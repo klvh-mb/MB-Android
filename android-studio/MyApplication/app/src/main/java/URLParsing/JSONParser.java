@@ -39,6 +39,9 @@ public class JSONParser {
             //httpPost.setEntity(new UrlEncodedFormEntity(params));
  
             HttpResponse httpResponse = httpClient.execute(httpPost);
+            if(httpResponse.getStatusLine().getStatusCode()!=200){
+                return null;
+            }
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
  

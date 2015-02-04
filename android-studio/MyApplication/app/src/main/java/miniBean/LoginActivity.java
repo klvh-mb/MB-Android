@@ -17,6 +17,11 @@
 package miniBean;
 
 import URLParsing.JSONParser;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -32,6 +37,10 @@ import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class LoginActivity extends FragmentActivity {
 
@@ -53,6 +62,7 @@ public class LoginActivity extends FragmentActivity {
     public String pankaj;
     public SharedPreferences session = null;
     public SharedPreferences mPref = null;
+    public MyApi yourUsersApi ;
 
     public AsyncFacebookRunner mAsyncRunner = null;
 
@@ -66,6 +76,11 @@ public class LoginActivity extends FragmentActivity {
 
         setContentView(R.layout.login);
         mAsyncRunner = new AsyncFacebookRunner(facebook);
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(getResources().getString(R.string.base_url))
+                .build();
+
+        yourUsersApi = restAdapter.create(MyApi.class);
         username = (EditText)findViewById(R.id.editText1);
         password = (EditText)findViewById(R.id.editText2);
         btnFbLogin = (Button) findViewById(R.id.btn_fblogin);
@@ -73,38 +88,68 @@ public class LoginActivity extends FragmentActivity {
         login = (Button)findViewById(R.id.button1);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                doLogin();
+               yourUsersApi.login(username.getText().toString(),password.getText().toString(),new Callback<Response>() {
+                   @Override
+                   public void success(Response response, Response response2) {
+                       saveToSession(response);
+                       Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                       startActivity(i);
+                   }
+
+                   @Override
+                    public void failure(RetrofitError retrofitError) {
+                        retrofitError.printStackTrace(); //to see if you have errors
+                    }
+                });
             }
         });
-        
+
         /**
 		 * Login button Click event
 		 * */
 		btnFbLogin.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				Log.d("Image Button", "button Clicked");
 				loginToFacebook();
 			}
 		});
     }
 
 
+    public void saveToSession(Response result){
+        BufferedReader reader = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        session.edit().putString("sessionID", sb.toString()).apply();
+    }
 
-    private void doLogin() { 
-    	String base = getResources().getString(R.string.base_url);
-    	String url1=base+"mobile/loginTest?email="+username.getText().toString()+"&password="+password.getText().toString();
-    	GetSessionID down = new GetSessionID();
-    	down.execute(url1);
-    } 
-    
-    private void doLoginUsingAccessToken(String access_token) { 
-    	String base = getResources().getString(R.string.base_url);
-    	String url1=base+"mobile/facebook?access_token="+access_token;
-    	GetSessionID down = new GetSessionID();
-    	down.execute(url1);
-    } 
+    private void doLoginUsingAccessToken(String access_token) {
+        yourUsersApi.loginByFacebbok(access_token ,new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                saveToSession(response);
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace(); //to see if you have errors
+            }
+        });
+    }
     
     public void loginToFacebook() {
 
@@ -163,29 +208,9 @@ public class LoginActivity extends FragmentActivity {
 
 
 
-    class GetSessionID extends AsyncTask<String, Integer, Long> {
-    	@Override
-    	protected Long doInBackground(String... params) {
-    		// TODO Auto-generated method stub
-    		JSONParser jsonParser = new JSONParser();
-    		String json = jsonParser.getJSONFromUrl(params[0], null);
-    		if (json != null || !json.isEmpty()) {
-    			session.edit().putString("sessionID", json).apply();
-    			System.out.println("JSON :: "+json);
-    		}
-    		return null;
-    	}
 
-		@Override
-		protected void onPostExecute(Long result) {
-			super.onPostExecute(result);
-			Intent i = new Intent(LoginActivity.this, MainActivity.class);
-			startActivity(i);
-		}
-    	
-    	
-    }
-    
+
+
 /*    public static String printKeyHash(Activity context) {
 		PackageInfo packageInfo;
 		String key = null;
