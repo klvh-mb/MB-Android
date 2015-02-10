@@ -16,21 +16,16 @@
 
 package miniBean;
 
-import URLParsing.JSONParser;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
@@ -41,6 +36,11 @@ import com.facebook.android.FacebookError;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LoginActivity extends FragmentActivity {
 
@@ -54,17 +54,16 @@ public class LoginActivity extends FragmentActivity {
 
    /* private ProfilePictureView profilePictureView;
     private TextView greeting;*/
-    
-    private EditText username=null;
-    private EditText  password=null;
-    private Button login;
-    private Button btnFbLogin;
     public String pankaj;
     public SharedPreferences session = null;
     public SharedPreferences mPref = null;
-    public MyApi yourUsersApi ;
-
+    public MyApi yourUsersApi;
     public AsyncFacebookRunner mAsyncRunner = null;
+    private EditText username = null;
+    private EditText password = null;
+    private Button login;
+    private Button btnFbLogin;
+    private ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,20 +73,23 @@ public class LoginActivity extends FragmentActivity {
         APP_ID = getResources().getString(R.string.app_id);
 
 
-        setContentView(R.layout.login);
+        setContentView(R.layout.login_view);
         mAsyncRunner = new AsyncFacebookRunner(facebook);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .build();
 
         yourUsersApi = restAdapter.create(MyApi.class);
-        username = (EditText)findViewById(R.id.editText1);
-        password = (EditText)findViewById(R.id.editText2);
-        btnFbLogin = (Button) findViewById(R.id.btn_fblogin);
+        username = (EditText)findViewById(R.id.userName);
+        password = (EditText)findViewById(R.id.password);
+        btnFbLogin = (Button) findViewById(R.id.buttonFbLogin);
+        progressBar=(ProgressBar)findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.GONE);
         
-        login = (Button)findViewById(R.id.button1);
+        login = (Button)findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                yourUsersApi.login(username.getText().toString(),password.getText().toString(),new Callback<Response>() {
                    @Override
                    public void success(Response response, Response response2) {
@@ -98,14 +100,21 @@ public class LoginActivity extends FragmentActivity {
 
                    @Override
                     public void failure(RetrofitError retrofitError) {
+        //               System.out.println("traceis::"+retrofitError.getResponse().getStatus());
+                       if(retrofitError.getResponse().getStatus()==400)
+                       {
+                           Toast.makeText(getApplicationContext(),"You have entered wrong User Id or Password",Toast.LENGTH_LONG).show();
+                           progressBar.setVisibility(View.INVISIBLE);
+                       }
                         retrofitError.printStackTrace(); //to see if you have errors
+
                     }
                 });
             }
         });
 
-        /**
-		 * Login button Click event
+        /*
+		 * Login mycomm Click event
 		 * */
 		btnFbLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -147,6 +156,8 @@ public class LoginActivity extends FragmentActivity {
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors
+
+
             }
         });
     }

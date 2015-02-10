@@ -4,81 +4,67 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
- 
+
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
- 
+
 public class FeedImageView extends ImageView {
- 
-    public interface ResponseObserver {
-        public void onError();
- 
-        public void onSuccess();
-    }
- 
+
     private ResponseObserver mObserver;
- 
-    public void setResponseObserver(ResponseObserver observer) {
-        mObserver = observer;
-    }
- 
     /**
      * The URL of the network image to load
      */
     private String mUrl;
- 
     /**
      * Resource ID of the image to be used as a placeholder until the network
      * image is loaded.
      */
     private int mDefaultImageId;
- 
     /**
      * Resource ID of the image to be used if the network response fails.
      */
     private int mErrorImageId;
- 
     /**
      * Local copy of the ImageLoader.
      */
     private ImageLoader mImageLoader;
- 
     /**
      * Current ImageContainer. (either in-flight or finished)
      */
     private ImageContainer mImageContainer;
- 
+
     public FeedImageView(Context context) {
         this(context, null);
     }
- 
+
     public FeedImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
- 
+
     public FeedImageView(Context context, AttributeSet attrs,
-            int defStyle) {
+                         int defStyle) {
         super(context, attrs, defStyle);
     }
- 
+
+    public void setResponseObserver(ResponseObserver observer) {
+        mObserver = observer;
+    }
+
     /**
      * Sets URL of the image that should be loaded into this view. Note that
      * calling this will immediately either set the cached image (if available)
      * or the default image specified by
      * {@link VolleyImageView#setDefaultImageResId(int)} on the view.
-     * 
+     * <p/>
      * NOTE: If applicable, {@link VolleyImageView#setDefaultImageResId(int)}
      * and {@link VolleyImageView#setErrorImageResId(int)} should be called
      * prior to calling this function.
-     * 
-     * @param url
-     *            The URL that should be loaded into this ImageView.
-     * @param imageLoader
-     *            ImageLoader that will be used to make the request.
+     *
+     * @param url         The URL that should be loaded into this ImageView.
+     * @param imageLoader ImageLoader that will be used to make the request.
      */
     public void setImageUrl(String url, ImageLoader imageLoader) {
         mUrl = url;
@@ -86,7 +72,7 @@ public class FeedImageView extends ImageView {
         // The URL has potentially changed. See if we need to load it.
         loadImageIfNecessary(false);
     }
- 
+
     /**
      * Sets the default image resource ID to be used for this view until the
      * attempt to load it completes.
@@ -94,7 +80,7 @@ public class FeedImageView extends ImageView {
     public void setDefaultImageResId(int defaultImage) {
         mDefaultImageId = defaultImage;
     }
- 
+
     /**
      * Sets the error image resource ID to be used for this view in the event
      * that the image requested fails to load.
@@ -102,17 +88,16 @@ public class FeedImageView extends ImageView {
     public void setErrorImageResId(int errorImage) {
         mErrorImageId = errorImage;
     }
- 
+
     /**
      * Loads the image for the view if it isn't already loaded.
-     * 
-     * @param isInLayoutPass
-     *            True if this was invoked from a layout pass, false otherwise.
+     *
+     * @param isInLayoutPass True if this was invoked from a layout pass, false otherwise.
      */
     private void loadImageIfNecessary(final boolean isInLayoutPass) {
         final int width = getWidth();
         int height = getHeight();
- 
+
         boolean isFullyWrapContent = getLayoutParams() != null
                 && getLayoutParams().height == LayoutParams.WRAP_CONTENT
                 && getLayoutParams().width == LayoutParams.WRAP_CONTENT;
@@ -122,7 +107,7 @@ public class FeedImageView extends ImageView {
         if (width == 0 && height == 0 && !isFullyWrapContent) {
             return;
         }
- 
+
         // if the URL to be loaded in this view is empty, cancel any old
         // requests and clear the
         // currently loaded image.
@@ -134,7 +119,7 @@ public class FeedImageView extends ImageView {
             setDefaultImageOrNull();
             return;
         }
- 
+
         // if there was an old request in this view, check if it needs to be
         // canceled.
         if (mImageContainer != null && mImageContainer.getRequestUrl() != null) {
@@ -148,7 +133,7 @@ public class FeedImageView extends ImageView {
                 setDefaultImageOrNull();
             }
         }
- 
+
         // The pre-existing content of this view didn't match the current URL.
         // Load the new image
         // from the network.
@@ -159,15 +144,15 @@ public class FeedImageView extends ImageView {
                         if (mErrorImageId != 0) {
                             setImageResource(mErrorImageId);
                         }
- 
+
                         if (mObserver != null) {
                             mObserver.onError();
                         }
                     }
- 
+
                     @Override
                     public void onResponse(final ImageContainer response,
-                            boolean isImmediate) {
+                                           boolean isImmediate) {
                         // If this was an immediate response that was delivered
                         // inside of a layout
                         // pass do not set the image immediately as it will
@@ -184,31 +169,31 @@ public class FeedImageView extends ImageView {
                             });
                             return;
                         }
- 
+
                         int bWidth = 0, bHeight = 0;
                         if (response.getBitmap() != null) {
- 
+
                             setImageBitmap(response.getBitmap());
                             bWidth = response.getBitmap().getWidth();
                             bHeight = response.getBitmap().getHeight();
                             adjustImageAspect(bWidth, bHeight);
- 
+
                         } else if (mDefaultImageId != 0) {
                             setImageResource(mDefaultImageId);
                         }
- 
+
                         if (mObserver != null) {
                             mObserver.onSuccess();
- 
+
                         }
                     }
                 });
- 
+
         // update the ImageContainer to be the new bitmap container.
         mImageContainer = newContainer;
- 
+
     }
- 
+
     private void setDefaultImageOrNull() {
         if (mDefaultImageId != 0) {
             setImageResource(mDefaultImageId);
@@ -216,14 +201,14 @@ public class FeedImageView extends ImageView {
             setImageBitmap(null);
         }
     }
- 
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right,
-            int bottom) {
+                            int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         loadImageIfNecessary(true);
     }
- 
+
     @Override
     protected void onDetachedFromWindow() {
         if (mImageContainer != null) {
@@ -237,27 +222,33 @@ public class FeedImageView extends ImageView {
         }
         super.onDetachedFromWindow();
     }
- 
+
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
         invalidate();
     }
- 
+
     /*
      * Adjusting imageview height
      * */
     private void adjustImageAspect(int bWidth, int bHeight) {
         LayoutParams params = (LayoutParams) getLayoutParams();
- 
+
         if (bWidth == 0 || bHeight == 0)
             return;
- 
+
         int swidth = getWidth();
         int new_height = 0;
         new_height = swidth * bHeight / bWidth;
         params.width = swidth;
         params.height = new_height;
         setLayoutParams(params);
+    }
+
+    public interface ResponseObserver {
+        public void onError();
+
+        public void onSuccess();
     }
 }

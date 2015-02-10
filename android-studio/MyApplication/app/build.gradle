@@ -25,6 +25,9 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile 'com.facebook.android:facebook-android-sdk:3.22.0'
     compile 'com.squareup.retrofit:retrofit:1.7.1'
+    compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile 'com.google.code.gson:gson:2.3'
     compile 'org.parceler:parceler:0.2.13'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
 }

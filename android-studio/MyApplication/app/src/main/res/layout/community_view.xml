@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/image_component"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/community" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/button_component"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_component"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/post_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:src="@drawable/post" />
+
+        <TextView
+            android:id="@+id/text_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/post_image"
+            android:text="782"
+            android:textSize="25dp" />
+
+        <ImageView
+            android:id="@+id/pro_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/text_post"
+            android:paddingLeft="30dp"
+            android:src="@drawable/profile_community" />
+
+        <TextView
+            android:id="@+id/text_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/pro_image"
+            android:text="411"
+            android:textSize="25dp" />
+
+        <ImageView
+            android:id="@+id/join_community"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:src="@drawable/check_community" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/join_community"
+            android:paddingRight="10dp"
+            android:text="Join"
+            android:textSize="25dp" />
+    </RelativeLayout>
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/button_component"
+        android:background="@drawable/startbar">
+
+    </View>
+</RelativeLayout>

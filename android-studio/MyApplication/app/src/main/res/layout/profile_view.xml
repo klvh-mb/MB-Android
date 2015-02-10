@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tulips" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageLayout"
+        android:paddingBottom="10dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/corner"
+            android:drawableLeft="@drawable/profile"
+            android:text="Edit" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viewBar1"
+        android:layout_width="match_parent"
+        android:layout_height="9dp"
+        android:layout_below="@+id/buttonLayout"
+        android:background="@drawable/startbar" />
+
+    <RelativeLayout
+        android:id="@+id/QuestionPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewBar1"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/Fir1_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:src="@drawable/notepad" />
+
+        <TextView
+            android:id="@+id/Sec1_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/Fir1_Component"
+            android:paddingLeft="20dp"
+            android:text="Questions"
+            android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/Thir1_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20dp"
+            android:src="@drawable/arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/Thir1_Component"
+            android:text="2"
+            android:textColor="#ff0000"
+            android:textSize="30dp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viewBar2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/QuestionPanel"
+        android:background="@drawable/bar" />
+
+    <RelativeLayout
+        android:id="@+id/AnswersPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewBar2"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/Fir2_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:src="@drawable/answers" />
+
+        <TextView
+            android:id="@+id/Sec2_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/Fir2_Component"
+            android:paddingLeft="20dp"
+            android:text="Answers"
+            android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/Third2_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20dp"
+            android:src="@drawable/arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/Third2_Component"
+            android:text="2"
+            android:textColor="#ff0000"
+            android:textSize="30dp" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viewBar3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/AnswersPanel"
+        android:background="@drawable/bar" />
+
+    <RelativeLayout
+        android:id="@+id/BookmarkPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewBar3"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/Fir3_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:src="@drawable/bookmark" />
+
+        <TextView
+            android:id="@+id/Sec3_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/Fir3_Component"
+            android:paddingLeft="20dp"
+            android:text="Bookmarks"
+            android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/Third3_Component"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20dp"
+            android:src="@drawable/arrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_toLeftOf="@+id/Third3_Component"
+            android:text="4"
+            android:textColor="#ff0000"
+            android:textSize="30dp" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viewBar4"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/BookmarkPanel"
+        android:background="@drawable/bar" />
+
+
+    <RelativeLayout
+        android:id="@+id/LastLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_weight=".34"
+                android:background="@drawable/corner"
+                android:drawableLeft="@drawable/chat"
+                android:paddingLeft="20dp"
+                android:text="Chat"
+
+
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight=".33"
+                android:background="@drawable/corner"
+                android:drawableLeft="@drawable/article"
+                android:paddingLeft="20dp"
+                android:text="Articles"
+
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_weight=".33"
+                android:background="@drawable/corner"
+                android:drawableLeft="@drawable/profile"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Profile" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
