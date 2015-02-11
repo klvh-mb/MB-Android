@@ -28,6 +28,6 @@ public interface MyApi {
     public void getMyCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
 
     @GET("/get-all-social-community-categories")
-    public void getSocialCommunityCategoriesMap(Callback<List<CommunityCategoryMapVM>> callback);
+    public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly,Callback<List<CommunityCategoryMapVM>> callback);
 
 }
