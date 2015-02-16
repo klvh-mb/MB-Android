@@ -1,239 +1,183 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/imageLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/tulips" />
-    </LinearLayout>
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
+    android:id="@+id/profileLayout">
 
     <RelativeLayout
-        android:id="@+id/buttonLayout"
+        android:id="@+id/profilePic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageLayout"
-        android:paddingBottom="10dp">
+        >
+        <ImageView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/c"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profilePic">
 
         <Button
+            android:id="@+id/editButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/corner"
             android:drawableLeft="@drawable/profile"
-            android:text="Edit" />
+            android:text="edit"
+            android:layout_alignParentEnd="true"
+            />
     </RelativeLayout>
 
-    <View
-        android:id="@+id/viewBar1"
-        android:layout_width="match_parent"
-        android:layout_height="9dp"
-        android:layout_below="@+id/buttonLayout"
-        android:background="@drawable/startbar" />
-
-    <RelativeLayout
-        android:id="@+id/QuestionPanel"
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:id="@+id/menuQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewBar1"
-        android:paddingTop="5dp">
-
+        android:layout_below="@id/edit">
         <ImageView
-            android:id="@+id/Fir1_Component"
+            android:id="@+id/questionPic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:src="@drawable/notepad" />
-
+            android:background="@drawable/profile_posts"/>
         <TextView
-            android:id="@+id/Sec1_Component"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="75"
+            android:id="@+id/questionText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/Fir1_Component"
-            android:paddingLeft="20dp"
+            android:layout_height="match_parent"
             android:text="Questions"
-            android:textSize="30dp" />
-
-        <ImageView
-            android:id="@+id/Thir1_Component"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="20dp"
-            android:src="@drawable/arrow" />
-
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/questionPic"/>
         <TextView
+            android:layout_weight="20"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/Edit1"
+            android:layout_toRightOf="@id/questionText"
+            android:text="2"            />
+        <ImageView
+            android:layout_weight="5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/Thir1_Component"
+            android:src="@drawable/add"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/menuAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menuQuestion">
+        <ImageView
+            android:id="@+id/answerPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/profile_comments"/>
+        <TextView
+            android:textStyle="bold"
+            android:layout_weight="75"
+            android:id="@+id/answerText"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_height="match_parent"
+            android:text="Answer"
+            android:layout_toRightOf="@id/answerPic"/>
+        <TextView
+            android:layout_weight="20"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/Edit2"
+            android:layout_toRightOf="@id/answerText"
+            android:editable="false"
             android:text="2"
-            android:textColor="#ff0000"
-            android:textSize="30dp" />
-    </RelativeLayout>
+            />
+        <ImageView
+            android:layout_weight="5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add"
 
-    <View
-        android:id="@+id/viewBar2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/QuestionPanel"
-        android:background="@drawable/bar" />
+            />
+    </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/AnswersPanel"
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/menuBookmarks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewBar2"
-        android:paddingTop="5dp">
-
+        android:layout_below="@id/menuAnswer"
+        android:orientation="horizontal">
         <ImageView
-            android:id="@+id/Fir2_Component"
+            android:id="@+id/bookmarksPic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:src="@drawable/answers" />
-
+            android:background="@drawable/profile_bookmarks"/>
         <TextView
-            android:id="@+id/Sec2_Component"
+            android:textStyle="bold"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="75"
+            android:id="@+id/bookmarksText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/Fir2_Component"
-            android:paddingLeft="20dp"
-            android:text="Answers"
-            android:textSize="30dp" />
-
-        <ImageView
-            android:id="@+id/Third2_Component"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="20dp"
-            android:src="@drawable/arrow" />
-
+            android:layout_height="match_parent"
+            android:text="Bookmark"/>
         <TextView
+            android:layout_weight="20"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/Third2_Component"
+            android:layout_height="match_parent"
+            android:id="@+id/Edit3"
+            android:editable="false"
             android:text="2"
-            android:textColor="#ff0000"
-            android:textSize="30dp" />
+            />
+        <ImageView
+            android:layout_weight="5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add"
 
-
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/viewBar3"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/AnswersPanel"
-        android:background="@drawable/bar" />
-
-    <RelativeLayout
-        android:id="@+id/BookmarkPanel"
+            />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewBar3"
-        android:paddingTop="5dp">
-
-        <ImageView
-            android:id="@+id/Fir3_Component"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:src="@drawable/bookmark" />
-
-        <TextView
-            android:id="@+id/Sec3_Component"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/Fir3_Component"
-            android:paddingLeft="20dp"
-            android:text="Bookmarks"
-            android:textSize="30dp" />
-
-        <ImageView
-            android:id="@+id/Third3_Component"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="20dp"
-            android:src="@drawable/arrow" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_toLeftOf="@+id/Third3_Component"
-            android:text="4"
-            android:textColor="#ff0000"
-            android:textSize="30dp" />
-
-
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/viewBar4"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/BookmarkPanel"
-        android:background="@drawable/bar" />
-
-
-    <RelativeLayout
-        android:id="@+id/LastLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_weight=".34"
-                android:background="@drawable/corner"
-                android:drawableLeft="@drawable/chat"
-                android:paddingLeft="20dp"
-                android:text="Chat"
-
-
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight=".33"
-                android:background="@drawable/corner"
-                android:drawableLeft="@drawable/article"
-                android:paddingLeft="20dp"
-                android:text="Articles"
-
-                />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_weight=".33"
-                android:background="@drawable/corner"
-                android:drawableLeft="@drawable/profile"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Profile" />
-        </LinearLayout>
-
-    </RelativeLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/comms"
+            android:layout_weight=".33"
+            android:drawableLeft="@drawable/comm"
+            android:text="comms"
+            android:background="#ffffff"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/articles"
+            android:layout_weight=".34"
+            android:drawableLeft="@drawable/tag"
+            android:text="articles"
+            android:background="#ffffff"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/profiles"
+            android:layout_weight=".33"
+            android:text="profile"
+            android:background="#ffffff"
+            android:drawableLeft="@drawable/profile"
+            />
 
 
+    </LinearLayout>
 </RelativeLayout>

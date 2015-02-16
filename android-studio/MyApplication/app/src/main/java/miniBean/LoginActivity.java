@@ -52,9 +52,6 @@ public class LoginActivity extends FragmentActivity {
 
 	private final String PENDING_ACTION_BUNDLE_KEY = "com.facebook.samples.hellofacebook:PendingAction";
 
-   /* private ProfilePictureView profilePictureView;
-    private TextView greeting;*/
-    public String pankaj;
     public SharedPreferences session = null;
     public SharedPreferences mPref = null;
     public MyApi yourUsersApi;
@@ -94,7 +91,7 @@ public class LoginActivity extends FragmentActivity {
                    @Override
                    public void success(Response response, Response response2) {
                        saveToSession(response);
-                       Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                       Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                        startActivity(i);
                    }
 
@@ -149,7 +146,7 @@ public class LoginActivity extends FragmentActivity {
             @Override
             public void success(Response response, Response response2) {
                 saveToSession(response);
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                 startActivity(i);
             }
 
@@ -216,48 +213,5 @@ public class LoginActivity extends FragmentActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		facebook.authorizeCallback(requestCode, resultCode, data);
 	}
-
-
-
-
-
-
-/*    public static String printKeyHash(Activity context) {
-		PackageInfo packageInfo;
-		String key = null;
-		try {
-
-			//getting application package name, as defined in manifest
-			String packageName = context.getApplicationContext().getPackageName();
-
-			//Retriving package info
-			packageInfo = context.getPackageManager().getPackageInfo(packageName,
-					PackageManager.GET_SIGNATURES);
-			
-			Log.e("Package Name=", context.getApplicationContext().getPackageName());
-			
-			for (Signature signature : packageInfo.signatures) {
-				MessageDigest md = MessageDigest.getInstance("SHA");
-				md.update(signature.toByteArray());
-				key = new String(Base64.encode(md.digest(), 0));
-			
-				// String key = new String(Base64.encodeBytes(md.digest()));
-				Log.e("Key Hash=", key);
-				System.out.println("Key Hash :::::: ="+ key);
-
-			} 
-		} catch (NameNotFoundException e1) {
-			Log.e("Name not found", e1.toString());
-		}
-
-		catch (NoSuchAlgorithmException e) {
-			Log.e("No such an algorithm", e.toString());
-		} catch (Exception e) {
-			Log.e("Exception", e.toString());
-		}
-
-		return key;
-	}
-*/
 }
 

@@ -9,10 +9,11 @@
     android:paddingLeft="4dp"
     android:paddingRight="4dp">
 
+
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/communityImg"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="80dp"
         android:scaleType="fitCenter"></com.android.volley.toolbox.NetworkImageView>
 
     <RelativeLayout
@@ -26,18 +27,23 @@
             >
         <TextView
             android:id="@+id/commName"
+            android:paddingLeft="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            
+            android:textSize="25dp"/>
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
+        <ImageView
+                android:id="@+id/mem_join"
+                android:layout_alignRight="@+id/commName"
                 android:src="@drawable/check_community"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentRight="true"
              />
             </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_below="@+id/layout0"
                     android:id="@+id/layout1"
                     android:layout_width="fill_parent"
@@ -51,6 +57,7 @@
                         android:src="@drawable/post" />
 
                     <TextView
+                        android:layout_toRightOf="@+id/post"
                         android:text="100"
                         android:id="@+id/noPost"
                         android:textSize="15dp"
@@ -59,22 +66,27 @@
 
                     <ImageView
                         android:paddingLeft="10dp"
+                        android:layout_toRightOf="@+id/noPost"
                         android:id="@+id/memberImg"
-                        android:layout_width="30dp"
+                        android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/member" />
+                        android:src="@drawable/profile_community" />
 
                     <TextView
                         android:text="10"
+                        android:layout_toRightOf="@id/memberImg"
                         android:id="@+id/noMember"
                         android:textSize="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-                </LinearLayout>
+
+                </RelativeLayout>
                 <TextView
                     android:layout_below="@+id/layout1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:textSize="20dp"
                     android:text="THIS IS FIRST POST........!!!!"
                     />
         </RelativeLayout>

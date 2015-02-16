@@ -11,6 +11,7 @@
 
         <TextView
             android:id="@+id/commName"
+            android:text="this is community name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -21,8 +22,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_weight=".5">
 
@@ -35,14 +36,14 @@
 
             <TextView
                 android:id="@+id/username"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/userpic" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_weight=".25">
 
@@ -54,14 +55,14 @@
 
             <TextView
                 android:id="@+id/timeText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/timepic" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_weight=".25">
 
@@ -73,11 +74,11 @@
 
             <TextView
                 android:id="@+id/commentnoTEXT"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/commentpic" />
 
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

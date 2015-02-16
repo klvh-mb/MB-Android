@@ -19,6 +19,16 @@ public class Post {
     public List<Long> imgs;
     public String cn;
 
+    public Long getCid() {
+        return cid;
+    }
+
+    public void setCid(Long cid) {
+        this.cid = cid;
+    }
+
+    public Long cid;
+
     public String getPtl() {
         return ptl;
     }

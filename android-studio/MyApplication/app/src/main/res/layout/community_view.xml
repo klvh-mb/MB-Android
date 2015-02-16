@@ -6,16 +6,18 @@
     <LinearLayout
         android:id="@+id/image_component"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="160dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/communityPic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/community" />
+            android:scaleType="fitCenter"></com.android.volley.toolbox.NetworkImageView>
     </LinearLayout>
 
     <RelativeLayout
+        android:background="#ffffff"
         android:id="@+id/button_component"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +32,7 @@
             android:src="@drawable/post" />
 
         <TextView
-            android:id="@+id/text_post"
+            android:id="@+id/noPostComm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/post_image"
@@ -41,12 +43,12 @@
             android:id="@+id/pro_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/text_post"
+            android:layout_toRightOf="@+id/noPostComm"
             android:paddingLeft="30dp"
             android:src="@drawable/profile_community" />
 
         <TextView
-            android:id="@+id/text_profile"
+            android:id="@+id/noMemberComm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/pro_image"
@@ -71,11 +73,32 @@
     </RelativeLayout>
 
     <View
-
+        android:id="@+id/viewBar"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:layout_below="@+id/button_component"
         android:background="@drawable/startbar">
 
     </View>
+    <RelativeLayout
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/viewBar">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressCommunity"
+            android:layout_centerInParent="true"
+                ></ProgressBar>
+
+        <ListView
+            android:id="@+id/listCommunityFeed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null" />
+
+    </RelativeLayout>
 </RelativeLayout>

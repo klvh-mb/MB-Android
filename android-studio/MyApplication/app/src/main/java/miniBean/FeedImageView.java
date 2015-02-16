@@ -159,7 +159,7 @@ public class FeedImageView extends ImageView {
                         // trigger a requestLayout
                         // inside of a layout. Instead, defer setting the image
                         // by posting back to
-                        // the main thread.
+                        // the tabs thread.
                         if (isImmediate && isInLayoutPass) {
                             post(new Runnable() {
                                 @Override

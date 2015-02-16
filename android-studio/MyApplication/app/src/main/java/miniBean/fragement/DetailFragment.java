@@ -18,27 +18,29 @@ import miniBean.CommunityActivity;
 import miniBean.MyApi;
 import miniBean.R;
 import miniBean.adapter.CommunityListAdapter;
+import miniBean.adapter.DetailListAdapter;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
+import miniBean.viewmodel.CommunityPostCommentVM;
+import miniBean.viewmodel.CommunityPostVM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 
 
-public class CommunityFragment extends Fragment {
+public class DetailFragment extends Fragment {
 
-    private static final String TAG = CommunityFragment.class.getName();
+    private static final String TAG = DetailFragment.class.getName();
     public SharedPreferences session = null;
     public MyApi api;
     private ListView listView;
-    private CommunityListAdapter listAdapter;
-    private List<CommunitiesWidgetChildVM> communityItems;
-    ProgressBar progressBarComm;
+    private DetailListAdapter listAdapter;
+    private List<CommunityPostCommentVM> communityItems;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.community_activity, container, false);
+        View view = inflater.inflate(R.layout.community_detail, container, false);
         session = getActivity().getSharedPreferences("prefs", 0);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -46,56 +48,44 @@ public class CommunityFragment extends Fragment {
 
         api = restAdapter.create(MyApi.class);
 
-        listView = (ListView) view.findViewById(R.id.listComm);
-        progressBarComm= (ProgressBar) view.findViewById(R.id.progressComm1);
-        progressBarComm.setVisibility(View.VISIBLE);
+        listView = (ListView) view.findViewById(R.id.list);
 
 
 
         communityItems = new ArrayList<>();
 
-        listAdapter = new CommunityListAdapter(getActivity(), communityItems);
+        listAdapter = new DetailListAdapter(getActivity(), communityItems);
         listView.setAdapter(listAdapter);
 
+        Intent intent=getActivity().getIntent();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(getActivity(), CommunityActivity.class);
-
-                String noMember,noPost="100",commId,name;
-
-                CommunitiesWidgetChildVM childVM = listAdapter.getItem(position);
-
-                commId=childVM.getId().toString();
-                noMember=childVM.getMm().toString();
-                name=childVM.getDn();
-
-                intent.putExtra("id",commId);
-                intent.putExtra("noMember",noMember);
-                intent.putExtra("noPost",noPost);
-                intent.putExtra("commName",name);
-
-                startActivity(intent);
-            }
-        });
+        String postID=intent.getStringExtra("postID");
+        String commID=intent.getStringExtra("commID");
 
 
 
         System.out.println("Before getCommunity");
-        getCommunity();
+        getCommunityDetail();
         System.out.println("After getCommunity");
         return view;
     }
 
-    private void getCommunity() {
+    private void getCommunityDetail() {
         System.out.println("In getCommunity");
-        api.getMyCommunities(session.getString("sessionID", null), new Callback<CommunitiesParentVM>() {
+        Intent intent=getActivity().getIntent();
+
+        String postID=intent.getStringExtra("postID");
+        String commID=intent.getStringExtra("commID");
+
+        Long cId,feedId;
+        cId=Long.parseLong(commID);
+        feedId=Long.parseLong(postID);
+
+       /* api.qnaLanding(feedId,cId, new Callback<CommunityPostVM>() {
             @Override
-            public void success(CommunitiesParentVM array, retrofit.client.Response response) {
-                communityItems.addAll(array.getCommunities());
+            public void success(CommunityPostVM array, retrofit.client.Response response) {
+                communityItems.addAll(array.getCs());
                 listAdapter.notifyDataSetChanged();
-                progressBarComm.setVisibility(View.GONE);
 
             }
 
@@ -104,7 +94,7 @@ public class CommunityFragment extends Fragment {
                 retrofitError.printStackTrace(); //to see if you have errors
 
             }
-        });
+        });*/
     }
 
 

@@ -34,7 +34,7 @@ public class SplashActivity extends Activity {
         session = getSharedPreferences("prefs", 0);
         LocalCache.categoryMapList.add(new CommunityCategoryMapVM("My Comm"));
 
-        AppController.api.getSocialCommunityCategoriesMap(false ,new Callback<List<CommunityCategoryMapVM>>() {
+        AppController.api.getSocialCommunityCategoriesMap(false, new Callback<List<CommunityCategoryMapVM>>() {
 
             @Override
             public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
@@ -43,7 +43,7 @@ public class SplashActivity extends Activity {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         if (session.getString("sessionID", null) != null) {
-                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            startActivity(new Intent(SplashActivity.this, ActivityMain.class));
                         } else {
                             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                         }

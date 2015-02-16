@@ -21,8 +21,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:background="#ff0000"
-                android:text="Joined" />
+                android:background="#ffffff"
+                android:text="Joined"
+                />
 
             <Button
                 android:id="@+id/button2"
@@ -36,12 +37,22 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/children_fragement"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/button_layout"
-        android:orientation="horizontal"></LinearLayout>
+        >
+
+        <ProgressBar
+            android:layout_centerInParent="true"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressComm"
+            android:layout_gravity="center_horizontal"
+            />
+    </RelativeLayout>
 
 
 </RelativeLayout>

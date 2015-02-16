@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F08CF6"
+    >
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -17,53 +20,60 @@
         android:background="@drawable/bar"
      />
 
-
-
-    <LinearLayout
-        android:id="@+id/usernameComponent"
+    <RelativeLayout
+        android:id="@+id/FacebookLoginComponent"
         android:layout_below="@+id/viewBar1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-
-        <TextView
-            android:id="@+id/usernameText"
+        <Button
+            android:id="@+id/buttonFbLogin"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username:"
-            android:textAlignment="center"
+            android:drawableLeft="@drawable/btn_login"
             />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:paddingTop="20dp"
+        android:id="@+id/usernameComponent"
+        android:layout_below="@+id/FacebookLoginComponent"
+        android:layout_width="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+
+        >
+
 
         <EditText
             android:id="@+id/userName"
+            android:layout_centerHorizontal="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter user name"
-            />
-    </LinearLayout>
+            android:hint="Enter Username"
+
+        />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_below="@+id/usernameComponent"
         android:id="@+id/passwordComponent"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         >
 
-        <TextView
-            android:id="@+id/passwordText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="Password:"
-
-            />
+      
 
         <EditText
             android:layout_toRightOf="@+id/passwordText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="Enter password"
+            android:hint="Enter Password"
             android:id="@+id/password"/>
 
             </LinearLayout>
@@ -91,25 +101,12 @@
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/lock"
+            android:background="@drawable/bg_parent_rounded_corner"
             android:text="Log In"
-            android:textSize="24dp" />
+            android:textSize="24dp"/>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/FacebookLoginComponent"
-        android:layout_below="@+id/LoginComponent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <Button
-            android:id="@+id/buttonFbLogin"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/btn_login"
-            />
-    </RelativeLayout>
+   
 
 
 </RelativeLayout>

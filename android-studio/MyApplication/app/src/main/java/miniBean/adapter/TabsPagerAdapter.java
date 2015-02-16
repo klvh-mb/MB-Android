@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import miniBean.fragement.GamesFragment;
-import miniBean.fragement.MoviesFragment;
 import miniBean.fragement.NewsFeedFragement;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
@@ -24,9 +23,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 // Games fragment activity
                 return new GamesFragment();
-            case 2:
-                // Movies fragment activity
-                return new MoviesFragment();
         }
 
         return null;

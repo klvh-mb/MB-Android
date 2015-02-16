@@ -30,7 +30,7 @@ public class FeedListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int location) {
+    public Post getItem(int location) {
         return feedItems.get(location);
     }
 

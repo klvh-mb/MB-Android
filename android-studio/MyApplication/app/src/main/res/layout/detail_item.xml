@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="#ffffff"
+        android:id="@+id/questionnare_component"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/QuestionPanel"
+        >
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/questionnare_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:paddingLeft="20dp"
+            android:src="@drawable/community" ></com.android.volley.toolbox.NetworkImageView>
+
+
+        <TextView
+            android:id="@+id/Text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/questionnare_img"
+            android:text="782"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/Text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="700"
+            android:textSize="20dp"
+            android:layout_below="@+id/Text1"
+            android:layout_toRightOf="@+id/questionnare_img"/>
+        <TextView
+            android:id="@+id/Text4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7"
+            android:textSize="20dp"
+            android:layout_below="@+id/Text1"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/questionnareText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/questionnare_component">
+
+        <TextView
+            android:id="@+id/Text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Questionare text...................
+        ........................"
+            android:textSize="20dp"
+            android:layout_toRightOf="@+id/questionnare_img"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/imgComponent"
+        android:layout_below="@id/questionnareText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/timeImg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/time"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time"
+                android:layout_toRightOf="@+id/timeImg"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/placeImg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/time"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time"
+                android:layout_toRightOf="@+id/placeImg"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/details_btn"
+            />
+        </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_below="@+id/imgComponent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
