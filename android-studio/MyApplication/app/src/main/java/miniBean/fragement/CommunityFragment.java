@@ -14,8 +14,8 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.CommunityActivity;
-import miniBean.MyApi;
+import miniBean.activity.CommunityActivity;
+import miniBean.app.MyApi;
 import miniBean.R;
 import miniBean.adapter.CommunityListAdapter;
 import miniBean.viewmodel.CommunitiesParentVM;
@@ -31,14 +31,15 @@ public class CommunityFragment extends Fragment {
     private static final String TAG = CommunityFragment.class.getName();
     public SharedPreferences session = null;
     public MyApi api;
+    ProgressBar progressBarComm;
     private ListView listView;
     private CommunityListAdapter listAdapter;
     private List<CommunitiesWidgetChildVM> communityItems;
-    ProgressBar progressBarComm;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.community_activity, container, false);
+        View view = inflater.inflate(R.layout.community_list_view, container, false);
         session = getActivity().getSharedPreferences("prefs", 0);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -47,9 +48,8 @@ public class CommunityFragment extends Fragment {
         api = restAdapter.create(MyApi.class);
 
         listView = (ListView) view.findViewById(R.id.listComm);
-        progressBarComm= (ProgressBar) view.findViewById(R.id.progressComm1);
+        progressBarComm = (ProgressBar) view.findViewById(R.id.progressComm1);
         progressBarComm.setVisibility(View.VISIBLE);
-
 
 
         communityItems = new ArrayList<>();
@@ -61,25 +61,26 @@ public class CommunityFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(getActivity(), CommunityActivity.class);
+                Intent intent = new Intent(getActivity(), CommunityActivity.class);
 
-                String noMember,noPost="100",commId,name;
+                String noMember, noPost = "100", commId, name;
 
                 CommunitiesWidgetChildVM childVM = listAdapter.getItem(position);
 
-                commId=childVM.getId().toString();
-                noMember=childVM.getMm().toString();
-                name=childVM.getDn();
+                commId = childVM.getId().toString();
+                noMember = childVM.getMm().toString();
+                name = childVM.getDn();
 
-                intent.putExtra("id",commId);
-                intent.putExtra("noMember",noMember);
-                intent.putExtra("noPost",noPost);
-                intent.putExtra("commName",name);
+                intent.putExtra("id", commId);
+                intent.putExtra("noMember", noMember);
+                intent.putExtra("noPost", noPost);
+                intent.putExtra("commName", name);
+                intent.putExtra("icon", childVM.getGi());
+                intent.putExtra("isM", childVM.getIsM());
 
                 startActivity(intent);
             }
         });
-
 
 
         System.out.println("Before getCommunity");

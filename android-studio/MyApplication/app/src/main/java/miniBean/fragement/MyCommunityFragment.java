@@ -14,14 +14,14 @@ import miniBean.R;
 
 public class MyCommunityFragment extends Fragment {
 
-    boolean buttonBool=false;
+    boolean buttonBool = false;
     Button joined, newsfeed;
     ProgressBar progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.mycomm, container, false);
+        View view = inflater.inflate(R.layout.mycomm_fragement, container, false);
 
         Fragment communityFragment = new CommunityFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -29,16 +29,18 @@ public class MyCommunityFragment extends Fragment {
 
         joined = (Button) view.findViewById(R.id.button1);
         newsfeed = (Button) view.findViewById(R.id.button2);
-        progressbar= (ProgressBar) view.findViewById(R.id.progressComm);
+        progressbar = (ProgressBar) view.findViewById(R.id.progressComm);
 
         progressbar.setVisibility(View.VISIBLE);
 
         joined.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(buttonBool==true) {
+                if (buttonBool == true) {
                     joined.setBackgroundColor(Color.WHITE);
-                    newsfeed.setBackgroundColor(Color.RED);
+                    joined.setTextColor(Color.parseColor("#FF6666"));
+                    newsfeed.setBackgroundColor(Color.parseColor("#FF8D8D"));
+                    newsfeed.setTextColor(Color.WHITE);
                     Fragment communityFragment = new CommunityFragment();
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                     transaction.replace(R.id.children_fragement, communityFragment).commit();
@@ -52,15 +54,17 @@ public class MyCommunityFragment extends Fragment {
         newsfeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(buttonBool==false) {
+                if (buttonBool == false) {
                     newsfeed.setBackgroundColor(Color.WHITE);
-                    joined.setBackgroundColor(Color.RED);
+                    newsfeed.setTextColor(Color.parseColor("#FF6666"));
+                    joined.setBackgroundColor(Color.parseColor("#FF8D8D"));
+                    joined.setTextColor(Color.WHITE);
                     Fragment newsFeedFragement = new NewsFeedFragement();
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                     transaction.replace(R.id.children_fragement, newsFeedFragement).commit();
-                    buttonBool=true;
+                    buttonBool = true;
                 }
-                }
+            }
 
         });
 

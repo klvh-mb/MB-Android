@@ -1,4 +1,4 @@
-package miniBean;
+package miniBean.Listener;
 
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;

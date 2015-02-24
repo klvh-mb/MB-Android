@@ -14,13 +14,11 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.CommunityActivity;
-import miniBean.DetailActivity;
-import miniBean.InfiniteScrollListener;
-import miniBean.MyApi;
+import miniBean.activity.DetailActivity;
+import miniBean.Listener.InfiniteScrollListener;
+import miniBean.app.MyApi;
 import miniBean.R;
 import miniBean.adapter.FeedListAdapter;
-import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.Post;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
@@ -34,10 +32,10 @@ public class NewsFeedFragement extends Fragment {
     private static final String TAG = NewsFeedFragement.class.getName();
     public SharedPreferences session = null;
     public MyApi api;
+    ProgressBar progressBarFeed;
     private ListView listView;
     private FeedListAdapter listAdapter;
     private List<Post> feedItems;
-    ProgressBar progressBarFeed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,9 +50,8 @@ public class NewsFeedFragement extends Fragment {
         api = restAdapter.create(MyApi.class);
 
         listView = (ListView) view.findViewById(R.id.list);
-        progressBarFeed= (ProgressBar) view.findViewById(R.id.progressFeed);
+        progressBarFeed = (ProgressBar) view.findViewById(R.id.progressFeed);
         progressBarFeed.setVisibility(View.VISIBLE);
-
 
 
         feedItems = new ArrayList<Post>();
@@ -62,15 +59,14 @@ public class NewsFeedFragement extends Fragment {
 
         listAdapter = new FeedListAdapter(getActivity(), feedItems);
         listView.setAdapter(listAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(getActivity(), DetailActivity.class);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 Post post = listAdapter.getItem(position);
-                intent.putExtra("postId",post.getId());
-                System.out.println("postid+"+post.getId());
-                intent.putExtra("commId",post.getCid());
-                System.out.println("commid+"+post.getCid());
+                intent.putExtra("postId", post.getId());
+                intent.putExtra("commId", post.getCid());
                 startActivity(intent);
             }
         });
@@ -78,8 +74,6 @@ public class NewsFeedFragement extends Fragment {
 
             @Override
             public void loadMore(int page, int totalItemsCount) {
-                // TODO Auto-generated method stub
-                System.out.println("Page ::::::::::: " + (page - 1));
                 getNewsFeed(page - 1);
             }
         });

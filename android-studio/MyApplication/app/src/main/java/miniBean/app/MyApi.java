@@ -1,16 +1,16 @@
-package miniBean;
+package miniBean.app;
 
 
 import java.util.List;
 
+import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommunitiesParentVM;
-import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
-import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
-import miniBean.viewmodel.PostMap;
+import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.client.Response;
+import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -33,15 +33,22 @@ public interface MyApi {
     public void getCommNewsfeed(@Path("id") Long id, @Query("key") String key, Callback<PostArray> callback);
 
     @GET("/get-social-community-categories-map")
-    public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly,Callback<List<CommunityCategoryMapVM>> callback);
+    public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, Callback<List<CommunityCategoryMapVM>> callback);
 
     @GET("/qna-landing/{qnaId}/{communityId}")
-    public void qnaLanding(@Path("qnaId") Long qnaId,@Path("communityId") Long communityId, Callback<PostArray> callback);
-	
-	 @GET("/community/join/{id}") //a function in your api to get all the list
+    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, Callback<PostArray> callback);
+
+    @GET("/community/join/{id}") //a function in your api to get all the list
     public void sendJoinRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/community/leave/{id}") //a function in your api to get all the list
     public void sendLeaveRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/get-user-info") //a function in your api to get all the list
+    public void getUserInfo(@Query("key") String key, Callback<UserVM> cb);
+
+    @POST("/communityQnA/question/answer") //a function in your api to get all the list
+    public void answerOnQuestion(@Body CommentPost commentPost, @Query("key") String key, Callback<Response> cb);
+
 
 }

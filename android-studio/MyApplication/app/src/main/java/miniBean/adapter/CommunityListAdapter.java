@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
@@ -18,7 +16,6 @@ import miniBean.app.AppController;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class CommunityListAdapter extends BaseAdapter {
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private Activity activity;
     private LayoutInflater inflater;
     private List<CommunitiesWidgetChildVM> communityItems;
@@ -55,17 +52,17 @@ public class CommunityListAdapter extends BaseAdapter {
         TextView commName = (TextView) convertView.findViewById(R.id.commName);
         TextView noMembers = (TextView) convertView.findViewById(R.id.noMember);
         TextView noTopics = (TextView) convertView.findViewById(R.id.noTopics);
-        NetworkImageView communityPic = (NetworkImageView) convertView
-                .findViewById(R.id.communityPic);
 
+        ImageView communityPic = (ImageView) convertView
+                .findViewById(R.id.communityPic);
 
         final CommunitiesWidgetChildVM item = communityItems.get(position);
 
         commName.setText(item.getDn());
         noMembers.setText(item.getMm().toString());
         noTopics.setText("11");
-        communityPic.setImageUrl(this.activity.getResources().getString(R.string.base_url) + item.getGi(), imageLoader);
 
+        AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.getGi(), communityPic);
         return convertView;
     }
 }

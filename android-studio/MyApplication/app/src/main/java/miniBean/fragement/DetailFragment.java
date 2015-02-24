@@ -7,25 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.CommunityActivity;
-import miniBean.MyApi;
+import miniBean.app.MyApi;
 import miniBean.R;
-import miniBean.adapter.CommunityListAdapter;
 import miniBean.adapter.DetailListAdapter;
-import miniBean.viewmodel.CommunitiesParentVM;
-import miniBean.viewmodel.CommunitiesWidgetChildVM;
-import miniBean.viewmodel.CommunityPostCommentVM;
-import miniBean.viewmodel.CommunityPostVM;
-import retrofit.Callback;
+import miniBean.viewmodel.Comment;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 
 
@@ -36,11 +27,12 @@ public class DetailFragment extends Fragment {
     public MyApi api;
     private ListView listView;
     private DetailListAdapter listAdapter;
-    private List<CommunityPostCommentVM> communityItems;
+    private List<Comment> communityItems;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.community_detail, container, false);
+        View view = inflater.inflate(R.layout.detail_activity, container, false);
         session = getActivity().getSharedPreferences("prefs", 0);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -51,17 +43,15 @@ public class DetailFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.list);
 
 
-
         communityItems = new ArrayList<>();
 
         listAdapter = new DetailListAdapter(getActivity(), communityItems);
         listView.setAdapter(listAdapter);
 
-        Intent intent=getActivity().getIntent();
+        Intent intent = getActivity().getIntent();
 
-        String postID=intent.getStringExtra("postID");
-        String commID=intent.getStringExtra("commID");
-
+        String postID = intent.getStringExtra("postID");
+        String commID = intent.getStringExtra("commID");
 
 
         System.out.println("Before getCommunity");
@@ -72,16 +62,16 @@ public class DetailFragment extends Fragment {
 
     private void getCommunityDetail() {
         System.out.println("In getCommunity");
-        Intent intent=getActivity().getIntent();
+        Intent intent = getActivity().getIntent();
 
-        String postID=intent.getStringExtra("postID");
-        String commID=intent.getStringExtra("commID");
+        String postID = intent.getStringExtra("postID");
+        String commID = intent.getStringExtra("commID");
 
-        Long cId,feedId;
-        cId=Long.parseLong(commID);
-        feedId=Long.parseLong(postID);
+        Long cId, feedId;
+        cId = Long.parseLong(commID);
+        feedId = Long.parseLong(postID);
 
-       /* api.qnaLanding(feedId,cId, new Callback<CommunityPostVM>() {
+      /* api.qnaLanding(feedId,cId, new Callback<CommunityPostVM>() {
             @Override
             public void success(CommunityPostVM array, retrofit.client.Response response) {
                 communityItems.addAll(array.getCs());

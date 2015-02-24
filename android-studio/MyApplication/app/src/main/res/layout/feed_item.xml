@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="#ffffff"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp">
 
         <TextView
             android:id="@+id/commName"
-            android:text="this is community name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="this is community name" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/feedLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -39,13 +46,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/userpic" />
-
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="25dp"
+            android:layout_width="55dp"
             android:layout_height="match_parent"
-            android:layout_weight=".25">
+            android:layout_weight=".20">
 
             <ImageView
                 android:id="@+id/timepic"
@@ -57,14 +63,14 @@
                 android:id="@+id/timeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/timepic" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="20dp"
             android:layout_height="match_parent"
-            android:layout_weight=".25">
+            android:layout_weight=".20">
 
             <ImageView
                 android:id="@+id/commentpic"
@@ -76,12 +82,14 @@
                 android:id="@+id/commentnoTEXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/commentpic" />
-
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/commentpic"
+                android:textColor="#FF8D8D" />
         </LinearLayout>
     </LinearLayout>
+
     <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/startbar"></View>
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@drawable/bar1" />
 </LinearLayout>

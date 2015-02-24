@@ -12,6 +12,7 @@
         android:id="@+id/listComm"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:divider="@null" />
+        android:divider="@drawable/bar1"
+        android:dividerHeight="20dp" />
 
 </RelativeLayout>

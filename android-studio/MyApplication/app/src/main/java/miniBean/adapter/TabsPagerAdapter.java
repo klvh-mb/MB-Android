@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import miniBean.fragement.GamesFragment;
 import miniBean.fragement.NewsFeedFragement;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
@@ -20,9 +19,6 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 // Top Rated fragment activity
                 return new NewsFeedFragement();
-            case 1:
-                // Games fragment activity
-                return new GamesFragment();
         }
 
         return null;
@@ -30,7 +26,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // get item count - equal to number of tabs
+        // get item count - equal to number of main_fragement
         return 3;
     }
 

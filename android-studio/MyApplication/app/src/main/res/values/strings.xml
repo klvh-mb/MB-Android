@@ -4,7 +4,7 @@
     <string name="app_name">miniBean</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="base_url">http://192.168.2.7:9000</string>
+    <string name="base_url">http://192.168.1.16:9000</string>
     <string name="app_id">827816483951229</string>
 
 </resources>

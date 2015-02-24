@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package miniBean;
+package miniBean.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +37,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import miniBean.app.MyApi;
+import miniBean.R;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -44,13 +46,13 @@ import retrofit.client.Response;
 
 public class LoginActivity extends FragmentActivity {
 
-	// Your Facebook APP ID
-	private static String APP_ID = "827816483951229"; // Replace with your App ID
+    // Your Facebook APP ID
+    private static String APP_ID = "827816483951229"; // Replace with your App ID
 
-	// Instance of Facebook Class
-	private Facebook facebook = new Facebook(APP_ID);
+    // Instance of Facebook Class
+    private Facebook facebook = new Facebook(APP_ID);
 
-	private final String PENDING_ACTION_BUNDLE_KEY = "com.facebook.samples.hellofacebook:PendingAction";
+    private final String PENDING_ACTION_BUNDLE_KEY = "com.facebook.samples.hellofacebook:PendingAction";
 
     public SharedPreferences session = null;
     public SharedPreferences mPref = null;
@@ -70,39 +72,38 @@ public class LoginActivity extends FragmentActivity {
         APP_ID = getResources().getString(R.string.app_id);
 
 
-        setContentView(R.layout.login_view);
+        setContentView(R.layout.login_activity);
         mAsyncRunner = new AsyncFacebookRunner(facebook);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .build();
 
         yourUsersApi = restAdapter.create(MyApi.class);
-        username = (EditText)findViewById(R.id.userName);
-        password = (EditText)findViewById(R.id.password);
+        username = (EditText) findViewById(R.id.userName);
+        password = (EditText) findViewById(R.id.password);
         btnFbLogin = (Button) findViewById(R.id.buttonFbLogin);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar1);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.GONE);
-        
-        login = (Button)findViewById(R.id.buttonLogin);
+
+        login = (Button) findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-               yourUsersApi.login(username.getText().toString(),password.getText().toString(),new Callback<Response>() {
-                   @Override
-                   public void success(Response response, Response response2) {
-                       saveToSession(response);
-                       Intent i = new Intent(LoginActivity.this, ActivityMain.class);
-                       startActivity(i);
-                   }
+                yourUsersApi.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
+                    @Override
+                    public void success(Response response, Response response2) {
+                        saveToSession(response);
+                        Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                        startActivity(i);
+                    }
 
-                   @Override
+                    @Override
                     public void failure(RetrofitError retrofitError) {
-        //               System.out.println("traceis::"+retrofitError.getResponse().getStatus());
-                       if(retrofitError.getResponse().getStatus()==400)
-                       {
-                           Toast.makeText(getApplicationContext(),"You have entered wrong User Id or Password",Toast.LENGTH_LONG).show();
-                           progressBar.setVisibility(View.INVISIBLE);
-                       }
+                        //               System.out.println("traceis::"+retrofitError.getResponse().getStatus());
+                        if (retrofitError.getResponse().getStatus() == 400) {
+                            Toast.makeText(getApplicationContext(), "You have entered wrong User Id or Password", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
                         retrofitError.printStackTrace(); //to see if you have errors
 
                     }
@@ -111,18 +112,18 @@ public class LoginActivity extends FragmentActivity {
         });
 
         /*
-		 * Login mycomm Click event
+         * Login mycomm_fragement Click event
 		 * */
-		btnFbLogin.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				loginToFacebook();
-			}
-		});
+        btnFbLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginToFacebook();
+            }
+        });
     }
 
 
-    public void saveToSession(Response result){
+    public void saveToSession(Response result) {
         BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
         try {
@@ -142,7 +143,7 @@ public class LoginActivity extends FragmentActivity {
     }
 
     private void doLoginUsingAccessToken(String access_token) {
-        yourUsersApi.loginByFacebbok(access_token ,new Callback<Response>() {
+        yourUsersApi.loginByFacebbok(access_token, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 saveToSession(response);
@@ -158,60 +159,60 @@ public class LoginActivity extends FragmentActivity {
             }
         });
     }
-    
+
     public void loginToFacebook() {
 
-		String access_token = session.getString("access_token", null);
-		long expires = session.getLong("access_expires", 0);
+        String access_token = session.getString("access_token", null);
+        long expires = session.getLong("access_expires", 0);
 
-		if (access_token != null) {
-			facebook.setAccessToken(access_token);
-			doLoginUsingAccessToken(access_token);
-			btnFbLogin.setVisibility(View.INVISIBLE);
-			Log.d("FB Sessions", "" + facebook.isSessionValid());
-		}
+        if (access_token != null) {
+            facebook.setAccessToken(access_token);
+            doLoginUsingAccessToken(access_token);
+            btnFbLogin.setVisibility(View.INVISIBLE);
+            Log.d("FB Sessions", "" + facebook.isSessionValid());
+        }
 
-		if (expires != 0) {
-			facebook.setAccessExpires(expires);
-		}
+        if (expires != 0) {
+            facebook.setAccessExpires(expires);
+        }
 
-		if (!facebook.isSessionValid()) {
-			facebook.authorize(this,
-					new String[] { "email", "publish_stream" },
-					new DialogListener() {
+        if (!facebook.isSessionValid()) {
+            facebook.authorize(this,
+                    new String[]{"email", "publish_stream"},
+                    new DialogListener() {
 
-						@Override
-						public void onComplete(Bundle values) {
-							doLoginUsingAccessToken(facebook.getAccessToken());
-						}
+                        @Override
+                        public void onComplete(Bundle values) {
+                            doLoginUsingAccessToken(facebook.getAccessToken());
+                        }
 
-						@Override
-						public void onError(DialogError error) {
-							// Function to handle error
+                        @Override
+                        public void onError(DialogError error) {
+                            // Function to handle error
 
-						}
+                        }
 
-						@Override
-						public void onFacebookError(FacebookError fberror) {
-							// Function to handle Facebook errors
+                        @Override
+                        public void onFacebookError(FacebookError fberror) {
+                            // Function to handle Facebook errors
 
-						}
+                        }
 
-						@Override
-						public void onCancel() {
-							// TODO Auto-generated method stub
-							
-						}
+                        @Override
+                        public void onCancel() {
+                            // TODO Auto-generated method stub
 
-					});
-		}
-	}
-    
-    
+                        }
+
+                    });
+        }
+    }
+
+
     @Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		facebook.authorizeCallback(requestCode, resultCode, data);
-	}
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        facebook.authorizeCallback(requestCode, resultCode, data);
+    }
 }
 

@@ -2,111 +2,100 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F08CF6"
-    >
+    android:background="#F08CF6">
 
     <RelativeLayout
+        android:id="@+id/imageLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/login"
-        android:id="@+id/imageLayout">
-    </RelativeLayout>
+        android:background="@drawable/login"></RelativeLayout>
 
     <View
         android:id="@+id/viewBar1"
-        android:layout_below="@+id/imageLayout"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@drawable/bar"
-     />
+        android:layout_below="@+id/imageLayout"
+        android:background="@drawable/bar" />
 
     <RelativeLayout
         android:id="@+id/FacebookLoginComponent"
-        android:layout_below="@+id/viewBar1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:layout_below="@+id/viewBar1">
+
         <Button
             android:id="@+id/buttonFbLogin"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/btn_login"
-            />
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/btn_login" />
     </RelativeLayout>
 
 
-
     <RelativeLayout
-        android:paddingTop="20dp"
         android:id="@+id/usernameComponent"
-        android:layout_below="@+id/FacebookLoginComponent"
         android:layout_width="200dp"
-        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/FacebookLoginComponent"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"
 
         >
 
 
         <EditText
             android:id="@+id/userName"
-            android:layout_centerHorizontal="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:hint="Enter Username"
 
-        />
+            />
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_below="@+id/usernameComponent"
         android:id="@+id/passwordComponent"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        >
+        android:layout_below="@+id/usernameComponent"
+        android:layout_centerHorizontal="true">
 
-      
 
         <EditText
-            android:layout_toRightOf="@+id/passwordText"
+            android:id="@+id/password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:layout_toRightOf="@+id/passwordText"
             android:hint="Enter Password"
-            android:id="@+id/password"/>
+            android:inputType="textPassword" />
 
-            </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
-        android:layout_below="@+id/passwordComponent"
+        android:id="@+id/LoginComponent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:id="@+id/LoginComponent"
-        >
+        android:layout_below="@+id/passwordComponent"
+        android:paddingTop="20dp">
 
         <ProgressBar
+            android:id="@+id/progressBar1"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar1"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            />
+            android:layout_centerVertical="true" />
 
 
         <Button
             android:id="@+id/buttonLogin"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/bg_parent_rounded_corner"
             android:text="Log In"
-            android:textSize="24dp"/>
+            android:textSize="24dp" />
     </RelativeLayout>
-
-   
 
 
 </RelativeLayout>

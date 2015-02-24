@@ -2,60 +2,38 @@ package miniBean.fragement;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.astuetz.PagerSlidingTabStrip;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import miniBean.DetailActivity;
-import miniBean.InfiniteScrollListener;
-import miniBean.MyApi;
 import miniBean.R;
-import miniBean.adapter.FeedListAdapter;
-import miniBean.adapter.TabsPagerAdapter;
 import miniBean.app.LocalCache;
 import miniBean.viewmodel.CommunityCategoryMapVM;
-import miniBean.viewmodel.Post;
-import miniBean.viewmodel.PostArray;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 
 
-public class MainFragement extends Fragment{
+public class MainFragement extends Fragment {
 
     private static final String TAG = MainFragement.class.getName();
+    ActionBar.Tab Tab1, Tab2, Tab3;
     private ViewPager viewPager;
     private MyPagerAdapter mAdapter;
-
     private PagerSlidingTabStrip tabs;
-    ActionBar.Tab Tab1, Tab2, Tab3;
     private Activity myContext;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.tabs, container, false);
+        View view = inflater.inflate(R.layout.main_fragement, container, false);
 
         System.out.println("in mainFragment......");
 
@@ -71,7 +49,7 @@ public class MainFragement extends Fragment{
 
         tabs.setViewPager(viewPager);
 
-        tabs.setIndicatorColor(Color.RED);
+        tabs.setIndicatorColor(Color.parseColor("#FF537B"));
 
 
         return view;
@@ -79,7 +57,7 @@ public class MainFragement extends Fragment{
 
     @Override
     public void onAttach(Activity activity) {
-        myContext=(Activity) activity;
+        myContext = (Activity) activity;
         super.onAttach(activity);
     }
 
@@ -88,7 +66,7 @@ public class MainFragement extends Fragment{
 
 class MyPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] TITLES ;
+    private String[] TITLES;
 
     public MyPagerAdapter(FragmentManager fm) {
         super(fm);

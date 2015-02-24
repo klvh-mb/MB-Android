@@ -9,23 +9,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.viewmodel.CommunitiesWidgetChildVM;
-import miniBean.viewmodel.CommunityPostCommentVM;
+import miniBean.viewmodel.Comment;
 
 public class DetailListAdapter extends BaseAdapter {
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    TextView ownerName, commentText, commentTime, commentLocation, postTime;
     private Activity activity;
     private LayoutInflater inflater;
-    private List<CommunityPostCommentVM> communityItems;
+    private List<Comment> communityItems;
 
-    public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> communityItems) {
+    public DetailListAdapter(Activity activity, List<Comment> communityItems) {
         this.activity = activity;
         this.communityItems = communityItems;
     }
@@ -36,7 +34,7 @@ public class DetailListAdapter extends BaseAdapter {
     }
 
     @Override
-    public CommunityPostCommentVM getItem(int location) {
+    public Comment getItem(int location) {
         return communityItems.get(location);
     }
 
@@ -54,18 +52,28 @@ public class DetailListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.detail_item, null);
 
-        TextView commName = (TextView) convertView.findViewById(R.id.Text1);
-        TextView noMembers = (TextView) convertView.findViewById(R.id.Text2);
-        TextView noTopics = (TextView) convertView.findViewById(R.id.Text3);
-        TextView noTopic = (TextView) convertView.findViewById(R.id.Text4);
+        ownerName = (TextView) convertView.findViewById(R.id.postedBy);
+        postTime = (TextView) convertView.findViewById(R.id.postedOn);
+        commentText = (TextView) convertView.findViewById(R.id.commentText);
+        commentTime = (TextView) convertView.findViewById(R.id.timeText);
+        commentLocation = (TextView) convertView.findViewById(R.id.locationText);
+        ImageView userPic = (ImageView) convertView.findViewById(R.id.questionnare_img);
 
-        NetworkImageView userPic = (NetworkImageView)convertView.findViewById(R.id.questionnare_img);
-
-        final CommunityPostCommentVM item = communityItems.get(position);
+        final Comment item = communityItems.get(position);
 
 
-        userPic.setImageUrl(this.activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getId(), imageLoader);
+        commentText.setText(item.getD());
 
+        ownerName.setText(item.getOn());
+
+        Date date = new Date(item.getCd());
+        String DATE_FORMAT_NOW = "dd-MMM";
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        String stringDate = sdf.format(date);
+        commentTime.setText(stringDate);
+        postTime.setText(stringDate);
+
+        AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getOid(), userPic);
         return convertView;
     }
 }

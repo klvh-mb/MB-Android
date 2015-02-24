@@ -1,96 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:background="#ffffff"
-    android:orientation="horizontal"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp">
+    android:orientation="horizontal">
 
-
-    <com.android.volley.toolbox.NetworkImageView
+    <ImageView
         android:id="@+id/communityImg"
-        android:layout_width="70dp"
-        android:layout_height="80dp"
-        android:scaleType="fitCenter"></com.android.volley.toolbox.NetworkImageView>
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="fitCenter"></ImageView>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-        <RelativeLayout
-            android:id="@+id/layout0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+    <LinearLayout
+        android:id="@+id/communityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/communityImg">
+
         <TextView
             android:id="@+id/commName"
-            android:paddingLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/communityLayout"
+        android:layout_toRightOf="@+id/communityImg">
+
+        <LinearLayout
+            android:id="@+id/imageComponent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
-            android:textSize="25dp"/>
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/post"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/post" />
+
+            <TextView
+                android:id="@+id/noPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/post"
+                android:text="100"
+                android:textSize="10dp" />
+
+            <ImageView
+                android:id="@+id/memberImg"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/noPost"
+                android:src="@drawable/profile_community" />
+
+            <TextView
+                android:id="@+id/noMember"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/memberImg"
+                android:text="10"
+                android:textSize="10dp" />
+        </LinearLayout>
 
         <ImageView
-                android:id="@+id/mem_join"
-                android:layout_alignRight="@+id/commName"
-                android:src="@drawable/check_community"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-             />
-            </RelativeLayout>
+            android:id="@+id/mem_join"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/check" />
+    </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_below="@+id/layout0"
-                    android:id="@+id/layout1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".6"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/post"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/post" />
+    <LinearLayout
+        android:id="@+id/postLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageLayout"
+        android:layout_toRightOf="@+id/communityImg">
 
-                    <TextView
-                        android:layout_toRightOf="@+id/post"
-                        android:text="100"
-                        android:id="@+id/noPost"
-                        android:textSize="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="This is post"
+            android:textSize="15dp" />
 
-                    <ImageView
-                        android:paddingLeft="10dp"
-                        android:layout_toRightOf="@+id/noPost"
-                        android:id="@+id/memberImg"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/profile_community" />
+    </LinearLayout>
 
-                    <TextView
-                        android:text="10"
-                        android:layout_toRightOf="@id/memberImg"
-                        android:id="@+id/noMember"
-                        android:textSize="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </RelativeLayout>
-                <TextView
-                    android:layout_below="@+id/layout1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:textSize="20dp"
-                    android:text="THIS IS FIRST POST........!!!!"
-                    />
-        </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/postLayout"
+        android:background="@drawable/bar1" />
+</RelativeLayout>
 
 
-
-</LinearLayout>

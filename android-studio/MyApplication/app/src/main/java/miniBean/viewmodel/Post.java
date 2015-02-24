@@ -18,6 +18,7 @@ public class Post {
     public boolean hasImage;
     public List<Long> imgs;
     public String cn;
+    public Long cid;
 
     public Long getCid() {
         return cid;
@@ -26,8 +27,6 @@ public class Post {
     public void setCid(Long cid) {
         this.cid = cid;
     }
-
-    public Long cid;
 
     public String getPtl() {
         return ptl;

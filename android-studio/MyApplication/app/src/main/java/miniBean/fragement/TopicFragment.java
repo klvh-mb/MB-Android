@@ -12,25 +12,17 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.CommunityActivity;
-import miniBean.MyApi;
+import miniBean.activity.CommunityActivity;
 import miniBean.R;
-import miniBean.adapter.FeedListAdapter;
 import miniBean.adapter.TopicAdapter;
-import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
-import miniBean.viewmodel.Post;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 public class TopicFragment extends Fragment {
 
     public ListView listView;
     public TopicAdapter topicAdapter;
-    public List<CommunitiesWidgetChildVM> communities =  new ArrayList<CommunitiesWidgetChildVM>();
+    public List<CommunitiesWidgetChildVM> communities = new ArrayList<CommunitiesWidgetChildVM>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,8 +31,7 @@ public class TopicFragment extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.listTopic);
         topicAdapter = new TopicAdapter(getActivity(), this.communities);
         listView.setAdapter(topicAdapter);
-        //topicAdapter.notifyDataSetChanged();
-
+        topicAdapter.notifyDataSetChanged();
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -48,20 +39,18 @@ public class TopicFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                Intent intent=new Intent(getActivity(), CommunityActivity.class);
+                Intent intent = new Intent(getActivity(), CommunityActivity.class);
 
-                String noMember,noPost="100",commId,name;
+                String noPost = "100";
 
                 CommunitiesWidgetChildVM childVM = topicAdapter.getItem(position);
 
-                commId=childVM.getId().toString();
-                noMember=childVM.getMm().toString();
-                name=childVM.getDn();
-
-                intent.putExtra("id",commId);
-                intent.putExtra("noMember",noMember);
-                intent.putExtra("noPost",noPost);
-                intent.putExtra("commName",name);
+                intent.putExtra("id", childVM.getId().toString());
+                intent.putExtra("noMember", childVM.getMm().toString());
+                intent.putExtra("noPost", noPost);
+                intent.putExtra("commName", childVM.getDn());
+                intent.putExtra("icon", childVM.getGi());
+                intent.putExtra("isM", childVM.getIsM());
 
                 startActivity(intent);
 

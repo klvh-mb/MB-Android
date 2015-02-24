@@ -2,13 +2,14 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import miniBean.R;
@@ -58,13 +59,15 @@ public class FeedListAdapter extends BaseAdapter {
         final Post item = feedItems.get(position);
 
 
-        name.setText(item.getCn());
+        name.setText(item.getPtl());
         username.setText(item.getP());
         noComment.setText("20");
 
-        CharSequence time = DateUtils.getRelativeTimeSpanString(item.getT(),
-                System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
-        timeText.setText(time);
+        Date date = new Date(item.getT());
+        String DATE_FORMAT_NOW = "dd-MMM";
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        String stringDate = sdf.format(date);
+        timeText.setText(stringDate);
         return convertView;
     }
 }

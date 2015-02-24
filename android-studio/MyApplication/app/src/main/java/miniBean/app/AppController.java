@@ -1,27 +1,21 @@
 package miniBean.app;
 
 import android.app.Application;
-import android.text.TextUtils;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import miniBean.MyApi;
 import miniBean.R;
-import miniBean.volley.LruBitmapCache;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
 public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
-    private static AppController mInstance;
-    LruBitmapCache mLruBitmapCache;
-    private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
+    public static ImageLoader mImageLoader;
     public static MyApi api;
+    private static AppController mInstance;
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -36,30 +30,13 @@ public class AppController extends Application {
                 .setClient(new OkClient()).build();
 
         api = restAdapter.create(MyApi.class);
-    }
+        System.out.println(" :::::::::::::::::::::::::::::::::::::::::::::::::::::::: ");
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
+                .cacheOnDisk(true).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(defaultOptions).build();
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config); //
+        mImageLoader = ImageLoader.getInstance();
 
-    public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        }
-
-        return mRequestQueue;
-    }
-
-    public ImageLoader getImageLoader() {
-        getRequestQueue();
-        if (mImageLoader == null) {
-            getLruBitmapCache();
-            mImageLoader = new ImageLoader(this.mRequestQueue, mLruBitmapCache);
-        }
-
-        return this.mImageLoader;
-    }
-
-    public LruBitmapCache getLruBitmapCache() {
-        if (mLruBitmapCache == null)
-            mLruBitmapCache = new LruBitmapCache();
-        return this.mLruBitmapCache;
     }
 
 }

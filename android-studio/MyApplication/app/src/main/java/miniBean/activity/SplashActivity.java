@@ -1,4 +1,4 @@
-package miniBean;
+package miniBean.activity;
 
 /**
  * Created by MNT on 09-Feb-15.
@@ -12,9 +12,9 @@ import android.os.Handler;
 
 import java.util.List;
 
+import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
-import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -29,7 +29,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.splash);
+        setContentView(R.layout.splash_activity);
 
         session = getSharedPreferences("prefs", 0);
         LocalCache.categoryMapList.add(new CommunityCategoryMapVM("My Comm"));
@@ -58,7 +58,6 @@ public class SplashActivity extends Activity {
 
             }
         });
-
 
 
     }
