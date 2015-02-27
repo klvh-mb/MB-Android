@@ -8,55 +8,68 @@
 
     <RelativeLayout
         android:id="@+id/viewComponent"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp">
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp">
 
             <ImageView
                 android:id="@+id/cancelButton"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/check" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/close" />
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:id="@+id/imageButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/check" />
+                android:src="@drawable/browse" />
 
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/check" />
 
         </LinearLayout>
 
         <Button
+
             android:id="@+id/postButton"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
-            android:text="Post" />
+            android:text="Post"
+            android:textSize="9dp" />
+
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/comment"
+    <LinearLayout
+        android:id="@+id/commentComponent"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@+id/viewComponent"
-        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewComponent">
+
+        <EditText
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#ffffff"
+            android:gravity="top|left"
+            android:lines="2" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/postImage"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/commentComponent"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#ffffff"
-        android:textSize="10dp" />
+        android:layout_marginTop="5dp" />
 </RelativeLayout>
 
 

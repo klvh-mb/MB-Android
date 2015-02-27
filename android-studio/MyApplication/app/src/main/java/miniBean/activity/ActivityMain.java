@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import miniBean.R;
 import miniBean.fragement.MainFragement;
-import miniBean.fragement.ProfileFragment;
+import miniBean.fragement.MyProfileFragment;
 
 
 public class ActivityMain extends FragmentActivity {
@@ -49,7 +49,7 @@ public class ActivityMain extends FragmentActivity {
                 System.out.println("Profile clicked.......");
                 Configuration config = getResources().getConfiguration();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                ProfileFragment profileFragement = new ProfileFragment();
+                MyProfileFragment profileFragement = new MyProfileFragment();
                 fragmentTransaction.replace(R.id.placeHolder, profileFragement).commit();
 
 

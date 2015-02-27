@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -17,10 +18,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.app.MyApi;
 import miniBean.R;
 import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.MyApi;
 import miniBean.viewmodel.Post;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
@@ -71,6 +72,18 @@ public class CommunityActivity extends FragmentActivity {
         listView = (ListView) findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                Post post = feedListAdapter.getItem(position);
+                intent.putExtra("postId", post.getId());
+                intent.putExtra("commId", post.getCid());
+                startActivity(intent);
+            }
+        });
+
         getNewsFeedByCommuityId(Long.parseLong(getIntent().getStringExtra("id")));
         System.out.println("::::::::::::::::::::::::::::::::::::: boolean  " + getIntent().getBooleanExtra("isM", false));
         if (getIntent().getBooleanExtra("isM", false))
@@ -110,10 +123,11 @@ public class CommunityActivity extends FragmentActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             sendJoinRequest(Long.parseLong(getIntent().getStringExtra("id")));
-                            if (statusCode == 200) {
-                                Toast.makeText(CommunityActivity.this, "Request Send", Toast.LENGTH_LONG).show();
-                                imageView.setImageResource(R.drawable.add);
-                            }
+
+                            Toast.makeText(getApplicationContext(), "Community Joined", Toast.LENGTH_LONG).show();
+                            ImageView image = (ImageView) findViewById(R.id.join_community);
+                            image.setImageResource(R.drawable.add);
+
                         }
                     });
 
@@ -133,11 +147,12 @@ public class CommunityActivity extends FragmentActivity {
                     alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                             leaveCommunity(Long.parseLong(getIntent().getStringExtra("id")));
-                            if (statusCode == 0) {
-                                imageView.setImageResource(R.drawable.request_send);
-                            }
+
+                            Toast.makeText(getApplicationContext(), "Community left", Toast.LENGTH_LONG).show();
+                            ImageView image = (ImageView) findViewById(R.id.join_community);
+                            image.setImageResource(R.drawable.check);
+
                         }
                     });
 
@@ -184,7 +199,6 @@ public class CommunityActivity extends FragmentActivity {
         AppController.api.sendJoinRequest(id, session.getString("sessionID", null), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                int statusCode = response.getStatus();
             }
 
             @Override

@@ -12,9 +12,9 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.app.MyApi;
 import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
+import miniBean.app.MyApi;
 import miniBean.viewmodel.Comment;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;

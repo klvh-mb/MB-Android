@@ -3,7 +3,8 @@
     android:id="@+id/mainMenu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:foreground="#01000000">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -88,13 +89,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/QuestionPanel"
-            android:layout_marginBottom="45dp">
+            android:layout_marginBottom="80dp">
 
             <ListView
                 android:id="@+id/detail_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></ListView>
         </RelativeLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="40dp"
+            android:indeterminate="false"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:progressDrawable="@drawable/custom_seekbar" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -114,7 +127,7 @@
                 android:drawablePadding="8dp"
                 android:singleLine="true"></Button>
 
-            <EditText
+            <TextView
                 android:id="@+id/commentBody"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
@@ -123,11 +136,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="70"
-                android:editable="false"
                 android:background="@drawable/edit_text"
                 android:drawableLeft="@drawable/comm">
 
-            </EditText>
+            </TextView>
         </LinearLayout>
     </RelativeLayout>
 

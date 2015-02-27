@@ -37,8 +37,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import miniBean.app.MyApi;
 import miniBean.R;
+import miniBean.app.MyApi;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

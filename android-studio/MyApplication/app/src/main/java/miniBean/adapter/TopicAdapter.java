@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import miniBean.app.MyApi;
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.MyApi;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -81,8 +81,11 @@ public class TopicAdapter extends BaseAdapter {
 
         AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
 
-        if (item.getIsM())
+        if (item.getIsM()) {
             imageAction.setImageResource(R.drawable.add);
+        } else {
+            imageAction.setImageResource(R.drawable.check);
+        }
 
 
         imageAction.setOnClickListener(new View.OnClickListener() {
@@ -97,13 +100,13 @@ public class TopicAdapter extends BaseAdapter {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             sendJoinRequest(item.getId());
-                            if (statusCode == 200) {
-                                Toast.makeText(inflater.getContext(), "Request Send", Toast.LENGTH_LONG).show();
-                                item.setIsM(false);
-                                ImageView changeImage = (ImageView) v.findViewById(R.id.mem_join);
-                                changeImage.setImageResource(R.drawable.add);
-                            }
+
+                            Toast.makeText(inflater.getContext(), "Community Joined", Toast.LENGTH_LONG).show();
+                            item.setIsM(true);
+                            ImageView image = (ImageView) v.findViewById(R.id.mem_join);
+                            image.setImageResource(R.drawable.add);
                         }
+
                     });
 
                     alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -124,11 +127,11 @@ public class TopicAdapter extends BaseAdapter {
                         public void onClick(DialogInterface dialog, int which) {
 
                             leaveCommunity(item.getId());
-                            if (statusCode == 0) {
-                                item.setIsM(true);
-                                ImageView changeImage = (ImageView) v.findViewById(R.id.mem_join);
-                                changeImage.setImageResource(R.drawable.add);
-                            }
+                            Toast.makeText(inflater.getContext(), "Community Left", Toast.LENGTH_LONG).show();
+
+                            item.setIsM(false);
+                            ImageView image = (ImageView) v.findViewById(R.id.mem_join);
+                            image.setImageResource(R.drawable.check);
                         }
                     });
                     alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -139,10 +142,7 @@ public class TopicAdapter extends BaseAdapter {
                     });
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
-
                 }
-
-
             }
         });
 

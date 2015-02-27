@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFF4"
+    android:paddingTop="10dp"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/listRequest"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="#EFEFF4"
+        android:dividerHeight="10dp" />
+
+
+</RelativeLayout>

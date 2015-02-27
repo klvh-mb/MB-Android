@@ -14,10 +14,11 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.activity.CommunityActivity;
-import miniBean.app.MyApi;
 import miniBean.R;
+import miniBean.activity.CommunityActivity;
 import miniBean.adapter.CommunityListAdapter;
+import miniBean.app.LocalCache;
+import miniBean.app.MyApi;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
@@ -84,7 +85,13 @@ public class CommunityFragment extends Fragment {
 
 
         System.out.println("Before getCommunity");
-        getCommunity();
+        if (LocalCache.getCommunitiesParentVM() != null) {
+            communityItems.addAll(LocalCache.getCommunitiesParentVM().getCommunities());
+            listAdapter.notifyDataSetChanged();
+            progressBarComm.setVisibility(View.GONE);
+        } else {
+            getCommunity();
+        }
         System.out.println("After getCommunity");
         return view;
     }
@@ -94,6 +101,7 @@ public class CommunityFragment extends Fragment {
         api.getMyCommunities(session.getString("sessionID", null), new Callback<CommunitiesParentVM>() {
             @Override
             public void success(CommunitiesParentVM array, retrofit.client.Response response) {
+                LocalCache.setCommunitiesParentVM(array);
                 communityItems.addAll(array.getCommunities());
                 listAdapter.notifyDataSetChanged();
                 progressBarComm.setVisibility(View.GONE);

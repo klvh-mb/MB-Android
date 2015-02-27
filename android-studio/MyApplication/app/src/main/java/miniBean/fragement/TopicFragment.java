@@ -12,8 +12,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.activity.CommunityActivity;
 import miniBean.R;
+import miniBean.activity.CommunityActivity;
 import miniBean.adapter.TopicAdapter;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 

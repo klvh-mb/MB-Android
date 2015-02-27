@@ -14,11 +14,11 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.activity.DetailActivity;
 import miniBean.Listener.InfiniteScrollListener;
-import miniBean.app.MyApi;
 import miniBean.R;
+import miniBean.activity.DetailActivity;
 import miniBean.adapter.FeedListAdapter;
+import miniBean.app.MyApi;
 import miniBean.viewmodel.Post;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
@@ -70,8 +70,7 @@ public class NewsFeedFragement extends Fragment {
                 startActivity(intent);
             }
         });
-        listView.setOnScrollListener(new InfiniteScrollListener(5) {
-
+        listView.setOnScrollListener(new InfiniteScrollListener(15) {
             @Override
             public void loadMore(int page, int totalItemsCount) {
                 getNewsFeed(page - 1);
