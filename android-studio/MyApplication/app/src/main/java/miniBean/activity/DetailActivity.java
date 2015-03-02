@@ -153,31 +153,25 @@ public class DetailActivity extends FragmentActivity {
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
-        api.qnaLanding(postID, commID, new Callback<PostArray>() {
+        api.qnaLanding(postID, commID, new Callback<Post>() {
             @Override
-            public void success(PostArray array, retrofit.client.Response response) {
-                if (array.getPosts().size() != 0) {
+            public void success(Post post, retrofit.client.Response response) {
+                questionText.setText(post.getPtl());
 
-                    Post post = array.getPosts().get(0);
-                    questionText.setText(post.getPtl());
-
-                    Comment comment = new Comment();
-                    comment.setOn(post.getP());
-                    comment.setCd(post.getT());
-                    comment.setD(post.getPt());
-                    comment.setOid(post.getOid());
-                    communityItems.add(comment);
-                    communityItems.addAll(post.getCs());
-                }
+                Comment comment = new Comment();
+                comment.setOn(post.getP());
+                comment.setCd(post.getT());
+                comment.setD(post.getPt());
+                comment.setOid(post.getOid());
+                communityItems.add(comment);
+                communityItems.addAll(post.getCs());
 
                 listAdapter.notifyDataSetChanged();
-
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors
-
             }
         });
     }

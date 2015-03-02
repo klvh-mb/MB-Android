@@ -8,6 +8,7 @@ import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.HeaderDataVM;
+import miniBean.viewmodel.Post;
 import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -43,7 +44,7 @@ public interface MyApi {
     public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, Callback<List<CommunityCategoryMapVM>> callback);
 
     @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
-    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, Callback<PostArray> callback);
+    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, Callback<Post> callback);
 
     @GET("/community/join/{id}") //a function in your api send join request to Community
     public void sendJoinRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
