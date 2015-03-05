@@ -2,28 +2,52 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.ActivityMain;
+import miniBean.activity.DetailActivity;
+import miniBean.activity.ProfileActivity;
 import miniBean.app.AppController;
 import miniBean.viewmodel.Comment;
+import miniBean.viewmodel.CommunityPostCommentVM;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class DetailListAdapter extends BaseAdapter {
     TextView ownerName, commentText, commentTime, commentLocation, postTime;
-    private Activity activity;
+    public Activity activity;
     private LayoutInflater inflater;
-    private List<Comment> communityItems;
-
-    public DetailListAdapter(Activity activity, List<Comment> communityItems) {
+    public SharedPreferences session = null;
+    private List<CommunityPostCommentVM> communityItems;
+    boolean likeFlag;
+    LinearLayout linearLayout;
+    ImageView like;
+    TextView likeText,totalLike;
+    public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> communityItems) {
         this.activity = activity;
         this.communityItems = communityItems;
     }
@@ -34,7 +58,7 @@ public class DetailListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Comment getItem(int location) {
+    public CommunityPostCommentVM getItem(int location) {
         return communityItems.get(location);
     }
 
@@ -51,29 +75,178 @@ public class DetailListAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
             convertView = inflater.inflate(R.layout.detail_item, null);
-
+        session = activity.getSharedPreferences("prefs", 0);
         ownerName = (TextView) convertView.findViewById(R.id.postedBy);
-        postTime = (TextView) convertView.findViewById(R.id.postedOn);
+       // postTime = (TextView) convertView.findViewById(R.id.postedOn);
         commentText = (TextView) convertView.findViewById(R.id.commentText);
         commentTime = (TextView) convertView.findViewById(R.id.timeText);
-        commentLocation = (TextView) convertView.findViewById(R.id.locationText);
+       // commentLocation = (TextView) convertView.findViewById(R.id.locationText);
         ImageView userPic = (ImageView) convertView.findViewById(R.id.questionnare_img);
+        like= (ImageView) convertView.findViewById(R.id.likeImage);
+        likeText= (TextView) convertView.findViewById(R.id.TextLike);
+        linearLayout= (LinearLayout) convertView.findViewById(R.id.likeComponent);
+        totalLike= (TextView) convertView.findViewById(R.id.TotalLike);
 
-        final Comment item = communityItems.get(position);
+        final CommunityPostCommentVM item = communityItems.get(position);
 
+        if(!item.isLike())
+        {
+            like.setImageResource(R.drawable.like);
+            likeText.setText("Like");
+            likeText.setTextColor(Color.BLACK);
+        }else
+        {
+            like.setImageResource(R.drawable.liked);
+            likeText.setText("Unlike");
+            likeText.setTextColor(Color.BLUE);
+        }
+        if(item.getNol()==0) {
+            totalLike.setText("");
+        }else {
+            totalLike.setText(item.getNol()+"");
+        }
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likeText= (TextView) v.findViewById(R.id.TextLike);
+                like= (ImageView) v.findViewById(R.id.likeImage);
+                totalLike= (TextView) v.findViewById(R.id.TotalLike);
+                if(item.isLike()==true)
+                {
+                    if(item.isPost()){
+                        unLikePost(item.getId());
+                    } else {
+                        unLikeComment(item.getId());
+                    }
+                    likeText.setText("Like");
+                    likeText.setTextColor(Color.BLACK);
+                    like.setImageResource(R.drawable.like);
+                    int total=item.getNol()-1;
+                    item.setNol(total);
+                    totalLike.setText(total+"");
+                    item.setLike(false);
+                } else {
+                    if(item.isPost()){
+                        likePost(item.getId());
+                    } else {
+                        likeComment(item.getId());
+                    }
+                    likeText.setText("Unlike");
+                    likeText.setTextColor(Color.BLUE);
+                    like.setImageResource(R.drawable.liked);
+                    int total=item.getNol()+1;
+                    item.setNol(total);
+                    totalLike.setText(total+"");
+                    item.setLike(true);
+                }
+            }
+        });
 
-        commentText.setText(item.getD());
+        //txtTest. setMovementMethod(LinkMovementMethod.getInstance(item.getD()));
+        commentText.setText(Html.fromHtml(item.getD()));
 
         ownerName.setText(item.getOn());
+
+        ownerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity, ProfileActivity.class);
+                i.putExtra("id",item.getOid().toString());
+                i.putExtra("name",item.getOn());
+                activity.startActivity(i);
+            }
+        });
 
         Date date = new Date(item.getCd());
         String DATE_FORMAT_NOW = "dd-MMM";
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
         String stringDate = sdf.format(date);
         commentTime.setText(stringDate);
-        postTime.setText(stringDate);
+        //postTime.setText(stringDate);
 
-        AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getOid(), userPic);
-        return convertView;
+        int rounded_value = 120;
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
+
+        ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/"+ item.getOid(), userPic,options);
+
+
+       /* AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getOid(), userPic,new SimpleImageLoadingListener(){
+            public void onLoadingStarted(String imageUri, View view) {
+                spinner.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                spinner.setVisibility(View.GONE);
+            }
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                spinner.setVisibility(View.GONE);
+            }
+        });
+       */ return convertView;
+    }
+
+    void likeComment(Long id)
+    {
+        AppController.api.setLikeComment(id, session.getString("sessionID", null), new Callback<Response>() {
+
+            @Override
+            public void success(Response response, Response response2) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+    void unLikeComment(Long id)
+    {
+        AppController.api.setUnLikeComment(id, session.getString("sessionID", null), new Callback<Response>() {
+
+            @Override
+            public void success(Response response, Response response2) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    void likePost(Long id)
+    {
+        AppController.api.setLikePost(id, session.getString("sessionID", null), new Callback<Response>() {
+
+            @Override
+            public void success(Response response, Response response2) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+    void unLikePost(Long id)
+    {
+        AppController.api.setUnLikePost(id, session.getString("sessionID", null), new Callback<Response>() {
+
+            @Override
+            public void success(Response response, Response response2) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
     }
 }

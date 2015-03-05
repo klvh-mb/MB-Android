@@ -7,6 +7,8 @@
     tools:context=".MainActivity">
 
     <ListView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/listComm"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

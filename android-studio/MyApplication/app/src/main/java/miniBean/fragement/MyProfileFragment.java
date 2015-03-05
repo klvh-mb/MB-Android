@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -32,7 +33,7 @@ public class MyProfileFragment extends Fragment {
     public List<NotificationVM> requestNotif, notifAll;
     public MyApi api;
     public SharedPreferences session = null;
-    ImageView request, notification;
+    ImageView request, notification,setting,back;
     Gson gson = new Gson();
     View actionBarView;
     BadgeView notifyBadge, requestBadge;
@@ -46,15 +47,21 @@ public class MyProfileFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        actionBarView = inflater.inflate(R.layout.profile_actionbar, null);
+        actionBarView = inflater.inflate(R.layout.profile_actionbar,null);
 
         request = (ImageView) actionBarView.findViewById(R.id.bookmarkedtAction);
 
         notification = (ImageView) actionBarView.findViewById(R.id.moreAction);
 
+        setting= (ImageView) actionBarView.findViewById(R.id.setting);
+
+        back= (ImageView) actionBarView.findViewById(R.id.backAction);
+        back.setVisibility(View.INVISIBLE);
         ((ActivityMain) getActivity()).getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
-        ((ActivityMain) getActivity()).getActionBar().setCustomView(actionBarView);
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT ,ActionBar.LayoutParams.MATCH_PARENT);
+
+        ((ActivityMain) getActivity()).getActionBar().setCustomView(actionBarView,lp);
 
         AppController.api.getHeaderBaeData(session.getString("sessionID", null), new Callback<HeaderDataVM>() {
             @Override
@@ -86,8 +93,9 @@ public class MyProfileFragment extends Fragment {
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                back.setVisibility(View.INVISIBLE);
+                setting.setVisibility(View.INVISIBLE);
                 ((TextView) actionBarView.findViewById(R.id.titleAction)).setText("Request");
-
                 Fragment requestFragment = new RequestFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("requestNotif", gson.toJson(requestNotif));
@@ -100,6 +108,8 @@ public class MyProfileFragment extends Fragment {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                back.setVisibility(View.INVISIBLE);
+                setting.setVisibility(View.INVISIBLE);
                 ((TextView) actionBarView.findViewById(R.id.titleAction)).setText("Notification");
                 Fragment notificactionFragment = new NotificationFragment();
                 Bundle bundle = new Bundle();
@@ -107,6 +117,19 @@ public class MyProfileFragment extends Fragment {
                 notificactionFragment.setArguments(bundle);
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, notificactionFragment).commit();
+            }
+        });
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                request.setVisibility(View.INVISIBLE);
+                notification.setVisibility(View.INVISIBLE);
+                setting.setVisibility(View.INVISIBLE);
+                ((TextView) actionBarView.findViewById(R.id.titleAction)).setText("Settings");
+                Fragment settingFragment = new LogoutFragment();
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.replace(R.id.children_fragement, settingFragment).commit();
+
             }
         });
     }

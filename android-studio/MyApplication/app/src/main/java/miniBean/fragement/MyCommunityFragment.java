@@ -45,6 +45,7 @@ public class MyCommunityFragment extends Fragment {
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                     transaction.replace(R.id.children_fragement, communityFragment).commit();
                     buttonBool = false;
+                    progressbar.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -63,6 +64,8 @@ public class MyCommunityFragment extends Fragment {
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                     transaction.replace(R.id.children_fragement, newsFeedFragement).commit();
                     buttonBool = true;
+                    progressbar.setVisibility(View.INVISIBLE);
+
                 }
             }
 

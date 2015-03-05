@@ -2,12 +2,17 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +23,7 @@ import miniBean.app.AppController;
 import miniBean.viewmodel.NotificationVM;
 
 public class NotificationListAdapter extends BaseAdapter {
+    ProgressBar spinner;
     ImageView userPhoto;
     TextView username, message, date;
     private Activity activity;
@@ -59,6 +65,7 @@ public class NotificationListAdapter extends BaseAdapter {
         username = (TextView) convertView.findViewById(R.id.postedBy);
         message = (TextView) convertView.findViewById(R.id.notificationMessage);
         date = (TextView) convertView.findViewById(R.id.notificationTime);
+        spinner= (ProgressBar) convertView.findViewById(R.id.imageLoader);
 
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
         AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(), userPhoto);

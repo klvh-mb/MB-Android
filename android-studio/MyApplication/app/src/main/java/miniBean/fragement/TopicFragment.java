@@ -54,9 +54,11 @@ public class TopicFragment extends Fragment {
 
                 startActivity(intent);
 
+                // getFragmentManager().beginTransaction().remove(TopicFragment.this).commit();
 
             }
         });
+
         return rootView;
     }
 

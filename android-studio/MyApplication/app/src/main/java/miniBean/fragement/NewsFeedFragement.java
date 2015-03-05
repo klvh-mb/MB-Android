@@ -19,7 +19,7 @@ import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.FeedListAdapter;
 import miniBean.app.MyApi;
-import miniBean.viewmodel.Post;
+import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -35,7 +35,7 @@ public class NewsFeedFragement extends Fragment {
     ProgressBar progressBarFeed;
     private ListView listView;
     private FeedListAdapter listAdapter;
-    private List<Post> feedItems;
+    private List<CommunityPostVM> feedItems;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class NewsFeedFragement extends Fragment {
         progressBarFeed.setVisibility(View.VISIBLE);
 
 
-        feedItems = new ArrayList<Post>();
+        feedItems = new ArrayList<CommunityPostVM>();
 
 
         listAdapter = new FeedListAdapter(getActivity(), feedItems);
@@ -64,19 +64,30 @@ public class NewsFeedFragement extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                Post post = listAdapter.getItem(position);
+                CommunityPostVM post = listAdapter.getItem(position);
                 intent.putExtra("postId", post.getId());
                 intent.putExtra("commId", post.getCid());
                 startActivity(intent);
             }
         });
-        listView.setOnScrollListener(new InfiniteScrollListener(15) {
+        listView.setOnScrollListener(new InfiniteScrollListener(1) {
             @Override
             public void loadMore(int page, int totalItemsCount) {
+                System.out.println("totalCount::"+totalItemsCount);
+                System.out.println("in loadmore::::::::");
                 getNewsFeed(page - 1);
             }
         });
+        // Set a listener to be invoked when the list should be refreshed.
+               /* listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        // Do work to refresh the list here.
+                        new GetDataTask().execute();
+                    }
+                });*/
         getNewsFeed(0);
+
 
         return view;
     }
@@ -96,6 +107,9 @@ public class NewsFeedFragement extends Fragment {
             }
         });
     }
+
+
+
 
 
 }

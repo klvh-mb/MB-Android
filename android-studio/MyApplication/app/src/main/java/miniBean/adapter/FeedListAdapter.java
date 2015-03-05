@@ -13,14 +13,14 @@ import java.util.Date;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.viewmodel.Post;
+import miniBean.viewmodel.CommunityPostVM;
 
 public class FeedListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<Post> feedItems;
+    private List<CommunityPostVM> feedItems;
 
-    public FeedListAdapter(Activity activity, List<Post> feedItems) {
+    public FeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this.activity = activity;
         this.feedItems = feedItems;
     }
@@ -31,7 +31,7 @@ public class FeedListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Post getItem(int location) {
+    public CommunityPostVM getItem(int location) {
         return feedItems.get(location);
     }
 
@@ -56,12 +56,13 @@ public class FeedListAdapter extends BaseAdapter {
         TextView noComment = (TextView) convertView
                 .findViewById(R.id.commentnoTEXT);
 
-        final Post item = feedItems.get(position);
+        final CommunityPostVM item = feedItems.get(position);
 
 
         name.setText(item.getPtl());
         username.setText(item.getP());
-        noComment.setText("20");
+        System.out.println("nocomment:::::"+item.getN_c());
+        noComment.setText(item.getN_c()+"");
 
         Date date = new Date(item.getT());
         String DATE_FORMAT_NOW = "dd-MMM";

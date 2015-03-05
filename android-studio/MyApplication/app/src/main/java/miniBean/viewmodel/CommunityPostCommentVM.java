@@ -15,7 +15,15 @@ public class CommunityPostCommentVM {
 
     public boolean isO = false;
     public boolean isLike = false;     // filled outside
+    public boolean isPost ;
 
+    public boolean isPost() {
+        return isPost;
+    }
+
+    public void setPost(boolean isPost) {
+        this.isPost = isPost;
+    }
 
     public Long getId() {
         return id;

@@ -7,6 +7,14 @@ public class CommunityCategoryMapVM {
     public long id;
     public String name;
 
+    public List<CommunitiesWidgetChildVM> getCommunities() {
+        return communities;
+    }
+
+    public void setCommunities(List<CommunitiesWidgetChildVM> communities) {
+        this.communities = communities;
+    }
+
     public List<CommunitiesWidgetChildVM> communities;
 
     public CommunityCategoryMapVM() {

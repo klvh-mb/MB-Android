@@ -25,34 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="Details"
+            android:text="Settings"
             android:textColor="#ffffff"
             android:textSize="25dp" />
-
-        <ImageView
-            android:id="@+id/bookmarkedtAction"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/moreAction"
-            android:src="@drawable/bookmark" />
-        <ImageView
-            android:id="@+id/moreAction"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/more" />
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_toRightOf="@+id/moreAction"
-            android:layout_centerInParent="true"
-            android:layout_width="10dp"
-            android:layout_marginRight="60dp"
-            android:layout_height="wrap_content">
-         </Spinner>
 
 
     </RelativeLayout>

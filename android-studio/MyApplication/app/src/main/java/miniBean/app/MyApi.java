@@ -7,8 +7,8 @@ import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
+import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.HeaderDataVM;
-import miniBean.viewmodel.Post;
 import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -44,7 +44,7 @@ public interface MyApi {
     public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, Callback<List<CommunityCategoryMapVM>> callback);
 
     @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
-    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, Callback<Post> callback);
+    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, Callback<CommunityPostVM> callback);
 
     @GET("/community/join/{id}") //a function in your api send join request to Community
     public void sendJoinRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
@@ -86,5 +86,23 @@ public interface MyApi {
     @GET("/ignore-it/{notify_id}") //a function in your api accept invite request to Community
     public void ignoreIt(@Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
 
+    @GET("/bookmark-post/{post_id}")
+    public void getBookmark(@Path("post_id")Long post_id,@Query("key") String key,Callback<Response> cb);
+
+
+    @GET("/unbookmark-post/{post_id}")
+    public void getUnBookmark(@Path("post_id")Long post_id,@Query("key") String key,Callback<Response> cb);
+
+    @GET("/like-comment/{comment_id}")
+    public void setLikeComment(@Path("comment_id")Long comment_id,@Query("key") String key,Callback<Response> cb);
+
+    @GET("/unlike-comment/{comment_id}")
+    public void setUnLikeComment(@Path("comment_id")Long comment_id,@Query("key") String key,Callback<Response> cb);
+
+    @GET("/like-post/{post_id}")
+    public void setLikePost(@Path("post_id")Long post_id ,@Query("key") String key,Callback<Response> cb);
+
+    @GET("/unlike-post/{post_id}")
+    public void setUnLikePost(@Path("post_id")Long post_id ,@Query("key") String key,Callback<Response> cb);
 
 }

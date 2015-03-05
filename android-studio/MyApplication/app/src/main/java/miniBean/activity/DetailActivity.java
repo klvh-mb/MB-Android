@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
@@ -32,11 +33,10 @@ import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.MyApi;
-import miniBean.viewmodel.Comment;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
-import miniBean.viewmodel.Post;
-import miniBean.viewmodel.PostArray;
+import miniBean.viewmodel.CommunityPostCommentVM;
+import miniBean.viewmodel.CommunityPostVM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -51,17 +51,19 @@ public class DetailActivity extends FragmentActivity {
     public SharedPreferences session = null;
     public MyApi api;
     public SeekBar seekBar;
-    ImageView backImage;
+    ImageView backImage,bookmark,moreAction;
     TextView commentEdit;
     ImageView image;
     String selectedImagePath = null;
     Uri selectedImageUri = null;
     private ListView listView;
     private DetailListAdapter listAdapter;
-    private List<Comment> communityItems;
+    private List<CommunityPostCommentVM> communityItems;
     private TextView questionText, userText, postedOnText, postText, locationText, timeText;
     private PopupWindow pw;
-
+    Boolean isBookMarked=false;
+    Spinner dropSpinner;
+    public Boolean isPhoto = false;
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -92,6 +94,7 @@ public class DetailActivity extends FragmentActivity {
         questionText = (TextView) findViewById(R.id.questionText);
         commentEdit = (TextView) findViewById(R.id.commentBody);
 
+
         final int color = 0xFFFF0000;
         final Drawable drawable = new ColorDrawable(color);
 
@@ -107,10 +110,11 @@ public class DetailActivity extends FragmentActivity {
 
             }
         });
-
-
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.detail_actionbar);
+        bookmark= (ImageView) findViewById(R.id.bookmarkedtAction);
+        moreAction= (ImageView) findViewById(R.id.moreAction);
+        dropSpinner= (Spinner) findViewById(R.id.spinner);
         seekBar = (SeekBar) findViewById(R.id.seekBar1);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -132,11 +136,31 @@ public class DetailActivity extends FragmentActivity {
                 // TODO Auto-generated method stub
             }
         });
+        final Long postID = getIntent().getLongExtra("postId", 0L);
+
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isBookMarked) {
+                        getBookmark(postID);
+                        bookmark.setImageResource(R.drawable.bookmarked);
+                        isBookMarked=true;
+                }else{
+                    unGetBookmark(postID);
+                    bookmark.setImageResource(R.drawable.bookmark);
+                    isBookMarked=false;
+                }
+            }
+        });
+
+        moreAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //dropdown();
+            }
+        });
 
         communityItems = new ArrayList<>();
-
-        listAdapter = new DetailListAdapter(this, communityItems);
-        listView.setAdapter(listAdapter);
         backImage = (ImageView) findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,25 +177,31 @@ public class DetailActivity extends FragmentActivity {
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
-        api.qnaLanding(postID, commID, new Callback<Post>() {
+        api.qnaLanding(postID, commID, new Callback<CommunityPostVM>() {
             @Override
-            public void success(Post post, retrofit.client.Response response) {
-                questionText.setText(post.getPtl());
+            public void success(CommunityPostVM post, retrofit.client.Response response) {
 
-                Comment comment = new Comment();
-                comment.setOn(post.getP());
-                comment.setCd(post.getT());
-                comment.setD(post.getPt());
-                comment.setOid(post.getOid());
-                communityItems.add(comment);
-                communityItems.addAll(post.getCs());
+                    questionText.setText(post.getPtl());
 
-                listAdapter.notifyDataSetChanged();
+                    CommunityPostCommentVM comment = new CommunityPostCommentVM();
+                    comment.setPost(true);
+                    comment.setNol(post.getNol());
+                    comment.setId(post.getId());
+                    comment.setOn(post.getP());
+                    comment.setCd(post.getT());
+                    comment.setD(post.getPt());
+                    comment.setOid(post.getOid());
+                    communityItems.add(comment);
+                    communityItems.addAll(post.getCs());
+                listAdapter = new DetailListAdapter(DetailActivity.this, communityItems);
+                listView.setAdapter(listAdapter);
+
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors
+
             }
         });
     }
@@ -198,7 +228,9 @@ public class DetailActivity extends FragmentActivity {
                 @Override
                 public void onClick(View v) {
                     String commentString = commentPost.getText().toString();
-                    answerQuestion(commentString);
+                    
+                    if(!commentString.equals(""))
+                        answerQuestion(commentString);
                 }
             });
             ImageView cancelButton = (ImageView) layout.findViewById(R.id.cancelButton);
@@ -219,6 +251,7 @@ public class DetailActivity extends FragmentActivity {
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+                    isPhoto = true;
 
                 }
             });
@@ -256,7 +289,9 @@ public class DetailActivity extends FragmentActivity {
         api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), session.getString("sessionID", null), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, retrofit.client.Response response) {
-                uploadPhoto(array.getId());
+                if(isPhoto)
+                    uploadPhoto(array.getId());
+                pw.dismiss();
             }
 
             @Override
@@ -285,5 +320,36 @@ public class DetailActivity extends FragmentActivity {
 
 
     }
+
+    public void getBookmark(Long postId)
+    {
+        AppController.api.getBookmark(postId,session.getString("sessionID",null), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                bookmark.setImageResource(R.drawable.bookmarked);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace(); //to see if you have errors
+            }
+        });
+    }
+    public void unGetBookmark(Long postId)
+    {
+        AppController.api.getUnBookmark(postId,session.getString("sessionID",null), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                bookmark.setImageResource(R.drawable.bookmark);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace(); //to see if you have errors
+
+            }
+        });
+    }
+
 }
 

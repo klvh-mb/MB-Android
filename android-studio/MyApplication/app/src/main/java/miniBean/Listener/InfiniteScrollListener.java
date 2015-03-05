@@ -28,7 +28,6 @@ public abstract class InfiniteScrollListener implements OnScrollListener {
                 this.isLoading = true;
             }
         }
-
         if (isLoading && (totalItemCount > itemCount)) {
             isLoading = false;
             itemCount = totalItemCount;

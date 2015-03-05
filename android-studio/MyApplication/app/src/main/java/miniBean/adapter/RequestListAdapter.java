@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class RequestListAdapter extends BaseAdapter {
     ImageView userPhoto;
     Button acceptButton, ignoreButton;
     private Activity activity;
+    ProgressBar spinner;
     private LayoutInflater inflater;
 
 
@@ -65,6 +67,7 @@ public class RequestListAdapter extends BaseAdapter {
         message = (TextView) convertView.findViewById(R.id.requestText);
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
         acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
+        spinner= (ProgressBar) convertView.findViewById(R.id.imageLoader);
         ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
         session = this.activity.getSharedPreferences("prefs", 0);
 

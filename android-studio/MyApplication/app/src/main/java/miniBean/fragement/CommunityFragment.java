@@ -86,6 +86,7 @@ public class CommunityFragment extends Fragment {
 
         System.out.println("Before getCommunity");
         if (LocalCache.getCommunitiesParentVM() != null) {
+            System.out.println("in localcache:::::::::::");
             communityItems.addAll(LocalCache.getCommunitiesParentVM().getCommunities());
             listAdapter.notifyDataSetChanged();
             progressBarComm.setVisibility(View.GONE);
