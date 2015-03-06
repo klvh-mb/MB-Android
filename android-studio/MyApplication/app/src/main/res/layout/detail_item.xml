@@ -22,8 +22,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            ></ImageView>
+            android:layout_marginTop="5dp"></ImageView>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -106,20 +105,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/timeImg"
-                />
+                android:layout_toRightOf="@+id/timeImg" />
+
             <LinearLayout
                 android:id="@+id/likeComponent"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/timeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/likeImage"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_toRightOf="@+id/timeText"
-                android:src="@drawable/like" />
+
+                <ImageView
+                    android:id="@+id/likeImage"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@+id/timeText"
+                    android:src="@drawable/like" />
+
                 <TextView
                     android:id="@+id/TotalLike"
                     android:layout_width="wrap_content"
@@ -127,14 +128,16 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/likeImage"
                     android:textColor="#0000ff" />
-            <TextView
-                android:id="@+id/TextLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/TotalLike"
-                android:textColor="#0000ff" />
+
+                <TextView
+                    android:id="@+id/TextLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/TotalLike"
+                    android:textColor="#0000ff" />
             </LinearLayout>
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"

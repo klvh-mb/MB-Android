@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E0E0D9">
+
     <RelativeLayout
         android:id="@+id/profilePic"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:background="#ffffff">
+
         <ImageView
             android:id="@+id/userCoverPic"
             android:layout_width="match_parent"
@@ -16,20 +18,24 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"></ImageView>
+
         <ProgressBar
             android:id="@+id/imageLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true" />
+
         <RelativeLayout
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true">
+
             <ImageView
                 android:id="@+id/userImage"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="5dp"></ImageView>
+
             <TextView
                 android:id="@+id/usernameText"
                 android:layout_width="wrap_content"
@@ -41,12 +47,14 @@
                 android:textAlignment="center" />
         </RelativeLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profilePic"
         android:background="#ffffff">
+
         <Button
             android:id="@+id/editButton"
             android:layout_width="wrap_content"
@@ -56,6 +64,7 @@
             android:drawableLeft="@drawable/profile"
             android:text="Edit" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
@@ -63,21 +72,25 @@
         android:layout_marginTop="15dp"
         android:background="#ffffff"
         android:orientation="horizontal">
+
         <LinearLayout
             android:id="@+id/menuQuestion"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffff">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
+
                 <ImageView
                     android:id="@+id/questionPic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/profile_posts" />
+
                 <TextView
                     android:id="@+id/questionText"
                     android:layout_width="wrap_content"
@@ -87,6 +100,7 @@
                     android:layout_weight="75"
                     android:text="Questions"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/Edit1"
                     android:layout_width="wrap_content"
@@ -95,6 +109,7 @@
                     android:layout_weight="5"
                     android:text="2"
                     android:textColor="#FF6666" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -102,11 +117,13 @@
                     android:src="@drawable/dropdown_btn" />
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_below="@id/menuQuestion"
             android:background="@drawable/bar1" />
+
         <LinearLayout
             android:id="@+id/menuAnswer"
             android:layout_width="match_parent"
@@ -114,6 +131,7 @@
             android:layout_below="@+id/menuQuestion"
             android:layout_marginTop="2dp"
             android:background="#ffffff">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,6 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/profile_comments" />
+
                 <TextView
                     android:id="@+id/answerText"
                     android:layout_width="wrap_content"
@@ -134,6 +153,7 @@
                     android:layout_weight="75"
                     android:text="Answers"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/Edit2"
                     android:layout_width="wrap_content"
@@ -143,6 +163,7 @@
                     android:editable="false"
                     android:text="2"
                     android:textColor="#FF6666" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -150,11 +171,13 @@
                     android:src="@drawable/dropdown_btn" />
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
             android:layout_below="@id/menuAnswer"
             android:background="@drawable/bar1" />
+
         <LinearLayout
             android:id="@+id/menuBookmarks"
             android:layout_width="match_parent"
@@ -163,16 +186,19 @@
             android:layout_marginTop="2dp"
             android:background="#ffffff"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
+
                 <ImageView
                     android:id="@+id/bookmarksPic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/profile_bookmarks" />
+
                 <TextView
                     android:id="@+id/bookmarksText"
                     android:layout_width="wrap_content"
@@ -181,6 +207,7 @@
                     android:layout_weight="75"
                     android:text="Bookmarks"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/Edit3"
                     android:layout_width="wrap_content"
@@ -189,6 +216,7 @@
                     android:editable="false"
                     android:text="2"
                     android:textColor="#FF6666" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,6 +224,7 @@
                     android:src="@drawable/dropdown_btn" />
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"

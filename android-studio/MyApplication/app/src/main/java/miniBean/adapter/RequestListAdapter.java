@@ -67,7 +67,7 @@ public class RequestListAdapter extends BaseAdapter {
         message = (TextView) convertView.findViewById(R.id.requestText);
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
         acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
-        spinner= (ProgressBar) convertView.findViewById(R.id.imageLoader);
+        spinner = (ProgressBar) convertView.findViewById(R.id.imageLoader);
         ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
         session = this.activity.getSharedPreferences("prefs", 0);
 

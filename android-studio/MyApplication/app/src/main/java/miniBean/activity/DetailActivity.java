@@ -51,7 +51,7 @@ public class DetailActivity extends FragmentActivity {
     public SharedPreferences session = null;
     public MyApi api;
     public SeekBar seekBar;
-    ImageView backImage,bookmark,moreAction;
+    ImageView backImage, bookmark, moreAction;
     TextView commentEdit;
     ImageView image;
     String selectedImagePath = null;
@@ -61,9 +61,10 @@ public class DetailActivity extends FragmentActivity {
     private List<CommunityPostCommentVM> communityItems;
     private TextView questionText, userText, postedOnText, postText, locationText, timeText;
     private PopupWindow pw;
-    Boolean isBookMarked=false;
+    Boolean isBookMarked = false;
     Spinner dropSpinner;
     public Boolean isPhoto = false;
+
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -112,9 +113,9 @@ public class DetailActivity extends FragmentActivity {
         });
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.detail_actionbar);
-        bookmark= (ImageView) findViewById(R.id.bookmarkedtAction);
-        moreAction= (ImageView) findViewById(R.id.moreAction);
-        dropSpinner= (Spinner) findViewById(R.id.spinner);
+        bookmark = (ImageView) findViewById(R.id.bookmarkedtAction);
+        moreAction = (ImageView) findViewById(R.id.moreAction);
+        dropSpinner = (Spinner) findViewById(R.id.spinner);
         seekBar = (SeekBar) findViewById(R.id.seekBar1);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -142,13 +143,13 @@ public class DetailActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 if (!isBookMarked) {
-                        getBookmark(postID);
-                        bookmark.setImageResource(R.drawable.bookmarked);
-                        isBookMarked=true;
-                }else{
+                    getBookmark(postID);
+                    bookmark.setImageResource(R.drawable.bookmarked);
+                    isBookMarked = true;
+                } else {
                     unGetBookmark(postID);
                     bookmark.setImageResource(R.drawable.bookmark);
-                    isBookMarked=false;
+                    isBookMarked = false;
                 }
             }
         });
@@ -181,18 +182,18 @@ public class DetailActivity extends FragmentActivity {
             @Override
             public void success(CommunityPostVM post, retrofit.client.Response response) {
 
-                    questionText.setText(post.getPtl());
+                questionText.setText(post.getPtl());
 
-                    CommunityPostCommentVM comment = new CommunityPostCommentVM();
-                    comment.setPost(true);
-                    comment.setNol(post.getNol());
-                    comment.setId(post.getId());
-                    comment.setOn(post.getP());
-                    comment.setCd(post.getT());
-                    comment.setD(post.getPt());
-                    comment.setOid(post.getOid());
-                    communityItems.add(comment);
-                    communityItems.addAll(post.getCs());
+                CommunityPostCommentVM comment = new CommunityPostCommentVM();
+                comment.setPost(true);
+                comment.setNol(post.getNol());
+                comment.setId(post.getId());
+                comment.setOn(post.getP());
+                comment.setCd(post.getT());
+                comment.setD(post.getPt());
+                comment.setOid(post.getOid());
+                communityItems.add(comment);
+                communityItems.addAll(post.getCs());
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityItems);
                 listView.setAdapter(listAdapter);
 
@@ -228,8 +229,8 @@ public class DetailActivity extends FragmentActivity {
                 @Override
                 public void onClick(View v) {
                     String commentString = commentPost.getText().toString();
-                    
-                    if(!commentString.equals(""))
+
+                    if (!commentString.equals(""))
                         answerQuestion(commentString);
                 }
             });
@@ -289,7 +290,7 @@ public class DetailActivity extends FragmentActivity {
         api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), session.getString("sessionID", null), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, retrofit.client.Response response) {
-                if(isPhoto)
+                if (isPhoto)
                     uploadPhoto(array.getId());
                 pw.dismiss();
             }
@@ -321,9 +322,8 @@ public class DetailActivity extends FragmentActivity {
 
     }
 
-    public void getBookmark(Long postId)
-    {
-        AppController.api.getBookmark(postId,session.getString("sessionID",null), new Callback<Response>() {
+    public void getBookmark(Long postId) {
+        AppController.api.getBookmark(postId, session.getString("sessionID", null), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 bookmark.setImageResource(R.drawable.bookmarked);
@@ -335,9 +335,9 @@ public class DetailActivity extends FragmentActivity {
             }
         });
     }
-    public void unGetBookmark(Long postId)
-    {
-        AppController.api.getUnBookmark(postId,session.getString("sessionID",null), new Callback<Response>() {
+
+    public void unGetBookmark(Long postId) {
+        AppController.api.getUnBookmark(postId, session.getString("sessionID", null), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 bookmark.setImageResource(R.drawable.bookmark);

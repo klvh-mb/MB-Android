@@ -51,7 +51,7 @@ public class ProfileFragment extends Fragment {
         answer = (TextView) view.findViewById(R.id.Edit3);
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
         userPic = (ImageView) view.findViewById(R.id.userImage);
-        spinner= (ProgressBar) view.findViewById(R.id.imageLoader);
+        spinner = (ProgressBar) view.findViewById(R.id.imageLoader);
         getUserInfo();
 
         return view;
@@ -67,7 +67,7 @@ public class ProfileFragment extends Fragment {
                 question.setText("100");
                 bookmarks.setText("100");
 
-                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + user.getId(), userCoverPic,new SimpleImageLoadingListener(){
+                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + user.getId(), userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
@@ -77,6 +77,7 @@ public class ProfileFragment extends Fragment {
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                         spinner.setVisibility(View.GONE);
                     }
+
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         spinner.setVisibility(View.GONE);

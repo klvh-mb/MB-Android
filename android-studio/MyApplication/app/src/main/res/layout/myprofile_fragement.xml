@@ -7,8 +7,7 @@
         android:id="@+id/children_fragement"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/button_layout">
-    </RelativeLayout>
+        android:layout_below="@id/button_layout"></RelativeLayout>
 
 
 </RelativeLayout>

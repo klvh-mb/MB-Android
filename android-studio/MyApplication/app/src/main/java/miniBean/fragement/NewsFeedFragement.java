@@ -73,7 +73,7 @@ public class NewsFeedFragement extends Fragment {
         listView.setOnScrollListener(new InfiniteScrollListener(1) {
             @Override
             public void loadMore(int page, int totalItemsCount) {
-                System.out.println("totalCount::"+totalItemsCount);
+                System.out.println("totalCount::" + totalItemsCount);
                 System.out.println("in loadmore::::::::");
                 getNewsFeed(page - 1);
             }
@@ -107,9 +107,6 @@ public class NewsFeedFragement extends Fragment {
             }
         });
     }
-
-
-
 
 
 }

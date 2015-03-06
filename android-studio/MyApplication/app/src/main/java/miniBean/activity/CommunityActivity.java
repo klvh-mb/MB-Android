@@ -2,7 +2,6 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,10 +15,14 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import miniBean.R;
 import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
@@ -34,6 +37,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
+
 public class CommunityActivity extends FragmentActivity {
     public SharedPreferences session = null;
     public MyApi api;
@@ -41,11 +45,12 @@ public class CommunityActivity extends FragmentActivity {
     ListView listView;
     FeedListAdapter feedListAdapter;
     List<CommunityPostVM> feedItems;
-    ProgressBar progressBar,spinner;
+    ProgressBar progressBar, spinner;
     List<CommunityCategoryMapVM> item;
     List<CommunitiesWidgetChildVM> commItem;
     ImageView imageView, backImage;
-    CommunitiesWidgetChildVM currentCommunity ;
+    CommunitiesWidgetChildVM currentCommunity;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +64,7 @@ public class CommunityActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.community_actionbar);
         backImage = (ImageView) findViewById(R.id.backImage);
-        spinner= (ProgressBar) findViewById(R.id.loadCover);
+        spinner = (ProgressBar) findViewById(R.id.loadCover);
         progressBar = (ProgressBar) findViewById(R.id.progressCommunity);
         progressBar.setVisibility(View.VISIBLE);
         noPost = (TextView) findViewById(R.id.noPostComm);
@@ -71,13 +76,13 @@ public class CommunityActivity extends FragmentActivity {
         listView = (ListView) findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
 
-        for(CommunityCategoryMapVM categoryMapVM : LocalCache.categoryMapList) {
-            if(categoryMapVM.communities != null)
-            for(CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
-                if(vm.getId() == Long.parseLong(getIntent().getStringExtra("id"))){
-                    currentCommunity =  vm;
+        for (CommunityCategoryMapVM categoryMapVM : LocalCache.categoryMapList) {
+            if (categoryMapVM.communities != null)
+                for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
+                    if (vm.getId() == Long.parseLong(getIntent().getStringExtra("id"))) {
+                        currentCommunity = vm;
+                    }
                 }
-            }
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -164,6 +169,7 @@ public class CommunityActivity extends FragmentActivity {
             }
         });
     }
+
     private void getNewsFeedByCommuityId(long id) {
         api.getCommNewsfeed(id, session.getString("sessionID", null), new Callback<PostArray>() {
             @Override
@@ -202,6 +208,7 @@ public class CommunityActivity extends FragmentActivity {
             }
         });
     }
+
     public void sendJoinRequest(Long id) {
         AppController.api.sendJoinRequest(id, session.getString("sessionID", null), new Callback<Response>() {
             @Override
@@ -214,11 +221,13 @@ public class CommunityActivity extends FragmentActivity {
             }
         });
     }
+
     public void leaveCommunity(Long id) {
         AppController.api.sendLeaveRequest(id, session.getString("sessionID", null), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
             }
+
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors

@@ -5,6 +5,7 @@ import java.util.List;
 
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
+
 public class LocalCache {
     public static List<CommunityCategoryMapVM> categoryMapList = new ArrayList<>();
     public static CommunitiesParentVM CommunitiesParentVM;

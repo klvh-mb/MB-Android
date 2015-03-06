@@ -87,22 +87,22 @@ public interface MyApi {
     public void ignoreIt(@Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/bookmark-post/{post_id}")
-    public void getBookmark(@Path("post_id")Long post_id,@Query("key") String key,Callback<Response> cb);
+    public void getBookmark(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
 
     @GET("/unbookmark-post/{post_id}")
-    public void getUnBookmark(@Path("post_id")Long post_id,@Query("key") String key,Callback<Response> cb);
+    public void getUnBookmark(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/like-comment/{comment_id}")
-    public void setLikeComment(@Path("comment_id")Long comment_id,@Query("key") String key,Callback<Response> cb);
+    public void setLikeComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/unlike-comment/{comment_id}")
-    public void setUnLikeComment(@Path("comment_id")Long comment_id,@Query("key") String key,Callback<Response> cb);
+    public void setUnLikeComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/like-post/{post_id}")
-    public void setLikePost(@Path("post_id")Long post_id ,@Query("key") String key,Callback<Response> cb);
+    public void setLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/unlike-post/{post_id}")
-    public void setUnLikePost(@Path("post_id")Long post_id ,@Query("key") String key,Callback<Response> cb);
+    public void setUnLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
 }

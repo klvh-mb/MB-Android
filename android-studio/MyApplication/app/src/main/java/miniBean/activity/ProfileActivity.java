@@ -26,7 +26,7 @@ public class ProfileActivity extends FragmentActivity {
 
     public SharedPreferences session = null;
     public MyApi api;
-    ImageView userCoverPic,userImage;
+    ImageView userCoverPic, userImage;
     TextView name;
     ImageView image;
     String selectedImagePath = null;
@@ -44,14 +44,14 @@ public class ProfileActivity extends FragmentActivity {
         session = getSharedPreferences("prefs", 0);
         api = restAdapter.create(MyApi.class);
 
-        name= (TextView) findViewById(R.id.usernameText);
-        userCoverPic= (ImageView) findViewById(R.id.userCoverPic);
-        userImage= (ImageView) findViewById(R.id.userImage);
-        spinner= (ProgressBar) findViewById(R.id.imageLoader);
+        name = (TextView) findViewById(R.id.usernameText);
+        userCoverPic = (ImageView) findViewById(R.id.userCoverPic);
+        userImage = (ImageView) findViewById(R.id.userImage);
+        spinner = (ProgressBar) findViewById(R.id.imageLoader);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.friend_profile_actionbar);
 
-        AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getIntent().getStringExtra("id"), userCoverPic,new SimpleImageLoadingListener(){
+        AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getIntent().getStringExtra("id"), userCoverPic, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 spinner.setVisibility(View.VISIBLE);
@@ -61,6 +61,7 @@ public class ProfileActivity extends FragmentActivity {
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 spinner.setVisibility(View.GONE);
             }
+
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 spinner.setVisibility(View.GONE);
@@ -69,7 +70,6 @@ public class ProfileActivity extends FragmentActivity {
 
         AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getIntent().getStringExtra("id"), userImage);
         name.setText(getIntent().getStringExtra("name"));
-
 
 
     }

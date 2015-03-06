@@ -61,8 +61,8 @@ public class FeedListAdapter extends BaseAdapter {
 
         name.setText(item.getPtl());
         username.setText(item.getP());
-        System.out.println("nocomment:::::"+item.getN_c());
-        noComment.setText(item.getN_c()+"");
+        System.out.println("nocomment:::::" + item.getN_c());
+        noComment.setText(item.getN_c() + "");
 
         Date date = new Date(item.getT());
         String DATE_FORMAT_NOW = "dd-MMM";

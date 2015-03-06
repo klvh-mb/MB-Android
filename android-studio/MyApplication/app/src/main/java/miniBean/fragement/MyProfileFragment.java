@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -33,7 +32,7 @@ public class MyProfileFragment extends Fragment {
     public List<NotificationVM> requestNotif, notifAll;
     public MyApi api;
     public SharedPreferences session = null;
-    ImageView request, notification,setting,back;
+    ImageView request, notification, setting, back;
     Gson gson = new Gson();
     View actionBarView;
     BadgeView notifyBadge, requestBadge;
@@ -47,21 +46,21 @@ public class MyProfileFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        actionBarView = inflater.inflate(R.layout.profile_actionbar,null);
+        actionBarView = inflater.inflate(R.layout.profile_actionbar, null);
 
         request = (ImageView) actionBarView.findViewById(R.id.bookmarkedtAction);
 
         notification = (ImageView) actionBarView.findViewById(R.id.moreAction);
 
-        setting= (ImageView) actionBarView.findViewById(R.id.setting);
+        setting = (ImageView) actionBarView.findViewById(R.id.setting);
 
-        back= (ImageView) actionBarView.findViewById(R.id.backAction);
+        back = (ImageView) actionBarView.findViewById(R.id.backAction);
         back.setVisibility(View.INVISIBLE);
         ((ActivityMain) getActivity()).getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT ,ActionBar.LayoutParams.MATCH_PARENT);
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
 
-        ((ActivityMain) getActivity()).getActionBar().setCustomView(actionBarView,lp);
+        ((ActivityMain) getActivity()).getActionBar().setCustomView(actionBarView, lp);
 
         AppController.api.getHeaderBaeData(session.getString("sessionID", null), new Callback<HeaderDataVM>() {
             @Override

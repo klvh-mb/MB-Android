@@ -7,25 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import miniBean.R;
-import miniBean.activity.ActivityMain;
 import miniBean.activity.LoginActivity;
-import miniBean.adapter.RequestListAdapter;
 import miniBean.app.MyApi;
-import miniBean.viewmodel.NotificationVM;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -45,7 +31,7 @@ public class LogoutFragment extends Fragment {
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient()).build();
 
-        relativeLayout= (RelativeLayout) view.findViewById(R.id.logout);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.logout);
         api = restAdapter.create(MyApi.class);
 
         relativeLayout.setOnClickListener(new View.OnClickListener() {
