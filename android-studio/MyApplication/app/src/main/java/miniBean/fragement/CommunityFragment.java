@@ -19,6 +19,7 @@ import miniBean.activity.CommunityActivity;
 import miniBean.adapter.CommunityListAdapter;
 import miniBean.app.LocalCache;
 import miniBean.app.MyApi;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
@@ -102,6 +103,7 @@ public class CommunityFragment extends Fragment {
         api.getMyCommunities(session.getString("sessionID", null), new Callback<CommunitiesParentVM>() {
             @Override
             public void success(CommunitiesParentVM array, retrofit.client.Response response) {
+                filterMyCommunities(array);
                 LocalCache.setCommunitiesParentVM(array);
                 communityItems.addAll(array.getCommunities());
                 listAdapter.notifyDataSetChanged();
@@ -117,5 +119,13 @@ public class CommunityFragment extends Fragment {
         });
     }
 
-
+    private void filterMyCommunities(CommunitiesParentVM array) {
+        for (int i = array.communities.size()-1; i > 0; i--) {
+            if (DefaultValues.FILTER_MY_COMM_TYPE.contains(array.communities.get(i).tp) ||
+                    DefaultValues.FILTER_MY_COMM_TARGETING_INFO.contains(array.communities.get(i).tinfo)) {
+                System.out.println("Filtered myCommunity - " + array.communities.get(i).dn);
+                array.communities.remove(i);
+            }
+        }
+    }
 }
