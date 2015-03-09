@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popupElement"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f0f0f0"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/titlePage"
+        android:layout_width="wrap_content"
+        android:text="PAGE TITLLE"
+        android:layout_height="wrap_content" />
+    <ListView
+        android:id="@+id/pageList"
+        android:layout_below="@+id/titlePage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+</RelativeLayout>
+
+

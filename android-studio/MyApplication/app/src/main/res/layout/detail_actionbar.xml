@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="horizontal">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,27 +35,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/moreAction"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/titleAction"
             android:src="@drawable/bookmark" />
-
-        <ImageView
-            android:id="@+id/moreAction"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/more" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_toRightOf="@+id/moreAction"
-            android:layout_centerInParent="true"
-            android:layout_width="10dp"
-            android:layout_marginRight="60dp"
-            android:layout_height="wrap_content"></Spinner>
-
-
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

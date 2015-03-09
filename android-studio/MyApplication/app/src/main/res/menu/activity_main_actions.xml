@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Search / will display always -->
-    <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/back"
-        android:title="" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <!-- Search, should appear as action button -->
+    <item android:id="@+id/a"
+        android:title="Report"
+        />
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/b"
 
-    <!-- Location Found -->
+        android:title="URL"/>
 </menu>

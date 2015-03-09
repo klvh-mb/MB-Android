@@ -3,6 +3,7 @@ package miniBean.fragement;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,9 +61,21 @@ public class MyCommunityFragment extends Fragment {
                     newsfeed.setTextColor(Color.parseColor("#FF6666"));
                     joined.setBackgroundColor(Color.parseColor("#FF8D8D"));
                     joined.setTextColor(Color.WHITE);
+                    /*Bundle bundle=new Bundle();
+                    bundle.putString("key","newsfeed");
                     Fragment newsFeedFragement = new NewsFeedFragement();
+                    newsFeedFragement.setArguments(bundle);
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                    transaction.replace(R.id.children_fragement, newsFeedFragement).commit();
+                    transaction.replace(R.id.children_fragement, newsFeedFragement).commit();*/
+                    Bundle bundle=new Bundle();
+                    bundle.putString("key","feed");
+                    NewsFeedFragement fragment = new NewsFeedFragement();
+                    FragmentManager fragmentManager = getChildFragmentManager();
+                    fragment.setArguments(bundle);
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    //fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.replace(R.id.children_fragement, fragment);
+                    fragmentTransaction.commit();
                     buttonBool = true;
                     progressbar.setVisibility(View.INVISIBLE);
 
@@ -74,3 +87,4 @@ public class MyCommunityFragment extends Fragment {
         return view;
     }
 }
+

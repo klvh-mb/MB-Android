@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -13,8 +14,13 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -27,10 +33,12 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
+import miniBean.adapter.PageListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.MyApi;
 import miniBean.viewmodel.CommentPost;
@@ -50,7 +58,7 @@ public class DetailActivity extends FragmentActivity {
     final Integer SELECT_PICTURE = 1;
     public SharedPreferences session = null;
     public MyApi api;
-    public SeekBar seekBar;
+    public Button PageButton;
     ImageView backImage, bookmark, moreAction;
     TextView commentEdit;
     ImageView image;
@@ -58,9 +66,10 @@ public class DetailActivity extends FragmentActivity {
     Uri selectedImageUri = null;
     private ListView listView;
     private DetailListAdapter listAdapter;
+    private PageListAdapter pageAdapter;
     private List<CommunityPostCommentVM> communityItems;
     private TextView questionText, userText, postedOnText, postText, locationText, timeText;
-    private PopupWindow pw;
+    private PopupWindow pw,pagePop;
     Boolean isBookMarked = false;
     Spinner dropSpinner;
     public Boolean isPhoto = false;
@@ -94,12 +103,7 @@ public class DetailActivity extends FragmentActivity {
         listView = (ListView) findViewById(R.id.detail_list);
         questionText = (TextView) findViewById(R.id.questionText);
         commentEdit = (TextView) findViewById(R.id.commentBody);
-
-
-        final int color = 0xFFFF0000;
-        final Drawable drawable = new ColorDrawable(color);
-
-
+        PageButton = (Button) findViewById(R.id.page);
         final FrameLayout layout_MainMenu;
         layout_MainMenu = (FrameLayout) findViewById(R.id.mainMenu);
 
@@ -111,32 +115,31 @@ public class DetailActivity extends FragmentActivity {
 
             }
         });
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.detail_actionbar);
-        bookmark = (ImageView) findViewById(R.id.bookmarkedtAction);
-        moreAction = (ImageView) findViewById(R.id.moreAction);
-        dropSpinner = (Spinner) findViewById(R.id.spinner);
-        seekBar = (SeekBar) findViewById(R.id.seekBar1);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
+        PageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                // TODO Auto-generated method stub
-                //String.valueOf(progress);
-                //Toast.makeText(getApplicationContext(), String.valueOf(progress), Toast.LENGTH_SHORT).show();
-            }
+            public void onClick(View v) {
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
+                initiatePopup();
             }
         });
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        // getActionBar().setCustomView(R.layout.detail_actionbar,);
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.detail_actionbar, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
+        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A582DA")));
+        // getActionBar().setDisplayHomeAsUpEnabled(true);
+        // getActionBar().setIcon(
+        //       new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        // getActionBar().setTitle("Details");
+        bookmark = (ImageView) findViewById(R.id.bookmarkedtAction);
+        moreAction = (ImageView) findViewById(R.id.moreAction);
+
         final Long postID = getIntent().getLongExtra("postId", 0L);
 
         bookmark.setOnClickListener(new View.OnClickListener() {
@@ -151,13 +154,6 @@ public class DetailActivity extends FragmentActivity {
                     bookmark.setImageResource(R.drawable.bookmark);
                     isBookMarked = false;
                 }
-            }
-        });
-
-        moreAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //dropdown();
             }
         });
 
@@ -315,15 +311,60 @@ public class DetailActivity extends FragmentActivity {
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors
-
             }
         });
 
 
     }
 
+    private void initiatePopup() {
+        try {
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) DetailActivity.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.pagination_popup_window,
+                    (ViewGroup) findViewById(R.id.popupElement));
+            // create a 300px width and 470px height PopupWindow
+            pagePop = new PopupWindow(layout, 450, 700, true);
+            // display the popup in the center
+            pagePop.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+
+            pagePop.setOutsideTouchable(true);
+            pagePop.setFocusable(false);
+            ArrayAdapter<String> listAdapter;
+            ListView list = (ListView) layout.findViewById(R.id.pageList);
+            ArrayList<String> List = new ArrayList<String>();
+
+            for (int i = 0; i < 10; i++) {
+                List.addAll(Arrays.asList("page::" + i));
+            }
+            listAdapter = new ArrayAdapter<String>(this, R.layout.page_item, List);
+            list.setAdapter(listAdapter);
+
+            list.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pagePop.dismiss();
+                }
+            });
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    System.out.println("popupin");
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     public void getBookmark(Long postId) {
-        AppController.api.getBookmark(postId, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.setBookmark(postId, session.getString("sessionID", null), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 bookmark.setImageResource(R.drawable.bookmarked);
@@ -337,7 +378,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     public void unGetBookmark(Long postId) {
-        AppController.api.getUnBookmark(postId, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.setUnBookmark(postId, session.getString("sessionID", null), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 bookmark.setImageResource(R.drawable.bookmark);
@@ -351,5 +392,30 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-}
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.a:
+                System.out.println("Report clicked...");
+                return true;
+            case R.id.b:
+                System.out.println("Url clicked...");
+                return true;
+            default:
+                return false;
+
+        }
+
+    }
+
+}

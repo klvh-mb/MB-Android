@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:background="#E0E0D9">
     <LinearLayout
-        android:id="@+id/placeHolder"
-        android:background="#ffffff"
+        android:id="@+id/placeHolders"
+        android:background="#000000"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

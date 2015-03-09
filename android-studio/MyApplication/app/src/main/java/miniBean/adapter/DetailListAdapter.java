@@ -134,7 +134,7 @@ public class DetailListAdapter extends BaseAdapter {
         });
 
         //txtTest. setMovementMethod(LinkMovementMethod.getInstance(item.getD()));
-        commentText.setText(Html.fromHtml(item.getD()));
+        commentText.setText(item.getD());
 
         ownerName.setText(item.getOn());
 
