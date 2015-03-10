@@ -16,7 +16,9 @@
             android:id="@+id/commName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="this is community name" />
+            android:text="post title"
+            android:textColor="#555"
+            android:textSize="16dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +47,8 @@
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/userpic" />
+                android:layout_toRightOf="@id/userpic"
+                android:textSize="14dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +67,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@id/timepic" />
+                android:layout_toRightOf="@id/timepic"
+                android:textSize="14dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/commentpic"
-                android:textColor="#FF8D8D" />
+                android:textColor="#FF8D8D"
+                android:textSize="14dp" />
         </LinearLayout>
     </LinearLayout>
 

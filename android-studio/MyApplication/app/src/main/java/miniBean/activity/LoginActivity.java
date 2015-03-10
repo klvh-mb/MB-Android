@@ -47,7 +47,7 @@ import retrofit.client.Response;
 public class LoginActivity extends FragmentActivity {
 
     // Your Facebook APP ID
-    private static String APP_ID = "827816483951229"; // Replace with your App ID
+    private static String APP_ID = "798543453496777"; // Replace with your App ID
 
     // Instance of Facebook Class
     private Facebook facebook = new Facebook(APP_ID);

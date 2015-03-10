@@ -9,12 +9,12 @@
 
     <ImageView
         android:id="@+id/communityImg"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:scaleType="fitCenter"></ImageView>
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"></ImageView>
 
     <LinearLayout
         android:id="@+id/communityLayout"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:textSize="15dp" />
+            android:textSize="16dp" />
     </LinearLayout>
 
     <RelativeLayout
@@ -45,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/post"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:src="@drawable/post" />
 
             <TextView
@@ -56,12 +56,13 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/post"
                 android:text="100"
-                android:textSize="10dp" />
+                android:textSize="14dp"
+                android:layout_gravity="center_vertical" />
 
             <ImageView
                 android:id="@+id/memberImg"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/noPost"
                 android:src="@drawable/profile_community" />
@@ -73,7 +74,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/memberImg"
                 android:text="10"
-                android:textSize="10dp" />
+                android:textSize="14dp"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
 
         <ImageView

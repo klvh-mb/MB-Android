@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:background="#EFEFF4"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_alignParentStart="false">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,30 +42,32 @@
 
                 <ImageView
                     android:layout_width="20dp"
-                    android:layout_height="35dp"
+                    android:layout_height="32dp"
                     android:src="@drawable/view" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:text="27"
                     android:textColor="#AAAAAA"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp" />
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="20dp"
                     android:src="@drawable/profile_comments" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:text="4"
                     android:textColor="#AAAAAA"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:layout_marginTop="7dp" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -84,7 +87,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="#333" />
         </LinearLayout>
 
         <RelativeLayout
@@ -92,19 +96,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/QuestionPanel"
-            android:layout_marginBottom="80dp">
+            android:layout_marginBottom="50dp">
 
             <ListView
                 android:id="@+id/detail_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ListView>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"></ListView>
         </RelativeLayout>
 
 
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="#d3d6db"
             android:orientation="horizontal">
@@ -112,25 +119,24 @@
             <Button
                 android:id="@+id/page"
                 android:layout_width="45dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="fill_parent"
                 android:layout_weight="10"
                 android:background="@drawable/bg_parent_rounded_corner"
                 android:drawablePadding="8dp"
-                android:singleLine="true"></Button>
+                android:singleLine="true"
+                android:layout_margin="5dp"></Button>
 
             <TextView
                 android:id="@+id/commentBody"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="fill_parent"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="70"
                 android:background="@drawable/edit_text"
-                android:drawableLeft="@drawable/comm">
+                android:drawableLeft="@drawable/comm"
+                android:layout_marginRight="5dp">
 
             </TextView>
         </LinearLayout>

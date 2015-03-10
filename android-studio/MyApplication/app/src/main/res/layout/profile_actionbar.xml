@@ -12,12 +12,13 @@
 
         <ImageView
             android:id="@+id/backAction"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
             android:layout_marginLeft="25dp"
             android:src="@drawable/back"
             android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:layout_alignParentStart="false" />
 
         <TextView
             android:id="@+id/titleAction"
@@ -34,28 +35,29 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/titleAction"
-            android:layout_marginLeft="25dp"
-            android:src="@drawable/w_profile" />
+            android:layout_marginLeft="35dp"
+            android:src="@drawable/w_profile"
+            android:layout_toLeftOf="@+id/moreAction" />
 
         <ImageView
             android:id="@+id/moreAction"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/bookmarkedtAction"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/w_notification" />
+            android:src="@drawable/w_notification"
+            android:layout_toLeftOf="@+id/setting" />
 
         <ImageView
             android:id="@+id/setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/moreAction"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/w_setup" />
+            android:src="@drawable/w_setup"
+            android:layout_alignParentEnd="false"
+            android:layout_marginRight="10dp" />
 
 
     </RelativeLayout>

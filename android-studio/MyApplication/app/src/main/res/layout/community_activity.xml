@@ -46,7 +46,9 @@
                 android:shadowDx="3"
                 android:shadowDy="3"
                 android:shadowRadius="6"
-                android:textSize="20dp" />
+                android:textSize="24dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp" />
         </RelativeLayout>
     </RelativeLayout>
 
