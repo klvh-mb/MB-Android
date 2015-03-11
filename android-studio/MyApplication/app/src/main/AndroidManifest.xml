@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name="miniBean.app.AppController"
@@ -46,6 +46,12 @@
         <activity
             android:name=".activity.NewsfeedActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name="org.acra.CrashReportDialog"
+            android:theme="@android:style/Theme.Dialog"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true" />
     </application>
 
 </manifest>
