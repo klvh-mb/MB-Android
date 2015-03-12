@@ -116,30 +116,35 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/timeText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner_like"
+                android:layout_centerInParent="true">
 
                 <ImageView
                     android:id="@+id/likeImage"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_toRightOf="@+id/timeText"
                     android:src="@drawable/like" />
-
-                <TextView
-                    android:id="@+id/TotalLike"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/likeImage"
-                    android:textColor="#0000ff" />
 
                 <TextView
                     android:id="@+id/TextLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/TotalLike"
-                    android:textColor="#0000ff" />
+                    android:textColor="#777"
+                    android:layout_marginRight="3dp"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/TotalLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/likeImage"
+                    android:textColor="#aaa"
+                    android:textSize="13dp" />
+
             </LinearLayout>
 
         </RelativeLayout>

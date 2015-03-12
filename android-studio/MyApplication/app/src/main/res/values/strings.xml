@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="crash_toast_text">miniBean crashed but a report will be sent to us to follow up</string>
-    <string name="crash_dialog_title">miniBean has crashed</string>
-    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data</string>
-    <string name="crash_dialog_comment_prompt">Press OK to send crash report</string>
-    <string name="crash_dialog_ok_toast">Thank you !</string>
+    <!-- Crash report -->
+    <string name="crash_toast_text">對不起！miniBean 小萌豆發生問題要退出</string>
+    <string name="crash_dialog_title">miniBean小萌豆 要退出</string>
+    <string name="crash_dialog_text">對不起! miniBean小萌豆 發生問題要退出，請幫我們修理問題，提供資訊報告給我們</string>
+    <string name="crash_dialog_comment_prompt">按OK寄出 (報告只包括問題資訊)</string>
+    <string name="crash_dialog_ok_toast">謝謝！</string>
 
+    <!-- Settings -->
     <string name="app_name">miniBean</string>
     <string name="action_settings">Settings</string>
     <string name="base_url">http://192.168.1.149:9000</string>
     <string name="app_id">798543453496777</string>
     <string name="dimmColor">#01ffffff</string>
+
+    <!-- Main -->
+    <string name="tabset_frontpage">首頁</string>
+    <string name="tabset_communities">社群</string>
+    <string name="tabset_schools">幼稚園</string>
+    <string name="tabset_profile">我</string>
+
+    <!-- Community tab -->
+    <string name="my_community_tab">我的社群</string>
+    <string name="my_community_tab_joined">已加入</string>
+    <string name="my_community_tab_newsfeed">動向</string>
+    <string name="like">讚好</string>
+    <string name="unlike">取消讚好</string>
+
+    <!-- Profile tab -->
+
+    <!-- PN tab -->
+
+    <!-- Dialog -->
+    <string name="exit_app">是否退出 miniBean小萌豆?</string>
+    <string name="yes">是</string>
+    <string name="no">不是</string>
+    <string name="confirm">確定</string>
+    <string name="cancel">取消</string>
 
 </resources>
 

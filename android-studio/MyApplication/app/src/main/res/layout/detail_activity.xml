@@ -29,7 +29,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="My Community"
+                android:text="@string/my_community_tab"
                 android:textColor="#AAAAAA"
                 android:textSize="15dp" />
 

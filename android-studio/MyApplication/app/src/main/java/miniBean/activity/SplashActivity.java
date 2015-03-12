@@ -32,7 +32,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.splash_activity);
 
         session = getSharedPreferences("prefs", 0);
-        LocalCache.categoryMapList.add(new CommunityCategoryMapVM("My Comm"));
+        LocalCache.categoryMapList.add(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
 
         AppController.api.getSocialCommunityCategoriesMap(false, new Callback<List<CommunityCategoryMapVM>>() {
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,16 +84,12 @@ public class DetailListAdapter extends BaseAdapter {
 
         if (!item.isLike()) {
             like.setImageResource(R.drawable.like);
-            likeText.setText("Like");
-            likeText.setTextColor(Color.BLACK);
+            likeText.setText(activity.getString(R.string.like));
         } else {
             like.setImageResource(R.drawable.liked);
-            likeText.setText("Unlike");
-            likeText.setTextColor(Color.BLUE);
+            likeText.setText(activity.getString(R.string.like));
         }
-        if (item.getNol() == 0) {
-            totalLike.setText("");
-        } else {
+        if (item.getNol() >= 0) {
             totalLike.setText(item.getNol() + "");
         }
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +104,7 @@ public class DetailListAdapter extends BaseAdapter {
                     } else {
                         unLikeComment(item.getId());
                     }
-                    likeText.setText("Like");
-                    likeText.setTextColor(Color.BLACK);
+                    likeText.setText(activity.getString(R.string.like));
                     like.setImageResource(R.drawable.like);
                     int total = item.getNol() - 1;
                     item.setNol(total);
@@ -122,8 +116,7 @@ public class DetailListAdapter extends BaseAdapter {
                     } else {
                         likeComment(item.getId());
                     }
-                    likeText.setText("Unlike");
-                    likeText.setTextColor(Color.BLUE);
+                    likeText.setText(activity.getString(R.string.like));
                     like.setImageResource(R.drawable.liked);
                     int total = item.getNol() + 1;
                     item.setNol(total);

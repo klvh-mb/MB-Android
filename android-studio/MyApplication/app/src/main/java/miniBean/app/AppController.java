@@ -69,5 +69,4 @@ public class AppController extends Application {
 
         ACRA.init(this);
     }
-
 }

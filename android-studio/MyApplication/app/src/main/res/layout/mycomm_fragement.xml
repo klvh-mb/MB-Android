@@ -25,7 +25,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
                 android:background="#ffffff"
-                android:text="Joined"
+                android:text="@string/my_community_tab_joined"
                 android:textColor="#FF6666" />
 
             <Button
@@ -38,7 +38,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/button1"
                 android:background="#FF8D8D"
-                android:text="Newsfeed"
+                android:text="@string/my_community_tab_newsfeed"
                 android:textColor="#FFFFFF" />
         </RelativeLayout>
         '
@@ -58,6 +58,5 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal" />
     </RelativeLayout>
-
 
 </RelativeLayout>
