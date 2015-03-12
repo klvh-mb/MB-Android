@@ -73,6 +73,7 @@ public class DetailActivity extends FragmentActivity {
     Boolean isBookMarked = false;
     Spinner dropSpinner;
     public Boolean isPhoto = false;
+    private TextView communityName, numPostViews, numPostComments;
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
@@ -99,6 +100,9 @@ public class DetailActivity extends FragmentActivity {
         session = getSharedPreferences("prefs", 0);
         api = restAdapter.create(MyApi.class);
 
+        communityName = (TextView) findViewById(R.id.communityName);
+        numPostViews = (TextView) findViewById(R.id.numPostViews);
+        numPostComments = (TextView) findViewById(R.id.numPostComments);
 
         listView = (ListView) findViewById(R.id.detail_list);
         questionText = (TextView) findViewById(R.id.questionText);
@@ -178,6 +182,9 @@ public class DetailActivity extends FragmentActivity {
             @Override
             public void success(CommunityPostVM post, retrofit.client.Response response) {
 
+                communityName.setText(post.getCn());
+                numPostViews.setText(post.getNov() + "");
+                numPostComments.setText(post.getN_c() + "");
                 questionText.setText(post.getPtl());
 
                 CommunityPostCommentVM comment = new CommunityPostCommentVM();

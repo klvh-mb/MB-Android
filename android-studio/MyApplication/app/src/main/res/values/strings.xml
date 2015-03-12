@@ -22,6 +22,7 @@
     <string name="tabset_profile">我</string>
 
     <!-- Community tab -->
+    <string name="from_community">社群:</string>
     <string name="my_community_tab">我的社群</string>
     <string name="my_community_tab_joined">已加入</string>
     <string name="my_community_tab_newsfeed">動向</string>

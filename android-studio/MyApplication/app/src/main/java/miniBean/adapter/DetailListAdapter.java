@@ -30,15 +30,17 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class DetailListAdapter extends BaseAdapter {
-    TextView ownerName, commentText, commentTime, commentLocation, postTime;
-    public Activity activity;
-    private LayoutInflater inflater;
+
     public SharedPreferences session = null;
+
+    private TextView ownerName, commentText, postTime;
+    private Activity activity;
+    private LayoutInflater inflater;
     private List<CommunityPostCommentVM> communityItems;
-    boolean likeFlag;
-    LinearLayout linearLayout;
-    ImageView like;
-    TextView likeText, totalLike;
+    private boolean likeFlag;
+    private LinearLayout linearLayout;
+    private ImageView like;
+    private TextView likeText, totalLike;
 
     public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> communityItems) {
         this.activity = activity;
@@ -70,10 +72,8 @@ public class DetailListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.detail_item, null);
         session = activity.getSharedPreferences("prefs", 0);
         ownerName = (TextView) convertView.findViewById(R.id.postedBy);
-        // postTime = (TextView) convertView.findViewById(R.id.postedOn);
+        postTime = (TextView) convertView.findViewById(R.id.postedOn);
         commentText = (TextView) convertView.findViewById(R.id.commentText);
-        commentTime = (TextView) convertView.findViewById(R.id.timeText);
-        // commentLocation = (TextView) convertView.findViewById(R.id.locationText);
         ImageView userPic = (ImageView) convertView.findViewById(R.id.questionnare_img);
         like = (ImageView) convertView.findViewById(R.id.likeImage);
         likeText = (TextView) convertView.findViewById(R.id.TextLike);
@@ -92,6 +92,7 @@ public class DetailListAdapter extends BaseAdapter {
         if (item.getNol() >= 0) {
             totalLike.setText(item.getNol() + "");
         }
+
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,8 +146,7 @@ public class DetailListAdapter extends BaseAdapter {
         String DATE_FORMAT_NOW = "dd-MMM";
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
         String stringDate = sdf.format(date);
-        commentTime.setText(stringDate);
-        //postTime.setText(stringDate);
+        postTime.setText(stringDate);
 
         int rounded_value = 120;
 
@@ -154,8 +154,7 @@ public class DetailListAdapter extends BaseAdapter {
 
         ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getOid(), userPic, options);
 
-
-       /* AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getOid(), userPic,new SimpleImageLoadingListener(){
+        /* AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getOid(), userPic,new SimpleImageLoadingListener(){
             public void onLoadingStarted(String imageUri, View view) {
                 spinner.setVisibility(View.VISIBLE);
             }
@@ -169,7 +168,8 @@ public class DetailListAdapter extends BaseAdapter {
                 spinner.setVisibility(View.GONE);
             }
         });
-       */
+        */
+
         return convertView;
     }
 

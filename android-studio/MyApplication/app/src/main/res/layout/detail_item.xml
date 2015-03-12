@@ -4,21 +4,13 @@
     android:layout_height="wrap_content"
     android:padding="5dp">
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/bar1" />
-
     <RelativeLayout
         android:id="@+id/questionnare_component"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/QuestionPanel"
         android:background="#ffffff">
 
         <ImageView
-
             android:id="@+id/questionnare_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -43,14 +35,29 @@
                 android:textSize="14dp"
                 android:layout_marginLeft="5dp" />
 
-            <TextView
-                android:id="@+id/postedOn"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/postedBy"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/questionnare_img"
-                android:textSize="15dp" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:id="@+id/timeImg"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/time"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/postedOn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@+id/timeImg"
+                    android:textSize="13dp"
+                    android:text="11-2015" />
+            </RelativeLayout>
         </LinearLayout>
 
         <TextView
@@ -85,40 +92,27 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/imgComponent"
+        android:id="@+id/postSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/questionnareText"
-        android:background="#ffffff">
+        android:layout_below="@+id/questionnareText"
+        android:background="#ffffff"
+        android:weightSum="1">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp">
-
-            <ImageView
-                android:id="@+id/timeImg"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/time" />
-
-            <TextView
-                android:id="@+id/timeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/timeImg" />
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="right">
 
             <LinearLayout
                 android:id="@+id/likeComponent"
-                android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/timeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_corner_like"
-                android:layout_centerInParent="true">
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp">
 
                 <ImageView
                     android:id="@+id/likeImage"
