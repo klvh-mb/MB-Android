@@ -62,6 +62,13 @@ public class TopicFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println(" Topic " +
+                "RESUME e:::::::::::");
+    }
+
     public List<CommunitiesWidgetChildVM> getCommunities() {
         return communities;
     }

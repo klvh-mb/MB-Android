@@ -33,31 +33,29 @@ public class SplashActivity extends Activity {
 
         session = getSharedPreferences("prefs", 0);
         LocalCache.categoryMapList.add(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
-
-        AppController.api.getSocialCommunityCategoriesMap(false, new Callback<List<CommunityCategoryMapVM>>() {
-
-            @Override
-            public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                int secondsDelayed = 1;
-                LocalCache.categoryMapList.addAll(array);
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        if (session.getString("sessionID", null) != null) {
+        if (session.getString("sessionID", null) != null) {
+            AppController.api.getSocialCommunityCategoriesMap(false, session.getString("sessionID", null), new Callback<List<CommunityCategoryMapVM>>() {
+                @Override
+                public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
+                    int secondsDelayed = 1;
+                    LocalCache.categoryMapList.addAll(array);
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
                             startActivity(new Intent(SplashActivity.this, ActivityMain.class));
-                        } else {
-                            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                            finish();
                         }
-                        finish();
-                    }
-                }, secondsDelayed * 1000);
-            }
+                    }, secondsDelayed * 1000);
+                }
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    retrofitError.printStackTrace(); //to see if you have errors
 
-            }
-        });
+                }
+            });
+        } else {
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        }
 
 
     }

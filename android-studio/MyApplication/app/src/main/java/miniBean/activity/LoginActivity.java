@@ -36,9 +36,13 @@ import com.facebook.android.FacebookError;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import miniBean.R;
+import miniBean.app.AppController;
+import miniBean.app.LocalCache;
 import miniBean.app.MyApi;
+import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -140,6 +144,8 @@ public class LoginActivity extends FragmentActivity {
             e.printStackTrace();
         }
         session.edit().putString("sessionID", sb.toString()).apply();
+        getCommunityMapCategory();
+
     }
 
     private void doLoginUsingAccessToken(String access_token) {
@@ -213,6 +219,24 @@ public class LoginActivity extends FragmentActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         facebook.authorizeCallback(requestCode, resultCode, data);
+    }
+
+    public void getCommunityMapCategory(){
+        AppController.api.getSocialCommunityCategoriesMap(false, session.getString("sessionID", null), new Callback<List<CommunityCategoryMapVM>>() {
+
+            @Override
+            public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
+                LocalCache.categoryMapList.addAll(array);
+                Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                startActivity(i);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace(); //to see if you have errors
+
+            }
+        });
     }
 }
 

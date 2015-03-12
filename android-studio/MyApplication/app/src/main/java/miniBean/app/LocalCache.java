@@ -10,6 +10,16 @@ public class LocalCache {
     public static List<CommunityCategoryMapVM> categoryMapList = new ArrayList<>();
     public static CommunitiesParentVM CommunitiesParentVM;
 
+    public static Boolean getDirty() {
+        return dirty;
+    }
+
+    public static void setDirty(Boolean dirty) {
+        LocalCache.dirty = dirty;
+    }
+
+    public static Boolean dirty;
+
     public static CommunitiesParentVM getCommunitiesParentVM() {
         return CommunitiesParentVM;
     }

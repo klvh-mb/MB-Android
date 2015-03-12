@@ -4,7 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LevelListDrawable;
+import android.os.AsyncTask;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +27,11 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -29,13 +44,11 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class DetailListAdapter extends BaseAdapter {
-
-    public SharedPreferences session = null;
-
+public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private TextView ownerName, commentText, postTime;
     private Activity activity;
     private LayoutInflater inflater;
+    public SharedPreferences session = null;
     private List<CommunityPostCommentVM> communityItems;
     private boolean likeFlag;
     private LinearLayout linearLayout;
@@ -128,7 +141,9 @@ public class DetailListAdapter extends BaseAdapter {
         });
 
         //txtTest. setMovementMethod(LinkMovementMethod.getInstance(item.getD()));
-        commentText.setText(item.getD());
+        Spanned spanned = Html.fromHtml(item.getD(), this, null);
+        commentText.setText(spanned);
+        commentText.setMovementMethod(LinkMovementMethod.getInstance());
 
         ownerName.setText(item.getOn());
 
@@ -232,4 +247,54 @@ public class DetailListAdapter extends BaseAdapter {
             }
         });
     }
+
+    @Override
+    public Drawable getDrawable(String source) {
+        LevelListDrawable d = new LevelListDrawable();
+        Drawable empty = activity.getResources().getDrawable(R.drawable.ic_launcher);
+        d.addLevel(0, 0, empty);
+        d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
+
+        new LoadImage().execute(source, d);
+
+        return d;
+    }
+
+    class LoadImage extends AsyncTask<Object, Void, Bitmap> {
+
+        private LevelListDrawable mDrawable;
+
+        @Override
+        protected Bitmap doInBackground(Object... params) {
+            String source = activity.getResources().getString(R.string.base_url) + (String) params[0];
+            mDrawable = (LevelListDrawable) params[1];
+            System.out.println("doInBackground " + source);
+            try {
+                InputStream is = new URL(source).openStream();
+                return BitmapFactory.decodeStream(is);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            if (bitmap != null) {
+                BitmapDrawable d = new BitmapDrawable(bitmap);
+                mDrawable.addLevel(1, 1, d);
+                mDrawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
+                mDrawable.setLevel(1);
+                // i don't know yet a better way to refresh TextView
+                // mTv.invalidate() doesn't work as expected
+                CharSequence t = commentText.getText();
+                commentText.setText(t);
+            }
+        }
+    }
+
 }

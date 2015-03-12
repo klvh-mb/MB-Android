@@ -77,7 +77,7 @@ public class NewsFeedFragement extends Fragment {
             public void onLoadMore(int page, int totalItemsCount) {
                 System.out.println("totalCount::" + totalItemsCount);
                 System.out.println("in loadmore::::::::");
-                functionCall(0);
+                functionCall(page-1);
             }
         });
 

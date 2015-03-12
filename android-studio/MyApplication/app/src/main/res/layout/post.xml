@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/titleComponent"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+    <EditText
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/postTitle"
+        android:hint="Title(Required)"
+        android:layout_width="wrap_content"
+        android:textSize="25dp"
+        android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_below="@+id/titleComponent"
+        android:background="@drawable/bar1"
+        android:layout_width="match_parent"
+        android:layout_height="5dp">
+
+        </View>
+    <RelativeLayout
+        android:id="@+id/postLayout"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider">
+        <EditText
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:id="@+id/postContent"
+            android:textSize="20dp"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:hint="Description(no less than 5 character)"/>
+        </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/postLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/image"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        />
+    <ImageView
+        android:id="@+id/browseImage"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:src="@drawable/browse"/>
+    </RelativeLayout>
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

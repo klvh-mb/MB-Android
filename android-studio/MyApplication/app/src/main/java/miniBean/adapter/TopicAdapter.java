@@ -17,6 +17,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.LocalCache;
 import miniBean.app.MyApi;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
@@ -154,7 +155,7 @@ public class TopicAdapter extends BaseAdapter {
         AppController.api.sendJoinRequest(id, session.getString("sessionID", null), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                int statusCode = response.getStatus();
+                LocalCache.setDirty(true);
             }
 
             @Override
@@ -168,7 +169,7 @@ public class TopicAdapter extends BaseAdapter {
         AppController.api.sendLeaveRequest(id, session.getString("sessionID", null), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                int statusCode = response.getStatus();
+                LocalCache.setDirty(true);
             }
 
             @Override

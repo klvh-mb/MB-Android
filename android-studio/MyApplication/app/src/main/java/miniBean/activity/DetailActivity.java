@@ -74,6 +74,7 @@ public class DetailActivity extends FragmentActivity {
     Spinner dropSpinner;
     public Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
+    public int noOfComments;
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
@@ -195,6 +196,7 @@ public class DetailActivity extends FragmentActivity {
                 comment.setCd(post.getT());
                 comment.setD(post.getPt());
                 comment.setOid(post.getOid());
+                noOfComments = post.getN_c();
                 communityItems.add(comment);
                 communityItems.addAll(post.getCs());
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityItems);
@@ -343,22 +345,18 @@ public class DetailActivity extends FragmentActivity {
             ListView list = (ListView) layout.findViewById(R.id.pageList);
             ArrayList<String> List = new ArrayList<String>();
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i <noOfComments/10 ; i++) {
                 List.addAll(Arrays.asList("page::" + i));
             }
             listAdapter = new ArrayAdapter<String>(this, R.layout.page_item, List);
             list.setAdapter(listAdapter);
 
-            list.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pagePop.dismiss();
-                }
-            });
+
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                    getComments(getIntent().getLongExtra("postId", 0L),position);
                     System.out.println("popupin");
 
                 }
@@ -423,6 +421,26 @@ public class DetailActivity extends FragmentActivity {
 
         }
 
+    }
+
+    public void getComments(Long postID,int offset)
+    {
+        AppController.api.getComments(postID,offset,new Callback<List<CommunityPostCommentVM>>(){
+
+            @Override
+            public void success(List<CommunityPostCommentVM> commentVMs, Response response) {
+                listAdapter = new DetailListAdapter(DetailActivity.this, commentVMs);
+                listView.setAdapter(listAdapter);
+
+                pagePop.dismiss();
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
     }
 
 }
