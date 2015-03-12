@@ -49,7 +49,7 @@ public class CommFragment extends Fragment {
 
     public SharedPreferences session = null;
     public MyApi api;
-    TextView noPost, noMember, commName;
+    TextView noMember, commName;
     ListView listView;
     FeedListAdapter feedListAdapter;
     List<CommunityPostVM> feedItems;
@@ -68,8 +68,6 @@ public class CommFragment extends Fragment {
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient()).build();
 
-
-        noPost = (TextView) view.findViewById(R.id.noPostComm);
         noMember = (TextView) view.findViewById(R.id.noMemberComm);
         commName = (TextView) view.findViewById(R.id.commNameText);
         imageView = (ImageView) view.findViewById(R.id.join_community);
@@ -83,8 +81,6 @@ public class CommFragment extends Fragment {
         System.out.print("commfragment:::::::::::::::::::::::::::");
         System.out.println("id:::::::::"+getArguments().getString("id"));
         System.out.println("ism:::::::"+ getArguments().getBoolean("isM", false));
-        System.out.println("nomember:::::::"+(getArguments().getString("noMember")));
-        System.out.println("nomember:::::::"+ (getArguments().getString("noPost")));
         System.out.println("nomember:::::::"+(getArguments().getString("noMember")));
 
         for (CommunityCategoryMapVM categoryMapVM : LocalCache.categoryMapList) {
@@ -193,7 +189,6 @@ public class CommFragment extends Fragment {
                 feedListAdapter.notifyDataSetChanged();
                 commName.setText(getArguments().getString("commName"));
                 noMember.setText(getArguments().getString("noMember"));
-                noPost.setText(getArguments().getString("noPost"));
                 //ImageView communityCoverPic = (ImageView)vi findViewById(R.id.communityPic);
                 //ImageView communityIcon = (ImageView) findViewById(R.id.commIconView);
                 ImageLoader imageLoader = ImageLoader.getInstance();

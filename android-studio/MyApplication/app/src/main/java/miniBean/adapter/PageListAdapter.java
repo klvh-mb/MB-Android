@@ -16,6 +16,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -71,7 +72,7 @@ public class PageListAdapter extends BaseAdapter {
         session = this.activity.getSharedPreferences("prefs", 0);
         page= (TextView) convertView.findViewById(R.id.page);
 
-        for(int i=1; i<=10; i++)
+        for(int i=1; i<= DefaultValues.DEFAULT_PAGINATION_COUNT; i++)
         {
             page.setText("page::"+i);
         }

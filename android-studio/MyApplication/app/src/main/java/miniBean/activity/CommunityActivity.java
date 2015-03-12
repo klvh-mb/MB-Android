@@ -70,15 +70,14 @@ public class CommunityActivity extends FragmentActivity {
         Bundle bundle=new Bundle();
         bundle.putString("id",getIntent().getStringExtra("id"));
         bundle.putString("noMember",getIntent().getStringExtra("noMember"));
-        bundle.putString("noPost",getIntent().getStringExtra("noPost"));
         bundle.putString("commName",getIntent().getStringExtra("commName"));
         bundle.putString("icon",getIntent().getStringExtra("icon"));
         bundle.putBoolean("isM",getIntent().getBooleanExtra("isM",true));
-        CommFragment fragement = new CommFragment();
+        CommFragment fragment = new CommFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragement.setArguments(bundle);
+        fragment.setArguments(bundle);
         //fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.replace(R.id.children_layout, fragement).commit();
+        fragmentTransaction.replace(R.id.children_layout, fragment).commit();
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override

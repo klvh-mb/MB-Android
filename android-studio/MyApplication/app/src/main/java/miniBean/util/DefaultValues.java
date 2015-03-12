@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class DefaultValues {
 
+    public static int DEFAULT_CONNECTION_TIMEOUT = 5;
+
     public static int DEFAULT_INFINITE_SCROLL_COUNT = 10;
     public static int DEFAULT_PAGINATION_COUNT = 10;
 

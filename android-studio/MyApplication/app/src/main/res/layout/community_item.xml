@@ -25,7 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:textSize="16dp" />
+            android:textSize="18dp"
+            android:textColor="@color/dark_gray" />
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
@@ -33,13 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="5dp">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/dropdown_btn" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -64,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:layout_marginLeft="10dp"
-                        android:text="100"
+                        android:text="-"
                         android:textSize="14dp"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
@@ -83,11 +77,11 @@
                         android:textSize="14dp" />
 
                     <TextView
-                        android:id="@+id/noTopics"
+                        android:id="@+id/numTopicsToday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="17"
+                        android:text="-"
                         android:textSize="14dp"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>

@@ -41,6 +41,7 @@ import miniBean.adapter.DetailListAdapter;
 import miniBean.adapter.PageListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.MyApi;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunityPostCommentVM;
@@ -345,7 +346,7 @@ public class DetailActivity extends FragmentActivity {
             ListView list = (ListView) layout.findViewById(R.id.pageList);
             ArrayList<String> List = new ArrayList<String>();
 
-            for (int i = 0; i <noOfComments/10 ; i++) {
+            for (int i = 0; i <noOfComments / DefaultValues.DEFAULT_PAGINATION_COUNT ; i++) {
                 List.addAll(Arrays.asList("page::" + i));
             }
             listAdapter = new ArrayAdapter<String>(this, R.layout.page_item, List);

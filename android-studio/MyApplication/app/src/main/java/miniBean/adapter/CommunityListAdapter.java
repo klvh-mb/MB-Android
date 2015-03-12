@@ -51,7 +51,7 @@ public class CommunityListAdapter extends BaseAdapter {
 
         TextView commName = (TextView) convertView.findViewById(R.id.commName);
         TextView noMembers = (TextView) convertView.findViewById(R.id.noMember);
-        TextView noTopics = (TextView) convertView.findViewById(R.id.noTopics);
+        TextView numTopicsToday = (TextView) convertView.findViewById(R.id.numTopicsToday);
 
         ImageView communityPic = (ImageView) convertView
                 .findViewById(R.id.communityPic);
@@ -60,7 +60,7 @@ public class CommunityListAdapter extends BaseAdapter {
 
         commName.setText(item.getDn());
         noMembers.setText(item.getMm().toString());
-        noTopics.setText("11");
+        numTopicsToday.setText("-");
 
         AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.getGi(), communityPic);
         return convertView;

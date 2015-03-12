@@ -16,7 +16,7 @@
             android:id="@+id/commName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="post title"
+            android:text="-"
             android:textColor="#333"
             android:textSize="16dp"
             android:lineSpacingExtra="3dp" />

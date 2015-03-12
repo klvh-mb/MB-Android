@@ -65,7 +65,7 @@ public class CommunityFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), CommunityActivity.class);
 
-                String noMember, noPost = "100", commId, name;
+                String noMember, commId, name;
 
                 CommunitiesWidgetChildVM childVM = listAdapter.getItem(position);
 
@@ -75,7 +75,6 @@ public class CommunityFragment extends Fragment {
 
                 intent.putExtra("id", commId);
                 intent.putExtra("noMember", noMember);
-                intent.putExtra("noPost", noPost);
                 intent.putExtra("commName", name);
                 intent.putExtra("icon", childVM.getGi());
                 intent.putExtra("isM", childVM.getIsM());
