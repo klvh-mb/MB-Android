@@ -12,7 +12,7 @@
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#A582DA">
+        android:background="@color/actionbar_bg">
 
         <TextView
             android:id="@+id/titleAction"

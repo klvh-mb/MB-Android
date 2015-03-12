@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="#A582DA">
+        android:background="@color/actionbar_bg">
 
         <ImageView
             android:id="@+id/backAction"
@@ -28,12 +28,12 @@
             android:layout_gravity="center"
             android:text="Profile"
             android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:textSize="22dp" />
 
         <ImageView
             android:id="@+id/bookmarkedtAction"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="35dp"
             android:src="@drawable/w_profile"
@@ -41,8 +41,8 @@
 
         <ImageView
             android:id="@+id/moreAction"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@drawable/w_notification"

@@ -7,7 +7,7 @@
         android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#FF8D8D">
+        android:background="@color/actionbar_bg_light">
 
         <RelativeLayout
 
@@ -26,7 +26,7 @@
                 android:layout_marginTop="2dp"
                 android:background="#ffffff"
                 android:text="@string/my_community_tab_joined"
-                android:textColor="#FF6666" />
+                android:textColor="@color/actionbar_selected_text" />
 
             <Button
                 android:id="@+id/button2"
@@ -37,7 +37,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/button1"
-                android:background="#FF8D8D"
+                android:background="@color/actionbar_bg_light"
                 android:text="@string/my_community_tab_newsfeed"
                 android:textColor="#FFFFFF" />
         </RelativeLayout>

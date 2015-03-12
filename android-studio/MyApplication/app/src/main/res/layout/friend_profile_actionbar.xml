@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="#A582DA">
+        android:background="@color/actionbar_bg">
 
         <TextView
             android:id="@+id/titleAction"
@@ -18,6 +18,6 @@
             android:layout_gravity="center"
             android:text="Profile"
             android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:textSize="22dp" />
     </RelativeLayout>
 </LinearLayout>

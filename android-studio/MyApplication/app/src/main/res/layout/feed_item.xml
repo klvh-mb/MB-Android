@@ -17,8 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="post title"
-            android:textColor="#555"
-            android:textSize="16dp" />
+            android:textColor="#333"
+            android:textSize="16dp"
+            android:lineSpacingExtra="3dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,17 +39,19 @@
 
             <ImageView
                 android:id="@+id/userpic"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/profile" />
+                android:src="@drawable/profile"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/userpic"
-                android:textSize="14dp" />
+                android:textSize="13dp"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,9 +61,10 @@
 
             <ImageView
                 android:id="@+id/timepic"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/time" />
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/time"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/timeText"
@@ -68,7 +72,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/timepic"
-                android:textSize="14dp" />
+                android:textSize="13dp"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,9 +83,10 @@
 
             <ImageView
                 android:id="@+id/commentpic"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/comment" />
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/comment"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/commentnoTEXT"
@@ -89,7 +95,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/commentpic"
                 android:textColor="#FF8D8D"
-                android:textSize="14dp" />
+                android:textSize="13dp"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
     </LinearLayout>
 

@@ -43,14 +43,22 @@ public class MainFragement extends Fragment {
 
         viewPager.setAdapter(mAdapter);
 
-        final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
-                .getDisplayMetrics());
+        final int pageMargin = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
         viewPager.setPageMargin(pageMargin);
 
         tabs.setViewPager(viewPager);
 
-        tabs.setIndicatorColor(Color.parseColor("#FF537B"));
+        tabs.setTextColor(getResources().getColor(R.color.dark_gray));
+        tabs.setIndicatorColor(getResources().getColor(R.color.actionbar_selected_text));
 
+        final int indicatorHeight = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+        tabs.setIndicatorHeight(indicatorHeight);
+
+        final int textSize = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        tabs.setTextSize(textSize);
 
         return view;
     }

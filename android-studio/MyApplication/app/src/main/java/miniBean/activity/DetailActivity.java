@@ -136,7 +136,7 @@ public class DetailActivity extends FragmentActivity {
                         Gravity.CENTER
                 )
         );
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A582DA")));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_bg)));
         // getActionBar().setDisplayHomeAsUpEnabled(true);
         // getActionBar().setIcon(
         //       new ColorDrawable(getResources().getColor(android.R.color.transparent)));

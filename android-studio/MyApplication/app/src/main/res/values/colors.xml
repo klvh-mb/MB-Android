@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffff</color>
+    <color name="gray">#999</color>
+    <color name="light_gray">#ccc</color>
+    <color name="dark_gray">#555</color>
+    <color name="sharp_pink">#FF6795</color>
+
     <color name="feed_bg">#d3d6db</color>
     <color name="feed_item_bg">#ffffff</color>
     <color name="feed_item_border">#c2c3c8</color>
     <color name="link">#0a80d1</color>
     <color name="timestamp">#a0a3a7</color>
+    <color name="tabset_selected">#9071BE</color>
+    <color name="actionbar_bg">#AF8AE7</color>
+    <color name="actionbar_selected_text">#BD94F9</color>
+    <color name="actionbar_bg_light">#D2ACEE</color>
+
 </resources>

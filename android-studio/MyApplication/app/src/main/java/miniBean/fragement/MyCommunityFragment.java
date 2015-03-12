@@ -39,8 +39,8 @@ public class MyCommunityFragment extends Fragment {
             public void onClick(View v) {
                 if (buttonBool == true) {
                     joined.setBackgroundColor(Color.WHITE);
-                    joined.setTextColor(Color.parseColor("#FF6666"));
-                    newsfeed.setBackgroundColor(Color.parseColor("#FF8D8D"));
+                    joined.setTextColor(getResources().getColor(R.color.actionbar_selected_text));
+                    newsfeed.setBackgroundColor(getResources().getColor(R.color.actionbar_bg_light));
                     newsfeed.setTextColor(Color.WHITE);
                     Fragment communityFragment = new CommunityFragment();
                     FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -58,8 +58,8 @@ public class MyCommunityFragment extends Fragment {
             public void onClick(View v) {
                 if (buttonBool == false) {
                     newsfeed.setBackgroundColor(Color.WHITE);
-                    newsfeed.setTextColor(Color.parseColor("#FF6666"));
-                    joined.setBackgroundColor(Color.parseColor("#FF8D8D"));
+                    newsfeed.setTextColor(getResources().getColor(R.color.actionbar_selected_text));
+                    joined.setBackgroundColor(getResources().getColor(R.color.actionbar_bg_light));
                     joined.setTextColor(Color.WHITE);
                     /*Bundle bundle=new Bundle();
                     bundle.putString("key","newsfeed");

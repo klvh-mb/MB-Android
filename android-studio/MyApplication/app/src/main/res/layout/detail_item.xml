@@ -29,7 +29,7 @@
             <TextView
                 android:id="@+id/postedBy"
                 android:layout_width="wrap_content"
-                android:textColor="#FF6795"
+                android:textColor="#777"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/questionnare_img"
                 android:textSize="14dp"
@@ -86,8 +86,9 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:textSize="16dp"
-            android:textColor="#555" />
+            android:textSize="17dp"
+            android:textColor="#333"
+            android:lineSpacingExtra="5dp" />
 
     </LinearLayout>
 
