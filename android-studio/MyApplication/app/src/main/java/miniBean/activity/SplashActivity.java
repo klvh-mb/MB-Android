@@ -5,7 +5,9 @@ package miniBean.activity;
  */
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -13,6 +15,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.view.ContextThemeWrapper;
 import android.widget.Toast;
 
 import java.util.List;
@@ -54,11 +57,22 @@ public class SplashActivity extends Activity {
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    retrofitError.printStackTrace(); //to see if you have errors
+                    //retrofitError.printStackTrace();
+
+                    showNetworkProblemAlert();
+
+                    /*
+                    if (RetrofitError.Kind.NETWORK.equals(retrofitError.getKind().name()) ||
+                            RetrofitError.Kind.HTTP.equals(retrofitError.getKind().name())) {
+
+                    } else {
+
+                    }
 
                     if (!isOnline()) {
-                        //SplashActivity.this.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                        SplashActivity.this.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
                     }
+                    */
                 }
             });
         } else {
@@ -66,12 +80,26 @@ public class SplashActivity extends Activity {
         }
     }
 
+    private void showNetworkProblemAlert() {
+        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
+                .setTitle(getString(R.string.connection_timeout_title))
+                .setMessage(getString(R.string.connection_timeout_message))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SplashActivity.this.finish();
+                    }
+                })
+                .show();
+    }
+
     private boolean isOnline() {
         ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 
         if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
-            Toast.makeText(getApplicationContext(), getString(R.string.connection_timeout), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.connection_timeout_message), Toast.LENGTH_LONG).show();
             return false;
         }
         return true;

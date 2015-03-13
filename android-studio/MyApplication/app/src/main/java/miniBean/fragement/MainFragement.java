@@ -53,7 +53,7 @@ public class MainFragement extends Fragment {
         tabs.setIndicatorColor(getResources().getColor(R.color.actionbar_selected_text));
 
         final int indicatorHeight = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+                TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
         tabs.setIndicatorHeight(indicatorHeight);
 
         final int textSize = (int) TypedValue.applyDimension(

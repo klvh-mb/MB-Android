@@ -176,7 +176,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void getQnaDetail() {
-        System.out.println("In getCommunity");
+        System.out.println("In getQnaDetail");
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
@@ -197,6 +197,7 @@ public class DetailActivity extends FragmentActivity {
                 comment.setCd(post.getT());
                 comment.setD(post.getPt());
                 comment.setOid(post.getOid());
+                comment.setLike(post.isLike());
                 noOfComments = post.getN_c();
                 communityItems.add(comment);
                 communityItems.addAll(post.getCs());
@@ -424,8 +425,7 @@ public class DetailActivity extends FragmentActivity {
 
     }
 
-    public void getComments(Long postID,int offset)
-    {
+    public void getComments(Long postID,int offset) {
         AppController.api.getComments(postID,offset,new Callback<List<CommunityPostCommentVM>>(){
 
             @Override

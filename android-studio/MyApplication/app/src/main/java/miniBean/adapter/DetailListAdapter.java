@@ -95,12 +95,13 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
         final CommunityPostCommentVM item = communityItems.get(position);
 
-        if (!item.isLike()) {
-            like.setImageResource(R.drawable.like);
-            likeText.setText(activity.getString(R.string.like));
-        } else {
+        likeText.setText(activity.getString(R.string.like));
+        if (item.isLike()) {
             like.setImageResource(R.drawable.liked);
-            likeText.setText(activity.getString(R.string.like));
+            //System.out.println("liked - "+item.getD());
+        } else {
+            like.setImageResource(R.drawable.like);
+            //System.out.println("not liked - "+item.getD());
         }
         if (item.getNol() >= 0) {
             totalLike.setText(item.getNol() + "");
@@ -112,7 +113,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                 likeText = (TextView) v.findViewById(R.id.TextLike);
                 like = (ImageView) v.findViewById(R.id.likeImage);
                 totalLike = (TextView) v.findViewById(R.id.TotalLike);
-                if (item.isLike() == true) {
+                if (item.isLike()) {
                     if (item.isPost()) {
                         unLikePost(item.getId());
                     } else {
