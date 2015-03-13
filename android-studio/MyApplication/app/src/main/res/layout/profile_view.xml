@@ -7,13 +7,13 @@
     <RelativeLayout
         android:id="@+id/profilePic"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="170dp"
         android:background="#ffffff">
 
         <ImageView
             android:id="@+id/userCoverPic"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -26,21 +26,27 @@
             android:layout_centerInParent="true" />
 
         <RelativeLayout
+            android:layout_marginTop="6dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true">
-
+            <RelativeLayout
+                android:id="@+id/userImageLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/image_round">
             <ImageView
                 android:id="@+id/userImage"
                 android:layout_width="100dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="5dp"></ImageView>
-
+                >
+                </ImageView>
+            </RelativeLayout>
             <TextView
                 android:id="@+id/usernameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/userImage"
+                android:layout_below="@+id/userImageLayout"
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
@@ -48,28 +54,12 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profilePic"
-        android:background="#ffffff">
-
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/profile"
-            android:text="Edit" />
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/edit"
-        android:layout_marginTop="15dp"
+        android:layout_below="@+id/profilePic"
+        android:layout_marginTop="10dp"
         android:background="#ffffff"
         android:orientation="horizontal">
 
@@ -107,7 +97,6 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@id/questionText"
                     android:layout_weight="5"
-                    android:text="2"
                     android:textColor="#FF6666" />
 
                 <ImageView
@@ -161,7 +150,6 @@
                     android:layout_toRightOf="@id/answerText"
                     android:layout_weight="5"
                     android:editable="false"
-                    android:text="2"
                     android:textColor="#FF6666" />
 
                 <ImageView
@@ -213,7 +201,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:editable="false"
-                    android:text="2"
                     android:textColor="#FF6666" />
 
                 <ImageView

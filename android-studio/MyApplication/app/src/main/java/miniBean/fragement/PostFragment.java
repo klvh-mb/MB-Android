@@ -110,6 +110,7 @@ public class PostFragment extends Fragment {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("posted:::::::::");
                 String title = postTitle.getText().toString();
                 String content=postContent.getText().toString();
 
@@ -118,16 +119,8 @@ public class PostFragment extends Fragment {
 
             }
         });
-
-
-
         image= (ImageView) view.findViewById(R.id.image);
-
-
         api = restAdapter.create(MyApi.class);
-
-
-
 
         return view;
     }
@@ -153,6 +146,10 @@ public class PostFragment extends Fragment {
     }
     public void setPost(String postString,String postContent)
     {
+        System.out.println(" :::::::::::: "+Long.parseLong(getArguments().getString("id")));
+        System.out.println(" :::::::::::: "+postString);
+        System.out.println(" :::::::::::: "+postContent);
+        System.out.println(" :::::::::::: "+isPhoto);
         AppController.api.setQuestion(new NewPost(Long.parseLong(getArguments().getString("id")),postString,postContent,isPhoto),session.getString("sessionID",null), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
@@ -162,7 +159,7 @@ public class PostFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-
+                error.printStackTrace();
             }
         });
     }

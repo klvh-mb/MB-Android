@@ -1,52 +1,27 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import miniBean.R;
-import miniBean.adapter.FeedListAdapter;
-import miniBean.app.AppController;
-import miniBean.app.LocalCache;
 import miniBean.app.MyApi;
 import miniBean.fragement.CommFragment;
 import miniBean.fragement.PostFragment;
-import miniBean.fragement.UserProfileFragment;
-import miniBean.viewmodel.CommunitiesWidgetChildVM;
-import miniBean.viewmodel.CommunityCategoryMapVM;
-import miniBean.viewmodel.CommunityPostVM;
-import miniBean.viewmodel.PostArray;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
 
 public class CommunityActivity extends FragmentActivity {
     public SharedPreferences session = null;
     public MyApi api;
     ProgressBar progressBar, spinner;
-    ImageView backImage;
+    ImageView backImage,editAction;
     TextView titleAction;
 
     @Override
@@ -65,6 +40,7 @@ public class CommunityActivity extends FragmentActivity {
         titleAction= (TextView) this.findViewById(R.id.titleAction);
         spinner = (ProgressBar) this.findViewById(R.id.loadCover);
         progressBar = (ProgressBar) this.findViewById(R.id.progressCommunity);
+        editAction= (ImageView) this.findViewById(R.id.editAction);
         //progressBar.setVisibility(View.VISIBLE);
 
         Bundle bundle=new Bundle();
@@ -83,6 +59,22 @@ public class CommunityActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                     finish();
+            }
+        });
+
+
+        editAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle=new Bundle();
+                bundle.putString("id",getIntent().getStringExtra("id"));
+
+                PostFragment fragment = new PostFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragment.setArguments(bundle);
+                //fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.children_layout, fragment).commit();
+
             }
         });
 

@@ -184,11 +184,11 @@ public class NewsFeedFragement extends Fragment {
     }
 void getBookmark(int offset)
 {
-    AppController.api.getBookmark(Long.valueOf(offset),session.getString("sessionID", null),new Callback<PostArray>() {
+    AppController.api.getBookmark(Long.valueOf(offset),session.getString("sessionID", null),new Callback<List<CommunityPostVM>>() {
         @Override
-        public void success(PostArray postArray, Response response) {
-            if(postArray.getPosts() != null)
-                feedItems.addAll(postArray.getPosts());
+        public void success(List<CommunityPostVM> postArray, Response response) {
+            if(postArray != null)
+                feedItems.addAll(postArray);
             listAdapter.notifyDataSetChanged();
             progressBarFeed.setVisibility(View.GONE);
 

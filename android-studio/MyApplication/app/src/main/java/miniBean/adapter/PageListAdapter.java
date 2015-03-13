@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
@@ -23,8 +24,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class PageListAdapter extends BaseAdapter {
-    public List<NotificationVM> requestItems;
     public SharedPreferences session;
+    ArrayList<String> List;
     TextView username, message, page;
     ImageView userPhoto;
     Button acceptButton, ignoreButton;
@@ -33,19 +34,20 @@ public class PageListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
 
-    public PageListAdapter(Activity activity, List<NotificationVM> requestItems) {
+    public PageListAdapter(Activity activity, ArrayList<String> List) {
         this.activity = activity;
-        this.requestItems = requestItems;
+        this.List=List;
     }
+
 
     @Override
     public int getCount() {
-        return requestItems.size();
+        return List.size();
     }
 
     @Override
-    public NotificationVM getItem(int location) {
-        return requestItems.get(location);
+    public String getItem(int location) {
+        return List.get(location);
     }
 
     @Override
@@ -62,20 +64,16 @@ public class PageListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.page_item, null);
 
-
-        final NotificationVM item = requestItems.get(position);
-
         message = (TextView) convertView.findViewById(R.id.requestText);
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
         acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
         ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
         session = this.activity.getSharedPreferences("prefs", 0);
-        page= (TextView) convertView.findViewById(R.id.page);
+        page= (TextView) convertView.findViewById(R.id.pageText);
 
-        for(int i=1; i<= DefaultValues.DEFAULT_PAGINATION_COUNT; i++)
-        {
-            page.setText("page::"+i);
-        }
+        String item=List.get(position);
+
+        page.setText(item);
         return convertView;
 
     }

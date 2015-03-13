@@ -24,7 +24,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.android.AsyncFacebookRunner;
@@ -64,9 +66,8 @@ public class LoginActivity extends FragmentActivity {
     public AsyncFacebookRunner mAsyncRunner = null;
     private EditText username = null;
     private EditText password = null;
-    private Button login;
-    private Button btnFbLogin;
-    private ProgressBar progressBar;
+    private TextView login;
+    private ImageView btnFbLogin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class LoginActivity extends FragmentActivity {
         APP_ID = getResources().getString(R.string.app_id);
 
 
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.login);
         mAsyncRunner = new AsyncFacebookRunner(facebook);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -85,14 +86,10 @@ public class LoginActivity extends FragmentActivity {
         yourUsersApi = restAdapter.create(MyApi.class);
         username = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
-        btnFbLogin = (Button) findViewById(R.id.buttonFbLogin);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.GONE);
-
-        login = (Button) findViewById(R.id.buttonLogin);
+        btnFbLogin = (ImageView) findViewById(R.id.buttonFbLogin);
+        login = (TextView) findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
                 yourUsersApi.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
@@ -106,7 +103,6 @@ public class LoginActivity extends FragmentActivity {
                         //               System.out.println("traceis::"+retrofitError.getResponse().getStatus());
                         if (retrofitError.getResponse().getStatus() == 400) {
                             Toast.makeText(getApplicationContext(), "You have entered wrong User Id or Password", Toast.LENGTH_LONG).show();
-                            progressBar.setVisibility(View.INVISIBLE);
                         }
                         retrofitError.printStackTrace(); //to see if you have errors
 

@@ -12,7 +12,7 @@
         <RelativeLayout
             android:id="@+id/profilePic"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="170dp"
             android:background="#ffffff">
 
             <ImageView
@@ -31,25 +31,32 @@
                 android:layout_centerInParent="true" />
 
             <RelativeLayout
+                android:layout_marginTop="5dp"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true">
-
+            <RelativeLayout
+                android:id="@+id/userImageLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/userImage"
                     android:layout_width="100dp"
                     android:layout_height="70dp"
-                    android:layout_marginTop="5dp"></ImageView>
-
+                    android:background="@drawable/image_round"
+                    ></ImageView>
+            </RelativeLayout>
                 <TextView
                     android:id="@+id/usernameText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/userImage"
+                    android:layout_below="@+id/userImageLayout"
                     android:layout_centerHorizontal="true"
                     android:layout_centerInParent="true"
                     android:layout_centerVertical="true"
                     android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
                     android:shadowColor="#000000"
                     android:shadowDx="3"
                     android:shadowDy="3"
@@ -62,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_below="@+id/profilePic"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:background="#ffffff"
             android:orientation="horizontal">
 

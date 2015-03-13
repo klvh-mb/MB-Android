@@ -76,6 +76,7 @@ public class DetailActivity extends FragmentActivity {
     public Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
     public int noOfComments;
+    CommunityPostCommentVM postVm = new CommunityPostCommentVM();
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
@@ -118,14 +119,12 @@ public class DetailActivity extends FragmentActivity {
             public void onClick(View v) {
                 layout_MainMenu.getForeground().setAlpha(220);
                 initiatePopupWindow();
-
             }
         });
 
         PageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 initiatePopup();
             }
         });
@@ -189,17 +188,15 @@ public class DetailActivity extends FragmentActivity {
                 numPostComments.setText(post.getN_c() + "");
                 questionText.setText(post.getPtl());
 
-                CommunityPostCommentVM comment = new CommunityPostCommentVM();
-                comment.setPost(true);
-                comment.setNol(post.getNol());
-                comment.setId(post.getId());
-                comment.setOn(post.getP());
-                comment.setCd(post.getT());
-                comment.setD(post.getPt());
-                comment.setOid(post.getOid());
-                comment.setLike(post.isLike());
+                postVm.setPost(true);
+                postVm.setNol(post.getNol());
+                postVm.setId(post.getId());
+                postVm.setOn(post.getP());
+                postVm.setCd(post.getT());
+                postVm.setD(post.getPt());
+                postVm.setOid(post.getOid());
                 noOfComments = post.getN_c();
-                communityItems.add(comment);
+                communityItems.add(postVm);
                 communityItems.addAll(post.getCs());
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityItems);
                 listView.setAdapter(listAdapter);
@@ -238,7 +235,10 @@ public class DetailActivity extends FragmentActivity {
                     String commentString = commentPost.getText().toString();
 
                     if (!commentString.equals(""))
+                    {
                         answerQuestion(commentString);
+                        pw.dismiss();
+                    }
                 }
             });
             ImageView cancelButton = (ImageView) layout.findViewById(R.id.cancelButton);
@@ -344,22 +344,30 @@ public class DetailActivity extends FragmentActivity {
             pagePop.setOutsideTouchable(true);
             pagePop.setFocusable(false);
             ArrayAdapter<String> listAdapter;
-            ListView list = (ListView) layout.findViewById(R.id.pageList);
-            ArrayList<String> List = new ArrayList<String>();
+            //ListView list = (ListView) layout.findViewById(R.id.pageList);
+            /*ArrayList<String> List = new ArrayList<String>();
 
             for (int i = 0; i <noOfComments / DefaultValues.DEFAULT_PAGINATION_COUNT ; i++) {
                 List.addAll(Arrays.asList("page::" + i));
             }
             listAdapter = new ArrayAdapter<String>(this, R.layout.page_item, List);
             list.setAdapter(listAdapter);
+*/
+            ListView listView1 = (ListView) layout.findViewById(R.id.pageList);
+            ArrayList<String> stringArrayList = new ArrayList<String>();
+            for (int i = 0; i <= noOfComments / DefaultValues.DEFAULT_PAGINATION_COUNT; i++) {
+                stringArrayList.add("Page:: " + (i+1));
+            }
+            pageAdapter=new PageListAdapter(this,stringArrayList);
+            listView1.setAdapter(pageAdapter);
 
-
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     getComments(getIntent().getLongExtra("postId", 0L),position);
                     System.out.println("popupin");
+                    pagePop.dismiss();
 
                 }
             });
@@ -425,12 +433,17 @@ public class DetailActivity extends FragmentActivity {
 
     }
 
-    public void getComments(Long postID,int offset) {
+    public void getComments(Long postID,int offset)
+    {
         AppController.api.getComments(postID,offset,new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {
-                listAdapter = new DetailListAdapter(DetailActivity.this, commentVMs);
+                communityItems.clear();
+                List<CommunityPostCommentVM> communityPostCommentVMs = new ArrayList<CommunityPostCommentVM>();
+                communityPostCommentVMs.add(postVm);
+                communityPostCommentVMs.addAll(commentVMs);
+                listAdapter = new DetailListAdapter(DetailActivity.this, communityPostCommentVMs);
                 listView.setAdapter(listAdapter);
 
                 pagePop.dismiss();
