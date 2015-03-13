@@ -26,6 +26,11 @@ public class ActivityMain extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        if( getIntent().getBooleanExtra("EXIT", false)){
+            finish();
+            return; // add this to prevent from doing unnecessary stuffs
+        }
+
         Configuration config = getResources().getConfiguration();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         MainFragement mainFragement = new MainFragement();

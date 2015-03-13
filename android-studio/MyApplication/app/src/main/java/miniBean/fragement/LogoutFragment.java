@@ -1,5 +1,7 @@
 package miniBean.fragement;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,11 +39,28 @@ public class LogoutFragment extends Fragment {
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = session.edit();
-                editor.remove("sessionID");
-                editor.commit();
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                startActivity(i);
+                // confirm exit
+                AlertDialog.Builder builder = new AlertDialog.Builder(LogoutFragment.this.getActivity());
+                builder.setMessage(R.string.exit_app)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // clear session and exit
+                                SharedPreferences.Editor editor = session.edit();
+                                editor.remove("sessionID");
+                                editor.commit();
+                                Intent i = new Intent(getActivity(), LoginActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
         return view;

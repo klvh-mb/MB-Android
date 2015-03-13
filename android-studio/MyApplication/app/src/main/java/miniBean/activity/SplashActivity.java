@@ -15,6 +15,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class SplashActivity extends Activity {
         session = getSharedPreferences("prefs", 0);
         LocalCache.categoryMapList.add(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
         if (session.getString("sessionID", null) != null) {
+            Log.d("sessionID", session.getString("sessionID", null));
             AppController.api.getSocialCommunityCategoriesMap(false, session.getString("sessionID", null), new Callback<List<CommunityCategoryMapVM>>() {
                 @Override
                 public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {

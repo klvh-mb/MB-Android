@@ -16,6 +16,8 @@
 
 package miniBean.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -93,19 +95,22 @@ public class LoginActivity extends FragmentActivity {
                 yourUsersApi.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
-                        saveToSession(response);
-                        Intent i = new Intent(LoginActivity.this, ActivityMain.class);
-                        startActivity(i);
+                        if (saveToSession(response)) {
+                            Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                            startActivity(i);
+                        } else {
+                            alert(R.string.login_error_title, R.string.login_error_message);
+                        }
                     }
 
                     @Override
                     public void failure(RetrofitError retrofitError) {
-                        //               System.out.println("traceis::"+retrofitError.getResponse().getStatus());
+                        //retrofitError.printStackTrace();
                         if (retrofitError.getResponse().getStatus() == 400) {
-                            Toast.makeText(getApplicationContext(), "You have entered wrong User Id or Password", Toast.LENGTH_LONG).show();
+                            alert(R.string.login_error_title, R.string.login_id_error_message);
+                        } else {
+                            alert(R.string.login_error_title, R.string.login_error_message);
                         }
-                        retrofitError.printStackTrace(); //to see if you have errors
-
                     }
                 });
             }
@@ -123,7 +128,11 @@ public class LoginActivity extends FragmentActivity {
     }
 
 
-    public void saveToSession(Response result) {
+    public boolean saveToSession(Response result) {
+        if (result == null) {
+            return false;
+        }
+
         BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
         try {
@@ -135,35 +144,39 @@ public class LoginActivity extends FragmentActivity {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        Log.d("sessionID", sb.toString());
         session.edit().putString("sessionID", sb.toString()).apply();
         getCommunityMapCategory();
-
+        return true;
     }
 
     private void doLoginUsingAccessToken(String access_token) {
         yourUsersApi.loginByFacebbok(access_token, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                saveToSession(response);
-                Intent i = new Intent(LoginActivity.this, ActivityMain.class);
-                startActivity(i);
+                if (saveToSession(response)) {
+                    Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                    startActivity(i);
+                } else {
+                    alert(R.string.login_error_title, R.string.login_error_message);
+                }
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-
-
+                //retrofitError.printStackTrace();
+                alert(R.string.login_error_title, R.string.login_error_message);
             }
         });
     }
 
     public void loginToFacebook() {
-
         String access_token = session.getString("access_token", null);
         long expires = session.getLong("access_expires", 0);
 
@@ -191,13 +204,13 @@ public class LoginActivity extends FragmentActivity {
                         @Override
                         public void onError(DialogError error) {
                             // Function to handle error
-
+                            alert(R.string.login_error_title, R.string.login_error_message);
                         }
 
                         @Override
                         public void onFacebookError(FacebookError fberror) {
                             // Function to handle Facebook errors
-
+                            alert(R.string.login_error_title, R.string.login_error_message);
                         }
 
                         @Override
@@ -209,7 +222,6 @@ public class LoginActivity extends FragmentActivity {
                     });
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -233,6 +245,44 @@ public class LoginActivity extends FragmentActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.exit_app)
+                .setCancelable(false)
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent i = new Intent(Intent.ACTION_MAIN);
+                        i.addCategory(Intent.CATEGORY_HOME);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra("EXIT", true);
+                        startActivity(i);
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void alert(int title, int message) {
+        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
+                .setTitle(getString(title))
+                .setMessage(getString(message))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //LoginActivity.this.finish();
+                    }
+                })
+                .show();
     }
 }
 
