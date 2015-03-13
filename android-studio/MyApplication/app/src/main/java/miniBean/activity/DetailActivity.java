@@ -195,6 +195,7 @@ public class DetailActivity extends FragmentActivity {
                 postVm.setCd(post.getT());
                 postVm.setD(post.getPt());
                 postVm.setOid(post.getOid());
+                postVm.setLike(post.isLike());
                 noOfComments = post.getN_c();
                 communityItems.add(postVm);
                 communityItems.addAll(post.getCs());
@@ -433,8 +434,7 @@ public class DetailActivity extends FragmentActivity {
 
     }
 
-    public void getComments(Long postID,int offset)
-    {
+    public void getComments(Long postID,int offset) {
         AppController.api.getComments(postID,offset,new Callback<List<CommunityPostCommentVM>>(){
 
             @Override

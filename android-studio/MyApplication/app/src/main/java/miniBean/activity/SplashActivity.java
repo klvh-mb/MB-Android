@@ -31,7 +31,6 @@ import retrofit.RetrofitError;
 
 public class SplashActivity extends Activity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
     public SharedPreferences session = null;
 
     @Override
