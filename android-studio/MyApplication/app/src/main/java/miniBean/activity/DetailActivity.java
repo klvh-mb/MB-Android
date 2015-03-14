@@ -174,7 +174,7 @@ public class DetailActivity extends FragmentActivity {
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
-        api.qnaLanding(postID, commID, new Callback<CommunityPostVM>() {
+        api.qnaLanding(postID, commID, session.getString("sessionID", null), new Callback<CommunityPostVM>() {
             @Override
             public void success(CommunityPostVM post, retrofit.client.Response response) {
 
@@ -433,7 +433,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     public void getComments(Long postID,int offset) {
-        AppController.api.getComments(postID,offset,new Callback<List<CommunityPostCommentVM>>(){
+        AppController.api.getComments(postID,offset,session.getString("sessionID", null),new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {
@@ -445,7 +445,6 @@ public class DetailActivity extends FragmentActivity {
                 listView.setAdapter(listAdapter);
 
                 pagePop.dismiss();
-
             }
 
             @Override

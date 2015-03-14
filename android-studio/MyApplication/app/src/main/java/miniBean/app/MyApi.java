@@ -47,7 +47,7 @@ public interface MyApi {
     public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, @Query("key") String key, Callback<List<CommunityCategoryMapVM>> callback);
 
     @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
-    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, Callback<CommunityPostVM> callback);
+    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, @Query("key") String key, Callback<CommunityPostVM> callback);
 
     @GET("/community/join/{id}") //a function in your api send join request to Community
     public void sendJoinRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
@@ -66,13 +66,11 @@ public interface MyApi {
 
     @Multipart
     @POST("/image/uploadCommentPhoto") //a function in your api upload image for comment
-    public void uploadCommentPhoto(@Part("commentId") String id,
-                                   @Part("comment-photo0") TypedFile photo, Callback<Response> cb);
+    public void uploadCommentPhoto(@Part("commentId") String id, @Part("comment-photo0") TypedFile photo, Callback<Response> cb);
 
     @Multipart
     @POST("/image/uploadPostPhoto") //a function in your api upload image for comment
-    public void uploadPostPhoto(@Part("postId") String id,
-                                   @Part("post-photo0") TypedFile photo, Callback<Response> cb);
+    public void uploadPostPhoto(@Part("postId") String id, @Part("post-photo0") TypedFile photo, Callback<Response> cb);
 
     @GET("/get-headerBar-data")
     //a function in your api to get all header meta data (notifications and requests).
@@ -125,5 +123,5 @@ public interface MyApi {
     public void getBookmark( @Path("offset") Long offset,@Query("key") String key, Callback<List<CommunityPostVM>> cb);
 
     @GET("/comments/{id}/{offset}")
-    public void getComments( @Path("id")Long post_id,@Path("offset") int offset, Callback<List<CommunityPostCommentVM>> cb);
+    public void getComments( @Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
 }
