@@ -87,10 +87,10 @@ public class AppController extends Application {
         Log.d("exitApp", "exit");
 
         Intent i = new Intent(Intent.ACTION_MAIN);
-        //i.setClass(this, LoginActivity.class);
         i.addCategory(Intent.CATEGORY_HOME);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.putExtra("EXIT", true);
+        //i.putExtra("EXIT", true);
+        //i.setClass(this, LoginActivity.class);
         startActivity(i);
 
         // exit

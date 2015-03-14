@@ -102,7 +102,6 @@ public class LoginActivity extends FragmentActivity {
                             startActivity(i);
                             */
                             getCommunityMapCategory();
-                            finish();
                         } else {
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
@@ -171,7 +170,6 @@ public class LoginActivity extends FragmentActivity {
                     startActivity(i);
                     */
                     getCommunityMapCategory();
-                    finish();
                 } else {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
@@ -250,7 +248,6 @@ public class LoginActivity extends FragmentActivity {
                 }
                 Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                 startActivity(i);
-                finish();   // need to finish this activity
             }
 
             @Override

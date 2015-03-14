@@ -99,13 +99,13 @@ public class CommFragment extends Fragment {
                 CommunityPostVM post = feedListAdapter.getItem(position);
                 intent.putExtra("postId", post.getId());
                 intent.putExtra("commId", post.getCid());
-                System.out.println("feeddd::" + post.getN_c());
+                System.out.println("feed::" + post.getN_c());
                 intent.putExtra("comments", post.getN_c());
 
                 startActivity(intent);
             }
         });
-        getNewsFeedByCommuityId(Long.parseLong(getArguments().getString("id")));
+        getNewsFeedByCommunityId(Long.parseLong(getArguments().getString("id")));
         System.out.println("::::::::::::::::::::::::::::::::::::: boolean  " + getArguments().getBoolean("isM", false));
         if (getArguments().getBoolean("isM", false))
             imageView.setImageResource(R.drawable.add);
@@ -120,7 +120,7 @@ public class CommFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
 
-        getNewsFeedByCommuityId(Long.parseLong(getArguments().getString("id")));
+        getNewsFeedByCommunityId(Long.parseLong(getArguments().getString("id")));
         if (!getArguments().getBoolean("isM", false)) {
             imageView.setImageResource(R.drawable.check);
         } else {
@@ -181,7 +181,7 @@ public class CommFragment extends Fragment {
         return view;
     }
 
-    private void getNewsFeedByCommuityId(long id) {
+    private void getNewsFeedByCommunityId(long id) {
         AppController.api.getCommNewsfeed(id, session.getString("sessionID", null), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, retrofit.client.Response response) {

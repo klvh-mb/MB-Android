@@ -53,7 +53,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private boolean likeFlag;
     private LinearLayout linearLayout;
     private ImageView like;
-    private TextView likeText, totalLike;
+    private TextView likeText, totalLike, indexComment;
 
     public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> communityItems) {
         this.activity = activity;
@@ -92,19 +92,26 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         likeText = (TextView) convertView.findViewById(R.id.TextLike);
         linearLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
         totalLike = (TextView) convertView.findViewById(R.id.TotalLike);
+        indexComment = (TextView) convertView.findViewById(R.id.indexComment);
 
         final CommunityPostCommentVM item = communityItems.get(position);
 
-        likeText.setText(activity.getString(R.string.like));
+        // like
         if (item.isLike()) {
             like.setImageResource(R.drawable.liked);
-            //System.out.println("liked - "+item.getD());
         } else {
             like.setImageResource(R.drawable.like);
-            //System.out.println("not liked - "+item.getD());
         }
         if (item.getNol() >= 0) {
-            totalLike.setText(item.getNol() + "");
+            totalLike.setText(item.getNol()+"");
+        }
+
+        // index
+        if (item.isPost()) {
+            indexComment.setVisibility(View.INVISIBLE);
+        } else {
+            indexComment.setVisibility(View.VISIBLE);
+            indexComment.setText("#"+position);
         }
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +130,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                     like.setImageResource(R.drawable.like);
                     int total = item.getNol() - 1;
                     item.setNol(total);
-                    totalLike.setText(total + "");
+                    totalLike.setText(total+"");
                     item.setLike(false);
                 } else {
                     if (item.isPost()) {
@@ -135,7 +142,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                     like.setImageResource(R.drawable.liked);
                     int total = item.getNol() + 1;
                     item.setNol(total);
-                    totalLike.setText(total + "");
+                    totalLike.setText(total+"");
                     item.setLike(true);
                 }
             }

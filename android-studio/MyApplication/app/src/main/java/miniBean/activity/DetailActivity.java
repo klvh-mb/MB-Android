@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,7 +60,7 @@ public class DetailActivity extends FragmentActivity {
     final Integer SELECT_PICTURE = 1;
     public SharedPreferences session = null;
     public MyApi api;
-    public Button PageButton;
+    public Button pageButton;
     ImageView backImage, bookmark, moreAction;
     TextView commentEdit;
     ImageView image;
@@ -110,7 +111,7 @@ public class DetailActivity extends FragmentActivity {
         listView = (ListView) findViewById(R.id.detail_list);
         questionText = (TextView) findViewById(R.id.questionText);
         commentEdit = (TextView) findViewById(R.id.commentBody);
-        PageButton = (Button) findViewById(R.id.page);
+        pageButton = (Button) findViewById(R.id.page);
         final FrameLayout layout_MainMenu;
         layout_MainMenu = (FrameLayout) findViewById(R.id.mainMenu);
 
@@ -122,12 +123,6 @@ public class DetailActivity extends FragmentActivity {
             }
         });
 
-        PageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initiatePopup();
-            }
-        });
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         // getActionBar().setCustomView(R.layout.detail_actionbar,);
         getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.detail_actionbar, null),
@@ -184,8 +179,8 @@ public class DetailActivity extends FragmentActivity {
             public void success(CommunityPostVM post, retrofit.client.Response response) {
 
                 communityName.setText(post.getCn());
-                numPostViews.setText(post.getNov() + "");
-                numPostComments.setText(post.getN_c() + "");
+                numPostViews.setText(post.getNov()+"");
+                numPostComments.setText(post.getN_c()+"");
                 questionText.setText(post.getPtl());
 
                 postVm.setPost(true);
@@ -202,6 +197,16 @@ public class DetailActivity extends FragmentActivity {
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityItems);
                 listView.setAdapter(listAdapter);
 
+                int maxPage = getMaxPage();
+                pageButton.setText("1/"+getMaxPage());
+                if(maxPage > 1) {
+                    pageButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            initiatePopup();
+                        }
+                    });
+                }
             }
 
             @Override
@@ -338,45 +343,38 @@ public class DetailActivity extends FragmentActivity {
             View layout = inflater.inflate(R.layout.pagination_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
             // create a 300px width and 470px height PopupWindow
-            pagePop = new PopupWindow(layout, 450, 700, true);
+            pagePop = new PopupWindow(layout, 450, 1000, true);
             // display the popup in the center
             pagePop.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
             pagePop.setOutsideTouchable(true);
             pagePop.setFocusable(false);
-            ArrayAdapter<String> listAdapter;
-            //ListView list = (ListView) layout.findViewById(R.id.pageList);
-            /*ArrayList<String> List = new ArrayList<String>();
-
-            for (int i = 0; i <noOfComments / DefaultValues.DEFAULT_PAGINATION_COUNT ; i++) {
-                List.addAll(Arrays.asList("page::" + i));
-            }
-            listAdapter = new ArrayAdapter<String>(this, R.layout.page_item, List);
-            list.setAdapter(listAdapter);
-*/
             ListView listView1 = (ListView) layout.findViewById(R.id.pageList);
             ArrayList<String> stringArrayList = new ArrayList<String>();
-            for (int i = 0; i <= noOfComments / DefaultValues.DEFAULT_PAGINATION_COUNT; i++) {
-                stringArrayList.add("Page:: " + (i+1));
+            for (int i = 0; i < getMaxPage(); i++) {
+                stringArrayList.add(getString(R.string.page_before)+(i+1)+getString(R.string.page_after));
             }
-            pageAdapter=new PageListAdapter(this,stringArrayList);
+            pageAdapter = new PageListAdapter(this,stringArrayList);
             listView1.setAdapter(pageAdapter);
 
-           listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                     getComments(getIntent().getLongExtra("postId", 0L),position);
-                    System.out.println("popupin");
+                    Log.d("onItemClick", "Page " + position);
                     pagePop.dismiss();
-
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-
+    private int getMaxPage() {
+        if (noOfComments == 0) {
+            return 1;
+        }
+        return (int)Math.ceil((double)noOfComments / (double)DefaultValues.DEFAULT_PAGINATION_COUNT);
     }
 
     public void getBookmark(Long postId) {

@@ -55,20 +55,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/timeImg"
-                    android:textSize="13dp"
+                    android:textSize="12dp"
                     android:text="11-2015" />
             </RelativeLayout>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/Text4"
+            android:id="@+id/indexComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginRight="5dp"
-            android:text="7"
-            android:textSize="15dp" />
+            android:text="-"
+            android:textSize="12dp" />
 
     </RelativeLayout>
 
@@ -130,7 +130,8 @@
                     android:layout_toRightOf="@+id/TotalLike"
                     android:textColor="#777"
                     android:layout_marginRight="3dp"
-                    android:textSize="13dp" />
+                    android:textSize="13dp"
+                    android:text="@string/like" />
 
                 <TextView
                     android:id="@+id/TotalLike"

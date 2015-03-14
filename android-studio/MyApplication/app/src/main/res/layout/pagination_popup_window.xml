@@ -3,17 +3,18 @@
     android:id="@+id/popupElement"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0"
+    android:background="@drawable/rounded_corner_popup"
     android:orientation="horizontal">
     <RelativeLayout
         android:id="@+id/titlePage"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="35dp"
+        android:gravity="center_vertical|center_horizontal">
         <TextView
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:text="PAGE TITLE"
-            android:textSize="25dp"
+            android:text="@string/goto_page"
+            android:textSize="18dp"
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <ListView

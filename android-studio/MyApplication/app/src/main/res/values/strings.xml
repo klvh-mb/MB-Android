@@ -29,9 +29,12 @@
     <string name="from_community">社群:</string>
     <string name="my_community_tab">我的社群</string>
     <string name="my_community_tab_joined">已加入</string>
-    <string name="my_community_tab_newsfeed">動向</string>
+    <string name="my_community_tab_newsfeed">社群動向</string>
     <string name="like">讚好</string>
     <string name="unlike">取消讚好</string>
+    <string name="goto_page">前往頁數</string>
+    <string name="page_before">第</string>
+    <string name="page_after">頁</string>
 
     <!-- Profile tab -->
     <string name="logout">登出</string>

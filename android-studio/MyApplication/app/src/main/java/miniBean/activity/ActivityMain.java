@@ -30,11 +30,13 @@ public class ActivityMain extends FragmentActivity {
 
         setContentView(R.layout.main_activity);
 
+        /*
         if(getIntent().getBooleanExtra("EXIT", false)){
             AppController.getInstance().clearAll();
             finish();
             return; // add this to prevent from doing unnecessary stuffs
         }
+        */
 
         Configuration config = getResources().getConfiguration();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -126,6 +128,14 @@ public class ActivityMain extends FragmentActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("onDestroy", "clear cache");
+
+        AppController.getInstance().clearAll();
     }
 }
 

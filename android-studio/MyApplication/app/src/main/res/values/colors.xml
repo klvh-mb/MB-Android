@@ -5,6 +5,9 @@
     <color name="light_gray">#ccc</color>
     <color name="dark_gray">#555</color>
     <color name="sharp_pink">#FF6795</color>
+    <color name="light_purple">#ECDAFF</color>
+    <color name="light_purple_2">#FBE7FF</color>
+    <color name="light_purple_3">#FFF5FF</color>
 
     <color name="feed_bg">#d3d6db</color>
     <color name="feed_item_bg">#ffffff</color>

@@ -156,7 +156,10 @@
                     android:background="@drawable/bg_parent_rounded_corner"
                     android:drawablePadding="8dp"
                     android:singleLine="true"
-                    android:layout_margin="5dp"></Button>
+                    android:layout_margin="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:text="1/1"></Button>
 
                 <TextView
                     android:id="@+id/commentBody"
