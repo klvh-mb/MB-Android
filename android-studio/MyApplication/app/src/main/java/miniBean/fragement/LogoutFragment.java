@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import miniBean.R;
+import miniBean.activity.ActivityMain;
 import miniBean.activity.LoginActivity;
+import miniBean.app.AppController;
 import miniBean.app.MyApi;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -41,17 +43,23 @@ public class LogoutFragment extends Fragment {
             public void onClick(View v) {
                 // confirm exit
                 AlertDialog.Builder builder = new AlertDialog.Builder(LogoutFragment.this.getActivity());
-                builder.setMessage(R.string.exit_app)
+                builder.setMessage(R.string.logout_message)
                         .setCancelable(false)
                         .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 // clear session and exit
+                                AppController.getInstance().clearAll();
                                 SharedPreferences.Editor editor = session.edit();
                                 editor.remove("sessionID");
                                 editor.commit();
+
+                                /*
                                 Intent i = new Intent(getActivity(), LoginActivity.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
+                                */
+
+                                AppController.getInstance().exitApp();
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

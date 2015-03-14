@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="Logout"
+            android:text="@string/logout"
             android:textColor="#ffffff"
             android:textSize="22dp" />
     </RelativeLayout>

@@ -40,14 +40,23 @@ public class SplashActivity extends Activity {
 
         setContentView(R.layout.splash_activity);
 
+        /*
+        if( getIntent().getBooleanExtra("EXIT", false)){
+            finish();
+            return; // add this to prevent from doing unnecessary stuffs
+        }
+        */
+
         session = getSharedPreferences("prefs", 0);
-        LocalCache.categoryMapList.add(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
+        LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
         if (session.getString("sessionID", null) != null) {
             Log.d("sessionID", session.getString("sessionID", null));
             AppController.api.getSocialCommunityCategoriesMap(false, session.getString("sessionID", null), new Callback<List<CommunityCategoryMapVM>>() {
                 @Override
                 public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                    LocalCache.categoryMapList.addAll(array);
+                    for (CommunityCategoryMapVM vm : array) {
+                        LocalCache.addCommunityCategoryMapToList(vm);
+                    }
                     new Handler().postDelayed(new Runnable() {
                         public void run() {
                             startActivity(new Intent(SplashActivity.this, ActivityMain.class));

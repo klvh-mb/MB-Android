@@ -1,12 +1,16 @@
 package miniBean.app;
 
 import android.app.Application;
+import android.content.Intent;
+import android.util.Log;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import miniBean.R;
+import miniBean.activity.ActivityMain;
+import miniBean.activity.LoginActivity;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -54,13 +58,14 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         mInstance = this;
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient()).build();
 
         api = restAdapter.create(MyApi.class);
-        System.out.println(" :::::::::::::::::::::::::::::::::::::::::::::::::::::::: ");
+
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
                 .cacheOnDisk(true).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(defaultOptions).build();
@@ -68,5 +73,29 @@ public class AppController extends Application {
         mImageLoader = ImageLoader.getInstance();
 
         ACRA.init(this);
+    }
+
+    /**
+     * Exit app. Clear everything.
+     */
+    public void clearAll() {
+        Log.d("clearAll", "clear cache");
+        LocalCache.clear();
+    }
+
+    public void exitApp() {
+        Log.d("exitApp", "exit");
+
+        Intent i = new Intent(Intent.ACTION_MAIN);
+        //i.setClass(this, LoginActivity.class);
+        i.addCategory(Intent.CATEGORY_HOME);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.putExtra("EXIT", true);
+        startActivity(i);
+
+        // exit
+        android.os.Process.killProcess(android.os.Process.myPid());
+
+        System.exit(1);
     }
 }

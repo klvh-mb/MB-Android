@@ -85,9 +85,9 @@ public class CommunityFragment extends Fragment {
 
 
         System.out.println("Before getCommunity");
-        if (LocalCache.getCommunitiesParentVM() != null) {
+        if (LocalCache.getMyCommunitiesParentVM() != null) {
             System.out.println("in localcache:::::::::::");
-            communityItems.addAll(LocalCache.getCommunitiesParentVM().getCommunities());
+            communityItems.addAll(LocalCache.getMyCommunitiesParentVM().getCommunities());
             listAdapter.notifyDataSetChanged();
             progressBarComm.setVisibility(View.GONE);
         } else {
@@ -103,7 +103,7 @@ public class CommunityFragment extends Fragment {
             @Override
             public void success(CommunitiesParentVM array, retrofit.client.Response response) {
                 filterMyCommunities(array);
-                LocalCache.setCommunitiesParentVM(array);
+                LocalCache.setMyCommunitiesParentVM(array);
                 communityItems.addAll(array.getCommunities());
                 listAdapter.notifyDataSetChanged();
                 progressBarComm.setVisibility(View.GONE);

@@ -96,8 +96,13 @@ public class LoginActivity extends FragmentActivity {
                     @Override
                     public void success(Response response, Response response2) {
                         if (saveToSession(response)) {
+                            /*
                             Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
+                            */
+                            getCommunityMapCategory();
+                            finish();
                         } else {
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
@@ -105,7 +110,7 @@ public class LoginActivity extends FragmentActivity {
 
                     @Override
                     public void failure(RetrofitError retrofitError) {
-                        //retrofitError.printStackTrace();
+                        retrofitError.printStackTrace();
                         if (retrofitError.getResponse().getStatus() == 400) {
                             alert(R.string.login_error_title, R.string.login_id_error_message);
                         } else {
@@ -152,7 +157,6 @@ public class LoginActivity extends FragmentActivity {
         }
         Log.d("sessionID", sb.toString());
         session.edit().putString("sessionID", sb.toString()).apply();
-        getCommunityMapCategory();
         return true;
     }
 
@@ -161,8 +165,13 @@ public class LoginActivity extends FragmentActivity {
             @Override
             public void success(Response response, Response response2) {
                 if (saveToSession(response)) {
+                    /*
                     Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    */
+                    getCommunityMapCategory();
+                    finish();
                 } else {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
@@ -170,7 +179,7 @@ public class LoginActivity extends FragmentActivity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                //retrofitError.printStackTrace();
+                retrofitError.printStackTrace();
                 alert(R.string.login_error_title, R.string.login_error_message);
             }
         });
@@ -203,12 +212,14 @@ public class LoginActivity extends FragmentActivity {
 
                         @Override
                         public void onError(DialogError error) {
+                            error.printStackTrace();
                             // Function to handle error
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
 
                         @Override
                         public void onFacebookError(FacebookError fberror) {
+                            fberror.printStackTrace();
                             // Function to handle Facebook errors
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
@@ -234,15 +245,17 @@ public class LoginActivity extends FragmentActivity {
 
             @Override
             public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                LocalCache.categoryMapList.addAll(array);
+                for (CommunityCategoryMapVM vm : array) {
+                    LocalCache.addCommunityCategoryMapToList(vm);
+                }
                 Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                 startActivity(i);
+                finish();   // need to finish this activity
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors
-
             }
         });
     }
@@ -254,12 +267,8 @@ public class LoginActivity extends FragmentActivity {
                 .setCancelable(false)
                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent i = new Intent(Intent.ACTION_MAIN);
-                        i.addCategory(Intent.CATEGORY_HOME);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtra("EXIT", true);
-                        startActivity(i);
-                        finish();
+                        AppController.getInstance().exitApp();
+                        //finish();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

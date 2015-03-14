@@ -11,94 +11,147 @@
         android:scaleType="fitXY"
         android:gravity="clip_horizontal"
         android:src="@drawable/login_bg" />
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:src="@drawable/logo_login"
-        android:layout_marginTop="20dp" />
-    <LinearLayout
-        android:id="@+id/mainComponent"
-        android:orientation="vertical"
-        android:layout_below="@+id/logo"
+        android:layout_marginTop="30dp" />
+
+    <RelativeLayout
+        android:id="@+id/loginMenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <EditText
-        android:hint="Enter Username"
-        android:textColor="#111"
-        android:id="@+id/userName"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#70ffffff"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginTop="5dp" />
-    <EditText
-        android:textColor="#000000"
-        android:background="#70ffffff"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="15dp"
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="Enter Password"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
-        <TextView
-            android:id="@+id/buttonLogin"
-            android:background="#80CDEB"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="120dp"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:id="@+id/mainComponent"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="Login"
-            android:textAlignment="center"
-            android:gravity="center"
-            android:textSize="22dp"
-            android:textColor="#ffffff"
-            />
-        </LinearLayout>
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="clip_horizontal"
+                    android:src="@drawable/login_user"
+                    android:layout_marginLeft="30dp"
+                    android:baselineAlignBottom="false"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="7dp" />
+                <EditText
+                    android:hint="您的電郵"
+                    android:textColor="#111"
+                    android:id="@+id/userName"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="15dp"
+                    android:editable="true"
+                    android:elevation="3dp"
+                    android:focusable="true"
+                    android:singleLine="true"
+                    android:textSize="20dp"
+                    android:background="#70ffffff"
+                    android:enabled="true" />
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="clip_horizontal"
+                    android:src="@drawable/login_lock"
+                    android:layout_marginLeft="30dp"
+                    android:baselineAlignBottom="false"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="7dp" />
+                <EditText
+                    android:textColor="#000000"
+                    android:background="#70ffffff"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="密碼"
+                    android:inputType="textPassword"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:password="true"
+                    android:focusable="true"
+                    android:enabled="true"
+                    android:editable="true"
+                    android:elevation="3dp"
+                    android:textSize="20dp" />
+            </FrameLayout>
+            <TextView
+                android:id="@+id/buttonLogin"
+                android:background="#80CDEB"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Login"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textSize="22dp"
+                android:textColor="#ffffff"
+                />
+         </LinearLayout>
         <TextView
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot Password ?"
+            android:text="忘記密碼"
             android:textColor="#ffffff"
             android:textSize="14dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/mainComponent"/>
          <TextView
              android:layout_marginTop="15dp"
-             android:layout_marginRight="30dp"
+             android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign Up"
+            android:text="新會員注册"
             android:textColor="#ffffff"
             android:textSize="14dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/mainComponent"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/facebookMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        >
+        android:layout_alignParentTop="false"
+        android:layout_marginBottom="80dp">
         <ImageView
             android:id="@+id/buttonFbLogin"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:src="@drawable/facebook_login"/>
-        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>
 
 

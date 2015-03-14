@@ -8,10 +8,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import miniBean.R;
+import miniBean.app.AppController;
+import miniBean.app.LocalCache;
 import miniBean.fragement.MainFragement;
 import miniBean.fragement.MyProfileFragment;
 
@@ -24,9 +27,11 @@ public class ActivityMain extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main_activity);
 
-        if( getIntent().getBooleanExtra("EXIT", false)){
+        if(getIntent().getBooleanExtra("EXIT", false)){
+            AppController.getInstance().clearAll();
             finish();
             return; // add this to prevent from doing unnecessary stuffs
         }
@@ -106,6 +111,7 @@ public class ActivityMain extends FragmentActivity {
                     .setCancelable(false)
                     .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            AppController.getInstance().clearAll();
                             ActivityMain.super.onBackPressed();
                         }
                     })

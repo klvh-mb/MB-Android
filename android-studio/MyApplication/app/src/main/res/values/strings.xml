@@ -34,11 +34,13 @@
     <string name="unlike">取消讚好</string>
 
     <!-- Profile tab -->
+    <string name="logout">登出</string>
 
     <!-- PN tab -->
 
     <!-- Dialog -->
     <string name="exit_app">是否退出 miniBean小萌豆?</string>
+    <string name="logout_message">確定登出?</string>
     <string name="yes">是</string>
     <string name="no">不是</string>
     <string name="confirm">確定</string>

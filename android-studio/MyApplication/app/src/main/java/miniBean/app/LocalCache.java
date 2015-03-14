@@ -7,10 +7,11 @@ import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 
 public class LocalCache {
-    public static List<CommunityCategoryMapVM> categoryMapList = new ArrayList<>();
-    public static CommunitiesParentVM CommunitiesParentVM;
+    private static List<CommunityCategoryMapVM> communityCategoryMapList = new ArrayList<CommunityCategoryMapVM>();
+    private static CommunitiesParentVM myCommunitiesParentVM;
+    private static Boolean dirty;
 
-    public static Boolean getDirty() {
+    public static Boolean isDirty() {
         return dirty;
     }
 
@@ -18,22 +19,25 @@ public class LocalCache {
         LocalCache.dirty = dirty;
     }
 
-    public static Boolean dirty;
-
-    public static CommunitiesParentVM getCommunitiesParentVM() {
-        return CommunitiesParentVM;
+    public static CommunitiesParentVM getMyCommunitiesParentVM() {
+        return myCommunitiesParentVM;
     }
 
-    public static void setCommunitiesParentVM(CommunitiesParentVM communitiesParentVM) {
-        CommunitiesParentVM = communitiesParentVM;
+    public static void setMyCommunitiesParentVM(CommunitiesParentVM communitiesParentVM) {
+        myCommunitiesParentVM = communitiesParentVM;
     }
 
-    public static List<CommunityCategoryMapVM> getCategoryMapList() {
-        return LocalCache.categoryMapList;
+    public static List<CommunityCategoryMapVM> getCommunityCategoryMapList() {
+        return LocalCache.communityCategoryMapList;
     }
 
-    public static void setCategoryMapList(List<CommunityCategoryMapVM> categoryMapList) {
-        LocalCache.categoryMapList = categoryMapList;
+    public static void addCommunityCategoryMapToList(CommunityCategoryMapVM communityCategoryMap) {
+        LocalCache.communityCategoryMapList.add(communityCategoryMap);
     }
 
+    public static void clear() {
+        communityCategoryMapList = new ArrayList<CommunityCategoryMapVM>();
+        myCommunitiesParentVM = null;
+        dirty = false;
+    }
 }

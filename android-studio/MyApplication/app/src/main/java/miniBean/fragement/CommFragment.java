@@ -83,7 +83,7 @@ public class CommFragment extends Fragment {
         System.out.println("ism:::::::"+ getArguments().getBoolean("isM", false));
         System.out.println("nomember:::::::"+(getArguments().getString("noMember")));
 
-        for (CommunityCategoryMapVM categoryMapVM : LocalCache.categoryMapList) {
+        for (CommunityCategoryMapVM categoryMapVM : LocalCache.getCommunityCategoryMapList()) {
             if (categoryMapVM.communities != null)
                 for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
                     if (vm.getId() == Long.parseLong(getArguments().getString("id"))) {
