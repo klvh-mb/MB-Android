@@ -99,8 +99,10 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         // like
         if (item.isLike()) {
             like.setImageResource(R.drawable.liked);
+            likeText.setTextColor(activity.getResources().getColor(R.color.like_blue));
         } else {
             like.setImageResource(R.drawable.like);
+            likeText.setTextColor(activity.getResources().getColor(R.color.gray));
         }
         if (item.getNol() >= 0) {
             totalLike.setText(item.getNol()+"");
@@ -126,7 +128,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                     } else {
                         unLikeComment(item.getId());
                     }
-                    likeText.setText(activity.getString(R.string.like));
+                    likeText.setTextColor(activity.getResources().getColor(R.color.gray));
                     like.setImageResource(R.drawable.like);
                     int total = item.getNol() - 1;
                     item.setNol(total);
@@ -138,7 +140,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                     } else {
                         likeComment(item.getId());
                     }
-                    likeText.setText(activity.getString(R.string.like));
+                    likeText.setTextColor(activity.getResources().getColor(R.color.like_blue));
                     like.setImageResource(R.drawable.liked);
                     int total = item.getNol() + 1;
                     item.setNol(total);

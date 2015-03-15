@@ -37,6 +37,8 @@ import com.facebook.android.Facebook;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -110,8 +112,15 @@ public class LoginActivity extends FragmentActivity {
                     @Override
                     public void failure(RetrofitError retrofitError) {
                         retrofitError.printStackTrace();
-                        if (retrofitError.getResponse().getStatus() == 400) {
-                            alert(R.string.login_error_title, R.string.login_id_error_message);
+
+                        if (retrofitError.getResponse() != null &&
+                                retrofitError.getResponse().getStatus() == 400) {
+                            String error = LoginActivity.this.getResponseBody(retrofitError.getResponse());
+                            if (!StringUtils.isEmpty(error)) {
+                                alert(getString(R.string.login_error_title), error);
+                            } else {
+                                alert(R.string.login_error_title, R.string.login_id_error_message);
+                            }
                         } else {
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
@@ -131,16 +140,11 @@ public class LoginActivity extends FragmentActivity {
         });
     }
 
-
-    public boolean saveToSession(Response result) {
-        if (result == null) {
-            return false;
-        }
-
+    private String getResponseBody(Response response) {
         BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
         try {
-            reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
             String line;
             try {
                 while ((line = reader.readLine()) != null) {
@@ -148,14 +152,21 @@ public class LoginActivity extends FragmentActivity {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
+    private boolean saveToSession(Response response) {
+        if (response == null) {
             return false;
         }
-        Log.d("sessionID", sb.toString());
-        session.edit().putString("sessionID", sb.toString()).apply();
+
+        String key = getResponseBody(response);
+        Log.d("sessionID", key);
+        session.edit().putString("sessionID", key).apply();
         return true;
     }
 
@@ -278,9 +289,13 @@ public class LoginActivity extends FragmentActivity {
     }
 
     private void alert(int title, int message) {
+        alert(getString(title), getString(message));
+    }
+
+    private void alert(String title, String message) {
         new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
-                .setTitle(getString(title))
-                .setMessage(getString(message))
+                .setTitle(title)
+                .setMessage(message)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
