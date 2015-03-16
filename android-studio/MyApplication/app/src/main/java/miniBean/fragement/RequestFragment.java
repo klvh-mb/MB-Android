@@ -22,15 +22,11 @@ import miniBean.R;
 import miniBean.adapter.RequestListAdapter;
 import miniBean.app.MyApi;
 import miniBean.viewmodel.NotificationVM;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
-
 
 public class RequestFragment extends Fragment {
 
     private static final String TAG = RequestFragment.class.getName();
     public SharedPreferences session = null;
-    public MyApi api;
     RequestListAdapter adapter;
     private ListView listView;
     private List<NotificationVM> requestItems;
@@ -39,13 +35,8 @@ public class RequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.request_list_view, container, false);
+
         session = getActivity().getSharedPreferences("prefs", 0);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
-
-
-        api = restAdapter.create(MyApi.class);
 
         requestItems = new ArrayList<NotificationVM>();
 

@@ -11,15 +11,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import miniBean.R;
-import miniBean.app.MyApi;
 import miniBean.fragement.CommFragment;
 import miniBean.fragement.PostFragment;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
 
 public class CommunityActivity extends FragmentActivity {
     public SharedPreferences session = null;
-    public MyApi api;
     ProgressBar progressBar, spinner;
     ImageView backImage,editAction;
     TextView titleAction;
@@ -27,12 +23,10 @@ public class CommunityActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
-        session = getSharedPreferences("prefs", 0);
+
         setContentView(R.layout.comm_activity);
-        api = restAdapter.create(MyApi.class);
+
+        session = getSharedPreferences("prefs", 0);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.community_actionbar);
@@ -61,7 +55,6 @@ public class CommunityActivity extends FragmentActivity {
                     finish();
             }
         });
-
 
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,28 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.ActivityMain;
 import miniBean.activity.CommunityActivity;
-import miniBean.adapter.RequestListAdapter;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.NewPost;
-import miniBean.viewmodel.NotificationVM;
 import miniBean.viewmodel.PostResponse;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -42,7 +28,6 @@ import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
-
 
 public class PostFragment extends Fragment {
 
@@ -52,7 +37,6 @@ public class PostFragment extends Fragment {
     View actionBarView;
     public SharedPreferences session = null;
     final Integer SELECT_PICTURE = 1;
-    public MyApi api;
     TextView postTitle,postContent,post;
     ImageView postImage,image;
     public Boolean isPhoto = false;
@@ -75,14 +59,13 @@ public class PostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.post, container, false);
+
         session = getActivity().getSharedPreferences("prefs", 0);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
 
         /*getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActivity().getActionBar().setCustomView(R.layout.post_actionbar);
-*/
+        */
+
         actionBarView = inflater.inflate(R.layout.post_actionbar, null);
         //((CommunityActivity)getActivity()).getActionBar().setCustomView(ActionBar.DISPLAY_SHOW_CUSTOM);
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
@@ -93,8 +76,6 @@ public class PostFragment extends Fragment {
         postTitle= (TextView) view.findViewById(R.id.postTitle);
         postImage= (ImageView) view.findViewById(R.id.browseImage);
 
-        //post.setText("hii..........");
-
         postImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +84,6 @@ public class PostFragment extends Fragment {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
                 isPhoto = true;
-
             }
         });
 
@@ -119,11 +99,11 @@ public class PostFragment extends Fragment {
 
             }
         });
-        image= (ImageView) view.findViewById(R.id.image);
-        api = restAdapter.create(MyApi.class);
+        image = (ImageView) view.findViewById(R.id.image);
 
         return view;
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -144,8 +124,8 @@ public class PostFragment extends Fragment {
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }
-    public void setPost(String postString,String postContent)
-    {
+
+    public void setPost(String postString,String postContent) {
         System.out.println(" :::::::::::: "+Long.parseLong(getArguments().getString("id")));
         System.out.println(" :::::::::::: "+postString);
         System.out.println(" :::::::::::: "+postContent);
@@ -179,5 +159,4 @@ public class PostFragment extends Fragment {
             }
         });
     }
-
 }

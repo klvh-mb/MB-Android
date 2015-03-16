@@ -18,7 +18,6 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -26,14 +25,12 @@ import retrofit.client.Response;
 
 public class TopicAdapter extends BaseAdapter {
     public SharedPreferences session = null;
-    public MyApi api;
     Long id;
     int statusCode = 0;
     ImageView imageAction;
     private Activity activity;
     private LayoutInflater inflater;
     private List<CommunitiesWidgetChildVM> communities;
-    private boolean booleanFlag = true;
 
     public TopicAdapter(Activity activity, List<CommunitiesWidgetChildVM> communities) {
         this.activity = activity;

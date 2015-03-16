@@ -25,30 +25,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.CommunityActivity;
 import miniBean.activity.DetailActivity;
-import miniBean.adapter.CommunityListAdapter;
 import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
-import miniBean.app.MyApi;
-import miniBean.util.DefaultValues;
-import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
-
 
 public class CommFragment extends Fragment {
 
     public SharedPreferences session = null;
-    public MyApi api;
     TextView noMember, commName;
     ListView listView;
     FeedListAdapter feedListAdapter;
@@ -59,14 +50,13 @@ public class CommFragment extends Fragment {
     ImageView imageView, backImage;
     ImageView communityCoverPic,communityIcon;
     CommunitiesWidgetChildVM currentCommunity;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View view = inflater.inflate(R.layout.community_activity, container, false);
+
         session = getActivity().getSharedPreferences("prefs", 0);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
 
         noMember = (TextView) view.findViewById(R.id.noMemberComm);
         commName = (TextView) view.findViewById(R.id.commNameText);
@@ -75,9 +65,9 @@ public class CommFragment extends Fragment {
         feedListAdapter = new FeedListAdapter(getActivity(), feedItems);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
-         communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
-         communityIcon = (ImageView) view.findViewById(R.id.commIconView);
-         spinner= (ProgressBar) view.findViewById(R.id.loadCover);
+        communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
+        communityIcon = (ImageView) view.findViewById(R.id.commIconView);
+        spinner = (ProgressBar) view.findViewById(R.id.loadCover);
         System.out.print("commfragment:::::::::::::::::::::::::::");
         System.out.println("id:::::::::"+getArguments().getString("id"));
         System.out.println("ism:::::::"+ getArguments().getBoolean("isM", false));

@@ -21,26 +21,22 @@ import java.lang.reflect.Field;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
-import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.OkClient;
-import retrofit.client.Response;
-
 
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = ProfileFragment.class.getName();
     public SharedPreferences session = null;
-    public MyApi api;
     ImageView userCoverPic, userPic;
     ProgressBar spinner;
     TextView question, answer, bookmarks, userName;
     LinearLayout questionMenu,answerMenu,bookmarksMenu;
     Long userId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);

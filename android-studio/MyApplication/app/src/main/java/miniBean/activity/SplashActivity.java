@@ -40,6 +40,8 @@ public class SplashActivity extends Activity {
 
         setContentView(R.layout.splash_activity);
 
+        session = getSharedPreferences("prefs", 0);
+
         /*
         if( getIntent().getBooleanExtra("EXIT", false)){
             finish();
@@ -47,7 +49,6 @@ public class SplashActivity extends Activity {
         }
         */
 
-        session = getSharedPreferences("prefs", 0);
         LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
         if (session.getString("sessionID", null) != null) {
             Log.d("sessionID", session.getString("sessionID", null));

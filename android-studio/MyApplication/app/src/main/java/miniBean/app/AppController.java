@@ -60,10 +60,10 @@ public class AppController extends Application {
         super.onCreate();
 
         mInstance = this;
+
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient()).build();
-
         api = restAdapter.create(MyApi.class);
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true)

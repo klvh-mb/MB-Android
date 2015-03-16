@@ -20,21 +20,16 @@ import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
-
 
 public class NewsFeedFragement extends Fragment {
 
     private static final String TAG = NewsFeedFragement.class.getName();
     public SharedPreferences session = null;
-    public MyApi api;
     ProgressBar progressBarFeed;
     private ListView listView;
     private BaseAdapter listAdapter;
@@ -43,14 +38,9 @@ public class NewsFeedFragement extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        //getMaEventsSao().addCacheChangedListener(this);
         View view = inflater.inflate(R.layout.newsfeed_activity, container, false);
-        session = getActivity().getSharedPreferences("prefs", 0);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
 
-        api = restAdapter.create(MyApi.class);
+        session = getActivity().getSharedPreferences("prefs", 0);
 
         listView = (ListView) view.findViewById(R.id.list);
         progressBarFeed = (ProgressBar) view.findViewById(R.id.progressFeed);
@@ -71,8 +61,6 @@ public class NewsFeedFragement extends Fragment {
         });
 
         listView.setOnScrollListener(new InfiniteScrollListener(1) {
-
-
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 System.out.println("totalCount::" + totalItemsCount);
@@ -125,7 +113,7 @@ public class NewsFeedFragement extends Fragment {
 
     private void getNewsFeed(int offset) {
         System.out.println("newsfedd::::");
-        api.getNewsfeed(Long.valueOf(offset), session.getString("sessionID", null), new Callback<PostArray>() {
+        AppController.api.getNewsfeed(Long.valueOf(offset), session.getString("sessionID", null), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, retrofit.client.Response response) {
                 System.out.println("innewsfeed::"+array.getPosts());

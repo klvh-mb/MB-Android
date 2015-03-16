@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,36 +19,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
 import miniBean.adapter.PageListAdapter;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
+import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
@@ -59,7 +52,6 @@ public class DetailActivity extends FragmentActivity {
 
     final Integer SELECT_PICTURE = 1;
     public SharedPreferences session = null;
-    public MyApi api;
     public Button pageButton;
     ImageView backImage, bookmark, moreAction;
     TextView commentEdit;
@@ -79,6 +71,8 @@ public class DetailActivity extends FragmentActivity {
     public int noOfComments;
     CommunityPostCommentVM postVm = new CommunityPostCommentVM();
 
+    private ActivityUtil activityUtil;
+
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -97,12 +91,12 @@ public class DetailActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
+
         setContentView(R.layout.detail_activity);
+
         session = getSharedPreferences("prefs", 0);
-        api = restAdapter.create(MyApi.class);
+
+        activityUtil = new ActivityUtil(this);
 
         communityName = (TextView) findViewById(R.id.communityName);
         numPostViews = (TextView) findViewById(R.id.numPostViews);
@@ -174,13 +168,13 @@ public class DetailActivity extends FragmentActivity {
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
-        api.qnaLanding(postID, commID, session.getString("sessionID", null), new Callback<CommunityPostVM>() {
+        AppController.api.qnaLanding(postID, commID, session.getString("sessionID", null), new Callback<CommunityPostVM>() {
             @Override
             public void success(CommunityPostVM post, retrofit.client.Response response) {
 
                 communityName.setText(post.getCn());
-                numPostViews.setText(post.getNov()+"");
-                numPostComments.setText(post.getN_c()+"");
+                numPostViews.setText(post.getNov() + "");
+                numPostComments.setText(post.getN_c() + "");
                 questionText.setText(post.getPtl());
 
                 postVm.setPost(true);
@@ -198,8 +192,8 @@ public class DetailActivity extends FragmentActivity {
                 listView.setAdapter(listAdapter);
 
                 int maxPage = getMaxPage();
-                pageButton.setText("1/"+getMaxPage());
-                if(maxPage > 1) {
+                pageButton.setText("1/" + getMaxPage());
+                if (maxPage > 1) {
                     pageButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -291,7 +285,6 @@ public class DetailActivity extends FragmentActivity {
     }
 
     public String getPath(Uri uri) {
-
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = this.managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -300,7 +293,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void answerQuestion(String commentString) {
-        api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), session.getString("sessionID", null), new Callback<CommentResponse>() {
+        AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), session.getString("sessionID", null), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, retrofit.client.Response response) {
                 if (isPhoto)

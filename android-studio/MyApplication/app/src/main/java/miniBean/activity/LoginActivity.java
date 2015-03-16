@@ -24,12 +24,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
@@ -39,18 +36,15 @@ import com.facebook.android.FacebookError;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.app.MyApi;
+import miniBean.util.ActivityUtil;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -62,39 +56,35 @@ public class LoginActivity extends FragmentActivity {
     // Instance of Facebook Class
     private Facebook facebook = new Facebook(APP_ID);
 
-    private final String PENDING_ACTION_BUNDLE_KEY = "com.facebook.samples.hellofacebook:PendingAction";
-
     public SharedPreferences session = null;
-    public SharedPreferences mPref = null;
-    public MyApi yourUsersApi;
     public AsyncFacebookRunner mAsyncRunner = null;
     private EditText username = null;
     private EditText password = null;
     private TextView login;
     private ImageView btnFbLogin;
 
+    private ActivityUtil activityUtil;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        session = getSharedPreferences("prefs", 0);
-        //printKeyHash(this);
-        APP_ID = getResources().getString(R.string.app_id);
-
 
         setContentView(R.layout.login);
-        mAsyncRunner = new AsyncFacebookRunner(facebook);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .build();
 
-        yourUsersApi = restAdapter.create(MyApi.class);
+        session = getSharedPreferences("prefs", 0);
+
+        activityUtil = new ActivityUtil(this);
+
+        APP_ID = getResources().getString(R.string.app_id);
+        mAsyncRunner = new AsyncFacebookRunner(facebook);
+
         username = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
         btnFbLogin = (ImageView) findViewById(R.id.buttonFbLogin);
         login = (TextView) findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                yourUsersApi.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
+                AppController.api.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
                         if (saveToSession(response)) {
@@ -115,7 +105,7 @@ public class LoginActivity extends FragmentActivity {
 
                         if (retrofitError.getResponse() != null &&
                                 retrofitError.getResponse().getStatus() == 400) {
-                            String error = LoginActivity.this.getResponseBody(retrofitError.getResponse());
+                            String error = LoginActivity.this.activityUtil.getResponseBody(retrofitError.getResponse());
                             if (!StringUtils.isEmpty(error)) {
                                 alert(getString(R.string.login_error_title), error);
                             } else {
@@ -140,38 +130,19 @@ public class LoginActivity extends FragmentActivity {
         });
     }
 
-    private String getResponseBody(Response response) {
-        BufferedReader reader = null;
-        StringBuilder sb = new StringBuilder();
-        try {
-            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
-            String line;
-            try {
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return sb.toString();
-    }
-
     private boolean saveToSession(Response response) {
         if (response == null) {
             return false;
         }
 
-        String key = getResponseBody(response);
+        String key = activityUtil.getResponseBody(response);
         Log.d("sessionID", key);
         session.edit().putString("sessionID", key).apply();
         return true;
     }
 
     private void doLoginUsingAccessToken(String access_token) {
-        yourUsersApi.loginByFacebbok(access_token, new Callback<Response>() {
+        AppController.api.loginByFacebbok(access_token, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 if (saveToSession(response)) {

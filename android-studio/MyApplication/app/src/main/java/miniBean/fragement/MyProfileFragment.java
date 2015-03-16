@@ -20,7 +20,6 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.ActivityMain;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.HeaderDataVM;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
@@ -30,7 +29,6 @@ import retrofit.client.Response;
 public class MyProfileFragment extends Fragment {
 
     public List<NotificationVM> requestNotif, notifAll;
-    public MyApi api;
     public SharedPreferences session = null;
     ImageView request, notification, setting, back;
     Gson gson = new Gson();

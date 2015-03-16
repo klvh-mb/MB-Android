@@ -14,10 +14,8 @@ import android.widget.Button;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.LocalCache;
 import miniBean.fragement.MainFragement;
 import miniBean.fragement.MyProfileFragment;
-
 
 public class ActivityMain extends FragmentActivity {
 

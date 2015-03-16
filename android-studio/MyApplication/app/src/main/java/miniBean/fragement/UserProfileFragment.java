@@ -1,6 +1,5 @@
 package miniBean.fragement;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,22 +20,15 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.lang.reflect.Field;
 
 import miniBean.R;
-import miniBean.activity.LoginActivity;
-import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
-
 
 public class UserProfileFragment extends Fragment {
 
     private static final String TAG = UserProfileFragment.class.getName();
     public SharedPreferences session = null;
-    public MyApi api;
     ImageView userCoverPic, userPic;
     ProgressBar spinner;
     TextView question, answer, bookmarks, userName;
@@ -46,10 +38,8 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.user_profile_fragement, container, false);
+
         session = getActivity().getSharedPreferences("prefs", 0);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
 
         userName = (TextView) view.findViewById(R.id.usernameText);
         question = (TextView) view.findViewById(R.id.Edit1);
@@ -59,7 +49,7 @@ public class UserProfileFragment extends Fragment {
         spinner = (ProgressBar) view.findViewById(R.id.imageLoader);
         questionMenu= (LinearLayout) view.findViewById(R.id.menuQuestions);
         answerMenu= (LinearLayout) view.findViewById(R.id.menuAnswer);
-       // bookmarksMenu= (LinearLayout) view.findViewById(R.id.menuBookmarks);
+        // bookmarksMenu= (LinearLayout) view.findViewById(R.id.menuBookmarks);
 
         final String id=getArguments().getString("id");
         System.out.println("nnnnnnnnnnnnn"+getArguments().getString("name"));
