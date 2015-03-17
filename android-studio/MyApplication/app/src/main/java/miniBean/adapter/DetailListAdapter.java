@@ -3,10 +3,8 @@ package miniBean.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
@@ -14,7 +12,6 @@ import android.os.AsyncTask;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +45,6 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private TextView ownerName, commentText, postTime;
     private Activity activity;
     private LayoutInflater inflater;
-    public SharedPreferences session = null;
     private List<CommunityPostCommentVM> communityItems;
     private boolean likeFlag;
     private LinearLayout linearLayout;
@@ -62,6 +58,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     @Override
     public int getCount() {
+        if (communityItems == null)
+            return 0;
         return communityItems.size();
     }
 
@@ -83,7 +81,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
             convertView = inflater.inflate(R.layout.detail_item, null);
-        session = activity.getSharedPreferences("prefs", 0);
+
         ownerName = (TextView) convertView.findViewById(R.id.postedBy);
         postTime = (TextView) convertView.findViewById(R.id.postedOn);
         commentText = (TextView) convertView.findViewById(R.id.commentText);
@@ -199,7 +197,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     void likeComment(Long id) {
-        AppController.api.setLikeComment(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.setLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
 
             @Override
             public void success(Response response, Response response2) {
@@ -214,7 +212,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     void unLikeComment(Long id) {
-        AppController.api.setUnLikeComment(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.setUnLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
 
             @Override
             public void success(Response response, Response response2) {
@@ -229,7 +227,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     void likePost(Long id) {
-        AppController.api.setLikePost(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.setLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
 
             @Override
             public void success(Response response, Response response2) {
@@ -244,7 +242,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     void unLikePost(Long id) {
-        AppController.api.setUnLikePost(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.setUnLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
 
             @Override
             public void success(Response response, Response response2) {

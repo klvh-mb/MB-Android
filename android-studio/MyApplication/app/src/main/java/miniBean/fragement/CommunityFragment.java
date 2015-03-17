@@ -1,7 +1,6 @@
 package miniBean.fragement;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,7 +27,6 @@ import retrofit.RetrofitError;
 public class CommunityFragment extends Fragment {
 
     private static final String TAG = CommunityFragment.class.getName();
-    public SharedPreferences session = null;
     ProgressBar progressBarComm;
     private ListView listView;
     private CommunityListAdapter listAdapter;
@@ -38,8 +36,6 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.community_list_view, container, false);
-
-        session = getActivity().getSharedPreferences("prefs", 0);
 
         listView = (ListView) view.findViewById(R.id.listComm);
         progressBarComm = (ProgressBar) view.findViewById(R.id.progressComm1);
@@ -89,7 +85,7 @@ public class CommunityFragment extends Fragment {
 
     private void getCommunity() {
         System.out.println("In getCommunity");
-        AppController.api.getMyCommunities(session.getString("sessionID", null), new Callback<CommunitiesParentVM>() {
+        AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>() {
             @Override
             public void success(CommunitiesParentVM array, retrofit.client.Response response) {
                 filterMyCommunities(array);

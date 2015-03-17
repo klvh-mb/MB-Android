@@ -221,22 +221,22 @@ public class LoginActivity extends FragmentActivity {
     }
 
     public void getCommunityMapCategory(){
-        AppController.api.getSocialCommunityCategoriesMap(false, session.getString("sessionID", null), new Callback<List<CommunityCategoryMapVM>>() {
+        AppController.api.getSocialCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
+                new Callback<List<CommunityCategoryMapVM>>() {
+                    @Override
+                    public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
+                        for (CommunityCategoryMapVM vm : array) {
+                            LocalCache.addCommunityCategoryMapToList(vm);
+                        }
+                        Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                        startActivity(i);
+                    }
 
-            @Override
-            public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                for (CommunityCategoryMapVM vm : array) {
-                    LocalCache.addCommunityCategoryMapToList(vm);
-                }
-                Intent i = new Intent(LoginActivity.this, ActivityMain.class);
-                startActivity(i);
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        retrofitError.printStackTrace(); //to see if you have errors
+                    }
+                });
     }
 
     @Override

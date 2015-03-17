@@ -33,15 +33,12 @@ public class TopicFragment extends Fragment {
         listView.setAdapter(topicAdapter);
         topicAdapter.notifyDataSetChanged();
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
                 Intent intent = new Intent(getActivity(), CommunityActivity.class);
 
-                String noPost = "100";
+                String noPost = "-";
 
                 CommunitiesWidgetChildVM childVM = topicAdapter.getItem(position);
 
@@ -55,7 +52,6 @@ public class TopicFragment extends Fragment {
                 startActivity(intent);
 
                 // getFragmentManager().beginTransaction().remove(TopicFragment.this).commit();
-
             }
         });
 

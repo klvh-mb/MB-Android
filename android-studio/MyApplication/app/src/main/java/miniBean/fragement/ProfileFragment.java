@@ -1,6 +1,5 @@
 package miniBean.fragement;
 
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,7 +29,6 @@ import retrofit.client.OkClient;
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = ProfileFragment.class.getName();
-    public SharedPreferences session = null;
     ImageView userCoverPic, userPic;
     ProgressBar spinner;
     TextView question, answer, bookmarks, userName;
@@ -41,11 +39,10 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.profile_view, container, false);
-        session = getActivity().getSharedPreferences("prefs", 0);
+
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
                 .setClient(new OkClient()).build();
-
 
         userName = (TextView) view.findViewById(R.id.usernameText);
         bookmarks = (TextView) view.findViewById(R.id.Edit1);
@@ -120,7 +117,7 @@ public class ProfileFragment extends Fragment {
     }
 
     void getUserInfo() {
-        AppController.api.getUserInfo(session.getString("sessionID", null), new Callback<UserVM>() {
+        AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
                 userId=user.getId();

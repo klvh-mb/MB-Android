@@ -1,7 +1,6 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -13,8 +12,6 @@ import miniBean.fragement.UserProfileFragment;
 
 public class ProfileActivity extends FragmentActivity {
 
-    public SharedPreferences session = null;
-
     private ImageView request,notification,settings;
 
     @Override
@@ -22,8 +19,6 @@ public class ProfileActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.friend_profile_view);
-
-        session = getSharedPreferences("prefs", 0);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.profile_actionbar);

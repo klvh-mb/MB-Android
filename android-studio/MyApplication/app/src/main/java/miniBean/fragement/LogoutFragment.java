@@ -15,15 +15,12 @@ import miniBean.app.AppController;
 
 public class LogoutFragment extends Fragment {
     private static final String TAG = LogoutFragment.class.getName();
-    public SharedPreferences session = null;
     RelativeLayout relativeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.logout, container, false);
-
-        session = getActivity().getSharedPreferences("prefs", 0);
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.logout);
 
@@ -38,9 +35,7 @@ public class LogoutFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int id) {
                                 // clear session and exit
                                 AppController.getInstance().clearAll();
-                                SharedPreferences.Editor editor = session.edit();
-                                editor.remove("sessionID");
-                                editor.commit();
+                                AppController.getInstance().clearPreferences();
 
                                 /*
                                 Intent i = new Intent(getActivity(), LoginActivity.class);

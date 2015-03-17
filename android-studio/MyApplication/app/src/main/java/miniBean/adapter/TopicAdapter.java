@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class TopicAdapter extends BaseAdapter {
-    public SharedPreferences session = null;
     Long id;
     int statusCode = 0;
     ImageView imageAction;
@@ -39,6 +37,8 @@ public class TopicAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (communities == null)
+            return 0;
         return communities.size();
     }
 
@@ -65,17 +65,13 @@ public class TopicAdapter extends BaseAdapter {
         TextView noMembers = (TextView) convertView.findViewById(R.id.noMember);
         imageAction = (ImageView) convertView.findViewById(R.id.mem_join);
 
-
         ImageView communityPic = (ImageView) convertView
                 .findViewById(R.id.communityImg);
-
 
         final CommunitiesWidgetChildVM item = communities.get(position);
 
         commName.setText(item.getDn());
         noMembers.setText(item.getMm().toString());
-
-        session = activity.getSharedPreferences("prefs", 0);
 
         AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
 
@@ -84,7 +80,6 @@ public class TopicAdapter extends BaseAdapter {
         } else {
             imageAction.setImageResource(R.drawable.check);
         }
-
 
         imageAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,9 +142,8 @@ public class TopicAdapter extends BaseAdapter {
         return convertView;
     }
 
-
     public void sendJoinRequest(Long id) {
-        AppController.api.sendJoinRequest(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.sendJoinRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 LocalCache.setDirty(true);
@@ -163,7 +157,7 @@ public class TopicAdapter extends BaseAdapter {
     }
 
     public void leaveCommunity(Long id) {
-        AppController.api.sendLeaveRequest(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.sendLeaveRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 LocalCache.setDirty(true);

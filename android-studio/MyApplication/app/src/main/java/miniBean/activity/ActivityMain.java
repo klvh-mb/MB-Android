@@ -41,7 +41,6 @@ public class ActivityMain extends FragmentActivity {
         MainFragement mainFragement = new MainFragement();
         fragmentTransaction.replace(R.id.placeHolder, mainFragement).commit();
 
-
         actionBar = getActionBar();
         actionBar.hide();
 
@@ -64,7 +63,6 @@ public class ActivityMain extends FragmentActivity {
                 MyProfileFragment profileFragement = new MyProfileFragment();
                 fragmentTransaction.replace(R.id.placeHolder, profileFragement).commit();
 
-
                 Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.profile_sel);
                 img.setBounds(0, 0, 60, 60);
                 profile.setCompoundDrawables(img, null, null, null);
@@ -74,8 +72,6 @@ public class ActivityMain extends FragmentActivity {
                 icon.setBounds(0, 0, 60, 60);
                 community.setCompoundDrawables(icon, null, null, null);
                 community.setTextColor(Color.BLACK);
-
-
             }
         });
 
@@ -98,7 +94,6 @@ public class ActivityMain extends FragmentActivity {
                 img.setBounds(0, 0, 60, 60);
                 community.setCompoundDrawables(img, null, null, null);
                 community.setTextColor(Color.parseColor("#E63E7C"));
-
             }
         });
     }

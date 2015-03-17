@@ -3,7 +3,6 @@ package miniBean.fragement;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,7 +38,6 @@ import retrofit.client.Response;
 
 public class CommFragment extends Fragment {
 
-    public SharedPreferences session = null;
     TextView noMember, commName;
     ListView listView;
     FeedListAdapter feedListAdapter;
@@ -55,8 +53,6 @@ public class CommFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View view = inflater.inflate(R.layout.community_activity, container, false);
-
-        session = getActivity().getSharedPreferences("prefs", 0);
 
         noMember = (TextView) view.findViewById(R.id.noMemberComm);
         commName = (TextView) view.findViewById(R.id.commNameText);
@@ -172,7 +168,7 @@ public class CommFragment extends Fragment {
     }
 
     private void getNewsFeedByCommunityId(long id) {
-        AppController.api.getCommNewsfeed(id, session.getString("sessionID", null), new Callback<PostArray>() {
+        AppController.api.getCommNewsfeed(id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, retrofit.client.Response response) {
                 feedItems.addAll(array.getPosts());
@@ -209,7 +205,7 @@ public class CommFragment extends Fragment {
     }
 
     public void sendJoinRequest(Long id) {
-        AppController.api.sendJoinRequest(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.sendJoinRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
             }
@@ -222,7 +218,7 @@ public class CommFragment extends Fragment {
     }
 
     public void leaveCommunity(Long id) {
-        AppController.api.sendLeaveRequest(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.sendLeaveRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
             }

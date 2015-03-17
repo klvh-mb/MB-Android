@@ -3,7 +3,6 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -51,7 +50,6 @@ import retrofit.mime.TypedFile;
 public class DetailActivity extends FragmentActivity {
 
     final Integer SELECT_PICTURE = 1;
-    public SharedPreferences session = null;
     public Button pageButton;
     ImageView backImage, bookmark, moreAction;
     TextView commentEdit;
@@ -93,8 +91,6 @@ public class DetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.detail_activity);
-
-        session = getSharedPreferences("prefs", 0);
 
         activityUtil = new ActivityUtil(this);
 
@@ -168,7 +164,7 @@ public class DetailActivity extends FragmentActivity {
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
-        AppController.api.qnaLanding(postID, commID, session.getString("sessionID", null), new Callback<CommunityPostVM>() {
+        AppController.api.qnaLanding(postID, commID, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
             @Override
             public void success(CommunityPostVM post, retrofit.client.Response response) {
 
@@ -293,7 +289,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void answerQuestion(String commentString) {
-        AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), session.getString("sessionID", null), new Callback<CommentResponse>() {
+        AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, retrofit.client.Response response) {
                 if (isPhoto)
@@ -371,7 +367,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     public void getBookmark(Long postId) {
-        AppController.api.setBookmark(postId, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.setBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 bookmark.setImageResource(R.drawable.bookmarked);
@@ -385,7 +381,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     public void unGetBookmark(Long postId) {
-        AppController.api.setUnBookmark(postId, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.setUnBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 bookmark.setImageResource(R.drawable.bookmark);
@@ -426,7 +422,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     public void getComments(Long postID,int offset) {
-        AppController.api.getComments(postID,offset,session.getString("sessionID", null),new Callback<List<CommunityPostCommentVM>>(){
+        AppController.api.getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {

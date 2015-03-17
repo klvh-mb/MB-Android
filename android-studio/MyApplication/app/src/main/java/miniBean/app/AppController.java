@@ -2,6 +2,7 @@ package miniBean.app;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -50,6 +51,7 @@ public class AppController extends Application {
     public static ImageLoader mImageLoader;
     public static MyApi api;
     private static AppController mInstance;
+    private SharedPreferences session;
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -60,6 +62,8 @@ public class AppController extends Application {
         super.onCreate();
 
         mInstance = this;
+
+        session = getSharedPreferences("prefs", 0);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -81,6 +85,18 @@ public class AppController extends Application {
     public void clearAll() {
         Log.d("clearAll", "clear cache");
         LocalCache.clear();
+    }
+
+    public void clearPreferences() {
+        if (session == null)
+            session = getSharedPreferences("prefs", 0);
+        SharedPreferences.Editor editor = session.edit();
+        editor.remove("sessionID");
+        editor.commit();
+    }
+
+    public String getSessionId() {
+        return session.getString("sessionID", null);
     }
 
     public void exitApp() {

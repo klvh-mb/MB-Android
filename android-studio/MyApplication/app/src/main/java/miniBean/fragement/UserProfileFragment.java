@@ -1,6 +1,5 @@
 package miniBean.fragement;
 
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,7 +27,6 @@ import retrofit.RetrofitError;
 public class UserProfileFragment extends Fragment {
 
     private static final String TAG = UserProfileFragment.class.getName();
-    public SharedPreferences session = null;
     ImageView userCoverPic, userPic;
     ProgressBar spinner;
     TextView question, answer, bookmarks, userName;
@@ -38,8 +36,6 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.user_profile_fragement, container, false);
-
-        session = getActivity().getSharedPreferences("prefs", 0);
 
         userName = (TextView) view.findViewById(R.id.usernameText);
         question = (TextView) view.findViewById(R.id.Edit1);
@@ -100,7 +96,7 @@ public class UserProfileFragment extends Fragment {
     }
 
     void getUserInfo() {
-        AppController.api.getUserInfo(session.getString("sessionID", null), new Callback<UserVM>() {
+        AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
 
