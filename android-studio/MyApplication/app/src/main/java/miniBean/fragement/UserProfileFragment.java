@@ -41,11 +41,11 @@ public class UserProfileFragment extends Fragment {
         question = (TextView) view.findViewById(R.id.Edit1);
         answer = (TextView) view.findViewById(R.id.Edit2);
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
-        userPic = (ImageView) view.findViewById(R.id.userImage);
+        userPic = (ImageView) view.findViewById(R.id.userImages);
         spinner = (ProgressBar) view.findViewById(R.id.imageLoader);
         questionMenu= (LinearLayout) view.findViewById(R.id.menuQuestions);
         answerMenu= (LinearLayout) view.findViewById(R.id.menuAnswer);
-        // bookmarksMenu= (LinearLayout) view.findViewById(R.id.menuBookmarks);
+       // bookmarksMenu= (LinearLayout) view.findViewById(R.id.menuBookmarks);
 
         final String id=getArguments().getString("id");
         System.out.println("nnnnnnnnnnnnn"+getArguments().getString("name"));
@@ -55,7 +55,7 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle=new Bundle();
-                bundle.putString("id",getArguments().getString("id"));
+                bundle.putLong("id",getArguments().getLong("oid"));
                 bundle.putString("key","userquestion");
                 NewsFeedFragement fragment = new NewsFeedFragement();
                 FragmentManager fragmentManager = getFragmentManager();
@@ -77,7 +77,7 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle=new Bundle();
-                bundle.putString("id",getArguments().getString("id"));
+                bundle.putLong("id",getArguments().getLong("oid"));
                 bundle.putString("key","useranswer");
                 NewsFeedFragement fragment = new NewsFeedFragement();
                 FragmentManager fragmentManager = getFragmentManager();
@@ -121,7 +121,11 @@ public class UserProfileFragment extends Fragment {
                         spinner.setVisibility(View.GONE);
                     }
                 });
-                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + user.getId(), userPic);
+                DisplayImageOptions options = new DisplayImageOptions.Builder()
+                        .displayer(new RoundedBitmapDisplayer(25)) // default
+                        .build();
+                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getArguments().getLong("oid"), userPic);
+                System.out.println("userrrrrrrrr::::::::::"+getArguments().getLong("oid"));
             }
 
             @Override

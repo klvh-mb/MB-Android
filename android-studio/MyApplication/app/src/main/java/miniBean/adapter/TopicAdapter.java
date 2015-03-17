@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
+import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -24,6 +26,7 @@ import retrofit.client.Response;
 
 public class TopicAdapter extends BaseAdapter {
     Long id;
+    public SharedPreferences session = null;
     int statusCode = 0;
     ImageView imageAction;
     private Activity activity;
@@ -61,6 +64,7 @@ public class TopicAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.topic_item, null);
 
+
         TextView commName = (TextView) convertView.findViewById(R.id.commName);
         TextView noMembers = (TextView) convertView.findViewById(R.id.noMember);
         imageAction = (ImageView) convertView.findViewById(R.id.mem_join);
@@ -69,7 +73,7 @@ public class TopicAdapter extends BaseAdapter {
                 .findViewById(R.id.communityImg);
 
         final CommunitiesWidgetChildVM item = communities.get(position);
-
+        session = activity.getSharedPreferences("prefs", 0);
         commName.setText(item.getDn());
         noMembers.setText(item.getMm().toString());
 
@@ -147,6 +151,7 @@ public class TopicAdapter extends BaseAdapter {
             @Override
             public void success(Response response, Response response2) {
                 LocalCache.setDirty(true);
+                getMyCommunities();
             }
 
             @Override
@@ -168,5 +173,21 @@ public class TopicAdapter extends BaseAdapter {
                 retrofitError.printStackTrace(); //to see if you have errors
             }
         });
+    }
+    public   void getMyCommunities()
+    {
+        AppController.api.getMyCommunities(session.getString("sessionID", null), new Callback<CommunitiesParentVM>(){
+
+            @Override
+            public void success(CommunitiesParentVM communitiesParentVM, Response response) {
+                LocalCache.setMyCommunitiesParentVM(communitiesParentVM);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+
     }
 }

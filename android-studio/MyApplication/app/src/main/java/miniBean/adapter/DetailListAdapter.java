@@ -54,7 +54,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private List<CommunityPostCommentVM> communityItems;
     private boolean likeFlag;
     private LinearLayout linearLayout;
-    private ImageView like;
+    private ImageView like,postImage;
     private TextView likeText, totalLike, indexComment;
     private int page;
 
@@ -106,7 +106,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         linearLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
         totalLike = (TextView) convertView.findViewById(R.id.TotalLike);
         indexComment = (TextView) convertView.findViewById(R.id.indexComment);
-
+        postImage= (ImageView) convertView.findViewById(R.id.postImage);
         final CommunityPostCommentVM item = communityItems.get(position);
 
         // like
@@ -181,8 +181,9 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity, ProfileActivity.class);
-                i.putExtra("id", item.getOid().toString());
+                i.putExtra("oid", item.getOid());
                 i.putExtra("name", item.getOn());
+                System.out.println("owner"+item.getOid());
                 activity.startActivity(i);
             }
         });
@@ -198,6 +199,26 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
 
         ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(), userPic, options);
+
+
+        System.out.println("hasimage::::"+item.hasImage);
+        if(item.hasImage)
+        {
+
+            System.out.println("getimage::::"+item.getImgs().toString());
+            Long[] ids = item.getImgs();
+            System.out.println("iddddd"+ids[0]);
+            postImage.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-post-image-by-id/" + ids[0], postImage);
+        }
+        else{
+
+            postImage.setVisibility(View.GONE);
+        }
+       /* if(!item.hasImage)
+        {
+            postImage.setVisibility(View.GONE);
+        }*/
 
         /* AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getOid(), userPic,new SimpleImageLoadingListener(){
             public void onLoadingStarted(String imageUri, View view) {

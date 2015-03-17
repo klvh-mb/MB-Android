@@ -27,10 +27,12 @@ public class ProfileActivity extends FragmentActivity {
         notification = (ImageView) findViewById(R.id.moreAction);
         settings = (ImageView) findViewById(R.id.setting);
 
-        String id = getIntent().getStringExtra("id");
+
+        String id = getIntent().getStringExtra("oid");
         String name = getIntent().getStringExtra("name");
+        System.out.println("profileActivity::::::"+id);
         Bundle bundle = new Bundle();
-        bundle.putString("id",id);
+        bundle.putLong("oid", getIntent().getLongExtra("oid",0l));
         bundle.putString("name", name);
         //set Fragmentclass Arguments
         //Fragmentclass fragobj=new Fragmentclass();

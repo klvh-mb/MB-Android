@@ -1,6 +1,7 @@
 package miniBean.fragement;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,15 +20,21 @@ import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.MyApi;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
+
 
 public class NewsFeedFragement extends Fragment {
 
     private static final String TAG = NewsFeedFragement.class.getName();
+    public SharedPreferences session = null;
+    public MyApi api;
     ProgressBar progressBarFeed;
     private ListView listView;
     private BaseAdapter listAdapter;
@@ -36,7 +43,14 @@ public class NewsFeedFragement extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        //getMaEventsSao().addCacheChangedListener(this);
         View view = inflater.inflate(R.layout.newsfeed_activity, container, false);
+        session = getActivity().getSharedPreferences("prefs", 0);
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(getResources().getString(R.string.base_url))
+                .setClient(new OkClient()).build();
+
+        api = restAdapter.create(MyApi.class);
 
         listView = (ListView) view.findViewById(R.id.list);
         progressBarFeed = (ProgressBar) view.findViewById(R.id.progressFeed);
@@ -57,6 +71,8 @@ public class NewsFeedFragement extends Fragment {
         });
 
         listView.setOnScrollListener(new InfiniteScrollListener(1) {
+
+
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 System.out.println("totalCount::" + totalItemsCount);
@@ -67,7 +83,7 @@ public class NewsFeedFragement extends Fragment {
 
         functionCall(0);
 
-        System.out.println("lastid::"+getArguments().getString("id"));
+//        System.out.println("lastid::"+getArguments().getString("id"));
         //Long id=Long.parseLong(getArguments().getString("id"));
         //getUserQuestion(0,id);
 
@@ -83,10 +99,10 @@ public class NewsFeedFragement extends Fragment {
 
             case "userquestion":
                 System.out.println("case1");
-                getUserQuestion(offset,Long.parseLong(getArguments().getString("id")));
+                getUserQuestion(offset,getArguments().getLong("id"));
                 break;
             case "useranswer":
-                getUserAnswer(offset,Long.parseLong(getArguments().getString("id")));
+                getUserAnswer(offset,getArguments().getLong("id"));
                 break;
             case "question":
                 getUserQuestion(offset,Long.parseLong(getArguments().getString("id")));
@@ -109,7 +125,7 @@ public class NewsFeedFragement extends Fragment {
 
     private void getNewsFeed(int offset) {
         System.out.println("newsfedd::::");
-        AppController.api.getNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        api.getNewsfeed(Long.valueOf(offset), session.getString("sessionID", null), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, retrofit.client.Response response) {
                 System.out.println("innewsfeed::"+array.getPosts());
@@ -127,7 +143,7 @@ public class NewsFeedFragement extends Fragment {
     }
     void getUserQuestion(int offset,Long id)
     {
-        AppController.api.getUserPost(Long.valueOf(offset),id,AppController.getInstance().getSessionId(), new Callback<PostArray>(){
+        AppController.api.getUserPost(Long.valueOf(offset),id,session.getString("sessionID", null), new Callback<PostArray>(){
             @Override
             public void success(PostArray array, Response response2) {
                 System.out.println("postarray::"+array.getPosts());
@@ -144,7 +160,7 @@ public class NewsFeedFragement extends Fragment {
         });
     }
     void getUserAnswer(int offset,Long id) {
-        AppController.api.getUserComment(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        AppController.api.getUserComment(Long.valueOf(offset), id, session.getString("sessionID", null), new Callback<PostArray>() {
 
             @Override
             public void success(PostArray array, Response response2) {
@@ -168,7 +184,7 @@ public class NewsFeedFragement extends Fragment {
     }
 void getBookmark(int offset)
 {
-    AppController.api.getBookmark(Long.valueOf(offset),AppController.getInstance().getSessionId(),new Callback<List<CommunityPostVM>>() {
+    AppController.api.getBookmark(Long.valueOf(offset),session.getString("sessionID", null),new Callback<List<CommunityPostVM>>() {
         @Override
         public void success(List<CommunityPostVM> postArray, Response response) {
             if(postArray != null)

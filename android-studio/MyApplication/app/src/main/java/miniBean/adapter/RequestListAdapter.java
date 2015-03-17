@@ -29,6 +29,7 @@ public class RequestListAdapter extends BaseAdapter {
     ProgressBar spinner;
     private LayoutInflater inflater;
 
+
     public RequestListAdapter(Activity activity, List<NotificationVM> requestItems) {
         this.activity = activity;
         this.requestItems = requestItems;
@@ -68,6 +69,7 @@ public class RequestListAdapter extends BaseAdapter {
         acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
         spinner = (ProgressBar) convertView.findViewById(R.id.imageLoader);
         ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
+        //session = this.activity.getSharedPreferences("prefs", 0);
 
         if (item.getTp().equals("COMM_JOIN_APPROVED") || item.getTp().equals("FRD_ACCEPTED")) {
             acceptButton.setVisibility(View.INVISIBLE);

@@ -62,6 +62,28 @@ public class RequestFragment extends Fragment {
         adapter = new RequestListAdapter(getActivity(), notificationVMs);
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               NotificationVM item = (NotificationVM)adapter.getItem(position);
+                System.out.println("itemmmmmm:::::"+item.getTp());
+                //Intent intent = new Intent(getActivity(), CommunityActivity.class);
+                //startActivity(intent);
+
+               if(item.getTp()=="COMM_JOIN_APPROVED") {
+                    System.out.println("::::::comm");
+                   Intent intent = new Intent(getActivity(), CommunityActivity.class);
+                   intent.putExtra("id",item.getId());
+                   startActivity(intent);
+               }
+                if(item.getTp()=="FRD_REQUEST"){
+                    System.out.println("::::::frnd");
+                   Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                   startActivity(intent);
+
+               }
+            }
+        });
         return view;
     }
 
