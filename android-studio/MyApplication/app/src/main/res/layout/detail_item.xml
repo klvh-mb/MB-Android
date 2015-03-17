@@ -92,11 +92,19 @@
 
     </LinearLayout>
 
+        <ImageView
+            android:layout_below="@+id/questionnareText"
+            android:id="@+id/postImage"
+            android:layout_width="100dp"
+            android:visibility="gone"
+            android:scaleType="fitXY"
+            android:layout_height="150dp" />
+
     <LinearLayout
         android:id="@+id/postSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/questionnareText"
+        android:layout_below="@+id/postImage"
         android:background="#ffffff"
         android:weightSum="1">
 

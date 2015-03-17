@@ -1,6 +1,7 @@
 package miniBean.fragement;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,17 +17,22 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.CommunityListAdapter;
-import miniBean.app.AppController;
 import miniBean.app.LocalCache;
+import miniBean.app.MyApi;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
+
 
 public class CommunityFragment extends Fragment {
 
     private static final String TAG = CommunityFragment.class.getName();
+    public SharedPreferences session = null;
+    public MyApi api;
     ProgressBar progressBarComm;
     private ListView listView;
     private CommunityListAdapter listAdapter;
@@ -36,15 +42,23 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.community_list_view, container, false);
+        session = getActivity().getSharedPreferences("prefs", 0);
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(getResources().getString(R.string.base_url))
+                .setClient(new OkClient()).build();
+
+        api = restAdapter.create(MyApi.class);
 
         listView = (ListView) view.findViewById(R.id.listComm);
         progressBarComm = (ProgressBar) view.findViewById(R.id.progressComm1);
         progressBarComm.setVisibility(View.VISIBLE);
 
+
         communityItems = new ArrayList<>();
 
         listAdapter = new CommunityListAdapter(getActivity(), communityItems);
         listView.setAdapter(listAdapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -85,7 +99,7 @@ public class CommunityFragment extends Fragment {
 
     private void getCommunity() {
         System.out.println("In getCommunity");
-        AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>() {
+        api.getMyCommunities(session.getString("sessionID", null), new Callback<CommunitiesParentVM>() {
             @Override
             public void success(CommunitiesParentVM array, retrofit.client.Response response) {
                 filterMyCommunities(array);
@@ -93,11 +107,13 @@ public class CommunityFragment extends Fragment {
                 communityItems.addAll(array.getCommunities());
                 listAdapter.notifyDataSetChanged();
                 progressBarComm.setVisibility(View.GONE);
+
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors
+
             }
         });
     }
@@ -110,5 +126,19 @@ public class CommunityFragment extends Fragment {
                 array.communities.remove(i);
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        if(LocalCache.getMyCommunitiesParentVM() != null) {
+            System.out.println("onresume::::::::" + LocalCache.getMyCommunitiesParentVM().getCommunities().size());
+            communityItems.clear();
+            communityItems.addAll(LocalCache.getMyCommunitiesParentVM().getCommunities());
+            listAdapter.notifyDataSetChanged();
+            progressBarComm.setVisibility(View.GONE);
+        }
+
     }
 }
