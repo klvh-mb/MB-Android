@@ -25,7 +25,7 @@ import retrofit.client.Response;
 
 public class PageListAdapter extends BaseAdapter {
     public SharedPreferences session;
-    ArrayList<String> List;
+    ArrayList<String> list;
     TextView username, message, page;
     ImageView userPhoto;
     Button acceptButton, ignoreButton;
@@ -34,20 +34,20 @@ public class PageListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
 
-    public PageListAdapter(Activity activity, ArrayList<String> List) {
+    public PageListAdapter(Activity activity, ArrayList<String> list) {
         this.activity = activity;
-        this.List=List;
+        this.list = list;
     }
 
 
     @Override
     public int getCount() {
-        return List.size();
+        return list.size();
     }
 
     @Override
     public String getItem(int location) {
-        return List.get(location);
+        return list.get(location);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class PageListAdapter extends BaseAdapter {
         session = this.activity.getSharedPreferences("prefs", 0);
         page= (TextView) convertView.findViewById(R.id.pageText);
 
-        String item=List.get(position);
+        String item = list.get(position);
 
         page.setText(item);
         return convertView;

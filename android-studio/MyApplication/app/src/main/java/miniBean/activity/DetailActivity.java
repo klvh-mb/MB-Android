@@ -67,6 +67,7 @@ public class DetailActivity extends FragmentActivity {
     public Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
     public int noOfComments;
+    public int curPage = 1;
     CommunityPostCommentVM postVm = new CommunityPostCommentVM();
 
     private ActivityUtil activityUtil;
@@ -164,6 +165,7 @@ public class DetailActivity extends FragmentActivity {
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
+
         AppController.api.qnaLanding(postID, commID, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
             @Override
             public void success(CommunityPostVM post, retrofit.client.Response response) {
@@ -184,19 +186,10 @@ public class DetailActivity extends FragmentActivity {
                 noOfComments = post.getN_c();
                 communityItems.add(postVm);
                 communityItems.addAll(post.getCs());
-                listAdapter = new DetailListAdapter(DetailActivity.this, communityItems);
+                listAdapter = new DetailListAdapter(DetailActivity.this, communityItems, curPage);
                 listView.setAdapter(listAdapter);
 
-                int maxPage = getMaxPage();
-                pageButton.setText("1/" + getMaxPage());
-                if (maxPage > 1) {
-                    pageButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            initiatePopup();
-                        }
-                    });
-                }
+                setPageButton(curPage);
             }
 
             @Override
@@ -249,8 +242,6 @@ public class DetailActivity extends FragmentActivity {
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -319,8 +310,6 @@ public class DetailActivity extends FragmentActivity {
                 retrofitError.printStackTrace(); //to see if you have errors
             }
         });
-
-
     }
 
     private void initiatePopup() {
@@ -349,13 +338,28 @@ public class DetailActivity extends FragmentActivity {
             listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d("onItemClick", "Page " + curPage);
+                    curPage = position + 1;
+                    setPageButton(curPage);
                     getComments(getIntent().getLongExtra("postId", 0L),position);
-                    Log.d("onItemClick", "Page " + position);
                     pagePop.dismiss();
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setPageButton(int page) {
+        int maxPage = getMaxPage();
+        pageButton.setText(page + "/" + getMaxPage());
+        if (maxPage > 1) {
+            pageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    initiatePopup();
+                }
+            });
         }
     }
 
@@ -421,16 +425,17 @@ public class DetailActivity extends FragmentActivity {
 
     }
 
-    public void getComments(Long postID,int offset) {
+    public void getComments(Long postID, final int offset) {
         AppController.api.getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {
                 communityItems.clear();
                 List<CommunityPostCommentVM> communityPostCommentVMs = new ArrayList<CommunityPostCommentVM>();
-                communityPostCommentVMs.add(postVm);
+                if (offset == 0)    // insert post itself for first page only
+                    communityPostCommentVMs.add(postVm);
                 communityPostCommentVMs.addAll(commentVMs);
-                listAdapter = new DetailListAdapter(DetailActivity.this, communityPostCommentVMs);
+                listAdapter = new DetailListAdapter(DetailActivity.this, communityPostCommentVMs, curPage);
                 listView.setAdapter(listAdapter);
 
                 pagePop.dismiss();

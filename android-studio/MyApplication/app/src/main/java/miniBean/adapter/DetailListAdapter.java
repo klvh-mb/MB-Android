@@ -36,6 +36,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.ProfileActivity;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -50,10 +51,12 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private LinearLayout linearLayout;
     private ImageView like;
     private TextView likeText, totalLike, indexComment;
+    private int page;
 
-    public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> communityItems) {
+    public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> communityItems, int page) {
         this.activity = activity;
         this.communityItems = communityItems;
+        this.page = page;
     }
 
     @Override
@@ -111,7 +114,14 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             indexComment.setVisibility(View.INVISIBLE);
         } else {
             indexComment.setVisibility(View.VISIBLE);
-            indexComment.setText("#"+position);
+            if (page == 1) {
+                indexComment.setText("#"+position);
+            } else {
+                // offset from previous page
+                // position starts at 0, add 1
+                position = ((page - 1) * DefaultValues.DEFAULT_PAGINATION_COUNT) + position + 1;
+                indexComment.setText("#"+position);
+            }
         }
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
