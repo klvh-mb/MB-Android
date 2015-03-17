@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.TypedValue;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -21,6 +22,14 @@ public class ActivityUtil {
 
     public ActivityUtil(Activity activity) {
         this.activity = activity;
+    }
+
+    //
+    // Helper
+    //
+
+    public int getRealDimension(int size) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, activity.getResources().getDisplayMetrics());
     }
 
     //

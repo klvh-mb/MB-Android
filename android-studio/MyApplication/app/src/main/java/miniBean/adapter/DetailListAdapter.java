@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
+import org.parceler.apache.commons.lang.StringUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,7 +39,9 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.ProfileActivity;
 import miniBean.app.AppController;
+import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.EmoticonUtil;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -53,10 +58,17 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private TextView likeText, totalLike, indexComment;
     private int page;
 
+    private ActivityUtil activityUtil;
+
+    private int emoticonWidth, emoticonHeight;
+
     public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> communityItems, int page) {
         this.activity = activity;
         this.communityItems = communityItems;
         this.page = page;
+        this.activityUtil = new ActivityUtil(activity);
+        emoticonWidth = activityUtil.getRealDimension(EmoticonUtil.WIDTH);
+        emoticonHeight = activityUtil.getRealDimension(EmoticonUtil.HEIGHT);
     }
 
     @Override
@@ -269,11 +281,19 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     @Override
     public Drawable getDrawable(String source) {
         LevelListDrawable d = new LevelListDrawable();
-        Drawable empty = activity.getResources().getDrawable(R.drawable.ic_launcher);
-        d.addLevel(0, 0, empty);
-        d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
 
-        new LoadImage().execute(source, d);
+        int emoticon = EmoticonUtil.map(source);
+        if (emoticon != -1) {
+            Log.d("getDrawable", "replace source with emoticon");
+            Drawable emo = activity.getResources().getDrawable(emoticon);
+            d.addLevel(0, 0, emo);
+            d.setBounds(0, 0, emoticonWidth, emoticonHeight);
+        } else {
+            Drawable empty = activity.getResources().getDrawable(R.drawable.empty);
+            d.addLevel(0, 0, empty);
+            d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
+            new LoadImage().execute(source, d);
+        }
 
         return d;
     }
@@ -286,7 +306,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         protected Bitmap doInBackground(Object... params) {
             String source = activity.getResources().getString(R.string.base_url) + (String) params[0];
             mDrawable = (LevelListDrawable) params[1];
-            System.out.println("doInBackground " + source);
+            Log.d("doInBackground", source);
             try {
                 InputStream is = new URL(source).openStream();
                 return BitmapFactory.decodeStream(is);
@@ -303,6 +323,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null) {
+                Log.d("LoadImage", bitmap.getWidth() + "|" + bitmap.getHeight());
                 BitmapDrawable d = new BitmapDrawable(bitmap);
                 mDrawable.addLevel(1, 1, d);
                 mDrawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());

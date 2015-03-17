@@ -2,6 +2,7 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,6 @@ public class FeedListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.feed_item, null);
 
-
         TextView name = (TextView) convertView.findViewById(R.id.commName);
         TextView username = (TextView) convertView.findViewById(R.id.username);
         TextView timeText = (TextView) convertView.findViewById(R.id.timeText);
@@ -58,10 +58,9 @@ public class FeedListAdapter extends BaseAdapter {
 
         final CommunityPostVM item = feedItems.get(position);
 
-
         name.setText(item.getPtl());
         username.setText(item.getP());
-        System.out.println("nocomment:::::" + item.getN_c());
+        Log.d("getView", item.getPtl() + "   #comment: " + item.getN_c());
         noComment.setText(item.getN_c() + "");
 
         Date date = new Date(item.getT());
