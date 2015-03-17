@@ -26,6 +26,9 @@
     <string name="tabset_profile">我</string>
 
     <!-- Community tab -->
+    <string name="community_actionbar_title">社群話題</string>
+    <string name="post_actionbar_title">話題詳情</string>
+    <string name="post_comment_bar_hint">回覆話題</string>
     <string name="from_community">社群:</string>
     <string name="my_community_tab">我的社群</string>
     <string name="my_community_tab_joined">已加入</string>
