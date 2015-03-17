@@ -2,6 +2,7 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.CommunityIconUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class CommunityListAdapter extends BaseAdapter {
@@ -62,7 +64,15 @@ public class CommunityListAdapter extends BaseAdapter {
         noMembers.setText(item.getMm().toString());
         numTopicsToday.setText("-");
 
-        AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.getGi(), communityPic);
+        int icon = CommunityIconUtil.map(item.gi);
+        if (icon != -1) {
+            //Log.d("getView", "replace source with local comm icon - " + item.gi);
+            communityPic.setImageDrawable(activity.getResources().getDrawable(icon));
+        } else {
+            Log.d("getView", "load comm icon from background - " + item.gi);
+            AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
+        }
+
         return convertView;
     }
 }

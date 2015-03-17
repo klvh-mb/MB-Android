@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
+import miniBean.util.CommunityIconUtil;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
@@ -64,7 +66,6 @@ public class TopicAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.topic_item, null);
 
-
         TextView commName = (TextView) convertView.findViewById(R.id.commName);
         TextView noMembers = (TextView) convertView.findViewById(R.id.noMember);
         imageAction = (ImageView) convertView.findViewById(R.id.mem_join);
@@ -77,7 +78,14 @@ public class TopicAdapter extends BaseAdapter {
         commName.setText(item.getDn());
         noMembers.setText(item.getMm().toString());
 
-        AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
+        int icon = CommunityIconUtil.map(item.gi);
+        if (icon != -1) {
+            //Log.d("getView", "replace source with local comm icon - " + item.gi);
+            communityPic.setImageDrawable(activity.getResources().getDrawable(icon));
+        } else {
+            Log.d("getView", "load comm icon from background - " + item.gi);
+            AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
+        }
 
         if (item.getIsM()) {
             imageAction.setImageResource(R.drawable.add);

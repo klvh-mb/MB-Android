@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.app.MyApi;
+import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
@@ -221,7 +223,16 @@ public class CommFragment extends Fragment {
                         spinner.setVisibility(View.GONE);
                     }
                 });
-                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + getArguments().getString("icon"), communityIcon);
+
+                String commIcon = getArguments().getString("icon");
+                int icon = CommunityIconUtil.map(commIcon);
+                if (icon != -1) {
+                    //Log.d("getView", "replace source with local comm icon - " + commIcon);
+                    communityIcon.setImageDrawable(getResources().getDrawable(icon));
+                } else {
+                    Log.d("getView", "load comm icon from background - " + commIcon);
+                    AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + commIcon, communityIcon);
+                }
             }
 
             @Override
