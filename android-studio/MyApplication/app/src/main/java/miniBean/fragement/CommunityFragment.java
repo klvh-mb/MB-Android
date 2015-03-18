@@ -72,13 +72,13 @@ public class CommunityFragment extends Fragment {
                 commId = childVM.getId().toString();
                 noMember = childVM.getMm().toString();
                 name = childVM.getDn();
-
+                System.out.println("idchecked 0:::"+commId);
                 intent.putExtra("id", commId);
                 intent.putExtra("noMember", noMember);
                 intent.putExtra("commName", name);
                 intent.putExtra("icon", childVM.getGi());
                 intent.putExtra("isM", childVM.getIsM());
-
+                intent.putExtra("flag","FromCommunityFragment");
                 startActivity(intent);
             }
         });

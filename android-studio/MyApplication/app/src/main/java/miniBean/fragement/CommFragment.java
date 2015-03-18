@@ -39,6 +39,7 @@ import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostVM;
+import miniBean.viewmodel.CommunityVM;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -49,22 +50,26 @@ import retrofit.client.Response;
 
 public class CommFragment extends Fragment {
 
-    public SharedPreferences session = null;
-    public MyApi api;
-    TextView noMember, commName;
-    ListView listView;
-    FeedListAdapter feedListAdapter;
-    List<CommunityPostVM> feedItems;
-    ProgressBar progressBar, spinner;
+    private SharedPreferences session = null;
+    private MyApi api;
+    private TextView noMember, commName;
+    private ListView listView;
+    private FeedListAdapter feedListAdapter;
+    private List<CommunityPostVM> feedItems;
+    private ProgressBar spinner;
     List<CommunityCategoryMapVM> item;
     List<CommunitiesWidgetChildVM> commItem;
-    ImageView imageView, backImage;
-    ImageView communityCoverPic,communityIcon;
-    CommunitiesWidgetChildVM currentCommunity;
+    private ImageView imageView;
+    private ImageView communityCoverPic,communityIcon;
+    private CommunitiesWidgetChildVM currentCommunity;
+    private String commname,nomember,icon;
+    private Long commid;
+    private boolean isM;
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        final View view = inflater.inflate(R.layout.community_activity, container, false);
+        view = inflater.inflate(R.layout.community_activity, container, false);
         session = getActivity().getSharedPreferences("prefs", 0);
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(getResources().getString(R.string.base_url))
@@ -80,15 +85,25 @@ public class CommFragment extends Fragment {
          communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
          communityIcon = (ImageView) view.findViewById(R.id.commIconView);
          spinner= (ProgressBar) view.findViewById(R.id.loadCover);
-        System.out.print("commfragment:::::::::::::::::::::::::::");
-        System.out.println("id:::::::::"+getArguments().getString("id"));
-        System.out.println("ism:::::::"+ getArguments().getBoolean("isM", false));
-        System.out.println("nomember:::::::"+(getArguments().getString("noMember")));
+
+        System.out.println("flagggg::::"+getArguments().getString("flag"));
+        System.out.println("idchecked 2::::"+Long.parseLong(getArguments().getString("id")));
+
+        if(!getArguments().getString("flag").equals("FromDetailActivity")) {
+            commname = getArguments().getString("commName");
+             commid = Long.parseLong(getArguments().getString("id"));
+            isM = getArguments().getBoolean("isM", false);
+            icon = getArguments().getString("icon");
+            nomember = getArguments().getString("noMember");
+            initilizeData();
+        }else {
+                getCommunities(Long.parseLong(getArguments().getString("id")));
+        }
 
         for (CommunityCategoryMapVM categoryMapVM : LocalCache.getCommunityCategoryMapList()) {
             if (categoryMapVM.communities != null)
                 for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
-                    if (vm.getId() == Long.parseLong(getArguments().getString("id"))) {
+                    if (vm.getId() == commid) {
                         currentCommunity = vm;
                     }
                 }
@@ -107,23 +122,20 @@ public class CommFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        getNewsFeedByCommunityId(Long.parseLong(getArguments().getString("id")));
-        System.out.println("::::::::::::::::::::::::::::::::::::: boolean  " + getArguments().getBoolean("isM", false));
-        if (getArguments().getBoolean("isM", false))
-            imageView.setImageResource(R.drawable.add);
-      /*  backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });*/
+        return view;
+    }
+
+    private void initilizeData(){
+        getNewsFeedByCommunityId(commid);
+        System.out.println("::::::::::::::::::::::::::::::::::::: boolean  " + getArguments().getBoolean("isM", false));
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new FeedListAdapter(getActivity(), feedItems);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
 
-        getNewsFeedByCommunityId(Long.parseLong(getArguments().getString("id")));
-        if (!getArguments().getBoolean("isM", false)) {
+        getNewsFeedByCommunityId(commid);
+        if (!isM) {
             imageView.setImageResource(R.drawable.check);
         } else {
             imageView.setImageResource(R.drawable.add);
@@ -132,14 +144,14 @@ public class CommFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (!(getArguments().getBoolean("isM", false))) {
+                if (!(isM)) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setMessage("Are You Want Join This Community?");
                     alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            sendJoinRequest(Long.parseLong(getArguments().getString("id")));
+                            sendJoinRequest(commid);
                             Toast.makeText(getActivity(), "Community Joined", Toast.LENGTH_LONG).show();
                             ImageView image = (ImageView) view.findViewById(R.id.join_community);
                             image.setImageResource(R.drawable.add);
@@ -174,7 +186,7 @@ public class CommFragment extends Fragment {
                     alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            leaveCommunity(Long.parseLong(getArguments().getString("id")));
+                            leaveCommunity(commid);
                             Toast.makeText(getActivity(), "Community left", Toast.LENGTH_LONG).show();
                             ImageView image = (ImageView) view.findViewById(R.id.join_community);
                             image.setImageResource(R.drawable.check);
@@ -193,7 +205,6 @@ public class CommFragment extends Fragment {
                 }
             }
         });
-        return view;
     }
 
     private void getNewsFeedByCommunityId(long id) {
@@ -202,8 +213,8 @@ public class CommFragment extends Fragment {
             public void success(PostArray array, retrofit.client.Response response) {
                 feedItems.addAll(array.getPosts());
                 feedListAdapter.notifyDataSetChanged();
-                commName.setText(getArguments().getString("commName"));
-                noMember.setText(getArguments().getString("noMember"));
+                commName.setText(commname);
+                noMember.setText(nomember);
                 //ImageView communityCoverPic = (ImageView)vi findViewById(R.id.communityPic);
                 //ImageView communityIcon = (ImageView) findViewById(R.id.commIconView);
                 ImageLoader imageLoader = ImageLoader.getInstance();
@@ -283,7 +294,27 @@ public class CommFragment extends Fragment {
 
             }
         });
+    }
+    public void getCommunities(Long id)
+    {
+        AppController.api.getCommunities(id, session.getString("sessionID", null),new Callback<CommunityVM>(){
 
+            @Override
+            public void success(CommunityVM communityVM, Response response) {
+                commname = communityVM.getN();
+                commid = communityVM.getId();
+                isM = communityVM.isM();
+                icon = communityVM.getIcon();
+                nomember = String.valueOf(communityVM.getNom());
+                initilizeData();
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
   }
 

@@ -106,6 +106,21 @@ public class DetailActivity extends FragmentActivity {
         final FrameLayout layout_MainMenu;
         layout_MainMenu = (FrameLayout) findViewById(R.id.mainMenu);
 
+        communityName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Long commID = getIntent().getLongExtra("commId", 0L);
+                System.out.println("commname clicked::::::::");
+                System.out.println("commid:::::::"+commID);
+                Intent intent=new Intent(DetailActivity.this,CommunityActivity.class);
+                intent.putExtra("flag","FromDetailActivity");
+                intent.putExtra("id",commID.toString());
+                startActivity(intent);
+
+
+            }
+        });
+
         commentEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

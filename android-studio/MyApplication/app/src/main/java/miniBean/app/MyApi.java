@@ -9,6 +9,7 @@ import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
+import miniBean.viewmodel.CommunityVM;
 import miniBean.viewmodel.HeaderDataVM;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostArray;
@@ -124,4 +125,8 @@ public interface MyApi {
 
     @GET("/comments/{id}/{offset}")
     public void getComments( @Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
+
+    @GET("/community/{id}")
+    public void getCommunities( @Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
+
 }

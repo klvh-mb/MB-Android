@@ -1,5 +1,7 @@
 package miniBean.fragement;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,10 +23,15 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.lang.reflect.Field;
 
 import miniBean.R;
+import miniBean.activity.LoginActivity;
+import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.app.MyApi;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 
 public class UserProfileFragment extends Fragment {
 
@@ -49,9 +56,9 @@ public class UserProfileFragment extends Fragment {
         answerMenu= (LinearLayout) view.findViewById(R.id.menuAnswer);
        // bookmarksMenu= (LinearLayout) view.findViewById(R.id.menuBookmarks);
 
-        final String id=getArguments().getString("id");
+        //final String id=getArguments().getString("id");
         System.out.println("nnnnnnnnnnnnn"+getArguments().getString("name"));
-        System.out.println("iiiiiiiiiiiii"+getArguments().getString("id"));
+        System.out.println("iiiiiiiiiiiii"+getArguments().getLong("oid"));
 
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +114,7 @@ public class UserProfileFragment extends Fragment {
                 question.setText("100");
                 //bookmarks.setText("100");
 
-                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getArguments().getString("id"), userCoverPic, new SimpleImageLoadingListener() {
+                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getArguments().getLong("oid"), userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);

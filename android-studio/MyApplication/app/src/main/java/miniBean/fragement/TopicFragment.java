@@ -48,7 +48,7 @@ public class TopicFragment extends Fragment {
                 intent.putExtra("commName", childVM.getDn());
                 intent.putExtra("icon", childVM.getGi());
                 intent.putExtra("isM", childVM.getIsM());
-
+                intent.putExtra("flag","FromTopicFragment");
                 startActivity(intent);
 
                 // getFragmentManager().beginTransaction().remove(TopicFragment.this).commit();

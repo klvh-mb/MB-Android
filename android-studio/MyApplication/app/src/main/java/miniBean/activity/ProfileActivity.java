@@ -28,9 +28,9 @@ public class ProfileActivity extends FragmentActivity {
         settings = (ImageView) findViewById(R.id.setting);
 
 
-        String id = getIntent().getStringExtra("oid");
+//        String id = getIntent().getStringExtra("oid");
         String name = getIntent().getStringExtra("name");
-        System.out.println("profileActivity::::::"+id);
+        System.out.println("profileActivity::::::"+getIntent().getLongExtra("oid",0l));
         Bundle bundle = new Bundle();
         bundle.putLong("oid", getIntent().getLongExtra("oid",0l));
         bundle.putString("name", name);
