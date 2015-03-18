@@ -46,10 +46,11 @@
                     android:layout_marginLeft="30dp"
                     android:baselineAlignBottom="false"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="7dp" />
+                    android:layout_marginTop="7dp"
+                    android:adjustViewBounds="false" />
                 <EditText
                     android:hint="您的電郵"
-                    android:textColor="#111"
+                    android:textColor="@color/input_text"
                     android:id="@+id/userName"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -59,12 +60,13 @@
                     android:paddingRight="10dp"
                     android:layout_marginTop="15dp"
                     android:editable="true"
-                    android:elevation="3dp"
                     android:focusable="true"
                     android:singleLine="true"
                     android:textSize="20dp"
-                    android:background="#70ffffff"
-                    android:enabled="true" />
+                    android:background="@color/white"
+                    android:enabled="true"
+                    android:alpha="0.8"
+                    android:elevation="-1dp" />
             </FrameLayout>
             <FrameLayout
                 android:layout_width="fill_parent"
@@ -79,8 +81,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="7dp" />
                 <EditText
-                    android:textColor="#000000"
-                    android:background="#70ffffff"
+                    android:textColor="@color/input_text"
+                    android:background="@color/white"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
@@ -96,8 +98,9 @@
                     android:focusable="true"
                     android:enabled="true"
                     android:editable="true"
-                    android:elevation="3dp"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:alpha="0.8"
+                    android:elevation="-1dp" />
             </FrameLayout>
             <TextView
                 android:id="@+id/buttonLogin"

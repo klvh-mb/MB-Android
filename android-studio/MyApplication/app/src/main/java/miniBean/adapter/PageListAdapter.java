@@ -2,29 +2,19 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import miniBean.R;
-import miniBean.app.AppController;
-import miniBean.util.DefaultValues;
-import miniBean.viewmodel.NotificationVM;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class PageListAdapter extends BaseAdapter {
-    public SharedPreferences session;
     ArrayList<String> list;
     TextView username, message, page;
     ImageView userPhoto;
@@ -33,12 +23,10 @@ public class PageListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
 
-
     public PageListAdapter(Activity activity, ArrayList<String> list) {
         this.activity = activity;
         this.list = list;
     }
-
 
     @Override
     public int getCount() {
@@ -68,7 +56,6 @@ public class PageListAdapter extends BaseAdapter {
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
         acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
         ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
-        session = this.activity.getSharedPreferences("prefs", 0);
         page= (TextView) convertView.findViewById(R.id.pageText);
 
         String item = list.get(position);

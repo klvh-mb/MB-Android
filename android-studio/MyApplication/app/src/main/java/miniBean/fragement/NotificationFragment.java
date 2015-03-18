@@ -1,6 +1,5 @@
 package miniBean.fragement;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,13 +20,11 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.adapter.NotificationListAdapter;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.NotificationVM;
 
 public class NotificationFragment extends Fragment {
 
     private static final String TAG = NotificationFragment.class.getName();
-    public SharedPreferences session = null;
     NotificationListAdapter adapter;
     private ListView listView;
     private List<NotificationVM> notificationItems;
@@ -35,9 +32,8 @@ public class NotificationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.notificaction_list_view, container, false);
 
-        session = getActivity().getSharedPreferences("prefs", 0);
+        View view = inflater.inflate(R.layout.notificaction_list_view, container, false);
 
         notificationItems = new ArrayList<NotificationVM>();
 

@@ -3,7 +3,6 @@ package miniBean.fragement;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,15 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.CommunityActivity;
 import miniBean.activity.DetailActivity;
-import miniBean.adapter.CommunityListAdapter;
 import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
-import miniBean.app.MyApi;
 import miniBean.util.CommunityIconUtil;
-import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
@@ -42,16 +37,12 @@ import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 
 public class CommFragment extends Fragment {
 
-    private SharedPreferences session = null;
-    private MyApi api;
     private TextView noMember, commName;
     private ListView listView;
     private FeedListAdapter feedListAdapter;
@@ -66,14 +57,12 @@ public class CommFragment extends Fragment {
     private Long commid;
     private boolean isM;
     View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         view = inflater.inflate(R.layout.community_activity, container, false);
-        session = getActivity().getSharedPreferences("prefs", 0);
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
 
         noMember = (TextView) view.findViewById(R.id.noMemberComm);
         commName = (TextView) view.findViewById(R.id.commNameText);
@@ -156,7 +145,7 @@ public class CommFragment extends Fragment {
                             ImageView image = (ImageView) view.findViewById(R.id.join_community);
                             image.setImageResource(R.drawable.add);
                             currentCommunity.setIsM(true);
-                            AppController.api.getMyCommunities(session.getString("sessionID", null), new Callback<CommunitiesParentVM>(){
+                            AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>(){
 
                                 @Override
                                 public void success(CommunitiesParentVM communitiesParentVM, Response response) {
@@ -208,7 +197,7 @@ public class CommFragment extends Fragment {
     }
 
     private void getNewsFeedByCommunityId(long id) {
-        AppController.api.getCommNewsfeed(id, session.getString("sessionID", null), new Callback<PostArray>() {
+        AppController.api.getCommNewsfeed(id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, retrofit.client.Response response) {
                 feedItems.addAll(array.getPosts());
@@ -254,7 +243,7 @@ public class CommFragment extends Fragment {
     }
 
     public void sendJoinRequest(Long id) {
-        AppController.api.sendJoinRequest(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.sendJoinRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 getMyCommunities();
@@ -268,7 +257,7 @@ public class CommFragment extends Fragment {
     }
 
     public void leaveCommunity(Long id) {
-        AppController.api.sendLeaveRequest(id, session.getString("sessionID", null), new Callback<Response>() {
+        AppController.api.sendLeaveRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                     getMyCommunities();
@@ -282,7 +271,7 @@ public class CommFragment extends Fragment {
     }
   public   void getMyCommunities()
     {
-        AppController.api.getMyCommunities(session.getString("sessionID", null), new Callback<CommunitiesParentVM>(){
+        AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>(){
 
             @Override
             public void success(CommunitiesParentVM communitiesParentVM, Response response) {
@@ -297,7 +286,7 @@ public class CommFragment extends Fragment {
     }
     public void getCommunities(Long id)
     {
-        AppController.api.getCommunities(id, session.getString("sessionID", null),new Callback<CommunityVM>(){
+        AppController.api.getCommunities(id, AppController.getInstance().getSessionId(),new Callback<CommunityVM>(){
 
             @Override
             public void success(CommunityVM communityVM, Response response) {

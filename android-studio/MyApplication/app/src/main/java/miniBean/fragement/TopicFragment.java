@@ -28,7 +28,13 @@ public class TopicFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.topic_fragment, container, false);
+
         listView = (ListView) rootView.findViewById(R.id.listTopic);
+
+        // Tricky... listview header and footer dividers need to add in code...
+        listView.addHeaderView(new View(getActivity().getBaseContext()), null, true);
+        listView.addFooterView(new View(getActivity().getBaseContext()), null, true);
+
         topicAdapter = new TopicAdapter(getActivity(), this.communities);
         listView.setAdapter(topicAdapter);
         topicAdapter.notifyDataSetChanged();

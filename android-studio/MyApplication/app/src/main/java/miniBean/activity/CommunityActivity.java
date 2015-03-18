@@ -2,36 +2,29 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import miniBean.R;
-import miniBean.app.AppController;
 import miniBean.fragement.CommFragment;
 import miniBean.fragement.PostFragment;
-import miniBean.viewmodel.CommunityVM;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class CommunityActivity extends FragmentActivity {
     ProgressBar progressBar, spinner;
     ImageView backImage,editAction;
     TextView titleAction;
-    public SharedPreferences session = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.comm_activity);
-        session = getSharedPreferences("prefs", 0);
+
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.community_actionbar);
         backImage = (ImageView) this.findViewById(R.id.backImage);

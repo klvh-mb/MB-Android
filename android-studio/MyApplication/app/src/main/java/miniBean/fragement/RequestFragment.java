@@ -1,7 +1,6 @@
 package miniBean.fragement;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,13 +23,11 @@ import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.activity.ProfileActivity;
 import miniBean.adapter.RequestListAdapter;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.NotificationVM;
 
 public class RequestFragment extends Fragment {
 
     private static final String TAG = RequestFragment.class.getName();
-    public SharedPreferences session = null;
     RequestListAdapter adapter;
     private ListView listView;
     private List<NotificationVM> requestItems;
@@ -39,8 +36,6 @@ public class RequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.request_list_view, container, false);
-
-        session = getActivity().getSharedPreferences("prefs", 0);
 
         requestItems = new ArrayList<NotificationVM>();
 

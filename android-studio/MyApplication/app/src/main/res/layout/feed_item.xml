@@ -8,9 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp">
 
         <TextView
             android:id="@+id/commName"
@@ -51,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/userpic"
                 android:textSize="13dp"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/light_gray" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,7 +75,8 @@
                 android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/timepic"
                 android:textSize="13dp"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/light_gray" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,14 +97,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/commentpic"
-                android:textColor="#FF8D8D"
+                android:textColor="@color/sharp_pink"
                 android:textSize="13dp"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="@drawable/bar1" />
 </LinearLayout>

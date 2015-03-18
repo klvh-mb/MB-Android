@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffff</color>
-    <color name="gray">#999</color>
-    <color name="light_gray">#ccc</color>
+    <color name="gray">#888</color>
+    <color name="light_gray">#aaa</color>
+    <color name="light_gray2">#ddd</color>
+    <color name="light_gray3">#eee</color>
     <color name="dark_gray">#555</color>
+    <color name="dark_gray2">#222</color>
+    <color name="dark_gray3">#111</color>
     <color name="sharp_pink">#FF6795</color>
     <color name="light_purple">#ECDAFF</color>
     <color name="light_purple_2">#FBE7FF</color>
     <color name="light_purple_3">#FFF5FF</color>
 
+    <color name="input_text">#111</color>
+    <color name="view_bg">#FCF7FD</color>
     <color name="feed_bg">#d3d6db</color>
     <color name="feed_item_bg">#ffffff</color>
     <color name="feed_item_border">#c2c3c8</color>

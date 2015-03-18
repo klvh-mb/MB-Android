@@ -11,14 +11,20 @@
             android:id="@+id/placeHolder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="80"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"
+            android:layout_weight="80"></LinearLayout>
+
+        <View
+            android:id="@+id/viewBar"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/button_component"
+            android:background="@color/light_gray2"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_weight="20"
             android:orientation="horizontal">
 
             <Button
@@ -28,7 +34,8 @@
                 android:layout_weight=".33"
                 android:background="#ffffff"
                 android:drawableLeft="@drawable/comm"
-                android:text="@string/tabset_communities" />
+                android:text="@string/tabset_communities"
+                android:paddingLeft="25dp" />
 
             <Button
                 android:id="@+id/articles"
@@ -37,7 +44,8 @@
                 android:layout_weight=".34"
                 android:background="#ffffff"
                 android:drawableLeft="@drawable/tag"
-                android:text="@string/tabset_schools" />
+                android:text="@string/tabset_schools"
+                android:paddingLeft="25dp" />
 
             <Button
                 android:id="@+id/profiles"
@@ -46,7 +54,8 @@
                 android:layout_weight=".33"
                 android:background="#ffffff"
                 android:drawableLeft="@drawable/profile"
-                android:text="@string/tabset_profile" />
+                android:text="@string/tabset_profile"
+                android:paddingLeft="25dp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

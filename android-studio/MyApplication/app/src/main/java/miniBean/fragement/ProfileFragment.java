@@ -22,43 +22,36 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = ProfileFragment.class.getName();
     ImageView userCoverPic, userPic;
     ProgressBar spinner;
-    TextView question, answer, bookmarks, userName;
+    TextView questionsCount, answersCount, bookmarksCount, userName;
     LinearLayout questionMenu,answerMenu,bookmarksMenu;
     Long userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.profile_view, container, false);
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
+        View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
         userName = (TextView) view.findViewById(R.id.usernameText);
-        bookmarks = (TextView) view.findViewById(R.id.Edit1);
-        question = (TextView) view.findViewById(R.id.Edit2);
-        answer = (TextView) view.findViewById(R.id.Edit3);
+        questionsCount = (TextView) view.findViewById(R.id.questionsCount);
+        answersCount = (TextView) view.findViewById(R.id.answersCount);
+        bookmarksCount = (TextView) view.findViewById(R.id.bookmarksCount);
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
         userPic = (ImageView) view.findViewById(R.id.userImage);
         spinner = (ProgressBar) view.findViewById(R.id.imageLoader);
-        questionMenu= (LinearLayout) view.findViewById(R.id.menuQuestion);
-        answerMenu= (LinearLayout) view.findViewById(R.id.menuAnswer);
-        bookmarksMenu= (LinearLayout) view.findViewById(R.id.menuBookmarks);
+        questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
+        answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
+        bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
 
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Bundle bundle=new Bundle();
                 bundle.putString("id",userId.toString());
                 bundle.putString("key","question");
@@ -70,13 +63,11 @@ public class ProfileFragment extends Fragment {
                 fragmentTransaction.hide(ProfileFragment.this);
                 fragmentTransaction.replace(R.id.children_fragement, fragment);
                 fragmentTransaction.commit();
-
             }
         });
         answerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Bundle bundle=new Bundle();
                 bundle.putString("id",userId.toString());
                 bundle.putString("key","answer");
@@ -88,14 +79,11 @@ public class ProfileFragment extends Fragment {
                 fragmentTransaction.hide(ProfileFragment.this);
                 fragmentTransaction.replace(R.id.children_fragement, fragment);
                 fragmentTransaction.commit();
-
-
             }
         });
         bookmarksMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Bundle bundle=new Bundle();
                 bundle.putString("id",userId.toString());
                 bundle.putString("key","bookmark");
@@ -107,8 +95,6 @@ public class ProfileFragment extends Fragment {
                 fragmentTransaction.hide(ProfileFragment.this);
                 fragmentTransaction.replace(R.id.children_fragement, fragment);
                 fragmentTransaction.commit();
-
-
             }
         });
         getUserInfo();
@@ -122,9 +108,9 @@ public class ProfileFragment extends Fragment {
             public void success(UserVM user, retrofit.client.Response response) {
                 userId=user.getId();
                 userName.setText(user.getDisplayName());
-                answer.setText("100");
-                question.setText("100");
-                bookmarks.setText("100");
+                questionsCount.setText("-");
+                answersCount.setText("-");
+                bookmarksCount.setText("-");
 
                 AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + user.getId(), userCoverPic, new SimpleImageLoadingListener() {
                     @Override

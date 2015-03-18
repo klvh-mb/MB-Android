@@ -1,7 +1,6 @@
 package miniBean.fragement;
 
 import android.app.ActionBar;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,7 +19,6 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.ActivityMain;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.HeaderDataVM;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
@@ -30,8 +28,6 @@ import retrofit.client.Response;
 public class MyProfileFragment extends Fragment {
 
     public List<NotificationVM> requestNotif, notifAll;
-    public MyApi api;
-    public SharedPreferences session = null;
     ImageView request, notification, setting, back;
     Gson gson = new Gson();
     View actionBarView;
@@ -41,9 +37,6 @@ public class MyProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.myprofile_fragement, container, false);
-        session = getActivity().getSharedPreferences("prefs", 0);
-
-        System.out.println("myprofile::::::");
 
         setHasOptionsMenu(true);
 
@@ -63,7 +56,7 @@ public class MyProfileFragment extends Fragment {
 
         ((ActivityMain) getActivity()).getActionBar().setCustomView(actionBarView, lp);
 
-        AppController.api.getHeaderBaeData(session.getString("sessionID", null), new Callback<HeaderDataVM>() {
+        AppController.api.getHeaderBaeData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
             @Override
             public void success(HeaderDataVM headerDataVM, Response response) {
                 System.out.println("headerdata" + headerDataVM.getName());

@@ -187,6 +187,7 @@ public class LoginActivity extends FragmentActivity {
 
                         @Override
                         public void onComplete(Bundle values) {
+                            Log.d("onComplete", "fb doLoginUsingAccessToken");
                             doLoginUsingAccessToken(facebook.getAccessToken());
                         }
 
@@ -207,10 +208,11 @@ public class LoginActivity extends FragmentActivity {
                         @Override
                         public void onCancel() {
                             // TODO Auto-generated method stub
-
+                            Log.d("onCancel", "fb login cancelled");
                         }
 
                     });
+            Log.d("loginToFacebook", "completed");
         }
     }
 

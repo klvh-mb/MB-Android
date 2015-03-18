@@ -2,10 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp">
+    android:layout_marginTop="10dp"
+    android:background="@color/view_bg">
 
     <ListView
         android:id="@+id/listTopic"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:divider="@color/view_bg"
+        android:dividerHeight="10dp"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true" />
 </RelativeLayout>

@@ -3,7 +3,6 @@ package miniBean.fragement;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,9 +22,7 @@ import miniBean.app.AppController;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostResponse;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
@@ -35,7 +32,6 @@ public class PostFragment extends Fragment {
     Uri selectedImageUri = null;
     private static final String TAG = PostFragment.class.getName();
     View actionBarView;
-    public SharedPreferences session = null;
     final Integer SELECT_PICTURE = 1;
     TextView postTitle,postContent,post;
     ImageView postImage,image;
@@ -59,8 +55,6 @@ public class PostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.post, container, false);
-
-        session = getActivity().getSharedPreferences("prefs", 0);
 
         /*getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActivity().getActionBar().setCustomView(R.layout.post_actionbar);
@@ -130,7 +124,7 @@ public class PostFragment extends Fragment {
         System.out.println(" :::::::::::: "+postString);
         System.out.println(" :::::::::::: "+postContent);
         System.out.println(" :::::::::::: "+isPhoto);
-        AppController.api.setQuestion(new NewPost(Long.parseLong(getArguments().getString("id")),postString,postContent,isPhoto),session.getString("sessionID",null), new Callback<PostResponse>() {
+        AppController.api.setQuestion(new NewPost(Long.parseLong(getArguments().getString("id")),postString,postContent,isPhoto),AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
                 if (isPhoto)
