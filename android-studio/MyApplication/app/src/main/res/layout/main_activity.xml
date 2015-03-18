@@ -35,7 +35,8 @@
                 android:background="#ffffff"
                 android:drawableLeft="@drawable/comm"
                 android:text="@string/tabset_communities"
-                android:paddingLeft="25dp" />
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp" />
 
             <Button
                 android:id="@+id/articles"
@@ -45,7 +46,8 @@
                 android:background="#ffffff"
                 android:drawableLeft="@drawable/tag"
                 android:text="@string/tabset_schools"
-                android:paddingLeft="25dp" />
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp" />
 
             <Button
                 android:id="@+id/profiles"
@@ -55,7 +57,8 @@
                 android:background="#ffffff"
                 android:drawableLeft="@drawable/profile"
                 android:text="@string/tabset_profile"
-                android:paddingLeft="25dp" />
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

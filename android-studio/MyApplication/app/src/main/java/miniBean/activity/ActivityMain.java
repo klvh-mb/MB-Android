@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,21 +15,26 @@ import android.widget.Button;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.LocalCache;
 import miniBean.fragement.MainFragement;
 import miniBean.fragement.MyProfileFragment;
-
+import miniBean.util.ActivityUtil;
 
 public class ActivityMain extends FragmentActivity {
 
     Button community, profile, article;
     private android.app.ActionBar actionBar;
-    private boolean commClicked=false,profileClicked=false;
+    private boolean commClicked = false,profileClicked = false;
+    private ActivityUtil activityUtil;
+
+    private int realTabIconWidth, realTabIconHeight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
+
+        activityUtil = new ActivityUtil(this);
 
         /*
         if(getIntent().getBooleanExtra("EXIT", false)){
@@ -51,10 +57,15 @@ public class ActivityMain extends FragmentActivity {
         profile = (Button) findViewById(R.id.profiles);
         article = (Button) findViewById(R.id.articles);
 
+        Rect rect = community.getCompoundDrawables()[0].getBounds();
+        realTabIconWidth = rect.width();
+        realTabIconHeight = rect.height();
+        Log.d("realDimension", rect.width() + ":" + rect.height());
+
         Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.comm_sel);
-        img.setBounds(0, 0, 60, 60);
+        img.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         community.setCompoundDrawables(img, null, null, null);
-        community.setTextColor(Color.parseColor("#E63E7C"));
+        community.setTextColor(getResources().getColor(R.color.sharp_pink));
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,14 +81,14 @@ public class ActivityMain extends FragmentActivity {
                 }
 
                 Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.profile_sel);
-                img.setBounds(0, 0, 60, 60);
+                img.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
                 profile.setCompoundDrawables(img, null, null, null);
-                profile.setTextColor(Color.parseColor("#E63E7C"));
+                profile.setTextColor(getResources().getColor(R.color.sharp_pink));
 
                 Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);
-                icon.setBounds(0, 0, 60, 60);
+                icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
                 community.setCompoundDrawables(icon, null, null, null);
-                community.setTextColor(Color.BLACK);
+                community.setTextColor(getResources().getColor(R.color.dark_gray3));
 
                 commClicked=false;
 
@@ -96,15 +107,16 @@ public class ActivityMain extends FragmentActivity {
                     fragmentTransaction.replace(R.id.placeHolder, mainFragement).commit();
                     commClicked=true;
                 }
+
                 Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.profile);
-                icon.setBounds(0, 0, 60, 60);
+                icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
                 profile.setCompoundDrawables(icon, null, null, null);
-                profile.setTextColor(Color.BLACK);
+                profile.setTextColor(getResources().getColor(R.color.dark_gray3));
 
                 Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.comm_sel);
-                img.setBounds(0, 0, 60, 60);
+                img.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
                 community.setCompoundDrawables(img, null, null, null);
-                community.setTextColor(Color.parseColor("#E63E7C"));
+                community.setTextColor(getResources().getColor(R.color.sharp_pink));
 
                 profileClicked=false;
             }
