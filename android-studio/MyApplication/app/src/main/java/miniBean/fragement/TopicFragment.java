@@ -46,7 +46,7 @@ public class TopicFragment extends Fragment {
 
                 String noPost = "-";
 
-                CommunitiesWidgetChildVM childVM = topicAdapter.getItem(position);
+                CommunitiesWidgetChildVM childVM = topicAdapter.getItem(position - 1);
 
                 intent.putExtra("id", childVM.getId().toString());
                 intent.putExtra("noMember", childVM.getMm().toString());

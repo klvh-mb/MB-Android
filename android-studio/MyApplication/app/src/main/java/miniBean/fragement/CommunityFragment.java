@@ -3,6 +3,7 @@ package miniBean.fragement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class CommunityFragment extends Fragment {
 
                 String noMember, commId, name;
 
-                CommunitiesWidgetChildVM childVM = listAdapter.getItem(position);
+                CommunitiesWidgetChildVM childVM = listAdapter.getItem(position - 1);
 
                 commId = childVM.getId().toString();
                 noMember = childVM.getMm().toString();
