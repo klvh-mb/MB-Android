@@ -87,7 +87,7 @@ public class CommFragment extends Fragment {
             nomember = getArguments().getString("noMember");
             initializeData();
         } else {
-            getCommunities(Long.parseLong(getArguments().getString("id")));
+            getCommunity(Long.parseLong(getArguments().getString("id")));
         }
 
         for (CommunityCategoryMapVM categoryMapVM : LocalCache.getCommunityCategoryMapList()) {
@@ -283,7 +283,7 @@ public class CommFragment extends Fragment {
         });
     }
 
-    public void getCommunities(Long id) {
+    public void getCommunity(Long id) {
         AppController.api.getCommunity(id, AppController.getInstance().getSessionId(), new Callback<CommunityVM>() {
 
             @Override

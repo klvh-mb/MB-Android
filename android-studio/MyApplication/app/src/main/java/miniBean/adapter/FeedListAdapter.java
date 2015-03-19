@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
 
 public class FeedListAdapter extends BaseAdapter {
@@ -24,6 +27,7 @@ public class FeedListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<CommunityPostVM> feedItems;
     private boolean isNewsfeed = true;
+    private int lastPosition = -1;
 
     public FeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this(activity, feedItems, true);
@@ -67,9 +71,10 @@ public class FeedListAdapter extends BaseAdapter {
 
         final CommunityPostVM item = feedItems.get(position);
 
+        //Log.d("getView", item.getPtl() + "   #comment: " + item.getN_c());
+
         name.setText(item.getPtl());
         username.setText(item.getP());
-        Log.d("getView", item.getPtl() + "   #comment: " + item.getN_c());
         numComment.setText(item.getN_c() + "");
 
         Date date = new Date(item.getT());
@@ -91,6 +96,17 @@ public class FeedListAdapter extends BaseAdapter {
         } else {
             commName.setVisibility(View.GONE);
             communityIcon.setVisibility(View.GONE);
+        }
+
+        //Animation animation = AnimationUtils.loadAnimation(activity.getBaseContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+        // Slide in from bottom
+        if (position > lastPosition) {
+            if (position > DefaultValues.LISTVIEW_SLIDE_IN_ANIM_START && lastPosition != -1) {
+                Log.d("getView", position+"");
+                Animation animation = AnimationUtils.loadAnimation(activity.getBaseContext(), R.anim.up_from_bottom);
+                convertView.startAnimation(animation);
+            }
+            lastPosition = position;
         }
 
         return convertView;

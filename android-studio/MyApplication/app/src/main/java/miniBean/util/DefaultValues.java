@@ -13,6 +13,8 @@ public class DefaultValues {
     public static int DEFAULT_INFINITE_SCROLL_COUNT = 10;
     public static int DEFAULT_PAGINATION_COUNT = 10;
 
+    public static int LISTVIEW_SLIDE_IN_ANIM_START = 10;
+
     public static List<String> FILTER_MY_COMM_TYPE = Arrays.asList(
             new String[] {"BUSINESS"}
     );
