@@ -37,7 +37,7 @@
                     android:id="@+id/fromCommunityText" />
 
                 <ImageView
-                    android:id="@+id/communityIcon"
+                    android:id="@+id/commIcon"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="false"
@@ -58,7 +58,7 @@
                     android:textSize="15dp"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:layout_toRightOf="@+id/communityIcon" />
+                    android:layout_toRightOf="@+id/commIcon" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

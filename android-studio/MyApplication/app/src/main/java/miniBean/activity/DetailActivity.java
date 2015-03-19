@@ -92,7 +92,7 @@ public class DetailActivity extends FragmentActivity {
         setContentView(R.layout.detail_activity);
 
         communityName = (TextView) findViewById(R.id.communityName);
-        communityIcon = (ImageView) findViewById(R.id.communityIcon);
+        communityIcon = (ImageView) findViewById(R.id.commIcon);
         numPostViews = (TextView) findViewById(R.id.numPostViews);
         numPostComments = (TextView) findViewById(R.id.numPostComments);
 

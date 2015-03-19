@@ -65,7 +65,7 @@ public class CommFragment extends Fragment {
         view = inflater.inflate(R.layout.community_activity, container, false);
 
         communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
-        communityIcon = (ImageView) view.findViewById(R.id.communityIcon);
+        communityIcon = (ImageView) view.findViewById(R.id.commIcon);
         commName = (TextView) view.findViewById(R.id.commNameText);
         noMember = (TextView) view.findViewById(R.id.noMemberComm);
         imageView = (ImageView) view.findViewById(R.id.join_community);

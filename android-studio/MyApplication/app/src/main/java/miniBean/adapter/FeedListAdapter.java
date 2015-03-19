@@ -62,7 +62,7 @@ public class FeedListAdapter extends BaseAdapter {
         TextView username = (TextView) convertView.findViewById(R.id.username);
         TextView timeText = (TextView) convertView.findViewById(R.id.time);
         TextView numComment = (TextView) convertView.findViewById(R.id.numComment);
-        ImageView communityIcon = (ImageView) convertView.findViewById(R.id.communityIcon);
+        ImageView communityIcon = (ImageView) convertView.findViewById(R.id.commIcon);
         TextView commName = (TextView) convertView.findViewById(R.id.commName);
 
         final CommunityPostVM item = feedItems.get(position);
