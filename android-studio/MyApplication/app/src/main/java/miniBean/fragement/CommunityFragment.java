@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -52,7 +53,8 @@ public class CommunityFragment extends Fragment {
 
         listAdapter = new CommunityListAdapter(getActivity(), communityItems);
         listView.setAdapter(listAdapter);
-
+        listView.setFriction(ViewConfiguration.getScrollFriction() *
+                DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

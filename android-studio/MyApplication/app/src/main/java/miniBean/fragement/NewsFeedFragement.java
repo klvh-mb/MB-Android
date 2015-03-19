@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -19,6 +20,7 @@ import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
@@ -45,6 +47,8 @@ public class NewsFeedFragement extends Fragment {
         feedItems = new ArrayList<CommunityPostVM>();
         listAdapter = getAdapterByFlow("");
         listView.setAdapter(listAdapter);
+        listView.setFriction(ViewConfiguration.getScrollFriction() *
+                DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,9 +61,8 @@ public class NewsFeedFragement extends Fragment {
             }
         });
 
-        listView.setOnScrollListener(new InfiniteScrollListener(1) {
-
-
+        listView.setOnScrollListener(new InfiniteScrollListener(
+                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 System.out.println("totalCount::" + totalItemsCount);

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import miniBean.adapter.FeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
@@ -73,6 +75,8 @@ public class CommFragment extends Fragment {
         feedListAdapter = new FeedListAdapter(getActivity(), feedItems, false);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
+        listView.setFriction(ViewConfiguration.getScrollFriction() *
+                DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
         spinner= (ProgressBar) view.findViewById(R.id.loadCover);
 

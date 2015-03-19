@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.activity.ProfileActivity;
 import miniBean.adapter.RequestListAdapter;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
 
 public class RequestFragment extends Fragment {
@@ -60,6 +62,8 @@ public class RequestFragment extends Fragment {
 
         adapter = new RequestListAdapter(getActivity(), notificationVMs);
         listView.setAdapter(adapter);
+        listView.setFriction(ViewConfiguration.getScrollFriction() *
+                DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

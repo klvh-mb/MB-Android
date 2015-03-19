@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.TopicAdapter;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class TopicFragment extends Fragment {
@@ -37,6 +39,9 @@ public class TopicFragment extends Fragment {
 
         topicAdapter = new TopicAdapter(getActivity(), this.communities);
         listView.setAdapter(topicAdapter);
+        listView.setFriction(ViewConfiguration.getScrollFriction() *
+                DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
+
         topicAdapter.notifyDataSetChanged();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
