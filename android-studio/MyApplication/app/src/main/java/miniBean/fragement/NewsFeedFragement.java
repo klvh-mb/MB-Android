@@ -36,8 +36,8 @@ public class NewsFeedFragement extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        //getMaEventsSao().addCacheChangedListener(this);
-        View view = inflater.inflate(R.layout.newsfeed_activity, container, false);
+
+        View view = inflater.inflate(R.layout.newsfeed_fragment, container, false);
 
         listView = (ListView) view.findViewById(R.id.list);
         progressBarFeed = (ProgressBar) view.findViewById(R.id.progressFeed);

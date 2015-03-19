@@ -35,7 +35,7 @@ import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
 import miniBean.adapter.PageListAdapter;
 import miniBean.app.AppController;
-import miniBean.util.ActivityUtil;
+import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
@@ -45,7 +45,6 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
-
 
 public class DetailActivity extends FragmentActivity {
 
@@ -66,11 +65,10 @@ public class DetailActivity extends FragmentActivity {
     Spinner dropSpinner;
     public Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
+    private ImageView communityIcon;
     public int noOfComments;
     public int curPage = 1;
     CommunityPostCommentVM postVm = new CommunityPostCommentVM();
-
-    private ActivityUtil activityUtil;
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
@@ -93,9 +91,8 @@ public class DetailActivity extends FragmentActivity {
 
         setContentView(R.layout.detail_activity);
 
-        activityUtil = new ActivityUtil(this);
-
         communityName = (TextView) findViewById(R.id.communityName);
+        communityIcon = (ImageView) findViewById(R.id.communityIcon);
         numPostViews = (TextView) findViewById(R.id.numPostViews);
         numPostComments = (TextView) findViewById(R.id.numPostComments);
 
@@ -116,8 +113,6 @@ public class DetailActivity extends FragmentActivity {
                 intent.putExtra("flag","FromDetailActivity");
                 intent.putExtra("id",commID.toString());
                 startActivity(intent);
-
-
             }
         });
 
@@ -203,6 +198,15 @@ public class DetailActivity extends FragmentActivity {
                 communityItems.addAll(post.getCs());
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityItems, curPage);
                 listView.setAdapter(listAdapter);
+
+                int iconMapped = CommunityIconUtil.map(post.getCi());
+                if (iconMapped != -1) {
+                    //Log.d("getView", "replace source with local comm icon - " + commIcon);
+                    communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
+                } else {
+                    Log.d("getView", "load comm icon from background - " + post.getCi());
+                    AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + post.getCi(), communityIcon);
+                }
 
                 setPageButton(curPage);
             }

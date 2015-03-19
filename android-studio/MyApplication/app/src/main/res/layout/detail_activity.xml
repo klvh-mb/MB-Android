@@ -36,18 +36,29 @@
                     android:gravity="center_vertical"
                     android:id="@+id/fromCommunityText" />
 
+                <ImageView
+                    android:id="@+id/communityIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentBottom="false"
+                    android:background="@drawable/image_round_thin"
+                    android:layout_toRightOf="@+id/fromCommunityText"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="false"
+                    android:layout_marginLeft="5dp" />
+
                 <TextView
                     android:id="@+id/communityName"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_alignParentLeft="false"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="3dp"
                     android:text="@string/my_community_tab"
                     android:textColor="#FF6795"
                     android:textSize="15dp"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:layout_toRightOf="@+id/fromCommunityText" />
+                    android:layout_toRightOf="@+id/communityIcon" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

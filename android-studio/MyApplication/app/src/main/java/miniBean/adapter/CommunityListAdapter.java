@@ -55,8 +55,7 @@ public class CommunityListAdapter extends BaseAdapter {
         TextView noMembers = (TextView) convertView.findViewById(R.id.noMember);
         TextView numTopicsToday = (TextView) convertView.findViewById(R.id.numTopicsToday);
 
-        ImageView communityPic = (ImageView) convertView
-                .findViewById(R.id.communityPic);
+        ImageView communityPic = (ImageView) convertView.findViewById(R.id.communityPic);
 
         final CommunitiesWidgetChildVM item = communityItems.get(position);
 
@@ -64,10 +63,10 @@ public class CommunityListAdapter extends BaseAdapter {
         noMembers.setText(item.getMm().toString());
         numTopicsToday.setText("-");
 
-        int icon = CommunityIconUtil.map(item.gi);
-        if (icon != -1) {
+        int iconMapped = CommunityIconUtil.map(item.gi);
+        if (iconMapped != -1) {
             //Log.d("getView", "replace source with local comm icon - " + item.gi);
-            communityPic.setImageDrawable(activity.getResources().getDrawable(icon));
+            communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
             Log.d("getView", "load comm icon from background - " + item.gi);
             AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);

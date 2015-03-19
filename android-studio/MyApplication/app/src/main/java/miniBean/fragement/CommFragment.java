@@ -64,29 +64,30 @@ public class CommFragment extends Fragment {
 
         view = inflater.inflate(R.layout.community_activity, container, false);
 
-        noMember = (TextView) view.findViewById(R.id.noMemberComm);
+        communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
+        communityIcon = (ImageView) view.findViewById(R.id.communityIcon);
         commName = (TextView) view.findViewById(R.id.commNameText);
+        noMember = (TextView) view.findViewById(R.id.noMemberComm);
         imageView = (ImageView) view.findViewById(R.id.join_community);
         feedItems = new ArrayList<CommunityPostVM>();
-        feedListAdapter = new FeedListAdapter(getActivity(), feedItems);
+        feedListAdapter = new FeedListAdapter(getActivity(), feedItems, false);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
-         communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
-         communityIcon = (ImageView) view.findViewById(R.id.commIconView);
-         spinner= (ProgressBar) view.findViewById(R.id.loadCover);
+
+        spinner= (ProgressBar) view.findViewById(R.id.loadCover);
 
         System.out.println("flagggg::::"+getArguments().getString("flag"));
         System.out.println("idchecked 2::::"+Long.parseLong(getArguments().getString("id")));
 
         if(!getArguments().getString("flag").equals("FromDetailActivity")) {
             commname = getArguments().getString("commName");
-             commid = Long.parseLong(getArguments().getString("id"));
+            commid = Long.parseLong(getArguments().getString("id"));
             isM = getArguments().getBoolean("isM", false);
             icon = getArguments().getString("icon");
             nomember = getArguments().getString("noMember");
-            initilizeData();
-        }else {
-                getCommunities(Long.parseLong(getArguments().getString("id")));
+            initializeData();
+        } else {
+            getCommunities(Long.parseLong(getArguments().getString("id")));
         }
 
         for (CommunityCategoryMapVM categoryMapVM : LocalCache.getCommunityCategoryMapList()) {
@@ -105,7 +106,6 @@ public class CommFragment extends Fragment {
                 CommunityPostVM post = feedListAdapter.getItem(position);
                 intent.putExtra("postId", post.getId());
                 intent.putExtra("commId", post.getCid());
-                System.out.println("feed::" + post.getN_c());
                 intent.putExtra("comments", post.getN_c());
 
                 startActivity(intent);
@@ -115,20 +115,21 @@ public class CommFragment extends Fragment {
         return view;
     }
 
-    private void initilizeData(){
+    private void initializeData(){
         getNewsFeedByCommunityId(commid);
-        System.out.println("::::::::::::::::::::::::::::::::::::: boolean  " + getArguments().getBoolean("isM", false));
+        Log.d("initializeData", "isM: "+isM);
+
         feedItems = new ArrayList<CommunityPostVM>();
-        feedListAdapter = new FeedListAdapter(getActivity(), feedItems);
+        feedListAdapter = new FeedListAdapter(getActivity(), feedItems, false);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
 
-        getNewsFeedByCommunityId(commid);
         if (!isM) {
             imageView.setImageResource(R.drawable.check);
         } else {
             imageView.setImageResource(R.drawable.add);
         }
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,8 +205,6 @@ public class CommFragment extends Fragment {
                 feedListAdapter.notifyDataSetChanged();
                 commName.setText(commname);
                 noMember.setText(nomember);
-                //ImageView communityCoverPic = (ImageView)vi findViewById(R.id.communityPic);
-                //ImageView communityIcon = (ImageView) findViewById(R.id.commIconView);
                 ImageLoader imageLoader = ImageLoader.getInstance();
                 imageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-community-image-by-id/" + getArguments().getString("id"), communityCoverPic, new SimpleImageLoadingListener() {
                     @Override
@@ -224,14 +223,13 @@ public class CommFragment extends Fragment {
                     }
                 });
 
-                String commIcon = getArguments().getString("icon");
-                int icon = CommunityIconUtil.map(commIcon);
-                if (icon != -1) {
+                int iconMapped = CommunityIconUtil.map(icon);
+                if (iconMapped != -1) {
                     //Log.d("getView", "replace source with local comm icon - " + commIcon);
-                    communityIcon.setImageDrawable(getResources().getDrawable(icon));
+                    communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
-                    Log.d("getView", "load comm icon from background - " + commIcon);
-                    AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + commIcon, communityIcon);
+                    Log.d("getView", "load comm icon from background - " + icon);
+                    AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + icon, communityIcon);
                 }
             }
 
@@ -269,8 +267,8 @@ public class CommFragment extends Fragment {
             }
         });
     }
-  public   void getMyCommunities()
-    {
+
+    public void getMyCommunities() {
         AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>(){
 
             @Override
@@ -284,9 +282,9 @@ public class CommFragment extends Fragment {
             }
         });
     }
-    public void getCommunities(Long id)
-    {
-        AppController.api.getCommunities(id, AppController.getInstance().getSessionId(),new Callback<CommunityVM>(){
+
+    public void getCommunities(Long id) {
+        AppController.api.getCommunity(id, AppController.getInstance().getSessionId(), new Callback<CommunityVM>() {
 
             @Override
             public void success(CommunityVM communityVM, Response response) {
@@ -295,8 +293,7 @@ public class CommFragment extends Fragment {
                 isM = communityVM.isM();
                 icon = communityVM.getIcon();
                 nomember = String.valueOf(communityVM.getNom());
-                initilizeData();
-
+                initializeData();
             }
 
             @Override
@@ -305,6 +302,6 @@ public class CommFragment extends Fragment {
             }
         });
     }
-  }
+}
 
 

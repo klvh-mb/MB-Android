@@ -13,12 +13,12 @@ public class NewsfeedActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.feed_activity);
+        setContentView(R.layout.newsfeed_activity);
 
         //getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        //getActionBar().setCustomView(R.layout.feed_activity);
-        String id=getIntent().getStringExtra("id");
-        Bundle bundle=new Bundle();
+        //getActionBar().setCustomView(R.layout.newsfeed_activity);
+        String id = getIntent().getStringExtra("id");
+        Bundle bundle = new Bundle();
         bundle.putString("id",id);
         System.out.println("newsfeed::"+getIntent().getStringExtra("id"));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

@@ -75,10 +75,10 @@ public class TopicAdapter extends BaseAdapter {
         commName.setText(item.getDn());
         noMembers.setText(item.getMm().toString());
 
-        int icon = CommunityIconUtil.map(item.gi);
-        if (icon != -1) {
+        int iconMapped = CommunityIconUtil.map(item.gi);
+        if (iconMapped != -1) {
             //Log.d("getView", "replace source with local comm icon - " + item.gi);
-            communityPic.setImageDrawable(activity.getResources().getDrawable(icon));
+            communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
             Log.d("getView", "load comm icon from background - " + item.gi);
             AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);

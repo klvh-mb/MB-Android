@@ -29,18 +29,19 @@
             android:layout_marginBottom="10dp">
 
             <ImageView
-                android:id="@+id/commIconView"
+                android:id="@+id/communityIcon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"></ImageView>
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/image_round_thin"></ImageView>
 
             <TextView
                 android:id="@+id/commNameText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@+id/commIconView"
+                android:layout_toRightOf="@+id/communityIcon"
                 android:textColor="#ffffff"
                 android:shadowColor="#000000"
                 android:shadowDx="3"

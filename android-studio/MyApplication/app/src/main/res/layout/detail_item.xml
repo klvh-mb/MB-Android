@@ -116,7 +116,7 @@
 
             <LinearLayout
                 android:id="@+id/likeComponent"
-                android:layout_toRightOf="@+id/timeText"
+                android:layout_toRightOf="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_corner_like"
@@ -127,7 +127,7 @@
                     android:id="@+id/likeImage"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:layout_toRightOf="@+id/timeText"
+                    android:layout_toRightOf="@+id/time"
                     android:src="@drawable/like" />
 
                 <TextView

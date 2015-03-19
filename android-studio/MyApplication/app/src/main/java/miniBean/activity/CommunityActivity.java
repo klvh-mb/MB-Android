@@ -37,33 +37,28 @@ public class CommunityActivity extends FragmentActivity {
 
         System.out.println("flag comm::"+intent.getStringExtra("flag"));
 
-       if(intent.getStringExtra("flag")!=null) {
-           System.out.println("flag:::::::" + intent.getStringExtra("flag").toString());
+        if(intent.getStringExtra("flag")!=null) {
+            System.out.println("flag:::::::" + intent.getStringExtra("flag").toString());
+        }
 
-       }
+        Bundle bundle = new Bundle();
+        if(getIntent().getStringExtra("flag") != null) {
+            System.out.println("flagchecked:::::::::");
+            bundle.putString("flag", (getIntent().getStringExtra("flag")));
+        }
 
+        System.out.println("idchecked 1::::"+getIntent().getStringExtra("id"));
+        bundle.putString("id", getIntent().getStringExtra("id"));
 
-            System.out.println("catch:::::::::");
-
-            Bundle bundle=new Bundle();
-            if(getIntent().getStringExtra("flag") != null) {
-                System.out.println("flagchecked:::::::::");
-                bundle.putString("flag", (getIntent().getStringExtra("flag")));
-            }
-
-            System.out.println("idchecked 1::::"+getIntent().getStringExtra("id"));
-            bundle.putString("id", getIntent().getStringExtra("id"));
-
-            bundle.putString("noMember", getIntent().getStringExtra("noMember"));
-            bundle.putString("commName", getIntent().getStringExtra("commName"));
-            bundle.putString("icon", getIntent().getStringExtra("icon"));
-            bundle.putBoolean("isM", getIntent().getBooleanExtra("isM", true));
-            CommFragment fragment = new CommFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragment.setArguments(bundle);
-            //fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.replace(R.id.children_layout, fragment).commit();
-
+        bundle.putString("noMember", getIntent().getStringExtra("noMember"));
+        bundle.putString("commName", getIntent().getStringExtra("commName"));
+        bundle.putString("icon", getIntent().getStringExtra("icon"));
+        bundle.putBoolean("isM", getIntent().getBooleanExtra("isM", true));
+        CommFragment fragment = new CommFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragment.setArguments(bundle);
+        //fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.children_layout, fragment).commit();
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override

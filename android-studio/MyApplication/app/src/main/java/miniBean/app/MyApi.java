@@ -121,12 +121,12 @@ public interface MyApi {
     public void getUserComment(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
 
     @GET("/get-bookmarked-posts/{offset}")
-    public void getBookmark( @Path("offset") Long offset,@Query("key") String key, Callback<List<CommunityPostVM>> cb);
+    public void getBookmark(@Path("offset") Long offset,@Query("key") String key, Callback<List<CommunityPostVM>> cb);
 
     @GET("/comments/{id}/{offset}")
-    public void getComments( @Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
+    public void getComments(@Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
 
     @GET("/community/{id}")
-    public void getCommunities( @Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
+    public void getCommunity(@Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
 
 }
