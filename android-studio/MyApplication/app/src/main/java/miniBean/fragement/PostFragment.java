@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.io.File;
 
 import miniBean.R;
@@ -84,16 +86,14 @@ public class PostFragment extends Fragment {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //AppController.getInstance().clearAll();
-                                //ActivityMain.super.onBackPressed();
+                                PostFragment.this.getActivity().onBackPressed();
+                                /*
                                 Intent intent=new Intent(getActivity(),CommunityActivity.class);
                                 intent.putExtra("id",getArguments().getString("id"));
-                                intent.putExtra("noMember",getArguments().getString("noMember"));
                                 intent.putExtra("commName",getArguments().getString("commName"));
-                                intent.putExtra("icon",getArguments().getString("icon"));
-                                intent.putExtra("isM",getArguments().getString("isM"));
                                 intent.putExtra("flag","FromPostFragment");
                                 startActivity(intent);
+                                */
                                 /*FragmentManager fm=getFragmentManager();
                                 fm.popBackStack();*/
                             }
@@ -109,7 +109,6 @@ public class PostFragment extends Fragment {
             }
         });
 
-
         postImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,17 +123,11 @@ public class PostFragment extends Fragment {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("posted:::::::::");
                 String title = postTitle.getText().toString();
                 String content=postContent.getText().toString();
 
-                if (!title.equals("")&&!content.equals(""))
-                {
-                    setPost(title, content);
-                    Intent intent=new Intent(getActivity(),CommunityActivity.class);
-                    intent.putExtra("id",getArguments().getString("id"));
-                    intent.putExtra("flag","FromPostFragment");
-                    startActivity(intent);
+                if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(content)) {
+                    doPost(title, content);
                 }
             }
         });
@@ -145,7 +138,6 @@ public class PostFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == SELECT_PICTURE) {
             selectedImageUri = data.getData();
             selectedImagePath = getPath(selectedImageUri);
@@ -156,7 +148,6 @@ public class PostFragment extends Fragment {
     }
 
     public String getPath(Uri uri) {
-
         String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -164,7 +155,7 @@ public class PostFragment extends Fragment {
         return cursor.getString(column_index);
     }
 
-    public void setPost(String postString,String postContent) {
+    public void doPost(String postString,String postContent) {
         System.out.println(" :::::::::::: "+Long.parseLong(getArguments().getString("id")));
         System.out.println(" :::::::::::: "+postString);
         System.out.println(" :::::::::::: "+postContent);
@@ -175,16 +166,20 @@ public class PostFragment extends Fragment {
                 if (isPhoto) {
                     uploadPhoto(postResponse.getId());
                 }
-                Toast.makeText(getActivity(), "Post Successful...!!!",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Post Successful...!!!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getActivity(),CommunityActivity.class);
+                intent.putExtra("id",getArguments().getString("id"));
+                intent.putExtra("commName",getArguments().getString("commName"));
+                intent.putExtra("flag","FromPostFragment");
+                startActivity(intent);
             }
 
             @Override
             public void failure(RetrofitError error) {
-               // error.printStackTrace();
-                Toast.makeText(getActivity(), "Post Failure...!!!",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Post Failure...!!!", Toast.LENGTH_SHORT).show();
 
+                error.printStackTrace();
             }
         });
     }

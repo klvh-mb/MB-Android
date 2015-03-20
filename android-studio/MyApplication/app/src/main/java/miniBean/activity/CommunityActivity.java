@@ -12,14 +12,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.List;
+
 import miniBean.R;
 import miniBean.fragement.CommFragment;
-import miniBean.fragement.MainFragement;
 import miniBean.fragement.PostFragment;
 
 public class CommunityActivity extends FragmentActivity {
-    ProgressBar progressBar, spinner;
-    ImageView backImage,editAction;
+    ImageView backImage, editAction;
     TextView titleAction;
 
     @Override
@@ -32,43 +32,33 @@ public class CommunityActivity extends FragmentActivity {
         getActionBar().setCustomView(R.layout.community_actionbar);
         backImage = (ImageView) this.findViewById(R.id.backImage);
         titleAction= (TextView) this.findViewById(R.id.titleAction);
-        spinner = (ProgressBar) this.findViewById(R.id.loadCover);
-        progressBar = (ProgressBar) this.findViewById(R.id.progressCommunity);
         editAction= (ImageView) this.findViewById(R.id.editAction);
-        //progressBar.setVisibility(View.VISIBLE);
-        Intent intent=getIntent();
+
+        Intent intent = getIntent();
 
         System.out.println("flag comm::"+intent.getStringExtra("flag"));
-
         if(intent.getStringExtra("flag")!=null) {
             System.out.println("flag:::::::" + intent.getStringExtra("flag").toString());
         }
 
         Bundle bundle = new Bundle();
         if(getIntent().getStringExtra("flag") != null) {
-            System.out.println("flagchecked:::::::::");
             bundle.putString("flag", (getIntent().getStringExtra("flag")));
         }
 
-        System.out.println("idchecked 1::::"+getIntent().getStringExtra("id"));
         bundle.putString("id", getIntent().getStringExtra("id"));
-
-        bundle.putString("noMember", getIntent().getStringExtra("noMember"));
         bundle.putString("commName", getIntent().getStringExtra("commName"));
-        bundle.putString("icon", getIntent().getStringExtra("icon"));
-        bundle.putBoolean("isM", getIntent().getBooleanExtra("isM", true));
         CommFragment fragment = new CommFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragment.setArguments(bundle);
         //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.children_layout, fragment).commit();
 
-        backImage.setOnClickListener(
-                new View.OnClickListener() {
+        backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //finish();
-                Intent intent=new Intent(CommunityActivity.this,ActivityMain.class);
+                //finish();
+                Intent intent = new Intent(CommunityActivity.this, ActivityMain.class);
                 startActivity(intent);
             }
         });
@@ -76,34 +66,31 @@ public class CommunityActivity extends FragmentActivity {
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putString("id",getIntent().getStringExtra("id"));
-                bundle.putString("noMember", getIntent().getStringExtra("noMember"));
                 bundle.putString("commName", getIntent().getStringExtra("commName"));
-                bundle.putString("icon", getIntent().getStringExtra("icon"));
-                bundle.putBoolean("isM", getIntent().getBooleanExtra("isM", true));
 
                 PostFragment fragment = new PostFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragment.setArguments(bundle);
                 //fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.replace(R.id.children_layout, fragment).commit();
-
             }
         });
-
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
+        /*
         this.finish();
-        Fragment fragment=getVisibleFragment();
-        if(fragment instanceof CommFragment)
-        {
+        Fragment fragment = getVisibleFragment();
+        if(fragment instanceof CommFragment) {
             System.out.println("Problem solved:::::::");
-            Intent intent=new Intent(CommunityActivity.this,ActivityMain.class);
+            Intent intent = new Intent(CommunityActivity.this, ActivityMain.class);
             startActivity(intent);
         }
+        */
     }
     public Fragment getVisibleFragment(){
         FragmentManager fragmentManager = CommunityActivity.this.getSupportFragmentManager();

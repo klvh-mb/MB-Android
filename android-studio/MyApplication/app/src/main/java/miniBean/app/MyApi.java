@@ -114,6 +114,12 @@ public interface MyApi {
     @GET("/unlike-post/{post_id}")
     public void setUnLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
+    @GET("/delete-post/{post_id}")
+    public void deletePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/delete-comment/{comment_id}")
+    public void deleteComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
+
     @GET("/get-user-newsfeeds-posts/{offset}/{id}")
     public void getUserPost(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
 

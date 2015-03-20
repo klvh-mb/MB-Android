@@ -27,6 +27,17 @@
     <string name="tabset_profile">我</string>
 
     <!-- Community tab -->
+    <string name="community_leave_confirm">確定退出社群?</string>
+    <string name="community_join_success">成功加入社群。話題會顯示到 社群動向</string>
+    <string name="community_join_failed">暫時不能加入社群，請稍後重試</string>
+    <string name="community_leave_success">成功退出社群</string>
+    <string name="community_leave_failed">暫時不能退出社群，請稍後重試</string>
+    <string name="post_delete_confirm">確定刪除話題?</string>
+    <string name="post_not_found">尋找不到此話題。話題可能已被刪除</string>
+    <string name="post_delete_success">成功刪除話題</string>
+    <string name="post_delete_failed">暫時不能刪除話題，請稍後重試</string>
+    <string name="comment_delete_success">成功刪除回覆</string>
+    <string name="comment_delete_failed">暫時不能刪除回覆，請稍後重試</string>
     <string name="community_actionbar_title">社群話題</string>
     <string name="post_actionbar_title">話題詳情</string>
     <string name="post_comment_bar_hint">回覆話題</string>
@@ -38,7 +49,7 @@
     <string name="new_post">發出</string>
     <string name="new_post_title">問題 / 分享⋯⋯</string>
     <string name="new_post_body">加些詳情</string>
-
+    <string name="delete">刪除</string>
     <string name="like">讚好</string>
     <string name="unlike">取消讚好</string>
     <string name="goto_page">前往頁數</string>

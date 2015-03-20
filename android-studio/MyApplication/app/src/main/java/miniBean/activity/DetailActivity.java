@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -106,12 +107,10 @@ public class DetailActivity extends FragmentActivity {
         communityName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Long commID = getIntent().getLongExtra("commId", 0L);
-                System.out.println("commname clicked::::::::");
-                System.out.println("commid:::::::"+commID);
-                Intent intent=new Intent(DetailActivity.this,CommunityActivity.class);
-                intent.putExtra("flag","FromDetailActivity");
-                intent.putExtra("id",commID.toString());
+                Long commId = getIntent().getLongExtra("commId", 0L);
+                Intent intent = new Intent(DetailActivity.this,CommunityActivity.class);
+                intent.putExtra("flag", "FromDetailActivity");
+                intent.putExtra("id", commId+"");
                 startActivity(intent);
             }
         });
@@ -171,30 +170,29 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void getQnaDetail() {
-        System.out.println("In getQnaDetail");
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
 
         AppController.api.qnaLanding(postID, commID, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
             @Override
-            public void success(CommunityPostVM post, retrofit.client.Response response) {
-
+            public void success(CommunityPostVM post, Response response) {
                 communityName.setText(post.getCn());
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");
                 questionText.setText(post.getPtl());
 
                 postVm.setPost(true);
-                postVm.setImgs(post.getImgs());
+                postVm.setO(post.isO());
                 postVm.setNol(post.getNol());
                 postVm.setId(post.getId());
                 postVm.setOn(post.getP());
                 postVm.setCd(post.getT());
                 postVm.setD(post.getPt());
                 postVm.setOid(post.getOid());
-                postVm.setHasImage(post.isHasImage());
                 postVm.setLike(post.isLike());
+                postVm.setHasImage(post.isHasImage());
+                postVm.setImgs(post.getImgs());
                 noOfComments = post.getN_c();
                 communityItems.add(postVm);
                 communityItems.addAll(post.getCs());
@@ -215,8 +213,9 @@ public class DetailActivity extends FragmentActivity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-
+                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.post_not_found), Toast.LENGTH_SHORT).show();
+                finish();
+                retrofitError.printStackTrace();
             }
         });
     }
@@ -303,7 +302,7 @@ public class DetailActivity extends FragmentActivity {
     private void answerQuestion(String commentString) {
         AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
-            public void success(CommentResponse array, retrofit.client.Response response) {
+            public void success(CommentResponse array, Response response) {
                 if (isPhoto)
                     uploadPhoto(array.getId());
                 pw.dismiss();
@@ -322,7 +321,7 @@ public class DetailActivity extends FragmentActivity {
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.api.uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
             @Override
-            public void success(Response array, retrofit.client.Response response) {
+            public void success(Response array, Response response) {
                 System.out.println("Response:::::::" + array);
             }
 

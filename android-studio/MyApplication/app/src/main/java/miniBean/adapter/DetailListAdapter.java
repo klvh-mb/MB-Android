@@ -1,7 +1,9 @@
 package miniBean.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +22,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -51,20 +54,19 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private TextView ownerName, commentText, postTime;
     private Activity activity;
     private LayoutInflater inflater;
-    private List<CommunityPostCommentVM> communityItems;
-    private boolean likeFlag;
-    private LinearLayout linearLayout;
+    private List<CommunityPostCommentVM> postComments;
+    private LinearLayout likeLayout;
     private ImageView like,postImage;
-    private TextView likeText, totalLike, indexComment;
+    private TextView deleteText, likeText, totalLike, indexComment;
     private int page;
 
     private ActivityUtil activityUtil;
 
     private int emoticonWidth, emoticonHeight;
 
-    public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> communityItems, int page) {
+    public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> postComments, int page) {
         this.activity = activity;
-        this.communityItems = communityItems;
+        this.postComments = postComments;
         this.page = page;
         this.activityUtil = new ActivityUtil(activity);
         emoticonWidth = activityUtil.getRealDimension(EmoticonUtil.WIDTH);
@@ -73,14 +75,14 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     @Override
     public int getCount() {
-        if (communityItems == null)
+        if (postComments == null)
             return 0;
-        return communityItems.size();
+        return postComments.size();
     }
 
     @Override
     public CommunityPostCommentVM getItem(int location) {
-        return communityItems.get(location);
+        return postComments.get(location);
     }
 
     @Override
@@ -102,12 +104,13 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         commentText = (TextView) convertView.findViewById(R.id.commentText);
         ImageView userPic = (ImageView) convertView.findViewById(R.id.questionnare_img);
         like = (ImageView) convertView.findViewById(R.id.likeImage);
-        likeText = (TextView) convertView.findViewById(R.id.TextLike);
-        linearLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
+        likeText = (TextView) convertView.findViewById(R.id.likeText);
+        deleteText = (TextView) convertView.findViewById(R.id.deleteText);
+        likeLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
         totalLike = (TextView) convertView.findViewById(R.id.TotalLike);
         indexComment = (TextView) convertView.findViewById(R.id.indexComment);
-        postImage= (ImageView) convertView.findViewById(R.id.postImage);
-        final CommunityPostCommentVM item = communityItems.get(position);
+        postImage = (ImageView) convertView.findViewById(R.id.postImage);
+        final CommunityPostCommentVM item = postComments.get(position);
 
         // like
         if (item.isLike()) {
@@ -119,6 +122,40 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         }
         if (item.getNol() >= 0) {
             totalLike.setText(item.getNol()+"");
+        }
+
+        // delete
+        if (item.isO()) {
+            deleteText.setVisibility(View.VISIBLE);
+
+            final int pos = position;
+            deleteText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(inflater.getContext());
+                    alertDialogBuilder.setMessage(DetailListAdapter.this.activity.getString(R.string.post_delete_confirm));
+                    alertDialogBuilder.setPositiveButton(DetailListAdapter.this.activity.getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (item.isPost()) {
+                                deletePost(item.getId());
+                            } else {
+                                deleteComment(item.getId(), pos);
+                            }
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton(DetailListAdapter.this.activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            });
+        } else {
+            deleteText.setVisibility(View.GONE);
         }
 
         // index
@@ -136,12 +173,9 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             }
         }
 
-        linearLayout.setOnClickListener(new View.OnClickListener() {
+        likeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeText = (TextView) v.findViewById(R.id.TextLike);
-                like = (ImageView) v.findViewById(R.id.likeImage);
-                totalLike = (TextView) v.findViewById(R.id.TotalLike);
                 if (item.isLike()) {
                     if (item.isPost()) {
                         unLikePost(item.getId());
@@ -195,28 +229,21 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         postTime.setText(stringDate);
 
         int rounded_value = 120;
-
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
-
         ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(), userPic, options);
 
-
         System.out.println("hasimage::::"+item.hasImage);
-        if(item.hasImage)
-        {
-
+        if(item.hasImage) {
             System.out.println("getimage::::"+item.getImgs().toString());
             Long[] ids = item.getImgs();
             System.out.println("iddddd"+ids[0]);
             postImage.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-post-image-by-id/" + ids[0], postImage);
-        }
-        else{
-
+        } else {
             postImage.setVisibility(View.GONE);
         }
-       /* if(!item.hasImage)
-        {
+
+        /* if(!item.hasImage) {
             postImage.setVisibility(View.GONE);
         }*/
 
@@ -241,7 +268,6 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     void likeComment(Long id) {
         AppController.api.setLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
-
             @Override
             public void success(Response response, Response response2) {
 
@@ -256,7 +282,6 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     void unLikeComment(Long id) {
         AppController.api.setUnLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
-
             @Override
             public void success(Response response, Response response2) {
 
@@ -271,7 +296,6 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     void likePost(Long id) {
         AppController.api.setLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
-
             @Override
             public void success(Response response, Response response2) {
 
@@ -286,7 +310,6 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     void unLikePost(Long id) {
         AppController.api.setUnLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
-
             @Override
             public void success(Response response, Response response2) {
 
@@ -294,6 +317,39 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
             @Override
             public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    void deletePost(Long id) {
+        AppController.api.deletePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Toast.makeText(inflater.getContext(), DetailListAdapter.this.activity.getString(R.string.post_delete_success), Toast.LENGTH_SHORT).show();
+                DetailListAdapter.this.activity.finish();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(inflater.getContext(), DetailListAdapter.this.activity.getString(R.string.post_delete_failed), Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+            }
+        });
+    }
+
+    void deleteComment(Long id, final int position) {
+        AppController.api.deleteComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Toast.makeText(inflater.getContext(), DetailListAdapter.this.activity.getString(R.string.comment_delete_success), Toast.LENGTH_SHORT).show();
+                DetailListAdapter.this.postComments.remove(position);
+                DetailListAdapter.this.notifyDataSetChanged();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(inflater.getContext(), DetailListAdapter.this.activity.getString(R.string.comment_delete_success), Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
             }
         });
