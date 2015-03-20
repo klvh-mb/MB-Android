@@ -77,7 +77,8 @@ public class CommFragment extends Fragment {
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
         spinner= (ProgressBar) view.findViewById(R.id.loadCover);
-
+        progressBar= (ProgressBar) view.findViewById(R.id.progressCommunity);
+        progressBar.setVisibility(View.VISIBLE);
         System.out.println("flagggg::::"+getArguments().getString("flag"));
         System.out.println("idchecked 2::::"+Long.parseLong(getArguments().getString("id")));
 
@@ -207,6 +208,7 @@ public class CommFragment extends Fragment {
         AppController.api.getCommNewsfeed(id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, retrofit.client.Response response) {
+                progressBar.setVisibility(View.INVISIBLE);
                 feedItems.addAll(array.getPosts());
                 feedListAdapter.notifyDataSetChanged();
                 commName.setText(commname);

@@ -1,18 +1,22 @@
 package miniBean.fragement;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -34,7 +38,7 @@ public class PostFragment extends Fragment {
     View actionBarView;
     final Integer SELECT_PICTURE = 1;
     TextView postTitle,postContent,post;
-    ImageView postImage,image;
+    ImageView postImage,image,backImage;
     public Boolean isPhoto = false;
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
@@ -65,10 +69,46 @@ public class PostFragment extends Fragment {
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         ((CommunityActivity) getActivity()).getActionBar().setCustomView(actionBarView, lp);
         post= (TextView) actionBarView.findViewById(R.id.titlePost);
+        backImage= (ImageView) actionBarView.findViewById(R.id.backImage);
 
         postContent= (TextView) view.findViewById(R.id.postContent);
         postTitle= (TextView) view.findViewById(R.id.postTitle);
         postImage= (ImageView) view.findViewById(R.id.browseImage);
+        image = (ImageView) view.findViewById(R.id.image);
+
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Do you Want Leave The Post Window..?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //AppController.getInstance().clearAll();
+                                //ActivityMain.super.onBackPressed();
+                                Intent intent=new Intent(getActivity(),CommunityActivity.class);
+                                intent.putExtra("id",getArguments().getString("id"));
+                                intent.putExtra("noMember",getArguments().getString("noMember"));
+                                intent.putExtra("commName",getArguments().getString("commName"));
+                                intent.putExtra("icon",getArguments().getString("icon"));
+                                intent.putExtra("isM",getArguments().getString("isM"));
+                                intent.putExtra("flag","FromPostFragment");
+                                startActivity(intent);
+                                /*FragmentManager fm=getFragmentManager();
+                                fm.popBackStack();*/
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
+        });
+
 
         postImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +129,16 @@ public class PostFragment extends Fragment {
                 String content=postContent.getText().toString();
 
                 if (!title.equals("")&&!content.equals(""))
-                    setPost(title,content);
-
+                {
+                    setPost(title, content);
+                    Intent intent=new Intent(getActivity(),CommunityActivity.class);
+                    intent.putExtra("id",getArguments().getString("id"));
+                    intent.putExtra("flag","FromPostFragment");
+                    startActivity(intent);
+                }
             }
         });
-        image = (ImageView) view.findViewById(R.id.image);
+
 
         return view;
     }
@@ -127,13 +172,19 @@ public class PostFragment extends Fragment {
         AppController.api.setQuestion(new NewPost(Long.parseLong(getArguments().getString("id")),postString,postContent,isPhoto),AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
-                if (isPhoto)
+                if (isPhoto) {
                     uploadPhoto(postResponse.getId());
+                }
+                Toast.makeText(getActivity(), "Post Successful...!!!",
+                        Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+               // error.printStackTrace();
+                Toast.makeText(getActivity(), "Post Failure...!!!",
+                        Toast.LENGTH_LONG).show();
+
             }
         });
     }

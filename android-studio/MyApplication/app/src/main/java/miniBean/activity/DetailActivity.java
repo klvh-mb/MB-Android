@@ -186,12 +186,14 @@ public class DetailActivity extends FragmentActivity {
                 questionText.setText(post.getPtl());
 
                 postVm.setPost(true);
+                postVm.setImgs(post.getImgs());
                 postVm.setNol(post.getNol());
                 postVm.setId(post.getId());
                 postVm.setOn(post.getP());
                 postVm.setCd(post.getT());
                 postVm.setD(post.getPt());
                 postVm.setOid(post.getOid());
+                postVm.setHasImage(post.isHasImage());
                 postVm.setLike(post.isLike());
                 noOfComments = post.getN_c();
                 communityItems.add(postVm);

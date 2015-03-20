@@ -3,7 +3,9 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import miniBean.R;
 import miniBean.fragement.CommFragment;
+import miniBean.fragement.MainFragement;
 import miniBean.fragement.PostFragment;
 
 public class CommunityActivity extends FragmentActivity {
@@ -60,10 +63,13 @@ public class CommunityActivity extends FragmentActivity {
         //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.children_layout, fragment).commit();
 
-        backImage.setOnClickListener(new View.OnClickListener() {
+        backImage.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    finish();
+                    //finish();
+                Intent intent=new Intent(CommunityActivity.this,ActivityMain.class);
+                startActivity(intent);
             }
         });
 
@@ -72,6 +78,10 @@ public class CommunityActivity extends FragmentActivity {
             public void onClick(View v) {
                 Bundle bundle=new Bundle();
                 bundle.putString("id",getIntent().getStringExtra("id"));
+                bundle.putString("noMember", getIntent().getStringExtra("noMember"));
+                bundle.putString("commName", getIntent().getStringExtra("commName"));
+                bundle.putString("icon", getIntent().getStringExtra("icon"));
+                bundle.putBoolean("isM", getIntent().getBooleanExtra("isM", true));
 
                 PostFragment fragment = new PostFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -84,4 +94,24 @@ public class CommunityActivity extends FragmentActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        Fragment fragment=getVisibleFragment();
+        if(fragment instanceof CommFragment)
+        {
+            System.out.println("Problem solved:::::::");
+            Intent intent=new Intent(CommunityActivity.this,ActivityMain.class);
+            startActivity(intent);
+        }
+    }
+    public Fragment getVisibleFragment(){
+        FragmentManager fragmentManager = CommunityActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for(Fragment fragment : fragments){
+            if(fragment != null && fragment.isVisible())
+                return fragment;
+        }
+        return null;
+    }
 }
