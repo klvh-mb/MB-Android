@@ -65,10 +65,10 @@ public class CommunityListAdapter extends BaseAdapter {
 
         int iconMapped = CommunityIconUtil.map(item.gi);
         if (iconMapped != -1) {
-            //Log.d("getView", "replace source with local comm icon - " + item.gi);
+            //Log.d(this.getClass().getSimpleName(), "getView: replace source with local comm icon - " + item.gi);
             communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
-            Log.d("getView", "load comm icon from background - " + item.gi);
+            Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.gi);
             AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
         }
 

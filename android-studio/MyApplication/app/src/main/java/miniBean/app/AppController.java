@@ -83,7 +83,7 @@ public class AppController extends Application {
      * Exit app. Clear everything.
      */
     public void clearAll() {
-        Log.d("clearAll", "clear cache");
+        Log.d(this.getClass().getSimpleName(), "clearAll");
         LocalCache.clear();
     }
 
@@ -100,7 +100,7 @@ public class AppController extends Application {
     }
 
     public void exitApp() {
-        Log.d("exitApp", "exit");
+        Log.d(this.getClass().getSimpleName(), "exitApp");
 
         Intent i = new Intent(Intent.ACTION_MAIN);
         i.addCategory(Intent.CATEGORY_HOME);

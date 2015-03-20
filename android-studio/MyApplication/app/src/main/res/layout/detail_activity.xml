@@ -87,7 +87,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginLeft="15dp"
-                        android:src="@drawable/profile_comments"
+                        android:src="@drawable/comment"
                         android:layout_gravity="center_vertical" />
 
                     <TextView

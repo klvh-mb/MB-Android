@@ -2,7 +2,6 @@ package miniBean.fragement;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +18,6 @@ import com.astuetz.PagerSlidingTabStrip;
 import miniBean.R;
 import miniBean.app.LocalCache;
 import miniBean.viewmodel.CommunityCategoryMapVM;
-
 
 public class MainFragement extends Fragment {
 
@@ -69,9 +67,7 @@ public class MainFragement extends Fragment {
         myContext = (Activity) activity;
         super.onAttach(activity);
     }
-
 }
-
 
 class MyPagerAdapter extends FragmentPagerAdapter {
 
@@ -98,7 +94,7 @@ class MyPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Log.d("getItem", "=======> "+position);
+        Log.d(this.getClass().getSimpleName(), "getItem: item - " + position);
         switch (position) {
             case 0:
                 return new MyCommunityFragment();

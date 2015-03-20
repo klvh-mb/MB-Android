@@ -305,12 +305,12 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
         int emoticon = EmoticonUtil.map(source);
         if (emoticon != -1) {
-            //Log.d("getDrawable", "replace source with emoticon - " + source);
+            //Log.d(this.getClass().getSimpleName(), "getDrawable: replace source with emoticon - " + source);
             Drawable emo = activity.getResources().getDrawable(emoticon);
             d.addLevel(0, 0, emo);
             d.setBounds(0, 0, emoticonWidth, emoticonHeight);
         } else {
-            Log.d("getDrawable", "load emoticon from background - " + source);
+            Log.d(this.getClass().getSimpleName(), "getDrawable: load emoticon from background - " + source);
             Drawable empty = activity.getResources().getDrawable(R.drawable.empty);
             d.addLevel(0, 0, empty);
             d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
@@ -344,7 +344,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null) {
-                Log.d("LoadImage", "loaded bitmap - " + bitmap.getWidth() + "|" + bitmap.getHeight());
+                Log.d(this.getClass().getSimpleName(), "onPostExecute: loaded bitmap - " + bitmap.getWidth() + "|" + bitmap.getHeight());
                 BitmapDrawable d = new BitmapDrawable(bitmap);
                 mDrawable.addLevel(1, 1, d);
                 mDrawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());

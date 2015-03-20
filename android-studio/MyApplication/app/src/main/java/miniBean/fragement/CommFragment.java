@@ -32,7 +32,6 @@ import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
-import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostVM;
@@ -41,7 +40,6 @@ import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
 
 public class CommFragment extends Fragment {
 
@@ -52,7 +50,7 @@ public class CommFragment extends Fragment {
     private ProgressBar spinner;
     List<CommunityCategoryMapVM> item;
     List<CommunitiesWidgetChildVM> commItem;
-    private ImageView imageView;
+    private ImageView joinCommunity;
     private ImageView communityCoverPic,communityIcon;
     private CommunitiesWidgetChildVM currentCommunity;
     private String commname,nomember,icon;
@@ -70,7 +68,7 @@ public class CommFragment extends Fragment {
         communityIcon = (ImageView) view.findViewById(R.id.commIcon);
         commName = (TextView) view.findViewById(R.id.commNameText);
         noMember = (TextView) view.findViewById(R.id.noMemberComm);
-        imageView = (ImageView) view.findViewById(R.id.join_community);
+        joinCommunity = (ImageView) view.findViewById(R.id.join_community);
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new FeedListAdapter(getActivity(), feedItems, false);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
@@ -94,14 +92,7 @@ public class CommFragment extends Fragment {
             getCommunity(Long.parseLong(getArguments().getString("id")));
         }
 
-        for (CommunityCategoryMapVM categoryMapVM : LocalCache.getCommunityCategoryMapList()) {
-            if (categoryMapVM.communities != null)
-                for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
-                    if (vm.getId() == commid) {
-                        currentCommunity = vm;
-                    }
-                }
-        }
+        setCurrentCommunity();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -119,9 +110,31 @@ public class CommFragment extends Fragment {
         return view;
     }
 
+    private void setCurrentCommunity() {
+        //Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity, comm - " + commname + "|" + commid);
+        //Log.d(this.getClass().getSimpleName(), "onCreateView: LocalCache.getCommunityCategoryMapList() size - " + LocalCache.getCommunityCategoryMapList().size());
+
+        currentCommunity = null;
+        for (CommunityCategoryMapVM categoryMapVM : LocalCache.getCommunityCategoryMapList()) {
+            if (categoryMapVM.communities != null) {
+                for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
+                    if (vm.getId().equals(commid)) {
+                        Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to vm [comm - " + commname + "|" + commid + "]   [vm  - " + vm.dn + "|" + vm.getId() + "]");
+                        currentCommunity = vm;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (currentCommunity == null) {
+            Log.e(this.getClass().getSimpleName(), "onCreateView: currentCommunity is null, comm - " + commname + "|" + commid);
+        }
+    }
+
     private void initializeData(){
         getNewsFeedByCommunityId(commid);
-        Log.d("initializeData", "isM: "+isM);
+        Log.d(this.getClass().getSimpleName(), "initialiazeData: isM - " + isM);
 
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new FeedListAdapter(getActivity(), feedItems, false);
@@ -129,17 +142,17 @@ public class CommFragment extends Fragment {
         listView.setAdapter(feedListAdapter);
 
         if (!isM) {
-            imageView.setImageResource(R.drawable.check);
+            joinCommunity.setImageResource(R.drawable.check);
         } else {
-            imageView.setImageResource(R.drawable.add);
+            joinCommunity.setImageResource(R.drawable.add);
         }
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        joinCommunity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                 if (!(isM)) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setMessage("Are You Want Join This Community?");
                     alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
@@ -150,19 +163,9 @@ public class CommFragment extends Fragment {
                             ImageView image = (ImageView) view.findViewById(R.id.join_community);
                             image.setImageResource(R.drawable.add);
                             currentCommunity.setIsM(true);
-                            AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>(){
 
-                                @Override
-                                public void success(CommunitiesParentVM communitiesParentVM, Response response) {
-                                    LocalCache.setMyCommunitiesParentVM(communitiesParentVM);
-                                }
-
-                                @Override
-                                public void failure(RetrofitError error) {
-
-                                }
-                            });
-
+                            // refresh my comms
+                            LocalCache.refreshMyCommunities();
                         }
                     });
                     alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -172,10 +175,7 @@ public class CommFragment extends Fragment {
                             Toast.makeText(getActivity(), "CANCEL", Toast.LENGTH_LONG).show();
                         }
                     });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
                 } else {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setMessage("Are You Want To Leave This Community?");
                     alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
@@ -186,6 +186,8 @@ public class CommFragment extends Fragment {
                             image.setImageResource(R.drawable.check);
                             currentCommunity.setIsM(false);
 
+                            // refresh my comms
+                            LocalCache.refreshMyCommunities();
                         }
                     });
                     alertDialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -194,9 +196,9 @@ public class CommFragment extends Fragment {
                             Toast.makeText(getActivity(), "CANCEL", Toast.LENGTH_LONG).show();
                         }
                     });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
                 }
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
     }
@@ -229,10 +231,10 @@ public class CommFragment extends Fragment {
 
                 int iconMapped = CommunityIconUtil.map(icon);
                 if (iconMapped != -1) {
-                    //Log.d("getView", "replace source with local comm icon - " + commIcon);
+                    //Log.d(this.getClass().getSimpleName(), "getNewsFeedByCommunityId.api.success: replace source with local comm icon - " + commIcon);
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
-                    Log.d("getView", "load comm icon from background - " + icon);
+                    Log.d(this.getClass().getSimpleName(), "getNewsFeedByCommunityId.api.success: load comm icon from background - " + icon);
                     AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + icon, communityIcon);
                 }
             }
@@ -248,7 +250,7 @@ public class CommFragment extends Fragment {
         AppController.api.sendJoinRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                getMyCommunities();
+                LocalCache.refreshMyCommunities();
             }
 
             @Override
@@ -262,27 +264,12 @@ public class CommFragment extends Fragment {
         AppController.api.sendLeaveRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                    getMyCommunities();
+                    LocalCache.refreshMyCommunities();
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors
-            }
-        });
-    }
-
-    public void getMyCommunities() {
-        AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>(){
-
-            @Override
-            public void success(CommunitiesParentVM communitiesParentVM, Response response) {
-                LocalCache.setMyCommunitiesParentVM(communitiesParentVM);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
             }
         });
     }

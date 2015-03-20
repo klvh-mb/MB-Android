@@ -201,10 +201,10 @@ public class DetailActivity extends FragmentActivity {
 
                 int iconMapped = CommunityIconUtil.map(post.getCi());
                 if (iconMapped != -1) {
-                    //Log.d("getView", "replace source with local comm icon - " + commIcon);
+                    //Log.d(this.getClass().getSimpleName(), "getQnaDetail: replace source with local comm icon - " + commIcon);
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
-                    Log.d("getView", "load comm icon from background - " + post.getCi());
+                    Log.d(this.getClass().getSimpleName(), "getQnaDetail: load comm icon from background - " + post.getCi());
                     AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + post.getCi(), communityIcon);
                 }
 
@@ -357,7 +357,7 @@ public class DetailActivity extends FragmentActivity {
             listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d("onItemClick", "Page " + curPage);
+                    Log.d(this.getClass().getSimpleName(), "listView1.onItemClick: Page " + curPage);
                     curPage = position + 1;
                     setPageButton(curPage);
                     getComments(getIntent().getLongExtra("postId", 0L),position);

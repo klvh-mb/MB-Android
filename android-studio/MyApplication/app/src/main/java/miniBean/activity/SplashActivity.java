@@ -43,7 +43,7 @@ public class SplashActivity extends Activity {
 
         LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
         if (AppController.getInstance().getSessionId() != null) {
-            Log.d("sessionID", AppController.getInstance().getSessionId());
+            Log.d(this.getClass().getSimpleName(), "onCreate: sessionID - " + AppController.getInstance().getSessionId());
             AppController.api.getSocialCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                     new Callback<List<CommunityCategoryMapVM>>() {
                         @Override

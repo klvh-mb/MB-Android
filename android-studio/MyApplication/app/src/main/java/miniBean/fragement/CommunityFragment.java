@@ -32,7 +32,7 @@ public class CommunityFragment extends Fragment {
     ProgressBar progressBarComm;
     private ListView listView;
     private CommunityListAdapter listAdapter;
-    private List<CommunitiesWidgetChildVM> communityItems;
+    private List<CommunitiesWidgetChildVM> communities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,9 +49,9 @@ public class CommunityFragment extends Fragment {
         progressBarComm = (ProgressBar) view.findViewById(R.id.progressComm1);
         progressBarComm.setVisibility(View.VISIBLE);
 
-        communityItems = new ArrayList<>();
+        communities = new ArrayList<>();
 
-        listAdapter = new CommunityListAdapter(getActivity(), communityItems);
+        listAdapter = new CommunityListAdapter(getActivity(), communities);
         listView.setAdapter(listAdapter);
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
@@ -68,7 +68,8 @@ public class CommunityFragment extends Fragment {
                 commId = childVM.getId().toString();
                 noMember = childVM.getMm().toString();
                 name = childVM.getDn();
-                System.out.println("idchecked 0:::"+commId);
+
+                Log.d(this.getClass().getSimpleName(), "onCreateView: listView.onItemClick with commId - " + commId);
                 intent.putExtra("id", commId);
                 intent.putExtra("noMember", noMember);
                 intent.putExtra("commName", name);
@@ -79,31 +80,24 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-
-        System.out.println("Before getCommunity");
+        LocalCache.setMyCommunityFragment(this);
         if (LocalCache.getMyCommunitiesParentVM() != null) {
-            System.out.println("in localcache:::::::::::");
-            communityItems.addAll(LocalCache.getMyCommunitiesParentVM().getCommunities());
-            listAdapter.notifyDataSetChanged();
-            progressBarComm.setVisibility(View.GONE);
+            Log.d(this.getClass().getSimpleName(), "onCreateView: reload my communities from LocalCache");
+            notifyChange(LocalCache.getMyCommunitiesParentVM().getCommunities());
         } else {
-            getCommunity();
+            LocalCache.refreshMyCommunities();
+            //getMyCommunities();
         }
-        System.out.println("After getCommunity");
+
         return view;
     }
 
-    private void getCommunity() {
-        System.out.println("In getCommunity");
+    private void getMyCommunities() {
         AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>() {
             @Override
             public void success(CommunitiesParentVM array, retrofit.client.Response response) {
-                filterMyCommunities(array);
                 LocalCache.setMyCommunitiesParentVM(array);
-                communityItems.addAll(array.getCommunities());
-                listAdapter.notifyDataSetChanged();
-                progressBarComm.setVisibility(View.GONE);
-
+                notifyChange(array.communities);
             }
 
             @Override
@@ -114,27 +108,20 @@ public class CommunityFragment extends Fragment {
         });
     }
 
-    private void filterMyCommunities(CommunitiesParentVM array) {
-        for (int i = array.communities.size()-1; i > 0; i--) {
-            if (DefaultValues.FILTER_MY_COMM_TYPE.contains(array.communities.get(i).tp) ||
-                    DefaultValues.FILTER_MY_COMM_TARGETING_INFO.contains(array.communities.get(i).tinfo)) {
-                System.out.println("Filtered myCommunity - " + array.communities.get(i).dn);
-                array.communities.remove(i);
-            }
-        }
+    public void notifyChange(List<CommunitiesWidgetChildVM> communities) {
+        this.communities.clear();
+        this.communities.addAll(communities);
+        listAdapter.notifyDataSetChanged();
+        progressBarComm.setVisibility(View.GONE);
     }
 
     @Override
     public void onResume() {
-
         super.onResume();
-        if(LocalCache.getMyCommunitiesParentVM() != null) {
-            System.out.println("onresume::::::::" + LocalCache.getMyCommunitiesParentVM().getCommunities().size());
-            communityItems.clear();
-            communityItems.addAll(LocalCache.getMyCommunitiesParentVM().getCommunities());
-            listAdapter.notifyDataSetChanged();
-            progressBarComm.setVisibility(View.GONE);
-        }
 
+        if(LocalCache.getMyCommunitiesParentVM() != null) {
+            Log.d(this.getClass().getSimpleName(), "onResume: my communities size - " + LocalCache.getMyCommunitiesParentVM().getCommunities().size());
+            notifyChange(LocalCache.getMyCommunitiesParentVM().getCommunities());
+        }
     }
 }

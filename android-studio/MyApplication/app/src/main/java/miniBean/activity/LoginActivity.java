@@ -136,7 +136,7 @@ public class LoginActivity extends FragmentActivity {
         }
 
         String key = activityUtil.getResponseBody(response);
-        Log.d("sessionID", key);
+        Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
         session.edit().putString("sessionID", key).apply();
         return true;
     }
@@ -173,7 +173,7 @@ public class LoginActivity extends FragmentActivity {
             facebook.setAccessToken(access_token);
             doLoginUsingAccessToken(access_token);
             btnFbLogin.setVisibility(View.INVISIBLE);
-            Log.d("FB Sessions", "" + facebook.isSessionValid());
+            Log.d(this.getClass().getSimpleName(), "loginToFacebook: FB Session valid - " + facebook.isSessionValid());
         }
 
         if (expires != 0) {
@@ -187,7 +187,7 @@ public class LoginActivity extends FragmentActivity {
 
                         @Override
                         public void onComplete(Bundle values) {
-                            Log.d("onComplete", "fb doLoginUsingAccessToken");
+                            Log.d(this.getClass().getSimpleName(), "loginToFacebook.onComplete: fb doLoginUsingAccessToken");
                             doLoginUsingAccessToken(facebook.getAccessToken());
                         }
 
@@ -208,11 +208,11 @@ public class LoginActivity extends FragmentActivity {
                         @Override
                         public void onCancel() {
                             // TODO Auto-generated method stub
-                            Log.d("onCancel", "fb login cancelled");
+                            Log.d(this.getClass().getSimpleName(), "loginToFacebook.onCancel: fb login cancelled");
                         }
 
                     });
-            Log.d("loginToFacebook", "completed");
+            Log.d(this.getClass().getSimpleName(), "loginToFacebook: completed");
         }
     }
 

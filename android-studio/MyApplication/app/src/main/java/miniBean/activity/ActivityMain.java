@@ -60,7 +60,7 @@ public class ActivityMain extends FragmentActivity {
         Rect rect = community.getCompoundDrawables()[0].getBounds();
         realTabIconWidth = rect.width();
         realTabIconHeight = rect.height();
-        Log.d("realDimension", rect.width() + ":" + rect.height());
+        Log.d(this.getClass().getSimpleName(), "onCreate: realDimension - " + rect.width() + ":" + rect.height());
 
         Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.comm_sel);
         img.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
@@ -151,7 +151,7 @@ public class ActivityMain extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("onDestroy", "clear cache");
+        Log.d(this.getClass().getSimpleName(), "onDestroy: clear all");
 
         AppController.getInstance().clearAll();
     }

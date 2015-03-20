@@ -16,6 +16,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.TopicAdapter;
+import miniBean.app.LocalCache;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
@@ -23,7 +24,7 @@ public class TopicFragment extends Fragment {
 
     public ListView listView;
     public TopicAdapter topicAdapter;
-    public List<CommunitiesWidgetChildVM> communities = new ArrayList<CommunitiesWidgetChildVM>();
+    public List<CommunitiesWidgetChildVM> communities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,8 +42,6 @@ public class TopicFragment extends Fragment {
         listView.setAdapter(topicAdapter);
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
-
-        topicAdapter.notifyDataSetChanged();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,14 +65,19 @@ public class TopicFragment extends Fragment {
             }
         });
 
+        LocalCache.addTopicCommunityFragment(this);
+
         return rootView;
+    }
+
+    public void notifyChange() {
+        topicAdapter.notifyDataSetChanged();
+        //progressBarComm.setVisibility(View.GONE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println(" Topic " +
-                "RESUME e:::::::::::");
     }
 
     public List<CommunitiesWidgetChildVM> getCommunities() {
@@ -83,6 +87,4 @@ public class TopicFragment extends Fragment {
     public void setCommunities(List<CommunitiesWidgetChildVM> communities) {
         this.communities = communities;
     }
-
-
 }

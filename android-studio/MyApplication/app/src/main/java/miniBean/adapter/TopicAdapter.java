@@ -19,7 +19,6 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.CommunityIconUtil;
-import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -77,10 +76,10 @@ public class TopicAdapter extends BaseAdapter {
 
         int iconMapped = CommunityIconUtil.map(item.gi);
         if (iconMapped != -1) {
-            //Log.d("getView", "replace source with local comm icon - " + item.gi);
+            //Log.d(this.getClass().getSimpleName(), "getView: replace source with local comm icon - " + item.gi);
             communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
-            Log.d("getView", "load comm icon from background - " + item.gi);
+            Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.gi);
             AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
         }
 
@@ -155,8 +154,7 @@ public class TopicAdapter extends BaseAdapter {
         AppController.api.sendJoinRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                LocalCache.setDirty(true);
-                getMyCommunities();
+                LocalCache.refreshMyCommunities();
             }
 
             @Override
@@ -170,26 +168,12 @@ public class TopicAdapter extends BaseAdapter {
         AppController.api.sendLeaveRequest(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                LocalCache.setDirty(true);
+                LocalCache.refreshMyCommunities();
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 retrofitError.printStackTrace(); //to see if you have errors
-            }
-        });
-    }
-
-    public void getMyCommunities(){
-        AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>(){
-            @Override
-            public void success(CommunitiesParentVM communitiesParentVM, Response response) {
-                LocalCache.setMyCommunitiesParentVM(communitiesParentVM);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
             }
         });
     }

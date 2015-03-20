@@ -71,7 +71,7 @@ public class FeedListAdapter extends BaseAdapter {
 
         final CommunityPostVM item = feedItems.get(position);
 
-        //Log.d("getView", item.getPtl() + "   #comment: " + item.getN_c());
+        //Log.d(this.getClass().getSimpleName(), "getView: Post - " + item.getPtl() + "|#comment: " + item.getN_c());
 
         name.setText(item.getPtl());
         username.setText(item.getP());
@@ -87,10 +87,10 @@ public class FeedListAdapter extends BaseAdapter {
             commName.setText(item.getCn());
             int iconMapped = CommunityIconUtil.map(item.getCi());
             if (iconMapped != -1) {
-                //Log.d("getView", "replace source with local comm icon - " + commIcon);
+                //Log.d(this.getClass().getSimpleName(), "getView: replace source with local comm icon - " + commIcon);
                 communityIcon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
             } else {
-                Log.d("getView", "load comm icon from background - " + item.getCi());
+                Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.getCi());
                 AppController.mImageLoader.displayImage(convertView.getResources().getString(R.string.base_url) + item.getCi(), communityIcon);
             }
         } else {
@@ -102,7 +102,7 @@ public class FeedListAdapter extends BaseAdapter {
         // Slide in from bottom
         if (position > lastPosition) {
             if (position > DefaultValues.LISTVIEW_SLIDE_IN_ANIM_START && lastPosition != -1) {
-                Log.d("getView", position+"");
+                //Log.d(this.getClass().getSimpleName(), "getView: animate up_from_bottom - " + position+"");
                 Animation animation = AnimationUtils.loadAnimation(activity.getBaseContext(), R.anim.up_from_bottom);
                 convertView.startAnimation(animation);
             }
