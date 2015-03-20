@@ -176,6 +176,10 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         likeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                likeText = (TextView) v.findViewById(R.id.likeText);
+                like = (ImageView) v.findViewById(R.id.likeImage);
+                totalLike = (TextView) v.findViewById(R.id.TotalLike);
+
                 if (item.isLike()) {
                     if (item.isPost()) {
                         unLikePost(item.getId());
