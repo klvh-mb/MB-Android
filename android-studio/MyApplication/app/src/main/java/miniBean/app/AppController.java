@@ -3,6 +3,10 @@ package miniBean.app;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.util.Base64;
 import android.util.Log;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -10,13 +14,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import miniBean.R;
-import miniBean.activity.ActivityMain;
-import miniBean.activity.LoginActivity;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
 import org.acra.*;
 import org.acra.annotation.*;
+
+import java.security.MessageDigest;
 
 /**
  * ARCA config
@@ -77,6 +81,8 @@ public class AppController extends Application {
         mImageLoader = ImageLoader.getInstance();
 
         ACRA.init(this);
+
+        //printKeyHashForFacebook();
     }
 
     /**
@@ -113,5 +119,18 @@ public class AppController extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
 
         System.exit(1);
+    }
+
+    private void printKeyHashForFacebook() {
+        try{
+            PackageInfo info = getPackageManager().getPackageInfo("miniBean.app", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d(this.getClass().getSimpleName(), "KeyHash - " + Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

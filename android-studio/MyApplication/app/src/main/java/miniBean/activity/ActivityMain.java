@@ -3,7 +3,6 @@ package miniBean.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,14 +16,12 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.fragement.MainFragement;
 import miniBean.fragement.MyProfileFragment;
-import miniBean.util.ActivityUtil;
 
 public class ActivityMain extends FragmentActivity {
 
     Button community, profile, article;
     private android.app.ActionBar actionBar;
     private boolean commClicked = false,profileClicked = false;
-    private ActivityUtil activityUtil;
 
     private int realTabIconWidth, realTabIconHeight;
 
@@ -33,8 +30,6 @@ public class ActivityMain extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
-
-        activityUtil = new ActivityUtil(this);
 
         /*
         if(getIntent().getBooleanExtra("EXIT", false)){

@@ -28,10 +28,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
-import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 
 import org.parceler.apache.commons.lang.StringUtils;
@@ -41,7 +39,6 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
-import miniBean.app.MyApi;
 import miniBean.util.ActivityUtil;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
@@ -57,13 +54,17 @@ public class LoginActivity extends FragmentActivity {
     private Facebook facebook = new Facebook(APP_ID);
 
     public SharedPreferences session = null;
-    public AsyncFacebookRunner mAsyncRunner = null;
     private EditText username = null;
     private EditText password = null;
     private TextView login;
     private ImageView btnFbLogin;
 
     private ActivityUtil activityUtil;
+
+    private static final String[] REQUEST_FACEBOOK_PERMISSIONS = {
+            //"id","email","cover","name","first_name","last_name","birthday","gender","age_range","relationship_status","link","timezone","locale","education","verified","updated_time"
+            "email","publish_stream"
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,6 @@ public class LoginActivity extends FragmentActivity {
         activityUtil = new ActivityUtil(this);
 
         APP_ID = getResources().getString(R.string.app_id);
-        mAsyncRunner = new AsyncFacebookRunner(facebook);
 
         username = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
@@ -130,60 +130,31 @@ public class LoginActivity extends FragmentActivity {
         });
     }
 
-    private boolean saveToSession(Response response) {
-        if (response == null) {
-            return false;
-        }
-
-        String key = activityUtil.getResponseBody(response);
-        Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
-        session.edit().putString("sessionID", key).apply();
-        return true;
-    }
-
-    private void doLoginUsingAccessToken(String access_token) {
-        AppController.api.loginByFacebbok(access_token, new Callback<Response>() {
-            @Override
-            public void success(Response response, Response response2) {
-                if (saveToSession(response)) {
-                    /*
-                    Intent i = new Intent(LoginActivity.this, ActivityMain.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                    */
-                    getCommunityMapCategory();
-                } else {
-                    alert(R.string.login_error_title, R.string.login_error_message);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace();
-                alert(R.string.login_error_title, R.string.login_error_message);
-            }
-        });
-    }
-
-    public void loginToFacebook() {
+    private void loginToFacebook() {
         String access_token = session.getString("access_token", null);
         long expires = session.getLong("access_expires", 0);
+
+        Log.d(this.getClass().getSimpleName(), "loginToFacebook: access_token - " + access_token);
 
         if (access_token != null) {
             facebook.setAccessToken(access_token);
             doLoginUsingAccessToken(access_token);
             btnFbLogin.setVisibility(View.INVISIBLE);
-            Log.d(this.getClass().getSimpleName(), "loginToFacebook: FB Session valid - " + facebook.isSessionValid());
         }
 
+        Log.d(this.getClass().getSimpleName(), "loginToFacebook: expires - " + expires);
         if (expires != 0) {
             facebook.setAccessExpires(expires);
         }
 
+        Log.d(this.getClass().getSimpleName(), "loginToFacebook: isSessionValid - " + facebook.isSessionValid());
         if (!facebook.isSessionValid()) {
-            facebook.authorize(this,
-                    new String[]{"email", "publish_stream"},
-                    new DialogListener() {
+            Log.d(this.getClass().getSimpleName(), "loginToFacebook: authorize");
+            facebook.authorize(
+                    this,
+                    REQUEST_FACEBOOK_PERMISSIONS,
+                    Facebook.FORCE_DIALOG_AUTH,     // force traditional dialog box instead of new integrated login dialogbox
+                    new Facebook.DialogListener() {
 
                         @Override
                         public void onComplete(Bundle values) {
@@ -216,20 +187,64 @@ public class LoginActivity extends FragmentActivity {
         }
     }
 
+    private void doLoginUsingAccessToken(String access_token) {
+        Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken: access_token - " + access_token);
+        AppController.api.loginByFacebbok(access_token, new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");
+                if (saveToSession(response)) {
+                    /*
+                    Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    */
+                    getCommunityMapCategory();
+                } else {
+                    alert(R.string.login_error_title, R.string.login_error_message);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace();
+                alert(R.string.login_error_title, R.string.login_error_message);
+            }
+        });
+    }
+
+    private boolean saveToSession(Response response) {
+        if (response == null) {
+            return false;
+        }
+
+        String key = activityUtil.getResponseBody(response);
+        Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
+        session.edit().putString("sessionID", key).apply();
+        return true;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(this.getClass().getSimpleName(), "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(this.getClass().getSimpleName(), "onActivityResult: facebook.authorizeCallback - requestCode:"+requestCode+" resultCode:"+resultCode+" data:"+data);
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
 
     public void getCommunityMapCategory(){
+        Log.d(this.getClass().getSimpleName(), "getCommunityMapCategory");
         AppController.api.getSocialCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                 new Callback<List<CommunityCategoryMapVM>>() {
                     @Override
                     public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
+                        Log.d(this.getClass().getSimpleName(), "getCommunityMapCategory.success: populate LocalCache and start ActivityMain");
+                        LocalCache.clearCommunityCategoryMapList();
+                        LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
                         for (CommunityCategoryMapVM vm : array) {
                             LocalCache.addCommunityCategoryMapToList(vm);
                         }
+
                         Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                         startActivity(i);
                     }

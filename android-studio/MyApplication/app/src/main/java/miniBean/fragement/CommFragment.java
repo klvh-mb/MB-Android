@@ -114,7 +114,7 @@ public class CommFragment extends Fragment {
             if (categoryMapVM.communities != null) {
                 for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
                     if (vm.getId().equals(commId)) {
-                        Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to vm [comm - " + commName + "|" + commId + "]   [vm  - " + vm.dn + "|" + vm.getId() + "]");
+                        Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to topic comm vm [comm - " + commName + "|" + commId + "]   [vm  - " + vm.dn + "|" + vm.getId() + "]");
                         currentCommunity = vm;
                         break;
                     }
@@ -123,7 +123,15 @@ public class CommFragment extends Fragment {
         }
 
         if (currentCommunity == null) {
-            Log.e(this.getClass().getSimpleName(), "onCreateView: currentCommunity is null, comm - " + commName + "|" + commId);
+            Log.w(this.getClass().getSimpleName(), "onCreateView: commId not in topic comms, comm - " + commName + "|" + commId);
+            // not in topic comm, could be closed or other special comms, get directly from my communities list
+            for (CommunitiesWidgetChildVM vm : LocalCache.getMyCommunitiesParentVM().communities) {
+                if (vm.getId().equals(commId)) {
+                    Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to my comm vm [comm - " + commName + "|" + commId + "]   [vm  - " + vm.dn + "|" + vm.getId() + "]");
+                    currentCommunity = vm;
+                    break;
+                }
+            }
         }
     }
 

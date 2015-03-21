@@ -41,16 +41,18 @@ public class SplashActivity extends Activity {
         }
         */
 
-        LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
         if (AppController.getInstance().getSessionId() != null) {
             Log.d(this.getClass().getSimpleName(), "onCreate: sessionID - " + AppController.getInstance().getSessionId());
             AppController.api.getSocialCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                     new Callback<List<CommunityCategoryMapVM>>() {
                         @Override
                         public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
+                            LocalCache.clearCommunityCategoryMapList();
+                            LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
                             for (CommunityCategoryMapVM vm : array) {
                                 LocalCache.addCommunityCategoryMapToList(vm);
                             }
+
                             new Handler().postDelayed(new Runnable() {
                                 public void run() {
                                     startActivity(new Intent(SplashActivity.this, ActivityMain.class));

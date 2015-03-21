@@ -43,6 +43,10 @@ public class LocalCache {
         return LocalCache.communityCategoryMapList;
     }
 
+    public static void clearCommunityCategoryMapList() {
+        communityCategoryMapList.clear();
+    }
+
     public static void addCommunityCategoryMapToList(CommunityCategoryMapVM communityCategoryMap) {
         communityCategoryMapList.add(communityCategoryMap);
     }
