@@ -93,7 +93,7 @@ public class LoginActivity extends FragmentActivity {
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                             */
-                            getCommunityMapCategory();
+                            getCommunityMapCategoryList();
                         } else {
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
@@ -199,7 +199,7 @@ public class LoginActivity extends FragmentActivity {
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     */
-                    getCommunityMapCategory();
+                    getCommunityMapCategoryList();
                 } else {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
@@ -232,21 +232,17 @@ public class LoginActivity extends FragmentActivity {
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
 
-    public void getCommunityMapCategory(){
-        Log.d(this.getClass().getSimpleName(), "getCommunityMapCategory");
+    public void getCommunityMapCategoryList(){
+        Log.d(this.getClass().getSimpleName(), "getCommunityMapCategoryList");
         AppController.api.getSocialCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                 new Callback<List<CommunityCategoryMapVM>>() {
                     @Override
                     public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                        Log.d(this.getClass().getSimpleName(), "getCommunityMapCategory.success: populate LocalCache and start ActivityMain");
-                        LocalCache.clearCommunityCategoryMapList();
-                        LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
-                        for (CommunityCategoryMapVM vm : array) {
-                            LocalCache.addCommunityCategoryMapToList(vm);
-                        }
+                        SplashActivity.cacheCommunityCategoryMapList(array);
 
                         Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                         startActivity(i);
+                        finish();
                     }
 
                     @Override

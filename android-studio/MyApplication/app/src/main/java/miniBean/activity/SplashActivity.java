@@ -47,18 +47,14 @@ public class SplashActivity extends Activity {
                     new Callback<List<CommunityCategoryMapVM>>() {
                         @Override
                         public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                            LocalCache.clearCommunityCategoryMapList();
-                            LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(getString(R.string.my_community_tab)));
-                            for (CommunityCategoryMapVM vm : array) {
-                                LocalCache.addCommunityCategoryMapToList(vm);
-                            }
+                            cacheCommunityCategoryMapList(array);
 
                             new Handler().postDelayed(new Runnable() {
                                 public void run() {
                                     startActivity(new Intent(SplashActivity.this, ActivityMain.class));
                                     finish();
                                 }
-                            }, DefaultValues.DEFAULT_CONNECTION_TIMEOUT * 1000);
+                            }, DefaultValues.SPLASH_DISPLAY_MILLIS);
                         }
 
                         @Override
@@ -83,6 +79,16 @@ public class SplashActivity extends Activity {
                     });
         } else {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        }
+    }
+
+    public static void cacheCommunityCategoryMapList(List<CommunityCategoryMapVM> array) {
+        Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - "+array.size());
+        LocalCache.clearCommunityCategoryMapList();
+        LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(
+                AppController.getInstance().getString(R.string.my_community_tab)));
+        for (CommunityCategoryMapVM vm : array) {
+            LocalCache.addCommunityCategoryMapToList(vm);
         }
     }
 

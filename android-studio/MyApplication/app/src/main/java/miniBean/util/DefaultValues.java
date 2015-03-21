@@ -8,7 +8,8 @@ import java.util.List;
  */
 public class DefaultValues {
 
-    public static int DEFAULT_CONNECTION_TIMEOUT = 2;
+    public static int SPLASH_DISPLAY_MILLIS = 1000;
+    public static int DEFAULT_CONNECTION_TIMEOUT_MILLIS = 3000;
 
     public static int DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD = 0;
     public static int DEFAULT_INFINITE_SCROLL_COUNT = 10;
