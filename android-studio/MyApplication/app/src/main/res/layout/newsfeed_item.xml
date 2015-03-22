@@ -16,7 +16,6 @@
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="15dp"
             android:id="@+id/postTitleLayout"
-            android:layout_toLeftOf="@+id/communityNameLayout"
             android:layout_marginRight="5dp">
 
             <TextView
@@ -29,32 +28,33 @@
                 android:lineSpacingExtra="3dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:layout_alignParentRight="true"
-            android:id="@+id/communityNameLayout">
-
-            <ImageView
-                android:id="@+id/commIcon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/image_round_thin" />
-
-            <TextView
-                android:id="@+id/commName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_toRightOf="@+id/commIcon"
-                android:textColor="@color/light_gray"
-                android:textSize="14dp"
-                android:layout_marginLeft="3dp"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/communityNameLayout"
+        android:layout_marginLeft="30dp">
+
+        <ImageView
+            android:id="@+id/commIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/image_round_thin" />
+
+        <TextView
+            android:id="@+id/commName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/commIcon"
+            android:textColor="@color/light_gray"
+            android:textSize="14dp"
+            android:layout_marginLeft="3dp"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/feedLayout"
