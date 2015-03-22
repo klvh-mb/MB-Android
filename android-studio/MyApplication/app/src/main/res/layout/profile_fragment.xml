@@ -98,7 +98,7 @@
                     android:layout_toRightOf="@id/questionPic"
                     android:layout_weight="75"
                     android:text="@string/questions_title"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:gravity="center_vertical" />
 
                 <TextView
@@ -155,7 +155,7 @@
                     android:layout_toRightOf="@id/answerPic"
                     android:layout_weight="75"
                     android:text="@string/answers_title"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:gravity="center_vertical" />
 
                 <TextView
@@ -213,7 +213,7 @@
                     android:layout_marginLeft="25dp"
                     android:layout_weight="75"
                     android:text="@string/bookmarks_title"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:gravity="center_vertical" />
 
                 <TextView

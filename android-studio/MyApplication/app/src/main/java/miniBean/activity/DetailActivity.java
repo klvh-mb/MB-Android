@@ -51,7 +51,7 @@ public class DetailActivity extends FragmentActivity {
 
     final Integer SELECT_PICTURE = 1;
     public Button pageButton;
-    ImageView backImage, bookmark, moreAction;
+    ImageView backImage, bookmarkAction, moreAction;
     TextView commentEdit;
     ImageView image;
     String selectedImagePath = null;
@@ -62,7 +62,7 @@ public class DetailActivity extends FragmentActivity {
     private List<CommunityPostCommentVM> communityItems;
     private TextView questionText, userText, postedOnText, postText, locationText, timeText;
     private PopupWindow pw,pagePop;
-    Boolean isBookMarked = false;
+    Boolean isBookmarked = false;
     Spinner dropSpinner;
     public Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
@@ -101,6 +101,7 @@ public class DetailActivity extends FragmentActivity {
         questionText = (TextView) findViewById(R.id.questionText);
         commentEdit = (TextView) findViewById(R.id.commentBody);
         pageButton = (Button) findViewById(R.id.page);
+
         final FrameLayout layout_MainMenu;
         layout_MainMenu = (FrameLayout) findViewById(R.id.mainMenu);
 
@@ -137,22 +138,23 @@ public class DetailActivity extends FragmentActivity {
         // getActionBar().setIcon(
         //       new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         // getActionBar().setTitle("Details");
-        bookmark = (ImageView) findViewById(R.id.bookmarkedtAction);
+
+        bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
         moreAction = (ImageView) findViewById(R.id.moreAction);
 
         final Long postID = getIntent().getLongExtra("postId", 0L);
 
-        bookmark.setOnClickListener(new View.OnClickListener() {
+        bookmarkAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isBookMarked) {
-                    getBookmark(postID);
-                    bookmark.setImageResource(R.drawable.bookmarked);
-                    isBookMarked = true;
+                if (!isBookmarked) {
+                    bookmark(postID);
+                    bookmarkAction.setImageResource(R.drawable.bookmarked);
+                    isBookmarked = true;
                 } else {
-                    unGetBookmark(postID);
-                    bookmark.setImageResource(R.drawable.bookmark);
-                    isBookMarked = false;
+                    unbookmark(postID);
+                    bookmarkAction.setImageResource(R.drawable.bookmark);
+                    isBookmarked = false;
                 }
             }
         });
@@ -181,6 +183,13 @@ public class DetailActivity extends FragmentActivity {
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");
                 questionText.setText(post.getPtl());
+
+                isBookmarked = post.isBookmarked;
+                if (isBookmarked) {
+                    bookmarkAction.setImageResource(R.drawable.bookmarked);
+                } else {
+                    bookmarkAction.setImageResource(R.drawable.bookmark);
+                }
 
                 postVm.setPost(true);
                 postVm.setO(post.isO());
@@ -390,11 +399,11 @@ public class DetailActivity extends FragmentActivity {
         return (int)Math.ceil((double)noOfComments / (double)DefaultValues.DEFAULT_PAGINATION_COUNT);
     }
 
-    public void getBookmark(Long postId) {
+    public void bookmark(Long postId) {
         AppController.api.setBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                bookmark.setImageResource(R.drawable.bookmarked);
+                bookmarkAction.setImageResource(R.drawable.bookmarked);
             }
 
             @Override
@@ -404,11 +413,11 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    public void unGetBookmark(Long postId) {
+    public void unbookmark(Long postId) {
         AppController.api.setUnBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                bookmark.setImageResource(R.drawable.bookmark);
+                bookmarkAction.setImageResource(R.drawable.bookmark);
             }
 
             @Override

@@ -16,12 +16,12 @@
 
 package miniBean.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -38,14 +38,13 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.LocalCache;
 import miniBean.util.ActivityUtil;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class LoginActivity extends FragmentActivity {
+public class LoginActivity extends Activity {
 
     // Your Facebook APP ID
     private static String APP_ID = "798543453496777"; // Replace with your App ID
@@ -62,8 +61,7 @@ public class LoginActivity extends FragmentActivity {
     private ActivityUtil activityUtil;
 
     private static final String[] REQUEST_FACEBOOK_PERMISSIONS = {
-            //"id","email","cover","name","first_name","last_name","birthday","gender","age_range","relationship_status","link","timezone","locale","education","verified","updated_time"
-            "email","publish_stream"
+            "public_profile","email","user_friends"
     };
 
     @Override

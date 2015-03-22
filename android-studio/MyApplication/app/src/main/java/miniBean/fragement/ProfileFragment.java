@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.lang.reflect.Field;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -97,20 +99,25 @@ public class ProfileFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
         getUserInfo();
+        getBookmarkSummary();
 
         return view;
     }
 
-    void getUserInfo() {
+    private void getUserInfo() {
         AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
-                userId=user.getId();
+                Log.d(ProfileFragment.this.getClass().getSimpleName(), "questionsCount - "+user.getQuestionsCount());
+                Log.d(ProfileFragment.this.getClass().getSimpleName(), "answersCount - "+user.getAnswersCount());
+                Log.d(ProfileFragment.this.getClass().getSimpleName(), "enableSignInForToday - "+user.isEnableSignInForToday());
+
+                userId = user.getId();
                 userName.setText(user.getDisplayName());
-                questionsCount.setText("-");
-                answersCount.setText("-");
-                bookmarksCount.setText("-");
+                questionsCount.setText(user.getQuestionsCount()+"");
+                answersCount.setText(user.getAnswersCount()+"");
 
                 AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + user.getId(), userCoverPic, new SimpleImageLoadingListener() {
                     @Override
@@ -129,6 +136,21 @@ public class ProfileFragment extends Fragment {
                     }
                 });
                 AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + user.getId(), userPic);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace(); //to see if you have errors
+            }
+        });
+    }
+
+    private void getBookmarkSummary() {
+        AppController.api.getBookmarkSummary(AppController.getInstance().getSessionId(), new Callback<BookmarkSummaryVM>() {
+            @Override
+            public void success(BookmarkSummaryVM bookmarkSummary, retrofit.client.Response response) {
+                Log.d(ProfileFragment.this.getClass().getSimpleName(), "questionsCount - "+bookmarkSummary.getQc());
+                bookmarksCount.setText(bookmarkSummary.getQc()+"");
             }
 
             @Override

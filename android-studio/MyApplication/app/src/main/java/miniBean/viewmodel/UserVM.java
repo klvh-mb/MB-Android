@@ -23,7 +23,8 @@ public class UserVM {
     public boolean isFbLogin = false;
     public boolean isHomeTourCompleted = false;
     public boolean enableSignInForToday = false;
-
+    public Long questionsCount;
+    public Long answersCount;
 
     public Long getId() {
         return id;
@@ -183,6 +184,22 @@ public class UserVM {
 
     public void setEnableSignInForToday(boolean enableSignInForToday) {
         this.enableSignInForToday = enableSignInForToday;
+    }
+
+    public Long getQuestionsCount() {
+        return questionsCount;
+    }
+
+    public void setQuestionsCount(Long questionsCount) {
+        this.questionsCount = questionsCount;
+    }
+
+    public Long getAnswersCount() {
+        return answersCount;
+    }
+
+    public void setAnswersCount(Long answersCount) {
+        this.answersCount = answersCount;
     }
 }
 

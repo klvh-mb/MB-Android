@@ -3,6 +3,7 @@ package miniBean.app;
 
 import java.util.List;
 
+import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunitiesParentVM;
@@ -58,6 +59,9 @@ public interface MyApi {
 
     @GET("/get-user-info") //a function in your api get User all Information
     public void getUserInfo(@Query("key") String key, Callback<UserVM> cb);
+
+    @GET("/get-bookmark-summary") //a function in your api get bookmark summary
+    public void getBookmarkSummary(@Query("key") String key, Callback<BookmarkSummaryVM> cb);
 
     @POST("/communityQnA/question/answer") //a function in your api answer on question.
     public void answerOnQuestion(@Body CommentPost commentPost, @Query("key") String key, Callback<CommentResponse> cb);

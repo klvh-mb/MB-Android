@@ -3,6 +3,7 @@ package miniBean.fragement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -61,12 +62,12 @@ public class NewsFeedFragement extends Fragment {
             }
         });
 
+        Log.d(this.getClass().getSimpleName(), "onCreateView: setOnScrollListener");
+
         listView.setOnScrollListener(new InfiniteScrollListener(
                 DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                System.out.println("totalCount::" + totalItemsCount);
-                System.out.println("in loadmore::::::::");
                 functionCall(page-1);
             }
         });
@@ -79,16 +80,15 @@ public class NewsFeedFragement extends Fragment {
 
         return view;
     }
-    public BaseAdapter getAdapterByFlow( String flowName){
+
+    public BaseAdapter getAdapterByFlow( String flowName) {
         return new FeedListAdapter(getActivity(), feedItems);
     }
 
     private void functionCall(int offset){
-        switch (getArguments().getString("key"))
-        {
-
+        Log.d(this.getClass().getSimpleName(), "InfiniteScrollListener with key - "+getArguments().getString("key"));
+        switch (getArguments().getString("key")) {
             case "userquestion":
-                System.out.println("case1");
                 getUserQuestion(offset,getArguments().getLong("id"));
                 break;
             case "useranswer":
@@ -104,24 +104,21 @@ public class NewsFeedFragement extends Fragment {
                 getBookmark(offset);
                 break;
             case "feed":
-                System.out.println("casetest");
                 getNewsFeed(offset);
                 break;
             default:
-                System.out.println("this is default.........");
+                Log.w(this.getClass().getSimpleName(), "InfiniteScrollListener unknown default case with key - "+getArguments().getString("key"));
         }
     }
 
-
     private void getNewsFeed(int offset) {
-        System.out.println("newsfedd::::");
         AppController.api.getNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, retrofit.client.Response response) {
-                System.out.println("innewsfeed::"+array.getPosts());
-                if(array.getPosts() != null)
-                feedItems.addAll(array.getPosts());
-                listAdapter.notifyDataSetChanged();
+                if(array.getPosts() != null) {
+                    feedItems.addAll(array.getPosts());
+                    listAdapter.notifyDataSetChanged();
+                }
                 progressBarFeed.setVisibility(View.GONE);
             }
 
@@ -131,8 +128,8 @@ public class NewsFeedFragement extends Fragment {
             }
         });
     }
-    void getUserQuestion(int offset,Long id)
-    {
+
+    private void getUserQuestion(int offset,Long id) {
         AppController.api.getUserPost(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>(){
             @Override
             public void success(PostArray array, Response response2) {
@@ -149,7 +146,8 @@ public class NewsFeedFragement extends Fragment {
             }
         });
     }
-    void getUserAnswer(int offset,Long id) {
+
+    private void getUserAnswer(int offset,Long id) {
         AppController.api.getUserComment(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
 
             @Override
@@ -167,29 +165,25 @@ public class NewsFeedFragement extends Fragment {
                 error.printStackTrace();
             }
         });
-
-
-
-
     }
-void getBookmark(int offset)
-{
-    AppController.api.getBookmark(Long.valueOf(offset),AppController.getInstance().getSessionId(),new Callback<List<CommunityPostVM>>() {
-        @Override
-        public void success(List<CommunityPostVM> postArray, Response response) {
-            if(postArray != null)
-                feedItems.addAll(postArray);
-            listAdapter.notifyDataSetChanged();
-            progressBarFeed.setVisibility(View.GONE);
 
-            System.out.println("sucess2::::" + postArray);
+    private void getBookmark(int offset) {
+        AppController.api.getBookmark(Long.valueOf(offset),AppController.getInstance().getSessionId(),new Callback<List<CommunityPostVM>>() {
+            @Override
+            public void success(List<CommunityPostVM> postArray, Response response) {
+                if(postArray != null)
+                    feedItems.addAll(postArray);
+                listAdapter.notifyDataSetChanged();
+                progressBarFeed.setVisibility(View.GONE);
 
-        }
+                System.out.println("sucess2::::" + postArray);
 
-        @Override
-        public void failure(RetrofitError error) {
-            error.printStackTrace();
-        }
-    });
-}
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
 }
