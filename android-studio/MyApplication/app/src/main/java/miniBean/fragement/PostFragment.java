@@ -105,7 +105,6 @@ public class PostFragment extends Fragment {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
-
             }
         });
 
@@ -124,14 +123,13 @@ public class PostFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String title = postTitle.getText().toString();
-                String content=postContent.getText().toString();
+                String content = postContent.getText().toString();
 
                 if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(content)) {
                     doPost(title, content);
                 }
             }
         });
-
 
         return view;
     }
@@ -144,7 +142,6 @@ public class PostFragment extends Fragment {
             selectedImageUri.getPath();
             image.setImageURI(selectedImageUri);
         }
-
     }
 
     public String getPath(Uri uri) {
@@ -166,18 +163,21 @@ public class PostFragment extends Fragment {
                 if (isPhoto) {
                     uploadPhoto(postResponse.getId());
                 }
-                Toast.makeText(getActivity(), "Post Successful...!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Post Successful", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getActivity(),CommunityActivity.class);
+                /*
+                Intent intent = new Intent(getActivity(), CommunityActivity.class);
                 intent.putExtra("id",getArguments().getString("id"));
                 intent.putExtra("commName",getArguments().getString("commName"));
                 intent.putExtra("flag","FromPostFragment");
                 startActivity(intent);
+                */
+                PostFragment.this.getActivity().finish();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "Post Failure...!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Post Failure", Toast.LENGTH_SHORT).show();
 
                 error.printStackTrace();
             }

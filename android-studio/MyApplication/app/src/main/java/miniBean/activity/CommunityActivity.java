@@ -31,8 +31,8 @@ public class CommunityActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.community_actionbar);
         backImage = (ImageView) this.findViewById(R.id.backImage);
-        titleAction= (TextView) this.findViewById(R.id.titleAction);
-        editAction= (ImageView) this.findViewById(R.id.editAction);
+        titleAction = (TextView) this.findViewById(R.id.titleAction);
+        editAction = (ImageView) this.findViewById(R.id.editAction);
 
         Intent intent = getIntent();
 

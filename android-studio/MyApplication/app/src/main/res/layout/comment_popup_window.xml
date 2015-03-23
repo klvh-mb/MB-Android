@@ -68,12 +68,17 @@
 
         <EditText
             android:editable="true"
-            android:id="@+id/comment"
+            android:id="@+id/commentEditText"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:background="#ffffff"
-            android:gravity="top|left"
-            android:lines="2" />
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:enabled="true"
+            android:gravity="left|top"
+            android:padding="3dp"
+            android:hint="@string/post_comment_bar_hint"
+            android:textSize="16dp" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -4,6 +4,8 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,8 +17,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -124,7 +129,8 @@ public class DetailActivity extends FragmentActivity {
         commentEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout_MainMenu.getForeground().setAlpha(220);
+                layout_MainMenu.getForeground().setAlpha(20);
+                layout_MainMenu.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
                 initiateCommentPopup();
             }
         });
@@ -248,16 +254,24 @@ public class DetailActivity extends FragmentActivity {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT, //activityUtil.getRealDimension(DefaultValues.COMMENT_POPUP_HEIGHT),
                     true);
-            commentPopup.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-            commentPopup.setOutsideTouchable(true);
-            commentPopup.setFocusable(false);
+            commentPopup.setOutsideTouchable(false);
+            commentPopup.setFocusable(true);
+            commentPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
+            commentPopup.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
 
-            final EditText commentPost = (EditText) layout.findViewById(R.id.comment);
+            commentPopup.setTouchInterceptor(new View.OnTouchListener() {
+                public boolean onTouch(View view, MotionEvent event) {
+                    return false;
+                }
+            });
+
+            final EditText commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
             TextView postButton = (TextView) layout.findViewById(R.id.postButton);
             postButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String commentString = commentPost.getText().toString();
+                    String commentString = commentEditText.getText().toString();
 
                     if (!commentString.equals("")) {
                         answerQuestion(commentString);
@@ -364,9 +378,10 @@ public class DetailActivity extends FragmentActivity {
                     activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH),
                     activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT),
                     true);
-            paginationPopup.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
-            paginationPopup.setOutsideTouchable(true);
-            paginationPopup.setFocusable(false);
+            paginationPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
+            paginationPopup.setOutsideTouchable(false);
+            paginationPopup.setFocusable(true);
+            paginationPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
             ListView listView1 = (ListView) layout.findViewById(R.id.pageList);
             ArrayList<String> stringArrayList = new ArrayList<String>();
