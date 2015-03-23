@@ -121,7 +121,12 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         }
 
         // delete
-        if (item.isO()) {
+        if (item.isO() || AppController.getUser().isAdmin()) {
+            if (item.isO()) {
+                deleteText.setTextColor(this.activity.getResources().getColor(R.color.like_blue));
+            } else if (AppController.getUser().isAdmin()) {
+                deleteText.setTextColor(this.activity.getResources().getColor(R.color.admin_green));
+            }
             deleteText.setVisibility(View.VISIBLE);
 
             final int pos = position;

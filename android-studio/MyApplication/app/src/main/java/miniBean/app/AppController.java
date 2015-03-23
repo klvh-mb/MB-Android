@@ -15,7 +15,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import miniBean.R;
+import miniBean.viewmodel.UserVM;
+import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 
 import org.acra.*;
@@ -56,6 +59,8 @@ public class AppController extends Application {
     public static MyApi api;
     private static AppController mInstance;
     private static ImageLoader mImageLoader;
+    private static UserVM user;
+
     private SharedPreferences session;
 
     public static synchronized AppController getInstance() {
@@ -64,6 +69,10 @@ public class AppController extends Application {
 
     public static synchronized ImageLoader getImageLoader() {
         return mImageLoader;
+    }
+
+    public static synchronized UserVM getUser() {
+        return user;
     }
 
     @Override
@@ -124,6 +133,22 @@ public class AppController extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
 
         System.exit(1);
+    }
+
+    public void setUserInfo() {
+        Log.d(this.getClass().getSimpleName(), "setUserInfo");
+        AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
+            @Override
+            public void success(UserVM user, retrofit.client.Response response) {
+                Log.d(this.getClass().getSimpleName(), "setUserInfo.success: user="+user.getDisplayName()+" id="+user.getId());
+                AppController.this.user = user;
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace(); //to see if you have errors
+            }
+        });
     }
 
     private void printKeyHashForFacebook() {

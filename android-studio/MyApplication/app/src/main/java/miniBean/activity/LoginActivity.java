@@ -236,7 +236,7 @@ public class LoginActivity extends Activity {
                 new Callback<List<CommunityCategoryMapVM>>() {
                     @Override
                     public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                        SplashActivity.cacheCommunityCategoryMapList(array);
+                        SplashActivity.init(array);
 
                         Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                         startActivity(i);

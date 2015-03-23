@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
                     new Callback<List<CommunityCategoryMapVM>>() {
                         @Override
                         public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                            cacheCommunityCategoryMapList(array);
+                            init(array);
 
                             new Handler().postDelayed(new Runnable() {
                                 public void run() {
@@ -82,7 +82,14 @@ public class SplashActivity extends Activity {
         }
     }
 
-    public static void cacheCommunityCategoryMapList(List<CommunityCategoryMapVM> array) {
+    public static void init(List<CommunityCategoryMapVM> array) {
+        cacheCommunityCategoryMapList(array);
+
+        // set user info to check for role specific actions, and others
+        AppController.getInstance().setUserInfo();
+    }
+
+    private static void cacheCommunityCategoryMapList(List<CommunityCategoryMapVM> array) {
         Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - "+array.size());
         LocalCache.clearCommunityCategoryMapList();
         LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(
