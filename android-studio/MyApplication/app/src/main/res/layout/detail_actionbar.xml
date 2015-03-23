@@ -24,19 +24,21 @@
             android:id="@+id/titleAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:text="@string/post_actionbar_title"
             android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:layout_centerInParent="true"
+            android:gravity="center" />
 
         <ImageView
             android:id="@+id/bookmarkAction"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/titleAction"
-            android:src="@drawable/bookmark" />
+            android:src="@drawable/bookmark"
+            android:padding="3dp"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 </RelativeLayout>

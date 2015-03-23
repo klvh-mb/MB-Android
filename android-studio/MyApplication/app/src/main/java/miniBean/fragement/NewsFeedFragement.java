@@ -2,6 +2,7 @@ package miniBean.fragement;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +32,10 @@ import retrofit.client.Response;
 public class NewsFeedFragement extends Fragment {
 
     private static final String TAG = NewsFeedFragement.class.getName();
-    ProgressBar progressBarFeed;
     private ListView listView;
     private BaseAdapter listAdapter;
     private List<CommunityPostVM> feedItems;
+    private View loadingFooter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,10 +43,12 @@ public class NewsFeedFragement extends Fragment {
 
         View view = inflater.inflate(R.layout.newsfeed_fragment, container, false);
 
-        listView = (ListView) view.findViewById(R.id.list);
-        progressBarFeed = (ProgressBar) view.findViewById(R.id.progressFeed);
-        progressBarFeed.setVisibility(View.VISIBLE);
         feedItems = new ArrayList<CommunityPostVM>();
+
+        loadingFooter = inflater.inflate(R.layout.list_loading_footer, null);
+
+        listView = (ListView) view.findViewById(R.id.list);
+        listView.addFooterView(loadingFooter);      // need to add footer before set adapter
         listAdapter = getAdapterByFlow("");
         listView.setAdapter(listAdapter);
         listView.setFriction(ViewConfiguration.getScrollFriction() *
@@ -68,21 +71,29 @@ public class NewsFeedFragement extends Fragment {
                 DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                functionCall(page-1);
+                Log.d(this.getClass().getSimpleName(), "onLoadMore - page="+page+" totalItemsCount="+totalItemsCount);
+                loadingFooter.setVisibility(View.VISIBLE);
+
+                functionCall(page - 1);
             }
         });
 
         functionCall(0);
 
-//        System.out.println("lastid::"+getArguments().getString("id"));
+        //System.out.println("lastid::"+getArguments().getString("id"));
         //Long id=Long.parseLong(getArguments().getString("id"));
         //getUserQuestion(0,id);
 
         return view;
     }
 
-    public BaseAdapter getAdapterByFlow( String flowName) {
+    public BaseAdapter getAdapterByFlow(String flowName) {
         return new FeedListAdapter(getActivity(), feedItems);
+    }
+
+    private void setFooterText(int text) {
+        TextView footerText = (TextView) listView.findViewById(R.id.listLoadingFooterText);
+        footerText.setText(text);
     }
 
     private void functionCall(int offset){
@@ -111,20 +122,31 @@ public class NewsFeedFragement extends Fragment {
         }
     }
 
+    private void loadFeedItemsToList(final List<CommunityPostVM> posts) {
+        if (posts == null || posts.size() == 0) {
+            setFooterText(R.string.list_loaded_all);
+        }
+
+        // NOTE: delay infinite scroll by a short interval to make UI looks smooth
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                feedItems.addAll(posts);
+                listAdapter.notifyDataSetChanged();
+            }
+        }, DefaultValues.DEFAULT_INFINITE_SCROLL_DELAY);
+    }
+
     private void getNewsFeed(int offset) {
         AppController.api.getNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
-            public void success(PostArray array, retrofit.client.Response response) {
-                if(array.getPosts() != null) {
-                    feedItems.addAll(array.getPosts());
-                    listAdapter.notifyDataSetChanged();
-                }
-                progressBarFeed.setVisibility(View.GONE);
+            public void success(final PostArray array, retrofit.client.Response response) {
+                loadFeedItemsToList(array.getPosts());
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
+            public void failure(RetrofitError error) {
+                setFooterText(R.string.list_loading_error);
+                error.printStackTrace();
             }
         });
     }
@@ -133,15 +155,11 @@ public class NewsFeedFragement extends Fragment {
         AppController.api.getUserPost(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>(){
             @Override
             public void success(PostArray array, Response response2) {
-                System.out.println("postarray::"+array.getPosts());
-                if(array.getPosts() != null)
-                    feedItems.addAll(array.getPosts());
-                listAdapter.notifyDataSetChanged();
-                progressBarFeed.setVisibility(View.GONE);
-                System.out.println("sucess1::::"+array);
+                loadFeedItemsToList(array.getPosts());
             }
             @Override
             public void failure(RetrofitError error) {
+                setFooterText(R.string.list_loading_error);
                 error.printStackTrace();
             }
         });
@@ -152,16 +170,12 @@ public class NewsFeedFragement extends Fragment {
 
             @Override
             public void success(PostArray array, Response response2) {
-                if(array.getPosts() != null)
-                    feedItems.addAll(array.getPosts());
-                listAdapter.notifyDataSetChanged();
-                progressBarFeed.setVisibility(View.GONE);
-
-                System.out.println("sucess2::::" + array);
+                loadFeedItemsToList(array.getPosts());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                setFooterText(R.string.list_loading_error);
                 error.printStackTrace();
             }
         });
@@ -170,18 +184,13 @@ public class NewsFeedFragement extends Fragment {
     private void getBookmark(int offset) {
         AppController.api.getBookmark(Long.valueOf(offset),AppController.getInstance().getSessionId(),new Callback<List<CommunityPostVM>>() {
             @Override
-            public void success(List<CommunityPostVM> postArray, Response response) {
-                if(postArray != null)
-                    feedItems.addAll(postArray);
-                listAdapter.notifyDataSetChanged();
-                progressBarFeed.setVisibility(View.GONE);
-
-                System.out.println("sucess2::::" + postArray);
-
+            public void success(List<CommunityPostVM> posts, Response response) {
+                loadFeedItemsToList(posts);
             }
 
             @Override
             public void failure(RetrofitError error) {
+                setFooterText(R.string.list_loading_error);
                 error.printStackTrace();
             }
         });

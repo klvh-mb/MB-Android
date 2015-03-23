@@ -55,6 +55,9 @@
     <string name="goto_page">前往頁數</string>
     <string name="page_before">第</string>
     <string name="page_after">頁</string>
+    <string name="list_loading">加載中。。。</string>
+    <string name="list_loading_error">加載出現問題。請檢查網路再重試</string>
+    <string name="list_loaded_all">- 已加載全部 -</string>
 
     <!-- Profile tab -->
     <string name="settings_actionbar_title">設定</string>
