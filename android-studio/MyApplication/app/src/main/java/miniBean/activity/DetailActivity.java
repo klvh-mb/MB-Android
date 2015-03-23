@@ -1,6 +1,7 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -265,6 +267,8 @@ public class DetailActivity extends FragmentActivity {
                     return false;
                 }
             });
+
+            activityUtil.popupInputMethodWindow();
 
             final EditText commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
             TextView postButton = (TextView) layout.findViewById(R.id.postButton);

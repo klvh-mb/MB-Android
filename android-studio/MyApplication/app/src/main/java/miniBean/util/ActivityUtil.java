@@ -1,10 +1,13 @@
 package miniBean.util;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.util.TypedValue;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
@@ -29,6 +32,20 @@ public class ActivityUtil {
 
     public ActivityUtil(Activity activity) {
         this.activity = activity;
+    }
+
+    //
+    // Popup soft keyboard
+    //
+
+    public void popupInputMethodWindow() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) activity.getApplicationContext().getSystemService(Service.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 0);
     }
 
     //
