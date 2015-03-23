@@ -19,6 +19,11 @@ public class DefaultValues {
     public static int LISTVIEW_SLIDE_IN_ANIM_START = 10;
     public static int LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR = 2;
 
+    public static int PAGINATION_POPUP_WIDTH = 150;
+    public static int PAGINATION_POPUP_HEIGHT = 300;
+
+    public static int COMMENT_POPUP_HEIGHT = 150;
+
     public static List<String> FILTER_MY_COMM_TYPE = Arrays.asList(
             new String[] {"BUSINESS"}
     );

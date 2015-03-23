@@ -3,46 +3,59 @@
     android:id="@+id/popupElement"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0"
-    android:orientation="horizontal">
+    android:background="@color/light_purple"
+    android:orientation="horizontal"
+    android:elevation="5dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <RelativeLayout
         android:id="@+id/viewComponent"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="40dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
             <ImageView
                 android:id="@+id/cancelButton"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/close" />
+                android:src="@drawable/close"
+                android:layout_gravity="bottom" />
 
             <ImageView
                 android:id="@+id/imageButton"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/browse" />
+                android:src="@drawable/browse"
+                android:layout_gravity="bottom" />
+
+            <ImageView
+                android:id="@+id/postImage"
+                android:layout_width="80dp"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/commentComponent"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="bottom|left" />
 
 
         </LinearLayout>
 
-        <Button
-
+        <TextView
             android:id="@+id/postButton"
-            android:layout_width="50dp"
+            android:layout_width="65dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:text="Post"
-            android:textSize="9dp" />
+            android:text="@string/new_post"
+            android:textSize="14dp"
+            android:layout_centerVertical="true"
+            style="@style/com_facebook_loginview_silver_style"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 
@@ -50,27 +63,19 @@
         android:id="@+id/commentComponent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewComponent">
+        android:layout_below="@+id/viewComponent"
+        android:layout_marginTop="10dp">
 
         <EditText
             android:editable="true"
             android:id="@+id/comment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="65dp"
             android:background="#ffffff"
             android:gravity="top|left"
             android:lines="2" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/postImage"
-        android:layout_width="100dp"
-        android:layout_height="120dp"
-        android:layout_below="@+id/commentComponent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp" />
 </RelativeLayout>
 
 

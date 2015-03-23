@@ -90,6 +90,7 @@ public class CommunityActivity extends FragmentActivity {
         }
         */
     }
+
     public Fragment getVisibleFragment(){
         FragmentManager fragmentManager = CommunityActivity.this.getSupportFragmentManager();
         List<Fragment> fragments = fragmentManager.getFragments();

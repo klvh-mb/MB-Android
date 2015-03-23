@@ -36,6 +36,7 @@ import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
 import miniBean.adapter.PageListAdapter;
 import miniBean.app.AppController;
+import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommentPost;
@@ -60,8 +61,8 @@ public class DetailActivity extends FragmentActivity {
     private DetailListAdapter listAdapter;
     private PageListAdapter pageAdapter;
     private List<CommunityPostCommentVM> communityItems;
-    private TextView questionText, userText, postedOnText, postText, locationText, timeText;
-    private PopupWindow pw,pagePop;
+    private TextView questionText;
+    private PopupWindow commentPopup, paginationPopup;
     Boolean isBookmarked = false;
     Spinner dropSpinner;
     public Boolean isPhoto = false;
@@ -69,7 +70,9 @@ public class DetailActivity extends FragmentActivity {
     private ImageView communityIcon;
     public int noOfComments;
     public int curPage = 1;
-    CommunityPostCommentVM postVm = new CommunityPostCommentVM();
+    private CommunityPostCommentVM postVm = new CommunityPostCommentVM();
+
+    private ActivityUtil activityUtil;
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
@@ -91,6 +94,8 @@ public class DetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.detail_activity);
+
+        activityUtil = new ActivityUtil(this);
 
         communityName = (TextView) findViewById(R.id.communityName);
         communityIcon = (ImageView) findViewById(R.id.commIcon);
@@ -120,7 +125,7 @@ public class DetailActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 layout_MainMenu.getForeground().setAlpha(220);
-                initiatePopupWindow();
+                initiateCommentPopup();
             }
         });
 
@@ -229,7 +234,7 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    private void initiatePopupWindow() {
+    private void initiateCommentPopup() {
         try {
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) DetailActivity.this
@@ -237,25 +242,26 @@ public class DetailActivity extends FragmentActivity {
             //Inflate the view from a predefined XML layout
             View layout = inflater.inflate(R.layout.comment_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
-            // create a 300px width and 470px height PopupWindow
-            pw = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, 300, true);
-            // display the popup in the center
-            pw.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
-            pw.setOutsideTouchable(true);
-            pw.setFocusable(false);
+            commentPopup = new PopupWindow(
+                    layout,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, //activityUtil.getRealDimension(DefaultValues.COMMENT_POPUP_HEIGHT),
+                    true);
+            commentPopup.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+            commentPopup.setOutsideTouchable(true);
+            commentPopup.setFocusable(false);
 
             final EditText commentPost = (EditText) layout.findViewById(R.id.comment);
-            Button postButton = (Button) layout.findViewById(R.id.postButton);
+            TextView postButton = (TextView) layout.findViewById(R.id.postButton);
             postButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String commentString = commentPost.getText().toString();
 
-                    if (!commentString.equals(""))
-                    {
+                    if (!commentString.equals("")) {
                         answerQuestion(commentString);
-                        pw.dismiss();
+                        commentPopup.dismiss();
                     }
                 }
             });
@@ -264,7 +270,7 @@ public class DetailActivity extends FragmentActivity {
                 @Override
                 public void onClick(View v) {
                     System.out.println("cancelbutton");
-                    pw.dismiss();
+                    commentPopup.dismiss();
                 }
             });
             ImageView imageButton = (ImageView) layout.findViewById(R.id.imageButton);
@@ -292,6 +298,9 @@ public class DetailActivity extends FragmentActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == SELECT_PICTURE) {
+            if (data == null)
+                return;
+
             selectedImageUri = data.getData();
             selectedImagePath = getPath(selectedImageUri);
             selectedImageUri.getPath();
@@ -314,7 +323,7 @@ public class DetailActivity extends FragmentActivity {
             public void success(CommentResponse array, Response response) {
                 if (isPhoto)
                     uploadPhoto(array.getId());
-                pw.dismiss();
+                commentPopup.dismiss();
             }
 
             @Override
@@ -341,7 +350,7 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    private void initiatePopup() {
+    private void initiatePaginationPopup() {
         try {
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) DetailActivity.this
@@ -349,13 +358,16 @@ public class DetailActivity extends FragmentActivity {
             //Inflate the view from a predefined XML layout
             View layout = inflater.inflate(R.layout.pagination_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
-            // create a 300px width and 470px height PopupWindow
-            pagePop = new PopupWindow(layout, 450, 1000, true);
-            // display the popup in the center
-            pagePop.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
 
-            pagePop.setOutsideTouchable(true);
-            pagePop.setFocusable(false);
+            paginationPopup = new PopupWindow(
+                    layout,
+                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH),
+                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT),
+                    true);
+            paginationPopup.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 0);
+            paginationPopup.setOutsideTouchable(true);
+            paginationPopup.setFocusable(false);
+
             ListView listView1 = (ListView) layout.findViewById(R.id.pageList);
             ArrayList<String> stringArrayList = new ArrayList<String>();
             for (int i = 0; i < getMaxPage(); i++) {
@@ -371,7 +383,7 @@ public class DetailActivity extends FragmentActivity {
                     curPage = position + 1;
                     setPageButton(curPage);
                     getComments(getIntent().getLongExtra("postId", 0L),position);
-                    pagePop.dismiss();
+                    paginationPopup.dismiss();
                 }
             });
         } catch (Exception e) {
@@ -386,7 +398,7 @@ public class DetailActivity extends FragmentActivity {
             pageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    initiatePopup();
+                    initiatePaginationPopup();
                 }
             });
         }
@@ -467,7 +479,7 @@ public class DetailActivity extends FragmentActivity {
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityPostCommentVMs, curPage);
                 listView.setAdapter(listAdapter);
 
-                pagePop.dismiss();
+                paginationPopup.dismiss();
             }
 
             @Override
