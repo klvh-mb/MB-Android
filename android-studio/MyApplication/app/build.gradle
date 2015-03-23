@@ -4,6 +4,10 @@ android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
 
     defaultConfig {
         applicationId "miniBean.app.AppController"
@@ -26,6 +30,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "joda-time:joda-time:2.2"
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.facebook.android:facebook-android-sdk:3.23.1'
     compile 'com.squareup.retrofit:retrofit:1.7.1'

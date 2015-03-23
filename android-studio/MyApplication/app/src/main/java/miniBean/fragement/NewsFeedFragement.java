@@ -71,14 +71,12 @@ public class NewsFeedFragement extends Fragment {
                 DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                Log.d(this.getClass().getSimpleName(), "onLoadMore - page="+page+" totalItemsCount="+totalItemsCount);
                 loadingFooter.setVisibility(View.VISIBLE);
-
-                functionCall(page - 1);
+                loadNewsfeed(page - 1);
             }
         });
 
-        functionCall(0);
+        loadNewsfeed(0);
 
         //System.out.println("lastid::"+getArguments().getString("id"));
         //Long id=Long.parseLong(getArguments().getString("id"));
@@ -96,8 +94,8 @@ public class NewsFeedFragement extends Fragment {
         footerText.setText(text);
     }
 
-    private void functionCall(int offset){
-        Log.d(this.getClass().getSimpleName(), "InfiniteScrollListener with key - "+getArguments().getString("key"));
+    private void loadNewsfeed(int offset){
+        Log.d(this.getClass().getSimpleName(), "InfiniteScrollListener offset="+offset+" with key="+getArguments().getString("key"));
         switch (getArguments().getString("key")) {
             case "userquestion":
                 getUserQuestion(offset,getArguments().getLong("id"));
@@ -125,15 +123,23 @@ public class NewsFeedFragement extends Fragment {
     private void loadFeedItemsToList(final List<CommunityPostVM> posts) {
         if (posts == null || posts.size() == 0) {
             setFooterText(R.string.list_loaded_all);
+        } else {
+            setFooterText(R.string.list_loading);
         }
 
         // NOTE: delay infinite scroll by a short interval to make UI looks smooth
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                feedItems.addAll(posts);
-                listAdapter.notifyDataSetChanged();
-            }
-        }, DefaultValues.DEFAULT_INFINITE_SCROLL_DELAY);
+        if (feedItems.size() == 0) {
+            Log.d(this.getClass().getSimpleName(), "loadFeedItemsToList: first batch completed");
+            feedItems.addAll(posts);
+            listAdapter.notifyDataSetChanged();
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    feedItems.addAll(posts);
+                    listAdapter.notifyDataSetChanged();
+                }
+            }, DefaultValues.DEFAULT_INFINITE_SCROLL_DELAY);
+        }
     }
 
     private void getNewsFeed(int offset) {

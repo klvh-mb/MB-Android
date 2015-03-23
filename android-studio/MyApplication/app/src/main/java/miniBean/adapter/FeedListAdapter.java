@@ -12,12 +12,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
@@ -29,6 +28,8 @@ public class FeedListAdapter extends BaseAdapter {
     private boolean isNewsfeed = true;
     private int lastPosition = -1;
 
+    private ActivityUtil activityUtil;
+
     public FeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this(activity, feedItems, true);
     }
@@ -37,6 +38,7 @@ public class FeedListAdapter extends BaseAdapter {
         this.activity = activity;
         this.feedItems = feedItems;
         this.isNewsfeed = isNewsfeed;
+        this.activityUtil = new ActivityUtil(activity);
     }
 
     @Override
@@ -77,11 +79,7 @@ public class FeedListAdapter extends BaseAdapter {
         username.setText(item.getP());
         numComment.setText(item.getN_c() + "");
 
-        Date date = new Date(item.getT());
-        String DATE_FORMAT_NOW = "dd-MMM";
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
-        String stringDate = sdf.format(date);
-        timeText.setText(stringDate);
+        timeText.setText(activityUtil.getTimeAgo(item.getUt()));
 
         if (isNewsfeed) {
             commName.setText(item.getCn());

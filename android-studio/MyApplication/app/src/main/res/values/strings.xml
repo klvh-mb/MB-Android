@@ -49,6 +49,11 @@
     <string name="new_post">發出</string>
     <string name="new_post_title">問題 / 分享⋯⋯</string>
     <string name="new_post_body">加些詳情</string>
+    <string name="timeago_just_now">剛剛</string>
+    <string name="timeago_min">分鐘前</string>
+    <string name="timeago_hrs">小時前</string>
+    <string name="timeago_yesterday">昨天</string>
+    <string name="timeago_days">日前</string>
     <string name="delete">刪除</string>
     <string name="like">讚好</string>
     <string name="unlike">取消讚好</string>

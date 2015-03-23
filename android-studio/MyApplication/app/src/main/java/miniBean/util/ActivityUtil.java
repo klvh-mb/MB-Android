@@ -7,9 +7,13 @@ import android.net.NetworkInfo;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import miniBean.R;
 
@@ -18,6 +22,9 @@ import miniBean.R;
  */
 public class ActivityUtil {
 
+    private String DATE_FORMAT_NOW = "yyyy-MM-dd";
+    private SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+
     private Activity activity;
 
     public ActivityUtil(Activity activity) {
@@ -25,7 +32,49 @@ public class ActivityUtil {
     }
 
     //
-    // Helper
+    // Date
+    //
+
+    private static final int SECOND_MILLIS = 1000;
+    private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+    private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+    private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
+
+    public String getTimeAgo(long time) {
+        if (time < 1000000000000L) {
+            // if timestamp given in seconds, convert to millis
+            time *= 1000;
+        }
+
+        long now = new DateTime().getMillis();
+        if (time > now || time <= 0) {
+            return null;
+        }
+
+        // TODO: localize
+        final long diff = now - time;
+        if (diff < MINUTE_MILLIS) {
+            return this.activity.getString(R.string.timeago_just_now);
+        } else if (diff < 2 * MINUTE_MILLIS) {
+            return 1 + this.activity.getString(R.string.timeago_min);
+        } else if (diff < 50 * MINUTE_MILLIS) {
+            return diff / MINUTE_MILLIS + this.activity.getString(R.string.timeago_just_now);
+        } else if (diff < 90 * MINUTE_MILLIS) {
+            return 1 +  this.activity.getString(R.string.timeago_hrs);
+        } else if (diff < 24 * HOUR_MILLIS) {
+            return diff / HOUR_MILLIS + this.activity.getString(R.string.timeago_hrs);
+        } else if (diff < 48 * HOUR_MILLIS) {
+            return this.activity.getString(R.string.timeago_yesterday);
+        } else if (diff < 7 * DAY_MILLIS) {
+            return diff / DAY_MILLIS + this.activity.getString(R.string.timeago_days);
+        } else {
+            Date date = new Date(time);
+            return sdf.format(date);
+        }
+    }
+
+    //
+    // Size
     //
 
     public int getRealDimension(int size) {

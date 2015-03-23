@@ -33,8 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import miniBean.R;
@@ -92,8 +90,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     public View getView(int position, View convertView, final ViewGroup parent) {
 
         if (inflater == null)
-            inflater = (LayoutInflater) activity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if (convertView == null)
             convertView = inflater.inflate(R.layout.detail_item, null);
 
@@ -224,11 +222,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             }
         });
 
-        Date date = new Date(item.getCd());
-        String DATE_FORMAT_NOW = "dd-MMM";
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
-        String stringDate = sdf.format(date);
-        postTime.setText(stringDate);
+        postTime.setText(activityUtil.getTimeAgo(item.getCd()));
 
         int rounded_value = 120;
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
