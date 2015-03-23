@@ -57,9 +57,7 @@ public class CommunityActivity extends FragmentActivity {
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //finish();
-                Intent intent = new Intent(CommunityActivity.this, ActivityMain.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -82,11 +80,11 @@ public class CommunityActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         /*
         this.finish();
         Fragment fragment = getVisibleFragment();
         if(fragment instanceof CommFragment) {
-            System.out.println("Problem solved:::::::");
             Intent intent = new Intent(CommunityActivity.this, ActivityMain.class);
             startActivity(intent);
         }
