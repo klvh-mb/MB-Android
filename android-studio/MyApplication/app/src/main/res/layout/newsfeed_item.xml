@@ -23,7 +23,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="-"
-                android:textColor="#333"
+                android:textColor="@color/dark_gray2"
                 android:textSize="16dp"
                 android:lineSpacingExtra="3dp" />
         </LinearLayout>

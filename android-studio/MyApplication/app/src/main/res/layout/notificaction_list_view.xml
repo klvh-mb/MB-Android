@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFF4"
+    android:background="@color/view_bg"
     android:paddingTop="10dp"
     tools:context=".MainActivity">
 
@@ -10,7 +10,7 @@
         android:id="@+id/listNotification"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:divider="#EFEFF4"
+        android:divider="@color/view_bg"
         android:dividerHeight="10dp" />
 
 

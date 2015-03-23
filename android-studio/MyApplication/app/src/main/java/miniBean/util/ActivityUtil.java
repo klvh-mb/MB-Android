@@ -65,7 +65,7 @@ public class ActivityUtil {
             return diff / HOUR_MILLIS + this.activity.getString(R.string.timeago_hrs);
         } else if (diff < 48 * HOUR_MILLIS) {
             return this.activity.getString(R.string.timeago_yesterday);
-        } else if (diff < 7 * DAY_MILLIS) {
+        } else if (diff < 14 * DAY_MILLIS) {
             return diff / DAY_MILLIS + this.activity.getString(R.string.timeago_days);
         } else {
             Date date = new Date(time);

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
+    android:background="@drawable/rect_border_community"
     android:orientation="horizontal"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
@@ -35,12 +35,34 @@
             android:id="@+id/notificationMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="80" />
+            android:layout_weight="80"
+            android:textSize="14dp"
+            android:textColor="@color/dark_gray2" />
 
-        <TextView
-            android:id="@+id/notificationTime"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="20" />
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:layout_weight="20">
+
+            <ImageView
+                android:id="@+id/timepic"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/time"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/notificationTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/timepic"
+                android:textSize="12dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/light_gray" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>
