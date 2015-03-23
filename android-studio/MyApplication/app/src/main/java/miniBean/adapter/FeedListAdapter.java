@@ -91,7 +91,7 @@ public class FeedListAdapter extends BaseAdapter {
                 communityIcon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
             } else {
                 Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.getCi());
-                AppController.mImageLoader.displayImage(convertView.getResources().getString(R.string.base_url) + item.getCi(), communityIcon);
+                AppController.getImageLoader().displayImage(convertView.getResources().getString(R.string.base_url) + item.getCi(), communityIcon);
             }
         } else {
             commName.setVisibility(View.GONE);

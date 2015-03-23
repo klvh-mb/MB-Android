@@ -64,7 +64,7 @@ public class NotificationListAdapter extends BaseAdapter {
         spinner = (ProgressBar) convertView.findViewById(R.id.imageLoader);
 
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
-        AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(), userPhoto);
+        AppController.getImageLoader().displayImage(activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(), userPhoto);
         message.setText(item.getMsg());
 
         String DATE_FORMAT_NOW = "dd-MMM";

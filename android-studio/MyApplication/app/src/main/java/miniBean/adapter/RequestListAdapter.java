@@ -78,7 +78,7 @@ public class RequestListAdapter extends BaseAdapter {
             acceptButton.setVisibility(View.VISIBLE);
             ignoreButton.setVisibility(View.VISIBLE);
         }
-        AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(), userPhoto);
+        AppController.getImageLoader().displayImage(activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(), userPhoto);
         message.setText(item.getMsg());
 
 

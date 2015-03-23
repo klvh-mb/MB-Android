@@ -18,8 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
@@ -199,8 +201,10 @@ public class CommFragment extends Fragment {
                 feedListAdapter.notifyDataSetChanged();
                 commNameText.setText(community.dn);
                 numMemberText.setText(community.mm+"");
-                ImageLoader imageLoader = ImageLoader.getInstance();
-                imageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-community-image-by-id/" + getArguments().getString("id"), communityCoverPic, new SimpleImageLoadingListener() {
+
+                int rounded_value = 0;
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
+                ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-community-image-by-id/" + getArguments().getString("id"), communityCoverPic, options, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
@@ -223,7 +227,7 @@ public class CommFragment extends Fragment {
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
                     Log.d(this.getClass().getSimpleName(), "getNewsFeedByCommunityId.api.success: load comm icon from background - " + community.gi);
-                    AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + community.gi, communityIcon);
+                    AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + community.gi, communityIcon);
                 }
                 progressBar.setVisibility(View.INVISIBLE);
             }

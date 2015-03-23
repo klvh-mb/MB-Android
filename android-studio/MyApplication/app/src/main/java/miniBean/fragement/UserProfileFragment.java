@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -106,7 +107,9 @@ public class UserProfileFragment extends Fragment {
                 answersCount.setText("-");
                 questionsCount.setText("-");
 
-                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getArguments().getLong("oid"), userCoverPic, new SimpleImageLoadingListener() {
+                int rounded_value = 0;
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
+                ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getArguments().getLong("oid"), userCoverPic, options, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
@@ -122,11 +125,8 @@ public class UserProfileFragment extends Fragment {
                         spinner.setVisibility(View.GONE);
                     }
                 });
-                DisplayImageOptions options = new DisplayImageOptions.Builder()
-                        .displayer(new RoundedBitmapDisplayer(25)) // default
-                        .build();
-                AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getArguments().getLong("oid"), userPic);
-                System.out.println("userrrrrrrrr::::::::::"+getArguments().getLong("oid"));
+
+                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getArguments().getLong("oid"), userPic);
             }
 
             @Override

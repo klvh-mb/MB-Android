@@ -76,7 +76,7 @@ public class TopicAdapter extends BaseAdapter {
             communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
             Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.gi);
-            AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
+            AppController.getImageLoader().displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
         }
 
         if (item.getIsM()) {

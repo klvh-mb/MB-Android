@@ -28,8 +28,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
-import org.parceler.apache.commons.lang.StringUtils;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -233,10 +231,11 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         postTime.setText(stringDate);
 
         int rounded_value = 120;
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisc(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
         ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(), userPic, options);
+        Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
 
-        System.out.println("hasimage::::"+item.hasImage);
+        Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
         if(item.hasImage) {
             System.out.println("getimage::::"+item.getImgs().toString());
             Long[] ids = item.getImgs();

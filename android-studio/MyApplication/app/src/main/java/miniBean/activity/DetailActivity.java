@@ -214,7 +214,7 @@ public class DetailActivity extends FragmentActivity {
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
                     Log.d(this.getClass().getSimpleName(), "getQnaDetail: load comm icon from background - " + post.getCi());
-                    AppController.mImageLoader.displayImage(getResources().getString(R.string.base_url) + post.getCi(), communityIcon);
+                    AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + post.getCi(), communityIcon);
                 }
 
                 setPageButton(curPage);

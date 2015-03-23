@@ -12,6 +12,7 @@ import android.util.Log;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import miniBean.R;
 import retrofit.RestAdapter;
@@ -52,13 +53,17 @@ import java.security.MessageDigest;
 public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
-    public static ImageLoader mImageLoader;
     public static MyApi api;
     private static AppController mInstance;
+    private static ImageLoader mImageLoader;
     private SharedPreferences session;
 
     public static synchronized AppController getInstance() {
         return mInstance;
+    }
+
+    public static synchronized ImageLoader getImageLoader() {
+        return mImageLoader;
     }
 
     @Override
@@ -74,10 +79,10 @@ public class AppController extends Application {
                 .setClient(new OkClient()).build();
         api = restAdapter.create(MyApi.class);
 
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
-                .cacheOnDisk(true).build();
+        int rounded_value = 20;
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(defaultOptions).build();
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config); //
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
         mImageLoader = ImageLoader.getInstance();
 
         ACRA.init(this);
