@@ -33,6 +33,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -226,7 +230,9 @@ public class DetailActivity extends FragmentActivity {
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
                     Log.d(this.getClass().getSimpleName(), "getQnaDetail: load comm icon from background - " + post.getCi());
-                    AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + post.getCi(), communityIcon);
+                    DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
+                            new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
+                    ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + post.getCi(), communityIcon, options);
                 }
 
                 setPageButtons(curPage);

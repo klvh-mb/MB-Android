@@ -12,6 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import java.util.List;
 
 import miniBean.R;
@@ -89,7 +93,9 @@ public class FeedListAdapter extends BaseAdapter {
                 communityIcon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
             } else {
                 Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.getCi());
-                AppController.getImageLoader().displayImage(convertView.getResources().getString(R.string.base_url) + item.getCi(), communityIcon);
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
+                        new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
+                ImageLoader.getInstance().displayImage(convertView.getResources().getString(R.string.base_url) + item.getCi(), communityIcon, options);
             }
         } else {
             commName.setVisibility(View.GONE);

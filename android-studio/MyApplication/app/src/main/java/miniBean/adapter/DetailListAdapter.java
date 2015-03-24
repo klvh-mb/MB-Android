@@ -228,8 +228,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
         postTime.setText(activityUtil.getTimeAgo(item.getCd()));
 
-        int rounded_value = 120;
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
+                new RoundedBitmapDisplayer(DefaultValues.IMAGE_CIRCLE_ROUNDED_VALUE)).build();
         ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(), userPic, options);
         Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
 

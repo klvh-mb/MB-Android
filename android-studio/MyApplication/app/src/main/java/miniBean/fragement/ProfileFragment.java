@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 import miniBean.R;
 import miniBean.activity.MyNewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -141,9 +142,7 @@ public class ProfileFragment extends Fragment {
                 questionsCount.setText(user.getQuestionsCount()+"");
                 answersCount.setText(user.getAnswersCount()+"");
 
-                int rounded_value = 0;
-                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
-                ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + user.getId(), userCoverPic, options, new SimpleImageLoadingListener() {
+                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + user.getId(), userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
@@ -159,7 +158,10 @@ public class ProfileFragment extends Fragment {
                         spinner.setVisibility(View.GONE);
                     }
                 });
-                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + user.getId(), userPic);
+
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
+                        new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
+                ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + user.getId(), userPic, options);
             }
 
             @Override

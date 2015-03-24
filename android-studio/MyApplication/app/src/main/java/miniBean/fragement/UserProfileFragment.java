@@ -23,6 +23,7 @@ import java.lang.reflect.Field;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -107,9 +108,7 @@ public class UserProfileFragment extends Fragment {
                 answersCount.setText("-");
                 questionsCount.setText("-");
 
-                int rounded_value = 0;
-                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
-                ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getArguments().getLong("oid"), userCoverPic, options, new SimpleImageLoadingListener() {
+                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getArguments().getLong("oid"), userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
@@ -126,7 +125,9 @@ public class UserProfileFragment extends Fragment {
                     }
                 });
 
-                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getArguments().getLong("oid"), userPic);
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
+                        new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
+                ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getArguments().getLong("oid"), userPic, options);
             }
 
             @Override

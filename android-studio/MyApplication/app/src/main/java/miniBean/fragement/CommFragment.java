@@ -202,9 +202,7 @@ public class CommFragment extends Fragment {
                 commNameText.setText(community.dn);
                 numMemberText.setText(community.mm+"");
 
-                int rounded_value = 0;
-                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
-                ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-community-image-by-id/" + getArguments().getString("id"), communityCoverPic, options, new SimpleImageLoadingListener() {
+                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-community-image-by-id/" + getArguments().getString("id"), communityCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);

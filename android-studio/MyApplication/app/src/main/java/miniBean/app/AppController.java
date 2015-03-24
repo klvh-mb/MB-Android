@@ -88,7 +88,7 @@ public class AppController extends Application {
                 .setClient(new OkClient()).build();
         api = restAdapter.create(MyApi.class);
 
-        int rounded_value = 38;
+        int rounded_value = 0;
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(defaultOptions).build();
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);

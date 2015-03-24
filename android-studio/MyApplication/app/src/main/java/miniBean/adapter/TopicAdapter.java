@@ -13,12 +13,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -76,7 +81,9 @@ public class TopicAdapter extends BaseAdapter {
             communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
             Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.gi);
-            AppController.getImageLoader().displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic);
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
+                    new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
+            ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic, options);
         }
 
         if (item.getIsM()) {
