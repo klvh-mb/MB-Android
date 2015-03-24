@@ -75,7 +75,7 @@ public class ActivityUtil {
         } else if (diff < 2 * MINUTE_MILLIS) {
             return 1 + this.activity.getString(R.string.timeago_min);
         } else if (diff < 50 * MINUTE_MILLIS) {
-            return diff / MINUTE_MILLIS + this.activity.getString(R.string.timeago_just_now);
+            return diff / MINUTE_MILLIS + this.activity.getString(R.string.timeago_min);
         } else if (diff < 90 * MINUTE_MILLIS) {
             return 1 +  this.activity.getString(R.string.timeago_hrs);
         } else if (diff < 24 * HOUR_MILLIS) {

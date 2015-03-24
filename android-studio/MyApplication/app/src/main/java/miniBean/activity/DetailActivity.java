@@ -1,7 +1,6 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -23,7 +21,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,26 +54,27 @@ import retrofit.mime.TypedFile;
 
 public class DetailActivity extends FragmentActivity {
 
-    final Integer SELECT_PICTURE = 1;
-    public Button pageButton;
-    ImageView backImage, bookmarkAction, moreAction;
-    TextView commentEdit;
-    ImageView image;
-    String selectedImagePath = null;
-    Uri selectedImageUri = null;
+    private final Integer SELECT_PICTURE = 1;
+    private FrameLayout mainFrameLayout;
+    private Button pageButton;
+    private ImageView backImage, bookmarkAction, moreAction;
+    private TextView commentEdit;
+    private ImageView image;
+    private String selectedImagePath = null;
+    private Uri selectedImageUri = null;
     private ListView listView;
     private DetailListAdapter listAdapter;
     private PageListAdapter pageAdapter;
     private List<CommunityPostCommentVM> communityItems;
     private TextView questionText;
     private PopupWindow commentPopup, paginationPopup;
-    Boolean isBookmarked = false;
-    Spinner dropSpinner;
-    public Boolean isPhoto = false;
+    private Boolean isBookmarked = false;
+    private Spinner dropSpinner;
+    private Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
     private ImageView communityIcon;
-    public int noOfComments;
-    public int curPage = 1;
+    private int noOfComments;
+    private int curPage = 1;
     private CommunityPostCommentVM postVm = new CommunityPostCommentVM();
 
     private ActivityUtil activityUtil;
@@ -114,8 +112,7 @@ public class DetailActivity extends FragmentActivity {
         commentEdit = (TextView) findViewById(R.id.commentBody);
         pageButton = (Button) findViewById(R.id.page);
 
-        final FrameLayout layout_MainMenu;
-        layout_MainMenu = (FrameLayout) findViewById(R.id.mainMenu);
+        mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
 
         communityName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,8 +128,6 @@ public class DetailActivity extends FragmentActivity {
         commentEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout_MainMenu.getForeground().setAlpha(20);
-                layout_MainMenu.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
                 initiateCommentPopup();
             }
         });
@@ -244,6 +239,9 @@ public class DetailActivity extends FragmentActivity {
 
     private void initiateCommentPopup() {
         try {
+            mainFrameLayout.getForeground().setAlpha(20);
+            mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
+
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) DetailActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -370,6 +368,9 @@ public class DetailActivity extends FragmentActivity {
 
     private void initiatePaginationPopup() {
         try {
+            mainFrameLayout.getForeground().setAlpha(20);
+            mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
+
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) DetailActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -459,7 +460,6 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
@@ -482,7 +482,6 @@ public class DetailActivity extends FragmentActivity {
                 return false;
 
         }
-
     }
 
     public void getComments(Long postID, final int offset) {
@@ -507,5 +506,4 @@ public class DetailActivity extends FragmentActivity {
             }
         });
     }
-
 }

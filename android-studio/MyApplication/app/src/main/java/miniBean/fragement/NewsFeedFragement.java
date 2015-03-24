@@ -67,8 +67,9 @@ public class NewsFeedFragement extends Fragment {
 
         Log.d(this.getClass().getSimpleName(), "onCreateView: setOnScrollListener");
 
+        // pass hasFooter = true to InfiniteScrollListener
         listView.setOnScrollListener(new InfiniteScrollListener(
-                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD) {
+                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, true) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 loadingFooter.setVisibility(View.VISIBLE);
