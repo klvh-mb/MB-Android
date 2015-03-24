@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/view_bg">
-
-    <RelativeLayout
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_weight="80"
         android:id="@+id/children_fragement"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/button_layout"></RelativeLayout>
-
-
-</RelativeLayout>
+        android:layout_below="@id/button_layout"
+        android:orientation="vertical">
+        </LinearLayout>
+</LinearLayout>

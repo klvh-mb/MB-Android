@@ -1,0 +1,189 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profileLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0D9">
+    <LinearLayout
+        android:id="@+id/placeHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/profilePic"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="#ffffff">
+
+            <ImageView
+                android:id="@+id/userCoverPic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"></ImageView>
+
+            <ProgressBar
+                android:id="@+id/imageLoader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <RelativeLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true">
+            <RelativeLayout
+                android:id="@+id/userImageLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/userImages"
+                    android:layout_width="100dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/image_round"
+                    ></ImageView>
+            </RelativeLayout>
+                <TextView
+                    android:id="@+id/usernameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/userImageLayout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:shadowColor="#000000"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="6"
+                    android:textAlignment="center" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/profilePic"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/menuQuestions"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#ffffff">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/questionPic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/profile_posts" />
+
+                    <TextView
+                        android:id="@+id/questionText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="25dp"
+                        android:layout_toRightOf="@id/questionPic"
+                        android:layout_weight="75"
+                        android:text="Questions"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/Edit1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/questionText"
+                        android:layout_weight="5"
+                        android:text="2"
+                        android:textColor="#FF6666" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:src="@drawable/dropdown_btn" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_below="@id/menuQuestions"
+                android:background="@drawable/bar1" />
+
+            <LinearLayout
+                android:id="@+id/menuAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/menuQuestions"
+                android:layout_marginTop="2dp"
+                android:background="#ffffff">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/answerPic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/profile_comments" />
+
+                    <TextView
+                        android:id="@+id/answerText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="25dp"
+                        android:layout_toRightOf="@id/answerPic"
+                        android:layout_weight="75"
+                        android:text="Answers"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/Edit2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/answerText"
+                        android:layout_weight="5"
+                        android:editable="false"
+                        android:text="2"
+                        android:textColor="#FF6666" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:src="@drawable/dropdown_btn" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_below="@id/menuAnswer"
+                android:background="@drawable/bar1" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_below="@id/menuAnswer"
+                android:background="@drawable/bar1" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

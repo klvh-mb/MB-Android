@@ -1,10 +1,9 @@
 package miniBean.fragement;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.lang.reflect.Field;
 
 import miniBean.R;
+import miniBean.activity.MyNewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.UserVM;
@@ -57,7 +57,15 @@ public class ProfileFragment extends Fragment {
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
+                System.out.println("profile fragment id::"+userId.toString());
+
+                Intent intent=new Intent(getActivity(), MyNewsfeedActivity.class);
+                intent.putExtra("id",userId.toString());
+                intent.putExtra("key","question");
+                startActivity(intent);
+
+
+                /*Bundle bundle=new Bundle();
                 bundle.putString("id",userId.toString());
                 bundle.putString("key","question");
                 NewsFeedFragement fragment = new NewsFeedFragement();
@@ -67,13 +75,18 @@ public class ProfileFragment extends Fragment {
                 //fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.hide(ProfileFragment.this);
                 fragmentTransaction.replace(R.id.children_fragement, fragment);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
             }
         });
         answerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
+                Intent intent=new Intent(getActivity(), MyNewsfeedActivity.class);
+                intent.putExtra("id",userId.toString());
+                intent.putExtra("key","answer");
+                startActivity(intent);
+
+               /* Bundle bundle=new Bundle();
                 bundle.putString("id",userId.toString());
                 bundle.putString("key","answer");
                 NewsFeedFragement fragment = new NewsFeedFragement();
@@ -83,13 +96,18 @@ public class ProfileFragment extends Fragment {
                 //fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.hide(ProfileFragment.this);
                 fragmentTransaction.replace(R.id.children_fragement, fragment);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
             }
         });
         bookmarksMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
+                Intent intent=new Intent(getActivity(), MyNewsfeedActivity.class);
+                intent.putExtra("id",userId.toString());
+                intent.putExtra("key","bookmark");
+                startActivity(intent);
+
+               /* Bundle bundle=new Bundle();
                 bundle.putString("id",userId.toString());
                 bundle.putString("key","bookmark");
                 NewsFeedFragement fragment = new NewsFeedFragement();
@@ -99,7 +117,8 @@ public class ProfileFragment extends Fragment {
                 //fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.hide(ProfileFragment.this);
                 fragmentTransaction.replace(R.id.children_fragement, fragment);
-                fragmentTransaction.commit();
+                fragmentTransaction.commit();*/
+
             }
         });
 

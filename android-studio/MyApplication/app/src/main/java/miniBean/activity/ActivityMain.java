@@ -2,6 +2,7 @@ package miniBean.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -15,12 +16,10 @@ import android.widget.Button;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.fragement.MainFragement;
-import miniBean.fragement.MyProfileFragment;
 
 public class ActivityMain extends FragmentActivity {
 
     Button community, profile, article;
-    private android.app.ActionBar actionBar;
     private boolean commClicked = false,profileClicked = false;
 
     private int realTabIconWidth, realTabIconHeight;
@@ -31,22 +30,13 @@ public class ActivityMain extends FragmentActivity {
 
         setContentView(R.layout.main_activity);
 
-        /*
-        if(getIntent().getBooleanExtra("EXIT", false)){
-            AppController.getInstance().clearAll();
-            finish();
-            return; // add this to prevent from doing unnecessary stuffs
-        }
-        */
-
         Configuration config = getResources().getConfiguration();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         MainFragement mainFragement = new MainFragement();
         fragmentTransaction.replace(R.id.placeHolder, mainFragement).commit();
         commClicked=true;
 
-        actionBar = getActionBar();
-        actionBar.hide();
+        getActionBar().hide();
 
         community = (Button) findViewById(R.id.comms);
         profile = (Button) findViewById(R.id.profiles);
@@ -65,15 +55,21 @@ public class ActivityMain extends FragmentActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionBar.show();
+                //actionBar.show();
                 System.out.println("Profile clicked.......");
-                if(!profileClicked) {
-                    Configuration config = getResources().getConfiguration();
+
+                Intent intent=new Intent(ActivityMain.this,MyProfileActivity.class);
+                startActivity(intent);
+
+                /*if(!profileClicked) {
+                    *//*Configuration config = getResources().getConfiguration();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                     MyProfileFragment profileFragement = new MyProfileFragment();
                     fragmentTransaction.replace(R.id.placeHolder, profileFragement).commit();
-                    profileClicked=true;
-                }
+                    profileClicked=true;*//*
+
+
+                }*/
 
                 Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.profile_sel);
                 img.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
@@ -93,7 +89,6 @@ public class ActivityMain extends FragmentActivity {
         community.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionBar.hide();
                 System.out.println("Community clicked.......");
                 if(!commClicked) {
                     Configuration config = getResources().getConfiguration();

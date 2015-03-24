@@ -104,11 +104,11 @@
         <ImageView
             android:layout_below="@+id/questionnareText"
             android:id="@+id/postImage"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:visibility="gone"
             android:scaleType="fitXY"
             android:layout_height="150dp" />
-
+        
     <LinearLayout
         android:id="@+id/postSummary"
         android:layout_width="match_parent"

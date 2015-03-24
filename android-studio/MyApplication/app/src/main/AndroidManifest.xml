@@ -50,6 +50,20 @@
             android:name=".activity.NewsfeedActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.MyNewsfeedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PostActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.MyProfileActivity"
+            android:screenOrientation="portrait" />
+
         <activity android:name="org.acra.CrashReportDialog"
             android:theme="@android:style/Theme.Dialog"
             android:launchMode="singleInstance"

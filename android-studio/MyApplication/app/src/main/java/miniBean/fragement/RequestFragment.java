@@ -44,8 +44,6 @@ public class RequestFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listRequest);
 
         String notif = getArguments().getString("requestNotif");
-        System.out.println("REQnotice::::::::::" + notif);
-
         Gson gson = new GsonBuilder().create();
         List<NotificationVM> notificationVMs = new ArrayList<>();
         JSONArray jsonArray1 = null;
@@ -69,7 +67,6 @@ public class RequestFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                NotificationVM item = (NotificationVM)adapter.getItem(position);
-                System.out.println("itemmmmmm:::::"+item.getTp());
                 //Intent intent = new Intent(getActivity(), CommunityActivity.class);
                 //startActivity(intent);
 
