@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -57,6 +58,7 @@ public class DetailActivity extends FragmentActivity {
     private final Integer SELECT_PICTURE = 1;
     private FrameLayout mainFrameLayout;
     private Button pageButton;
+    private ImageButton backButton, nextButton;
     private ImageView backImage, bookmarkAction, moreAction;
     private TextView commentEdit;
     private ImageView image;
@@ -111,6 +113,8 @@ public class DetailActivity extends FragmentActivity {
         questionText = (TextView) findViewById(R.id.questionText);
         commentEdit = (TextView) findViewById(R.id.commentBody);
         pageButton = (Button) findViewById(R.id.page);
+        backButton = (ImageButton) findViewById(R.id.back);
+        nextButton = (ImageButton) findViewById(R.id.next);
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
 
@@ -225,7 +229,7 @@ public class DetailActivity extends FragmentActivity {
                     AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + post.getCi(), communityIcon);
                 }
 
-                setPageButton(curPage);
+                setPageButtons(curPage);
             }
 
             @Override
@@ -400,8 +404,6 @@ public class DetailActivity extends FragmentActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Log.d(this.getClass().getSimpleName(), "listView1.onItemClick: Page " + curPage);
-                    curPage = position + 1;
-                    setPageButton(curPage);
                     getComments(getIntent().getLongExtra("postId", 0L),position);
                     paginationPopup.dismiss();
                 }
@@ -411,7 +413,9 @@ public class DetailActivity extends FragmentActivity {
         }
     }
 
-    private void setPageButton(int page) {
+    private void setPageButtons(int page) {
+        curPage = page;
+
         int maxPage = getMaxPage();
         pageButton.setText(page + "/" + getMaxPage());
         if (maxPage > 1) {
@@ -421,6 +425,48 @@ public class DetailActivity extends FragmentActivity {
                     initiatePaginationPopup();
                 }
             });
+        }
+
+        if (maxPage == 1) {
+            backButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.GONE);
+            backButton.setEnabled(false);
+            nextButton.setEnabled(false);
+        } else {
+            backButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+
+            if (page <= 1) {
+                backButton.setEnabled(false);
+                backButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_back_gray));
+            } else {
+                backButton.setEnabled(true);
+                backButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_back));
+
+                final int pageOffset = page - 1;
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getComments(getIntent().getLongExtra("postId", 0L), pageOffset - 1);
+                    }
+                });
+            }
+
+            if (page >= maxPage) {
+                nextButton.setEnabled(false);
+                nextButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_next_gray));
+            } else {
+                nextButton.setEnabled(true);
+                nextButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_next));
+
+                final int pageOffset = page - 1;
+                nextButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getComments(getIntent().getLongExtra("postId", 0L), pageOffset + 1);
+                    }
+                });
+            }
         }
     }
 
@@ -497,7 +543,7 @@ public class DetailActivity extends FragmentActivity {
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityPostCommentVMs, curPage);
                 listView.setAdapter(listAdapter);
 
-                paginationPopup.dismiss();
+                setPageButtons(offset + 1);
             }
 
             @Override

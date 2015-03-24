@@ -57,6 +57,8 @@
     <string name="delete">刪除</string>
     <string name="like">讚好</string>
     <string name="unlike">取消讚好</string>
+    <string name="page_back">上頁</string>
+    <string name="page_next">下頁</string>
     <string name="goto_page">前往頁數</string>
     <string name="page_before">第</string>
     <string name="page_after">頁</string>
