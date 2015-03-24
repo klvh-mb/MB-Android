@@ -209,7 +209,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             }
         });
 
-        Spanned spanned = activityUtil.getDisplayTextFromHtml(item.getD());
+        Spanned spanned = activityUtil.getDisplayTextFromHtml(item.getD(), this);
         commentText.setText(spanned);
         commentText.setMovementMethod(LinkMovementMethod.getInstance());
 

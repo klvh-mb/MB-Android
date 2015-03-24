@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -40,9 +41,10 @@ public class ActivityUtil {
     // Html
     //
 
-    public Spanned getDisplayTextFromHtml(String text) {
+    public Spanned getDisplayTextFromHtml(String text, Html.ImageGetter imageGetter) {
+        Log.d(this.getClass().getSimpleName(), "getDisplayTextFromHtml: text="+text);
         text = text.replace("\n", "<br/>");
-        Spanned spanned = Html.fromHtml(text);
+        Spanned spanned = Html.fromHtml(text, imageGetter, null);
         return spanned;
     }
 
