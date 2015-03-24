@@ -97,7 +97,8 @@
             android:layout_marginTop="5dp"
             android:textSize="17dp"
             android:textColor="#333"
-            android:lineSpacingExtra="5dp" />
+            android:lineSpacingExtra="5dp"
+            android:textColorLink="@color/link" />
 
     </LinearLayout>
 

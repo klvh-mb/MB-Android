@@ -6,6 +6,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -32,6 +34,16 @@ public class ActivityUtil {
 
     public ActivityUtil(Activity activity) {
         this.activity = activity;
+    }
+
+    //
+    // Html
+    //
+
+    public Spanned getDisplayTextFromHtml(String text) {
+        text = text.replace("\n", "<br/>");
+        Spanned spanned = Html.fromHtml(text);
+        return spanned;
     }
 
     //
