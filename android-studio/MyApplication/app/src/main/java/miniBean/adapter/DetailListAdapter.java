@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
@@ -41,7 +42,6 @@ import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
-import miniBean.view.FullScreenImageView;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -54,7 +54,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private List<CommunityPostCommentVM> postComments;
     private LinearLayout likeLayout;
     private ImageView like;
-    private ImageView postImage;
+    private LinearLayout postImagesLayout;
+    private List<ImageView> postImages;
     private TextView deleteText, likeText, totalLike, indexComment;
     private int page;
 
@@ -107,7 +108,9 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         likeLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
         totalLike = (TextView) convertView.findViewById(R.id.TotalLike);
         indexComment = (TextView) convertView.findViewById(R.id.indexComment);
-        postImage = (ImageView) convertView.findViewById(R.id.postImage);
+        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
+        postImages = new ArrayList<>();
+
         final CommunityPostCommentVM item = postComments.get(position);
 
         // like
@@ -230,21 +233,30 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
         postTime.setText(activityUtil.getTimeAgo(item.getCd()));
 
+        // profile pic
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
                 new RoundedBitmapDisplayer(DefaultValues.IMAGE_CIRCLE_ROUNDED_VALUE)).build();
         ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(), userPic, options);
         Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
 
+        // icons
+
+
+        // images
         Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
         if(item.hasImage) {
-            Long[] ids = item.getImgs();
-            //String source = activity.getResources().getString(R.string.base_url) + "/image/get-post-image-by-id/" + ids[0];
-            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + ids[0];
-            Log.d(this.getClass().getSimpleName(), "getView: load post image from background - " + source);
-
-            new LoadPostImage().execute(source, postImage);
+            for (Long imageId : item.getImgs()) {
+                String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
+                ImageView postImage = new ImageView(this.activity);
+                postImage.setAdjustViewBounds(true);
+                postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                postImage.setPadding(0,0,0,activityUtil.getRealDimension(10));
+                postImagesLayout.addView(postImage);
+                new LoadPostImage().execute(source, postImage);
+            }
+            postImagesLayout.setVisibility(View.VISIBLE);
         } else {
-            postImage.setVisibility(View.GONE);
+            postImagesLayout.setVisibility(View.GONE);
         }
 
         return convertView;

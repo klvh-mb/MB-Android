@@ -102,25 +102,21 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_below="@+id/questionnareText"
-        android:id="@+id/postImage"
-        android:layout_width="match_parent"
-        android:visibility="gone"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:cropToPadding="false"
-        android:layout_marginTop="10dp" />
-        
+        android:id="@+id/postImages"
+        android:layout_below="@+id/questionnareText"
+        android:visibility="gone"></LinearLayout>
+
     <LinearLayout
         android:id="@+id/postSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/postImage"
         android:background="#ffffff"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_below="@+id/postImages">
 
         <RelativeLayout
             android:layout_width="wrap_content"

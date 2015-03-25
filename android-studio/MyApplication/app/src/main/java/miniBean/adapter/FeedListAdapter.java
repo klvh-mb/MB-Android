@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -28,6 +29,7 @@ import miniBean.viewmodel.CommunityPostVM;
 public class FeedListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
+    private LinearLayout iconsLayout;
     private List<CommunityPostVM> feedItems;
     private boolean isNewsfeed = true;
     private int lastPosition = -1;
@@ -100,6 +102,19 @@ public class FeedListAdapter extends BaseAdapter {
         } else {
             commName.setVisibility(View.GONE);
             communityIcon.setVisibility(View.GONE);
+        }
+
+        // icons
+        LinearLayout iconsLayout = (LinearLayout) convertView.findViewById(R.id.iconsLayout);
+        ImageView iconImage = (ImageView) convertView.findViewById(R.id.iconImage);
+        ImageView iconHot = (ImageView) convertView.findViewById(R.id.iconHot);
+        iconsLayout.setVisibility(View.GONE);
+        iconImage.setVisibility(View.GONE);
+        iconHot.setVisibility(View.GONE);
+
+        if (item.hasImage) {
+            iconsLayout.setVisibility(View.VISIBLE);
+            iconImage.setVisibility(View.VISIBLE);
         }
 
         //Animation animation = AnimationUtils.loadAnimation(activity.getBaseContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);

@@ -18,6 +18,29 @@
             android:id="@+id/postTitleLayout"
             android:layout_marginRight="5dp">
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/iconsLayout"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:id="@+id/iconHot"
+                    android:src="@drawable/pi_hot"
+                    android:layout_marginRight="5dp" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:id="@+id/iconImage"
+                    android:src="@drawable/pi_image"
+                    android:layout_marginRight="5dp" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/postTitle"
                 android:layout_width="fill_parent"
