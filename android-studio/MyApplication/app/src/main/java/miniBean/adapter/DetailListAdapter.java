@@ -41,6 +41,7 @@ import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
+import miniBean.view.FullScreenImageView;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -52,7 +53,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private LayoutInflater inflater;
     private List<CommunityPostCommentVM> postComments;
     private LinearLayout likeLayout;
-    private ImageView like,postImage;
+    private ImageView like;
+    private ImageView postImage;
     private TextView deleteText, likeText, totalLike, indexComment;
     private int page;
 
@@ -235,39 +237,24 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
         Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
         if(item.hasImage) {
-            System.out.println("getimage::::"+item.getImgs().toString());
             Long[] ids = item.getImgs();
-            System.out.println("iddddd"+ids[0]);
+            //String source = activity.getResources().getString(R.string.base_url) + "/image/get-post-image-by-id/" + ids[0];
+            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + ids[0];
+            Log.d(this.getClass().getSimpleName(), "getView: load post image from background - " + source);
+
+            Drawable empty = activityUtil.getEmptyDrawable();
+            new LoadPostImage().execute(source, empty);
+
+            postImage.setImageDrawable(empty);
             postImage.setVisibility(View.VISIBLE);
-            ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-post-image-by-id/" + ids[0], postImage);
         } else {
             postImage.setVisibility(View.GONE);
         }
 
-        /* if(!item.hasImage) {
-            postImage.setVisibility(View.GONE);
-        }*/
-
-        /* AppController.mImageLoader.displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-mini-image-by-id/" + item.getOid(), userPic,new SimpleImageLoadingListener(){
-            public void onLoadingStarted(String imageUri, View view) {
-                spinner.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                spinner.setVisibility(View.GONE);
-            }
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                spinner.setVisibility(View.GONE);
-            }
-        });
-        */
-
         return convertView;
     }
 
-    void likeComment(Long id) {
+    private void likeComment(Long id) {
         AppController.api.setLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -281,7 +268,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         });
     }
 
-    void unLikeComment(Long id) {
+    private void unLikeComment(Long id) {
         AppController.api.setUnLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -295,7 +282,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         });
     }
 
-    void likePost(Long id) {
+    private void likePost(Long id) {
         AppController.api.setLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -309,7 +296,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         });
     }
 
-    void unLikePost(Long id) {
+    private void unLikePost(Long id) {
         AppController.api.setUnLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -323,7 +310,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         });
     }
 
-    void deletePost(Long id) {
+    private void deletePost(Long id) {
         AppController.api.deletePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -339,7 +326,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         });
     }
 
-    void deleteComment(Long id, final int position) {
+    private void deleteComment(Long id, final int position) {
         AppController.api.deleteComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -371,7 +358,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             Drawable empty = activity.getResources().getDrawable(R.drawable.empty);
             d.addLevel(0, 0, empty);
             d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
-            new LoadImage().execute(source, d);
+            new LoadImageToBody().execute(source, d);
         }
 
         return d;
@@ -379,11 +366,14 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     class LoadImage extends AsyncTask<Object, Void, Bitmap> {
 
-        private LevelListDrawable mDrawable;
+        protected LevelListDrawable mDrawable;
 
         @Override
         protected Bitmap doInBackground(Object... params) {
-            String source = activity.getResources().getString(R.string.base_url) + (String) params[0];
+            String source = (String) params[0];
+            if (!source.startsWith(activity.getResources().getString(R.string.base_url))) {
+                source = activity.getResources().getString(R.string.base_url) + source;
+            }
             mDrawable = (LevelListDrawable) params[1];
             try {
                 InputStream is = new URL(source).openStream();
@@ -406,6 +396,44 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                 mDrawable.addLevel(1, 1, d);
                 mDrawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
                 mDrawable.setLevel(1);
+            }
+        }
+    }
+
+    class LoadPostImage extends LoadImage {
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            if (bitmap != null) {
+                Log.d(this.getClass().getSimpleName(), "onPostExecute: loaded bitmap - " + bitmap.getWidth() + "|" + bitmap.getHeight());
+
+                int width = bitmap.getWidth();
+                int height = bitmap.getHeight();
+
+                // always stretch to screen width
+                int displayWidth = activityUtil.getDisplayDimensions().width();
+                float shrinkAspect = (float)displayWidth / (float)width;
+                width = displayWidth;
+                height = (int)(height * shrinkAspect);
+
+                Log.d(this.getClass().getSimpleName(), "onPostExecute: after shrink - " + width + "|" + height + " with shrinkAspect=" + shrinkAspect);
+
+                BitmapDrawable d = new BitmapDrawable(bitmap);
+                mDrawable.addLevel(1, 1, d);
+                mDrawable.setBounds(0, 0, width, height);
+                mDrawable.setLevel(1);
+            }
+        }
+    }
+
+    class LoadImageToBody extends LoadImage {
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+
+            if (bitmap != null) {
+                Log.d(this.getClass().getSimpleName(), "onPostExecute: refresh body text");
                 // i don't know yet a better way to refresh TextView
                 // mTv.invalidate() doesn't work as expected
                 CharSequence t = commentText.getText();
@@ -413,5 +441,4 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             }
         }
     }
-
 }

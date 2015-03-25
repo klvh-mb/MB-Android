@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.Listener.InfiniteScrollListener;
+import miniBean.listener.InfiniteScrollListener;
 import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.FeedListAdapter;
