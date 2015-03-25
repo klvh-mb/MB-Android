@@ -242,11 +242,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + ids[0];
             Log.d(this.getClass().getSimpleName(), "getView: load post image from background - " + source);
 
-            Drawable empty = activityUtil.getEmptyDrawable();
-            new LoadPostImage().execute(source, empty);
-
-            postImage.setImageDrawable(empty);
-            postImage.setVisibility(View.VISIBLE);
+            new LoadPostImage().execute(source, postImage);
         } else {
             postImage.setVisibility(View.GONE);
         }
@@ -366,7 +362,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     class LoadImage extends AsyncTask<Object, Void, Bitmap> {
 
-        protected LevelListDrawable mDrawable;
+        protected ImageView imageView;
 
         @Override
         protected Bitmap doInBackground(Object... params) {
@@ -374,7 +370,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             if (!source.startsWith(activity.getResources().getString(R.string.base_url))) {
                 source = activity.getResources().getString(R.string.base_url) + source;
             }
-            mDrawable = (LevelListDrawable) params[1];
+
+            imageView = (ImageView) params[1];
             try {
                 InputStream is = new URL(source).openStream();
                 return BitmapFactory.decodeStream(is);
@@ -392,10 +389,11 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null) {
                 Log.d(this.getClass().getSimpleName(), "onPostExecute: loaded bitmap - " + bitmap.getWidth() + "|" + bitmap.getHeight());
-                BitmapDrawable d = new BitmapDrawable(bitmap);
-                mDrawable.addLevel(1, 1, d);
-                mDrawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
-                mDrawable.setLevel(1);
+                Drawable d = new BitmapDrawable(
+                        DetailListAdapter.this.activity.getResources(),
+                        Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), false));
+                imageView.setImageDrawable(d);
+                imageView.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -412,16 +410,17 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
                 // always stretch to screen width
                 int displayWidth = activityUtil.getDisplayDimensions().width();
-                float shrinkAspect = (float)displayWidth / (float)width;
+                float scaleAspect = (float)displayWidth / (float)width;
                 width = displayWidth;
-                height = (int)(height * shrinkAspect);
+                height = (int)(height * scaleAspect);
 
-                Log.d(this.getClass().getSimpleName(), "onPostExecute: after shrink - " + width + "|" + height + " with shrinkAspect=" + shrinkAspect);
+                Log.d(this.getClass().getSimpleName(), "onPostExecute: after shrink - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
 
-                BitmapDrawable d = new BitmapDrawable(bitmap);
-                mDrawable.addLevel(1, 1, d);
-                mDrawable.setBounds(0, 0, width, height);
-                mDrawable.setLevel(1);
+                Drawable d = new BitmapDrawable(
+                        DetailListAdapter.this.activity.getResources(),
+                        Bitmap.createScaledBitmap(bitmap, width, height, false));
+                imageView.setImageDrawable(d);
+                imageView.setVisibility(View.VISIBLE);
             }
         }
     }
