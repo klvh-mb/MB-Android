@@ -79,7 +79,7 @@ public interface MyApi {
 
     @GET("/get-headerBar-data")
     //a function in your api to get all header meta data (notifications and requests).
-    public void getHeaderBaeData(@Query("key") String key, Callback<HeaderDataVM> cb);
+    public void getHeaderBarData(@Query("key") String key, Callback<HeaderDataVM> cb);
 
 
     //'/accept-friend-request?friend_id=:id&notify_id=:notify_id'
@@ -139,4 +139,6 @@ public interface MyApi {
     @GET("/community/{id}")
     public void getCommunity(@Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
 
+    @GET("/questions")
+    public void getNextQuestions(@Query("id")Long comm_id,@Query("time") String time,@Query("key") String key,@Query("offset") int offset,Callback<List<CommunityPostVM>> callback);
 }

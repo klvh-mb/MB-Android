@@ -347,8 +347,11 @@ public class DetailActivity extends FragmentActivity {
         AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, Response response) {
-                if (isPhoto)
+                if (isPhoto){
                     uploadPhoto(array.getId());
+                }else{
+                    getComments(getIntent().getLongExtra("postId", 0L),0);
+                }
                 commentPopup.dismiss();
             }
 
@@ -366,6 +369,7 @@ public class DetailActivity extends FragmentActivity {
         AppController.api.uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
             @Override
             public void success(Response array, Response response) {
+                getComments(getIntent().getLongExtra("postId", 0L),0);
                 System.out.println("Response:::::::" + array);
             }
 
@@ -537,6 +541,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     public void getComments(Long postID, final int offset) {
+        System.out.println("in getcomment");
         AppController.api.getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
@@ -548,7 +553,7 @@ public class DetailActivity extends FragmentActivity {
                 communityPostCommentVMs.addAll(commentVMs);
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityPostCommentVMs, curPage);
                 listView.setAdapter(listAdapter);
-
+                listAdapter.notifyDataSetChanged();
                 setPageButtons(offset + 1);
             }
 

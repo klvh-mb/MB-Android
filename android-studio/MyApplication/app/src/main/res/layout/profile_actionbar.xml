@@ -39,6 +39,19 @@
             android:src="@drawable/w_profile"
             android:layout_toLeftOf="@+id/moreAction" />
 
+        <TextView
+            android:id="@+id/requestCount"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:text="-"
+            android:textAlignment="center"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:background="@drawable/badge_circle"
+            android:layout_alignTop="@+id/bookmarkedtAction"
+            android:layout_toLeftOf="@+id/moreAction"
+            android:layout_toStartOf="@+id/moreAction" />
         <ImageView
             android:id="@+id/moreAction"
             android:layout_width="22dp"
@@ -47,7 +60,19 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/w_notification"
             android:layout_toLeftOf="@+id/setting" />
-
+        <TextView
+            android:id="@+id/notificationCount"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:text="-"
+            android:textSize="10sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:background="@drawable/badge_circle"
+            android:layout_alignTop="@+id/setting"
+            android:layout_alignRight="@+id/moreAction"
+            android:layout_alignEnd="@+id/moreAction" />
         <ImageView
             android:id="@+id/setting"
             android:layout_width="25dp"

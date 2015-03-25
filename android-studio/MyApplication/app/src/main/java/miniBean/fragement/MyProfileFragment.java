@@ -56,7 +56,7 @@ public class MyProfileFragment extends Fragment {
 
         ((ActivityMain) getActivity()).getActionBar().setCustomView(actionBarView, lp);
 
-        AppController.api.getHeaderBaeData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
+        AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
             @Override
             public void success(HeaderDataVM headerDataVM, Response response) {
                 System.out.println("headerdata" + headerDataVM.getName());

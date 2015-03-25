@@ -27,6 +27,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.ArrayList;
 import java.util.List;
 
+import miniBean.Listener.InfiniteScrollListener;
 import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.FeedListAdapter;
@@ -73,6 +74,7 @@ public class CommFragment extends Fragment {
         feedListAdapter = new FeedListAdapter(getActivity(), feedItems, false);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
+
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
@@ -103,7 +105,14 @@ public class CommFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        listView.setOnScrollListener(new InfiniteScrollListener(
+                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, true) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                System.out.println("pagecount::"+page);
+                loadNextNewsfeed(Long.parseLong(getArguments().getString("id")), feedItems.get(feedItems.size()-1).getT() +"", page-1);
+            }
+        });
         return view;
     }
 
@@ -139,16 +148,13 @@ public class CommFragment extends Fragment {
 
     private void initializeData(){
         setCurrentCommunity();
-
         getNewsFeedByCommunityId(currentCommunity);
-
         Log.d(this.getClass().getSimpleName(), "initialiazeData: community - " + commName);
         if (!currentCommunity.isM) {
             joinImageView.setImageResource(R.drawable.check);
         } else {
             joinImageView.setImageResource(R.drawable.add);
         }
-
         joinImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,7 +250,6 @@ public class CommFragment extends Fragment {
                 Toast.makeText(CommFragment.this.getActivity(), CommFragment.this.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(true);
                 joinImageView.setImageResource(R.drawable.add);
-
                 LocalCache.refreshMyCommunities();
             }
 
@@ -255,7 +260,6 @@ public class CommFragment extends Fragment {
             }
         });
     }
-
     public void leaveCommunity(final CommunitiesWidgetChildVM communityVM, final ImageView joinImageView) {
         AppController.api.sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
@@ -263,7 +267,6 @@ public class CommFragment extends Fragment {
                 Toast.makeText(CommFragment.this.getActivity().getBaseContext(), CommFragment.this.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(false);
                 joinImageView.setImageResource(R.drawable.check);
-
                 LocalCache.refreshMyCommunities();
             }
 
@@ -274,6 +277,22 @@ public class CommFragment extends Fragment {
             }
         });
     }
-}
+    public void loadNextNewsfeed(Long id,String date,int offset)
+    {
+        System.out.println("id:::::"+id);
+        System.out.println("offset:::::"+offset);
+        AppController.api.getNextQuestions(id, date, AppController.getInstance().getSessionId(), offset, new Callback<List<CommunityPostVM>>() {
+            @Override
+            public void success(List<CommunityPostVM> communityPostVMs, Response response) {
+                feedItems.addAll(communityPostVMs);
+                feedListAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+}
 

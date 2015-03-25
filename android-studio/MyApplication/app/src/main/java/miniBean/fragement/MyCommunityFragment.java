@@ -22,12 +22,12 @@ public class MyCommunityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         View view = inflater.inflate(R.layout.mycomm_fragement, container, false);
 
         joined = (Button) view.findViewById(R.id.button1);
         newsfeed = (Button) view.findViewById(R.id.button2);
         progressbar = (ProgressBar) view.findViewById(R.id.progressComm);
+
         progressbar.setVisibility(View.VISIBLE);
 
         if (joinedPressed) {

@@ -29,13 +29,12 @@ import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
 public class PostActivity extends FragmentActivity {
-    ImageView backImage,image, editAction,postImage;
-    public Boolean isPhoto = false;
-    final Integer SELECT_PICTURE = 1;
-    TextView postTitle,postContent,post;
-    String selectedImagePath = null;
-    Uri selectedImageUri = null;
-    Long id;
+    private ImageView backImage,image, editAction,postImage;
+    private Boolean isPhoto = false;
+    private final Integer SELECT_PICTURE = 1;
+    private TextView postTitle,postContent,post;
+    private String selectedImagePath = null;
+    private Uri selectedImageUri = null;
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
@@ -61,8 +60,6 @@ public class PostActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.post_actionbar);
 
-
-        System.out.println("in postactivity");
         backImage= (ImageView) findViewById(R.id.backImage);
         post= (TextView) findViewById(R.id.titlePost);
         postImage= (ImageView) findViewById(R.id.browseImage);
@@ -70,8 +67,6 @@ public class PostActivity extends FragmentActivity {
         postTitle= (TextView) findViewById(R.id.postTitle);
         postContent= (TextView) findViewById(R.id.postContent);
 
-        //id=Long.parseLong(getIntent().getStringExtra("id"));
-        System.out.println("postactivity id::"+Long.parseLong(getIntent().getStringExtra("id")));
         backImage.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -120,13 +115,9 @@ public class PostActivity extends FragmentActivity {
 
                 if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(content)) {
                     doPost(title, content);
-                    //onBackPressed();
-
                 }
             }
         });
-
-
     }
 
     @Override
@@ -137,7 +128,6 @@ public class PostActivity extends FragmentActivity {
             selectedImageUri.getPath();
             image.setImageURI(selectedImageUri);
         }
-
     }
 
     public String getPath(Uri uri) {

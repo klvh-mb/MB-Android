@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -24,9 +25,10 @@ import retrofit.client.Response;
 
 public class MyProfileActivity extends FragmentActivity {
 
-    public List<NotificationVM> requestNotif, notifAll;
+    private List<NotificationVM> requestNotif, notifAll;
     private ImageView request, notification, settings,back;
-    Gson gson = new Gson();
+    private TextView requestCount,notificationCount;
+     Gson gson = new Gson();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +42,23 @@ public class MyProfileActivity extends FragmentActivity {
         notification = (ImageView) findViewById(R.id.moreAction);
         settings = (ImageView) findViewById(R.id.setting);
         back= (ImageView) findViewById(R.id.backAction);
+        requestCount= (TextView) findViewById(R.id.requestCount);
+        notificationCount= (TextView) findViewById(R.id.notificationCount);
 
         System.out.println("IN myprofile activity...");
 
-        AppController.api.getHeaderBaeData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
+        AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
             @Override
             public void success(HeaderDataVM headerDataVM, Response response) {
                 System.out.println("headerdata" + headerDataVM.getName());
+                System.out.println("notifi" + headerDataVM.getNotifyCounts());
+                System.out.println("request" + headerDataVM.getRequestCounts());
                 requestNotif = headerDataVM.getRequestNotif();
                 notifAll = headerDataVM.getAllNotif();
+
+                requestCount.setText(headerDataVM.getRequestCounts()+"");
+                notificationCount.setText(headerDataVM.getNotifyCounts()+"");
+
                 getHeaderBarData();
             }
 

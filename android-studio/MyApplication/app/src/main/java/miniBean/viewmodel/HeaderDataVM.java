@@ -4,8 +4,8 @@ import java.util.List;
 
 public class HeaderDataVM {
     public String name;
-    public Long notifyCounts;
-    public Long requestCounts;
+    public Long notifyCount;
+    public Long requestCount;
     public List<NotificationVM> allNotif;
     public List<NotificationVM> requestNotif;
 
@@ -19,19 +19,19 @@ public class HeaderDataVM {
     }
 
     public Long getNotifyCounts() {
-        return notifyCounts;
+        return notifyCount;
     }
 
     public void setNotifyCounts(Long notifyCounts) {
-        this.notifyCounts = notifyCounts;
+        this.notifyCount = notifyCounts;
     }
 
     public Long getRequestCounts() {
-        return requestCounts;
+        return requestCount;
     }
 
     public void setRequestCounts(Long requestCounts) {
-        this.requestCounts = requestCounts;
+        this.requestCount = requestCounts;
     }
 
     public List<NotificationVM> getAllNotif() {
