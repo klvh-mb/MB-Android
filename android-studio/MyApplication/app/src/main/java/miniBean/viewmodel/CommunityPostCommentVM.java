@@ -17,6 +17,9 @@ public class CommunityPostCommentVM {
     public boolean isLike = false;     // filled outside
     public boolean isPost;
 
+    // helper method
+    public boolean imageLoaded = false;
+
     public boolean isPost() {
         return isPost;
     }

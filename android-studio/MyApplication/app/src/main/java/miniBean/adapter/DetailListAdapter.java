@@ -24,10 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.FileNotFoundException;
@@ -236,59 +234,24 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         postTime.setText(activityUtil.getTimeAgo(item.getCd()));
 
         // profile pic
+        //Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
         ImageLoader.getInstance().displayImage(
                 activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(),
                 userPic,
                 AppController.ROUND_IMAGE_OPTIONS);
-        Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
 
         // images
         Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
         if(item.hasImage) {
-            for (Long imageId : item.getImgs()) {
-                String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
-                ImageView postImage = new ImageView(this.activity);
-                postImage.setAdjustViewBounds(true);
-                postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10));
-                postImagesLayout.addView(postImage);
-
-                //new LoadPostImage().execute(source, postImage);
-                AppController.getImageLoader().displayImage(source, postImage, new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        if (loadedImage != null) {
-                            Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "|" + loadedImage.getHeight());
-
-                            int width = loadedImage.getWidth();
-                            int height = loadedImage.getHeight();
-
-                            // always stretch to screen width
-                            int displayWidth = activityUtil.getDisplayDimensions().width();
-                            float scaleAspect = (float)displayWidth / (float)width;
-                            width = displayWidth;
-                            height = (int)(height * scaleAspect);
-
-                            Log.d(this.getClass().getSimpleName(), "onLoadingComplete: after shrink - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
-
-                            Drawable d = new BitmapDrawable(
-                                    DetailListAdapter.this.activity.getResources(),
-                                    Bitmap.createScaledBitmap(loadedImage, width, height, false));
-                            ((ImageView)view).setImageDrawable(d);
-                            ((ImageView)view).setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
+            if (!item.imageLoaded || postImagesLayout.getChildCount() == 0) {
+                loadImages(item.getImgs());
+                item.imageLoaded = true;
+            } else {
+                for(int i = 0; i < postImagesLayout.getChildCount(); ++i) {
+                    View childView = postImagesLayout.getChildAt(i);
+                    childView.setVisibility(View.VISIBLE);
+                    Log.d(this.getClass().getSimpleName(), "getView: resume all post images view - "+i);
+                }
             }
             postImagesLayout.setVisibility(View.VISIBLE);
         } else {
@@ -296,6 +259,55 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         }
 
         return convertView;
+    }
+
+    private void loadImages(Long[] imageIds) {
+        for (Long imageId : imageIds) {
+            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
+            ImageView postImage = new ImageView(this.activity);
+            postImage.setAdjustViewBounds(true);
+            postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10));
+            postImagesLayout.addView(postImage);
+
+            //new LoadPostImage().execute(source, postImage);   // obsolete
+            AppController.getImageLoader().displayImage(source, postImage, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    if (loadedImage != null) {
+                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "|" + loadedImage.getHeight());
+
+                        int width = loadedImage.getWidth();
+                        int height = loadedImage.getHeight();
+
+                        // always stretch to screen width
+                        int displayWidth = activityUtil.getDisplayDimensions().width();
+                        float scaleAspect = (float)displayWidth / (float)width;
+                        width = displayWidth;
+                        height = (int)(height * scaleAspect);
+
+                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: after shrink - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
+
+                        Drawable d = new BitmapDrawable(
+                                DetailListAdapter.this.activity.getResources(),
+                                Bitmap.createScaledBitmap(loadedImage, width, height, false));
+                        ImageView imageView = (ImageView)view;
+                        imageView.setImageDrawable(d);
+                        imageView.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        }
     }
 
     private void likeComment(Long id) {
