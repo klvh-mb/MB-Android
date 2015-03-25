@@ -83,11 +83,12 @@ public class RequestListAdapter extends BaseAdapter {
             acceptButton.setVisibility(View.VISIBLE);
             ignoreButton.setVisibility(View.VISIBLE);
         }
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
-                new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
-        ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(), userPhoto, options);
-        message.setText(item.getMsg());
 
+        ImageLoader.getInstance().displayImage(
+                activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(),
+                userPhoto,
+                AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
+        message.setText(item.getMsg());
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override

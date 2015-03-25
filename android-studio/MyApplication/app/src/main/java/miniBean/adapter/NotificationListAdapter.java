@@ -70,11 +70,13 @@ public class NotificationListAdapter extends BaseAdapter {
         message = (TextView) convertView.findViewById(R.id.notificationMessage);
         timeText = (TextView) convertView.findViewById(R.id.notificationTime);
         spinner = (ProgressBar) convertView.findViewById(R.id.imageLoader);
-
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
-                new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
-        ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(), userPhoto, options);
+
+        ImageLoader.getInstance().displayImage(
+                activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(),
+                userPhoto,
+                AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
+
         message.setText(item.getMsg());
 
         timeText.setText(activityUtil.getTimeAgo(new DateTime(Long.parseLong(item.getUpd())).getMillis()));

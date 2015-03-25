@@ -26,7 +26,9 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -95,174 +97,202 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null) {
+        if (convertView == null)
             convertView = inflater.inflate(R.layout.detail_item, null);
 
-            ownerName = (TextView) convertView.findViewById(R.id.postedBy);
-            postTime = (TextView) convertView.findViewById(R.id.postedOn);
-            commentText = (TextView) convertView.findViewById(R.id.commentText);
-            ImageView userPic = (ImageView) convertView.findViewById(R.id.questionnare_img);
-            like = (ImageView) convertView.findViewById(R.id.likeImage);
-            likeText = (TextView) convertView.findViewById(R.id.likeText);
-            deleteText = (TextView) convertView.findViewById(R.id.deleteText);
-            likeLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
-            totalLike = (TextView) convertView.findViewById(R.id.TotalLike);
-            indexComment = (TextView) convertView.findViewById(R.id.indexComment);
-            postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
-            postImages = new ArrayList<>();
+        ownerName = (TextView) convertView.findViewById(R.id.postedBy);
+        postTime = (TextView) convertView.findViewById(R.id.postedOn);
+        commentText = (TextView) convertView.findViewById(R.id.commentText);
+        ImageView userPic = (ImageView) convertView.findViewById(R.id.questionnare_img);
+        like = (ImageView) convertView.findViewById(R.id.likeImage);
+        likeText = (TextView) convertView.findViewById(R.id.likeText);
+        deleteText = (TextView) convertView.findViewById(R.id.deleteText);
+        likeLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
+        totalLike = (TextView) convertView.findViewById(R.id.TotalLike);
+        indexComment = (TextView) convertView.findViewById(R.id.indexComment);
+        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
+        postImages = new ArrayList<>();
 
-            final CommunityPostCommentVM item = postComments.get(position);
+        final CommunityPostCommentVM item = postComments.get(position);
 
-            // like
-            if (item.isLike()) {
-                like.setImageResource(R.drawable.liked);
-                likeText.setTextColor(activity.getResources().getColor(R.color.like_blue));
-            } else {
-                like.setImageResource(R.drawable.like);
-                likeText.setTextColor(activity.getResources().getColor(R.color.gray));
+        // like
+        if (item.isLike()) {
+            like.setImageResource(R.drawable.liked);
+            likeText.setTextColor(activity.getResources().getColor(R.color.like_blue));
+        } else {
+            like.setImageResource(R.drawable.like);
+            likeText.setTextColor(activity.getResources().getColor(R.color.gray));
+        }
+        if (item.getNol() >= 0) {
+            totalLike.setText(item.getNol()+"");
+        }
+
+        // delete
+        if (item.isO() || AppController.getUser().isAdmin()) {
+            if (item.isO()) {
+                deleteText.setTextColor(this.activity.getResources().getColor(R.color.like_blue));
+            } else if (AppController.getUser().isAdmin()) {
+                deleteText.setTextColor(this.activity.getResources().getColor(R.color.admin_green));
             }
-            if (item.getNol() >= 0) {
-                totalLike.setText(item.getNol() + "");
-            }
+            deleteText.setVisibility(View.VISIBLE);
 
-            // delete
-            if (item.isO() || AppController.getUser().isAdmin()) {
-                if (item.isO()) {
-                    deleteText.setTextColor(this.activity.getResources().getColor(R.color.like_blue));
-                } else if (AppController.getUser().isAdmin()) {
-                    deleteText.setTextColor(this.activity.getResources().getColor(R.color.admin_green));
+            final int pos = position;
+            deleteText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(inflater.getContext());
+                    alertDialogBuilder.setMessage(DetailListAdapter.this.activity.getString(R.string.post_delete_confirm));
+                    alertDialogBuilder.setPositiveButton(DetailListAdapter.this.activity.getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (item.isPost()) {
+                                deletePost(item.getId());
+                            } else {
+                                deleteComment(item.getId(), pos);
+                            }
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton(DetailListAdapter.this.activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 }
-                deleteText.setVisibility(View.VISIBLE);
+            });
+        } else {
+            deleteText.setVisibility(View.GONE);
+        }
 
-                final int pos = position;
-                deleteText.setOnClickListener(new View.OnClickListener() {
+        // index
+        if (item.isPost()) {
+            indexComment.setVisibility(View.INVISIBLE);
+        } else {
+            indexComment.setVisibility(View.VISIBLE);
+            if (page == 1) {
+                indexComment.setText("#"+position);
+            } else {
+                // offset from previous page
+                // position starts at 0, add 1
+                position = ((page - 1) * DefaultValues.DEFAULT_PAGINATION_COUNT) + position + 1;
+                indexComment.setText("#"+position);
+            }
+        }
+
+        likeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likeText = (TextView) v.findViewById(R.id.likeText);
+                like = (ImageView) v.findViewById(R.id.likeImage);
+                totalLike = (TextView) v.findViewById(R.id.TotalLike);
+
+                if (item.isLike()) {
+                    if (item.isPost()) {
+                        unLikePost(item.getId());
+                    } else {
+                        unLikeComment(item.getId());
+                    }
+                    likeText.setTextColor(activity.getResources().getColor(R.color.gray));
+                    like.setImageResource(R.drawable.like);
+                    int total = item.getNol() - 1;
+                    item.setNol(total);
+                    totalLike.setText(total+"");
+                    item.setLike(false);
+                } else {
+                    if (item.isPost()) {
+                        likePost(item.getId());
+                    } else {
+                        likeComment(item.getId());
+                    }
+                    likeText.setTextColor(activity.getResources().getColor(R.color.like_blue));
+                    like.setImageResource(R.drawable.liked);
+                    int total = item.getNol() + 1;
+                    item.setNol(total);
+                    totalLike.setText(total+"");
+                    item.setLike(true);
+                }
+            }
+        });
+
+        Spanned spanned = activityUtil.getDisplayTextFromHtml(item.getD(), this);
+        commentText.setText(spanned);
+        commentText.setMovementMethod(LinkMovementMethod.getInstance());
+
+        ownerName.setText(item.getOn());
+
+        ownerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity, ProfileActivity.class);
+                i.putExtra("oid", item.getOid());
+                i.putExtra("name", item.getOn());
+                System.out.println("owner"+item.getOid());
+                activity.startActivity(i);
+            }
+        });
+
+        postTime.setText(activityUtil.getTimeAgo(item.getCd()));
+
+        // profile pic
+        ImageLoader.getInstance().displayImage(
+                activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(),
+                userPic,
+                AppController.ROUND_IMAGE_OPTIONS);
+        Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
+
+        // images
+        Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
+        if(item.hasImage) {
+            for (Long imageId : item.getImgs()) {
+                String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
+                ImageView postImage = new ImageView(this.activity);
+                postImage.setAdjustViewBounds(true);
+                postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10));
+                postImagesLayout.addView(postImage);
+
+                //new LoadPostImage().execute(source, postImage);
+                AppController.getImageLoader().displayImage(source, postImage, new SimpleImageLoadingListener() {
                     @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(inflater.getContext());
-                        alertDialogBuilder.setMessage(DetailListAdapter.this.activity.getString(R.string.post_delete_confirm));
-                        alertDialogBuilder.setPositiveButton(DetailListAdapter.this.activity.getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (item.isPost()) {
-                                    deletePost(item.getId());
-                                } else {
-                                    deleteComment(item.getId(), pos);
-                                }
-                            }
-                        });
-                        alertDialogBuilder.setNegativeButton(DetailListAdapter.this.activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                    public void onLoadingStarted(String imageUri, View view) {
 
-                            }
-                        });
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        if (loadedImage != null) {
+                            Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "|" + loadedImage.getHeight());
+
+                            int width = loadedImage.getWidth();
+                            int height = loadedImage.getHeight();
+
+                            // always stretch to screen width
+                            int displayWidth = activityUtil.getDisplayDimensions().width();
+                            float scaleAspect = (float)displayWidth / (float)width;
+                            width = displayWidth;
+                            height = (int)(height * scaleAspect);
+
+                            Log.d(this.getClass().getSimpleName(), "onLoadingComplete: after shrink - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
+
+                            Drawable d = new BitmapDrawable(
+                                    DetailListAdapter.this.activity.getResources(),
+                                    Bitmap.createScaledBitmap(loadedImage, width, height, false));
+                            ((ImageView)view).setImageDrawable(d);
+                            ((ImageView)view).setVisibility(View.VISIBLE);
+                        }
                     }
                 });
-            } else {
-                deleteText.setVisibility(View.GONE);
             }
-
-            // index
-            if (item.isPost()) {
-                indexComment.setVisibility(View.INVISIBLE);
-            } else {
-                indexComment.setVisibility(View.VISIBLE);
-                if (page == 1) {
-                    indexComment.setText("#" + position);
-                } else {
-                    // offset from previous page
-                    // position starts at 0, add 1
-                    position = ((page - 1) * DefaultValues.DEFAULT_PAGINATION_COUNT) + position + 1;
-                    indexComment.setText("#" + position);
-                }
-            }
-
-            likeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    likeText = (TextView) v.findViewById(R.id.likeText);
-                    like = (ImageView) v.findViewById(R.id.likeImage);
-                    totalLike = (TextView) v.findViewById(R.id.TotalLike);
-
-                    if (item.isLike()) {
-                        if (item.isPost()) {
-                            unLikePost(item.getId());
-                        } else {
-                            unLikeComment(item.getId());
-                        }
-                        likeText.setTextColor(activity.getResources().getColor(R.color.gray));
-                        like.setImageResource(R.drawable.like);
-                        int total = item.getNol() - 1;
-                        item.setNol(total);
-                        totalLike.setText(total + "");
-                        item.setLike(false);
-                    } else {
-                        if (item.isPost()) {
-                            likePost(item.getId());
-                        } else {
-                            likeComment(item.getId());
-                        }
-                        likeText.setTextColor(activity.getResources().getColor(R.color.like_blue));
-                        like.setImageResource(R.drawable.liked);
-                        int total = item.getNol() + 1;
-                        item.setNol(total);
-                        totalLike.setText(total + "");
-                        item.setLike(true);
-                    }
-                }
-            });
-
-            Spanned spanned = activityUtil.getDisplayTextFromHtml(item.getD(), this);
-            commentText.setText(spanned);
-            commentText.setMovementMethod(LinkMovementMethod.getInstance());
-
-            ownerName.setText(item.getOn());
-
-            ownerName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(activity, ProfileActivity.class);
-                    i.putExtra("oid", item.getOid());
-                    i.putExtra("name", item.getOn());
-                    System.out.println("owner" + item.getOid());
-                    activity.startActivity(i);
-                }
-            });
-
-            postTime.setText(activityUtil.getTimeAgo(item.getCd()));
-
-            // profile pic
-            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
-                    new RoundedBitmapDisplayer(DefaultValues.IMAGE_CIRCLE_ROUNDED_VALUE)).build();
-            ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(), userPic, options);
-            Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - " + item.getOn() + "|" + activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
-
-            // icons
-
-
-            // images
-            Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - " + item.hasImage);
-            if (item.hasImage) {
-                System.out.println("size::::" + item.getImgs().length);
-                for (Long imageId : item.getImgs()) {
-                    System.out.println("in loop:::::::::::::");
-                    String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
-                    ImageView postImage = new ImageView(this.activity);
-                    postImage.setAdjustViewBounds(true);
-                    postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10));
-                    postImagesLayout.addView(postImage);
-                    new LoadPostImage().execute(source, postImage);
-                }
-                postImagesLayout.setVisibility(View.VISIBLE);
-            } else {
-                postImagesLayout.setVisibility(View.GONE);
-            }
-
-        }else{
-          return  convertView ;
+            postImagesLayout.setVisibility(View.VISIBLE);
+        } else {
+            postImagesLayout.setVisibility(View.GONE);
         }
 
         return convertView;
@@ -416,6 +446,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         }
     }
 
+    // Obsolete... use universal ImageLoader
     class LoadPostImage extends LoadImage {
 
         @Override

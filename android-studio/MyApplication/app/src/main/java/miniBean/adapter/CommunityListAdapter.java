@@ -74,9 +74,10 @@ public class CommunityListAdapter extends BaseAdapter {
             communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
             Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.gi);
-            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
-                    new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
-            ImageLoader.getInstance().displayImage(activity.getResources().getString(R.string.base_url) + item.gi, communityPic, options);
+            ImageLoader.getInstance().displayImage(
+                    activity.getResources().getString(R.string.base_url) + item.gi,
+                    communityPic,
+                    AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
         }
 
         return convertView;

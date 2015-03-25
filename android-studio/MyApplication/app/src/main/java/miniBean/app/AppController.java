@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import miniBean.R;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -61,6 +62,24 @@ public class AppController extends Application {
     private static ImageLoader mImageLoader;
     private static UserVM user;
 
+    public static DisplayImageOptions DEFAULT_IMAGE_OPTIONS =
+            new DisplayImageOptions.Builder().
+                    cacheInMemory(true).
+                    showImageOnLoading(R.drawable.image_loading).
+                    displayer(new RoundedBitmapDisplayer(0)).build();
+
+    public static DisplayImageOptions ROUNDED_CORNERS_IMAGE_OPTIONS =
+            new DisplayImageOptions.Builder().
+                    cacheInMemory(true).
+                    showImageOnLoading(R.drawable.image_loading).
+                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
+
+    public static DisplayImageOptions ROUND_IMAGE_OPTIONS =
+            new DisplayImageOptions.Builder().
+                    cacheInMemory(true).
+                    showImageOnLoading(R.drawable.image_loading).
+                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_ROUND_ROUNDED_VALUE)).build();
+
     private SharedPreferences session;
 
     public static synchronized AppController getInstance() {
@@ -88,9 +107,7 @@ public class AppController extends Application {
                 .setClient(new OkClient()).build();
         api = restAdapter.create(MyApi.class);
 
-        int rounded_value = 0;
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(new RoundedBitmapDisplayer(rounded_value)).build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(defaultOptions).build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(DEFAULT_IMAGE_OPTIONS).build();
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
         mImageLoader = ImageLoader.getInstance();
 

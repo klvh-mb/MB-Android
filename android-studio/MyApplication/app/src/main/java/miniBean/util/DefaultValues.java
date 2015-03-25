@@ -23,7 +23,7 @@ public class DefaultValues {
     public static int PAGINATION_POPUP_HEIGHT = 300;
 
     public static int IMAGE_CORNERS_ROUNDED_VALUE = 38;
-    public static int IMAGE_CIRCLE_ROUNDED_VALUE = 120;
+    public static int IMAGE_ROUND_ROUNDED_VALUE = 120;
 
     public static List<String> FILTER_MY_COMM_TYPE = Arrays.asList(
             new String[] {"BUSINESS"}

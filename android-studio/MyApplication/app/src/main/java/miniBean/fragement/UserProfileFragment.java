@@ -125,9 +125,10 @@ public class UserProfileFragment extends Fragment {
                     }
                 });
 
-                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
-                        new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
-                ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getArguments().getLong("oid"), userPic, options);
+                ImageLoader.getInstance().displayImage(
+                        getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getArguments().getLong("oid"),
+                        userPic,
+                        AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
             }
 
             @Override

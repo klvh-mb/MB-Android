@@ -230,9 +230,10 @@ public class DetailActivity extends FragmentActivity {
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
                     Log.d(this.getClass().getSimpleName(), "getQnaDetail: load comm icon from background - " + post.getCi());
-                    DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).displayer(
-                            new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
-                    ImageLoader.getInstance().displayImage(getResources().getString(R.string.base_url) + post.getCi(), communityIcon, options);
+                    ImageLoader.getInstance().displayImage(
+                            getResources().getString(R.string.base_url) + post.getCi(),
+                            communityIcon,
+                            AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
                 }
 
                 setPageButtons(curPage);
@@ -347,10 +348,10 @@ public class DetailActivity extends FragmentActivity {
         AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, Response response) {
-                if (isPhoto){
+                if (isPhoto) {
                     uploadPhoto(array.getId());
                 }else{
-                    getComments(getIntent().getLongExtra("postId", 0L),0);
+                    getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page
                 }
                 commentPopup.dismiss();
             }
@@ -369,8 +370,7 @@ public class DetailActivity extends FragmentActivity {
         AppController.api.uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
             @Override
             public void success(Response array, Response response) {
-                getComments(getIntent().getLongExtra("postId", 0L),0);
-                System.out.println("Response:::::::" + array);
+                getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page
             }
 
             @Override
@@ -541,7 +541,6 @@ public class DetailActivity extends FragmentActivity {
     }
 
     public void getComments(Long postID, final int offset) {
-        System.out.println("in getcomment");
         AppController.api.getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
@@ -551,10 +550,11 @@ public class DetailActivity extends FragmentActivity {
                 if (offset == 0)    // insert post itself for first page only
                     communityPostCommentVMs.add(postVm);
                 communityPostCommentVMs.addAll(commentVMs);
+
+                setPageButtons(offset + 1);     // set page before adapter as it takes in curPage
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityPostCommentVMs, curPage);
                 listView.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
-                setPageButtons(offset + 1);
             }
 
             @Override
