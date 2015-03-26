@@ -20,7 +20,7 @@ import java.util.List;
 import miniBean.Listener.InfiniteScrollListener;
 import miniBean.R;
 import miniBean.activity.DetailActivity;
-import miniBean.adapter.FeedListAdapter;
+import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
@@ -29,9 +29,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class NewsFeedFragement extends Fragment {
+public class NewsfeedListFragement extends Fragment {
 
-    private static final String TAG = NewsFeedFragement.class.getName();
+    private static final String TAG = NewsfeedListFragement.class.getName();
     private ListView listView;
     private BaseAdapter listAdapter;
     private List<CommunityPostVM> feedItems;
@@ -41,7 +41,7 @@ public class NewsFeedFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.newsfeed_fragment, container, false);
+        View view = inflater.inflate(R.layout.newsfeed_list_fragment, container, false);
 
         feedItems = new ArrayList<CommunityPostVM>();
 
@@ -87,7 +87,7 @@ public class NewsFeedFragement extends Fragment {
     }
 
     public BaseAdapter getAdapterByFlow(String flowName) {
-        return new FeedListAdapter(getActivity(), feedItems);
+        return new NewsfeedListAdapter(getActivity(), feedItems);
     }
 
     private void setFooterText(int text) {

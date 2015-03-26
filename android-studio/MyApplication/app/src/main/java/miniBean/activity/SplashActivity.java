@@ -51,7 +51,7 @@ public class SplashActivity extends Activity {
 
                             new Handler().postDelayed(new Runnable() {
                                 public void run() {
-                                    startActivity(new Intent(SplashActivity.this, ActivityMain.class));
+                                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                                     finish();
                                 }
                             }, DefaultValues.SPLASH_DISPLAY_MILLIS);
@@ -93,7 +93,7 @@ public class SplashActivity extends Activity {
         Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - "+array.size());
         LocalCache.clearCommunityCategoryMapList();
         LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(
-                AppController.getInstance().getString(R.string.my_community_tab)));
+                AppController.getInstance().getString(R.string.community_tab_my)));
         for (CommunityCategoryMapVM vm : array) {
             LocalCache.addCommunityCategoryMapToList(vm);
         }

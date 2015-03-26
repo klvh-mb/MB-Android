@@ -13,9 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.List;
 
@@ -23,19 +21,18 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.CommunityIconUtil;
-import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TopicAdapter extends BaseAdapter {
+public class TopicCommunityListAdapter extends BaseAdapter {
     ImageView imageAction;
     private Activity activity;
     private LayoutInflater inflater;
     private List<CommunitiesWidgetChildVM> communities;
 
-    public TopicAdapter(Activity activity, List<CommunitiesWidgetChildVM> communities) {
+    public TopicCommunityListAdapter(Activity activity, List<CommunitiesWidgetChildVM> communities) {
         this.activity = activity;
         this.communities = communities;
     }
@@ -63,7 +60,7 @@ public class TopicAdapter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.topic_item, null);
+            convertView = inflater.inflate(R.layout.topic_community_list_item, null);
 
         TextView commName = (TextView) convertView.findViewById(R.id.commName);
         TextView noMembers = (TextView) convertView.findViewById(R.id.noMember);
@@ -101,15 +98,15 @@ public class TopicAdapter extends BaseAdapter {
                     joinCommunity(item, joinImageView);
                 } else {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(inflater.getContext());
-                    alertDialogBuilder.setMessage(TopicAdapter.this.activity.getString(R.string.community_leave_confirm));
-                    alertDialogBuilder.setPositiveButton(TopicAdapter.this.activity.getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setMessage(TopicCommunityListAdapter.this.activity.getString(R.string.community_leave_confirm));
+                    alertDialogBuilder.setPositiveButton(TopicCommunityListAdapter.this.activity.getString(R.string.confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ImageView leaveImageView = (ImageView) v.findViewById(R.id.mem_join);
                             leaveCommunity(item, leaveImageView);
                         }
                     });
-                    alertDialogBuilder.setNegativeButton(TopicAdapter.this.activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setNegativeButton(TopicCommunityListAdapter.this.activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -128,7 +125,7 @@ public class TopicAdapter extends BaseAdapter {
         AppController.api.sendJoinRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                Toast.makeText(inflater.getContext(), TopicAdapter.this.activity.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(inflater.getContext(), TopicCommunityListAdapter.this.activity.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(true);
                 joinImageView.setImageResource(R.drawable.add);
 
@@ -137,7 +134,7 @@ public class TopicAdapter extends BaseAdapter {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                Toast.makeText(inflater.getContext(), TopicAdapter.this.activity.getString(R.string.community_join_failed), Toast.LENGTH_SHORT).show();
+                Toast.makeText(inflater.getContext(), TopicCommunityListAdapter.this.activity.getString(R.string.community_join_failed), Toast.LENGTH_SHORT).show();
                 retrofitError.printStackTrace();
             }
         });
@@ -147,7 +144,7 @@ public class TopicAdapter extends BaseAdapter {
         AppController.api.sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                Toast.makeText(inflater.getContext(), TopicAdapter.this.activity.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(inflater.getContext(), TopicCommunityListAdapter.this.activity.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(false);
                 joinImageView.setImageResource(R.drawable.check);
 
@@ -156,7 +153,7 @@ public class TopicAdapter extends BaseAdapter {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                Toast.makeText(inflater.getContext(), TopicAdapter.this.activity.getString(R.string.community_leave_failed), Toast.LENGTH_SHORT).show();
+                Toast.makeText(inflater.getContext(), TopicCommunityListAdapter.this.activity.getString(R.string.community_leave_failed), Toast.LENGTH_SHORT).show();
                 retrofitError.printStackTrace();
             }
         });

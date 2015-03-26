@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import miniBean.fragement.NewsFeedFragement;
+import miniBean.fragement.NewsfeedListFragement;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
@@ -18,7 +18,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
         switch (index) {
             case 0:
                 // Top Rated fragment activity
-                return new NewsFeedFragement();
+                return new NewsfeedListFragement();
         }
 
         return null;

@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import miniBean.fragement.CommunityFragment;
+import miniBean.fragement.CommunityListFragment;
 import miniBean.fragement.TopicFragment;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
@@ -19,7 +19,7 @@ public class LocalCache {
     private static CommunitiesParentVM myCommunitiesParentVM;
     private static boolean dirty = false;
 
-    private static CommunityFragment myCommunityFragment;
+    private static CommunityListFragment myCommunityFragment;
     private static List<TopicFragment> topicCommunityFragments = new ArrayList<>();
 
     public static boolean isDirty() {
@@ -57,7 +57,7 @@ public class LocalCache {
         dirty = false;
     }
 
-    public static void setMyCommunityFragment(CommunityFragment fragment) {
+    public static void setMyCommunityFragment(CommunityListFragment fragment) {
         LocalCache.myCommunityFragment = fragment;
     }
 

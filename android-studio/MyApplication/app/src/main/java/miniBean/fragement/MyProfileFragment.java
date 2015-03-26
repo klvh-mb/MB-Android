@@ -17,7 +17,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.ActivityMain;
+import miniBean.activity.MainActivity;
 import miniBean.app.AppController;
 import miniBean.viewmodel.HeaderDataVM;
 import miniBean.viewmodel.NotificationVM;
@@ -36,7 +36,7 @@ public class MyProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.myprofile_fragement, container, false);
+        View view = inflater.inflate(R.layout.my_profile_fragement, container, false);
 
         setHasOptionsMenu(true);
 
@@ -50,11 +50,11 @@ public class MyProfileFragment extends Fragment {
 
         back = (ImageView) actionBarView.findViewById(R.id.backAction);
         back.setVisibility(View.INVISIBLE);
-        ((ActivityMain) getActivity()).getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        ((MainActivity) getActivity()).getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
 
-        ((ActivityMain) getActivity()).getActionBar().setCustomView(actionBarView, lp);
+        ((MainActivity) getActivity()).getActionBar().setCustomView(actionBarView, lp);
 
         AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
             @Override
@@ -89,7 +89,7 @@ public class MyProfileFragment extends Fragment {
                 back.setVisibility(View.INVISIBLE);
                 setting.setVisibility(View.INVISIBLE);
                 ((TextView) actionBarView.findViewById(R.id.titleAction)).setText("Request");
-                Fragment requestFragment = new RequestFragment();
+                Fragment requestFragment = new RequestListFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("requestNotif", gson.toJson(requestNotif));
                 requestFragment.setArguments(bundle);
@@ -104,7 +104,7 @@ public class MyProfileFragment extends Fragment {
                 back.setVisibility(View.INVISIBLE);
                 setting.setVisibility(View.INVISIBLE);
                 ((TextView) actionBarView.findViewById(R.id.titleAction)).setText("Notification");
-                Fragment notificactionFragment = new NotificationFragment();
+                Fragment notificactionFragment = new NotificationListFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("notifAll", gson.toJson(notifAll));
                 notificactionFragment.setArguments(bundle);

@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.ProfileActivity;
+import miniBean.activity.UserProfileActivity;
 import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
@@ -96,7 +96,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.detail_item, null);
+            convertView = inflater.inflate(R.layout.detail_list_item, null);
 
         ownerName = (TextView) convertView.findViewById(R.id.postedBy);
         postTime = (TextView) convertView.findViewById(R.id.postedOn);
@@ -223,7 +223,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         ownerName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, ProfileActivity.class);
+                Intent i = new Intent(activity, UserProfileActivity.class);
                 i.putExtra("oid", item.getOid());
                 i.putExtra("name", item.getOn());
                 System.out.println("owner"+item.getOid());
@@ -241,7 +241,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                 AppController.ROUND_IMAGE_OPTIONS);
 
         // images
-        Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
+        Log.d(this.getClass().getSimpleName(), "getView: new_post/comment hasImage - "+item.hasImage);
         if(item.hasImage) {
             if (!item.imageLoaded || postImagesLayout.getChildCount() == 0) {
                 loadImages(item.getImgs());
@@ -250,7 +250,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                 for(int i = 0; i < postImagesLayout.getChildCount(); ++i) {
                     View childView = postImagesLayout.getChildAt(i);
                     childView.setVisibility(View.VISIBLE);
-                    Log.d(this.getClass().getSimpleName(), "getView: resume all post images view - "+i);
+                    Log.d(this.getClass().getSimpleName(), "getView: resume all new_post images view - "+i);
                 }
             }
             postImagesLayout.setVisibility(View.VISIBLE);
@@ -263,7 +263,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     private void loadImages(Long[] imageIds) {
         for (Long imageId : imageIds) {
-            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
+            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-new_post-image-by-id/" + imageId;
             ImageView postImage = new ImageView(this.activity);
             postImage.setAdjustViewBounds(true);
             postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);

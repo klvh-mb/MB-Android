@@ -33,7 +33,7 @@ public class MyProfileActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.myprofile_fragement);
+        setContentView(R.layout.my_profile_fragement);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.profile_actionbar);

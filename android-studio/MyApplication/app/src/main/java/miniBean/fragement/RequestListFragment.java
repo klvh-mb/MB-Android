@@ -22,14 +22,14 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
-import miniBean.activity.ProfileActivity;
+import miniBean.activity.UserProfileActivity;
 import miniBean.adapter.RequestListAdapter;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
 
-public class RequestFragment extends Fragment {
+public class RequestListFragment extends Fragment {
 
-    private static final String TAG = RequestFragment.class.getName();
+    private static final String TAG = RequestListFragment.class.getName();
     RequestListAdapter adapter;
     private ListView listView;
     private List<NotificationVM> requestItems;
@@ -67,8 +67,6 @@ public class RequestFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                NotificationVM item = (NotificationVM)adapter.getItem(position);
-                //Intent intent = new Intent(getActivity(), CommunityActivity.class);
-                //startActivity(intent);
 
                if(item.getTp()=="COMM_JOIN_APPROVED") {
                     System.out.println("::::::comm");
@@ -78,7 +76,7 @@ public class RequestFragment extends Fragment {
                }
                 if(item.getTp()=="FRD_REQUEST"){
                     System.out.println("::::::frnd");
-                   Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                   Intent intent = new Intent(getActivity(), UserProfileActivity.class);
                    startActivity(intent);
 
                }

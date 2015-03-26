@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 import miniBean.R;
-import miniBean.fragement.NewsFeedFragement;
+import miniBean.fragement.NewsfeedListFragement;
 
 public class NewsfeedActivity extends FragmentActivity {
 
@@ -22,7 +22,7 @@ public class NewsfeedActivity extends FragmentActivity {
         bundle.putString("id",id);
         System.out.println("newsfeed::"+getIntent().getStringExtra("id"));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        NewsFeedFragement newsfeedFragment = new NewsFeedFragement();
+        NewsfeedListFragement newsfeedFragment = new NewsfeedListFragement();
         newsfeedFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.placeHolders, newsfeedFragment).commit();
     }

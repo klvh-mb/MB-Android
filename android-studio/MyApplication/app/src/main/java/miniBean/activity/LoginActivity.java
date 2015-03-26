@@ -118,7 +118,7 @@ public class LoginActivity extends Activity {
         });
 
         /*
-         * Login mycomm_fragement Click event
+         * Login my_community_fragement Click event
 		 * */
         btnFbLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,7 +238,7 @@ public class LoginActivity extends Activity {
                     public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
                         SplashActivity.init(array);
 
-                        Intent i = new Intent(LoginActivity.this, ActivityMain.class);
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(i);
                         finish();
                     }

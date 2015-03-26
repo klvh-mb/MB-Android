@@ -20,7 +20,7 @@ public class CommunityActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.comm_activity);
+        setContentView(R.layout.community_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.community_actionbar);
@@ -70,7 +70,7 @@ public class CommunityActivity extends FragmentActivity {
                 fragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.children_layout, fragment).commit();*/
 
-                Intent intent=new Intent(CommunityActivity.this,PostActivity.class);
+                Intent intent=new Intent(CommunityActivity.this,NewPostActivity.class);
                 intent.putExtra("id",getIntent().getStringExtra("id"));
                 intent.putExtra("commName", getIntent().getStringExtra("commName"));
                 startActivity(intent);

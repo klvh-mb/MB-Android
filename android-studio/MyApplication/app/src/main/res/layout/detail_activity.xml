@@ -52,7 +52,7 @@
                     android:layout_height="fill_parent"
                     android:layout_alignParentLeft="false"
                     android:layout_marginLeft="3dp"
-                    android:text="@string/my_community_tab"
+                    android:text="@string/tabset_communities"
                     android:textColor="#FF6795"
                     android:textSize="15dp"
                     android:layout_centerVertical="true"

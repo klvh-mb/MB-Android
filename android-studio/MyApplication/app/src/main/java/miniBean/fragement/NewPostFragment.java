@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +31,11 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
-public class PostFragment extends Fragment {
+public class NewPostFragment extends Fragment {
 
     String selectedImagePath = null;
     Uri selectedImageUri = null;
-    private static final String TAG = PostFragment.class.getName();
+    private static final String TAG = NewPostFragment.class.getName();
     View actionBarView;
     final Integer SELECT_PICTURE = 1;
     TextView postTitle,postContent,post;
@@ -60,13 +59,13 @@ public class PostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.post, container, false);
+        View view = inflater.inflate(R.layout.new_post, container, false);
 
         /*getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActivity().getActionBar().setCustomView(R.layout.post_actionbar);
+        getActivity().getActionBar().setCustomView(R.layout.new_post_actionbar);
         */
 
-        actionBarView = inflater.inflate(R.layout.post_actionbar, null);
+        actionBarView = inflater.inflate(R.layout.new_post_actionbar, null);
         //((CommunityActivity)getActivity()).getActionBar().setCustomView(ActionBar.DISPLAY_SHOW_CUSTOM);
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         ((CommunityActivity) getActivity()).getActionBar().setCustomView(actionBarView, lp);
@@ -86,7 +85,7 @@ public class PostFragment extends Fragment {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                PostFragment.this.getActivity().onBackPressed();
+                                NewPostFragment.this.getActivity().onBackPressed();
                                 /*
                                 Intent intent=new Intent(getActivity(),CommunityActivity.class);
                                 intent.putExtra("id",getArguments().getString("id"));

@@ -26,9 +26,9 @@ import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
-public class CommunityFragment extends Fragment {
+public class CommunityListFragment extends Fragment {
 
-    private static final String TAG = CommunityFragment.class.getName();
+    private static final String TAG = CommunityListFragment.class.getName();
     ProgressBar progressBarComm;
     private ListView listView;
     private CommunityListAdapter listAdapter;
@@ -38,7 +38,7 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.community_list_view, container, false);
+        View view = inflater.inflate(R.layout.community_list_fragment, container, false);
 
         listView = (ListView) view.findViewById(R.id.listComm);
 

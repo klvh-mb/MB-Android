@@ -13,17 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.lang.reflect.Field;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.util.DefaultValues;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -63,7 +60,7 @@ public class UserProfileFragment extends Fragment {
                 Bundle bundle=new Bundle();
                 bundle.putLong("id",getArguments().getLong("oid"));
                 bundle.putString("key","userquestion");
-                NewsFeedFragement fragment = new NewsFeedFragement();
+                NewsfeedListFragement fragment = new NewsfeedListFragement();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -83,7 +80,7 @@ public class UserProfileFragment extends Fragment {
                 Bundle bundle=new Bundle();
                 bundle.putLong("id",getArguments().getLong("oid"));
                 bundle.putString("key","useranswer");
-                NewsFeedFragement fragment = new NewsFeedFragement();
+                NewsfeedListFragement fragment = new NewsfeedListFragement();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -11,15 +11,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -64,7 +61,7 @@ public class RequestListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.request_item, null);
+            convertView = inflater.inflate(R.layout.request_list_item, null);
 
 
         final NotificationVM item = requestItems.get(position);

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import miniBean.R;
 import miniBean.fragement.UserProfileFragment;
 
-public class ProfileActivity extends FragmentActivity {
+public class UserProfileActivity extends FragmentActivity {
 
     private ImageView request,notification,settings;
 
@@ -18,7 +18,7 @@ public class ProfileActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.friend_profile_view);
+        setContentView(R.layout.user_profile_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.profile_actionbar);

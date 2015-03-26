@@ -10,9 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import org.joda.time.DateTime;
 
@@ -21,7 +19,6 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
-import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
 
 public class NotificationListAdapter extends BaseAdapter {
@@ -62,7 +59,7 @@ public class NotificationListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.notification_item, null);
+            convertView = inflater.inflate(R.layout.notification_list_item, null);
 
         final NotificationVM item = notificationItems.get(position);
 

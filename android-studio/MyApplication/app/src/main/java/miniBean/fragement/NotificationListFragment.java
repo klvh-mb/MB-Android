@@ -24,9 +24,9 @@ import miniBean.adapter.NotificationListAdapter;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
 
-public class NotificationFragment extends Fragment {
+public class NotificationListFragment extends Fragment {
 
-    private static final String TAG = NotificationFragment.class.getName();
+    private static final String TAG = NotificationListFragment.class.getName();
     NotificationListAdapter adapter;
     private ListView listView;
     private List<NotificationVM> notificationItems;

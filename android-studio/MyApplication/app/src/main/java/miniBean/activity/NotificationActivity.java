@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import miniBean.R;
 import miniBean.fragement.LogoutFragment;
-import miniBean.fragement.NotificationFragment;
-import miniBean.fragement.RequestFragment;
+import miniBean.fragement.NotificationListFragment;
+import miniBean.fragement.RequestListFragment;
 
 public class NotificationActivity extends FragmentActivity {
 
@@ -34,7 +34,7 @@ public class NotificationActivity extends FragmentActivity {
 
                 if(getIntent().getStringExtra("key").equals("request")) {
                     titleText.setText("Request");
-                    Fragment requestFragment = new RequestFragment();
+                    Fragment requestFragment = new RequestListFragment();
                     Bundle bundle1 = new Bundle();
                     String jstring=getIntent().getStringExtra("requestNotif");
                     bundle1.putString("requestNotif", getIntent().getStringExtra("requestNotif"));
@@ -44,7 +44,7 @@ public class NotificationActivity extends FragmentActivity {
                 }else if(getIntent().getStringExtra("key").equals("notification"))
                 {
                     titleText.setText("Notification");
-                    Fragment notificationFragment = new NotificationFragment();
+                    Fragment notificationFragment = new NotificationListFragment();
                     Bundle bundle1 = new Bundle();
                     String jstring=getIntent().getStringExtra("notifAll");
                     bundle1.putString("notifAll",getIntent().getStringExtra("notifAll"));

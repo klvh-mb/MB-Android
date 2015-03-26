@@ -33,9 +33,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -547,7 +545,7 @@ public class DetailActivity extends FragmentActivity {
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {
                 communityItems.clear();
                 List<CommunityPostCommentVM> communityPostCommentVMs = new ArrayList<CommunityPostCommentVM>();
-                if (offset == 0)    // insert post itself for first page only
+                if (offset == 0)    // insert new_post itself for first page only
                     communityPostCommentVMs.add(postVm);
                 communityPostCommentVMs.addAll(commentVMs);
 

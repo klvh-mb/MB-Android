@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.TextView;
 
 import miniBean.R;
-import miniBean.fragement.NewsFeedFragement;
+import miniBean.fragement.NewsfeedListFragement;
 
 public class MyNewsfeedActivity extends FragmentActivity {
 
@@ -43,7 +43,7 @@ public class MyNewsfeedActivity extends FragmentActivity {
         bundle.putString("key",key);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        NewsFeedFragement newsfeedFragment = new NewsFeedFragement();
+        NewsfeedListFragement newsfeedFragment = new NewsfeedListFragement();
         newsfeedFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.placeHolders, newsfeedFragment).commit();
     }

@@ -39,7 +39,7 @@
                 android:paddingRight="25dp" />
 
             <Button
-                android:id="@+id/articles"
+                android:id="@+id/schools"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight=".34"

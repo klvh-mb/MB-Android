@@ -18,31 +18,32 @@
             android:background="@drawable/button_round">
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/buttonNewsfeed"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:text="@string/community_tab_my_newsfeed"
+                android:textColor="@color/actionbar_selected_text"
+                android:elegantTextHeight="false" />
+
+            <Button
+                android:id="@+id/buttonJoined"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="2dp"
-                android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
-                android:background="#ffffff"
-                android:text="@string/my_community_tab_joined"
-                android:textColor="@color/actionbar_selected_text" />
+                android:background="@color/actionbar_selected_text"
+                android:text="@string/community_tab_my_joined"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/buttonNewsfeed"
+                android:layout_marginRight="2dp" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_toRightOf="@+id/button1"
-                android:background="@color/actionbar_bg_light"
-                android:text="@string/my_community_tab_newsfeed"
-                android:textColor="#FFFFFF" />
         </RelativeLayout>
-        '
+
     </RelativeLayout>
 
     <RelativeLayout

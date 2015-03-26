@@ -28,8 +28,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
-public class PostActivity extends FragmentActivity {
-    private ImageView backImage,image, editAction,postImage;
+public class NewPostActivity extends FragmentActivity {
+    private ImageView backImage, image, postImage;
     private Boolean isPhoto = false;
     private final Integer SELECT_PICTURE = 1;
     private TextView postTitle,postContent,post;
@@ -55,10 +55,10 @@ public class PostActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.post);
+        setContentView(R.layout.new_post);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.post_actionbar);
+        getActionBar().setCustomView(R.layout.new_post_actionbar);
 
         backImage= (ImageView) findViewById(R.id.backImage);
         post= (TextView) findViewById(R.id.titlePost);
@@ -71,7 +71,7 @@ public class PostActivity extends FragmentActivity {
 
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(PostActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(NewPostActivity.this);
                 builder.setMessage("Do you Want Leave The Post Window..?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -148,7 +148,7 @@ public class PostActivity extends FragmentActivity {
                     uploadPhoto(postResponse.getId());
                 }
                 onBackPressed();
-                Toast.makeText(PostActivity.this, "Post Successful...!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewPostActivity.this, "Post Successful...!!!", Toast.LENGTH_SHORT).show();
               /*  Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
                 intent.putExtra("id",getIntent().getLongExtra("id",0l));
                 intent.putExtra("commName",getIntent().getStringExtra("commName"));
@@ -159,7 +159,7 @@ public class PostActivity extends FragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(PostActivity.this, "Post Failure...!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewPostActivity.this, "Post Failure...!!!", Toast.LENGTH_SHORT).show();
 
                 error.printStackTrace();
             }
@@ -167,7 +167,7 @@ public class PostActivity extends FragmentActivity {
     }
 
     public void uploadPhoto(String postId) {
-        File photo = new File(getRealPathFromUri(PostActivity.this, selectedImageUri));
+        File photo = new File(getRealPathFromUri(NewPostActivity.this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.api.uploadPostPhoto(postId, typedFile, new Callback<Response>() {
             @Override

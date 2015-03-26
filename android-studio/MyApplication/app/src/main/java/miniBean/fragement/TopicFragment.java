@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
-import miniBean.adapter.TopicAdapter;
+import miniBean.adapter.TopicCommunityListAdapter;
 import miniBean.app.LocalCache;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
@@ -23,14 +22,14 @@ import miniBean.viewmodel.CommunitiesWidgetChildVM;
 public class TopicFragment extends Fragment {
 
     public ListView listView;
-    public TopicAdapter topicAdapter;
+    public TopicCommunityListAdapter topicAdapter;
     public List<CommunitiesWidgetChildVM> communities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.topic_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.topic_community_fragment, container, false);
 
         listView = (ListView) rootView.findViewById(R.id.listTopic);
 
@@ -38,7 +37,7 @@ public class TopicFragment extends Fragment {
         listView.addHeaderView(new View(getActivity().getBaseContext()), null, true);
         listView.addFooterView(new View(getActivity().getBaseContext()), null, true);
 
-        topicAdapter = new TopicAdapter(getActivity(), this.communities);
+        topicAdapter = new TopicCommunityListAdapter(getActivity(), this.communities);
         listView.setAdapter(topicAdapter);
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);

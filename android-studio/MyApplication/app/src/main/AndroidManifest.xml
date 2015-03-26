@@ -41,10 +41,10 @@
             android:name=".activity.CommunityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ActivityMain"
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ProfileActivity"
+            android:name=".activity.UserProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NewsfeedActivity"
@@ -57,7 +57,7 @@
             android:name=".activity.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PostActivity"
+            android:name=".activity.NewPostActivity"
             android:screenOrientation="portrait" />
 
         <activity

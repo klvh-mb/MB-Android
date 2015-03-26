@@ -18,10 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
@@ -30,7 +27,7 @@ import java.util.List;
 import miniBean.Listener.InfiniteScrollListener;
 import miniBean.R;
 import miniBean.activity.DetailActivity;
-import miniBean.adapter.FeedListAdapter;
+import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.CommunityIconUtil;
@@ -48,7 +45,7 @@ public class CommFragment extends Fragment {
 
     private TextView numMemberText, commNameText;
     private ListView listView;
-    private FeedListAdapter feedListAdapter;
+    private NewsfeedListAdapter feedListAdapter;
     private List<CommunityPostVM> feedItems;
     private ProgressBar spinner, progressBar;
     private ImageView joinImageView;
@@ -62,7 +59,7 @@ public class CommFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        view = inflater.inflate(R.layout.community_activity, container, false);
+        view = inflater.inflate(R.layout.community_fragment, container, false);
 
         communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
         communityIcon = (ImageView) view.findViewById(R.id.commIcon);
@@ -71,7 +68,7 @@ public class CommFragment extends Fragment {
         joinImageView = (ImageView) view.findViewById(R.id.join_community);
 
         feedItems = new ArrayList<CommunityPostVM>();
-        feedListAdapter = new FeedListAdapter(getActivity(), feedItems, false);
+        feedListAdapter = new NewsfeedListAdapter(getActivity(), feedItems, false);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
         listView.setAdapter(feedListAdapter);
 

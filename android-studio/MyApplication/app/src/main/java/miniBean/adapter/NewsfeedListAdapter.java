@@ -13,9 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.List;
 
@@ -26,7 +24,7 @@ import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
 
-public class FeedListAdapter extends BaseAdapter {
+public class NewsfeedListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private LinearLayout iconsLayout;
@@ -36,11 +34,11 @@ public class FeedListAdapter extends BaseAdapter {
 
     private ActivityUtil activityUtil;
 
-    public FeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
+    public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this(activity, feedItems, true);
     }
 
-    public FeedListAdapter(Activity activity, List<CommunityPostVM> feedItems, boolean isNewsfeed) {
+    public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems, boolean isNewsfeed) {
         this.activity = activity;
         this.feedItems = feedItems;
         this.isNewsfeed = isNewsfeed;
@@ -68,7 +66,7 @@ public class FeedListAdapter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.newsfeed_item, null);
+            convertView = inflater.inflate(R.layout.newsfeed_list_item, null);
 
         TextView name = (TextView) convertView.findViewById(R.id.postTitle);
         TextView username = (TextView) convertView.findViewById(R.id.username);

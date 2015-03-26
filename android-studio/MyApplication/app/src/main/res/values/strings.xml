@@ -27,6 +27,11 @@
     <string name="tabset_profile">我</string>
 
     <!-- Community tab -->
+    <string name="community_tab_my">我的社群</string>
+    <string name="community_tab_topic">主題社群</string>
+    <string name="community_tab_year">年份社群</string>
+    <string name="community_tab_my_joined">已加入</string>
+    <string name="community_tab_my_newsfeed">社群動向</string>
     <string name="community_leave_confirm">確定退出社群?</string>
     <string name="community_join_success">成功加入社群。話題會顯示到 社群動向</string>
     <string name="community_join_failed">暫時不能加入社群，請稍後重試</string>
@@ -42,9 +47,6 @@
     <string name="post_actionbar_title">話題詳情</string>
     <string name="post_comment_bar_hint">回覆話題</string>
     <string name="from_community">社群:</string>
-    <string name="my_community_tab">我的社群</string>
-    <string name="my_community_tab_joined">已加入</string>
-    <string name="my_community_tab_newsfeed">社群動向</string>
     <string name="new_post_actionbar_title">新話題</string>
     <string name="new_post">發出</string>
     <string name="new_post_title">問題 / 分享⋯⋯</string>
