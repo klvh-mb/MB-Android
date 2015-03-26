@@ -136,7 +136,17 @@
             android:textColor="#ffffff"
             android:textSize="14dp"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/mainComponent"/>
+            android:layout_below="@+id/mainComponent"
+             android:id="@+id/textView" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_below="@+id/mainComponent"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
     <RelativeLayout

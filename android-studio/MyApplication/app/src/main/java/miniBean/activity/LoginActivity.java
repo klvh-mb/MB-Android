@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.android.DialogError;
@@ -51,7 +52,7 @@ public class LoginActivity extends Activity {
 
     // Instance of Facebook Class
     private Facebook facebook = new Facebook(APP_ID);
-
+    private ProgressBar progressBar;
     public SharedPreferences session = null;
     private EditText username = null;
     private EditText password = null;
@@ -71,7 +72,8 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
 
         session = getSharedPreferences("prefs", 0);
-
+        progressBar= (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
         activityUtil = new ActivityUtil(this);
 
         APP_ID = getResources().getString(R.string.app_id);
@@ -82,10 +84,12 @@ public class LoginActivity extends Activity {
         login = (TextView) findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
                 AppController.api.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
                         if (saveToSession(response)) {
+                            progressBar.setVisibility(View.INVISIBLE);
                             /*
                             Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

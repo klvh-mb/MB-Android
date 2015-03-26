@@ -9,6 +9,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +23,6 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
-import miniBean.activity.UserProfileActivity;
 import miniBean.adapter.RequestListAdapter;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
@@ -33,7 +33,7 @@ public class RequestListFragment extends Fragment {
     RequestListAdapter adapter;
     private ListView listView;
     private List<NotificationVM> requestItems;
-
+    private TextView tipText;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -42,7 +42,7 @@ public class RequestListFragment extends Fragment {
         requestItems = new ArrayList<NotificationVM>();
 
         listView = (ListView) view.findViewById(R.id.listRequest);
-
+        tipText= (TextView) view.findViewById(R.id.tipText);
         String notif = getArguments().getString("requestNotif");
         Gson gson = new GsonBuilder().create();
         List<NotificationVM> notificationVMs = new ArrayList<>();
@@ -57,27 +57,37 @@ public class RequestListFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        adapter = new RequestListAdapter(getActivity(), notificationVMs);
-        listView.setAdapter(adapter);
+        System.out.println("reque size::"+notificationVMs.size());
+        if(notificationVMs.size()==0){
+            tipText.setVisibility(View.VISIBLE);
+        }else {
+            adapter = new RequestListAdapter(getActivity(), notificationVMs);
+            listView.setAdapter(adapter);
+        }
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                NotificationVM item = (NotificationVM)adapter.getItem(position);
 
-               if(item.getTp()=="COMM_JOIN_APPROVED") {
+
+               if(item.getTp().equals("COMM_JOIN_APPROVED")) {
                    Intent intent = new Intent(getActivity(), CommunityActivity.class);
-                   intent.putExtra("id",item.getId());
+                   intent.putExtra("id",item.getUrl().getTarget().toString());
+                   intent.putExtra("flag","FromRequest");
                    startActivity(intent);
                }
-                if(item.getTp()=="FRD_REQUEST"){
+               /* if(item.getTp().equals("FRD_REQUEST")){
+                    System.out.println("::::::frnd");
                    Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-                    intent.putExtra("id",item.getId());
-                   startActivity(intent);
-               }
+                    intent.putExtra("id",item.getUrl().getTarget().toString());
+                    startActivity(intent);
+
+
+               }*/
             }
         });
         return view;

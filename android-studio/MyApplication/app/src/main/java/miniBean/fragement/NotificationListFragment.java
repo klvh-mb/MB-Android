@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,7 +31,7 @@ public class NotificationListFragment extends Fragment {
     NotificationListAdapter adapter;
     private ListView listView;
     private List<NotificationVM> notificationItems;
-
+    private TextView tipText;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -38,6 +39,7 @@ public class NotificationListFragment extends Fragment {
         View view = inflater.inflate(R.layout.notification_list_fragment, container, false);
 
         notificationItems = new ArrayList<NotificationVM>();
+        tipText= (TextView) view.findViewById(R.id.tipText);
 
         String notif = getArguments().getString("notifAll");
         Gson gson = new GsonBuilder().create();
@@ -55,8 +57,14 @@ public class NotificationListFragment extends Fragment {
         }
 
         listView = (ListView) view.findViewById(R.id.listNotification);
-        adapter = new NotificationListAdapter(getActivity(), notificationVMs);
-        listView.setAdapter(adapter);
+        System.out.println("noti size::"+notificationVMs.size());
+        if(notificationVMs.size()==0){
+            tipText.setVisibility(View.VISIBLE);
+        }else {
+            adapter = new NotificationListAdapter(getActivity(), notificationVMs);
+            listView.setAdapter(adapter);
+        }
+
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
