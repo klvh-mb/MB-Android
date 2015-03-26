@@ -75,6 +75,7 @@
     <string name="user_profile_actionbar_title">主頁</string>
     <string name="request_actionbar_title">邀請</string>
     <string name="notification_actionbar_title">通知</string>
+    <string name="no_notification">- 沒有訊息 -</string>
     <string name="questions_title">發佈的話題</string>
     <string name="answers_title">回覆的話題</string>
     <string name="bookmarks_title">我的收藏</string>

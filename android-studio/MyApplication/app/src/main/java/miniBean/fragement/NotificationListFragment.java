@@ -30,16 +30,15 @@ public class NotificationListFragment extends Fragment {
     private static final String TAG = NotificationListFragment.class.getName();
     NotificationListAdapter adapter;
     private ListView listView;
-    private List<NotificationVM> notificationItems;
     private TextView tipText;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         View view = inflater.inflate(R.layout.notification_list_fragment, container, false);
 
-        notificationItems = new ArrayList<NotificationVM>();
-        tipText= (TextView) view.findViewById(R.id.tipText);
+        listView = (ListView) view.findViewById(R.id.listNotification);
+        tipText = (TextView) view.findViewById(R.id.tipText);
 
         String notif = getArguments().getString("notifAll");
         Gson gson = new GsonBuilder().create();
@@ -56,11 +55,9 @@ public class NotificationListFragment extends Fragment {
             e.printStackTrace();
         }
 
-        listView = (ListView) view.findViewById(R.id.listNotification);
-        System.out.println("noti size::"+notificationVMs.size());
-        if(notificationVMs.size()==0){
+        if(notificationVMs.size() == 0){
             tipText.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             adapter = new NotificationListAdapter(getActivity(), notificationVMs);
             listView.setAdapter(adapter);
         }

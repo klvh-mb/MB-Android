@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
@@ -15,12 +16,15 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +61,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private LinearLayout postImagesLayout;
     private List<ImageView> postImages;
     private TextView deleteText, likeText, numLike, postIndex;
+    private FrameLayout frameLayout;
     private int page;
 
     private ActivityUtil activityUtil;
@@ -110,6 +115,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         postIndex = (TextView) convertView.findViewById(R.id.postIndex);
         postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
         postImages = new ArrayList<>();
+        frameLayout = (FrameLayout) convertView.findViewById(R.id.mainFrameLayout);
 
         final CommunityPostCommentVM item = postComments.get(position);
 
@@ -215,8 +221,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         }
 
         Spanned spanned = activityUtil.getDisplayTextFromHtml(item.getD(), this);
-        postIndex.setText(spanned);
-        postIndex.setMovementMethod(LinkMovementMethod.getInstance());
+        postBodyText.setText(spanned);
+        postBodyText.setMovementMethod(LinkMovementMethod.getInstance());
 
         ownerName.setText(item.getOn());
         ownerName.setOnClickListener(new View.OnClickListener() {
@@ -268,7 +274,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     private void loadImages(Long[] imageIds) {
         for (Long imageId : imageIds) {
-            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
+            final String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
             Log.d(this.getClass().getSimpleName(), "loadImages: source - "+source);
 
             ImageView postImage = new ImageView(this.activity);
@@ -276,6 +282,15 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10));
             postImagesLayout.addView(postImage);
+
+            /*
+            postImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fullscreenImagePopup(source);
+                }
+            });
+            */
 
             //new LoadPostImage().execute(source, postImage);   // obsolete
             ImageUtil.displayImage(source, postImage, new SimpleImageLoadingListener() {
@@ -425,6 +440,32 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         }
 
         return d;
+    }
+
+    private void fullscreenImagePopup(String source) {
+        try {
+            frameLayout.getForeground().setAlpha(20);
+            frameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
+
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) activity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.image_popup_window,(ViewGroup) activity.findViewById(R.id.popupElement));
+            ImageView fullImage= (ImageView) layout.findViewById(R.id.fullImage);
+
+            PopupWindow imagePopup = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
+            imagePopup.setOutsideTouchable(false);
+            imagePopup.setBackgroundDrawable(new BitmapDrawable(activity.getResources(), ""));
+            imagePopup.setFocusable(true);
+            imagePopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            ImageUtil.displayImage(source, fullImage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     class LoadImage extends AsyncTask<Object, Void, Bitmap> {

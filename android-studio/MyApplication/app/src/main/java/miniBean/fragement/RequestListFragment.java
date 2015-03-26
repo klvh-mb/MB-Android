@@ -32,17 +32,16 @@ public class RequestListFragment extends Fragment {
     private static final String TAG = RequestListFragment.class.getName();
     RequestListAdapter adapter;
     private ListView listView;
-    private List<NotificationVM> requestItems;
     private TextView tipText;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.request_list_fragment, container, false);
 
-        requestItems = new ArrayList<NotificationVM>();
-
         listView = (ListView) view.findViewById(R.id.listRequest);
-        tipText= (TextView) view.findViewById(R.id.tipText);
+        tipText = (TextView) view.findViewById(R.id.tipText);
+
         String notif = getArguments().getString("requestNotif");
         Gson gson = new GsonBuilder().create();
         List<NotificationVM> notificationVMs = new ArrayList<>();
@@ -57,22 +56,21 @@ public class RequestListFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("reque size::"+notificationVMs.size());
-        if(notificationVMs.size()==0){
+
+        if(notificationVMs.size() == 0){
             tipText.setVisibility(View.VISIBLE);
         }else {
             adapter = new RequestListAdapter(getActivity(), notificationVMs);
             listView.setAdapter(adapter);
         }
+
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                NotificationVM item = (NotificationVM)adapter.getItem(position);
-
 
                if(item.getTp().equals("COMM_JOIN_APPROVED")) {
                    Intent intent = new Intent(getActivity(), CommunityActivity.class);
