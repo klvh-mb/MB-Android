@@ -109,7 +109,10 @@ public class CommunityFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 loadingFooter.setVisibility(View.VISIBLE);
-                loadNewsfeed(Long.parseLong(getArguments().getString("id")), feedItems.get(feedItems.size()-1).getT()+"", page-1);
+                loadNewsfeed(
+                        Long.parseLong(getArguments().getString("id")),
+                        feedItems.get(feedItems.size()-1).getUt()+"",       // NOTE: use updateTime not createTime!!
+                        page-1);
             }
         });
 
