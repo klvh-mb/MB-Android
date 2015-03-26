@@ -37,7 +37,7 @@ public class RequestListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.request_list_view, container, false);
+        View view = inflater.inflate(R.layout.request_list_fragment, container, false);
 
         requestItems = new ArrayList<NotificationVM>();
 
@@ -69,16 +69,14 @@ public class RequestListFragment extends Fragment {
                NotificationVM item = (NotificationVM)adapter.getItem(position);
 
                if(item.getTp()=="COMM_JOIN_APPROVED") {
-                    System.out.println("::::::comm");
                    Intent intent = new Intent(getActivity(), CommunityActivity.class);
                    intent.putExtra("id",item.getId());
                    startActivity(intent);
                }
                 if(item.getTp()=="FRD_REQUEST"){
-                    System.out.println("::::::frnd");
                    Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                    intent.putExtra("id",item.getId());
                    startActivity(intent);
-
                }
             }
         });

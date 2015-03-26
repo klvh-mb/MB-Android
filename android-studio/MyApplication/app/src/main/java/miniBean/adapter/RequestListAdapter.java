@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.util.List;
 
 import miniBean.R;
@@ -71,7 +69,6 @@ public class RequestListAdapter extends BaseAdapter {
         acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
         spinner = (ProgressBar) convertView.findViewById(R.id.imageLoader);
         ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
-        //session = this.activity.getSharedPreferences("prefs", 0);
 
         if (item.getTp().equals("COMM_JOIN_APPROVED") || item.getTp().equals("FRD_ACCEPTED")) {
             acceptButton.setVisibility(View.INVISIBLE);
@@ -81,10 +78,9 @@ public class RequestListAdapter extends BaseAdapter {
             ignoreButton.setVisibility(View.VISIBLE);
         }
 
-        ImageLoader.getInstance().displayImage(
+        AppController.getImageLoader().displayImage(
                 activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(),
-                userPhoto,
-                AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
+                userPhoto);
         message.setText(item.getMsg());
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +110,6 @@ public class RequestListAdapter extends BaseAdapter {
             }
 
         });
-
 
         return convertView;
     }

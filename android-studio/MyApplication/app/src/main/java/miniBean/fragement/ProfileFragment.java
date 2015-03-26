@@ -13,18 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.lang.reflect.Field;
 
 import miniBean.R;
-import miniBean.activity.MyNewsfeedActivity;
+import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
-import miniBean.util.DefaultValues;
 import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -33,11 +30,11 @@ import retrofit.RetrofitError;
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = ProfileFragment.class.getName();
-    ImageView userCoverPic, userPic;
-    ProgressBar spinner;
-    TextView questionsCount, answersCount, bookmarksCount, userName;
-    LinearLayout questionMenu, answerMenu, bookmarksMenu;
-    Long userId;
+    private ImageView userCoverPic, userPic;
+    private ProgressBar spinner;
+    private TextView questionsCount, answersCount, bookmarksCount, userName;
+    private LinearLayout questionMenu, answerMenu, bookmarksMenu;
+    private Long userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,8 +55,8 @@ public class ProfileFragment extends Fragment {
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), MyNewsfeedActivity.class);
-                intent.putExtra("id",userId.toString());
+                Intent intent = new Intent(getActivity(), NewsfeedActivity.class);
+                intent.putExtra("id",userId);
                 intent.putExtra("key","question");
                 startActivity(intent);
 
@@ -80,8 +77,8 @@ public class ProfileFragment extends Fragment {
         answerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), MyNewsfeedActivity.class);
-                intent.putExtra("id",userId.toString());
+                Intent intent = new Intent(getActivity(), NewsfeedActivity.class);
+                intent.putExtra("id",userId);
                 intent.putExtra("key","answer");
                 startActivity(intent);
 
@@ -102,8 +99,8 @@ public class ProfileFragment extends Fragment {
         bookmarksMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), MyNewsfeedActivity.class);
-                intent.putExtra("id",userId.toString());
+                Intent intent = new Intent(getActivity(), NewsfeedActivity.class);
+                intent.putExtra("id",userId);
                 intent.putExtra("key","bookmark");
                 startActivity(intent);
 

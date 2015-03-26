@@ -35,7 +35,7 @@ public class NotificationListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.notificaction_list_view, container, false);
+        View view = inflater.inflate(R.layout.notification_list_fragment, container, false);
 
         notificationItems = new ArrayList<NotificationVM>();
 

@@ -1,10 +1,12 @@
 package miniBean.fragement;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.lang.reflect.Field;
 
 import miniBean.R;
+import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -28,10 +31,10 @@ import retrofit.RetrofitError;
 public class UserProfileFragment extends Fragment {
 
     private static final String TAG = UserProfileFragment.class.getName();
-    ImageView userCoverPic, userPic;
-    ProgressBar spinner;
-    TextView questionsCount, answersCount, bookmarksCount, userName;
-    LinearLayout questionMenu,answerMenu,bookmarksMenu;
+    private ImageView userCoverPic, userPic;
+    private ProgressBar spinner;
+    private TextView questionsCount, answersCount, bookmarksCount, userName;
+    private LinearLayout questionMenu, answerMenu, bookmarksMenu;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,36 +53,39 @@ public class UserProfileFragment extends Fragment {
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         bookmarksMenu.setVisibility(View.GONE);
 
-        //final String id=getArguments().getString("id");
-        System.out.println("nnnnnnnnnnnnn"+getArguments().getString("name"));
-        System.out.println("iiiiiiiiiiiii"+getArguments().getLong("oid"));
-
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
+                /*
+                Bundle bundle = new Bundle();
                 bundle.putLong("id",getArguments().getLong("oid"));
                 bundle.putString("key","userquestion");
+
                 NewsfeedListFragement fragment = new NewsfeedListFragement();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.hide(UserProfileFragment.this);
-                //fragmentTransaction.add(R.id.placeHolder, fragment);
                 fragmentTransaction.replace(R.id.placeHolder, fragment);
                 fragmentTransaction.commit();
-                /*Intent i = new Intent(getActivity(), NewsfeedActivity.class);
-                i.putExtra("id",id);
-                startActivity(i);*/
+                */
+
+                Intent intent = new Intent(getActivity(), NewsfeedActivity.class);
+                intent.putExtra("id",getArguments().getLong("oid"));
+                intent.putExtra("key","userquestion");
+                startActivity(intent);
             }
         });
+
         answerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle=new Bundle();
+                /*
+                Bundle bundle = new Bundle();
                 bundle.putLong("id",getArguments().getLong("oid"));
                 bundle.putString("key","useranswer");
+
                 NewsfeedListFragement fragment = new NewsfeedListFragement();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragment.setArguments(bundle);
@@ -88,6 +94,12 @@ public class UserProfileFragment extends Fragment {
                 fragmentTransaction.hide(UserProfileFragment.this);
                 fragmentTransaction.replace(R.id.placeHolder, fragment);
                 fragmentTransaction.commit();
+                */
+
+                Intent intent = new Intent(getActivity(), NewsfeedActivity.class);
+                intent.putExtra("id",getArguments().getLong("oid"));
+                intent.putExtra("key","useranswer");
+                startActivity(intent);
             }
         });
 
@@ -96,14 +108,13 @@ public class UserProfileFragment extends Fragment {
         return view;
     }
 
-    void getUserInfo() {
+    private void getUserInfo() {
         AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
-
                 userName.setText(getArguments().getString("name"));
-                answersCount.setText("-");
-                questionsCount.setText("-");
+                questionsCount.setText(user.getQuestionsCount()+"");
+                answersCount.setText(user.getAnswersCount()+"");
 
                 AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getArguments().getLong("oid"), userCoverPic, new SimpleImageLoadingListener() {
                     @Override
@@ -143,7 +154,6 @@ public class UserProfileFragment extends Fragment {
             Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
             childFragmentManager.setAccessible(true);
             childFragmentManager.set(this, null);
-
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {

@@ -99,7 +99,7 @@ class MyPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new MyCommunityFragment();
             default:
-                TopicFragment topicFragment = new TopicFragment();
+                TopicCommunityFragment topicFragment = new TopicCommunityFragment();
                 topicFragment.setCommunities(LocalCache.getCommunityCategoryMapList().get(position).communities);
                 return topicFragment;
         }

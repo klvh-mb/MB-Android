@@ -105,10 +105,10 @@ public class NewsfeedListFragement extends Fragment {
                 getUserAnswer(offset,getArguments().getLong("id"));
                 break;
             case "question":
-                getUserQuestion(offset,Long.parseLong(getArguments().getString("id")));
+                getUserQuestion(offset,getArguments().getLong("id"));
                 break;
             case "answer":
-                getUserAnswer(offset,Long.parseLong(getArguments().getString("id")));
+                getUserAnswer(offset,getArguments().getLong("id"));
                 break;
             case "bookmark":
                 getBookmark(offset);

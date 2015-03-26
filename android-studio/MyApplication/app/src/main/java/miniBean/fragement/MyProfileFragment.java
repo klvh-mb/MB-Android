@@ -51,6 +51,9 @@ public class MyProfileFragment extends Fragment {
         back = (ImageView) actionBarView.findViewById(R.id.backAction);
         back.setVisibility(View.INVISIBLE);
 
+        requestCount.setVisibility(View.INVISIBLE);
+        notificationCount.setVisibility(View.INVISIBLE);
+
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         getActivity().getActionBar().setCustomView(actionBarView, lp);
         getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -77,8 +80,19 @@ public class MyProfileFragment extends Fragment {
         requestNotif = headerDataVM.getRequestNotif();
         notifAll = headerDataVM.getAllNotif();
 
-        requestCount.setText(headerDataVM.getRequestCounts()+"");
-        notificationCount.setText(headerDataVM.getNotifyCounts()+"");
+        if (headerDataVM.getRequestCounts() == 0) {
+            requestCount.setVisibility(View.INVISIBLE);
+        } else {
+            requestCount.setVisibility(View.VISIBLE);
+            requestCount.setText(headerDataVM.getRequestCounts() + "");
+        }
+
+        if (headerDataVM.getNotifyCounts() == 0) {
+            notificationCount.setVisibility(View.INVISIBLE);
+        } else {
+            notificationCount.setVisibility(View.VISIBLE);
+            notificationCount.setText(headerDataVM.getNotifyCounts() + "");
+        }
 
         Fragment profileFragment = new ProfileFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -88,7 +102,8 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 back.setVisibility(View.INVISIBLE);
-                ((TextView) actionBarView.findViewById(R.id.title)).setText("Request");
+                ((TextView) actionBarView.findViewById(R.id.title)).setText(getString(R.string.request_actionbar_title));
+
                 Fragment requestFragment = new RequestListFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("requestNotif", gson.toJson(requestNotif));
@@ -102,7 +117,8 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 back.setVisibility(View.INVISIBLE);
-                ((TextView) actionBarView.findViewById(R.id.title)).setText("Notification");
+                ((TextView) actionBarView.findViewById(R.id.title)).setText(getString(R.string.notification_actionbar_title));
+
                 Fragment notificactionFragment = new NotificationListFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("notifAll", gson.toJson(notifAll));
@@ -119,6 +135,7 @@ public class MyProfileFragment extends Fragment {
                 notification.setVisibility(View.INVISIBLE);
                 setting.setVisibility(View.INVISIBLE);
                 ((TextView) actionBarView.findViewById(R.id.title)).setText("Settings");
+
                 Fragment settingFragment = new LogoutFragment();
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, settingFragment).commit();

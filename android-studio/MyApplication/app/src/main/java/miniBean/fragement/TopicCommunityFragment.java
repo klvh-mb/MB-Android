@@ -19,7 +19,7 @@ import miniBean.app.LocalCache;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
-public class TopicFragment extends Fragment {
+public class TopicCommunityFragment extends Fragment {
 
     public ListView listView;
     public TopicCommunityListAdapter topicAdapter;

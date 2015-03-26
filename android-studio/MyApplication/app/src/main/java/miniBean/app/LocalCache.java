@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.fragement.CommunityListFragment;
-import miniBean.fragement.TopicFragment;
+import miniBean.fragement.TopicCommunityFragment;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
@@ -20,7 +20,7 @@ public class LocalCache {
     private static boolean dirty = false;
 
     private static CommunityListFragment myCommunityFragment;
-    private static List<TopicFragment> topicCommunityFragments = new ArrayList<>();
+    private static List<TopicCommunityFragment> topicCommunityFragments = new ArrayList<>();
 
     public static boolean isDirty() {
         return dirty;
@@ -61,7 +61,7 @@ public class LocalCache {
         LocalCache.myCommunityFragment = fragment;
     }
 
-    public static void addTopicCommunityFragment(TopicFragment fragment) {
+    public static void addTopicCommunityFragment(TopicCommunityFragment fragment) {
         if (!LocalCache.topicCommunityFragments.contains(fragment)) {
             LocalCache.topicCommunityFragments.add(fragment);
         }
@@ -79,7 +79,7 @@ public class LocalCache {
                     Log.d("LocalCache", "refreshMyCommunities.api.success: refresh CommunityFragment");
                     myCommunityFragment.notifyChange(communitiesParentVM.communities);
                 }
-                for (TopicFragment fragment : topicCommunityFragments) {
+                for (TopicCommunityFragment fragment : topicCommunityFragments) {
                     fragment.notifyChange();
                 }
 

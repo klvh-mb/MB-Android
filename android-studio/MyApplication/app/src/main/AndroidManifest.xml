@@ -49,19 +49,11 @@
         <activity
             android:name=".activity.NewsfeedActivity"
             android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.MyNewsfeedActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NewPostActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.MyProfileActivity"
             android:screenOrientation="portrait" />
 
         <activity android:name="org.acra.CrashReportDialog"
