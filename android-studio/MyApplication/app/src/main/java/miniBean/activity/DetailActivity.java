@@ -154,7 +154,7 @@ public class DetailActivity extends FragmentActivity {
         // getActionBar().setTitle("Details");
 
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
-        moreAction = (ImageView) findViewById(R.id.moreAction);
+        moreAction = (ImageView) findViewById(R.id.notification);
 
         final Long postID = getIntent().getLongExtra("postId", 0L);
 

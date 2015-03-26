@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.MainActivity;
 import miniBean.app.AppController;
 import miniBean.viewmodel.HeaderDataVM;
 import miniBean.viewmodel.NotificationVM;
@@ -28,10 +27,11 @@ import retrofit.client.Response;
 public class MyProfileFragment extends Fragment {
 
     public List<NotificationVM> requestNotif, notifAll;
-    ImageView request, notification, setting, back;
+    private ImageView setting, back;
+    private ViewGroup request, notification;
+    private TextView requestCount, notificationCount;
     Gson gson = new Gson();
     View actionBarView;
-    BadgeView notifyBadge, requestBadge;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,29 +40,25 @@ public class MyProfileFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        actionBarView = inflater.inflate(R.layout.profile_actionbar, null);
+        actionBarView = inflater.inflate(R.layout.my_profile_actionbar, null);
 
-        request = (ImageView) actionBarView.findViewById(R.id.bookmarkedtAction);
-
-        notification = (ImageView) actionBarView.findViewById(R.id.moreAction);
-
+        request = (ViewGroup) actionBarView.findViewById(R.id.requestLayout);
+        notification = (ViewGroup) actionBarView.findViewById(R.id.notificationLayout);
+        requestCount = (TextView) actionBarView.findViewById(R.id.requestCount);
+        notificationCount = (TextView) actionBarView.findViewById(R.id.notificationCount);
         setting = (ImageView) actionBarView.findViewById(R.id.setting);
 
         back = (ImageView) actionBarView.findViewById(R.id.backAction);
         back.setVisibility(View.INVISIBLE);
-        ((MainActivity) getActivity()).getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-
-        ((MainActivity) getActivity()).getActionBar().setCustomView(actionBarView, lp);
+        getActivity().getActionBar().setCustomView(actionBarView, lp);
+        getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
         AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
             @Override
             public void success(HeaderDataVM headerDataVM, Response response) {
-                System.out.println("headerdata" + headerDataVM.getName());
-                requestNotif = headerDataVM.getRequestNotif();
-                notifAll = headerDataVM.getAllNotif();
-                getHeaderBarData();
+                setHeaderBarData(headerDataVM);
             }
 
             @Override
@@ -72,23 +68,27 @@ public class MyProfileFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
-    void getHeaderBarData() {
+    private void setHeaderBarData(HeaderDataVM headerDataVM) {
+        Log.d(MyProfileFragment.this.getClass().getSimpleName(), "getHeaderBarData.success: user=" + headerDataVM.getName() + " request=" + headerDataVM.getRequestCounts() + " notif=" + headerDataVM.getNotifyCounts());
+
+        requestNotif = headerDataVM.getRequestNotif();
+        notifAll = headerDataVM.getAllNotif();
+
+        requestCount.setText(headerDataVM.getRequestCounts()+"");
+        notificationCount.setText(headerDataVM.getNotifyCounts()+"");
 
         Fragment profileFragment = new ProfileFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, profileFragment).commit();
 
-
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 back.setVisibility(View.INVISIBLE);
-                setting.setVisibility(View.INVISIBLE);
-                ((TextView) actionBarView.findViewById(R.id.titleAction)).setText("Request");
+                ((TextView) actionBarView.findViewById(R.id.title)).setText("Request");
                 Fragment requestFragment = new RequestListFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("requestNotif", gson.toJson(requestNotif));
@@ -102,8 +102,7 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 back.setVisibility(View.INVISIBLE);
-                setting.setVisibility(View.INVISIBLE);
-                ((TextView) actionBarView.findViewById(R.id.titleAction)).setText("Notification");
+                ((TextView) actionBarView.findViewById(R.id.title)).setText("Notification");
                 Fragment notificactionFragment = new NotificationListFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("notifAll", gson.toJson(notifAll));
@@ -112,13 +111,14 @@ public class MyProfileFragment extends Fragment {
                 transaction.replace(R.id.children_fragement, notificactionFragment).commit();
             }
         });
+
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 request.setVisibility(View.INVISIBLE);
                 notification.setVisibility(View.INVISIBLE);
                 setting.setVisibility(View.INVISIBLE);
-                ((TextView) actionBarView.findViewById(R.id.titleAction)).setText("Settings");
+                ((TextView) actionBarView.findViewById(R.id.title)).setText("Settings");
                 Fragment settingFragment = new LogoutFragment();
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, settingFragment).commit();

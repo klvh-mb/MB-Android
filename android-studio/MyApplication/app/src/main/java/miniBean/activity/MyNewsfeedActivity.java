@@ -20,7 +20,7 @@ public class MyNewsfeedActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.newsfeed_actionbar);
 
-        titleText= (TextView) findViewById(R.id.titleAction);
+        titleText= (TextView) findViewById(R.id.title);
 
         String id = getIntent().getStringExtra("id");
         String key=getIntent().getStringExtra("key");

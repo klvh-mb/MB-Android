@@ -27,10 +27,10 @@ public class NotificationActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.notification_actionbar);
 
-        request = (ImageView) findViewById(R.id.bookmarkedtAction);
-        notification = (ImageView) findViewById(R.id.moreAction);
+        request = (ImageView) findViewById(R.id.request);
+        notification = (ImageView) findViewById(R.id.notification);
         settings = (ImageView) findViewById(R.id.setting);
-        titleText= (TextView) findViewById(R.id.titleAction);
+        titleText= (TextView) findViewById(R.id.title);
 
                 if(getIntent().getStringExtra("key").equals("request")) {
                     titleText.setText("Request");

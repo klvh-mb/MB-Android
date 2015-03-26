@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -26,9 +30,11 @@ import retrofit.client.Response;
 public class MyProfileActivity extends FragmentActivity {
 
     private List<NotificationVM> requestNotif, notifAll;
-    private ImageView request, notification, settings,back;
+    private ImageView settings, back;
+    private ViewGroup request, notification;
     private TextView requestCount,notificationCount;
-     Gson gson = new Gson();
+    Gson gson = new Gson();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,49 +42,46 @@ public class MyProfileActivity extends FragmentActivity {
         setContentView(R.layout.my_profile_fragement);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.profile_actionbar);
+        //getActionBar().setCustomView(R.layout.my_profile_actionbar);
 
-        request = (ImageView) findViewById(R.id.bookmarkedtAction);
-        notification = (ImageView) findViewById(R.id.moreAction);
+        request = (ViewGroup) findViewById(R.id.requestLayout);
+        notification = (ViewGroup) findViewById(R.id.notificationLayout);
         settings = (ImageView) findViewById(R.id.setting);
-        back= (ImageView) findViewById(R.id.backAction);
-        requestCount= (TextView) findViewById(R.id.requestCount);
-        notificationCount= (TextView) findViewById(R.id.notificationCount);
-
-        System.out.println("IN myprofile activity...");
+        back = (ImageView) findViewById(R.id.backAction);
+        requestCount = (TextView) findViewById(R.id.requestCount);
+        notificationCount = (TextView) findViewById(R.id.notificationCount);
 
         AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
             @Override
             public void success(HeaderDataVM headerDataVM, Response response) {
-                System.out.println("headerdata" + headerDataVM.getName());
-                System.out.println("notifi" + headerDataVM.getNotifyCounts());
-                System.out.println("request" + headerDataVM.getRequestCounts());
-                requestNotif = headerDataVM.getRequestNotif();
-                notifAll = headerDataVM.getAllNotif();
-
-                requestCount.setText(headerDataVM.getRequestCounts()+"");
-                notificationCount.setText(headerDataVM.getNotifyCounts()+"");
-
-                getHeaderBarData();
+                setHeaderBarData(headerDataVM);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace(); //to see if you have errors
-
             }
         });
-
     }
 
-    void getHeaderBarData() {
+    private void setHeaderBarData(HeaderDataVM headerDataVM) {
+        Log.d(MyProfileActivity.this.getClass().getSimpleName(), "getHeaderBarData.success: user="+headerDataVM.getName()+" request="+headerDataVM.getRequestCounts()+" notif="+headerDataVM.getNotifyCounts());
+
+        requestNotif = headerDataVM.getRequestNotif();
+        notifAll = headerDataVM.getAllNotif();
+        requestCount.setText(headerDataVM.getRequestCounts()+"");
+        notificationCount.setText(headerDataVM.getNotifyCounts()+"");
 
         Fragment profileFragment = new ProfileFragment();
-        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, profileFragment).commit();
 
-
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         request.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,19 +112,14 @@ public class MyProfileActivity extends FragmentActivity {
                 notificactionFragment.setArguments(bundle);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, notificactionFragment).commit();*/
+
                 Intent intent=new Intent(MyProfileActivity.this,NotificationActivity.class);
                 intent.putExtra("key","notification");
                 intent.putExtra("notifAll", gson.toJson(notifAll));
                 startActivity(intent);
+            }
+        });
 
-            }
-        });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,10 +129,10 @@ public class MyProfileActivity extends FragmentActivity {
                 Fragment settingFragment = new LogoutFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, settingFragment).commit();*/
+
                 Intent intent=new Intent(MyProfileActivity.this,NotificationActivity.class);
                 intent.putExtra("key","logout");
                 startActivity(intent);
-
             }
         });
     }

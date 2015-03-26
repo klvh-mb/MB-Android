@@ -241,7 +241,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                 AppController.ROUND_IMAGE_OPTIONS);
 
         // images
-        Log.d(this.getClass().getSimpleName(), "getView: new_post/comment hasImage - "+item.hasImage);
+        Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
         if(item.hasImage) {
             if (!item.imageLoaded || postImagesLayout.getChildCount() == 0) {
                 loadImages(item.getImgs());
@@ -250,7 +250,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                 for(int i = 0; i < postImagesLayout.getChildCount(); ++i) {
                     View childView = postImagesLayout.getChildAt(i);
                     childView.setVisibility(View.VISIBLE);
-                    Log.d(this.getClass().getSimpleName(), "getView: resume all new_post images view - "+i);
+                    Log.d(this.getClass().getSimpleName(), "getView: resume all post images view - "+i);
                 }
             }
             postImagesLayout.setVisibility(View.VISIBLE);
@@ -263,7 +263,9 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     private void loadImages(Long[] imageIds) {
         for (Long imageId : imageIds) {
-            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-new_post-image-by-id/" + imageId;
+            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
+            Log.d(this.getClass().getSimpleName(), "loadImages: source - "+source);
+
             ImageView postImage = new ImageView(this.activity);
             postImage.setAdjustViewBounds(true);
             postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);

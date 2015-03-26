@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
     ImageView userCoverPic, userPic;
     ProgressBar spinner;
     TextView questionsCount, answersCount, bookmarksCount, userName;
-    LinearLayout questionMenu,answerMenu,bookmarksMenu;
+    LinearLayout questionMenu, answerMenu, bookmarksMenu;
     Long userId;
 
     @Override
@@ -58,13 +58,10 @@ public class ProfileFragment extends Fragment {
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("profile fragment id::"+userId.toString());
-
                 Intent intent=new Intent(getActivity(), MyNewsfeedActivity.class);
                 intent.putExtra("id",userId.toString());
                 intent.putExtra("key","question");
                 startActivity(intent);
-
 
                 /*Bundle bundle=new Bundle();
                 bundle.putString("id",userId.toString());
@@ -79,6 +76,7 @@ public class ProfileFragment extends Fragment {
                 fragmentTransaction.commit();*/
             }
         });
+
         answerMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +98,7 @@ public class ProfileFragment extends Fragment {
                 fragmentTransaction.commit();*/
             }
         });
+
         bookmarksMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +175,7 @@ public class ProfileFragment extends Fragment {
         AppController.api.getBookmarkSummary(AppController.getInstance().getSessionId(), new Callback<BookmarkSummaryVM>() {
             @Override
             public void success(BookmarkSummaryVM bookmarkSummary, retrofit.client.Response response) {
-                Log.d(ProfileFragment.this.getClass().getSimpleName(), "questionsCount - "+bookmarkSummary.getQc());
+                Log.d(ProfileFragment.this.getClass().getSimpleName(), "bookmarksCount - "+bookmarkSummary.getQc());
                 bookmarksCount.setText(bookmarkSummary.getQc()+"");
             }
 

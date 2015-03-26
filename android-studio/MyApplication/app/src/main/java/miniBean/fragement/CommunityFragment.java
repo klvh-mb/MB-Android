@@ -41,7 +41,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class CommFragment extends Fragment {
+public class CommunityFragment extends Fragment {
 
     private TextView numMemberText, commNameText;
     private ListView listView;
@@ -159,14 +159,14 @@ public class CommFragment extends Fragment {
                     joinCommunity(currentCommunity, joinImageView);
                 } else {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                    alertDialogBuilder.setMessage(CommFragment.this.getString(R.string.community_leave_confirm));
-                    alertDialogBuilder.setPositiveButton(CommFragment.this.getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setMessage(CommunityFragment.this.getString(R.string.community_leave_confirm));
+                    alertDialogBuilder.setPositiveButton(CommunityFragment.this.getString(R.string.confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             leaveCommunity(currentCommunity, joinImageView);
                         }
                     });
-                    alertDialogBuilder.setNegativeButton(CommFragment.this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setNegativeButton(CommunityFragment.this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -244,7 +244,7 @@ public class CommFragment extends Fragment {
         AppController.api.sendJoinRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                Toast.makeText(CommFragment.this.getActivity(), CommFragment.this.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommunityFragment.this.getActivity(), CommunityFragment.this.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(true);
                 joinImageView.setImageResource(R.drawable.add);
                 LocalCache.refreshMyCommunities();
@@ -252,7 +252,7 @@ public class CommFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                Toast.makeText(CommFragment.this.getActivity(), CommFragment.this.getString(R.string.community_join_failed), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommunityFragment.this.getActivity(), CommunityFragment.this.getString(R.string.community_join_failed), Toast.LENGTH_SHORT).show();
                 retrofitError.printStackTrace();
             }
         });
@@ -261,7 +261,7 @@ public class CommFragment extends Fragment {
         AppController.api.sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                Toast.makeText(CommFragment.this.getActivity().getBaseContext(), CommFragment.this.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommunityFragment.this.getActivity().getBaseContext(), CommunityFragment.this.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(false);
                 joinImageView.setImageResource(R.drawable.check);
                 LocalCache.refreshMyCommunities();
@@ -269,7 +269,7 @@ public class CommFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                Toast.makeText(CommFragment.this.getActivity().getBaseContext(), CommFragment.this.getString(R.string.community_leave_failed), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CommunityFragment.this.getActivity().getBaseContext(), CommunityFragment.this.getString(R.string.community_leave_failed), Toast.LENGTH_SHORT).show();
                 retrofitError.printStackTrace();
             }
         });

@@ -48,7 +48,7 @@ public interface MyApi {
     //a function in your api to get all the community categories (Topic Vise Communities ) list
     public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, @Query("key") String key, Callback<List<CommunityCategoryMapVM>> callback);
 
-    @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one new_post
+    @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
     public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, @Query("key") String key, Callback<CommunityPostVM> callback);
 
     @GET("/community/join/{id}") //a function in your api send join request to Community
@@ -66,7 +66,7 @@ public interface MyApi {
     @POST("/communityQnA/question/answer") //a function in your api answer on question.
     public void answerOnQuestion(@Body CommentPost commentPost, @Query("key") String key, Callback<CommentResponse> cb);
 
-    @POST("/communityQnA/question/new_post")
+    @POST("/communityQnA/question/post")
     public void setQuestion(@Body NewPost newPost, @Query("key") String key, Callback<PostResponse> cb);
 
     @Multipart
@@ -75,7 +75,7 @@ public interface MyApi {
 
     @Multipart
     @POST("/image/uploadPostPhoto") //a function in your api upload image for comment
-    public void uploadPostPhoto(@Part("postId") String id, @Part("new_post-photo0") TypedFile photo, Callback<Response> cb);
+    public void uploadPostPhoto(@Part("postId") String id, @Part("post-photo0") TypedFile photo, Callback<Response> cb);
 
     @GET("/get-headerBar-data")
     //a function in your api to get all header meta data (notifications and requests).
@@ -100,10 +100,10 @@ public interface MyApi {
     @GET("/ignore-it/{notify_id}") //a function in your api accept invite request to Community
     public void ignoreIt(@Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
 
-    @GET("/bookmark-new_post/{post_id}")
+    @GET("/bookmark-post/{post_id}")
     public void setBookmark(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
-    @GET("/unbookmark-new_post/{post_id}")
+    @GET("/unbookmark-post/{post_id}")
     public void setUnBookmark(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/like-comment/{comment_id}")
@@ -112,13 +112,13 @@ public interface MyApi {
     @GET("/unlike-comment/{comment_id}")
     public void setUnLikeComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
 
-    @GET("/like-new_post/{post_id}")
+    @GET("/like-post/{post_id}")
     public void setLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
-    @GET("/unlike-new_post/{post_id}")
+    @GET("/unlike-post/{post_id}")
     public void setUnLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
-    @GET("/delete-new_post/{post_id}")
+    @GET("/delete-post/{post_id}")
     public void deletePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/delete-comment/{comment_id}")

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import miniBean.R;
-import miniBean.fragement.CommFragment;
+import miniBean.fragement.CommunityFragment;
 
 public class CommunityActivity extends FragmentActivity {
     ImageView backImage, editAction;
@@ -25,7 +25,7 @@ public class CommunityActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.community_actionbar);
         backImage = (ImageView) this.findViewById(R.id.backImage);
-        titleAction= (TextView) this.findViewById(R.id.titleAction);
+        titleAction= (TextView) this.findViewById(R.id.title);
         editAction= (ImageView) this.findViewById(R.id.editAction);
 
         Intent intent = getIntent();
@@ -42,7 +42,7 @@ public class CommunityActivity extends FragmentActivity {
 
         bundle.putString("id", getIntent().getStringExtra("id"));
         bundle.putString("commName", getIntent().getStringExtra("commName"));
-        CommFragment fragment = new CommFragment();
+        CommunityFragment fragment = new CommunityFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragment.setArguments(bundle);
         //fragmentTransaction.addToBackStack(null);

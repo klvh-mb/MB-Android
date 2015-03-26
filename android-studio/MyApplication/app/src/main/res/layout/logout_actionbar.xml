@@ -20,7 +20,7 @@
             android:src="@drawable/back" />
 
         <TextView
-            android:id="@+id/titleAction"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -28,7 +28,6 @@
             android:text="@string/settings_actionbar_title"
             android:textColor="#ffffff"
             android:textSize="22dp" />
-
 
     </RelativeLayout>
 </LinearLayout>
