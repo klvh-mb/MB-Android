@@ -5,13 +5,14 @@
     android:padding="5dp">
 
     <RelativeLayout
-        android:id="@+id/questionnare_component"
+        android:id="@+id/postSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff">
+        android:background="#ffffff"
+        android:nestedScrollingEnabled="false">
 
         <ImageView
-            android:id="@+id/questionnare_img"
+            android:id="@+id/userPic"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
@@ -23,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/questionnare_img"
+            android:layout_toRightOf="@+id/userPic"
             android:orientation="vertical">
 
             <TextView
@@ -31,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@color/sharp_pink"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/questionnare_img"
+                android:layout_toRightOf="@+id/userPic"
                 android:textSize="14dp"
                 android:layout_marginLeft="5dp" />
 
@@ -70,7 +71,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/indexComment"
+            android:id="@+id/postIndex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -82,14 +83,14 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/questionnareText"
+        android:id="@+id/postBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/questionnare_component"
+        android:layout_below="@+id/postSummary"
         android:background="#ffffff">
 
         <TextView
-            android:id="@+id/commentText"
+            android:id="@+id/postBodyText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -107,11 +108,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/postImages"
-        android:layout_below="@+id/questionnareText"
+        android:layout_below="@+id/postBody"
         android:visibility="gone"></LinearLayout>
 
     <LinearLayout
-        android:id="@+id/postSummary"
+        android:id="@+id/postActions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
@@ -146,14 +147,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@+id/TotalLike"
+                    android:layout_toRightOf="@+id/numLike"
                     android:textColor="#777"
                     android:layout_marginRight="3dp"
                     android:textSize="13dp"
                     android:text="@string/like" />
 
                 <TextView
-                    android:id="@+id/TotalLike"
+                    android:id="@+id/numLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/likeImage"

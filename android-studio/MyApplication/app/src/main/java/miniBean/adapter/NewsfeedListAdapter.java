@@ -22,6 +22,7 @@ import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunityPostVM;
 
 public class NewsfeedListAdapter extends BaseAdapter {
@@ -93,10 +94,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
                 communityIcon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
             } else {
                 Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.getCi());
-                ImageLoader.getInstance().displayImage(
-                        convertView.getResources().getString(R.string.base_url) + item.getCi(),
-                        communityIcon,
-                        AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
+                ImageUtil.displayRoundedCornersImage(item.getCi(), communityIcon);
             }
         } else {
             commName.setVisibility(View.GONE);

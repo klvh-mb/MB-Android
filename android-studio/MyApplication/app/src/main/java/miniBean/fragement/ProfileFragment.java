@@ -22,6 +22,7 @@ import java.lang.reflect.Field;
 import miniBean.R;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -138,7 +139,8 @@ public class ProfileFragment extends Fragment {
                 questionsCount.setText(user.getQuestionsCount()+"");
                 answersCount.setText(user.getAnswersCount()+"");
 
-                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + user.getId(), userCoverPic, new SimpleImageLoadingListener() {
+                ImageUtil.displayThumbnailProfileImage(user.getId(), userPic);
+                ImageUtil.displayCoverImage(user.getId(), userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
@@ -154,11 +156,6 @@ public class ProfileFragment extends Fragment {
                         spinner.setVisibility(View.GONE);
                     }
                 });
-
-                ImageLoader.getInstance().displayImage(
-                        getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + user.getId(),
-                        userPic,
-                        AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
             }
 
             @Override

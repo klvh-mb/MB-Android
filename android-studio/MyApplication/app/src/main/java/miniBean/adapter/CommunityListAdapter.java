@@ -10,13 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.util.List;
 
 import miniBean.R;
-import miniBean.app.AppController;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class CommunityListAdapter extends BaseAdapter {
@@ -71,10 +69,7 @@ public class CommunityListAdapter extends BaseAdapter {
             communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
             Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.gi);
-            ImageLoader.getInstance().displayImage(
-                    activity.getResources().getString(R.string.base_url) + item.gi,
-                    communityPic,
-                    AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
+            ImageUtil.displayRoundedCornersImage(item.gi, communityPic);
         }
 
         return convertView;

@@ -15,20 +15,20 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class RequestListAdapter extends BaseAdapter {
-    public List<NotificationVM> requestItems;
-    TextView username, message, date;
-    ImageView userPhoto;
-    Button acceptButton, ignoreButton;
+    private TextView message;
+    private ImageView userPhoto;
+    private Button acceptButton, ignoreButton;
     private Activity activity;
-    ProgressBar spinner;
+    private ProgressBar spinner;
     private LayoutInflater inflater;
-
+    private List<NotificationVM> requestItems;
 
     public RequestListAdapter(Activity activity, List<NotificationVM> requestItems) {
         this.activity = activity;
@@ -56,8 +56,8 @@ public class RequestListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, final ViewGroup parent) {
 
         if (inflater == null)
-            inflater = (LayoutInflater) activity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if (convertView == null)
             convertView = inflater.inflate(R.layout.request_list_item, null);
 
@@ -78,10 +78,9 @@ public class RequestListAdapter extends BaseAdapter {
             ignoreButton.setVisibility(View.VISIBLE);
         }
 
-        AppController.getImageLoader().displayImage(
-                activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(),
-                userPhoto);
         message.setText(item.getMsg());
+
+        ImageUtil.displayImage(item.getUrl().getPhoto(), userPhoto);
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +126,6 @@ public class RequestListAdapter extends BaseAdapter {
                 retrofitError.printStackTrace(); //to see if you have errors
             }
         });
-
     }
 
     public void acceptFriendRequest(Long friend_id, Long notif_id, final View v) {
@@ -159,7 +157,6 @@ public class RequestListAdapter extends BaseAdapter {
                 retrofitError.printStackTrace(); //to see if you have errors
             }
         });
-
     }
 
     public void ignoreIt(final NotificationVM item) {
@@ -175,7 +172,5 @@ public class RequestListAdapter extends BaseAdapter {
                 retrofitError.printStackTrace(); //to see if you have errors
             }
         });
-
     }
-
 }

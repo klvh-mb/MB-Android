@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 import miniBean.R;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -97,8 +98,8 @@ public class UserProfileFragment extends Fragment {
                 */
 
                 Intent intent = new Intent(getActivity(), NewsfeedActivity.class);
-                intent.putExtra("id",getArguments().getLong("oid"));
-                intent.putExtra("key","useranswer");
+                intent.putExtra("id", getArguments().getLong("oid"));
+                intent.putExtra("key", "useranswer");
                 startActivity(intent);
             }
         });
@@ -116,7 +117,8 @@ public class UserProfileFragment extends Fragment {
                 questionsCount.setText(user.getQuestionsCount()+"");
                 answersCount.setText(user.getAnswersCount()+"");
 
-                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-image-by-id/" + getArguments().getLong("oid"), userCoverPic, new SimpleImageLoadingListener() {
+                ImageUtil.displayThumbnailProfileImage(getArguments().getLong("oid"), userPic);
+                ImageUtil.displayCoverImage(getArguments().getLong("oid"), userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
@@ -132,11 +134,6 @@ public class UserProfileFragment extends Fragment {
                         spinner.setVisibility(View.GONE);
                     }
                 });
-
-                ImageLoader.getInstance().displayImage(
-                        getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + getArguments().getLong("oid"),
-                        userPic,
-                        AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
             }
 
             @Override

@@ -46,6 +46,7 @@ import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunityPostCommentVM;
@@ -228,10 +229,7 @@ public class DetailActivity extends FragmentActivity {
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
                     Log.d(this.getClass().getSimpleName(), "getQnaDetail: load comm icon from background - " + post.getCi());
-                    ImageLoader.getInstance().displayImage(
-                            getResources().getString(R.string.base_url) + post.getCi(),
-                            communityIcon,
-                            AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
+                    ImageUtil.displayRoundedCornersImage(post.getCi(), communityIcon);
                 }
 
                 setPageButtons(curPage);

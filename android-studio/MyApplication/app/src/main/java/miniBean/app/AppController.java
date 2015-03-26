@@ -9,13 +9,8 @@ import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-
 import miniBean.R;
-import miniBean.util.DefaultValues;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -57,37 +52,16 @@ import java.security.MessageDigest;
 public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
+    public static String BASE_URL;
     public static MyApi api;
+
     private static AppController mInstance;
-    private static ImageLoader mImageLoader;
     private static UserVM user;
-
-    public static DisplayImageOptions DEFAULT_IMAGE_OPTIONS =
-            new DisplayImageOptions.Builder().
-                    cacheInMemory(true).
-                    showImageOnLoading(R.drawable.image_loading).
-                    displayer(new RoundedBitmapDisplayer(0)).build();
-
-    public static DisplayImageOptions ROUNDED_CORNERS_IMAGE_OPTIONS =
-            new DisplayImageOptions.Builder().
-                    cacheInMemory(true).
-                    showImageOnLoading(R.drawable.image_loading).
-                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
-
-    public static DisplayImageOptions ROUND_IMAGE_OPTIONS =
-            new DisplayImageOptions.Builder().
-                    cacheInMemory(true).
-                    showImageOnLoading(R.drawable.image_loading).
-                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_ROUND_ROUNDED_VALUE)).build();
 
     private SharedPreferences session;
 
     public static synchronized AppController getInstance() {
         return mInstance;
-    }
-
-    public static synchronized ImageLoader getImageLoader() {
-        return mImageLoader;
     }
 
     public static synchronized UserVM getUser() {
@@ -99,6 +73,7 @@ public class AppController extends Application {
         super.onCreate();
 
         mInstance = this;
+        BASE_URL = getString(R.string.base_url);
 
         session = getSharedPreferences("prefs", 0);
 
@@ -107,9 +82,7 @@ public class AppController extends Application {
                 .setClient(new OkClient()).build();
         api = restAdapter.create(MyApi.class);
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(DEFAULT_IMAGE_OPTIONS).build();
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
-        mImageLoader = ImageLoader.getInstance();
+        ImageUtil.init();
 
         ACRA.init(this);
 

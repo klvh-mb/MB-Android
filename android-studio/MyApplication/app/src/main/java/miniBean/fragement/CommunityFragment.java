@@ -32,6 +32,7 @@ import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostVM;
@@ -205,7 +206,7 @@ public class CommunityFragment extends Fragment {
                 commNameText.setText(community.dn);
                 numMemberText.setText(community.mm+"");
 
-                AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + "/image/get-cover-community-image-by-id/" + getArguments().getString("id"), communityCoverPic, new SimpleImageLoadingListener() {
+                ImageUtil.displayCommunityCoverImage(Long.parseLong(getArguments().getString("id")), communityCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
@@ -228,7 +229,7 @@ public class CommunityFragment extends Fragment {
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                 } else {
                     Log.d(this.getClass().getSimpleName(), "getNewsFeedByCommunityId.api.success: load comm icon from background - " + community.gi);
-                    AppController.getImageLoader().displayImage(getResources().getString(R.string.base_url) + community.gi, communityIcon);
+                    ImageUtil.displayRoundedCornersImage(community.gi, communityIcon);
                 }
                 progressBar.setVisibility(View.INVISIBLE);
             }

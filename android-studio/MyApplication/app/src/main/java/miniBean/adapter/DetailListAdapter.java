@@ -24,7 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -42,21 +41,22 @@ import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
-    private TextView ownerName, commentText, postTime;
+    private TextView ownerName, postBodyText, postTime;
     private Activity activity;
     private LayoutInflater inflater;
     private List<CommunityPostCommentVM> postComments;
     private LinearLayout likeLayout;
-    private ImageView like;
+    private ImageView userPic, like;
     private LinearLayout postImagesLayout;
     private List<ImageView> postImages;
-    private TextView deleteText, likeText, totalLike, indexComment;
+    private TextView deleteText, likeText, numLike, postIndex;
     private int page;
 
     private ActivityUtil activityUtil;
@@ -100,14 +100,14 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
         ownerName = (TextView) convertView.findViewById(R.id.postedBy);
         postTime = (TextView) convertView.findViewById(R.id.postedOn);
-        commentText = (TextView) convertView.findViewById(R.id.commentText);
-        ImageView userPic = (ImageView) convertView.findViewById(R.id.questionnare_img);
+        postBodyText = (TextView) convertView.findViewById(R.id.postBodyText);
+        userPic = (ImageView) convertView.findViewById(R.id.userPic);
         like = (ImageView) convertView.findViewById(R.id.likeImage);
         likeText = (TextView) convertView.findViewById(R.id.likeText);
         deleteText = (TextView) convertView.findViewById(R.id.deleteText);
         likeLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
-        totalLike = (TextView) convertView.findViewById(R.id.TotalLike);
-        indexComment = (TextView) convertView.findViewById(R.id.indexComment);
+        numLike = (TextView) convertView.findViewById(R.id.numLike);
+        postIndex = (TextView) convertView.findViewById(R.id.postIndex);
         postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
         postImages = new ArrayList<>();
 
@@ -122,8 +122,43 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             likeText.setTextColor(activity.getResources().getColor(R.color.gray));
         }
         if (item.getNol() >= 0) {
-            totalLike.setText(item.getNol()+"");
+            numLike.setText(item.getNol()+"");
         }
+
+        likeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                likeText = (TextView) v.findViewById(R.id.likeText);
+                like = (ImageView) v.findViewById(R.id.likeImage);
+                numLike = (TextView) v.findViewById(R.id.numLike);
+
+                if (item.isLike()) {
+                    if (item.isPost()) {
+                        unLikePost(item.getId());
+                    } else {
+                        unLikeComment(item.getId());
+                    }
+                    likeText.setTextColor(activity.getResources().getColor(R.color.gray));
+                    like.setImageResource(R.drawable.like);
+                    int total = item.getNol() - 1;
+                    item.setNol(total);
+                    numLike.setText(total+"");
+                    item.setLike(false);
+                } else {
+                    if (item.isPost()) {
+                        likePost(item.getId());
+                    } else {
+                        likeComment(item.getId());
+                    }
+                    likeText.setTextColor(activity.getResources().getColor(R.color.like_blue));
+                    like.setImageResource(R.drawable.liked);
+                    int total = item.getNol() + 1;
+                    item.setNol(total);
+                    numLike.setText(total+"");
+                    item.setLike(true);
+                }
+            }
+        });
 
         // delete
         if (item.isO() || AppController.getUser().isAdmin()) {
@@ -166,67 +201,40 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
         // index
         if (item.isPost()) {
-            indexComment.setVisibility(View.INVISIBLE);
+            postIndex.setVisibility(View.INVISIBLE);
         } else {
-            indexComment.setVisibility(View.VISIBLE);
+            postIndex.setVisibility(View.VISIBLE);
             if (page == 1) {
-                indexComment.setText("#"+position);
+                postIndex.setText("#"+position);
             } else {
                 // offset from previous page
                 // position starts at 0, add 1
                 position = ((page - 1) * DefaultValues.DEFAULT_PAGINATION_COUNT) + position + 1;
-                indexComment.setText("#"+position);
+                postIndex.setText("#"+position);
             }
         }
 
-        likeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                likeText = (TextView) v.findViewById(R.id.likeText);
-                like = (ImageView) v.findViewById(R.id.likeImage);
-                totalLike = (TextView) v.findViewById(R.id.TotalLike);
-
-                if (item.isLike()) {
-                    if (item.isPost()) {
-                        unLikePost(item.getId());
-                    } else {
-                        unLikeComment(item.getId());
-                    }
-                    likeText.setTextColor(activity.getResources().getColor(R.color.gray));
-                    like.setImageResource(R.drawable.like);
-                    int total = item.getNol() - 1;
-                    item.setNol(total);
-                    totalLike.setText(total+"");
-                    item.setLike(false);
-                } else {
-                    if (item.isPost()) {
-                        likePost(item.getId());
-                    } else {
-                        likeComment(item.getId());
-                    }
-                    likeText.setTextColor(activity.getResources().getColor(R.color.like_blue));
-                    like.setImageResource(R.drawable.liked);
-                    int total = item.getNol() + 1;
-                    item.setNol(total);
-                    totalLike.setText(total+"");
-                    item.setLike(true);
-                }
-            }
-        });
-
         Spanned spanned = activityUtil.getDisplayTextFromHtml(item.getD(), this);
-        commentText.setText(spanned);
-        commentText.setMovementMethod(LinkMovementMethod.getInstance());
+        postIndex.setText(spanned);
+        postIndex.setMovementMethod(LinkMovementMethod.getInstance());
 
         ownerName.setText(item.getOn());
-
         ownerName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity, UserProfileActivity.class);
                 i.putExtra("oid", item.getOid());
                 i.putExtra("name", item.getOn());
-                System.out.println("owner"+item.getOid());
+                activity.startActivity(i);
+            }
+        });
+
+        userPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity, UserProfileActivity.class);
+                i.putExtra("oid", item.getOid());
+                i.putExtra("name", item.getOn());
                 activity.startActivity(i);
             }
         });
@@ -235,10 +243,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
         // profile pic
         //Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
-        ImageLoader.getInstance().displayImage(
-                activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid(),
-                userPic,
-                AppController.ROUND_IMAGE_OPTIONS);
+        ImageUtil.displayMiniProfileImage(item.getOid(), userPic);
 
         // images
         Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
@@ -273,7 +278,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             postImagesLayout.addView(postImage);
 
             //new LoadPostImage().execute(source, postImage);   // obsolete
-            AppController.getImageLoader().displayImage(source, postImage, new SimpleImageLoadingListener() {
+            ImageUtil.displayImage(source, postImage, new SimpleImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
 
@@ -498,8 +503,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                 Log.d(this.getClass().getSimpleName(), "onPostExecute: refresh body text");
                 // i don't know yet a better way to refresh TextView
                 // mTv.invalidate() doesn't work as expected
-                CharSequence t = commentText.getText();
-                commentText.setText(t);
+                CharSequence t = postBodyText.getText();
+                postBodyText.setText(t);
             }
         }
     }

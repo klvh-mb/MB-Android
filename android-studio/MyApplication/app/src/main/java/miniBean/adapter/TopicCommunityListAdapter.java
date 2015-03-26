@@ -13,14 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -78,10 +77,7 @@ public class TopicCommunityListAdapter extends BaseAdapter {
             communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));
         } else {
             Log.d(this.getClass().getSimpleName(), "getView: load comm icon from background - " + item.gi);
-            ImageLoader.getInstance().displayImage(
-                    activity.getResources().getString(R.string.base_url) + item.gi,
-                    communityPic,
-                    AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
+            ImageUtil.displayRoundedCornersImage(item.gi, communityPic);
         }
 
         if (item.getIsM()) {

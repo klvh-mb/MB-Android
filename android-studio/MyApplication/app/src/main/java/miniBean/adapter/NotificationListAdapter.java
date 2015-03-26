@@ -10,22 +10,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import org.joda.time.DateTime;
 
 import java.util.List;
 
 import miniBean.R;
-import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.NotificationVM;
 
 public class NotificationListAdapter extends BaseAdapter {
-    ProgressBar spinner;
-    ImageView userPhoto;
-    TextView username, message, timeText;
+    private ImageView userPhoto;
+    private TextView message, timeText;
     private Activity activity;
+    private ProgressBar spinner;
     private LayoutInflater inflater;
     private List<NotificationVM> notificationItems;
 
@@ -63,20 +61,15 @@ public class NotificationListAdapter extends BaseAdapter {
 
         final NotificationVM item = notificationItems.get(position);
 
-        username = (TextView) convertView.findViewById(R.id.postedBy);
         message = (TextView) convertView.findViewById(R.id.notificationMessage);
         timeText = (TextView) convertView.findViewById(R.id.notificationTime);
         spinner = (ProgressBar) convertView.findViewById(R.id.imageLoader);
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
 
-        ImageLoader.getInstance().displayImage(
-                activity.getResources().getString(R.string.base_url) + item.getUrl().getPhoto(),
-                userPhoto,
-                AppController.ROUNDED_CORNERS_IMAGE_OPTIONS);
-
         message.setText(item.getMsg());
-
         timeText.setText(activityUtil.getTimeAgo(new DateTime(Long.parseLong(item.getUpd())).getMillis()));
+
+        ImageUtil.displayRoundImage(item.getUrl().getPhoto(), userPhoto);
 
         return convertView;
     }
