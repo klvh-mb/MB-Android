@@ -43,9 +43,9 @@ public class NewsfeedListFragement extends Fragment {
 
         View view = inflater.inflate(R.layout.newsfeed_list_fragment, container, false);
 
-        feedItems = new ArrayList<CommunityPostVM>();
-
         loadingFooter = inflater.inflate(R.layout.list_loading_footer, null);
+
+        feedItems = new ArrayList<CommunityPostVM>();
 
         listView = (ListView) view.findViewById(R.id.list);
         listView.addFooterView(loadingFooter);      // need to add footer before set adapter
@@ -159,7 +159,7 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getUserQuestion(int offset,Long id) {
-        AppController.api.getUserPost(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>(){
+        AppController.api.getUserPosts(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>(){
             @Override
             public void success(PostArray array, Response response2) {
                 loadFeedItemsToList(array.getPosts());
@@ -173,7 +173,7 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getUserAnswer(int offset,Long id) {
-        AppController.api.getUserComment(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        AppController.api.getUserComments(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
 
             @Override
             public void success(PostArray array, Response response2) {
@@ -189,7 +189,7 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getBookmark(int offset) {
-        AppController.api.getBookmark(Long.valueOf(offset),AppController.getInstance().getSessionId(),new Callback<List<CommunityPostVM>>() {
+        AppController.api.getBookmarkedPosts(Long.valueOf(offset),AppController.getInstance().getSessionId(),new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> posts, Response response) {
                 loadFeedItemsToList(posts);

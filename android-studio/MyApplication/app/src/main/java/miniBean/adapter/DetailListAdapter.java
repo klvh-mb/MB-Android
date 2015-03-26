@@ -274,9 +274,6 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     private void loadImages(Long[] imageIds) {
         for (Long imageId : imageIds) {
-            final String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
-            Log.d(this.getClass().getSimpleName(), "loadImages: source - "+source);
-
             ImageView postImage = new ImageView(this.activity);
             postImage.setAdjustViewBounds(true);
             postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -292,8 +289,14 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             });
             */
 
-            //new LoadPostImage().execute(source, postImage);   // obsolete
-            ImageUtil.displayImage(source, postImage, new SimpleImageLoadingListener() {
+            // obsolete
+            /*
+            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
+            Log.d(this.getClass().getSimpleName(), "loadImages: source - "+source);
+            new LoadPostImage().execute(source, postImage);
+            */
+
+            ImageUtil.displayPostImage(imageId, postImage, new SimpleImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
 

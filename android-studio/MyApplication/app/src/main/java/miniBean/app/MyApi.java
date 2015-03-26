@@ -41,11 +41,12 @@ public interface MyApi {
     public void getMyCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
 
     @GET("/communityQnA/questions/{id}")
-    //a function in your api to get all the Newsfeed list of specific community
-    public void getCommNewsfeed(@Path("id") Long id, @Query("key") String key, Callback<PostArray> callback);
+    public void getCommunityInitialPosts(@Path("id") Long id, @Query("key") String key, Callback<PostArray> callback);
+
+    @GET("/communityQnA/questions/next/{id}/{time}")
+    public void getCommunityNextPosts(@Path("id") Long id, @Path("time") String time, @Query("key") String key, Callback<List<CommunityPostVM>> callback);
 
     @GET("/get-social-community-categories-map")
-    //a function in your api to get all the community categories (Topic Vise Communities ) list
     public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, @Query("key") String key, Callback<List<CommunityCategoryMapVM>> callback);
 
     @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
@@ -80,7 +81,6 @@ public interface MyApi {
     @GET("/get-headerBar-data")
     //a function in your api to get all header meta data (notifications and requests).
     public void getHeaderBarData(@Query("key") String key, Callback<HeaderDataVM> cb);
-
 
     //'/accept-friend-request?friend_id=:id&notify_id=:notify_id'
     @GET("/accept-friend-request") //a function in your api accept friend request.
@@ -125,20 +125,17 @@ public interface MyApi {
     public void deleteComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/get-user-newsfeeds-posts/{offset}/{id}")
-    public void getUserPost(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
+    public void getUserPosts(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
 
     @GET("/get-user-newsfeeds-comments/{offset}/{id}")
-    public void getUserComment(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
+    public void getUserComments(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
 
     @GET("/get-bookmarked-posts/{offset}")
-    public void getBookmark(@Path("offset") Long offset,@Query("key") String key, Callback<List<CommunityPostVM>> cb);
+    public void getBookmarkedPosts(@Path("offset") Long offset,@Query("key") String key, Callback<List<CommunityPostVM>> cb);
 
     @GET("/comments/{id}/{offset}")
     public void getComments(@Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
 
     @GET("/community/{id}")
     public void getCommunity(@Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
-
-    @GET("/questions")
-    public void getNextQuestions(@Query("id")Long comm_id,@Query("time") String time,@Query("key") String key,@Query("offset") int offset,Callback<List<CommunityPostVM>> callback);
 }

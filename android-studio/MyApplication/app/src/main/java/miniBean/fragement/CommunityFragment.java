@@ -54,13 +54,15 @@ public class CommunityFragment extends Fragment {
     private CommunitiesWidgetChildVM currentCommunity;
     private Long commId;
     private String commName;
-    private View view;
+    private View loadingFooter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        view = inflater.inflate(R.layout.community_fragment, container, false);
+        View view = inflater.inflate(R.layout.community_fragment, container, false);
+
+        loadingFooter = inflater.inflate(R.layout.list_loading_footer, null);
 
         communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
         communityIcon = (ImageView) view.findViewById(R.id.commIcon);
@@ -71,6 +73,7 @@ public class CommunityFragment extends Fragment {
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new NewsfeedListAdapter(getActivity(), feedItems, false);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
+        listView.addFooterView(loadingFooter);      // need to add footer before set adapter
         listView.setAdapter(feedListAdapter);
 
         listView.setFriction(ViewConfiguration.getScrollFriction() *
@@ -79,9 +82,6 @@ public class CommunityFragment extends Fragment {
         spinner = (ProgressBar) view.findViewById(R.id.loadCover);
         progressBar = (ProgressBar) view.findViewById(R.id.progressCommunity);
         progressBar.setVisibility(View.VISIBLE);
-
-        System.out.println("flagggg::::"+getArguments().getString("flag"));
-        System.out.println("idchecked 2::::"+Long.parseLong(getArguments().getString("id")));
 
         if(!getArguments().getString("flag").equals("FromDetailActivity")) {
             commId = Long.parseLong(getArguments().getString("id"));
@@ -103,15 +103,22 @@ public class CommunityFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
         listView.setOnScrollListener(new InfiniteScrollListener(
                 DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, true) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                System.out.println("pagecount::"+page);
-                loadNextNewsfeed(Long.parseLong(getArguments().getString("id")), feedItems.get(feedItems.size()-1).getT() +"", page-1);
+                loadingFooter.setVisibility(View.VISIBLE);
+                loadNewsfeed(Long.parseLong(getArguments().getString("id")), feedItems.get(feedItems.size()-1).getT()+"", page-1);
             }
         });
+
         return view;
+    }
+
+    private void setFooterText(int text) {
+        TextView footerText = (TextView) listView.findViewById(R.id.listLoadingFooterText);
+        footerText.setText(text);
     }
 
     private void setCurrentCommunity() {
@@ -198,7 +205,7 @@ public class CommunityFragment extends Fragment {
     }
 
     private void getNewsFeedByCommunityId(final CommunitiesWidgetChildVM community) {
-        AppController.api.getCommNewsfeed(community.id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        AppController.api.getCommunityInitialPosts(community.id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response) {
                 feedItems.addAll(array.getPosts());
@@ -258,6 +265,7 @@ public class CommunityFragment extends Fragment {
             }
         });
     }
+
     public void leaveCommunity(final CommunitiesWidgetChildVM communityVM, final ImageView joinImageView) {
         AppController.api.sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
@@ -275,13 +283,18 @@ public class CommunityFragment extends Fragment {
             }
         });
     }
-    public void loadNextNewsfeed(Long id,String date,int offset)
-    {
-        System.out.println("id:::::"+id);
-        System.out.println("offset:::::"+offset);
-        AppController.api.getNextQuestions(id, date, AppController.getInstance().getSessionId(), offset, new Callback<List<CommunityPostVM>>() {
+
+    public void loadNewsfeed(Long id, String date, int offset) {
+        AppController.api.getCommunityNextPosts(id, date, AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> communityPostVMs, Response response) {
+                Log.d(CommunityFragment.this.getClass().getSimpleName(), "loadNewsfeed.success: communityPostVMs.size="+communityPostVMs.size());
+                if (communityPostVMs == null || communityPostVMs.size() == 0) {
+                    setFooterText(R.string.list_loaded_all);
+                } else {
+                    setFooterText(R.string.list_loading);
+                }
+
                 feedItems.addAll(communityPostVMs);
                 feedListAdapter.notifyDataSetChanged();
             }

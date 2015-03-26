@@ -24,6 +24,7 @@ public class ImageUtil {
     public static final String PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-profile-image-by-id/";
     public static final String THUMBNAIL_PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-thumbnail-image-by-id/";
     public static final String MINI_PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-mini-image-by-id/";
+    public static final String POST_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-original-post-image-by-id/";
 
     public static DisplayImageOptions DEFAULT_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
@@ -131,6 +132,16 @@ public class ImageUtil {
 
     public static void displayMiniProfileImage(long id, ImageView imageView, ImageLoadingListener listener) {
         ImageLoader.getInstance().displayImage(MINI_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUND_IMAGE_OPTIONS, listener);
+    }
+
+    // Post image
+
+    public static void displayPostImage(long id, ImageView imageView) {
+        getImageLoader().displayImage(POST_IMAGE_BY_ID_URL + id, imageView);
+    }
+
+    public static void displayPostImage(long id, ImageView imageView, ImageLoadingListener listener) {
+        getImageLoader().displayImage(POST_IMAGE_BY_ID_URL + id, imageView, listener);
     }
 
     // Generic
