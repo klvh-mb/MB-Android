@@ -95,29 +95,9 @@ public class NewPostActivity extends FragmentActivity {
         }
 
         backImage.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(NewPostActivity.this);
-                builder.setMessage("Do you Want Leave The Post Window..?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                onBackPressed();
-                                /*Intent intent=new Intent(PostActivity.this,CommunityActivity.class);
-                                intent.putExtra("id",getArguments().getString("id"));
-                                intent.putExtra("commName",getArguments().getString("commName"));
-                                intent.putExtra("flag","FromPostFragment");
-                                startActivity(intent);*/
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
+                onBackPressed();
             }
         });
 
@@ -260,7 +240,21 @@ public class NewPostActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        AlertDialog.Builder builder = new AlertDialog.Builder(NewPostActivity.this);
+        builder.setMessage(getString(R.string.cancel_new_post))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        NewPostActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
         return;
     }
 }

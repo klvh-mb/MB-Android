@@ -89,10 +89,11 @@
     <!-- PN tab -->
 
     <!-- Dialog -->
+    <string name="cancel_new_post">退出發佈話題?</string>
     <string name="exit_app">是否退出 miniBean小萌豆?</string>
     <string name="logout_message">確定登出?</string>
     <string name="yes">是</string>
-    <string name="no">不是</string>
+    <string name="no">取消</string>
     <string name="confirm">確定</string>
     <string name="cancel">取消</string>
 
