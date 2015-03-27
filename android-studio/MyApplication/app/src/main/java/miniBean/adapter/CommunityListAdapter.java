@@ -29,11 +29,15 @@ public class CommunityListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (communityItems == null)
+            return 0;
         return communityItems.size();
     }
 
     @Override
     public CommunitiesWidgetChildVM getItem(int location) {
+        if (communityItems == null || location > communityItems.size()-1)
+            return null;
         return communityItems.get(location);
     }
 

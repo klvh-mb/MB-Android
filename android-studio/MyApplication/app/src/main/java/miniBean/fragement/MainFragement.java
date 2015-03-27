@@ -75,10 +75,11 @@ class MyPagerAdapter extends FragmentPagerAdapter {
 
     public MyPagerAdapter(FragmentManager fm) {
         super(fm);
+
         TITLES = new String[LocalCache.getCommunityCategoryMapList().size()]; // TODO
         int index = 0;
-        for (CommunityCategoryMapVM _topic : LocalCache.getCommunityCategoryMapList()) {
-            TITLES[index++] = _topic.getName();
+        for (CommunityCategoryMapVM topic : LocalCache.getCommunityCategoryMapList()) {
+            TITLES[index++] = topic.getName();
         }
     }
 
@@ -104,5 +105,4 @@ class MyPagerAdapter extends FragmentPagerAdapter {
                 return topicFragment;
         }
     }
-
 }

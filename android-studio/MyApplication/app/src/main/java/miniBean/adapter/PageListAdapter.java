@@ -30,11 +30,15 @@ public class PageListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (list == null)
+            return 0;
         return list.size();
     }
 
     @Override
     public String getItem(int location) {
+        if (list == null || location > list.size()-1)
+            return null;
         return list.get(location);
     }
 

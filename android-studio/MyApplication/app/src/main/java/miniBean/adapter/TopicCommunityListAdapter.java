@@ -45,6 +45,8 @@ public class TopicCommunityListAdapter extends BaseAdapter {
 
     @Override
     public CommunitiesWidgetChildVM getItem(int location) {
+        if (communities == null || location > communities.size()-1)
+            return null;
         return communities.get(location);
     }
 

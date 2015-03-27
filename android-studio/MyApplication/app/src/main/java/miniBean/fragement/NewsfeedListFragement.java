@@ -59,9 +59,11 @@ public class NewsfeedListFragement extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 CommunityPostVM post = (CommunityPostVM) listAdapter.getItem(position);
-                intent.putExtra("postId", post.getId());
-                intent.putExtra("commId", post.getCid());
-                startActivity(intent);
+                if (post != null) {
+                    intent.putExtra("postId", post.getId());
+                    intent.putExtra("commId", post.getCid());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -159,11 +161,12 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getUserQuestion(int offset,Long id) {
-        AppController.api.getUserPosts(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>(){
+        AppController.api.getUserPosts(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response2) {
                 loadFeedItemsToList(array.getPosts());
             }
+
             @Override
             public void failure(RetrofitError error) {
                 setFooterText(R.string.list_loading_error);
@@ -189,7 +192,7 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getBookmark(int offset) {
-        AppController.api.getBookmarkedPosts(Long.valueOf(offset),AppController.getInstance().getSessionId(),new Callback<List<CommunityPostVM>>() {
+        AppController.api.getBookmarkedPosts(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> posts, Response response) {
                 loadFeedItemsToList(posts);

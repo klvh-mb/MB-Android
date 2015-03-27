@@ -1,11 +1,14 @@
 package miniBean.fragement;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.CommunityActivity;
 import miniBean.adapter.NotificationListAdapter;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
@@ -64,6 +68,16 @@ public class NotificationListFragment extends Fragment {
 
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NotificationVM item = adapter.getItem(position);
+                if (item != null) {
+
+                }
+            }
+        });
 
         return view;
     }

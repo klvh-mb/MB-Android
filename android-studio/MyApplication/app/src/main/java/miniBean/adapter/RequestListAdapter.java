@@ -44,6 +44,8 @@ public class RequestListAdapter extends BaseAdapter {
 
     @Override
     public NotificationVM getItem(int location) {
+        if (requestItems == null || location > requestItems.size()-1)
+            return null;
         return requestItems.get(location);
     }
 

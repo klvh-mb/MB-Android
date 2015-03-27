@@ -3,6 +3,7 @@ package miniBean.fragement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -45,22 +46,23 @@ public class TopicCommunityFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), CommunityActivity.class);
-
                 String noPost = "-";
 
-                CommunitiesWidgetChildVM childVM = topicAdapter.getItem(position - 1);
+                position = position - 1;    // offset by header
+                CommunitiesWidgetChildVM childVM = topicAdapter.getItem(position);
+                if (childVM != null) {
+                    Intent intent = new Intent(getActivity(), CommunityActivity.class);
+                    intent.putExtra("id", childVM.getId().toString());
+                    intent.putExtra("noMember", childVM.getMm().toString());
+                    intent.putExtra("noPost", noPost);
+                    intent.putExtra("commName", childVM.getDn());
+                    intent.putExtra("icon", childVM.getGi());
+                    intent.putExtra("isM", childVM.getIsM());
+                    intent.putExtra("flag", "FromTopicFragment");
+                    startActivity(intent);
 
-                intent.putExtra("id", childVM.getId().toString());
-                intent.putExtra("noMember", childVM.getMm().toString());
-                intent.putExtra("noPost", noPost);
-                intent.putExtra("commName", childVM.getDn());
-                intent.putExtra("icon", childVM.getGi());
-                intent.putExtra("isM", childVM.getIsM());
-                intent.putExtra("flag","FromTopicFragment");
-                startActivity(intent);
-
-                // getFragmentManager().beginTransaction().remove(TopicFragment.this).commit();
+                    // getFragmentManager().beginTransaction().remove(TopicFragment.this).commit();
+                }
             }
         });
 

@@ -48,11 +48,15 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (feedItems == null)
+            return 0;
         return feedItems.size();
     }
 
     @Override
     public CommunityPostVM getItem(int location) {
+        if (feedItems == null || location > feedItems.size()-1)
+            return null;
         return feedItems.get(location);
     }
 

@@ -86,6 +86,8 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
 
     @Override
     public CommunityPostCommentVM getItem(int location) {
+        if (postComments == null || location > postComments.size()-1)
+            return null;
         return postComments.get(location);
     }
 

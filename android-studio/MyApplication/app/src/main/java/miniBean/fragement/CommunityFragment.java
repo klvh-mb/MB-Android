@@ -96,11 +96,12 @@ public class CommunityFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 CommunityPostVM post = feedListAdapter.getItem(position);
-                intent.putExtra("postId", post.getId());
-                intent.putExtra("commId", post.getCid());
-                intent.putExtra("comments", post.getN_c());
-
-                startActivity(intent);
+                if (post != null) {
+                    intent.putExtra("postId", post.getId());
+                    intent.putExtra("commId", post.getCid());
+                    intent.putExtra("comments", post.getN_c());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -214,7 +215,7 @@ public class CommunityFragment extends Fragment {
                 feedItems.addAll(array.getPosts());
                 feedListAdapter.notifyDataSetChanged();
                 commNameText.setText(community.dn);
-                numMemberText.setText(community.mm+"");
+                numMemberText.setText(community.mm + "");
 
                 ImageUtil.displayCommunityCoverImage(Long.parseLong(getArguments().getString("id")), communityCoverPic, new SimpleImageLoadingListener() {
                     @Override
@@ -291,7 +292,7 @@ public class CommunityFragment extends Fragment {
         AppController.api.getCommunityNextPosts(id, date, AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> communityPostVMs, Response response) {
-                Log.d(CommunityFragment.this.getClass().getSimpleName(), "loadNewsfeed.success: communityPostVMs.size="+communityPostVMs.size());
+                Log.d(CommunityFragment.this.getClass().getSimpleName(), "loadNewsfeed.success: communityPostVMs.size=" + communityPostVMs.size());
                 if (communityPostVMs == null || communityPostVMs.size() == 0) {
                     setFooterText(R.string.list_loaded_all);
                 } else {

@@ -37,11 +37,15 @@ public class NotificationListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (notificationItems == null)
+            return 0;
         return notificationItems.size();
     }
 
     @Override
     public NotificationVM getItem(int location) {
+        if (notificationItems == null || location > notificationItems.size()-1)
+            return null;
         return notificationItems.get(location);
     }
 

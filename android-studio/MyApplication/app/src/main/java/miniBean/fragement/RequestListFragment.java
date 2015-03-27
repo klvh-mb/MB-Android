@@ -3,6 +3,7 @@ package miniBean.fragement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -70,24 +71,24 @@ public class RequestListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               NotificationVM item = (NotificationVM)adapter.getItem(position);
+                NotificationVM item = adapter.getItem(position);
+                if (item != null) {
+                    if (item.getTp().equals("COMM_JOIN_APPROVED")) {
+                        Intent intent = new Intent(getActivity(), CommunityActivity.class);
+                        intent.putExtra("id", item.getUrl().getTarget().toString());
+                        intent.putExtra("flag", "FromRequest");
+                        startActivity(intent);
+                    }
 
-               if(item.getTp().equals("COMM_JOIN_APPROVED")) {
-                   Intent intent = new Intent(getActivity(), CommunityActivity.class);
-                   intent.putExtra("id",item.getUrl().getTarget().toString());
-                   intent.putExtra("flag","FromRequest");
-                   startActivity(intent);
-               }
-               /* if(item.getTp().equals("FRD_REQUEST")){
-                    System.out.println("::::::frnd");
-                   Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-                    intent.putExtra("id",item.getUrl().getTarget().toString());
-                    startActivity(intent);
-
-
-               }*/
+                    /*if(item.getTp().equals("FRD_REQUEST")){
+                        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                        intent.putExtra("id",item.getUrl().getTarget().toString());
+                        startActivity(intent);
+                    }*/
+                }
             }
         });
+
         return view;
     }
 
