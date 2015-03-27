@@ -6,24 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import miniBean.R;
 
-public class PageListAdapter extends BaseAdapter {
-    ArrayList<String> list;
-    TextView username, message, page;
-    ImageView userPhoto;
-    Button acceptButton, ignoreButton;
+public class PopupPageListAdapter extends BaseAdapter {
+    private List<String> list;
+    private TextView page;
     private Activity activity;
 
     private LayoutInflater inflater;
 
-    public PageListAdapter(Activity activity, ArrayList<String> list) {
+    public PopupPageListAdapter(Activity activity, List<String> list) {
         this.activity = activity;
         this.list = list;
     }
@@ -51,22 +47,16 @@ public class PageListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, final ViewGroup parent) {
 
         if (inflater == null)
-            inflater = (LayoutInflater) activity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null)
-            convertView = inflater.inflate(R.layout.page_item, null);
+            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        message = (TextView) convertView.findViewById(R.id.requestText);
-        userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
-        acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
-        ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
-        page= (TextView) convertView.findViewById(R.id.pageText);
+        if (convertView == null)
+            convertView = inflater.inflate(R.layout.pagination_popup_item, null);
 
         String item = list.get(position);
 
+        page = (TextView) convertView.findViewById(R.id.pageText);
         page.setText(item);
+
         return convertView;
-
     }
-
 }

@@ -25,13 +25,13 @@ public class CommunityActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.community_actionbar);
         backImage = (ImageView) this.findViewById(R.id.backImage);
-        titleAction= (TextView) this.findViewById(R.id.title);
-        editAction= (ImageView) this.findViewById(R.id.editAction);
+        titleAction = (TextView) this.findViewById(R.id.title);
+        editAction = (ImageView) this.findViewById(R.id.editAction);
 
         Intent intent = getIntent();
 
         System.out.println("flag comm::"+intent.getStringExtra("flag"));
-        if(intent.getStringExtra("flag")!=null) {
+        if(intent.getStringExtra("flag") != null) {
             System.out.println("flag:::::::" + intent.getStringExtra("flag").toString());
         }
 
@@ -61,15 +61,6 @@ public class CommunityActivity extends FragmentActivity {
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Bundle bundle = new Bundle();
-                bundle.putString("id",getIntent().getStringExtra("id"));
-                bundle.putString("commName", getIntent().getStringExtra("commName"));
-
-                PostFragment fragment = new PostFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.children_layout, fragment).commit();*/
-
                 Intent intent=new Intent(CommunityActivity.this,NewPostActivity.class);
                 intent.putExtra("id",getIntent().getStringExtra("id"));
                 intent.putExtra("commName", getIntent().getStringExtra("commName"));

@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:background="@color/light_purple_3"
+    android:layout_width="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/commIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="false"
+        android:background="@drawable/image_round_thin"
+        android:layout_toRightOf="@+id/newPostToText"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="false"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/communityName"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="false"
+        android:layout_marginLeft="3dp"
+        android:text="@string/tabset_communities"
+        android:textColor="@color/dark_gray3"
+        android:textSize="16dp"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@+id/commIcon" />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

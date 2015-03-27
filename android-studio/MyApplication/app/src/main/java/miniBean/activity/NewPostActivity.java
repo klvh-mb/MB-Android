@@ -2,27 +2,41 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import miniBean.R;
+import miniBean.adapter.PopupMyCommunityListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.LocalCache;
 import miniBean.util.ActivityUtil;
+import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
+import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostResponse;
 import retrofit.Callback;
@@ -31,12 +45,21 @@ import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
 public class NewPostActivity extends FragmentActivity {
+    private RelativeLayout communityLayout;
+    private TextView communityName;
+    private ImageView communityIcon;
     private ImageView backImage, postImage, browseImage;
     private Boolean isPhoto = false;
     private final Integer SELECT_PICTURE = 1;
-    private TextView postTitle,postContent,post;
+    private TextView postTitle, postContent, post;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
+
+    private Long communityId;
+    private PopupWindow myCommunityPopup;
+    private PopupMyCommunityListAdapter adapter;
+
+    private ActivityUtil activityUtil;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,15 +67,32 @@ public class NewPostActivity extends FragmentActivity {
 
         setContentView(R.layout.new_post);
 
+        activityUtil = new ActivityUtil(this);
+
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.new_post_actionbar);
 
-        backImage= (ImageView) findViewById(R.id.backImage);
+        // init my comms if not yet...
+        if (LocalCache.getMyCommunitiesParentVM() == null)
+            LocalCache.refreshMyCommunities();
+
+        backImage = (ImageView) findViewById(R.id.backImage);
         post = (TextView) findViewById(R.id.titlePost);
+        communityLayout = (RelativeLayout) findViewById(R.id.communityLayout);
+        communityIcon = (ImageView) findViewById(R.id.commIcon);
+        communityName = (TextView) findViewById(R.id.communityName);
         browseImage = (ImageView) findViewById(R.id.browseImage);
         postImage = (ImageView) findViewById(R.id.postImage);
-        postTitle= (TextView) findViewById(R.id.postTitle);
-        postContent= (TextView) findViewById(R.id.postContent);
+        postTitle = (TextView) findViewById(R.id.postTitle);
+        postContent = (TextView) findViewById(R.id.postContent);
+
+        communityId = Long.parseLong(getIntent().getStringExtra("id"));
+        Log.d(this.getClass().getSimpleName(), "onCreate: communityId="+communityId);
+        if (communityId == null) {
+            communityLayout.setVisibility(View.VISIBLE);
+        } else {
+            communityLayout.setVisibility(View.GONE);
+        }
 
         backImage.setOnClickListener(new View.OnClickListener() {
 
@@ -63,13 +103,12 @@ public class NewPostActivity extends FragmentActivity {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                    onBackPressed();
-                             /*   Intent intent=new Intent(PostActivity.this,CommunityActivity.class);
+                                onBackPressed();
+                                /*Intent intent=new Intent(PostActivity.this,CommunityActivity.class);
                                 intent.putExtra("id",getArguments().getString("id"));
                                 intent.putExtra("commName",getArguments().getString("commName"));
                                 intent.putExtra("flag","FromPostFragment");
                                 startActivity(intent);*/
-
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -79,7 +118,6 @@ public class NewPostActivity extends FragmentActivity {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
-
             }
         });
 
@@ -97,11 +135,10 @@ public class NewPostActivity extends FragmentActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = postTitle.getText().toString();
-                String content = postContent.getText().toString();
-
-                if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(content)) {
-                    doPost(title, content);
+                if (communityId == null) {
+                    initiateMyCommunityPopup();
+                } else {
+                    doPost();
                 }
             }
         });
@@ -126,9 +163,59 @@ public class NewPostActivity extends FragmentActivity {
         }
     }
 
-    public void doPost(String title, String content) {
-        Log.d(this.getClass().getSimpleName(), "doPost: userId=" + AppController.getUser().getId() + " title=" + title);
-        AppController.api.setQuestion(new NewPost(Long.parseLong(getIntent().getStringExtra("id")), title, content, isPhoto), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
+    private void initiateMyCommunityPopup() {
+        // should never be the case...
+        if (LocalCache.getMyCommunitiesParentVM() == null)
+            return;
+
+        try {
+            LayoutInflater inflater = (LayoutInflater) NewPostActivity.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View layout = inflater.inflate(R.layout.my_community_popup_window,
+                    (ViewGroup) findViewById(R.id.popupElement));
+
+            myCommunityPopup = new PopupWindow(
+                    layout,
+                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH),
+                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT),
+                    true);
+            myCommunityPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
+            myCommunityPopup.setOutsideTouchable(false);
+            myCommunityPopup.setFocusable(true);
+            myCommunityPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            ListView listView = (ListView) layout.findViewById(R.id.communityList);
+            adapter = new PopupMyCommunityListAdapter(this, LocalCache.getMyCommunitiesParentVM().communities);
+            listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    CommunitiesWidgetChildVM community = adapter.getItem(position);
+                    communityId = community.getId();
+                    Log.d(this.getClass().getSimpleName(), "listView.onItemClick: community="+community.getId()+"|"+community.getDn());
+                    doPost();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void doPost() {
+        String title = postTitle.getText().toString();
+        String content = postContent.getText().toString();
+
+        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(content))
+            return;
+
+        // should never be the case...
+        if (communityId == null)
+            return;
+
+        Log.d(this.getClass().getSimpleName(), "doPost: communityId=" + communityId + " title=" + title);
+        AppController.api.setQuestion(new NewPost(communityId, title, content, isPhoto), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
                 if (isPhoto) {
@@ -150,15 +237,18 @@ public class NewPostActivity extends FragmentActivity {
                 error.printStackTrace();
             }
         });
+
+        if (myCommunityPopup != null)
+            myCommunityPopup.dismiss();
     }
 
-    public void uploadPhoto(String postId) {
+    private void uploadPhoto(String postId) {
         File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.api.uploadPostPhoto(postId, typedFile, new Callback<Response>() {
             @Override
             public void success(Response array, retrofit.client.Response response) {
-                System.out.println("Response:::::::" + array);
+
             }
 
             @Override

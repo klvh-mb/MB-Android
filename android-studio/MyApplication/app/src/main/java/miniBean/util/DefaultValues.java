@@ -22,6 +22,9 @@ public class DefaultValues {
     public static int PAGINATION_POPUP_WIDTH = 150;
     public static int PAGINATION_POPUP_HEIGHT = 300;
 
+    public static int MY_COMMUNITY_POPUP_WIDTH = 250;
+    public static int MY_COMMUNITY_POPUP_HEIGHT = 350;
+
     public static int IMAGE_CORNERS_ROUNDED_VALUE = 38;
     public static int IMAGE_ROUND_ROUNDED_VALUE = 120;
 

@@ -33,7 +33,7 @@
                     android:textSize="15dp"
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
-                    android:id="@+id/fromCommunityText" />
+                    android:id="@+id/newPostToText" />
 
                 <ImageView
                     android:id="@+id/commIcon"
@@ -41,7 +41,7 @@
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="false"
                     android:background="@drawable/image_round_thin"
-                    android:layout_toRightOf="@+id/fromCommunityText"
+                    android:layout_toRightOf="@+id/newPostToText"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="false"
                     android:layout_marginLeft="5dp" />

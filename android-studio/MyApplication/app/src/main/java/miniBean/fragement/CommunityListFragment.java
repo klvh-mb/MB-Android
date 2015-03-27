@@ -86,26 +86,9 @@ public class CommunityListFragment extends Fragment {
             notifyChange(LocalCache.getMyCommunitiesParentVM().getCommunities());
         } else {
             LocalCache.refreshMyCommunities();
-            //getMyCommunities();
         }
 
         return view;
-    }
-
-    private void getMyCommunities() {
-        AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>() {
-            @Override
-            public void success(CommunitiesParentVM array, retrofit.client.Response response) {
-                LocalCache.setMyCommunitiesParentVM(array);
-                notifyChange(array.communities);
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-
-            }
-        });
     }
 
     public void notifyChange(List<CommunitiesWidgetChildVM> communities) {

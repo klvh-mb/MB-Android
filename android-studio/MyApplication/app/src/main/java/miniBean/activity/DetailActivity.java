@@ -33,13 +33,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
-import miniBean.adapter.PageListAdapter;
+import miniBean.adapter.PopupPageListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
@@ -67,7 +69,7 @@ public class DetailActivity extends FragmentActivity {
     private Uri selectedImageUri = null;
     private ListView listView;
     private DetailListAdapter listAdapter;
-    private PageListAdapter pageAdapter;
+    private PopupPageListAdapter pageAdapter;
     private List<CommunityPostCommentVM> communityItems;
     private TextView questionText;
     private PopupWindow commentPopup, paginationPopup;
@@ -76,6 +78,7 @@ public class DetailActivity extends FragmentActivity {
     private Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
     private ImageView communityIcon;
+    private EditText commentEditText;
     private int noOfComments;
     private int curPage = 1;
     private CommunityPostCommentVM postVm = new CommunityPostCommentVM();
@@ -101,6 +104,7 @@ public class DetailActivity extends FragmentActivity {
         pageButton = (Button) findViewById(R.id.page);
         backButton = (ImageButton) findViewById(R.id.back);
         nextButton = (ImageButton) findViewById(R.id.next);
+        commentEditText = (EditText) findViewById(R.id.commentEditText);
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
 
@@ -232,10 +236,9 @@ public class DetailActivity extends FragmentActivity {
             mainFrameLayout.getForeground().setAlpha(20);
             mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
 
-            //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) DetailActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //Inflate the view from a predefined XML layout
+
             View layout = inflater.inflate(R.layout.comment_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
 
@@ -258,17 +261,12 @@ public class DetailActivity extends FragmentActivity {
 
             activityUtil.popupInputMethodWindow();
 
-            final EditText commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
             TextView postButton = (TextView) layout.findViewById(R.id.postButton);
             postButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String commentString = commentEditText.getText().toString();
-
-                    if (!commentString.equals("")) {
-                        doComment(commentString);
-                        commentPopup.dismiss();
-                    }
+                    doComment();
+                    commentPopup.dismiss();
                 }
             });
 
@@ -325,8 +323,12 @@ public class DetailActivity extends FragmentActivity {
         }
     }
 
-    private void doComment(String comment) {
-        Log.d(this.getClass().getSimpleName(), "doComment: userId="+AppController.getUser().getId()+" comment="+comment.substring(0, Math.min(5, comment.length())));
+    private void doComment() {
+        String comment = commentEditText.getText().toString();
+        if (StringUtils.isEmpty(comment))
+            return;
+
+        Log.d(this.getClass().getSimpleName(), "doComment: postId="+getIntent().getLongExtra("postId", 0L)+" comment="+comment.substring(0, Math.min(5, comment.length())));
         AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, Response response) {
@@ -347,7 +349,7 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    public void uploadPhoto(String commentId) {
+    private void uploadPhoto(String commentId) {
         File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.api.uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
@@ -390,7 +392,7 @@ public class DetailActivity extends FragmentActivity {
             for (int i = 0; i < getMaxPage(); i++) {
                 stringArrayList.add(getString(R.string.page_before)+(i+1)+getString(R.string.page_after));
             }
-            pageAdapter = new PageListAdapter(this,stringArrayList);
+            pageAdapter = new PopupPageListAdapter(this,stringArrayList);
             listView1.setAdapter(pageAdapter);
 
             listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -470,7 +472,7 @@ public class DetailActivity extends FragmentActivity {
         return (int)Math.ceil((double)noOfComments / (double)DefaultValues.DEFAULT_PAGINATION_COUNT);
     }
 
-    public void bookmark(Long postId) {
+    private void bookmark(Long postId) {
         AppController.api.setBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -484,7 +486,7 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    public void unbookmark(Long postId) {
+    private void unbookmark(Long postId) {
         AppController.api.setUnBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -523,7 +525,7 @@ public class DetailActivity extends FragmentActivity {
         }
     }
 
-    public void getComments(Long postID, final int offset) {
+    private void getComments(Long postID, final int offset) {
         AppController.api.getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
