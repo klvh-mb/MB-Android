@@ -1,5 +1,12 @@
 package miniBean.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -15,6 +22,9 @@ import miniBean.app.AppController;
  * Created by keithlei on 3/16/15.
  */
 public class ImageUtil {
+
+    public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 350;
+    public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 350;
 
     public static final String COMMUNITY_COVER_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-cover-community-image-by-id/";
     public static final String THUMBNAIL_COMMUNITY_COVER_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-thumbnail-cover-community-image-by-id/";
@@ -168,5 +178,50 @@ public class ImageUtil {
         if (!url.startsWith(AppController.BASE_URL))
             url = AppController.BASE_URL + url;
         ImageLoader.getInstance().displayImage(url, imageView, ROUND_IMAGE_OPTIONS);
+    }
+
+    // Select photo
+
+    public static String getRealPathFromUri(Context context, Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    public static Bitmap resizeAsPreviewThumbnail(String path) {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        Bitmap bp = BitmapFactory.decodeFile(path, opts);
+
+        int orignalHeight = opts.outHeight;
+        int orignalWidth = opts.outWidth;
+        int resizeScale = 1;
+
+        if ( orignalWidth > PREVIEW_THUMBNAIL_MAX_WIDTH || orignalHeight > PREVIEW_THUMBNAIL_MAX_HEIGHT ) {
+            final int widthRatio = Math.round((float) orignalWidth / (float) PREVIEW_THUMBNAIL_MAX_WIDTH);
+            final int heightRatio = Math.round((float) orignalHeight / (float) PREVIEW_THUMBNAIL_MAX_HEIGHT);
+            resizeScale = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+
+        // put the scale instruction (1 -> scale to (1/1); 8-> scale to 1/8)
+        opts.inSampleSize = resizeScale;
+        opts.inJustDecodeBounds = false;
+
+        int bmSize = (orignalWidth / resizeScale) * (orignalHeight / resizeScale) * 4;
+        if ( Runtime.getRuntime().freeMemory() > bmSize ) {
+            bp = BitmapFactory.decodeFile(path, opts);
+        } else {
+            return null;
+        }
+        return bp;
     }
 }

@@ -21,7 +21,8 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColorHint="@color/gray"
-        android:singleLine="true" />
+        android:singleLine="false"
+        android:maxLines="2" />
     </RelativeLayout>
     <View
         android:id="@+id/divider"
@@ -56,15 +57,14 @@
     <RelativeLayout
         android:layout_below="@+id/postLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="120dp">
     <ImageView
-        android:scaleType="fitXY"
-        android:id="@+id/image"
+        android:id="@+id/postImage"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_width="80dp"
+        android:layout_width="120dp"
         android:layout_height="fill_parent"
-        />
+        android:visibility="visible" />
     <ImageView
         android:id="@+id/browseImage"
         android:layout_centerVertical="true"

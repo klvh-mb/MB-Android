@@ -2,14 +2,14 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +21,8 @@ import java.io.File;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.ActivityUtil;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostResponse;
 import retrofit.Callback;
@@ -29,27 +31,12 @@ import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
 public class NewPostActivity extends FragmentActivity {
-    private ImageView backImage, image, postImage;
+    private ImageView backImage, postImage, browseImage;
     private Boolean isPhoto = false;
     private final Integer SELECT_PICTURE = 1;
     private TextView postTitle,postContent,post;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
-
-    public static String getRealPathFromUri(Context context, Uri contentUri) {
-        Cursor cursor = null;
-        try {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,9 +48,9 @@ public class NewPostActivity extends FragmentActivity {
         getActionBar().setCustomView(R.layout.new_post_actionbar);
 
         backImage= (ImageView) findViewById(R.id.backImage);
-        post= (TextView) findViewById(R.id.titlePost);
-        postImage= (ImageView) findViewById(R.id.browseImage);
-        image= (ImageView) findViewById(R.id.image);
+        post = (TextView) findViewById(R.id.titlePost);
+        browseImage = (ImageView) findViewById(R.id.browseImage);
+        postImage = (ImageView) findViewById(R.id.postImage);
         postTitle= (TextView) findViewById(R.id.postTitle);
         postContent= (TextView) findViewById(R.id.postContent);
 
@@ -96,7 +83,7 @@ public class NewPostActivity extends FragmentActivity {
             }
         });
 
-        postImage.setOnClickListener(new View.OnClickListener() {
+        browseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -111,7 +98,7 @@ public class NewPostActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 String title = postTitle.getText().toString();
-                String content=postContent.getText().toString();
+                String content = postContent.getText().toString();
 
                 if (!StringUtils.isEmpty(title) && !StringUtils.isEmpty(content)) {
                     doPost(title, content);
@@ -123,51 +110,50 @@ public class NewPostActivity extends FragmentActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SELECT_PICTURE) {
+            if (data == null)
+                return;
+
             selectedImageUri = data.getData();
-            selectedImagePath = getPath(selectedImageUri);
-            selectedImageUri.getPath();
-            image.setImageURI(selectedImageUri);
+            selectedImagePath = ImageUtil.getRealPathFromUri(this, selectedImageUri);
+
+            String path = selectedImageUri.getPath();
+            Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
+            Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
+            if (bp != null) {
+                postImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+                postImage.setVisibility(View.VISIBLE);
+            }
         }
     }
 
-    public String getPath(Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = this.managedQuery(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-
-    public void doPost(String postString,String postContent) {
-        System.out.println("dopost id::"+Long.parseLong(getIntent().getStringExtra("id")));
-
-        AppController.api.setQuestion(new NewPost(Long.parseLong(getIntent().getStringExtra("id")),postString,postContent,isPhoto),AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
+    public void doPost(String title, String content) {
+        Log.d(this.getClass().getSimpleName(), "doPost: userId=" + AppController.getUser().getId() + " title=" + title);
+        AppController.api.setQuestion(new NewPost(Long.parseLong(getIntent().getStringExtra("id")), title, content, isPhoto), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
                 if (isPhoto) {
                     uploadPhoto(postResponse.getId());
                 }
                 onBackPressed();
-                Toast.makeText(NewPostActivity.this, "Post Successful...!!!", Toast.LENGTH_SHORT).show();
-              /*  Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
+                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_SHORT).show();
+
+                /*  Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
                 intent.putExtra("id",getIntent().getLongExtra("id",0l));
                 intent.putExtra("commName",getIntent().getStringExtra("commName"));
                 intent.putExtra("flag","FromPostFragment");
                 startActivity(intent);*/
-
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(NewPostActivity.this, "Post Failure...!!!", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_failed), Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
             }
         });
     }
 
     public void uploadPhoto(String postId) {
-        File photo = new File(getRealPathFromUri(NewPostActivity.this, selectedImageUri));
+        File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.api.uploadPostPhoto(postId, typedFile, new Callback<Response>() {
             @Override

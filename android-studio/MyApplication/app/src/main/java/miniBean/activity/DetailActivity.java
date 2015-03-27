@@ -3,13 +3,13 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,8 +32,6 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -64,7 +62,7 @@ public class DetailActivity extends FragmentActivity {
     private ImageButton backButton, nextButton;
     private ImageView backImage, bookmarkAction, moreAction;
     private TextView commentEdit;
-    private ImageView image;
+    private ImageView commentImage;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
     private ListView listView;
@@ -84,21 +82,6 @@ public class DetailActivity extends FragmentActivity {
 
     private ActivityUtil activityUtil;
 
-    public static String getRealPathFromUri(Context context, Uri contentUri) {
-        Cursor cursor = null;
-        try {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +97,7 @@ public class DetailActivity extends FragmentActivity {
 
         listView = (ListView) findViewById(R.id.detail_list);
         questionText = (TextView) findViewById(R.id.questionText);
-        commentEdit = (TextView) findViewById(R.id.commentBody);
+        commentEdit = (TextView) findViewById(R.id.commentEdit);
         pageButton = (Button) findViewById(R.id.page);
         backButton = (ImageButton) findViewById(R.id.back);
         nextButton = (ImageButton) findViewById(R.id.next);
@@ -283,21 +266,22 @@ public class DetailActivity extends FragmentActivity {
                     String commentString = commentEditText.getText().toString();
 
                     if (!commentString.equals("")) {
-                        answerQuestion(commentString);
+                        doComment(commentString);
                         commentPopup.dismiss();
                     }
                 }
             });
+
             ImageView cancelButton = (ImageView) layout.findViewById(R.id.cancelButton);
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("cancelbutton");
                     commentPopup.dismiss();
                 }
             });
-            ImageView imageButton = (ImageView) layout.findViewById(R.id.imageButton);
-            imageButton.setOnClickListener(new View.OnClickListener() {
+
+            ImageView browseImage = (ImageView) layout.findViewById(R.id.browseImage);
+            browseImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
@@ -305,13 +289,11 @@ public class DetailActivity extends FragmentActivity {
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
                     isPhoto = true;
-
                 }
             });
 
-            image = (ImageView) layout.findViewById(R.id.postImage);
-            System.out.println("Image Path : " + selectedImagePath);
-
+            commentImage = (ImageView) layout.findViewById(R.id.commentImage);
+            Log.d(this.getClass().getSimpleName(), "initiateCommentPopup: "+selectedImagePath);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -319,49 +301,54 @@ public class DetailActivity extends FragmentActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == SELECT_PICTURE) {
             if (data == null)
                 return;
 
             selectedImageUri = data.getData();
-            selectedImagePath = getPath(selectedImageUri);
-            selectedImageUri.getPath();
-            image.setImageURI(selectedImageUri);
+            selectedImagePath = ImageUtil.getRealPathFromUri(this, selectedImageUri);
+
+            String path = selectedImageUri.getPath();
+            Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
+            Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
+            if (bp != null) {
+                commentImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+                commentImage.setVisibility(View.VISIBLE);
+            }
+
+            // pop back soft keyboard
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    activityUtil.popupInputMethodWindow();
+                }
+            }, 10);
         }
-
     }
 
-    public String getPath(Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = this.managedQuery(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-
-    private void answerQuestion(String commentString) {
-        AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), commentString, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
+    private void doComment(String comment) {
+        Log.d(this.getClass().getSimpleName(), "doComment: userId="+AppController.getUser().getId()+" comment="+comment.substring(0, Math.min(5, comment.length())));
+        AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, Response response) {
                 if (isPhoto) {
                     uploadPhoto(array.getId());
-                }else{
-                    getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page
+                } else {
+                    getComments(getIntent().getLongExtra("postId", 0L),getMaxPage()-1);  // reload page
                 }
+                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_success), Toast.LENGTH_SHORT).show();
                 commentPopup.dismiss();
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-
+            public void failure(RetrofitError error) {
+                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_failed), Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
             }
         });
     }
 
     public void uploadPhoto(String commentId) {
-        File photo = new File(getRealPathFromUri(getApplicationContext(), selectedImageUri));
+        File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.api.uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
             @Override
@@ -409,7 +396,7 @@ public class DetailActivity extends FragmentActivity {
             listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d(this.getClass().getSimpleName(), "listView1.onItemClick: Page " + curPage);
+                    Log.d(this.getClass().getSimpleName(), "listView1.onItemClick: Page " + (position+1));
                     getComments(getIntent().getLongExtra("postId", 0L),position);
                     paginationPopup.dismiss();
                 }

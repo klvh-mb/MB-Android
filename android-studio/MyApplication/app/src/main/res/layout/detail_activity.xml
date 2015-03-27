@@ -171,7 +171,7 @@
                     android:text="1/1"></Button>
 
                 <TextView
-                    android:id="@+id/commentBody"
+                    android:id="@+id/commentEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_gravity="center_vertical"

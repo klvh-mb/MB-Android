@@ -28,7 +28,7 @@
                 android:layout_gravity="bottom" />
 
             <ImageView
-                android:id="@+id/imageButton"
+                android:id="@+id/browseImage"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="20dp"
@@ -36,7 +36,7 @@
                 android:layout_gravity="bottom" />
 
             <ImageView
-                android:id="@+id/postImage"
+                android:id="@+id/commentImage"
                 android:layout_width="80dp"
                 android:layout_height="fill_parent"
                 android:layout_below="@+id/commentComponent"
