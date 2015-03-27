@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by keithlei on 3/9/15.
+ * Should read from server.
  */
 public class DefaultValues {
 
@@ -24,6 +24,12 @@ public class DefaultValues {
 
     public static int IMAGE_CORNERS_ROUNDED_VALUE = 38;
     public static int IMAGE_ROUND_ROUNDED_VALUE = 120;
+
+    public static int NEW_POST_DAYS_AGO = 3;
+    public static int NEW_POST_NOC = 3;
+    public static int HOT_POST_NOV = 200;
+    public static int HOT_POST_NOL = 5;
+    public static int HOT_POST_NOC = 5;
 
     public static List<String> FILTER_MY_COMM_TYPE = Arrays.asList(
             new String[] {"BUSINESS"}

@@ -28,6 +28,13 @@
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
+                    android:id="@+id/iconNew"
+                    android:src="@drawable/pi_new"
+                    android:layout_marginRight="5dp" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:id="@+id/iconHot"
                     android:src="@drawable/pi_hot"
                     android:layout_marginRight="5dp" />

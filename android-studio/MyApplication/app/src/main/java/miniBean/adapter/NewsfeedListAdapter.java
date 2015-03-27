@@ -13,16 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.util.List;
 
 import miniBean.R;
-import miniBean.app.AppController;
-import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
+import miniBean.util.PostUtil;
 import miniBean.viewmodel.CommunityPostVM;
 
 public class NewsfeedListAdapter extends BaseAdapter {
@@ -33,8 +31,6 @@ public class NewsfeedListAdapter extends BaseAdapter {
     private boolean isNewsfeed = true;
     private int lastPosition = -1;
 
-    private ActivityUtil activityUtil;
-
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this(activity, feedItems, true);
     }
@@ -43,7 +39,6 @@ public class NewsfeedListAdapter extends BaseAdapter {
         this.activity = activity;
         this.feedItems = feedItems;
         this.isNewsfeed = isNewsfeed;
-        this.activityUtil = new ActivityUtil(activity);
     }
 
     @Override
@@ -88,7 +83,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
         username.setText(item.getP());
         numComment.setText(item.getN_c() + "");
 
-        timeText.setText(activityUtil.getTimeAgo(item.getUt()));
+        timeText.setText(DateTimeUtil.getTimeAgo(item.getUt()));
 
         if (isNewsfeed) {
             commName.setText(item.getCn());
@@ -108,12 +103,22 @@ public class NewsfeedListAdapter extends BaseAdapter {
         // icons
         LinearLayout iconsLayout = (LinearLayout) convertView.findViewById(R.id.iconsLayout);
         ImageView iconImage = (ImageView) convertView.findViewById(R.id.iconImage);
+        ImageView iconNew = (ImageView) convertView.findViewById(R.id.iconNew);
         ImageView iconHot = (ImageView) convertView.findViewById(R.id.iconHot);
         iconsLayout.setVisibility(View.GONE);
         iconImage.setVisibility(View.GONE);
+        iconNew.setVisibility(View.GONE);
         iconHot.setVisibility(View.GONE);
 
-        if (item.hasImage) {
+        // New and Hot icons are mutually exclusive
+        if (PostUtil.isNewPost(item)) {
+            iconsLayout.setVisibility(View.VISIBLE);
+            iconNew.setVisibility(View.VISIBLE);
+        } else if (PostUtil.isHotPost(item)) {
+            iconsLayout.setVisibility(View.VISIBLE);
+            iconHot.setVisibility(View.VISIBLE);
+        }
+        if (PostUtil.isImagePost(item)) {
             iconsLayout.setVisibility(View.VISIBLE);
             iconImage.setVisibility(View.VISIBLE);
         }

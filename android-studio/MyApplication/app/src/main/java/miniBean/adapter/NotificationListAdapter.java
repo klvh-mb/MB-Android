@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.util.ActivityUtil;
+import miniBean.util.DateTimeUtil;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.NotificationVM;
 
@@ -27,12 +27,9 @@ public class NotificationListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<NotificationVM> notificationItems;
 
-    private ActivityUtil activityUtil;
-
     public NotificationListAdapter(Activity activity, List<NotificationVM> notificationItems) {
         this.activity = activity;
         this.notificationItems = notificationItems;
-        this.activityUtil = new ActivityUtil(activity);
     }
 
     @Override
@@ -71,7 +68,7 @@ public class NotificationListAdapter extends BaseAdapter {
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
 
         message.setText(item.getMsg());
-        timeText.setText(activityUtil.getTimeAgo(new DateTime(Long.parseLong(item.getUpd())).getMillis()));
+        timeText.setText(DateTimeUtil.getTimeAgo(new DateTime(Long.parseLong(item.getUpd())).getMillis()));
 
         ImageUtil.displayRoundImage(item.getUrl().getPhoto(), userPhoto);
 

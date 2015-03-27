@@ -43,6 +43,7 @@ import miniBean.R;
 import miniBean.activity.UserProfileActivity;
 import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
+import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
@@ -247,7 +248,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             }
         });
 
-        postTime.setText(activityUtil.getTimeAgo(item.getCd()));
+        postTime.setText(DateTimeUtil.getTimeAgo(item.getCd()));
 
         // profile pic
         //Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
