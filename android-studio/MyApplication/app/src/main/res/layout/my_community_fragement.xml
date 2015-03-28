@@ -5,21 +5,39 @@
     android:background="@color/view_bg">
 
     <RelativeLayout
-        android:id="@+id/button_layout"
+        android:id="@+id/mainActionsLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/actionbar_bg_light">
 
         <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/signInLayout"
+            android:layout_toLeftOf="@+id/buttonsLayout"
+            android:visibility="invisible">
 
-            android:layout_width="200dp"
+            <ImageView
+                android:id="@+id/signInAction"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="false"
+                android:layout_centerVertical="true"
+                android:src="@drawable/game_sign_in"
+                android:layout_alignParentLeft="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/button_round">
+            android:background="@drawable/button_round"
+            android:id="@+id/buttonsLayout">
 
             <Button
                 android:id="@+id/buttonNewsfeed"
-                android:layout_width="100dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginLeft="2dp"
@@ -27,11 +45,12 @@
                 android:background="@color/white"
                 android:text="@string/community_tab_my_newsfeed"
                 android:textColor="@color/actionbar_selected_text"
-                android:elegantTextHeight="false" />
+                android:elegantTextHeight="false"
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/buttonJoined"
-                android:layout_width="100dp"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="2dp"
@@ -40,8 +59,25 @@
                 android:text="@string/community_tab_my_joined"
                 android:textColor="@color/white"
                 android:layout_toRightOf="@+id/buttonNewsfeed"
-                android:layout_marginRight="2dp" />
+                android:layout_marginRight="2dp"
+                android:textSize="15dp" />
 
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/editLayout"
+            android:layout_toRightOf="@+id/buttonsLayout">
+
+            <ImageView
+                android:id="@+id/editAction"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/edit_post" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -50,7 +86,7 @@
         android:id="@+id/children_fragement"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/button_layout">
+        android:layout_below="@+id/mainActionsLayout">
 
         <ProgressBar
             android:id="@+id/progressComm"

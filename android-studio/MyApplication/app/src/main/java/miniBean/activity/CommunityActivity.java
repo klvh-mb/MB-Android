@@ -61,7 +61,7 @@ public class CommunityActivity extends FragmentActivity {
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(CommunityActivity.this,NewPostActivity.class);
+                Intent intent = new Intent(CommunityActivity.this,NewPostActivity.class);
                 intent.putExtra("id",getIntent().getStringExtra("id"));
                 intent.putExtra("commName", getIntent().getStringExtra("commName"));
                 startActivity(intent);

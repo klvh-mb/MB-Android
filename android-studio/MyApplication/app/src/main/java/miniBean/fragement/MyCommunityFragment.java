@@ -1,5 +1,6 @@
 package miniBean.fragement;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,21 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import miniBean.R;
+import miniBean.activity.NewPostActivity;
 
 public class MyCommunityFragment extends Fragment {
 
-    boolean newsfeedPressed = true;
-    Button newsfeed, joined;
-    ProgressBar progressbar;
+    private ImageView signInAction, editAction;
+    private Button newsfeed, joined;
+    private ProgressBar progressbar;
+    private boolean newsfeedPressed = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.my_community_fragement, container, false);
 
+        editAction = (ImageView) view.findViewById(R.id.editAction);
+        signInAction = (ImageView) view.findViewById(R.id.signInAction);
         newsfeed = (Button) view.findViewById(R.id.buttonNewsfeed);
         joined = (Button) view.findViewById(R.id.buttonJoined);
         progressbar = (ProgressBar) view.findViewById(R.id.progressComm);
@@ -55,6 +61,17 @@ public class MyCommunityFragment extends Fragment {
                     progressbar.setVisibility(View.INVISIBLE);
                     newsfeedPressed = false;
                 }
+            }
+        });
+
+        editAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // launch new post page with no comm id, user will select
+                Intent intent = new Intent(MyCommunityFragment.this.getActivity(), NewPostActivity.class);
+                intent.putExtra("id","");
+                intent.putExtra("commName", "");
+                startActivity(intent);
             }
         });
 

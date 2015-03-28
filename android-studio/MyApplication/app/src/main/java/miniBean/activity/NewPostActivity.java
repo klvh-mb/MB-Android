@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 import org.parceler.apache.commons.lang.StringUtils;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import miniBean.R;
 import miniBean.adapter.PopupMyCommunityListAdapter;
@@ -59,6 +57,8 @@ public class NewPostActivity extends FragmentActivity {
     private PopupWindow myCommunityPopup;
     private PopupMyCommunityListAdapter adapter;
 
+    private boolean postSuccess = false;
+
     private ActivityUtil activityUtil;
 
     @Override
@@ -86,13 +86,14 @@ public class NewPostActivity extends FragmentActivity {
         postTitle = (TextView) findViewById(R.id.postTitle);
         postContent = (TextView) findViewById(R.id.postContent);
 
-        communityId = Long.parseLong(getIntent().getStringExtra("id"));
-        Log.d(this.getClass().getSimpleName(), "onCreate: communityId="+communityId);
-        if (communityId == null) {
+        if (StringUtils.isEmpty(getIntent().getStringExtra("id"))) {
+            communityId = null;
             communityLayout.setVisibility(View.VISIBLE);
         } else {
+            communityId = Long.parseLong(getIntent().getStringExtra("id"));
             communityLayout.setVisibility(View.GONE);
         }
+        Log.d(this.getClass().getSimpleName(), "onCreate: communityId="+communityId);
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +199,8 @@ public class NewPostActivity extends FragmentActivity {
         AppController.api.setQuestion(new NewPost(communityId, title, content, isPhoto), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
+                postSuccess = true;
+
                 if (isPhoto) {
                     uploadPhoto(postResponse.getId());
                 }
@@ -217,9 +220,6 @@ public class NewPostActivity extends FragmentActivity {
                 error.printStackTrace();
             }
         });
-
-        if (myCommunityPopup != null)
-            myCommunityPopup.dismiss();
     }
 
     private void uploadPhoto(String postId) {
@@ -240,6 +240,17 @@ public class NewPostActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
+        String title = postTitle.getText().toString();
+        String content = postContent.getText().toString();
+
+        if (postSuccess ||
+                (StringUtils.isEmpty(title) || StringUtils.isEmpty(content))) {
+            super.onBackPressed();
+            if (myCommunityPopup != null)
+                myCommunityPopup.dismiss();
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(NewPostActivity.this);
         builder.setMessage(getString(R.string.cancel_new_post))
                 .setCancelable(false)
