@@ -64,7 +64,7 @@ public class ActivityUtil {
                 InputMethodManager imm = (InputMethodManager) activity.getApplicationContext().getSystemService(Service.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
-        }, 0);
+        }, 100);
     }
 
     //

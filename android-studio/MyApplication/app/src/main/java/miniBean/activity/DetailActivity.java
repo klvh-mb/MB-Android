@@ -321,11 +321,7 @@ public class DetailActivity extends FragmentActivity {
             }
 
             // pop back soft keyboard
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    activityUtil.popupInputMethodWindow();
-                }
-            }, 10);
+            activityUtil.popupInputMethodWindow();
         }
     }
 

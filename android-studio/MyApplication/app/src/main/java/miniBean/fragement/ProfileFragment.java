@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +24,10 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import miniBean.R;
+import miniBean.activity.MainActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.UserVM;
@@ -141,11 +144,11 @@ public class ProfileFragment extends Fragment {
                 if(usercoverpicClicked){
                     userCoverPic.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                     userCoverPic.setVisibility(View.VISIBLE);
-                    changeCoverPic(userId.toString());
+                    changeCoverPhoto(userId);
                 }else if(userpicClicked){
                     userPic.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                     userPic.setVisibility(View.VISIBLE);
-                    changeProfilePic(userId.toString());
+                    changeProfilePhoto(userId);
                 }
 
             }
@@ -223,31 +226,36 @@ public class ProfileFragment extends Fragment {
             throw new RuntimeException(e);
         }
     }
-    private void changeCoverPic(final String id){
-        System.out.println("change cover:::::");
+
+    private void changeCoverPhoto(final long id){
+        Log.d(this.getClass().getSimpleName(), "changeCoverPhoto: Id="+id);
         File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
 
-        AppController.api.uploadCoverPhoto(id,typedFile,AppController.getInstance().getSessionId(),new Callback<Response>() {
+        ImageUtil.clearCoverImageCache(id);
+        AppController.api.uploadCoverPhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        ImageUtil.displayCoverImage(id, userCoverPic, new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+                                spinner.setVisibility(View.VISIBLE);
+                            }
 
-                ImageUtil.displayCoverImage(Long.parseLong(id), userCoverPic, new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                        spinner.setVisibility(View.VISIBLE);
-                    }
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                spinner.setVisibility(View.GONE);
+                            }
 
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        spinner.setVisibility(View.GONE);
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                spinner.setVisibility(View.GONE);
+                            }
+                        });
                     }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        spinner.setVisibility(View.GONE);
-                    }
-                });
+                }, DefaultValues.DEFAULT_HANDLER_DELAY);
             }
 
             @Override
@@ -257,23 +265,27 @@ public class ProfileFragment extends Fragment {
         });
 
     }
-  private void changeProfilePic(final String id)
-  {
-      System.out.println("change profile:::::");
-      File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
-      TypedFile typedFile = new TypedFile("application/octet-stream", photo);
 
-      AppController.api.uploadProfilePhoto(id,typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
+    private void changeProfilePhoto(final long id) {
+        Log.d(this.getClass().getSimpleName(), "changeProfilePhoto: Id=" + id);
+        File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
+        TypedFile typedFile = new TypedFile("application/octet-stream", photo);
 
-          @Override
-          public void success(Response response, Response response2) {
-              ImageUtil.displayThumbnailProfileImage(Long.parseLong(id), userPic);
-          }
+        ImageUtil.clearProfileImageCache(id);
+        AppController.api.uploadProfilePhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
+            @Override
+            public void success(Response response, Response response2) {
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        ImageUtil.displayThumbnailProfileImage(id, userPic);
+                    }
+                }, DefaultValues.DEFAULT_HANDLER_DELAY);
+            }
 
-          @Override
-          public void failure(RetrofitError error) {
+            @Override
+            public void failure(RetrofitError error) {
                         error.printStackTrace();
-          }
-      });
-  }
+            }
+        });
+    }
 }

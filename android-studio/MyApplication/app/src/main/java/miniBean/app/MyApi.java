@@ -141,10 +141,10 @@ public interface MyApi {
 
     @Multipart
     @POST("/image/upload-cover-photo")
-    public void uploadCoverPhoto(@Part("userId") String id, @Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
+    public void uploadCoverPhoto(@Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
 
     @Multipart
     @POST("/image/upload-profile-photo")
-    public void uploadProfilePhoto(@Part("userId") String id, @Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
+    public void uploadProfilePhoto(@Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
 
 }
