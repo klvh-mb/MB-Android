@@ -167,6 +167,7 @@ public class NewPostActivity extends FragmentActivity {
                 postImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                 postImage.setVisibility(View.VISIBLE);
             }
+
         }
     }
 
@@ -316,4 +317,5 @@ public class NewPostActivity extends FragmentActivity {
         alert.show();
         return;
     }
+
 }

@@ -138,4 +138,13 @@ public interface MyApi {
 
     @GET("/community/{id}")
     public void getCommunity(@Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
+
+    @Multipart
+    @POST("/image/upload-cover-photo")
+    public void uploadCoverPhoto(@Part("userId") String id, @Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
+
+    @Multipart
+    @POST("/image/upload-profile-photo")
+    public void uploadProfilePhoto(@Part("userId") String id, @Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
+
 }
