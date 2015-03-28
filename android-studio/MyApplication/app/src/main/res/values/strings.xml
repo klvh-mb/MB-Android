@@ -47,8 +47,9 @@
     <string name="post_actionbar_title">話題詳情</string>
     <string name="post_comment_bar_hint">回覆話題</string>
     <string name="from_community">社群:</string>
-    <string name="new_post_to_select">發佈話題到</string>
+    <string name="new_post_to_popup_title">發佈話題到</string>
     <string name="new_post_to">發佈到:</string>
+    <string name="new_post_select_community">請選擇社群</string>
     <string name="new_post_actionbar_title">新話題</string>
     <string name="new_post">發出</string>
     <string name="new_post_title">問題 / 分享⋯⋯</string>
@@ -96,6 +97,11 @@
     <string name="no">取消</string>
     <string name="confirm">確定</string>
     <string name="cancel">取消</string>
+
+    <!-- Validation -->
+    <string name="invalid_post_title_empty">請填寫標題</string>
+    <string name="invalid_post_body_empty">請填寫內容</string>
+    <string name="invalid_comment_body_empty">請填寫內容</string>
 
 </resources>
 

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -32,6 +33,7 @@ import miniBean.adapter.PopupMyCommunityListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.ActivityUtil;
+import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
@@ -44,6 +46,9 @@ import retrofit.mime.TypedFile;
 
 public class NewPostActivity extends FragmentActivity {
     private RelativeLayout communityLayout;
+    private LinearLayout selectCommunityLayout;
+    private TextView selectCommunityText;
+    private ImageView selectCommunityIcon;
     private TextView communityName;
     private ImageView communityIcon;
     private ImageView backImage, postImage, browseImage;
@@ -79,6 +84,9 @@ public class NewPostActivity extends FragmentActivity {
         backImage = (ImageView) findViewById(R.id.backImage);
         post = (TextView) findViewById(R.id.titlePost);
         communityLayout = (RelativeLayout) findViewById(R.id.communityLayout);
+        selectCommunityLayout = (LinearLayout) findViewById(R.id.selectCommunityLayout);
+        selectCommunityText = (TextView) findViewById(R.id.selectCommunityText);
+        selectCommunityIcon = (ImageView) findViewById(R.id.selectCommunityIcon);
         communityIcon = (ImageView) findViewById(R.id.commIcon);
         communityName = (TextView) findViewById(R.id.communityName);
         browseImage = (ImageView) findViewById(R.id.browseImage);
@@ -94,6 +102,14 @@ public class NewPostActivity extends FragmentActivity {
             communityLayout.setVisibility(View.GONE);
         }
         Log.d(this.getClass().getSimpleName(), "onCreate: communityId="+communityId);
+
+        updateSelectCommunityLayout();
+        selectCommunityLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initiateMyCommunityPopup();
+            }
+        });
 
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,13 +132,23 @@ public class NewPostActivity extends FragmentActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (communityId == null) {
-                    initiateMyCommunityPopup();
-                } else {
-                    doPost();
-                }
+                doPost();
             }
         });
+    }
+
+    private void updateSelectCommunityLayout() {
+        if (communityId == null) {
+            selectCommunityText.setVisibility(View.VISIBLE);
+            selectCommunityIcon.setVisibility(View.VISIBLE);
+            communityIcon.setVisibility(View.GONE);
+            communityName.setVisibility(View.GONE);
+        } else {
+            selectCommunityText.setVisibility(View.GONE);
+            selectCommunityIcon.setVisibility(View.GONE);
+            communityIcon.setVisibility(View.VISIBLE);
+            communityName.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -145,9 +171,11 @@ public class NewPostActivity extends FragmentActivity {
     }
 
     private void initiateMyCommunityPopup() {
-        // should never be the case...
-        if (LocalCache.getMyCommunitiesParentVM() == null)
+        // should never be the case unless prior network error...
+        if (LocalCache.getMyCommunitiesParentVM() == null) {
+            LocalCache.refreshMyCommunities();
             return;
+        }
 
         try {
             LayoutInflater inflater = (LayoutInflater) NewPostActivity.this
@@ -175,8 +203,20 @@ public class NewPostActivity extends FragmentActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     CommunitiesWidgetChildVM community = adapter.getItem(position);
                     communityId = community.getId();
+
+                    communityName.setText(community.getDn());
+                    int iconMapped = CommunityIconUtil.map(community.getGi());
+                    if (iconMapped != -1) {
+                        //Log.d(this.getClass().getSimpleName(), "getQnaDetail: replace source with local comm icon - " + commIcon);
+                        communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
+                    } else {
+                        Log.d(this.getClass().getSimpleName(), "getQnaDetail: load comm icon from background - " + community.getGi());
+                        ImageUtil.displayRoundedCornersImage(community.getGi(), communityIcon);
+                    }
+
+                    updateSelectCommunityLayout();
+                    myCommunityPopup.dismiss();
                     Log.d(this.getClass().getSimpleName(), "listView.onItemClick: community="+community.getId()+"|"+community.getDn());
-                    doPost();
                 }
             });
         } catch (Exception e) {
@@ -188,12 +228,20 @@ public class NewPostActivity extends FragmentActivity {
         String title = postTitle.getText().toString();
         String content = postContent.getText().toString();
 
-        if (StringUtils.isEmpty(title) || StringUtils.isEmpty(content))
+        if (StringUtils.isEmpty(title)) {
+            Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.invalid_post_title_empty), Toast.LENGTH_SHORT).show();
             return;
+        }
 
-        // should never be the case...
-        if (communityId == null)
+        if (StringUtils.isEmpty(content)) {
+            Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.invalid_post_body_empty), Toast.LENGTH_SHORT).show();
             return;
+        }
+
+        if (communityId == null) {
+            initiateMyCommunityPopup();
+            return;
+        }
 
         Log.d(this.getClass().getSimpleName(), "doPost: communityId=" + communityId + " title=" + title);
         AppController.api.setQuestion(new NewPost(communityId, title, content, isPhoto), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
@@ -205,7 +253,7 @@ public class NewPostActivity extends FragmentActivity {
                     uploadPhoto(postResponse.getId());
                 }
                 onBackPressed();
-                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_LONG).show();
 
                 /*  Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
                 intent.putExtra("id",getIntent().getLongExtra("id",0l));

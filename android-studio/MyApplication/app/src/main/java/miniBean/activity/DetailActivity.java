@@ -104,7 +104,6 @@ public class DetailActivity extends FragmentActivity {
         pageButton = (Button) findViewById(R.id.page);
         backButton = (ImageButton) findViewById(R.id.back);
         nextButton = (ImageButton) findViewById(R.id.next);
-        commentEditText = (EditText) findViewById(R.id.commentEditText);
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
 
@@ -223,10 +222,15 @@ public class DetailActivity extends FragmentActivity {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.post_not_found), Toast.LENGTH_SHORT).show();
+            public void failure(RetrofitError error) {
+                if (RetrofitError.Kind.NETWORK.equals(error.getKind()) ||
+                        RetrofitError.Kind.HTTP.equals(error.getKind())) {
+                    Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.post_not_found), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.connection_timeout_message), Toast.LENGTH_SHORT).show();
+                }
                 finish();
-                retrofitError.printStackTrace();
+                error.printStackTrace();
             }
         });
     }
@@ -241,6 +245,8 @@ public class DetailActivity extends FragmentActivity {
 
             View layout = inflater.inflate(R.layout.comment_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
+
+            commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
 
             commentPopup = new PopupWindow(
                     layout,
@@ -324,9 +330,18 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void doComment() {
+        if (commentEditText == null) {
+            Log.d(this.getClass().getSimpleName(), "commentEditText null");
+        }
+        if (commentEditText.getText() == null) {
+            Log.d(this.getClass().getSimpleName(), "commentEditText.getText() null");
+        }
+
         String comment = commentEditText.getText().toString();
-        if (StringUtils.isEmpty(comment))
+        if (StringUtils.isEmpty(comment)) {
+            Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.invalid_comment_body_empty), Toast.LENGTH_SHORT).show();
             return;
+        }
 
         Log.d(this.getClass().getSimpleName(), "doComment: postId="+getIntent().getLongExtra("postId", 0L)+" comment="+comment.substring(0, Math.min(5, comment.length())));
         AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
@@ -337,7 +352,7 @@ public class DetailActivity extends FragmentActivity {
                 } else {
                     getComments(getIntent().getLongExtra("postId", 0L),getMaxPage()-1);  // reload page
                 }
-                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_success), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_success), Toast.LENGTH_LONG).show();
                 commentPopup.dismiss();
             }
 

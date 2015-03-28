@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/communityLayout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:background="#EFEFF4"
         android:orientation="horizontal"
         android:layout_alignParentStart="false">
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:text="@string/new_post_to"
             android:textColor="#777"
             android:textSize="16dp"
@@ -25,29 +25,66 @@
             android:gravity="center_vertical"
             android:id="@+id/newPostToText" />
 
-        <ImageView
-            android:id="@+id/commIcon"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_alignParentBottom="false"
-            android:background="@drawable/image_round_thin"
-            android:layout_toRightOf="@+id/newPostToText"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="false"
-            android:layout_marginLeft="5dp" />
-
-        <TextView
-            android:id="@+id/communityName"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_alignParentLeft="false"
-            android:layout_marginLeft="3dp"
-            android:text="@string/tabset_communities"
-            android:textColor="#FF6795"
-            android:textSize="16dp"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:layout_toRightOf="@+id/commIcon" />
+            android:layout_toRightOf="@+id/newPostToText"
+            android:id="@+id/selectCommunityLayout">
+
+            <ImageView
+                android:id="@+id/commIcon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentBottom="false"
+                android:background="@drawable/image_round_thin"
+                android:layout_toRightOf="@+id/newPostToText"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="false"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/communityName"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="false"
+                android:layout_marginLeft="3dp"
+                android:text="@string/tabset_communities"
+                android:textColor="#FF6795"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:layout_toRightOf="@+id/commIcon"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/selectCommunityText"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="false"
+                android:layout_marginLeft="5dp"
+                android:text="@string/new_post_select_community"
+                android:textColor="#FF6795"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:layout_toRightOf="@+id/commIcon"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:id="@+id/selectCommunityIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="false"
+                android:layout_toRightOf="@+id/newPostToText"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="false"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/dropdown_arrow" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
