@@ -14,6 +14,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
+
+import java.io.File;
 
 import miniBean.R;
 import miniBean.app.AppController;
@@ -85,6 +88,7 @@ public class ImageUtil {
     }
 
     public static void displayCommunityCoverImage(long id, ImageView imageView, ImageLoadingListener listener) {
+
         getImageLoader().displayImage(COMMUNITY_COVER_IMAGE_BY_ID_URL + id, imageView, listener);
     }
 
@@ -103,6 +107,7 @@ public class ImageUtil {
     }
 
     public static void displayCoverImage(long id, ImageView imageView, ImageLoadingListener listener) {
+        clearCoverpicCache(COVER_IMAGE_BY_ID_URL + id);
         getImageLoader().displayImage(COVER_IMAGE_BY_ID_URL + id, imageView, listener);
     }
 
@@ -129,6 +134,7 @@ public class ImageUtil {
     }
 
     public static void displayThumbnailProfileImage(long id, ImageView imageView) {
+        clearProfilepicCache(THUMBNAIL_PROFILE_IMAGE_BY_ID_URL + id);
         ImageLoader.getInstance().displayImage(THUMBNAIL_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUNDED_CORNERS_IMAGE_OPTIONS);
     }
 
@@ -137,6 +143,7 @@ public class ImageUtil {
     }
 
     public static void displayMiniProfileImage(long id, ImageView imageView) {
+        clearProfilepicCache(MINI_PROFILE_IMAGE_BY_ID_URL + id);
         ImageLoader.getInstance().displayImage(MINI_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUND_IMAGE_OPTIONS);
     }
 
@@ -178,6 +185,25 @@ public class ImageUtil {
         if (!url.startsWith(AppController.BASE_URL))
             url = AppController.BASE_URL + url;
         ImageLoader.getInstance().displayImage(url, imageView, ROUND_IMAGE_OPTIONS);
+    }
+
+    public static void clearProfilepicCache(String url){
+        File imageFile = mImageLoader.getDiscCache().get(url);
+        if (imageFile.exists()) {
+            imageFile.delete();
+        }
+        MemoryCacheUtils.removeFromCache(url, mImageLoader.getMemoryCache());
+    }
+
+    public static void clearCoverpicCache(String url){
+        File imageFile = mImageLoader.getDiscCache().get(url);
+        if (imageFile.exists()) {
+            imageFile.delete();
+        }
+
+        MemoryCacheUtils.removeFromCache(url, mImageLoader.getMemoryCache());
+
+
     }
 
     // Select photo

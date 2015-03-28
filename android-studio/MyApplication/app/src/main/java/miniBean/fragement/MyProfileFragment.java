@@ -1,6 +1,7 @@
 package miniBean.fragement;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -96,7 +97,7 @@ public class MyProfileFragment extends Fragment {
 
         Fragment profileFragment = new ProfileFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, profileFragment).commit();
+        transaction.replace(R.id.children_fragement, profileFragment,"profile").commit();
 
         request.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +158,14 @@ public class MyProfileFragment extends Fragment {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        Fragment fragment = (Fragment) getChildFragmentManager().findFragmentByTag("profile");
+        if(fragment != null){
+            fragment.onActivityResult(requestCode, resultCode, intent);
         }
     }
 }
