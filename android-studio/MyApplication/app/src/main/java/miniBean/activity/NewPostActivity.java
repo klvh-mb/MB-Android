@@ -31,7 +31,7 @@ import java.io.File;
 import miniBean.R;
 import miniBean.adapter.PopupMyCommunityListAdapter;
 import miniBean.app.AppController;
-import miniBean.app.LocalCache;
+import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
@@ -78,8 +78,8 @@ public class NewPostActivity extends FragmentActivity {
         getActionBar().setCustomView(R.layout.new_post_actionbar);
 
         // init my comms if not yet...
-        if (LocalCache.getMyCommunitiesParentVM() == null)
-            LocalCache.refreshMyCommunities();
+        if (LocalCommunityTabCache.getMyCommunitiesParentVM() == null)
+            LocalCommunityTabCache.refreshMyCommunities();
 
         backImage = (ImageView) findViewById(R.id.backImage);
         post = (TextView) findViewById(R.id.titlePost);
@@ -173,8 +173,8 @@ public class NewPostActivity extends FragmentActivity {
 
     private void initiateMyCommunityPopup() {
         // should never be the case unless prior network error...
-        if (LocalCache.getMyCommunitiesParentVM() == null) {
-            LocalCache.refreshMyCommunities();
+        if (LocalCommunityTabCache.getMyCommunitiesParentVM() == null) {
+            LocalCommunityTabCache.refreshMyCommunities();
             return;
         }
 
@@ -196,7 +196,7 @@ public class NewPostActivity extends FragmentActivity {
             myCommunityPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
             ListView listView = (ListView) layout.findViewById(R.id.communityList);
-            adapter = new PopupMyCommunityListAdapter(this, LocalCache.getMyCommunitiesParentVM().communities);
+            adapter = new PopupMyCommunityListAdapter(this, LocalCommunityTabCache.getMyCommunitiesParentVM().communities);
             listView.setAdapter(adapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

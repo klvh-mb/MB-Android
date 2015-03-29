@@ -94,7 +94,7 @@ public class AppController extends Application {
      */
     public void clearAll() {
         Log.d(this.getClass().getSimpleName(), "clearAll");
-        LocalCache.clear();
+        LocalCommunityTabCache.clear();
     }
 
     public void clearPreferences() {

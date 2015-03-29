@@ -16,13 +16,17 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.LocalCache;
+import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.DefaultValues;
+import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
 public class SplashActivity extends Activity {
+
+    private boolean topicCommunityTabLoaded = false;
+    private boolean yearCommunityTabLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +41,33 @@ public class SplashActivity extends Activity {
         }
         */
 
+        init();
+
+        topicCommunityTabLoaded = false;
+        yearCommunityTabLoaded = false;
+
         if (AppController.getInstance().getSessionId() != null) {
             Log.d(this.getClass().getSimpleName(), "onCreate: sessionID - " + AppController.getInstance().getSessionId());
+
             AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                     new Callback<List<CommunityCategoryMapVM>>() {
                         @Override
                         public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                            init(array);
+                            Log.d("SplashActivity", "api.getTopicCommunityCategoriesMap.success: CommunityCategoryMapVM list size - "+array.size());
 
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                                    finish();
-                                }
-                            }, DefaultValues.SPLASH_DISPLAY_MILLIS);
+                            LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, array);
+
+                            topicCommunityTabLoaded = true;
+                            if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
+                                startMainActivity();
+                            }
                         }
 
                         @Override
-                        public void failure(RetrofitError retrofitError) {
-                            //retrofitError.printStackTrace();
-
+                        public void failure(RetrofitError error) {
                             showNetworkProblemAlert();
+
+                            error.printStackTrace();
 
                             /*
                             if (RetrofitError.Kind.NETWORK.equals(retrofitError.getKind().name()) ||
@@ -73,26 +83,47 @@ public class SplashActivity extends Activity {
                             */
                         }
                     });
+
+            AppController.api.getZodiacYearCommunities(AppController.getInstance().getSessionId(),
+                    new Callback<CommunitiesParentVM>() {
+                        @Override
+                        public void success(CommunitiesParentVM communitiesParent, retrofit.client.Response response) {
+                            Log.d("SplashActivity", "api.getZodiacYearCommunities.success: CommunitiesParentVM list size - "+communitiesParent.communities.size());
+
+                            LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY, communitiesParent);
+
+                            yearCommunityTabLoaded = true;
+                            if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
+                                startMainActivity();
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            showNetworkProblemAlert();
+
+                            error.printStackTrace();
+                        }
+                    });
         } else {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         }
     }
 
-    public static void init(List<CommunityCategoryMapVM> array) {
-        cacheTopicCommunityCategoryMapList(array);
+    public static void init() {
+        LocalCommunityTabCache.clear();
 
         // set user info to check for role specific actions, and others
         AppController.getInstance().setUserInfo();
     }
 
-    private static void cacheTopicCommunityCategoryMapList(List<CommunityCategoryMapVM> array) {
-        Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - "+array.size());
-        LocalCache.clearTopicCommunityCategoryMapList();
-        LocalCache.addTopicCommunityCategoryMapToList(new CommunityCategoryMapVM(
-                AppController.getInstance().getString(R.string.community_tab_my)));
-        for (CommunityCategoryMapVM vm : array) {
-            LocalCache.addTopicCommunityCategoryMapToList(vm);
-        }
+    private void startMainActivity() {
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                finish();
+            }
+        }, DefaultValues.SPLASH_DISPLAY_MILLIS);
     }
 
     private void showNetworkProblemAlert() {

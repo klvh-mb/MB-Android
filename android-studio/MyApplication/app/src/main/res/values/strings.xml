@@ -30,12 +30,12 @@
     <string name="community_tab_my">我的社群</string>
     <string name="community_tab_topic">主題社群</string>
     <string name="community_tab_year">年份社群</string>
-    <string name="community_tab_my_joined">已加入</string>
+    <string name="community_tab_my_joined">正在關注</string>
     <string name="community_tab_my_newsfeed">社群動向</string>
-    <string name="community_leave_confirm">確定退出社群?</string>
-    <string name="community_join_success">成功加入社群。話題會顯示到 社群動向</string>
-    <string name="community_join_failed">暫時不能加入社群，請稍後重試</string>
-    <string name="community_leave_success">成功退出社群</string>
+    <string name="community_leave_confirm">取消關注社群?</string>
+    <string name="community_join_success">成功關注社群。話題會顯示到 社群動向</string>
+    <string name="community_join_failed">暫時不能關注社群，請稍後重試</string>
+    <string name="community_leave_success">成功取消關注社群</string>
     <string name="community_leave_failed">暫時不能退出社群，請稍後重試</string>
     <string name="post_delete_confirm">確定刪除話題?</string>
     <string name="post_not_found">尋找不到此話題。話題可能已被刪除</string>

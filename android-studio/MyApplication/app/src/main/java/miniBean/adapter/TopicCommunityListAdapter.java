@@ -17,7 +17,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.LocalCache;
+import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
@@ -127,7 +127,7 @@ public class TopicCommunityListAdapter extends BaseAdapter {
                 communityVM.setIsM(true);
                 joinImageView.setImageResource(R.drawable.add);
 
-                LocalCache.refreshMyCommunities();
+                LocalCommunityTabCache.refreshMyCommunities();
             }
 
             @Override
@@ -146,7 +146,7 @@ public class TopicCommunityListAdapter extends BaseAdapter {
                 communityVM.setIsM(false);
                 joinImageView.setImageResource(R.drawable.check);
 
-                LocalCache.refreshMyCommunities();
+                LocalCommunityTabCache.refreshMyCommunities();
             }
 
             @Override

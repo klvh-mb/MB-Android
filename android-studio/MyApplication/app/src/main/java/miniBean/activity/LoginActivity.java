@@ -39,7 +39,9 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.ActivityUtil;
+import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -61,6 +63,9 @@ public class LoginActivity extends Activity {
 
     private ActivityUtil activityUtil;
 
+    private boolean topicCommunityTabLoaded = false;
+    private boolean yearCommunityTabLoaded = false;
+
     private static final String[] REQUEST_FACEBOOK_PERMISSIONS = {
             "public_profile","email","user_friends"
     };
@@ -70,6 +75,11 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.login_activity);
+
+        SplashActivity.init();
+
+        topicCommunityTabLoaded = false;
+        yearCommunityTabLoaded = false;
 
         session = getSharedPreferences("prefs", 0);
         spinner=  (ProgressBar) findViewById(R.id.spinner);
@@ -91,17 +101,17 @@ public class LoginActivity extends Activity {
                     @Override
                     public void success(Response response, Response response2) {
                         if (saveToSession(response)) {
-                            spinner.setVisibility(View.GONE);
+                            fillLocalCommunityTabCache();
+
                             /*
                             Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                             */
-                            getTopicCommunityMapCategoryList();
                         } else {
-                            spinner.setVisibility(View.GONE);
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
+                        spinner.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -200,12 +210,13 @@ public class LoginActivity extends Activity {
             public void success(Response response, Response response2) {
                 Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");
                 if (saveToSession(response)) {
+                    fillLocalCommunityTabCache();
+
                     /*
                     Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     */
-                    getTopicCommunityMapCategoryList();
                 } else {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
@@ -241,17 +252,21 @@ public class LoginActivity extends Activity {
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
 
-    public void getTopicCommunityMapCategoryList(){
+    public void fillLocalCommunityTabCache(){
         Log.d(this.getClass().getSimpleName(), "getTopicCommunityMapCategoryList");
+
         AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                 new Callback<List<CommunityCategoryMapVM>>() {
                     @Override
                     public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                        SplashActivity.init(array);
+                        Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - " + array.size());
 
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
+                        LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, array);
+
+                        topicCommunityTabLoaded = true;
+                        if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
+                            startMainActivity();
+                        }
                     }
 
                     @Override
@@ -259,6 +274,31 @@ public class LoginActivity extends Activity {
                         error.printStackTrace();
                     }
                 });
+
+        AppController.api.getZodiacYearCommunities(AppController.getInstance().getSessionId(),
+                new Callback<CommunitiesParentVM>() {
+                    @Override
+                    public void success(CommunitiesParentVM communitiesParent, retrofit.client.Response response) {
+                        Log.d("SplashActivity", "api.getZodiacYearCommunities.success: CommunitiesParentVM list size - "+communitiesParent.communities.size());
+
+                        LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY, communitiesParent);
+
+                        yearCommunityTabLoaded = true;
+                        if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
+                            startMainActivity();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
+    }
+
+    private void startMainActivity() {
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 
     @Override

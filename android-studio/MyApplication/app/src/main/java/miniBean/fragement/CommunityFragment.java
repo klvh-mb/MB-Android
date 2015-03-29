@@ -25,7 +25,7 @@ import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
-import miniBean.app.LocalCache;
+import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
@@ -124,7 +124,7 @@ public class CommunityFragment extends Fragment {
         //Log.d(this.getClass().getSimpleName(), "onCreateView: LocalCache.getCommunityCategoryMapList() size - " + LocalCache.getCommunityCategoryMapList().size());
 
         currentCommunity = null;
-        for (CommunityCategoryMapVM categoryMapVM : LocalCache.getTopicCommunityCategoryMapList()) {
+        for (CommunityCategoryMapVM categoryMapVM : LocalCommunityTabCache.getCommunityCategoryMapList()) {
             if (categoryMapVM.communities != null) {
                 for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
                     if (vm.getId().equals(commId)) {
@@ -139,7 +139,7 @@ public class CommunityFragment extends Fragment {
         if (currentCommunity == null) {
             Log.w(this.getClass().getSimpleName(), "onCreateView: commId not in topic comms, comm - " + commName + "|" + commId);
             // not in topic comm, could be closed or other special comms, get directly from my communities list
-            for (CommunitiesWidgetChildVM vm : LocalCache.getMyCommunitiesParentVM().communities) {
+            for (CommunitiesWidgetChildVM vm : LocalCommunityTabCache.getMyCommunitiesParentVM().communities) {
                 if (vm.getId().equals(commId)) {
                     Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to my comm vm [comm - " + commName + "|" + commId + "]   [vm  - " + vm.dn + "|" + vm.getId() + "]");
                     currentCommunity = vm;
@@ -243,7 +243,7 @@ public class CommunityFragment extends Fragment {
                 Toast.makeText(CommunityFragment.this.getActivity(), CommunityFragment.this.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(true);
                 joinImageView.setImageResource(R.drawable.add);
-                LocalCache.refreshMyCommunities();
+                LocalCommunityTabCache.refreshMyCommunities();
             }
 
             @Override
@@ -261,7 +261,7 @@ public class CommunityFragment extends Fragment {
                 Toast.makeText(CommunityFragment.this.getActivity().getBaseContext(), CommunityFragment.this.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(false);
                 joinImageView.setImageResource(R.drawable.check);
-                LocalCache.refreshMyCommunities();
+                LocalCommunityTabCache.refreshMyCommunities();
             }
 
             @Override

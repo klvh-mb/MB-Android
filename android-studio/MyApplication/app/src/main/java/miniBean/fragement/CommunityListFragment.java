@@ -18,7 +18,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.CommunityListAdapter;
-import miniBean.app.LocalCache;
+import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
@@ -77,12 +77,12 @@ public class CommunityListFragment extends Fragment {
             }
         });
 
-        LocalCache.setMyCommunityFragment(this);
-        if (LocalCache.getMyCommunitiesParentVM() != null) {
+        LocalCommunityTabCache.setMyCommunityFragment(this);
+        if (LocalCommunityTabCache.getMyCommunitiesParentVM() != null) {
             Log.d(this.getClass().getSimpleName(), "onCreateView: reload my communities from LocalCache");
-            notifyChange(LocalCache.getMyCommunitiesParentVM().getCommunities());
+            notifyChange(LocalCommunityTabCache.getMyCommunitiesParentVM().getCommunities());
         } else {
-            LocalCache.refreshMyCommunities();
+            LocalCommunityTabCache.refreshMyCommunities();
         }
 
         return view;
@@ -99,9 +99,9 @@ public class CommunityListFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if(LocalCache.getMyCommunitiesParentVM() != null) {
-            Log.d(this.getClass().getSimpleName(), "onResume: my communities size - " + LocalCache.getMyCommunitiesParentVM().getCommunities().size());
-            notifyChange(LocalCache.getMyCommunitiesParentVM().getCommunities());
+        if(LocalCommunityTabCache.getMyCommunitiesParentVM() != null) {
+            Log.d(this.getClass().getSimpleName(), "onResume: my communities size - " + LocalCommunityTabCache.getMyCommunitiesParentVM().getCommunities().size());
+            notifyChange(LocalCommunityTabCache.getMyCommunitiesParentVM().getCommunities());
         }
     }
 }

@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import miniBean.R;
-import miniBean.app.LocalCache;
+import miniBean.app.LocalCommunityTabCache;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 
 public class MainFragement extends Fragment {
@@ -74,12 +74,16 @@ class MyPagerAdapter extends FragmentPagerAdapter {
     public MyPagerAdapter(FragmentManager fm) {
         super(fm);
 
-        if (TITLES == null && LocalCache.getTopicCommunityCategoryMapList() != null)
-            TITLES = new String[LocalCache.getTopicCommunityCategoryMapList().size()]; // TODO
+        if (TITLES == null && LocalCommunityTabCache.getCommunityCategoryMapList() != null) {
+            Log.d(this.getClass().getSimpleName(), "MyPagerAdapter: TITLES size="+LocalCommunityTabCache.getCommunityCategoryMapList().size());
+            TITLES = new String[LocalCommunityTabCache.getCommunityCategoryMapList().size()]; // TODO
+        }
 
         int index = 0;
-        for (CommunityCategoryMapVM topic : LocalCache.getTopicCommunityCategoryMapList()) {
-            TITLES[index++] = topic.getName();
+        for (CommunityCategoryMapVM mapList : LocalCommunityTabCache.getCommunityCategoryMapList()) {
+            Log.d(this.getClass().getSimpleName(), "MyPagerAdapter: TITLES["+index+"]="+mapList.getName());
+            TITLES[index] = mapList.getName();
+            index++;
         }
     }
 
@@ -101,7 +105,7 @@ class MyPagerAdapter extends FragmentPagerAdapter {
                 return new MyCommunityFragment();
             default:
                 TopicCommunityFragment topicFragment = new TopicCommunityFragment();
-                topicFragment.setCommunities(LocalCache.getTopicCommunityCategoryMapList().get(position).communities);
+                topicFragment.setCommunities(LocalCommunityTabCache.getCommunityCategoryMapList().get(position).communities);
                 return topicFragment;
         }
     }
