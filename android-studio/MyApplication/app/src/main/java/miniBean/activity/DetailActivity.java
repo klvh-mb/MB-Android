@@ -29,7 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Spinner;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +74,7 @@ public class DetailActivity extends FragmentActivity {
     private TextView questionText;
     private PopupWindow commentPopup, paginationPopup;
     private Boolean isBookmarked = false;
-    private Spinner dropSpinner;
+    private ProgressBar spinner;
     private Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
     private ImageView communityIcon;
@@ -104,6 +104,7 @@ public class DetailActivity extends FragmentActivity {
         pageButton = (Button) findViewById(R.id.page);
         backButton = (ImageButton) findViewById(R.id.back);
         nextButton = (ImageButton) findViewById(R.id.next);
+        spinner = (ProgressBar) findViewById(R.id.spinner);
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
 
@@ -173,6 +174,9 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void getQnaDetail() {
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
@@ -219,6 +223,8 @@ public class DetailActivity extends FragmentActivity {
                 }
 
                 setPageButtons(curPage);
+
+                spinner.setVisibility(View.GONE);
             }
 
             @Override
@@ -229,7 +235,15 @@ public class DetailActivity extends FragmentActivity {
                 } else {
                     Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.connection_timeout_message), Toast.LENGTH_SHORT).show();
                 }
-                finish();
+
+                spinner.setVisibility(View.GONE);
+
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        finish();
+                    }
+                }, DefaultValues.DEFAULT_HANDLER_DELAY);
+
                 error.printStackTrace();
             }
         });
@@ -537,6 +551,9 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void getComments(Long postID, final int offset) {
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
         AppController.api.getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
@@ -551,10 +568,13 @@ public class DetailActivity extends FragmentActivity {
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityPostCommentVMs, curPage);
                 listView.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
+
+                spinner.setVisibility(View.GONE);
             }
 
             @Override
             public void failure(RetrofitError error) {
+                spinner.setVisibility(View.GONE);
                 error.printStackTrace();
             }
         });

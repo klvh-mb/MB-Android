@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import miniBean.R;
-import miniBean.fragement.LogoutFragment;
+import miniBean.fragement.SettingsFragment;
 import miniBean.fragement.NotificationListFragment;
 import miniBean.fragement.RequestListFragment;
 
@@ -54,7 +54,7 @@ public class NotificationActivity extends FragmentActivity {
                 }else if(getIntent().getStringExtra("key").equals("logout"))
                 {
                     titleText.setText("Logout");
-                    Fragment logoutFragment = new LogoutFragment();
+                    Fragment logoutFragment = new SettingsFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.children_layout, logoutFragment).commit();
                 }

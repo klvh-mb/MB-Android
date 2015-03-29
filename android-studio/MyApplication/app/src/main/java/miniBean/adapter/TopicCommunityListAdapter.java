@@ -26,7 +26,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class TopicCommunityListAdapter extends BaseAdapter {
-    ImageView imageAction;
+    private ImageView imageAction;
     private Activity activity;
     private LayoutInflater inflater;
     private List<CommunitiesWidgetChildVM> communities;

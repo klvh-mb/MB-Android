@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
 
     // Instance of Facebook Class
     private Facebook facebook = new Facebook(APP_ID);
-    private ProgressBar progressBar;
+    private ProgressBar spinner;
     public SharedPreferences session = null;
     private EditText username = null;
     private EditText password = null;
@@ -69,11 +69,11 @@ public class LoginActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.login);
+        setContentView(R.layout.login_activity);
 
         session = getSharedPreferences("prefs", 0);
-        progressBar= (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+        spinner=  (ProgressBar) findViewById(R.id.spinner);
+        spinner.setVisibility(View.INVISIBLE);
         activityUtil = new ActivityUtil(this);
 
         APP_ID = getResources().getString(R.string.app_id);
@@ -84,12 +84,14 @@ public class LoginActivity extends Activity {
         login = (TextView) findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.VISIBLE);
+                spinner.bringToFront();
+
                 AppController.api.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
                         if (saveToSession(response)) {
-                            progressBar.setVisibility(View.INVISIBLE);
+                            spinner.setVisibility(View.GONE);
                             /*
                             Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -97,25 +99,27 @@ public class LoginActivity extends Activity {
                             */
                             getCommunityMapCategoryList();
                         } else {
+                            spinner.setVisibility(View.GONE);
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
                     }
 
                     @Override
-                    public void failure(RetrofitError retrofitError) {
-                        retrofitError.printStackTrace();
-
-                        if (retrofitError.getResponse() != null &&
-                                retrofitError.getResponse().getStatus() == 400) {
-                            String error = LoginActivity.this.activityUtil.getResponseBody(retrofitError.getResponse());
-                            if (!StringUtils.isEmpty(error)) {
-                                alert(getString(R.string.login_error_title), error);
+                    public void failure(RetrofitError error) {
+                        spinner.setVisibility(View.GONE);
+                        if (error.getResponse() != null &&
+                                error.getResponse().getStatus() == 400) {
+                            String errorMsg = LoginActivity.this.activityUtil.getResponseBody(error.getResponse());
+                            if (!StringUtils.isEmpty(errorMsg)) {
+                                alert(getString(R.string.login_error_title), errorMsg);
                             } else {
                                 alert(R.string.login_error_title, R.string.login_id_error_message);
                             }
                         } else {
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
+
+                        error.printStackTrace();
                     }
                 });
             }
@@ -166,21 +170,18 @@ public class LoginActivity extends Activity {
 
                         @Override
                         public void onError(DialogError error) {
-                            error.printStackTrace();
-                            // Function to handle error
                             alert(R.string.login_error_title, R.string.login_error_message);
+                            error.printStackTrace();
                         }
 
                         @Override
                         public void onFacebookError(FacebookError fberror) {
-                            fberror.printStackTrace();
-                            // Function to handle Facebook errors
                             alert(R.string.login_error_title, R.string.login_error_message);
+                            fberror.printStackTrace();
                         }
 
                         @Override
                         public void onCancel() {
-                            // TODO Auto-generated method stub
                             Log.d(this.getClass().getSimpleName(), "loginToFacebook.onCancel: fb login cancelled");
                         }
 
@@ -190,6 +191,9 @@ public class LoginActivity extends Activity {
     }
 
     private void doLoginUsingAccessToken(String access_token) {
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
         Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken: access_token - " + access_token);
         AppController.api.loginByFacebbok(access_token, new Callback<Response>() {
             @Override
@@ -205,12 +209,15 @@ public class LoginActivity extends Activity {
                 } else {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
+
+                spinner.setVisibility(View.GONE);
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace();
+            public void failure(RetrofitError error) {
+                spinner.setVisibility(View.GONE);
                 alert(R.string.login_error_title, R.string.login_error_message);
+                error.printStackTrace();
             }
         });
     }

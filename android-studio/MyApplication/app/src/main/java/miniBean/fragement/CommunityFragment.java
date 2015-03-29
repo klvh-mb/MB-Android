@@ -48,7 +48,7 @@ public class CommunityFragment extends Fragment {
     private ListView listView;
     private NewsfeedListAdapter feedListAdapter;
     private List<CommunityPostVM> feedItems;
-    private ProgressBar spinner, progressBar;
+    private ProgressBar spinner;
     private ImageView joinImageView;
     private ImageView communityCoverPic, communityIcon;
     private CommunitiesWidgetChildVM currentCommunity;
@@ -79,9 +79,7 @@ public class CommunityFragment extends Fragment {
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
-        spinner = (ProgressBar) view.findViewById(R.id.loadCover);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressCommunity);
-        progressBar.setVisibility(View.VISIBLE);
+        spinner = (ProgressBar) view.findViewById(R.id.spinner);
 
         if(!getArguments().getString("flag").equals("FromDetailActivity")) {
             commId = Long.parseLong(getArguments().getString("id"));
@@ -209,6 +207,11 @@ public class CommunityFragment extends Fragment {
     }
 
     private void getNewsFeedByCommunityId(final CommunitiesWidgetChildVM community) {
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
+        ImageUtil.displayCommunityCoverImage(community.id, communityCoverPic);
+
         AppController.api.getCommunityInitialPosts(community.id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response) {
@@ -216,23 +219,6 @@ public class CommunityFragment extends Fragment {
                 feedListAdapter.notifyDataSetChanged();
                 commNameText.setText(community.dn);
                 numMemberText.setText(community.mm + "");
-
-                ImageUtil.displayCommunityCoverImage(Long.parseLong(getArguments().getString("id")), communityCoverPic, new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                        spinner.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        spinner.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        spinner.setVisibility(View.GONE);
-                    }
-                });
 
                 int iconMapped = CommunityIconUtil.map(community.gi);
                 if (iconMapped != -1) {
@@ -242,12 +228,14 @@ public class CommunityFragment extends Fragment {
                     Log.d(this.getClass().getSimpleName(), "getNewsFeedByCommunityId.api.success: load comm icon from background - " + community.gi);
                     ImageUtil.displayRoundedCornersImage(community.gi, communityIcon);
                 }
-                progressBar.setVisibility(View.INVISIBLE);
+
+                spinner.setVisibility(View.INVISIBLE);
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                //retrofitError.printStackTrace(); //to see if you have errors
+            public void failure(RetrofitError error) {
+                spinner.setVisibility(View.INVISIBLE);
+                error.printStackTrace();
             }
         });
     }

@@ -3,6 +3,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <ProgressBar
+        android:id="@+id/spinner"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_spinner"></ProgressBar>
+
     <RelativeLayout
         android:layout_weight="20"
         android:id="@+id/image_component"
@@ -15,12 +25,6 @@
             android:id="@+id/communityPic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ImageView>
-
-        <ProgressBar
-            android:layout_centerInParent="true"
-            android:id="@+id/loadCover"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -122,13 +126,6 @@
         android:layout_below="@id/viewBar"
         android:background="#ffffff"
         android:orientation="vertical">
-
-        <ProgressBar
-            android:id="@+id/progressCommunity"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"></ProgressBar>
 
         <ListView
             android:id="@+id/listCommunityFeed"

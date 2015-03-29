@@ -137,9 +137,9 @@ public class MyProfileFragment extends Fragment {
                 setting.setVisibility(View.INVISIBLE);
                 ((TextView) actionBarView.findViewById(R.id.title)).setText("Settings");
 
-                Fragment settingFragment = new LogoutFragment();
+                Fragment settingsFragment = new SettingsFragment();
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.children_fragement, settingFragment).commit();
+                transaction.replace(R.id.children_fragement, settingsFragment).commit();
 
             }
         });

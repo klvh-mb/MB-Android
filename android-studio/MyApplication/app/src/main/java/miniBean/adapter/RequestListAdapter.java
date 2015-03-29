@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -26,7 +25,6 @@ public class RequestListAdapter extends BaseAdapter {
     private ImageView userPhoto;
     private Button acceptButton, ignoreButton;
     private Activity activity;
-    private ProgressBar spinner;
     private LayoutInflater inflater;
     private List<NotificationVM> requestItems;
 
@@ -69,7 +67,6 @@ public class RequestListAdapter extends BaseAdapter {
         message = (TextView) convertView.findViewById(R.id.requestText);
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
         acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
-        spinner = (ProgressBar) convertView.findViewById(R.id.spinner);
         ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
 
         if (item.getTp().equals("COMM_JOIN_APPROVED") || item.getTp().equals("FRD_ACCEPTED")) {

@@ -71,12 +71,14 @@ public class MainFragement extends Fragment {
 
 class MyPagerAdapter extends FragmentPagerAdapter {
 
-    private String[] TITLES;
+    private static String[] TITLES;
 
     public MyPagerAdapter(FragmentManager fm) {
         super(fm);
 
-        TITLES = new String[LocalCache.getCommunityCategoryMapList().size()]; // TODO
+        if (TITLES == null && LocalCache.getCommunityCategoryMapList() != null)
+            TITLES = new String[LocalCache.getCommunityCategoryMapList().size()]; // TODO
+
         int index = 0;
         for (CommunityCategoryMapVM topic : LocalCache.getCommunityCategoryMapList()) {
             TITLES[index++] = topic.getName();

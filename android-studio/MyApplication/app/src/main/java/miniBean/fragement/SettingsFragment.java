@@ -12,14 +12,14 @@ import android.widget.RelativeLayout;
 import miniBean.R;
 import miniBean.app.AppController;
 
-public class LogoutFragment extends Fragment {
-    private static final String TAG = LogoutFragment.class.getName();
+public class SettingsFragment extends Fragment {
+    private static final String TAG = SettingsFragment.class.getName();
     RelativeLayout relativeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.logout, container, false);
+        View view = inflater.inflate(R.layout.settings_fragment, container, false);
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.logout);
 
@@ -27,7 +27,7 @@ public class LogoutFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // confirm exit
-                AlertDialog.Builder builder = new AlertDialog.Builder(LogoutFragment.this.getActivity());
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsFragment.this.getActivity());
                 builder.setMessage(R.string.logout_message)
                         .setCancelable(false)
                         .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
