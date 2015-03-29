@@ -3,7 +3,6 @@ package miniBean.fragement;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,9 +16,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +124,7 @@ public class CommunityFragment extends Fragment {
         //Log.d(this.getClass().getSimpleName(), "onCreateView: LocalCache.getCommunityCategoryMapList() size - " + LocalCache.getCommunityCategoryMapList().size());
 
         currentCommunity = null;
-        for (CommunityCategoryMapVM categoryMapVM : LocalCache.getCommunityCategoryMapList()) {
+        for (CommunityCategoryMapVM categoryMapVM : LocalCache.getTopicCommunityCategoryMapList()) {
             if (categoryMapVM.communities != null) {
                 for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
                     if (vm.getId().equals(commId)) {

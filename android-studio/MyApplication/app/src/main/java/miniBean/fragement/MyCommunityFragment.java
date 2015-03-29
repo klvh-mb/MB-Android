@@ -20,7 +20,7 @@ public class MyCommunityFragment extends Fragment {
 
     private ImageView signInAction, editAction;
     private Button newsfeed, joined;
-    private ProgressBar progressbar;
+    private ProgressBar spinner;
     private boolean newsfeedPressed = true;
 
     @Override
@@ -32,8 +32,9 @@ public class MyCommunityFragment extends Fragment {
         signInAction = (ImageView) view.findViewById(R.id.signInAction);
         newsfeed = (Button) view.findViewById(R.id.buttonNewsfeed);
         joined = (Button) view.findViewById(R.id.buttonJoined);
-        progressbar = (ProgressBar) view.findViewById(R.id.progressComm);
-        progressbar.setVisibility(View.VISIBLE);
+        spinner = (ProgressBar) view.findViewById(R.id.spinner);
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
 
         if (newsfeedPressed) {
             pressNewsfeedButton();
@@ -46,7 +47,7 @@ public class MyCommunityFragment extends Fragment {
             public void onClick(View v) {
                 if (!newsfeedPressed) {
                     pressNewsfeedButton();
-                    progressbar.setVisibility(View.INVISIBLE);
+                    spinner.setVisibility(View.GONE);
                     newsfeedPressed = true;
                 }
             }
@@ -58,7 +59,7 @@ public class MyCommunityFragment extends Fragment {
             public void onClick(View v) {
                 if (newsfeedPressed) {
                     pressJoinedButton();
-                    progressbar.setVisibility(View.INVISIBLE);
+                    spinner.setVisibility(View.GONE);
                     newsfeedPressed = false;
                 }
             }

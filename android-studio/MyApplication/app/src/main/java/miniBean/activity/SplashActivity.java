@@ -1,9 +1,5 @@
 package miniBean.activity;
 
-/**
- * Created by MNT on 09-Feb-15.
- */
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -43,7 +39,7 @@ public class SplashActivity extends Activity {
 
         if (AppController.getInstance().getSessionId() != null) {
             Log.d(this.getClass().getSimpleName(), "onCreate: sessionID - " + AppController.getInstance().getSessionId());
-            AppController.api.getSocialCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
+            AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                     new Callback<List<CommunityCategoryMapVM>>() {
                         @Override
                         public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
@@ -83,19 +79,19 @@ public class SplashActivity extends Activity {
     }
 
     public static void init(List<CommunityCategoryMapVM> array) {
-        cacheCommunityCategoryMapList(array);
+        cacheTopicCommunityCategoryMapList(array);
 
         // set user info to check for role specific actions, and others
         AppController.getInstance().setUserInfo();
     }
 
-    private static void cacheCommunityCategoryMapList(List<CommunityCategoryMapVM> array) {
+    private static void cacheTopicCommunityCategoryMapList(List<CommunityCategoryMapVM> array) {
         Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - "+array.size());
-        LocalCache.clearCommunityCategoryMapList();
-        LocalCache.addCommunityCategoryMapToList(new CommunityCategoryMapVM(
+        LocalCache.clearTopicCommunityCategoryMapList();
+        LocalCache.addTopicCommunityCategoryMapToList(new CommunityCategoryMapVM(
                 AppController.getInstance().getString(R.string.community_tab_my)));
         for (CommunityCategoryMapVM vm : array) {
-            LocalCache.addCommunityCategoryMapToList(vm);
+            LocalCache.addTopicCommunityCategoryMapToList(vm);
         }
     }
 

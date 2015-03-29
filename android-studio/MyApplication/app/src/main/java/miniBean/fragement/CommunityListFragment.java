@@ -18,18 +18,14 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.CommunityListAdapter;
-import miniBean.app.AppController;
 import miniBean.app.LocalCache;
 import miniBean.util.DefaultValues;
-import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
-import retrofit.Callback;
-import retrofit.RetrofitError;
 
 public class CommunityListFragment extends Fragment {
 
     private static final String TAG = CommunityListFragment.class.getName();
-    ProgressBar progressBarComm;
+    ProgressBar spinner;
     private ListView listView;
     private CommunityListAdapter listAdapter;
     private List<CommunitiesWidgetChildVM> communities;
@@ -46,8 +42,9 @@ public class CommunityListFragment extends Fragment {
         listView.addHeaderView(new View(getActivity().getBaseContext()), null, true);
         listView.addFooterView(new View(getActivity().getBaseContext()), null, true);
 
-        progressBarComm = (ProgressBar) view.findViewById(R.id.progressComm1);
-        progressBarComm.setVisibility(View.VISIBLE);
+        spinner = (ProgressBar) view.findViewById(R.id.spinner);
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
 
         communities = new ArrayList<>();
 
@@ -95,7 +92,7 @@ public class CommunityListFragment extends Fragment {
         this.communities.clear();
         this.communities.addAll(communities);
         listAdapter.notifyDataSetChanged();
-        progressBarComm.setVisibility(View.GONE);
+        spinner.setVisibility(View.GONE);
     }
 
     @Override

@@ -28,13 +28,11 @@ public class MainFragement extends Fragment {
     private PagerSlidingTabStrip tabs;
     private Activity myContext;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.main_fragement, container, false);
 
-        System.out.println("in mainFragment......");
+        View view = inflater.inflate(R.layout.main_fragement, container, false);
 
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
@@ -76,11 +74,11 @@ class MyPagerAdapter extends FragmentPagerAdapter {
     public MyPagerAdapter(FragmentManager fm) {
         super(fm);
 
-        if (TITLES == null && LocalCache.getCommunityCategoryMapList() != null)
-            TITLES = new String[LocalCache.getCommunityCategoryMapList().size()]; // TODO
+        if (TITLES == null && LocalCache.getTopicCommunityCategoryMapList() != null)
+            TITLES = new String[LocalCache.getTopicCommunityCategoryMapList().size()]; // TODO
 
         int index = 0;
-        for (CommunityCategoryMapVM topic : LocalCache.getCommunityCategoryMapList()) {
+        for (CommunityCategoryMapVM topic : LocalCache.getTopicCommunityCategoryMapList()) {
             TITLES[index++] = topic.getName();
         }
     }
@@ -103,7 +101,7 @@ class MyPagerAdapter extends FragmentPagerAdapter {
                 return new MyCommunityFragment();
             default:
                 TopicCommunityFragment topicFragment = new TopicCommunityFragment();
-                topicFragment.setCommunities(LocalCache.getCommunityCategoryMapList().get(position).communities);
+                topicFragment.setCommunities(LocalCache.getTopicCommunityCategoryMapList().get(position).communities);
                 return topicFragment;
         }
     }

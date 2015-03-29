@@ -47,7 +47,10 @@ public interface MyApi {
     public void getCommunityNextPosts(@Path("id") Long id, @Path("time") String time, @Query("key") String key, Callback<List<CommunityPostVM>> callback);
 
     @GET("/get-social-community-categories-map")
-    public void getSocialCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, @Query("key") String key, Callback<List<CommunityCategoryMapVM>> callback);
+    public void getTopicCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, @Query("key") String key, Callback<List<CommunityCategoryMapVM>> callback);
+
+    @GET("/get-zodiac-year-communities")
+    public void getZodiacYearCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
 
     @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
     public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, @Query("key") String key, Callback<CommunityPostVM> callback);

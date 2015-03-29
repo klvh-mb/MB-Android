@@ -97,7 +97,7 @@ public class LoginActivity extends Activity {
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                             */
-                            getCommunityMapCategoryList();
+                            getTopicCommunityMapCategoryList();
                         } else {
                             spinner.setVisibility(View.GONE);
                             alert(R.string.login_error_title, R.string.login_error_message);
@@ -205,7 +205,7 @@ public class LoginActivity extends Activity {
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     */
-                    getCommunityMapCategoryList();
+                    getTopicCommunityMapCategoryList();
                 } else {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
@@ -241,9 +241,9 @@ public class LoginActivity extends Activity {
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
 
-    public void getCommunityMapCategoryList(){
-        Log.d(this.getClass().getSimpleName(), "getCommunityMapCategoryList");
-        AppController.api.getSocialCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
+    public void getTopicCommunityMapCategoryList(){
+        Log.d(this.getClass().getSimpleName(), "getTopicCommunityMapCategoryList");
+        AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                 new Callback<List<CommunityCategoryMapVM>>() {
                     @Override
                     public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
@@ -255,8 +255,8 @@ public class LoginActivity extends Activity {
                     }
 
                     @Override
-                    public void failure(RetrofitError retrofitError) {
-                        retrofitError.printStackTrace(); //to see if you have errors
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
                     }
                 });
     }

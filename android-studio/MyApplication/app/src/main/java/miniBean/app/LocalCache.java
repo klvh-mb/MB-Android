@@ -15,8 +15,16 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class LocalCache {
-    private static List<CommunityCategoryMapVM> communityCategoryMapList = new ArrayList<>();
+
+    // my comms
     private static CommunitiesParentVM myCommunitiesParentVM;
+
+    // topic comms
+    private static List<CommunityCategoryMapVM> topicCommunityCategoryMapList = new ArrayList<>();
+
+    // my comms
+    private static CommunitiesParentVM zodiacYearCommunitiesParentVM;
+
     private static boolean dirty = false;
 
     private static CommunityListFragment myCommunityFragment;
@@ -39,20 +47,20 @@ public class LocalCache {
         myCommunitiesParentVM = communitiesParentVM;
     }
 
-    public static List<CommunityCategoryMapVM> getCommunityCategoryMapList() {
-        return LocalCache.communityCategoryMapList;
+    public static List<CommunityCategoryMapVM> getTopicCommunityCategoryMapList() {
+        return LocalCache.topicCommunityCategoryMapList;
     }
 
-    public static void clearCommunityCategoryMapList() {
-        communityCategoryMapList.clear();
+    public static void clearTopicCommunityCategoryMapList() {
+        topicCommunityCategoryMapList.clear();
     }
 
-    public static void addCommunityCategoryMapToList(CommunityCategoryMapVM communityCategoryMap) {
-        communityCategoryMapList.add(communityCategoryMap);
+    public static void addTopicCommunityCategoryMapToList(CommunityCategoryMapVM topicCommunityCategoryMap) {
+        topicCommunityCategoryMapList.add(topicCommunityCategoryMap);
     }
 
     public static void clear() {
-        communityCategoryMapList = new ArrayList<>();
+        topicCommunityCategoryMapList = new ArrayList<>();
         myCommunitiesParentVM = null;
         dirty = false;
     }
