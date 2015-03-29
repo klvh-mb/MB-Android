@@ -48,7 +48,8 @@ public class ProfileFragment extends Fragment {
     private final Integer SELECT_PICTURE = 1;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
-    private boolean usercoverpicClicked=false,userpicClicked=false;
+    private boolean coverPhotoClicked = false, profilePhotoClicked=false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -60,7 +61,7 @@ public class ProfileFragment extends Fragment {
         bookmarksCount = (TextView) view.findViewById(R.id.bookmarksCount);
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
         userPic = (ImageView) view.findViewById(R.id.userImage);
-        spinner = (ProgressBar) view.findViewById(R.id.imageLoader);
+        spinner = (ProgressBar) view.findViewById(R.id.spinner);
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
@@ -73,7 +74,7 @@ public class ProfileFragment extends Fragment {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
                 isPhoto = true;
-                usercoverpicClicked=true;
+                coverPhotoClicked = true;
             }
         });
 
@@ -86,7 +87,7 @@ public class ProfileFragment extends Fragment {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
                 isPhoto = true;
-                userpicClicked=true;
+                profilePhotoClicked = true;
             }
         });
 
@@ -130,7 +131,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
-                if (requestCode == SELECT_PICTURE) {
+
+        if (requestCode == SELECT_PICTURE) {
             if (data == null)
                 return;
 
@@ -141,23 +143,23 @@ public class ProfileFragment extends Fragment {
             Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
             Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
             if (bp != null) {
-                if(usercoverpicClicked){
+                if(coverPhotoClicked){
                     userCoverPic.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                     userCoverPic.setVisibility(View.VISIBLE);
                     changeCoverPhoto(userId);
-                }else if(userpicClicked){
+                } else if(profilePhotoClicked) {
                     userPic.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                     userPic.setVisibility(View.VISIBLE);
                     changeProfilePhoto(userId);
                 }
-
             }
-
-
         }
     }
 
     private void getUserInfo() {
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
         AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
@@ -170,11 +172,12 @@ public class ProfileFragment extends Fragment {
                 questionsCount.setText(user.getQuestionsCount()+"");
                 answersCount.setText(user.getAnswersCount()+"");
 
-                ImageUtil.displayThumbnailProfileImage(user.getId(), userPic);
-                ImageUtil.displayCoverImage(user.getId(), userCoverPic, new SimpleImageLoadingListener() {
+                ImageUtil.displayThumbnailProfileImage(userId, userPic);
+                ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
+                        spinner.bringToFront();
                     }
 
                     @Override
@@ -190,8 +193,8 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
             }
         });
     }
@@ -205,8 +208,8 @@ public class ProfileFragment extends Fragment {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
             }
         });
     }
@@ -219,7 +222,6 @@ public class ProfileFragment extends Fragment {
             Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
             childFragmentManager.setAccessible(true);
             childFragmentManager.set(this, null);
-
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
@@ -232,6 +234,9 @@ public class ProfileFragment extends Fragment {
         File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
 
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
         ImageUtil.clearCoverImageCache(id);
         AppController.api.uploadCoverPhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
@@ -242,6 +247,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
                                 spinner.setVisibility(View.VISIBLE);
+                                spinner.bringToFront();
                             }
 
                             @Override
@@ -271,20 +277,39 @@ public class ProfileFragment extends Fragment {
         File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
 
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
         ImageUtil.clearProfileImageCache(id);
         AppController.api.uploadProfilePhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
             @Override
             public void success(Response response, Response response2) {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
-                        ImageUtil.displayThumbnailProfileImage(id, userPic);
+                        ImageUtil.displayThumbnailProfileImage(id, userPic, new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+                                spinner.setVisibility(View.VISIBLE);
+                                spinner.bringToFront();
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                spinner.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                spinner.setVisibility(View.GONE);
+                            }
+                        });
                     }
                 }, DefaultValues.DEFAULT_HANDLER_DELAY);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                        error.printStackTrace();
+                error.printStackTrace();
             }
         });
     }

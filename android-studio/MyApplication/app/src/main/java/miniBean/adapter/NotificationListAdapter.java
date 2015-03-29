@@ -23,7 +23,6 @@ public class NotificationListAdapter extends BaseAdapter {
     private ImageView userPhoto;
     private TextView message, timeText;
     private Activity activity;
-    private ProgressBar spinner;
     private LayoutInflater inflater;
     private List<NotificationVM> notificationItems;
 
@@ -64,7 +63,6 @@ public class NotificationListAdapter extends BaseAdapter {
 
         message = (TextView) convertView.findViewById(R.id.notificationMessage);
         timeText = (TextView) convertView.findViewById(R.id.notificationTime);
-        spinner = (ProgressBar) convertView.findViewById(R.id.imageLoader);
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
 
         message.setText(item.getMsg());

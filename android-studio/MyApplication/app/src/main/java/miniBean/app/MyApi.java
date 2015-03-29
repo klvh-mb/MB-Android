@@ -1,6 +1,5 @@
 package miniBean.app;
 
-
 import java.util.List;
 
 import miniBean.viewmodel.BookmarkSummaryVM;
@@ -15,6 +14,7 @@ import miniBean.viewmodel.HeaderDataVM;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.PostResponse;
+import miniBean.viewmodel.ProfileVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.client.Response;
@@ -60,6 +60,9 @@ public interface MyApi {
 
     @GET("/get-user-info") //a function in your api get User all Information
     public void getUserInfo(@Query("key") String key, Callback<UserVM> cb);
+
+    @GET("/profile/{id}") //a function in your api get User all Information
+    public void getUserProfile(@Path("id") Long id, @Query("key") String key, Callback<ProfileVM> cb);
 
     @GET("/get-bookmark-summary") //a function in your api get bookmark summary
     public void getBookmarkSummary(@Query("key") String key, Callback<BookmarkSummaryVM> cb);

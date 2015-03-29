@@ -25,6 +25,7 @@ import miniBean.R;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.util.ImageUtil;
+import miniBean.viewmodel.ProfileVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -48,7 +49,7 @@ public class UserProfileFragment extends Fragment {
         bookmarksCount = (TextView) view.findViewById(R.id.bookmarksCount);
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
         userPic = (ImageView) view.findViewById(R.id.userImage);
-        spinner = (ProgressBar) view.findViewById(R.id.imageLoader);
+        spinner = (ProgressBar) view.findViewById(R.id.spinner);
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
@@ -104,24 +105,29 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
-        getUserInfo();
+        long userId = getArguments().getLong("oid");
+        getUserProfile(userId);
 
         return view;
     }
 
-    private void getUserInfo() {
-        AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
-            @Override
-            public void success(UserVM user, retrofit.client.Response response) {
-                userName.setText(getArguments().getString("name"));
-                questionsCount.setText(user.getQuestionsCount()+"");
-                answersCount.setText(user.getAnswersCount()+"");
+    private void getUserProfile(final long userId) {
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
 
-                ImageUtil.displayThumbnailProfileImage(getArguments().getLong("oid"), userPic);
-                ImageUtil.displayCoverImage(getArguments().getLong("oid"), userCoverPic, new SimpleImageLoadingListener() {
+        AppController.api.getUserProfile(userId, AppController.getInstance().getSessionId(), new Callback<ProfileVM>() {
+            @Override
+            public void success(ProfileVM profile, retrofit.client.Response response) {
+                userName.setText(profile.getDn());
+                questionsCount.setText(profile.getQc() + "");
+                answersCount.setText(profile.getAc() + "");
+
+                ImageUtil.displayThumbnailProfileImage(userId, userPic);
+                ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         spinner.setVisibility(View.VISIBLE);
+                        spinner.bringToFront();
                     }
 
                     @Override
@@ -137,8 +143,8 @@ public class UserProfileFragment extends Fragment {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
             }
         });
     }

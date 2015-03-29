@@ -69,7 +69,7 @@ public class RequestListAdapter extends BaseAdapter {
         message = (TextView) convertView.findViewById(R.id.requestText);
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);
         acceptButton = (Button) convertView.findViewById(R.id.acceptButton);
-        spinner = (ProgressBar) convertView.findViewById(R.id.imageLoader);
+        spinner = (ProgressBar) convertView.findViewById(R.id.spinner);
         ignoreButton = (Button) convertView.findViewById(R.id.ignoreButton);
 
         if (item.getTp().equals("COMM_JOIN_APPROVED") || item.getTp().equals("FRD_ACCEPTED")) {

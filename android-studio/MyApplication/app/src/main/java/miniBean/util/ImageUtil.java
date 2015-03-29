@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.io.File;
@@ -41,18 +42,21 @@ public class ImageUtil {
     public static DisplayImageOptions DEFAULT_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
+                    cacheOnDisk(false).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(0)).build();
 
     public static DisplayImageOptions ROUNDED_CORNERS_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
+                    cacheOnDisk(false).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
 
     public static DisplayImageOptions ROUND_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
+                    cacheOnDisk(false).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_ROUND_ROUNDED_VALUE)).build();
 
@@ -195,10 +199,11 @@ public class ImageUtil {
     }
 
     private static void clearImageCache(String url) {
-        File imageFile = mImageLoader.getDiscCache().get(url);
+        File imageFile = mImageLoader.getDiskCache().get(url);
         if (imageFile.exists()) {
             imageFile.delete();
         }
+        DiskCacheUtils.removeFromCache(url, mImageLoader.getDiskCache());
         MemoryCacheUtils.removeFromCache(url, mImageLoader.getMemoryCache());
     }
 
