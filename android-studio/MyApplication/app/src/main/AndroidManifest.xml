@@ -50,7 +50,7 @@
             android:name=".activity.NewsfeedActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.NotificationActivity"
+            android:name=".activity.MyProfileActionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NewPostActivity"

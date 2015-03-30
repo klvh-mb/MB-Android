@@ -2,6 +2,7 @@ package miniBean.fragement;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,11 +11,12 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import miniBean.R;
+import miniBean.activity.LoginActivity;
 import miniBean.app.AppController;
 
 public class SettingsFragment extends Fragment {
     private static final String TAG = SettingsFragment.class.getName();
-    RelativeLayout relativeLayout;
+    private RelativeLayout relativeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +38,12 @@ public class SettingsFragment extends Fragment {
                                 AppController.getInstance().clearAll();
                                 AppController.getInstance().clearPreferences();
 
-                                AppController.getInstance().exitApp();
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                getActivity().finish();
+
+                                //AppController.getInstance().exitApp();
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

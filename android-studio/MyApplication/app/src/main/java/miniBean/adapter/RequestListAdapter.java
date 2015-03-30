@@ -61,7 +61,6 @@ public class RequestListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.request_list_item, null);
 
-
         final NotificationVM item = requestItems.get(position);
 
         message = (TextView) convertView.findViewById(R.id.requestText);

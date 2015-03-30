@@ -28,7 +28,7 @@ public class NewsfeedActivity extends FragmentActivity {
         Long id = getIntent().getLongExtra("id", 0l);
         String key = getIntent().getStringExtra("key");
 
-        Log.d(this.getClass().getSimpleName(), "onCreate: ID="+id+" key="+key);
+        Log.d(this.getClass().getSimpleName(), "onCreate: Id="+id+" key="+key);
         switch (getIntent().getStringExtra("key")) {
             case "question":
             case "userquestion":

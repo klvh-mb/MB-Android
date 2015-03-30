@@ -18,6 +18,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.MyProfileActionActivity;
 import miniBean.app.AppController;
 import miniBean.viewmodel.HeaderDataVM;
 import miniBean.viewmodel.NotificationVM;
@@ -102,6 +103,12 @@ public class MyProfileFragment extends Fragment {
         request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyProfileActionActivity.class);
+                intent.putExtra("key","requests");
+                intent.putExtra("requestNotif", gson.toJson(requestNotif));
+                startActivity(intent);
+
+                /*
                 back.setVisibility(View.INVISIBLE);
                 ((TextView) actionBarView.findViewById(R.id.title)).setText(getString(R.string.request_actionbar_title));
 
@@ -111,12 +118,19 @@ public class MyProfileFragment extends Fragment {
                 requestFragment.setArguments(bundle);
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, requestFragment).commit();
+                */
             }
         });
 
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyProfileActionActivity.class);
+                intent.putExtra("key","notifications");
+                intent.putExtra("notifAll", gson.toJson(notifAll));
+                startActivity(intent);
+
+                /*
                 back.setVisibility(View.INVISIBLE);
                 ((TextView) actionBarView.findViewById(R.id.title)).setText(getString(R.string.notification_actionbar_title));
 
@@ -126,21 +140,27 @@ public class MyProfileFragment extends Fragment {
                 notificactionFragment.setArguments(bundle);
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, notificactionFragment).commit();
+                */
             }
         });
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyProfileActionActivity.class);
+                intent.putExtra("key","settings");
+                startActivity(intent);
+
+                /*
                 request.setVisibility(View.INVISIBLE);
                 notification.setVisibility(View.INVISIBLE);
                 setting.setVisibility(View.INVISIBLE);
-                ((TextView) actionBarView.findViewById(R.id.title)).setText("Settings");
+                ((TextView) actionBarView.findViewById(R.id.title)).setText(getString(R.string.settings_actionbar_title));
 
                 Fragment settingsFragment = new SettingsFragment();
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, settingsFragment).commit();
-
+                */
             }
         });
     }
@@ -160,6 +180,7 @@ public class MyProfileFragment extends Fragment {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
