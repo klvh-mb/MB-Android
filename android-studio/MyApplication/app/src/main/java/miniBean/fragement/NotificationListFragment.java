@@ -26,8 +26,12 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.NotificationListAdapter;
+import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.NotificationVM;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class NotificationListFragment extends Fragment {
 
@@ -45,6 +49,9 @@ public class NotificationListFragment extends Fragment {
         tipText = (TextView) view.findViewById(R.id.tipText);
 
         String notif = getArguments().getString("notifAll");
+
+        StringBuilder ids = new StringBuilder();
+
         Gson gson = new GsonBuilder().create();
         List<NotificationVM> notificationVMs = new ArrayList<>();
         JSONArray jsonArray1 = null;
@@ -54,10 +61,21 @@ public class NotificationListFragment extends Fragment {
                 JSONObject json_data = jsonArray1.getJSONObject(i);
                 NotificationVM vm = gson.fromJson(json_data.toString(), NotificationVM.class);
                 notificationVMs.add(vm);
+
+                if(vm.getSta()==0) {
+                    if (i != 0) {
+                        ids.append(",");
+                    }
+                    ids.append(vm.getNid());
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        if(ids.length()!=0)
+            markAsRead(ids.toString());
+
 
         if(notificationVMs.size() == 0){
             tipText.setVisibility(View.VISIBLE);
@@ -96,5 +114,18 @@ public class NotificationListFragment extends Fragment {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+    private void markAsRead(String ids){
+        AppController.api.markAsRead(ids,AppController.getInstance().getSessionId(),new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
     }
 }

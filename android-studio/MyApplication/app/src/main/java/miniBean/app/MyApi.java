@@ -153,4 +153,7 @@ public interface MyApi {
     @POST("/image/upload-profile-photo")
     public void uploadProfilePhoto(@Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
 
+    @GET("/mark-as-read/{ids}")
+    public void markAsRead(@Path("ids")String id, @Query("key") String key, Callback<Response> cb);
+
 }

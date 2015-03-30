@@ -90,6 +90,7 @@ public class MyProfileFragment extends Fragment {
         }
 
         if (headerDataVM.getNotifyCounts() == 0) {
+
             notificationCount.setVisibility(View.INVISIBLE);
         } else {
             notificationCount.setVisibility(View.VISIBLE);
@@ -189,4 +190,6 @@ public class MyProfileFragment extends Fragment {
             fragment.onActivityResult(requestCode, resultCode, intent);
         }
     }
+
+
 }
