@@ -37,11 +37,27 @@
 
             <ImageView
                 android:id="@+id/commentImage"
-                android:layout_width="80dp"
-                android:layout_height="fill_parent"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_below="@+id/commentComponent"
                 android:layout_marginLeft="15dp"
                 android:layout_gravity="bottom|left" />
+
+            <ImageView
+                android:id="@+id/commentImage1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_below="@+id/commentComponent"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="bottom|left" />
+            <ImageView
+                android:id="@+id/commentImage2"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_below="@+id/commentComponent"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="bottom|left" />
+
 
 
         </LinearLayout>

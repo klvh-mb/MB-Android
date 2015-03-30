@@ -64,7 +64,7 @@ public class DetailActivity extends FragmentActivity {
     private ImageButton backButton, nextButton;
     private ImageView backImage, bookmarkAction, moreAction;
     private TextView commentEdit;
-    private ImageView commentImage;
+    private ImageView commentImage,commentImage1,commentImage2;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
     private ListView listView;
@@ -82,6 +82,10 @@ public class DetailActivity extends FragmentActivity {
     private int noOfComments;
     private int curPage = 1;
     private CommunityPostCommentVM postVm = new CommunityPostCommentVM();
+    private List<File> photos;
+    private File photo;
+    int imageCount=0;
+
 
     private ActivityUtil activityUtil;
 
@@ -107,6 +111,8 @@ public class DetailActivity extends FragmentActivity {
         spinner = (ProgressBar) findViewById(R.id.spinner);
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
+
+        photos = new ArrayList<>();
 
         communityName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,6 +291,7 @@ public class DetailActivity extends FragmentActivity {
             postButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    imageCount=0;
                     doComment();
                     commentPopup.dismiss();
                 }
@@ -307,10 +314,15 @@ public class DetailActivity extends FragmentActivity {
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
                     isPhoto = true;
+                    imageCount++;
                 }
             });
 
             commentImage = (ImageView) layout.findViewById(R.id.commentImage);
+            commentImage1= (ImageView) layout.findViewById(R.id.commentImage1);
+            commentImage2= (ImageView) layout.findViewById(R.id.commentImage2);
+
+
             Log.d(this.getClass().getSimpleName(), "initiateCommentPopup: "+selectedImagePath);
         } catch (Exception e) {
             e.printStackTrace();
@@ -330,9 +342,20 @@ public class DetailActivity extends FragmentActivity {
             Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
             Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
             if (bp != null) {
-                commentImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
-                commentImage.setVisibility(View.VISIBLE);
+                if(imageCount==1) {
+                    commentImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+                    commentImage.setVisibility(View.VISIBLE);
+                }else if(imageCount==2){
+                    commentImage1.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+                    commentImage1.setVisibility(View.VISIBLE);
+                }else if(imageCount==3){
+                    commentImage2.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+                    commentImage2.setVisibility(View.VISIBLE);
+                }
             }
+
+            photo=new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
+            photos.add(photo);
 
             // pop back soft keyboard
             activityUtil.popupInputMethodWindow();
@@ -358,7 +381,9 @@ public class DetailActivity extends FragmentActivity {
             @Override
             public void success(CommentResponse array, Response response) {
                 if (isPhoto) {
-                    uploadPhoto(array.getId());
+                    for(File singlePhoto:photos) {
+                        uploadPhoto(array.getId(),singlePhoto);
+                    }
                 } else {
                     getComments(getIntent().getLongExtra("postId", 0L),getMaxPage()-1);  // reload page
                 }
@@ -374,13 +399,13 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    private void uploadPhoto(String commentId) {
-        File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
+    private void uploadPhoto(String commentId,File photo) {
+        //File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.api.uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
             @Override
             public void success(Response array, Response response) {
-                getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page
+                getComments(getIntent().getLongExtra("postId", 0L), 0);  // reload page
             }
 
             @Override
