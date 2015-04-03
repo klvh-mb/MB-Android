@@ -170,7 +170,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         });
 
         // delete
-        if (item.isO() || AppController.getUser().isAdmin()) {
+        if (item.isO() || (AppController.getUser() != null && AppController.getUser().isAdmin())) {
             if (item.isO()) {
                 deleteText.setTextColor(this.activity.getResources().getColor(R.color.like_blue));
             } else if (AppController.getUser().isAdmin()) {
@@ -257,14 +257,15 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         // images
         Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
         if(item.hasImage) {
-            if (!item.imageLoaded || postImagesLayout.getChildCount() == 0) {
+            if (!item.imageLoaded && postImagesLayout.getChildCount() == 0) {
+                Log.d(this.getClass().getSimpleName(), "getView: load "+item.getImgs().length+" images to post/comment - "+item.getD());
                 loadImages(item.getImgs());
                 item.imageLoaded = true;
             } else {
-                for(int i = 0; i < postImagesLayout.getChildCount(); ++i) {
+                for(int i = 0; i < postImagesLayout.getChildCount(); i++) {
                     View childView = postImagesLayout.getChildAt(i);
                     childView.setVisibility(View.VISIBLE);
-                    Log.d(this.getClass().getSimpleName(), "getView: resume all post images view - "+i);
+                    Log.d(this.getClass().getSimpleName(), "getView: resume post/comment image view - "+i);
                 }
             }
             postImagesLayout.setVisibility(View.VISIBLE);
@@ -299,7 +300,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             new LoadPostImage().execute(source, postImage);
             */
 
-            ImageUtil.displayPostImage(imageId, postImage, new SimpleImageLoadingListener() {
+            ImageUtil.displayOriginalPostImage(imageId, postImage, new SimpleImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
 

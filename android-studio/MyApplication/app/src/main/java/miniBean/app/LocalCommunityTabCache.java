@@ -130,15 +130,7 @@ public class LocalCommunityTabCache {
             public void success(CommunitiesParentVM communitiesParentVM, Response response) {
                 Log.d(LocalCommunityTabCache.class.getSimpleName(), "refreshMyCommunities.api.success: my communities size - " + communitiesParentVM.communities.size());
                 setMyCommunitiesParentVM(communitiesParentVM);
-
-                // notify change to fragments...
-                if (myCommunityFragment != null) {
-                    Log.d(LocalCommunityTabCache.class.getSimpleName(), "refreshMyCommunities.api.success: refresh CommunityFragment");
-                    myCommunityFragment.notifyChange(communitiesParentVM.communities);
-                }
-                for (TopicCommunityFragment fragment : topicCommunityFragments) {
-                    fragment.notifyChange();
-                }
+                notifyChange();
             }
 
             @Override
@@ -155,6 +147,16 @@ public class LocalCommunityTabCache {
                 Log.d(LocalCommunityTabCache.class.getSimpleName(), "filterMyCommunities: filtered " + communitiesParentVM.communities.get(i).dn);
                 communitiesParentVM.communities.remove(i);
             }
+        }
+    }
+
+    private static void notifyChange() {
+        if (myCommunityFragment != null) {
+            Log.d(LocalCommunityTabCache.class.getSimpleName(), "notifyChange: refresh CommunityFragment");
+            myCommunityFragment.notifyChange(getMyCommunitiesParentVM().communities);
+        }
+        for (TopicCommunityFragment fragment : topicCommunityFragments) {
+            fragment.notifyChange();
         }
     }
 }
