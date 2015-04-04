@@ -54,8 +54,10 @@
     <string name="new_post">發出</string>
     <string name="new_post_title">問題 / 分享⋯⋯</string>
     <string name="new_post_body">加些詳情</string>
+    <string name="new_post_max_images">最多可加入3張圖</string>
     <string name="new_post_success">成功發佈話題</string>
     <string name="new_post_failed">暫時不能發佈話題，請稍後重試</string>
+    <string name="comment_max_images">最多可加入3張圖</string>
     <string name="comment_success">成功回覆話題</string>
     <string name="comment_failed">暫時不能回覆話題，請稍後重試</string>
     <string name="timeago_just_now">剛剛</string>

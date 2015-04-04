@@ -64,7 +64,6 @@ public class DetailActivity extends FragmentActivity {
     private ImageButton backButton, nextButton;
     private ImageView backImage, bookmarkAction, moreAction;
     private TextView commentEdit;
-    private ImageView commentImage,commentImage1,commentImage2;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
     private ListView listView;
@@ -75,17 +74,17 @@ public class DetailActivity extends FragmentActivity {
     private PopupWindow commentPopup, paginationPopup;
     private Boolean isBookmarked = false;
     private ProgressBar spinner;
-    private Boolean isPhoto = false;
     private TextView communityName, numPostViews, numPostComments;
     private ImageView communityIcon;
     private EditText commentEditText;
     private int noOfComments;
     private int curPage = 1;
     private CommunityPostCommentVM postVm = new CommunityPostCommentVM();
-    private List<File> photos;
-    private File photo;
-    int imageCount=0;
 
+    private TextView commentPostButton;
+    private ImageView commentBrowseButton, commentCancelButton;
+    private List<ImageView> commentImages = new ArrayList<>();
+    private List<File> photos = new ArrayList<>();
 
     private ActivityUtil activityUtil;
 
@@ -111,8 +110,6 @@ public class DetailActivity extends FragmentActivity {
         spinner = (ProgressBar) findViewById(R.id.spinner);
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
-
-        photos = new ArrayList<>();
 
         communityName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -256,10 +253,10 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void initiateCommentPopup() {
-        try {
-            mainFrameLayout.getForeground().setAlpha(20);
-            mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
+        mainFrameLayout.getForeground().setAlpha(20);
+        mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
 
+        try {
             LayoutInflater inflater = (LayoutInflater) DetailActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -268,11 +265,14 @@ public class DetailActivity extends FragmentActivity {
 
             commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
 
-            commentPopup = new PopupWindow(
-                    layout,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT, //activityUtil.getRealDimension(DefaultValues.COMMENT_POPUP_HEIGHT),
-                    true);
+            if (commentPopup == null) {
+                commentPopup = new PopupWindow(
+                        layout,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT, //activityUtil.getRealDimension(DefaultValues.COMMENT_POPUP_HEIGHT),
+                        true);
+            }
+
             commentPopup.setOutsideTouchable(false);
             commentPopup.setFocusable(true);
             commentPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
@@ -287,45 +287,89 @@ public class DetailActivity extends FragmentActivity {
 
             activityUtil.popupInputMethodWindow();
 
-            TextView postButton = (TextView) layout.findViewById(R.id.postButton);
-            postButton.setOnClickListener(new View.OnClickListener() {
+            commentPostButton = (TextView) layout.findViewById(R.id.postButton);
+            commentPostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imageCount=0;
                     doComment();
-                    commentPopup.dismiss();
                 }
             });
 
-            ImageView cancelButton = (ImageView) layout.findViewById(R.id.cancelButton);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
+            commentCancelButton = (ImageView) layout.findViewById(R.id.cancelButton);
+            commentCancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     commentPopup.dismiss();
                 }
             });
 
-            ImageView browseImage = (ImageView) layout.findViewById(R.id.browseImage);
-            browseImage.setOnClickListener(new View.OnClickListener() {
+            commentBrowseButton = (ImageView) layout.findViewById(R.id.browseImage);
+            commentBrowseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-                    isPhoto = true;
-                    imageCount++;
+                    if (photos.size() == DefaultValues.MAX_COMMENT_IMAGES) {
+                        Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_max_images), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+                    }
                 }
             });
 
-            commentImage = (ImageView) layout.findViewById(R.id.commentImage);
-            commentImage1= (ImageView) layout.findViewById(R.id.commentImage1);
-            commentImage2= (ImageView) layout.findViewById(R.id.commentImage2);
+            if (commentImages.size() == 0) {
+                ImageView commentImage = (ImageView) layout.findViewById(R.id.commentImage1);
+                commentImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeCommentImage(0);
+                    }
+                });
+                commentImages.add(commentImage);
 
+                commentImage = (ImageView) layout.findViewById(R.id.commentImage2);
+                commentImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeCommentImage(1);
+                    }
+                });
+                commentImages.add(commentImage);
 
-            Log.d(this.getClass().getSimpleName(), "initiateCommentPopup: "+selectedImagePath);
+                commentImage = (ImageView) layout.findViewById(R.id.commentImage3);
+                commentImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeCommentImage(2);
+                    }
+                });
+                commentImages.add(commentImage);
+            }
+
+            Log.d(this.getClass().getSimpleName(), "initiateCommentPopup: " + selectedImagePath);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void resetCommentImages() {
+        commentImages = new ArrayList<>();
+        photos = new ArrayList<>();
+    }
+
+    private void setCommentImage(Bitmap bp) {
+        ImageView commentImage = commentImages.get(photos.size());
+        commentImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+        commentImage.setVisibility(View.VISIBLE);
+        File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
+        photos.add(photo);
+    }
+
+    private void removeCommentImage(int i) {
+        if (photos.size() > i) {
+            photos.remove(i);
+            commentImages.get(i).setImageDrawable(null);
         }
     }
 
@@ -341,21 +385,9 @@ public class DetailActivity extends FragmentActivity {
             String path = selectedImageUri.getPath();
             Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
             Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
-            if (bp != null) {
-                if(imageCount==1) {
-                    commentImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
-                    commentImage.setVisibility(View.VISIBLE);
-                }else if(imageCount==2){
-                    commentImage1.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
-                    commentImage1.setVisibility(View.VISIBLE);
-                }else if(imageCount==3){
-                    commentImage2.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
-                    commentImage2.setVisibility(View.VISIBLE);
-                }
+            if (bp != null && photos.size() < DefaultValues.MAX_COMMENT_IMAGES) {
+                setCommentImage(bp);
             }
-
-            photo=new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
-            photos.add(photo);
 
             // pop back soft keyboard
             activityUtil.popupInputMethodWindow();
@@ -363,37 +395,37 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void doComment() {
-        if (commentEditText == null) {
-            Log.d(this.getClass().getSimpleName(), "commentEditText null");
-        }
-        if (commentEditText.getText() == null) {
-            Log.d(this.getClass().getSimpleName(), "commentEditText.getText() null");
-        }
-
         String comment = commentEditText.getText().toString();
         if (StringUtils.isEmpty(comment)) {
             Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.invalid_comment_body_empty), Toast.LENGTH_SHORT).show();
             return;
         }
 
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
         Log.d(this.getClass().getSimpleName(), "doComment: postId="+getIntent().getLongExtra("postId", 0L)+" comment="+comment.substring(0, Math.min(5, comment.length())));
         AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, Response response) {
-                if (isPhoto) {
-                    for(File singlePhoto:photos) {
+                if (photos.size() > 0) {
+                    for(File singlePhoto : photos) {
                         uploadPhoto(array.getId(),singlePhoto);
                     }
                 } else {
-                    getComments(getIntent().getLongExtra("postId", 0L),getMaxPage()-1);  // reload page
+                    getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page
                 }
                 Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_success), Toast.LENGTH_LONG).show();
+
+                resetCommentImages();
                 commentPopup.dismiss();
+                commentPopup = null;
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_failed), Toast.LENGTH_SHORT).show();
+                commentPopup.dismiss();
                 error.printStackTrace();
             }
         });
@@ -416,13 +448,14 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void initiatePaginationPopup() {
-        try {
-            mainFrameLayout.getForeground().setAlpha(20);
-            mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
+        mainFrameLayout.getForeground().setAlpha(20);
+        mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
 
+        try {
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) DetailActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             //Inflate the view from a predefined XML layout
             View layout = inflater.inflate(R.layout.pagination_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
@@ -432,6 +465,7 @@ public class DetailActivity extends FragmentActivity {
                     activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH),
                     activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT),
                     true);
+
             paginationPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             paginationPopup.setOutsideTouchable(false);
             paginationPopup.setFocusable(true);
@@ -440,16 +474,16 @@ public class DetailActivity extends FragmentActivity {
             ListView listView1 = (ListView) layout.findViewById(R.id.pageList);
             ArrayList<String> stringArrayList = new ArrayList<String>();
             for (int i = 0; i < getMaxPage(); i++) {
-                stringArrayList.add(getString(R.string.page_before)+(i+1)+getString(R.string.page_after));
+                stringArrayList.add(getString(R.string.page_before) + (i + 1) + getString(R.string.page_after));
             }
-            pageAdapter = new PopupPageListAdapter(this,stringArrayList);
+            pageAdapter = new PopupPageListAdapter(this, stringArrayList);
             listView1.setAdapter(pageAdapter);
 
             listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d(this.getClass().getSimpleName(), "listView1.onItemClick: Page " + (position+1));
-                    getComments(getIntent().getLongExtra("postId", 0L),position);
+                    Log.d(this.getClass().getSimpleName(), "listView1.onItemClick: Page " + (position + 1));
+                    getComments(getIntent().getLongExtra("postId", 0L), position);
                     paginationPopup.dismiss();
                 }
             });

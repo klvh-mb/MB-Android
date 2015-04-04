@@ -26,6 +26,9 @@ public class DefaultValues {
     public static int MY_COMMUNITY_POPUP_WIDTH = 250;
     public static int MY_COMMUNITY_POPUP_HEIGHT = 350;
 
+    public static int MAX_POST_IMAGES = 3;
+    public static int MAX_COMMENT_IMAGES = 3;
+
     public static int IMAGE_CORNERS_ROUNDED_VALUE = 38;
     public static int IMAGE_ROUND_ROUNDED_VALUE = 120;
 
