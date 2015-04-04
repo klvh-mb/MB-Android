@@ -71,7 +71,7 @@ public class MainActivity extends FragmentActivity {
         Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.profile);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         profile.setCompoundDrawables(icon, null, null, null);
-        profile.setTextColor(getResources().getColor(R.color.dark_gray3));
+        profile.setTextColor(getResources().getColor(R.color.dark_gray_3));
 
         Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.comm_sel);
         img.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
@@ -101,7 +101,7 @@ public class MainActivity extends FragmentActivity {
         Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         community.setCompoundDrawables(icon, null, null, null);
-        community.setTextColor(getResources().getColor(R.color.dark_gray3));
+        community.setTextColor(getResources().getColor(R.color.dark_gray_3));
 
         commClicked = false;
     }

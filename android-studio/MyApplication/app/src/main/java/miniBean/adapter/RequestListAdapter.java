@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -62,6 +63,10 @@ public class RequestListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.request_list_item, null);
 
         final NotificationVM item = requestItems.get(position);
+
+        LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.mainLayout);
+        if (item.getSta() == 0)
+            layout.setBackgroundDrawable(this.activity.getResources().getDrawable(R.drawable.rect_border_notification_new));
 
         message = (TextView) convertView.findViewById(R.id.requestText);
         userPhoto = (ImageView) convertView.findViewById(R.id.userImage);

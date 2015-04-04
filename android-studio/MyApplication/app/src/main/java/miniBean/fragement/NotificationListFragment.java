@@ -1,9 +1,7 @@
 package miniBean.fragement;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.CommunityActivity;
 import miniBean.adapter.NotificationListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
@@ -73,9 +70,8 @@ public class NotificationListFragment extends Fragment {
             e.printStackTrace();
         }
 
-        if(ids.length()!=0)
+        if(ids.length() != 0)
             markAsRead(ids.toString());
-
 
         if(notificationVMs.size() == 0){
             tipText.setVisibility(View.VISIBLE);
@@ -108,7 +104,6 @@ public class NotificationListFragment extends Fragment {
             Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
             childFragmentManager.setAccessible(true);
             childFragmentManager.set(this, null);
-
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {

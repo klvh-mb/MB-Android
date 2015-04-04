@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:textSize="17dp"
-            android:textColor="@color/dark_gray2" />
+            android:textColor="@color/dark_gray_2" />
 
         <ImageView
             android:id="@+id/mem_join"

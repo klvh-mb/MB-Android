@@ -60,6 +60,14 @@ public class MyProfileFragment extends Fragment {
         getActivity().getActionBar().setCustomView(actionBarView, lp);
         getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Log.d(this.getClass().getSimpleName(), "onStart: api.getHeaderBarData");
         AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
             @Override
             public void success(HeaderDataVM headerDataVM, Response response) {
@@ -68,12 +76,9 @@ public class MyProfileFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace(); //to see if you have errors
-
+                error.printStackTrace();
             }
         });
-
-        return view;
     }
 
     private void setHeaderBarData(HeaderDataVM headerDataVM) {

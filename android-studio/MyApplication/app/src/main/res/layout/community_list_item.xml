@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:textSize="17dp"
-            android:textColor="@color/dark_gray2" />
+            android:textColor="@color/dark_gray_2" />
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"

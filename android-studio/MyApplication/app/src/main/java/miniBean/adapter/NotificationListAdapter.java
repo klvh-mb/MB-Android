@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -60,6 +61,10 @@ public class NotificationListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.notification_list_item, null);
 
         final NotificationVM item = notificationItems.get(position);
+
+        LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.mainLayout);
+        if (item.getSta() == 0)
+            layout.setBackgroundDrawable(this.activity.getResources().getDrawable(R.drawable.rect_border_notification_new));
 
         message = (TextView) convertView.findViewById(R.id.notificationMessage);
         timeText = (TextView) convertView.findViewById(R.id.notificationTime);

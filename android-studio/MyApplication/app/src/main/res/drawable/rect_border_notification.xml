@@ -10,7 +10,7 @@
         android:color="@color/light_gray_3" />
 
     <corners
-        android:radius="3dp">
+        android:radius="0dp">
     </corners>
 
 </shape>

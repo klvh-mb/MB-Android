@@ -4,11 +4,11 @@
     <color name="admin_green">#038100</color>
     <color name="gray">#888</color>
     <color name="light_gray">#aaa</color>
-    <color name="light_gray2">#ddd</color>
-    <color name="light_gray3">#eee</color>
+    <color name="light_gray_2">#ddd</color>
+    <color name="light_gray_3">#eee</color>
     <color name="dark_gray">#555</color>
-    <color name="dark_gray2">#222</color>
-    <color name="dark_gray3">#111</color>
+    <color name="dark_gray_2">#222</color>
+    <color name="dark_gray_3">#111</color>
     <color name="sharp_pink">#FF6795</color>
     <color name="purple">#ECDAFF</color>
     <color name="light_purple">#ECDAFF</color>
