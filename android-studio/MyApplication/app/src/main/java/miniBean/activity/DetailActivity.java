@@ -319,32 +319,18 @@ public class DetailActivity extends FragmentActivity {
             });
 
             if (commentImages.size() == 0) {
-                ImageView commentImage = (ImageView) layout.findViewById(R.id.commentImage1);
-                commentImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        removeCommentImage(0);
-                    }
-                });
-                commentImages.add(commentImage);
+                commentImages.add((ImageView) layout.findViewById(R.id.commentImage1));
+                commentImages.add((ImageView) layout.findViewById(R.id.commentImage2));
+                commentImages.add((ImageView) layout.findViewById(R.id.commentImage3));
 
-                commentImage = (ImageView) layout.findViewById(R.id.commentImage2);
-                commentImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        removeCommentImage(1);
-                    }
-                });
-                commentImages.add(commentImage);
-
-                commentImage = (ImageView) layout.findViewById(R.id.commentImage3);
-                commentImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        removeCommentImage(2);
-                    }
-                });
-                commentImages.add(commentImage);
+                for (ImageView commentImage : commentImages) {
+                    commentImage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            removeCommentImage();
+                        }
+                    });
+                }
             }
 
             Log.d(this.getClass().getSimpleName(), "initiateCommentPopup: " + selectedImagePath);
@@ -366,10 +352,11 @@ public class DetailActivity extends FragmentActivity {
         photos.add(photo);
     }
 
-    private void removeCommentImage(int i) {
-        if (photos.size() > i) {
-            photos.remove(i);
-            commentImages.get(i).setImageDrawable(null);
+    private void removeCommentImage() {
+        if (photos.size() > 0) {
+            int toRemove = photos.size()-1;
+            commentImages.get(toRemove).setImageDrawable(null);
+            photos.remove(toRemove);
         }
     }
 
