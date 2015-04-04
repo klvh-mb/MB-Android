@@ -585,8 +585,10 @@ public class DetailActivity extends FragmentActivity {
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {
                 communityItems.clear();
                 List<CommunityPostCommentVM> communityPostCommentVMs = new ArrayList<CommunityPostCommentVM>();
-                if (offset == 0)    // insert new_post itself for first page only
+                if (offset == 0) {   // insert new_post itself for first page only
+                    postVm.imageLoaded = false;
                     communityPostCommentVMs.add(postVm);
+                }
                 communityPostCommentVMs.addAll(commentVMs);
 
                 setPageButtons(offset + 1);     // set page before adapter as it takes in curPage

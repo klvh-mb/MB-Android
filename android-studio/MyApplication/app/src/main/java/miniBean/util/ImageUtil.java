@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -93,7 +94,6 @@ public class ImageUtil {
     }
 
     public static void displayCommunityCoverImage(long id, ImageView imageView, ImageLoadingListener listener) {
-
         getImageLoader().displayImage(COMMUNITY_COVER_IMAGE_BY_ID_URL + id, imageView, listener);
     }
 
@@ -156,18 +156,22 @@ public class ImageUtil {
     // Post image
 
     public static void displayPostImage(long id, ImageView imageView) {
+        Log.d(ImageUtil.class.getSimpleName(), "displayPostImage: loading "+POST_IMAGE_BY_ID_URL + id);
         getImageLoader().displayImage(POST_IMAGE_BY_ID_URL + id, imageView);
     }
 
     public static void displayPostImage(long id, ImageView imageView, ImageLoadingListener listener) {
+        Log.d(ImageUtil.class.getSimpleName(), "displayPostImage: loading "+POST_IMAGE_BY_ID_URL + id);
         getImageLoader().displayImage(POST_IMAGE_BY_ID_URL + id, imageView, listener);
     }
 
     public static void displayOriginalPostImage(long id, ImageView imageView) {
+        Log.d(ImageUtil.class.getSimpleName(), "displayOriginalPostImage: loading "+ORIGINAL_POST_IMAGE_BY_ID_URL + id);
         getImageLoader().displayImage(ORIGINAL_POST_IMAGE_BY_ID_URL + id, imageView);
     }
 
     public static void displayOriginalPostImage(long id, ImageView imageView, ImageLoadingListener listener) {
+        Log.d(ImageUtil.class.getSimpleName(), "displayOriginalPostImage: loading "+ORIGINAL_POST_IMAGE_BY_ID_URL + id);
         getImageLoader().displayImage(ORIGINAL_POST_IMAGE_BY_ID_URL + id, imageView, listener);
     }
 

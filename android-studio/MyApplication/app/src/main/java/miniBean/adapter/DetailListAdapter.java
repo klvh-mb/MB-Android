@@ -59,11 +59,11 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     private List<CommunityPostCommentVM> postComments;
     private LinearLayout likeLayout;
     private ImageView userPic, like;
-    private LinearLayout postImagesLayout;
-    private List<ImageView> postImages;
     private TextView deleteText, likeText, numLike, postIndex;
     private FrameLayout frameLayout;
     private int page;
+
+    private LinearLayout postImagesLayout;
 
     private ActivityUtil activityUtil;
 
@@ -98,7 +98,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     @Override
-    public View getView(int position, View convertView, final ViewGroup parent) {
+    public synchronized View getView(int position, View convertView, final ViewGroup parent) {
 
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -116,9 +116,10 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         likeLayout = (LinearLayout) convertView.findViewById(R.id.likeComponent);
         numLike = (TextView) convertView.findViewById(R.id.numLike);
         postIndex = (TextView) convertView.findViewById(R.id.postIndex);
-        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
-        postImages = new ArrayList<>();
         frameLayout = (FrameLayout) convertView.findViewById(R.id.mainFrameLayout);
+
+        // images
+        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
 
         final CommunityPostCommentVM item = postComments.get(position);
 
@@ -251,24 +252,27 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         postTime.setText(DateTimeUtil.getTimeAgo(item.getCd()));
 
         // profile pic
-        //Log.d(this.getClass().getSimpleName(), "getView: load user profile pic - "+item.getOn()+"|"+activity.getResources().getString(R.string.base_url) + "/image/get-profile-image-by-id/" + item.getOid());
         ImageUtil.displayMiniProfileImage(item.getOid(), userPic);
 
         // images
-        Log.d(this.getClass().getSimpleName(), "getView: post/comment hasImage - "+item.hasImage);
+        // NOTE: need to load images from UIL cache each time as ListAdapter items are being recycled...
+        //       without this item will not show images correctly
         if(item.hasImage) {
-            if (!item.imageLoaded && postImagesLayout.getChildCount() == 0) {
-                Log.d(this.getClass().getSimpleName(), "getView: load "+item.getImgs().length+" images to post/comment - "+item.getD());
-                loadImages(item.getImgs());
-                item.imageLoaded = true;
+            Log.d(this.getClass().getSimpleName(), "getView: load "+item.getImgs().length+" images to post/comment #"+position+" - "+item.getD());
+            loadImages(item, postImagesLayout);
+            postImagesLayout.setVisibility(View.VISIBLE);
+
+            /*if (!item.imageLoaded) {
+                Log.d(this.getClass().getSimpleName(), "getView: load "+item.getImgs().length+" images to post/comment #"+position+" - "+item.getD());
+                loadImages(item, postImagesLayout);
             } else {
                 for(int i = 0; i < postImagesLayout.getChildCount(); i++) {
+                    Log.d(this.getClass().getSimpleName(), "getView: resume image "+i+" visibility for post/comment #"+position+" - "+item.getD());
                     View childView = postImagesLayout.getChildAt(i);
                     childView.setVisibility(View.VISIBLE);
-                    Log.d(this.getClass().getSimpleName(), "getView: resume post/comment image view - "+i);
                 }
             }
-            postImagesLayout.setVisibility(View.VISIBLE);
+            postImagesLayout.setVisibility(View.VISIBLE);*/
         } else {
             postImagesLayout.setVisibility(View.GONE);
         }
@@ -276,13 +280,15 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         return convertView;
     }
 
-    private void loadImages(Long[] imageIds) {
-        for (Long imageId : imageIds) {
+    private void loadImages(final CommunityPostCommentVM item, final LinearLayout layout) {
+        layout.removeAllViewsInLayout();
+
+        for (Long imageId : item.getImgs()) {
             ImageView postImage = new ImageView(this.activity);
             postImage.setAdjustViewBounds(true);
             postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10));
-            postImagesLayout.addView(postImage);
+            layout.addView(postImage);
 
             /*
             postImage.setOnClickListener(new View.OnClickListener() {
@@ -325,7 +331,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                         width = displayWidth;
                         height = (int)(height * scaleAspect);
 
-                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: after shrink - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
+                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: after resize - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
 
                         Drawable d = new BitmapDrawable(
                                 DetailListAdapter.this.activity.getResources(),
@@ -337,6 +343,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                 }
             });
         }
+        item.imageLoaded = true;
     }
 
     private void likeComment(Long id) {
