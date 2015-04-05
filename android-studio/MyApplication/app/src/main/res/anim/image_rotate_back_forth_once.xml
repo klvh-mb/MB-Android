@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="true"
+    android:ordering="sequentially">
+    <!-- start animation -->
+    <rotate
+        android:startOffset="0"
+        android:fromDegrees="0"
+        android:toDegrees="30"
+        android:duration="500"
+        android:pivotX="50%"
+        android:pivotY="50%">
+    </rotate>
+    <rotate
+        android:startOffset="500"
+        android:fromDegrees="30"
+        android:toDegrees="-30"
+        android:duration="1000"
+        android:pivotX="50%"
+        android:pivotY="50%">
+    </rotate>
+    <rotate
+        android:startOffset="1500"
+        android:fromDegrees="-30"
+        android:toDegrees="0"
+        android:duration="500"
+        android:pivotX="50%"
+        android:pivotY="50%">
+    </rotate>
+</set>

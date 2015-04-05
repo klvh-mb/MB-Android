@@ -1,26 +1,30 @@
 package miniBean.fragement;
 
+import android.app.Service;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import miniBean.R;
 import miniBean.activity.NewPostActivity;
+import miniBean.util.AnimationUtil;
 
 public class MyCommunityFragment extends Fragment {
 
     private ImageView signInAction, editAction;
     private Button newsfeed, joined;
-    private ProgressBar spinner;
     private boolean newsfeedPressed = true;
 
     @Override
@@ -32,9 +36,13 @@ public class MyCommunityFragment extends Fragment {
         signInAction = (ImageView) view.findViewById(R.id.signInAction);
         newsfeed = (Button) view.findViewById(R.id.buttonNewsfeed);
         joined = (Button) view.findViewById(R.id.buttonJoined);
-        spinner = (ProgressBar) view.findViewById(R.id.spinner);
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AnimationUtil.rotateBackForthOnce(signInAction);
+            }
+        }, 2000);
 
         if (newsfeedPressed) {
             pressNewsfeedButton();
@@ -47,7 +55,6 @@ public class MyCommunityFragment extends Fragment {
             public void onClick(View v) {
                 if (!newsfeedPressed) {
                     pressNewsfeedButton();
-                    spinner.setVisibility(View.GONE);
                     newsfeedPressed = true;
                 }
             }
@@ -59,7 +66,6 @@ public class MyCommunityFragment extends Fragment {
             public void onClick(View v) {
                 if (newsfeedPressed) {
                     pressJoinedButton();
-                    spinner.setVisibility(View.GONE);
                     newsfeedPressed = false;
                 }
             }

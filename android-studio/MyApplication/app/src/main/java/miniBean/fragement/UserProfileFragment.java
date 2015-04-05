@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
 import miniBean.R;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.util.AnimationUtil;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.ProfileVM;
 import miniBean.viewmodel.UserVM;
@@ -112,8 +113,7 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void getUserProfile(final long userId) {
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         AppController.api.getUserProfile(userId, AppController.getInstance().getSessionId(), new Callback<ProfileVM>() {
             @Override
@@ -126,18 +126,17 @@ public class UserProfileFragment extends Fragment {
                 ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
-                        spinner.setVisibility(View.VISIBLE);
-                        spinner.bringToFront();
+                        AnimationUtil.show(spinner);
                     }
 
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        spinner.setVisibility(View.GONE);
+                        AnimationUtil.cancel(spinner);
                     }
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        spinner.setVisibility(View.GONE);
+                        AnimationUtil.cancel(spinner);
                     }
                 });
             }

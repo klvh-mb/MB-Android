@@ -27,6 +27,7 @@ import miniBean.R;
 import miniBean.activity.MainActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
@@ -157,8 +158,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getUserInfo() {
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
@@ -176,18 +176,17 @@ public class ProfileFragment extends Fragment {
                 ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
-                        spinner.setVisibility(View.VISIBLE);
-                        spinner.bringToFront();
+                        AnimationUtil.show(spinner);
                     }
 
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        spinner.setVisibility(View.GONE);
+                        AnimationUtil.cancel(spinner);
                     }
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        spinner.setVisibility(View.GONE);
+                        AnimationUtil.cancel(spinner);
                     }
                 });
             }
@@ -234,8 +233,7 @@ public class ProfileFragment extends Fragment {
         File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
 
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         ImageUtil.clearCoverImageCache(id);
         AppController.api.uploadCoverPhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>() {
@@ -246,18 +244,17 @@ public class ProfileFragment extends Fragment {
                         ImageUtil.displayCoverImage(id, userCoverPic, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-                                spinner.setVisibility(View.VISIBLE);
-                                spinner.bringToFront();
+                                AnimationUtil.show(spinner);
                             }
 
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                spinner.setVisibility(View.GONE);
+                                AnimationUtil.cancel(spinner);
                             }
 
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                spinner.setVisibility(View.GONE);
+                                AnimationUtil.cancel(spinner);
                             }
                         });
                     }
@@ -269,7 +266,6 @@ public class ProfileFragment extends Fragment {
                     error.printStackTrace();
             }
         });
-
     }
 
     private void changeProfilePhoto(final long id) {
@@ -277,8 +273,7 @@ public class ProfileFragment extends Fragment {
         File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
 
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         ImageUtil.clearProfileImageCache(id);
         AppController.api.uploadProfilePhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
@@ -289,18 +284,17 @@ public class ProfileFragment extends Fragment {
                         ImageUtil.displayThumbnailProfileImage(id, userPic, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-                                spinner.setVisibility(View.VISIBLE);
-                                spinner.bringToFront();
+                                AnimationUtil.show(spinner);
                             }
 
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                spinner.setVisibility(View.GONE);
+                                AnimationUtil.cancel(spinner);
                             }
 
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                spinner.setVisibility(View.GONE);
+                                AnimationUtil.cancel(spinner);
                             }
                         });
                     }

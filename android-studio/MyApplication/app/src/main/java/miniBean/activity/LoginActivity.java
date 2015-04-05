@@ -41,6 +41,7 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.ActivityUtil;
+import miniBean.util.AnimationUtil;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
@@ -82,8 +83,8 @@ public class LoginActivity extends Activity {
         yearCommunityTabLoaded = false;
 
         session = getSharedPreferences("prefs", 0);
-        spinner=  (ProgressBar) findViewById(R.id.spinner);
-        spinner.setVisibility(View.INVISIBLE);
+        spinner = (ProgressBar)findViewById(R.id.spinner);
+
         activityUtil = new ActivityUtil(this);
 
         APP_ID = getResources().getString(R.string.app_id);
@@ -94,8 +95,7 @@ public class LoginActivity extends Activity {
         login = (TextView) findViewById(R.id.buttonLogin);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                spinner.setVisibility(View.VISIBLE);
-                spinner.bringToFront();
+                AnimationUtil.show(spinner);
 
                 AppController.api.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
@@ -111,12 +111,12 @@ public class LoginActivity extends Activity {
                         } else {
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
-                        spinner.setVisibility(View.GONE);
+                        AnimationUtil.cancel(spinner);
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        spinner.setVisibility(View.GONE);
+                        AnimationUtil.cancel(spinner);
                         if (error.getResponse() != null &&
                                 error.getResponse().getStatus() == 400) {
                             String errorMsg = LoginActivity.this.activityUtil.getResponseBody(error.getResponse());
@@ -201,8 +201,7 @@ public class LoginActivity extends Activity {
     }
 
     private void doLoginUsingAccessToken(String access_token) {
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken: access_token - " + access_token);
         AppController.api.loginByFacebbok(access_token, new Callback<Response>() {
@@ -221,12 +220,12 @@ public class LoginActivity extends Activity {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
 
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
                 alert(R.string.login_error_title, R.string.login_error_message);
                 error.printStackTrace();
             }

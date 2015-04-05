@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,6 +28,7 @@ import miniBean.activity.DetailActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
@@ -203,8 +206,7 @@ public class CommunityFragment extends Fragment {
     }
 
     private void getNewsFeedByCommunityId(final CommunitiesWidgetChildVM community) {
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         ImageUtil.displayCommunityCoverImage(community.id, communityCoverPic);
 
@@ -225,12 +227,12 @@ public class CommunityFragment extends Fragment {
                     ImageUtil.displayRoundedCornersImage(community.gi, communityIcon);
                 }
 
-                spinner.setVisibility(View.INVISIBLE);
+                AnimationUtil.cancel(spinner);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                spinner.setVisibility(View.INVISIBLE);
+                AnimationUtil.cancel(spinner);
                 error.printStackTrace();
             }
         });

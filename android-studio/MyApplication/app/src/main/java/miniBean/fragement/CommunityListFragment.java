@@ -19,6 +19,7 @@ import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.CommunityListAdapter;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
@@ -43,8 +44,8 @@ public class CommunityListFragment extends Fragment {
         listView.addFooterView(new View(getActivity().getBaseContext()), null, true);
 
         spinner = (ProgressBar) view.findViewById(R.id.spinner);
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+
+        AnimationUtil.show(spinner);
 
         communities = new ArrayList<>();
 
@@ -92,7 +93,7 @@ public class CommunityListFragment extends Fragment {
         this.communities.clear();
         this.communities.addAll(communities);
         listAdapter.notifyDataSetChanged();
-        spinner.setVisibility(View.GONE);
+        AnimationUtil.cancel(spinner);
     }
 
     @Override

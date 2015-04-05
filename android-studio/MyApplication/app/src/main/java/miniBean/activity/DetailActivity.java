@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,6 +45,7 @@ import miniBean.adapter.DetailListAdapter;
 import miniBean.adapter.PopupPageListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
+import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
@@ -177,8 +179,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void getQnaDetail() {
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         Intent intent = getIntent();
         Long postID = intent.getLongExtra("postId", 0L);
@@ -227,7 +228,7 @@ public class DetailActivity extends FragmentActivity {
 
                 setPageButtons(curPage);
 
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
             }
 
             @Override
@@ -239,7 +240,7 @@ public class DetailActivity extends FragmentActivity {
                     Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.connection_timeout_message), Toast.LENGTH_SHORT).show();
                 }
 
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
 
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
@@ -340,7 +341,9 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void resetCommentImages() {
-        commentImages = new ArrayList<>();
+        for (ImageView commentImage : commentImages) {
+            commentImage.setImageDrawable(null);
+        }
         photos = new ArrayList<>();
     }
 
@@ -388,8 +391,7 @@ public class DetailActivity extends FragmentActivity {
             return;
         }
 
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         Log.d(this.getClass().getSimpleName(), "doComment: postId="+getIntent().getLongExtra("postId", 0L)+" comment="+comment.substring(0, Math.min(5, comment.length())));
         AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
@@ -597,8 +599,7 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void getComments(Long postID, final int offset) {
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         AppController.api.getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
 
@@ -617,12 +618,12 @@ public class DetailActivity extends FragmentActivity {
                 listView.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
 
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
                 error.printStackTrace();
             }
         });

@@ -11,20 +11,24 @@
         android:background="@color/actionbar_bg_light">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/signInLayout"
             android:layout_toLeftOf="@+id/buttonsLayout"
-            android:visibility="invisible">
+            android:visibility="visible"
+            android:paddingBottom="0dp">
 
             <ImageView
                 android:id="@+id/signInAction"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_width="50dp"
+                android:layout_height="fill_parent"
                 android:layout_alignParentRight="false"
-                android:layout_centerVertical="true"
-                android:src="@drawable/game_sign_in"
-                android:layout_alignParentLeft="true" />
+                android:src="@drawable/logo_bean_s"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -88,15 +92,6 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/mainActionsLayout">
 
-        <ProgressBar
-            android:id="@+id/spinner"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:indeterminate="true"
-            android:indeterminateDrawable="@drawable/progress_spinner" />
     </RelativeLayout>
 
 </RelativeLayout>

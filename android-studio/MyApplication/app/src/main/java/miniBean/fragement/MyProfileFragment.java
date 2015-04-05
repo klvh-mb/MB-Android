@@ -60,48 +60,6 @@ public class MyProfileFragment extends Fragment {
         getActivity().getActionBar().setCustomView(actionBarView, lp);
         getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        Log.d(this.getClass().getSimpleName(), "onStart: api.getHeaderBarData");
-        AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
-            @Override
-            public void success(HeaderDataVM headerDataVM, Response response) {
-                setHeaderBarData(headerDataVM);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
-    }
-
-    private void setHeaderBarData(HeaderDataVM headerDataVM) {
-        Log.d(MyProfileFragment.this.getClass().getSimpleName(), "getHeaderBarData.success: user=" + headerDataVM.getName() + " request=" + headerDataVM.getRequestCounts() + " notif=" + headerDataVM.getNotifyCounts());
-
-        requestNotif = headerDataVM.getRequestNotif();
-        notifAll = headerDataVM.getAllNotif();
-
-        if (headerDataVM.getRequestCounts() == 0) {
-            requestCount.setVisibility(View.INVISIBLE);
-        } else {
-            requestCount.setVisibility(View.VISIBLE);
-            requestCount.setText(headerDataVM.getRequestCounts() + "");
-        }
-
-        if (headerDataVM.getNotifyCounts() == 0) {
-
-            notificationCount.setVisibility(View.INVISIBLE);
-        } else {
-            notificationCount.setVisibility(View.VISIBLE);
-            notificationCount.setText(headerDataVM.getNotifyCounts() + "");
-        }
-
         Fragment profileFragment = new ProfileFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, profileFragment,"profile").commit();
@@ -169,6 +127,48 @@ public class MyProfileFragment extends Fragment {
                 */
             }
         });
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Log.d(this.getClass().getSimpleName(), "onStart: api.getHeaderBarData");
+        AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
+            @Override
+            public void success(HeaderDataVM headerDataVM, Response response) {
+                setHeaderBarData(headerDataVM);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    private void setHeaderBarData(HeaderDataVM headerDataVM) {
+        Log.d(MyProfileFragment.this.getClass().getSimpleName(), "getHeaderBarData.success: user=" + headerDataVM.getName() + " request=" + headerDataVM.getRequestCounts() + " notif=" + headerDataVM.getNotifyCounts());
+
+        requestNotif = headerDataVM.getRequestNotif();
+        notifAll = headerDataVM.getAllNotif();
+
+        if (headerDataVM.getRequestCounts() == 0) {
+            requestCount.setVisibility(View.INVISIBLE);
+        } else {
+            requestCount.setVisibility(View.VISIBLE);
+            requestCount.setText(headerDataVM.getRequestCounts() + "");
+        }
+
+        if (headerDataVM.getNotifyCounts() == 0) {
+
+            notificationCount.setVisibility(View.INVISIBLE);
+        } else {
+            notificationCount.setVisibility(View.VISIBLE);
+            notificationCount.setText(headerDataVM.getNotifyCounts() + "");
+        }
     }
 
     @Override
