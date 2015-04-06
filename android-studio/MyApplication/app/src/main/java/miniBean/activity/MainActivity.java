@@ -30,7 +30,7 @@ import retrofit.RetrofitError;
 public class MainActivity extends FragmentActivity {
 
     private Button community, profile, schools;
-    private boolean commClicked = false, profileClicked = false;
+    private boolean commClicked = false, schoolsClicked = false, profileClicked = false;
 
     private int realTabIconWidth, realTabIconHeight;
 
@@ -66,6 +66,14 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        schools.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(MainActivity.this.getClass().getSimpleName(), "onClick: Schools tab clicked");
+                pressSchoolsTab();
+            }
+        });
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,48 +91,87 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void pressCommunityTab() {
+        getActionBar().hide();
+
         if (!commClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            MainFragement mainFragement = new MainFragement();
-            fragmentTransaction.replace(R.id.placeHolder, mainFragement).commit();
-            commClicked = true;
+            MainFragement fragement = new MainFragement();
+            fragmentTransaction.replace(R.id.placeHolder, fragement).commit();
         }
 
-        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.profile);
+        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm_sel);
+        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
+        community.setCompoundDrawables(icon, null, null, null);
+        community.setTextColor(getResources().getColor(R.color.sharp_pink));
+        commClicked = true;
+
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.tag);
+        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
+        schools.setCompoundDrawables(icon, null, null, null);
+        schools.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        schoolsClicked = false;
+
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.profile);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         profile.setCompoundDrawables(icon, null, null, null);
         profile.setTextColor(getResources().getColor(R.color.dark_gray_3));
-
-        Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.comm_sel);
-        img.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        community.setCompoundDrawables(img, null, null, null);
-        community.setTextColor(getResources().getColor(R.color.sharp_pink));
-
         profileClicked = false;
     }
 
     private void pressSchoolsTab() {
-    }
+        getActionBar().show();
 
-    private void pressProfileTab() {
-        if (!profileClicked) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            MyProfileFragment profileFragement = new MyProfileFragment();
-            fragmentTransaction.replace(R.id.placeHolder, profileFragement).commit();
-            profileClicked = true;
+        if (!schoolsClicked) {
+            /*FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            SchoolsFragment fragement = new SchoolsFragment();
+            fragmentTransaction.replace(R.id.placeHolder, fragement).commit();*/
         }
-
-        Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.profile_sel);
-        img.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        profile.setCompoundDrawables(img, null, null, null);
-        profile.setTextColor(getResources().getColor(R.color.sharp_pink));
 
         Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         community.setCompoundDrawables(icon, null, null, null);
         community.setTextColor(getResources().getColor(R.color.dark_gray_3));
-
         commClicked = false;
+
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.tag_sel);
+        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
+        schools.setCompoundDrawables(icon, null, null, null);
+        schools.setTextColor(getResources().getColor(R.color.sharp_pink));
+        schoolsClicked = true;
+
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.profile);
+        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
+        profile.setCompoundDrawables(icon, null, null, null);
+        profile.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        profileClicked = false;
+    }
+
+    private void pressProfileTab() {
+        getActionBar().show();
+
+        if (!profileClicked) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            MyProfileFragment fragement = new MyProfileFragment();
+            fragmentTransaction.replace(R.id.placeHolder, fragement).commit();
+        }
+
+        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);
+        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
+        community.setCompoundDrawables(icon, null, null, null);
+        community.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        commClicked = false;
+
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.tag);
+        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
+        schools.setCompoundDrawables(icon, null, null, null);
+        schools.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        schoolsClicked = false;
+
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.profile_sel);
+        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
+        profile.setCompoundDrawables(icon, null, null, null);
+        profile.setTextColor(getResources().getColor(R.color.sharp_pink));
+        profileClicked = true;
     }
 
     @Override

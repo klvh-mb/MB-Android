@@ -11,6 +11,7 @@ import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
 import miniBean.viewmodel.HeaderDataVM;
+import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.PostResponse;
@@ -156,4 +157,6 @@ public interface MyApi {
     @GET("/mark-as-read/{ids}")
     public void markAsRead(@Path("ids")String id, @Query("key") String key, Callback<Response> cb);
 
+    @GET("/get-all-districts")
+    public void getAllDistricts(@Query("key") String key, Callback<List<LocationVM>> cb);
 }

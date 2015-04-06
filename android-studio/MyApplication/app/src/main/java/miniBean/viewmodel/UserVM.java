@@ -25,6 +25,8 @@ public class UserVM {
     public boolean enableSignInForToday = false;
     public Long questionsCount;
     public Long answersCount;
+    public boolean emailValidated = false;
+    public boolean newUser = false;
 
     public Long getId() {
         return id;
@@ -200,6 +202,22 @@ public class UserVM {
 
     public void setAnswersCount(Long answersCount) {
         this.answersCount = answersCount;
+    }
+
+    public boolean isEmailValidated() {
+        return emailValidated;
+    }
+
+    public void setEmailValidated(boolean emailValidated) {
+        this.emailValidated = emailValidated;
+    }
+
+    public boolean isNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(boolean newUser) {
+        this.newUser = newUser;
     }
 }
 
