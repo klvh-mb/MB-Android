@@ -12,18 +12,32 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+
+import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.LocalCommunityTabCache;
 import miniBean.fragement.MainFragement;
 import miniBean.fragement.MyProfileFragment;
+import miniBean.util.AnimationUtil;
+import miniBean.viewmodel.CommunitiesParentVM;
+import miniBean.viewmodel.CommunityCategoryMapVM;
+import retrofit.Callback;
+import retrofit.RetrofitError;
 
 public class MainActivity extends FragmentActivity {
 
-    Button community, profile, schools;
+    private Button community, profile, schools;
     private boolean commClicked = false, profileClicked = false;
 
     private int realTabIconWidth, realTabIconHeight;
+
+    private boolean topicCommunityTabLoaded = false;
+    private boolean yearCommunityTabLoaded = false;
+
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +45,18 @@ public class MainActivity extends FragmentActivity {
 
         setContentView(R.layout.main_activity);
 
+        getActionBar().hide();
+
         community = (Button) findViewById(R.id.comms);
         profile = (Button) findViewById(R.id.profiles);
         schools = (Button) findViewById(R.id.schools);
+
+        spinner = (ProgressBar) findViewById(R.id.spinner);
 
         Rect rect = community.getCompoundDrawables()[0].getBounds();
         realTabIconWidth = rect.width();
         realTabIconHeight = rect.height();
         Log.d(this.getClass().getSimpleName(), "onCreate: realDimension - " + rect.width() + ":" + rect.height());
-
-        pressCommunityTab();
 
         community.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +75,15 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        init();
+    }
+
     private void pressCommunityTab() {
         if (!commClicked) {
-            getActionBar().hide();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             MainFragement mainFragement = new MainFragement();
             fragmentTransaction.replace(R.id.placeHolder, mainFragement).commit();
@@ -86,7 +108,6 @@ public class MainActivity extends FragmentActivity {
 
     private void pressProfileTab() {
         if (!profileClicked) {
-            getActionBar().show();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             MyProfileFragment profileFragement = new MyProfileFragment();
             fragmentTransaction.replace(R.id.placeHolder, profileFragement).commit();
@@ -134,16 +155,68 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         Log.d(this.getClass().getSimpleName(), "onDestroy: clear all");
 
-        AppController.getInstance().clearAll();
+        //AppController.getInstance().clearAll();
     }
-    // In your activity
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void init() {
+        if (LocalCommunityTabCache.isCommunityCategoryMapListEmpty()) {
+            AnimationUtil.show(spinner);
+
+            topicCommunityTabLoaded = false;
+            yearCommunityTabLoaded = false;
+
+            AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
+                    new Callback<List<CommunityCategoryMapVM>>() {
+                        @Override
+                        public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
+                            Log.d("MainActivity", "api.getTopicCommunityCategoriesMap.success: CommunityCategoryMapVM list size - " + array.size());
+
+                            LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, array);
+
+                            topicCommunityTabLoaded = true;
+                            if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
+                                AnimationUtil.cancel(spinner);
+                                pressCommunityTab();
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                        }
+                    });
+
+            AppController.api.getZodiacYearCommunities(AppController.getInstance().getSessionId(),
+                    new Callback<CommunitiesParentVM>() {
+                        @Override
+                        public void success(CommunitiesParentVM communitiesParent, retrofit.client.Response response) {
+                            Log.d("MainActivity", "api.getZodiacYearCommunities.success: CommunitiesParentVM list size - " + communitiesParent.communities.size());
+
+                            LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY, communitiesParent);
+
+                            yearCommunityTabLoaded = true;
+                            if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
+                                AnimationUtil.cancel(spinner);
+                                pressCommunityTab();
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                        }
+                    });
         }
     }
 }

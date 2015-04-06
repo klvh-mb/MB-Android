@@ -1,13 +1,19 @@
 package miniBean.app;
 
+import android.app.AlertDialog;
 import android.app.Application;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import miniBean.R;
 import miniBean.util.ImageUtil;
@@ -95,6 +101,7 @@ public class AppController extends Application {
     public void clearAll() {
         Log.d(this.getClass().getSimpleName(), "clearAll");
         LocalCommunityTabCache.clear();
+        user = null;
     }
 
     public void clearPreferences() {
@@ -135,10 +142,50 @@ public class AppController extends Application {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
+            public void failure(RetrofitError error) {
+                showNetworkProblemAlert();
+
+                /*
+                if (RetrofitError.Kind.NETWORK.equals(retrofitError.getKind().name()) ||
+                        RetrofitError.Kind.HTTP.equals(retrofitError.getKind().name())) {
+
+                } else {
+
+                }
+
+                if (!isOnline()) {
+                    SplashActivity.this.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                }
+                */
+
+                error.printStackTrace();
             }
         });
+    }
+
+    private void showNetworkProblemAlert() {
+        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
+                .setTitle(getString(R.string.connection_timeout_title))
+                .setMessage(getString(R.string.connection_timeout_message))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(getApplicationContext(), getString(R.string.connection_timeout_message), Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void printKeyHashForFacebook() {

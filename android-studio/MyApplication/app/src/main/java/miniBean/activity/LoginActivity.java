@@ -35,15 +35,10 @@ import com.facebook.android.FacebookError;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
-import java.util.List;
-
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
-import miniBean.viewmodel.CommunitiesParentVM;
-import miniBean.viewmodel.CommunityCategoryMapVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -93,6 +88,7 @@ public class LoginActivity extends Activity {
         password = (EditText) findViewById(R.id.password);
         btnFbLogin = (ImageView) findViewById(R.id.buttonFbLogin);
         login = (TextView) findViewById(R.id.buttonLogin);
+
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 AnimationUtil.show(spinner);
@@ -101,8 +97,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void success(Response response, Response response2) {
                         if (saveToSession(response)) {
-                            fillLocalCommunityTabCache();
-
+                            startMainActivity();
                             /*
                             Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -209,8 +204,7 @@ public class LoginActivity extends Activity {
             public void success(Response response, Response response2) {
                 Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");
                 if (saveToSession(response)) {
-                    fillLocalCommunityTabCache();
-
+                    startMainActivity();
                     /*
                     Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -249,50 +243,6 @@ public class LoginActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(this.getClass().getSimpleName(), "onActivityResult: facebook.authorizeCallback - requestCode:"+requestCode+" resultCode:"+resultCode+" data:"+data);
         facebook.authorizeCallback(requestCode, resultCode, data);
-    }
-
-    public void fillLocalCommunityTabCache(){
-        Log.d(this.getClass().getSimpleName(), "getTopicCommunityMapCategoryList");
-
-        AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
-                new Callback<List<CommunityCategoryMapVM>>() {
-                    @Override
-                    public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                        Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - " + array.size());
-
-                        LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, array);
-
-                        topicCommunityTabLoaded = true;
-                        if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
-                            startMainActivity();
-                        }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
-                });
-
-        AppController.api.getZodiacYearCommunities(AppController.getInstance().getSessionId(),
-                new Callback<CommunitiesParentVM>() {
-                    @Override
-                    public void success(CommunitiesParentVM communitiesParent, retrofit.client.Response response) {
-                        Log.d("SplashActivity", "api.getZodiacYearCommunities.success: CommunitiesParentVM list size - "+communitiesParent.communities.size());
-
-                        LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY, communitiesParent);
-
-                        yearCommunityTabLoaded = true;
-                        if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
-                            startMainActivity();
-                        }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
-                });
     }
 
     private void startMainActivity() {

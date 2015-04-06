@@ -22,11 +22,10 @@ import miniBean.viewmodel.CommunityCategoryMapVM;
 public class MainFragement extends Fragment {
 
     private static final String TAG = MainFragement.class.getName();
-    ActionBar.Tab Tab1, Tab2, Tab3;
+    private ActionBar.Tab Tab1, Tab2, Tab3;
     private ViewPager viewPager;
     private MyPagerAdapter mAdapter;
     private PagerSlidingTabStrip tabs;
-    private Activity myContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,18 +33,18 @@ public class MainFragement extends Fragment {
 
         View view = inflater.inflate(R.layout.main_fragement, container, false);
 
+        getActivity().getActionBar().hide();
+
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         mAdapter = new MyPagerAdapter(getChildFragmentManager());
 
-        viewPager.setAdapter(mAdapter);
-
         final int pageMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
         viewPager.setPageMargin(pageMargin);
+        viewPager.setAdapter(mAdapter);
 
         tabs.setViewPager(viewPager);
-
         tabs.setTextColor(getResources().getColor(R.color.dark_gray));
         tabs.setIndicatorColor(getResources().getColor(R.color.actionbar_selected_text));
 
@@ -62,7 +61,6 @@ public class MainFragement extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
-        myContext = (Activity) activity;
         super.onAttach(activity);
     }
 }

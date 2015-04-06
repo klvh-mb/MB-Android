@@ -28,11 +28,11 @@ public class LocalCommunityTabCache {
     private static CommunitiesParentVM myCommunitiesParentVM;
 
     // topic comms
-    private static List<CommunityCategoryMapVM> communityCategoryMapList = new ArrayList<>();
+    private static List<CommunityCategoryMapVM> communityCategoryMapList;
 
     // tabs to refresh
     private static CommunityListFragment myCommunityFragment;
-    private static List<TopicCommunityFragment> topicCommunityFragments = new ArrayList<>();
+    private static List<TopicCommunityFragment> topicCommunityFragments;
 
     private LocalCommunityTabCache() {}
 
@@ -41,9 +41,19 @@ public class LocalCommunityTabCache {
     }
 
     private static void init() {
-        addToCommunityCategoryMapList(AppController.getInstance().getString(R.string.community_tab_my));
-        addToCommunityCategoryMapList(AppController.getInstance().getString(R.string.community_tab_topic));
-        addToCommunityCategoryMapList(AppController.getInstance().getString(R.string.community_tab_year));
+        if (communityCategoryMapList == null) {
+            communityCategoryMapList = new ArrayList<>();
+        }
+
+        if (communityCategoryMapList.isEmpty()) {
+            addToCommunityCategoryMapList(AppController.getInstance().getString(R.string.community_tab_my));
+            addToCommunityCategoryMapList(AppController.getInstance().getString(R.string.community_tab_topic));
+            addToCommunityCategoryMapList(AppController.getInstance().getString(R.string.community_tab_year));
+        }
+
+        if (topicCommunityFragments == null) {
+            topicCommunityFragments = new ArrayList<>();
+        }
     }
 
     private static void addToCommunityCategoryMapList(String categoryName) {
@@ -69,8 +79,16 @@ public class LocalCommunityTabCache {
     // topic comms
     //
 
+    public static boolean isCommunityCategoryMapListEmpty() {
+        for (CommunityCategoryMapVM map : communityCategoryMapList) {
+            if (map.communities != null && !map.communities.isEmpty())
+                return false;
+        }
+        return true;
+    }
+
     public static List<CommunityCategoryMapVM> getCommunityCategoryMapList() {
-        return LocalCommunityTabCache.communityCategoryMapList;
+        return communityCategoryMapList;
     }
 
     public static void addToCommunityCategoryMapList(CommunityTabType tabType, List<CommunityCategoryMapVM> mapList) {

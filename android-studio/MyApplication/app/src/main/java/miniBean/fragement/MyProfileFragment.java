@@ -32,17 +32,23 @@ public class MyProfileFragment extends Fragment {
     private ImageView setting, back;
     private ViewGroup request, notification;
     private TextView requestCount, notificationCount;
-    Gson gson = new Gson();
-    View actionBarView;
+    private View actionBarView;
+
+    private Gson gson = new Gson();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.my_profile_fragement, container, false);
 
-        setHasOptionsMenu(true);
-
         actionBarView = inflater.inflate(R.layout.my_profile_actionbar, null);
+
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        getActivity().getActionBar().setCustomView(actionBarView, lp);
+        getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getActivity().getActionBar().show();
+
+        setHasOptionsMenu(true);
 
         request = (ViewGroup) actionBarView.findViewById(R.id.requestLayout);
         notification = (ViewGroup) actionBarView.findViewById(R.id.notificationLayout);
@@ -55,10 +61,6 @@ public class MyProfileFragment extends Fragment {
 
         requestCount.setVisibility(View.INVISIBLE);
         notificationCount.setVisibility(View.INVISIBLE);
-
-        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
-        getActivity().getActionBar().setCustomView(actionBarView, lp);
-        getActivity().getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
         Fragment profileFragment = new ProfileFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
