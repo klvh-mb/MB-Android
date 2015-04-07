@@ -94,7 +94,8 @@
             android:gravity="left|top"
             android:padding="3dp"
             android:hint="@string/post_comment_bar_hint"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:clickable="true" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -293,7 +293,7 @@ public class NewPostActivity extends FragmentActivity {
         String content = postContent.getText().toString();
 
         if (postSuccess ||
-                (StringUtils.isEmpty(title) || StringUtils.isEmpty(content))) {
+                (StringUtils.isEmpty(title) && StringUtils.isEmpty(content))) {
             super.onBackPressed();
             if (myCommunityPopup != null)
                 myCommunityPopup.dismiss();

@@ -1,6 +1,7 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +23,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -261,10 +262,8 @@ public class DetailActivity extends FragmentActivity {
             LayoutInflater inflater = (LayoutInflater) DetailActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View layout = inflater.inflate(R.layout.comment_popup_window,
+            final View layout = inflater.inflate(R.layout.comment_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
-
-            commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
 
             if (commentPopup == null) {
                 commentPopup = new PopupWindow(
@@ -285,6 +284,77 @@ public class DetailActivity extends FragmentActivity {
                     return false;
                 }
             });
+
+            commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
+            commentEditText.setLongClickable(true);
+
+            // NOTE: UGLY WORKAROUND or pasting text to comment edit!!!
+            commentEditText.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Log.d(DetailActivity.this.getClass().getSimpleName(), "onLongClick");
+                    startActionMode(new ActionMode.Callback() {
+                        final int PASTE_MENU_ITEM_ID = 0;
+
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            Log.d(DetailActivity.this.getClass().getSimpleName(), "onPrepareActionMode");
+                            return true;
+                        }
+
+                        public void onDestroyActionMode(ActionMode mode) {
+                        }
+
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            Log.d(DetailActivity.this.getClass().getSimpleName(), "onCreateActionMode: menu size="+menu.size());
+                            menu.add(0,PASTE_MENU_ITEM_ID,0,"Paste");
+                            menu.setQwertyMode(false);
+                            return true;
+                        }
+
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            Log.d(DetailActivity.this.getClass().getSimpleName(), "onActionItemClicked: item clicked="+item.getItemId()+" title="+item.getTitle());
+                            switch(item.getItemId()) {
+                                case PASTE_MENU_ITEM_ID:
+                                    final ClipboardManager clipBoard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+                                    if (clipBoard != null && clipBoard.getPrimaryClip() != null && clipBoard.getPrimaryClip().getItemAt(0) != null) {
+                                        String paste = clipBoard.getPrimaryClip().getItemAt(0).getText().toString();
+                                        commentEditText.getText().insert(commentEditText.getSelectionStart(), paste);
+                                    }
+                            }
+
+                            mode.finish();
+
+                            // popup again
+                            commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+                            activityUtil.popupInputMethodWindow();
+                            return true;
+                        }
+                    });
+                    return true;
+                }
+            });
+
+            /*
+            commentEditText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    Log.d(DetailActivity.this.getClass().getSimpleName(), "onPrepareActionMode");
+                    return false;
+                }
+
+                public void onDestroyActionMode(ActionMode mode) {
+                }
+
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    Log.d(DetailActivity.this.getClass().getSimpleName(), "onCreateActionMode");
+                    return false;
+                }
+
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    Log.d(DetailActivity.this.getClass().getSimpleName(), "onActionItemClicked");
+                    return false;
+                }
+            });
+            */
 
             activityUtil.popupInputMethodWindow();
 
