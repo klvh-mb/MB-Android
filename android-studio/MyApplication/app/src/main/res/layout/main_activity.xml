@@ -30,7 +30,9 @@
             android:layout_height="1dp"
             android:layout_below="@+id/button_component"
             android:background="@color/light_gray_2"></View>
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,6 +75,22 @@
                 android:paddingRight="25dp"
                 android:textSize="14dp" />
         </LinearLayout>
+    <TextView
+        android:id="@+id/notificationCount"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:text="-"
+        android:textSize="10sp"
+        android:textAlignment="center"
+        android:textColor="#FFF"
+        android:background="@drawable/badge_circle"
+        android:layout_alignTop="@+id/setting"
+        android:layout_alignRight="@+id/notification"
+        android:layout_alignEnd="@+id/notification"
+        android:gravity="center"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginBottom="7dp" />
+</FrameLayout>
     </LinearLayout>
 </RelativeLayout>
 

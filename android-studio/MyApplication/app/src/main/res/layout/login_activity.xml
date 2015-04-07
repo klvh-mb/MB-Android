@@ -147,7 +147,7 @@
             android:textSize="14dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/mainComponent"
-             android:id="@+id/textView" />
+             android:id="@+id/signupText" />
 
     </RelativeLayout>
 

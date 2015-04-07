@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -24,8 +25,10 @@ import miniBean.fragement.MyProfileFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
+import miniBean.viewmodel.HeaderDataVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends FragmentActivity {
 
@@ -38,6 +41,7 @@ public class MainActivity extends FragmentActivity {
     private boolean yearCommunityTabLoaded = false;
 
     private ProgressBar spinner;
+    private TextView notificationCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,7 @@ public class MainActivity extends FragmentActivity {
         community = (Button) findViewById(R.id.comms);
         profile = (Button) findViewById(R.id.profiles);
         schools = (Button) findViewById(R.id.schools);
-
+        notificationCount = (TextView) findViewById(R.id.notificationCount);
         spinner = (ProgressBar) findViewById(R.id.spinner);
 
         Rect rect = community.getCompoundDrawables()[0].getBounds();
@@ -81,7 +85,11 @@ public class MainActivity extends FragmentActivity {
                 pressProfileTab();
             }
         });
+
+        unreadNotification();
     }
+
+
 
     @Override
     protected void onStart() {
@@ -153,6 +161,7 @@ public class MainActivity extends FragmentActivity {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             MyProfileFragment fragement = new MyProfileFragment();
             fragmentTransaction.replace(R.id.placeHolder, fragement).commit();
+            notificationCount.setVisibility(View.INVISIBLE);
         }
 
         Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);
@@ -176,7 +185,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if(isTaskRoot()) {
+        if (isTaskRoot()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.exit_app)
                     .setCancelable(false)
@@ -266,5 +275,24 @@ public class MainActivity extends FragmentActivity {
                     });
         }
     }
-}
 
+    private void unreadNotification() {
+        AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
+            @Override
+            public void success(HeaderDataVM headerDataVM, Response response) {
+                int totalNotif;
+                totalNotif = Integer.valueOf(headerDataVM.getRequestCounts().toString()) + Integer.valueOf(headerDataVM.getNotifyCounts().toString());
+
+                if(totalNotif==0){
+                    notificationCount.setVisibility(View.INVISIBLE);
+                }else {
+                    notificationCount.setText("" + totalNotif);
+                }
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+}

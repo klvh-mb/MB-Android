@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
@@ -35,12 +36,21 @@ import com.facebook.android.FacebookError;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
+import java.util.List;
+
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.LocalCommunityTabCache;
+import miniBean.app.MyApi;
 import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
+import miniBean.viewmodel.CommunitiesParentVM;
+import miniBean.viewmodel.CommunityCategoryMapVM;
+import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 public class LoginActivity extends Activity {
@@ -56,6 +66,7 @@ public class LoginActivity extends Activity {
     private EditText password = null;
     private TextView login;
     private ImageView btnFbLogin;
+    private TextView signup;
 
     private ActivityUtil activityUtil;
 
@@ -69,6 +80,13 @@ public class LoginActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(getResources().getString(R.string.base_url))
+                .setClient(new OkClient())
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+        AppController.api = restAdapter.create(MyApi.class);
 
         setContentView(R.layout.login_activity);
 
@@ -88,6 +106,8 @@ public class LoginActivity extends Activity {
         password = (EditText) findViewById(R.id.password);
         btnFbLogin = (ImageView) findViewById(R.id.buttonFbLogin);
         login = (TextView) findViewById(R.id.buttonLogin);
+        signup= (TextView) findViewById(R.id.signupText);
+
 
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -96,19 +116,9 @@ public class LoginActivity extends Activity {
                 AppController.api.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
-                        if (saveToSession(response)) {
-                            startMainActivity();
-                            /*
-                            Intent i = new Intent(LoginActivity.this, ActivityMain.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
-                            */
-                        } else {
-                            alert(R.string.login_error_title, R.string.login_error_message);
-                        }
-                        AnimationUtil.cancel(spinner);
+                        saveToSession(response);
+                        getUserInfo(response);
                     }
-
                     @Override
                     public void failure(RetrofitError error) {
                         AnimationUtil.cancel(spinner);
@@ -130,6 +140,14 @@ public class LoginActivity extends Activity {
             }
         });
 
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(LoginActivity.this,SignupActivity.class);
+                startActivity(intent);
+            }
+        });
+
         /*
          * Login my_community_fragement Click event
 		 * */
@@ -137,6 +155,46 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 loginToFacebook();
+            }
+        });
+    }
+
+  private void getUserInfo(final Response response1) {
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
+
+        final String key=activityUtil.getResponseBody(response1);
+        System.out.println("key::::::"+key);
+
+        AppController.api.getUserInfo(key, new Callback<UserVM>() {
+            @Override
+            public void success(UserVM user, retrofit.client.Response response) {
+                if(user.isNewUser()) {
+                    if (user.isEmailValidated() == false) {
+                            Toast.makeText(LoginActivity.this, "Verify ur email", Toast.LENGTH_LONG).show();
+                    } else if (user.isEmailValidated() == true) {
+                        if (user.isFbLogin() == false) {
+                            session.edit().putString("sessionID", key).apply();
+                            Intent intent = new Intent(LoginActivity.this, SignupDetailActivity.class);
+                            intent.putExtra("first_name", user.firstName);
+                            startActivity(intent);
+                        } else if (user.isFbLogin() == true) {
+                            session.edit().putString("sessionID", key).apply();
+                            Intent intent = new Intent(LoginActivity.this, SignupDetailActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                }else{
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                }
+                spinner.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void failure(RetrofitError error)
+            {
+                error.printStackTrace();
             }
         });
     }
@@ -196,7 +254,8 @@ public class LoginActivity extends Activity {
     }
 
     private void doLoginUsingAccessToken(String access_token) {
-        AnimationUtil.show(spinner);
+        spinner.setVisibility(View.VISIBLE);
+        spinner.bringToFront();
 
         Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken: access_token - " + access_token);
         AppController.api.loginByFacebbok(access_token, new Callback<Response>() {
@@ -204,7 +263,8 @@ public class LoginActivity extends Activity {
             public void success(Response response, Response response2) {
                 Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");
                 if (saveToSession(response)) {
-                    startMainActivity();
+                    fillLocalCommunityTabCache();
+
                     /*
                     Intent i = new Intent(LoginActivity.this, ActivityMain.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -214,12 +274,12 @@ public class LoginActivity extends Activity {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
 
-                AnimationUtil.cancel(spinner);
+                spinner.setVisibility(View.GONE);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                AnimationUtil.cancel(spinner);
+                spinner.setVisibility(View.GONE);
                 alert(R.string.login_error_title, R.string.login_error_message);
                 error.printStackTrace();
             }
@@ -243,6 +303,50 @@ public class LoginActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(this.getClass().getSimpleName(), "onActivityResult: facebook.authorizeCallback - requestCode:"+requestCode+" resultCode:"+resultCode+" data:"+data);
         facebook.authorizeCallback(requestCode, resultCode, data);
+    }
+
+    public void fillLocalCommunityTabCache(){
+        Log.d(this.getClass().getSimpleName(), "getTopicCommunityMapCategoryList");
+
+        AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
+                new Callback<List<CommunityCategoryMapVM>>() {
+                    @Override
+                    public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
+                        Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - " + array.size());
+
+                        LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, array);
+
+                        topicCommunityTabLoaded = true;
+                        if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
+                            startMainActivity();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+        AppController.api.getZodiacYearCommunities(AppController.getInstance().getSessionId(),
+                new Callback<CommunitiesParentVM>() {
+                    @Override
+                    public void success(CommunitiesParentVM communitiesParent, retrofit.client.Response response) {
+                        Log.d("SplashActivity", "api.getZodiacYearCommunities.success: CommunitiesParentVM list size - "+communitiesParent.communities.size());
+
+                        LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY, communitiesParent);
+
+                        yearCommunityTabLoaded = true;
+                        if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
+                            startMainActivity();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
     }
 
     private void startMainActivity() {
@@ -287,5 +391,6 @@ public class LoginActivity extends Activity {
                 })
                 .show();
     }
+
 }
 

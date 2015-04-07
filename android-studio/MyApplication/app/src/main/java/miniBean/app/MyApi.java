@@ -20,6 +20,8 @@ import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
@@ -157,6 +159,25 @@ public interface MyApi {
     @GET("/mark-as-read/{ids}")
     public void markAsRead(@Path("ids")String id, @Query("key") String key, Callback<Response> cb);
 
-    @GET("/get-all-districts")
+    @POST("/signup")
+    public void signUp(@Query("lname") String lanme,@Query("fname") String fname,@Query("email") String email,@Query("password") String password,@Query("repeatPassword") String repeatPassword,Callback<Response> cb);
+    //http://localhost:9000/signup?lname=asd&fname=dsa&email=shwashank12@gmail.com&password=qwerty&repeatPassword=qwerty
+
+    @FormUrlEncoded
+    @POST("/saveSignupInfo")
+    public void signUpInfo(@Field("parent_displayname") String parent_displayname, @Field("parent_birth_year") Integer parent_birth_year,
+                           @Field("parent_location") Integer parent_location,@Field("parent_type") String parent_type,
+                           @Field("num_children") String num_children,@Field("bb_gender1") String bb_gender1,
+                           @Field("bb_gender2") String bb_gender2,@Field("bb_gender3") String bb_gender3,
+                           @Field("bb_birth_year1") String bb_birth_year1,@Field("bb_birth_month1") String bb_birth_month1,
+                           @Field("bb_birth_day1") String bb_birth_day1,@Field("bb_birth_year2") String bb_birth_year2,
+                           @Field("bb_birth_month2") String bb_birth_month2,@Field("bb_birth_day2") String bb_birth_day2,
+                           @Field("bb_birth_year3") String bb_birth_year3,@Field("bb_birth_month3") String bb_birth_month3,
+                           @Field("bb_birth_day3") String bb_birth_day3, @Query("key") String key,Callback<Response> cb);
+
+	 @GET("/get-all-districts")
     public void getAllDistricts(@Query("key") String key, Callback<List<LocationVM>> cb);
+
 }
+
+

@@ -1,5 +1,7 @@
 package miniBean.fragement;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -24,7 +25,6 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import miniBean.R;
-import miniBean.activity.MainActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.util.AnimationUtil;
@@ -193,7 +193,8 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                //error.printStackTrace();
+                showNetworkProblemAlert();
             }
         });
     }
@@ -306,5 +307,20 @@ public class ProfileFragment extends Fragment {
                 error.printStackTrace();
             }
         });
+    }
+
+
+    private void showNetworkProblemAlert() {
+        new AlertDialog.Builder(getActivity(), android.R.style.Theme_Holo_Light_Dialog)
+                .setTitle("Network Error")
+                .setMessage("Server is not connected...")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        getActivity().finish();
+                    }
+                })
+                .show();
     }
 }

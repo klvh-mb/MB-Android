@@ -27,6 +27,8 @@ import android.widget.Toast;
 import org.parceler.apache.commons.lang.StringUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import miniBean.R;
 import miniBean.adapter.PopupMyCommunityListAdapter;
@@ -57,6 +59,9 @@ public class NewPostActivity extends FragmentActivity {
     private TextView postTitle, postContent, post;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
+
+    private List<File> photos = new ArrayList<>();
+    private List<ImageView> postImages = new ArrayList<>();
 
     private Long communityId;
     private PopupWindow myCommunityPopup;
@@ -90,7 +95,6 @@ public class NewPostActivity extends FragmentActivity {
         communityIcon = (ImageView) findViewById(R.id.commIcon);
         communityName = (TextView) findViewById(R.id.communityName);
         browseImage = (ImageView) findViewById(R.id.browseImage);
-        postImage = (ImageView) findViewById(R.id.postImage);
         postTitle = (TextView) findViewById(R.id.postTitle);
         postContent = (TextView) findViewById(R.id.postContent);
 
@@ -129,6 +133,22 @@ public class NewPostActivity extends FragmentActivity {
             }
         });
 
+
+        if (postImages.size() == 0) {
+            postImages.add((ImageView) findViewById(R.id.postImage1));
+            postImages.add((ImageView) findViewById(R.id.postImage2));
+            postImages.add((ImageView) findViewById(R.id.postImage3));
+
+            for (ImageView postImage : postImages) {
+                postImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removePostImage();
+                    }
+                });
+            }
+        }
+
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,12 +183,32 @@ public class NewPostActivity extends FragmentActivity {
             String path = selectedImageUri.getPath();
             Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
             Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
-            if (bp != null) {
-                postImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
-                postImage.setVisibility(View.VISIBLE);
+            if (bp != null && photos.size() < DefaultValues.MAX_POST_IMAGES) {
+                /*postImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+                postImage.setVisibility(View.VISIBLE);*/
+                setPostImages(bp);
             }
 
         }
+    }
+
+
+    private void setPostImages(Bitmap bp){
+        ImageView postImage = postImages.get(photos.size());
+        postImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+        postImage.setVisibility(View.VISIBLE);
+        File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
+        photos.add(photo);
+    }
+
+    private void removePostImage(){
+
+        if (photos.size() > 0) {
+            int toRemove = photos.size()-1;
+            postImages.get(toRemove).setImageDrawable(null);
+            photos.remove(toRemove);
+        }
+
     }
 
     private void initiateMyCommunityPopup() {
@@ -250,8 +290,10 @@ public class NewPostActivity extends FragmentActivity {
             public void success(PostResponse postResponse, Response response) {
                 postSuccess = true;
 
-                if (isPhoto) {
-                    uploadPhoto(postResponse.getId());
+                if (photos.size()>0) {
+                    for (File singlePhoto : photos) {
+                        uploadPhoto(postResponse.getId(), singlePhoto);
+                    }
                 }
                 onBackPressed();
                 Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_LONG).show();
@@ -271,8 +313,8 @@ public class NewPostActivity extends FragmentActivity {
         });
     }
 
-    private void uploadPhoto(String postId) {
-        File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
+    private void uploadPhoto(String postId,File photo) {
+       // File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.api.uploadPostPhoto(postId, typedFile, new Callback<Response>() {
             @Override
