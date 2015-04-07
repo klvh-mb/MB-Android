@@ -79,20 +79,27 @@ public class AppController extends Application {
         super.onCreate();
 
         mInstance = this;
-        BASE_URL = getString(R.string.base_url);
 
         session = getSharedPreferences("prefs", 0);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient()).build();
-        api = restAdapter.create(MyApi.class);
+        init(this);
 
         ImageUtil.init();
 
         ACRA.init(this);
 
         //printKeyHashForFacebook();
+    }
+
+    public static void init(Context context) {
+        BASE_URL = context.getString(R.string.base_url);
+
+        if (api == null) {
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(BASE_URL)
+                    .setClient(new OkClient()).build();
+            api = restAdapter.create(MyApi.class);
+        }
     }
 
     /**

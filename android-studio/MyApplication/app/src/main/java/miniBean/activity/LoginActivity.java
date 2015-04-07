@@ -81,14 +81,9 @@ public class LoginActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        AppController.api = restAdapter.create(MyApi.class);
-
         setContentView(R.layout.login_activity);
+
+        AppController.init(this);
 
         SplashActivity.init();
 
@@ -159,10 +154,8 @@ public class LoginActivity extends Activity {
         });
     }
 
-  private void getUserInfo(final Response response1) {
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
-
+    private void getUserInfo(final Response response1) {
+        AnimationUtil.show(spinner);
         final String key=activityUtil.getResponseBody(response1);
         System.out.println("key::::::"+key);
 
@@ -188,7 +181,7 @@ public class LoginActivity extends Activity {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
             }
 
             @Override
@@ -254,8 +247,7 @@ public class LoginActivity extends Activity {
     }
 
     private void doLoginUsingAccessToken(String access_token) {
-        spinner.setVisibility(View.VISIBLE);
-        spinner.bringToFront();
+        AnimationUtil.show(spinner);
 
         Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken: access_token - " + access_token);
         AppController.api.loginByFacebbok(access_token, new Callback<Response>() {
@@ -274,12 +266,12 @@ public class LoginActivity extends Activity {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
 
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                spinner.setVisibility(View.GONE);
+                AnimationUtil.cancel(spinner);
                 alert(R.string.login_error_title, R.string.login_error_message);
                 error.printStackTrace();
             }

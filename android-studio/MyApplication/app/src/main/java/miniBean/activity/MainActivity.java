@@ -85,8 +85,6 @@ public class MainActivity extends FragmentActivity {
                 pressProfileTab();
             }
         });
-
-        unreadNotification();
     }
 
 
@@ -96,6 +94,8 @@ public class MainActivity extends FragmentActivity {
         super.onStart();
 
         init();
+
+        checkUnreadNotifications();
     }
 
     private void pressCommunityTab() {
@@ -276,7 +276,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    private void unreadNotification() {
+    private void checkUnreadNotifications() {
         AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
             @Override
             public void success(HeaderDataVM headerDataVM, Response response) {
