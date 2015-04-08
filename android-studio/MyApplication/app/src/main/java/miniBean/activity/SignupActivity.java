@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -69,8 +68,9 @@ public class SignupActivity extends Activity {
         setContentView(R.layout.signup_activity);
 
 
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.signup_actionbar);
+        //getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        //getActionBar().setCustomView(R.layout.signup_actionbar);
+        getActionBar().hide();
 
         lastName= (EditText) findViewById(R.id.lastNameEdittext);
         firstName= (EditText) findViewById(R.id.firstNameEdittext);

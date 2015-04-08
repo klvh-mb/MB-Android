@@ -2,7 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/view_bg">
+    android:background="@color/white">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bgImage"
+        android:src="@drawable/logo_beans_bg"
+        android:scaleType="fitEnd" />
 
     <ProgressBar
         style="?android:attr/progressBarStyle"
@@ -18,18 +25,19 @@
         android:id="@+id/facebookText"
         android:text="Use Facebook To Signup"
         android:textStyle="bold"
-        android:textSize="15sp"
+        android:textSize="18dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/dark_gray" />
     <ImageView
         android:id="@+id/facebookButton"
         android:layout_below="@+id/facebookText"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/facebook_login"/>
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/facebook_login" />
     <TextView
         android:id="@+id/noteText"
         android:layout_width="wrap_content"
@@ -37,7 +45,8 @@
         android:text="Note:minibean will not post to your fb account"
         android:layout_below="@+id/facebookButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:textColor="@color/gray" />
 
     <TextView
         android:id="@+id/signupText"
@@ -45,17 +54,17 @@
         android:layout_height="wrap_content"
         android:text="Use Email To Signup"
         android:textStyle="bold"
-        android:textSize="15sp"
+        android:textSize="18dp"
         android:layout_below="@+id/noteText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        />
+        android:layout_marginTop="35dp"
+        android:textColor="@color/dark_gray" />
     <LinearLayout
         android:id="@+id/editLayout"
         android:layout_below="@+id/signupText"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginLeft="35dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -69,77 +78,89 @@
                 android:hint="last name"
                 android:textSize="15sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_round"/>
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_round"
+                android:layout_marginRight="5dp" />
             <EditText
                 android:id="@+id/firstNameEdittext"
                 android:layout_weight=".5"
                 android:hint="first name"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:textSize="15sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_round"/>
+                android:layout_height="40dp"
+                android:background="@drawable/edit_text_round"/>
         </LinearLayout>
         <EditText
             android:id="@+id/emailEdittext"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:textSize="15sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_round"
+            android:layout_height="40dp"
+            android:background="@drawable/edit_text_round"
             android:hint="email"/>
         <EditText
             android:id="@+id/passwordEdittext"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:hint="password"
             android:textSize="15sp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_round"/>
+            android:layout_height="40dp"
+            android:background="@drawable/edit_text_round"/>
         <EditText
             android:id="@+id/repeatPassword"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:hint="confirm password"
             android:textSize="15sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edittext_round"/>
+            android:layout_height="40dp"
+            android:background="@drawable/edit_text_round"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/signupButton"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/editLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:text="SIGN UP"
-        android:textStyle="bold"
         android:background="#FFBE42"
-        android:layout_marginLeft="70dp"/>
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_marginLeft="40dp"
         android:id="@+id/checkboxLayout"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/signupButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <CheckBox
             android:id="@+id/termsCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Terms and Condition"/>
+            android:text="Terms"
+            android:checked="true"
+            android:textSize="13dp"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/dark_gray" />
 
         <CheckBox
             android:id="@+id/privacyCheckbox"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Privacy"/>
+            android:text="Privacy"
+            android:textSize="13dp"
+            android:checked="true"
+            android:layout_marginRight="50dp"
+            android:layout_weight="0.5"
+            android:textColor="@color/dark_gray" />
     </LinearLayout>
 </RelativeLayout>

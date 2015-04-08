@@ -21,6 +21,7 @@
     <string name="connection_timeout_message">網路出現問題。請檢查是否已經上缐</string>
 
     <!-- Signup -->
+    <string name="login">登入</string>
     <string name="signup_email_unverified">電郵尚未認證，請登入電郵並按認證連結 - </string>
 
     <!-- Main -->

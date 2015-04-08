@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/actionbar_bg">
+        android:background="@color/signup_blue">
 
         <ImageView
             android:id="@+id/backImage"
@@ -24,11 +24,12 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="false"
             android:src="@drawable/logo_login"
             android:layout_alignParentStart="false"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:layout_margin="3dp" />
 
 
     </RelativeLayout>

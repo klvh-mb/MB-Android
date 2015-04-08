@@ -42,7 +42,7 @@
 
                 <EditText
                     android:id="@+id/displaynameEdit"
-                    android:background="@drawable/edittext_round"
+                    android:background="@drawable/edit_text_round"
                     android:layout_marginLeft="25dp"
                     android:textSize="15sp"
                     android:layout_width="match_parent"

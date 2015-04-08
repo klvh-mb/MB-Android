@@ -16,6 +16,7 @@
     <color name="light_purple_3">#FFF5FF</color>
 
     <color name="signup_yellow">#FFBE42</color>
+    <color name="signup_blue">#8379F1</color>
     <color name="input_text">#111</color>
     <color name="view_bg">#FCF7FD</color>
     <color name="feed_bg">#d3d6db</color>

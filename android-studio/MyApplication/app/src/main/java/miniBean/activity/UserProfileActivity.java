@@ -4,14 +4,11 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.widget.TextView;
 
 import miniBean.R;
 import miniBean.fragement.UserProfileFragment;
 
 public class UserProfileActivity extends FragmentActivity {
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
