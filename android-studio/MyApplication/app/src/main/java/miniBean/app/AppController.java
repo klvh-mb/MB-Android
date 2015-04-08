@@ -1,26 +1,18 @@
 package miniBean.app;
 
-import android.app.AlertDialog;
 import android.app.Application;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.Toast;
 
 import miniBean.R;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.UserVM;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 
 import org.acra.*;
@@ -70,6 +62,10 @@ public class AppController extends Application {
         return mInstance;
     }
 
+    public static synchronized void setUser(UserVM vm) {
+        user = vm;
+    }
+
     public static synchronized UserVM getUser() {
         return user;
     }
@@ -82,17 +78,13 @@ public class AppController extends Application {
 
         session = getSharedPreferences("prefs", 0);
 
-        init(this);
-
-        ImageUtil.init();
-
-        ACRA.init(this);
+        init();
 
         //printKeyHashForFacebook();
     }
 
-    public static void init(Context context) {
-        BASE_URL = context.getString(R.string.base_url);
+    public static void init() {
+        BASE_URL = getInstance().getString(R.string.base_url);
 
         if (api == null) {
             RestAdapter restAdapter = new RestAdapter.Builder()
@@ -100,6 +92,10 @@ public class AppController extends Application {
                     .setClient(new OkClient()).build();
             api = restAdapter.create(MyApi.class);
         }
+
+        ImageUtil.init();
+
+        ACRA.init(getInstance());
     }
 
     /**
@@ -108,7 +104,14 @@ public class AppController extends Application {
     public void clearAll() {
         Log.d(this.getClass().getSimpleName(), "clearAll");
         LocalCommunityTabCache.clear();
+        NotificationCache.clear();
         user = null;
+    }
+
+    public void savePreferences(String key) {
+        if (session == null)
+            session = getSharedPreferences("prefs", 0);
+        session.edit().putString("sessionID", key).apply();
     }
 
     public void clearPreferences() {
@@ -137,62 +140,6 @@ public class AppController extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
 
         System.exit(1);
-    }
-
-    public void setUserInfo() {
-        Log.d(this.getClass().getSimpleName(), "setUserInfo");
-        AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
-            @Override
-            public void success(UserVM user, retrofit.client.Response response) {
-                Log.d(this.getClass().getSimpleName(), "setUserInfo.success: user="+user.getDisplayName()+" id="+user.getId());
-                AppController.this.user = user;
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                showNetworkProblemAlert();
-
-                /*
-                if (RetrofitError.Kind.NETWORK.equals(retrofitError.getKind().name()) ||
-                        RetrofitError.Kind.HTTP.equals(retrofitError.getKind().name())) {
-
-                } else {
-
-                }
-
-                if (!isOnline()) {
-                    SplashActivity.this.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
-                }
-                */
-
-                error.printStackTrace();
-            }
-        });
-    }
-
-    private void showNetworkProblemAlert() {
-        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
-                .setTitle(getString(R.string.connection_timeout_title))
-                .setMessage(getString(R.string.connection_timeout_message))
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .show();
-    }
-
-    private boolean isOnline() {
-        ConnectivityManager conMgr = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
-
-        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
-            Toast.makeText(getApplicationContext(), getString(R.string.connection_timeout_message), Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
     }
 
     private void printKeyHashForFacebook() {

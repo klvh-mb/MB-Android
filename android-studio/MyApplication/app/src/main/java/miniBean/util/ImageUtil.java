@@ -45,21 +45,21 @@ public class ImageUtil {
     public static DisplayImageOptions DEFAULT_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
-                    cacheOnDisk(false).
+                    cacheOnDisk(true).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(0)).build();
 
     public static DisplayImageOptions ROUNDED_CORNERS_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
-                    cacheOnDisk(false).
+                    cacheOnDisk(true).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
 
     public static DisplayImageOptions ROUND_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
-                    cacheOnDisk(false).
+                    cacheOnDisk(true).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_ROUND_ROUNDED_VALUE)).build();
 

@@ -3,6 +3,8 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -128,8 +130,6 @@ public class SignupDetailActivity extends Activity {
 
         titleText.setText("Hi " + getIntent().getStringExtra("first_name"));
 
-
-
         babyGender1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -163,7 +163,6 @@ public class SignupDetailActivity extends Activity {
             }
         });
 
-
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -185,7 +184,6 @@ public class SignupDetailActivity extends Activity {
 
             }
         });
-
 
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,13 +263,10 @@ public class SignupDetailActivity extends Activity {
                             error.printStackTrace();
                    }
                });
-
             };
 
         });
-
     }
-
 
     public void setVisible(int id){
 
@@ -305,21 +300,19 @@ public class SignupDetailActivity extends Activity {
         babySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            if (babySpinner.getSelectedItem()=="1"){
-                detailLayout.setVisibility(View.VISIBLE);
-                detailLayout1.setVisibility(View.GONE);
-                detailLayout2.setVisibility(View.GONE);
-        }else if(babySpinner.getSelectedItem()=="2"){
-                detailLayout1.setVisibility(View.VISIBLE);
-                detailLayout.setVisibility(View.VISIBLE);
-                detailLayout2.setVisibility(View.GONE);
-        }else if(babySpinner.getSelectedItem()=="3"){
-                detailLayout2.setVisibility(View.VISIBLE);
-                detailLayout.setVisibility(View.VISIBLE);
-                detailLayout1.setVisibility(View.VISIBLE);
-        }
-
+                if (babySpinner.getSelectedItem()=="1"){
+                    detailLayout.setVisibility(View.VISIBLE);
+                    detailLayout1.setVisibility(View.GONE);
+                    detailLayout2.setVisibility(View.GONE);
+                }else if(babySpinner.getSelectedItem()=="2"){
+                    detailLayout1.setVisibility(View.VISIBLE);
+                    detailLayout.setVisibility(View.VISIBLE);
+                    detailLayout2.setVisibility(View.GONE);
+                }else if(babySpinner.getSelectedItem()=="3"){
+                    detailLayout2.setVisibility(View.VISIBLE);
+                    detailLayout.setVisibility(View.VISIBLE);
+                    detailLayout1.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -353,4 +346,28 @@ public class SignupDetailActivity extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if (isTaskRoot()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.exit_app)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            AppController.getInstance().clearPreferences();
+                            AppController.getInstance().clearAll();
+                            SignupDetailActivity.super.onBackPressed();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

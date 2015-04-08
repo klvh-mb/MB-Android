@@ -25,7 +25,7 @@ public class MyProfileActionActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.my_profile_action_actionbar);
 
-        titleText= (TextView) findViewById(R.id.title);
+        titleText = (TextView) findViewById(R.id.title);
 
         Bundle bundle = new Bundle();
         Fragment fragment = null;

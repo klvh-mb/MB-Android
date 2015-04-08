@@ -20,12 +20,13 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.app.NotificationCache;
 import miniBean.fragement.MainFragement;
 import miniBean.fragement.MyProfileFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
-import miniBean.viewmodel.HeaderDataVM;
+import miniBean.viewmodel.NotificationsParentVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -87,15 +88,23 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
 
         init();
 
-        checkUnreadNotifications();
+        NotificationCache.refresh(new Callback<NotificationsParentVM>() {
+            @Override
+            public void success(NotificationsParentVM notificationsParentVM, Response response) {
+                setUnreadNotificationsCount();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
     }
 
     private void pressCommunityTab() {
@@ -124,6 +133,8 @@ public class MainActivity extends FragmentActivity {
         profile.setCompoundDrawables(icon, null, null, null);
         profile.setTextColor(getResources().getColor(R.color.dark_gray_3));
         profileClicked = false;
+
+        setUnreadNotificationsCount();
     }
 
     private void pressSchoolsTab() {
@@ -152,6 +163,8 @@ public class MainActivity extends FragmentActivity {
         profile.setCompoundDrawables(icon, null, null, null);
         profile.setTextColor(getResources().getColor(R.color.dark_gray_3));
         profileClicked = false;
+
+        setUnreadNotificationsCount();
     }
 
     private void pressProfileTab() {
@@ -181,6 +194,8 @@ public class MainActivity extends FragmentActivity {
         profile.setCompoundDrawables(icon, null, null, null);
         profile.setTextColor(getResources().getColor(R.color.sharp_pink));
         profileClicked = true;
+
+        setUnreadNotificationsCount();
     }
 
     @Override
@@ -202,7 +217,6 @@ public class MainActivity extends FragmentActivity {
                     });
             AlertDialog alert = builder.create();
             alert.show();
-
         } else {
             super.onBackPressed();
         }
@@ -213,8 +227,6 @@ public class MainActivity extends FragmentActivity {
         super.onDestroy();
 
         Log.d(this.getClass().getSimpleName(), "onDestroy: clear all");
-
-        //AppController.getInstance().clearAll();
     }
 
     @Override
@@ -276,23 +288,17 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    private void checkUnreadNotifications() {
-        AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
-            @Override
-            public void success(HeaderDataVM headerDataVM, Response response) {
-                int totalNotif;
-                totalNotif = Integer.valueOf(headerDataVM.getRequestCounts().toString()) + Integer.valueOf(headerDataVM.getNotifyCounts().toString());
+    private void setUnreadNotificationsCount() {
+        NotificationsParentVM notificationsParentVM = NotificationCache.getNotifications();
+        long count = notificationsParentVM.getRequestCounts() + notificationsParentVM.getNotifyCounts();
 
-                if(totalNotif==0){
-                    notificationCount.setVisibility(View.INVISIBLE);
-                }else {
-                    notificationCount.setText("" + totalNotif);
-                }
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
+        Log.d(this.getClass().getSimpleName(), "setUnreadNotificationsCount: requestCount="+notificationsParentVM.getRequestCounts()+" notifCount="+notificationsParentVM.getNotifyCounts());
+
+        if(count == 0) {
+            notificationCount.setVisibility(View.INVISIBLE);
+        } else {
+            notificationCount.setVisibility(View.VISIBLE);
+            notificationCount.setText(count+"");
+        }
     }
 }

@@ -32,7 +32,7 @@ public class CommunityActivity extends FragmentActivity {
 
         System.out.println("flag comm::"+intent.getStringExtra("flag"));
         if(intent.getStringExtra("flag") != null) {
-            System.out.println("flag:::::::" + intent.getStringExtra("flag").toString());
+            System.out.println("flag:::::::" + intent.getStringExtra("flag"));
         }
 
         Bundle bundle = new Bundle();

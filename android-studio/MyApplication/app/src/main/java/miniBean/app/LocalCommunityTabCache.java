@@ -66,11 +66,11 @@ public class LocalCommunityTabCache {
     // my comms
     //
 
-    public static CommunitiesParentVM getMyCommunitiesParentVM() {
+    public static CommunitiesParentVM getMyCommunities() {
         return myCommunitiesParentVM;
     }
 
-    public static void setMyCommunitiesParentVM(CommunitiesParentVM communitiesParentVM) {
+    public static void setMyCommunities(CommunitiesParentVM communitiesParentVM) {
         filterMyCommunities(communitiesParentVM);
         myCommunitiesParentVM = communitiesParentVM;
     }
@@ -147,7 +147,7 @@ public class LocalCommunityTabCache {
             @Override
             public void success(CommunitiesParentVM communitiesParentVM, Response response) {
                 Log.d(LocalCommunityTabCache.class.getSimpleName(), "refreshMyCommunities.api.success: my communities size - " + communitiesParentVM.communities.size());
-                setMyCommunitiesParentVM(communitiesParentVM);
+                setMyCommunities(communitiesParentVM);
                 notifyChange();
             }
 
@@ -171,7 +171,7 @@ public class LocalCommunityTabCache {
     private static void notifyChange() {
         if (myCommunityFragment != null) {
             Log.d(LocalCommunityTabCache.class.getSimpleName(), "notifyChange: refresh CommunityFragment");
-            myCommunityFragment.notifyChange(getMyCommunitiesParentVM().communities);
+            myCommunityFragment.notifyChange(getMyCommunities().communities);
         }
         for (TopicCommunityFragment fragment : topicCommunityFragments) {
             fragment.notifyChange();

@@ -36,21 +36,13 @@ import com.facebook.android.FacebookError;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
-import java.util.List;
-
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.LocalCommunityTabCache;
-import miniBean.app.MyApi;
 import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
-import miniBean.viewmodel.CommunitiesParentVM;
-import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 public class LoginActivity extends Activity {
@@ -61,17 +53,15 @@ public class LoginActivity extends Activity {
     // Instance of Facebook Class
     private Facebook facebook = new Facebook(APP_ID);
     private ProgressBar spinner;
-    public SharedPreferences session = null;
     private EditText username = null;
     private EditText password = null;
     private TextView login;
     private ImageView btnFbLogin;
     private TextView signup;
 
-    private ActivityUtil activityUtil;
+    private SharedPreferences session;
 
-    private boolean topicCommunityTabLoaded = false;
-    private boolean yearCommunityTabLoaded = false;
+    private ActivityUtil activityUtil;
 
     private static final String[] REQUEST_FACEBOOK_PERMISSIONS = {
             "public_profile","email","user_friends"
@@ -83,15 +73,7 @@ public class LoginActivity extends Activity {
 
         setContentView(R.layout.login_activity);
 
-        AppController.init(this);
-
-        SplashActivity.init();
-
-        topicCommunityTabLoaded = false;
-        yearCommunityTabLoaded = false;
-
         session = getSharedPreferences("prefs", 0);
-        spinner = (ProgressBar)findViewById(R.id.spinner);
 
         activityUtil = new ActivityUtil(this);
 
@@ -101,8 +83,9 @@ public class LoginActivity extends Activity {
         password = (EditText) findViewById(R.id.password);
         btnFbLogin = (ImageView) findViewById(R.id.buttonFbLogin);
         login = (TextView) findViewById(R.id.buttonLogin);
-        signup= (TextView) findViewById(R.id.signupText);
+        signup = (TextView) findViewById(R.id.signupText);
 
+        spinner = (ProgressBar)findViewById(R.id.spinner);
 
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -111,8 +94,9 @@ public class LoginActivity extends Activity {
                 AppController.api.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
-                        saveToSession(response);
-                        getUserInfo(response);
+                        if (!saveToSession(response)) {
+                            alert(R.string.login_error_title, R.string.login_error_message);
+                        }
                     }
                     @Override
                     public void failure(RetrofitError error) {
@@ -138,7 +122,7 @@ public class LoginActivity extends Activity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(LoginActivity.this,SignupActivity.class);
+                Intent intent = new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(intent);
             }
         });
@@ -150,44 +134,6 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
                 loginToFacebook();
-            }
-        });
-    }
-
-    private void getUserInfo(final Response response1) {
-        AnimationUtil.show(spinner);
-        final String key=activityUtil.getResponseBody(response1);
-        System.out.println("key::::::"+key);
-
-        AppController.api.getUserInfo(key, new Callback<UserVM>() {
-            @Override
-            public void success(UserVM user, retrofit.client.Response response) {
-                if(user.isNewUser()) {
-                    if (user.isEmailValidated() == false) {
-                            Toast.makeText(LoginActivity.this, "Verify ur email", Toast.LENGTH_LONG).show();
-                    } else if (user.isEmailValidated() == true) {
-                        if (user.isFbLogin() == false) {
-                            session.edit().putString("sessionID", key).apply();
-                            Intent intent = new Intent(LoginActivity.this, SignupDetailActivity.class);
-                            intent.putExtra("first_name", user.firstName);
-                            startActivity(intent);
-                        } else if (user.isFbLogin() == true) {
-                            session.edit().putString("sessionID", key).apply();
-                            Intent intent = new Intent(LoginActivity.this, SignupDetailActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-                }else{
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                }
-                AnimationUtil.cancel(spinner);
-            }
-
-            @Override
-            public void failure(RetrofitError error)
-            {
-                error.printStackTrace();
             }
         });
     }
@@ -254,15 +200,7 @@ public class LoginActivity extends Activity {
             @Override
             public void success(Response response, Response response2) {
                 Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");
-                if (saveToSession(response)) {
-                    fillLocalCommunityTabCache();
-
-                    /*
-                    Intent i = new Intent(LoginActivity.this, ActivityMain.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                    */
-                } else {
+                if (!saveToSession(response)) {
                     alert(R.string.login_error_title, R.string.login_error_message);
                 }
 
@@ -285,7 +223,14 @@ public class LoginActivity extends Activity {
 
         String key = activityUtil.getResponseBody(response);
         Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
-        session.edit().putString("sessionID", key).apply();
+        AppController.getInstance().savePreferences(key);
+
+        Intent intent = new Intent(this, SplashActivity.class);
+        intent.putExtra("flag","FromLoginActivity");
+        intent.putExtra("key",key);
+        startActivity(intent);
+        finish();
+
         return true;
     }
 
@@ -297,50 +242,6 @@ public class LoginActivity extends Activity {
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
 
-    public void fillLocalCommunityTabCache(){
-        Log.d(this.getClass().getSimpleName(), "getTopicCommunityMapCategoryList");
-
-        AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
-                new Callback<List<CommunityCategoryMapVM>>() {
-                    @Override
-                    public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
-                        Log.d("SplashActivity", "cacheCommunityCategoryMapList: CommunityCategoryMapVM list size - " + array.size());
-
-                        LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, array);
-
-                        topicCommunityTabLoaded = true;
-                        if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
-                            startMainActivity();
-                        }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
-                });
-
-        AppController.api.getZodiacYearCommunities(AppController.getInstance().getSessionId(),
-                new Callback<CommunitiesParentVM>() {
-                    @Override
-                    public void success(CommunitiesParentVM communitiesParent, retrofit.client.Response response) {
-                        Log.d("SplashActivity", "api.getZodiacYearCommunities.success: CommunitiesParentVM list size - "+communitiesParent.communities.size());
-
-                        LocalCommunityTabCache.addToCommunityCategoryMapList(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY, communitiesParent);
-
-                        yearCommunityTabLoaded = true;
-                        if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
-                            startMainActivity();
-                        }
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
-                });
-    }
-
     private void startMainActivity() {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
@@ -348,22 +249,26 @@ public class LoginActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.exit_app)
-                .setCancelable(false)
-                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        AppController.getInstance().exitApp();
-                        //finish();
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
+        if (isTaskRoot()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.exit_app)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            AppController.getInstance().clearAll();
+                            LoginActivity.super.onBackPressed();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void alert(int title, int message) {

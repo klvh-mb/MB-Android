@@ -79,9 +79,9 @@ public class CommunityListFragment extends Fragment {
         });
 
         LocalCommunityTabCache.setMyCommunityFragment(this);
-        if (LocalCommunityTabCache.getMyCommunitiesParentVM() != null) {
+        if (LocalCommunityTabCache.getMyCommunities() != null) {
             Log.d(this.getClass().getSimpleName(), "onCreateView: reload my communities from LocalCache");
-            notifyChange(LocalCommunityTabCache.getMyCommunitiesParentVM().getCommunities());
+            notifyChange(LocalCommunityTabCache.getMyCommunities().getCommunities());
         } else {
             LocalCommunityTabCache.refreshMyCommunities();
         }
@@ -100,9 +100,9 @@ public class CommunityListFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if(LocalCommunityTabCache.getMyCommunitiesParentVM() != null) {
-            Log.d(this.getClass().getSimpleName(), "onResume: my communities size - " + LocalCommunityTabCache.getMyCommunitiesParentVM().getCommunities().size());
-            notifyChange(LocalCommunityTabCache.getMyCommunitiesParentVM().getCommunities());
+        if(LocalCommunityTabCache.getMyCommunities() != null) {
+            Log.d(this.getClass().getSimpleName(), "onResume: my communities size - " + LocalCommunityTabCache.getMyCommunities().getCommunities().size());
+            notifyChange(LocalCommunityTabCache.getMyCommunities().getCommunities());
         }
     }
 }

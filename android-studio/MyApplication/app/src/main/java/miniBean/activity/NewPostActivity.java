@@ -82,10 +82,6 @@ public class NewPostActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.new_post_actionbar);
 
-        // init my comms if not yet...
-        if (LocalCommunityTabCache.getMyCommunitiesParentVM() == null)
-            LocalCommunityTabCache.refreshMyCommunities();
-
         backImage = (ImageView) findViewById(R.id.backImage);
         post = (TextView) findViewById(R.id.titlePost);
         communityLayout = (RelativeLayout) findViewById(R.id.communityLayout);
@@ -212,12 +208,6 @@ public class NewPostActivity extends FragmentActivity {
     }
 
     private void initiateMyCommunityPopup() {
-        // should never be the case unless prior network error...
-        if (LocalCommunityTabCache.getMyCommunitiesParentVM() == null) {
-            LocalCommunityTabCache.refreshMyCommunities();
-            return;
-        }
-
         try {
             LayoutInflater inflater = (LayoutInflater) NewPostActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -236,7 +226,7 @@ public class NewPostActivity extends FragmentActivity {
             myCommunityPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
             ListView listView = (ListView) layout.findViewById(R.id.communityList);
-            adapter = new PopupMyCommunityListAdapter(this, LocalCommunityTabCache.getMyCommunitiesParentVM().communities);
+            adapter = new PopupMyCommunityListAdapter(this, LocalCommunityTabCache.getMyCommunities().communities);
             listView.setAdapter(adapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

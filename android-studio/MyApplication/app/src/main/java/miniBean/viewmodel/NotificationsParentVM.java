@@ -2,13 +2,12 @@ package miniBean.viewmodel;
 
 import java.util.List;
 
-public class HeaderDataVM {
+public class NotificationsParentVM {
     public String name;
     public Long notifyCount;
     public Long requestCount;
     public List<NotificationVM> allNotif;
     public List<NotificationVM> requestNotif;
-
 
     public String getName() {
         return name;

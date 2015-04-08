@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -142,7 +140,7 @@ public class CommunityFragment extends Fragment {
         if (currentCommunity == null) {
             Log.w(this.getClass().getSimpleName(), "onCreateView: commId not in topic comms, comm - " + commName + "|" + commId);
             // not in topic comm, could be closed or other special comms, get directly from my communities list
-            for (CommunitiesWidgetChildVM vm : LocalCommunityTabCache.getMyCommunitiesParentVM().communities) {
+            for (CommunitiesWidgetChildVM vm : LocalCommunityTabCache.getMyCommunities().communities) {
                 if (vm.getId().equals(commId)) {
                     Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to my comm vm [comm - " + commName + "|" + commId + "]   [vm  - " + vm.dn + "|" + vm.getId() + "]");
                     currentCommunity = vm;

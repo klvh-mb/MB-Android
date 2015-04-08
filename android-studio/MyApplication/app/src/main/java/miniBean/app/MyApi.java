@@ -10,7 +10,7 @@ import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
-import miniBean.viewmodel.HeaderDataVM;
+import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostArray;
@@ -89,7 +89,7 @@ public interface MyApi {
 
     @GET("/get-headerBar-data")
     //a function in your api to get all header meta data (notifications and requests).
-    public void getHeaderBarData(@Query("key") String key, Callback<HeaderDataVM> cb);
+    public void getHeaderBarData(@Query("key") String key, Callback<NotificationsParentVM> cb);
 
     //'/accept-friend-request?friend_id=:id&notify_id=:notify_id'
     @GET("/accept-friend-request") //a function in your api accept friend request.

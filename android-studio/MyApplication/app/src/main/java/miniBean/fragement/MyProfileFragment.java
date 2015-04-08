@@ -20,7 +20,8 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.app.AppController;
-import miniBean.viewmodel.HeaderDataVM;
+import miniBean.app.NotificationCache;
+import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -137,11 +138,10 @@ public class MyProfileFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        Log.d(this.getClass().getSimpleName(), "onStart: api.getHeaderBarData");
-        AppController.api.getHeaderBarData(AppController.getInstance().getSessionId(), new Callback<HeaderDataVM>() {
+        NotificationCache.refresh(new Callback<NotificationsParentVM>() {
             @Override
-            public void success(HeaderDataVM headerDataVM, Response response) {
-                setHeaderBarData(headerDataVM);
+            public void success(NotificationsParentVM notificationsParentVM, Response response) {
+                setHeaderBarData(notificationsParentVM);
             }
 
             @Override
@@ -151,25 +151,22 @@ public class MyProfileFragment extends Fragment {
         });
     }
 
-    private void setHeaderBarData(HeaderDataVM headerDataVM) {
-        Log.d(MyProfileFragment.this.getClass().getSimpleName(), "getHeaderBarData.success: user=" + headerDataVM.getName() + " request=" + headerDataVM.getRequestCounts() + " notif=" + headerDataVM.getNotifyCounts());
+    private void setHeaderBarData(NotificationsParentVM notificationsParentVM) {
+        requestNotif = notificationsParentVM.getRequestNotif();
+        notifAll = notificationsParentVM.getAllNotif();
 
-        requestNotif = headerDataVM.getRequestNotif();
-        notifAll = headerDataVM.getAllNotif();
-
-        if (headerDataVM.getRequestCounts() == 0) {
+        if (notificationsParentVM.getRequestCounts() == 0) {
             requestCount.setVisibility(View.INVISIBLE);
         } else {
             requestCount.setVisibility(View.VISIBLE);
-            requestCount.setText(headerDataVM.getRequestCounts() + "");
+            requestCount.setText(notificationsParentVM.getRequestCounts() + "");
         }
 
-        if (headerDataVM.getNotifyCounts() == 0) {
-
+        if (notificationsParentVM.getNotifyCounts() == 0) {
             notificationCount.setVisibility(View.INVISIBLE);
         } else {
             notificationCount.setVisibility(View.VISIBLE);
-            notificationCount.setText(headerDataVM.getNotifyCounts() + "");
+            notificationCount.setText(notificationsParentVM.getNotifyCounts() + "");
         }
     }
 
