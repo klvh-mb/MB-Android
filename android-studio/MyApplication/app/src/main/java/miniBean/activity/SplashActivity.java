@@ -48,37 +48,35 @@ public class SplashActivity extends Activity {
         }
 
         if (sessionId == null) {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-            finish();
+            LoginActivity.startLoginActivity(SplashActivity.this);
         } else {
             Log.d(this.getClass().getSimpleName(), "onStart: sessionID - " + sessionId);
-            startMainActivity(sessionId, this);
+            startMainActivity(sessionId);
         }
     }
 
-    private void startMainActivity(final String sessionId, final Context context) {
+    private void startMainActivity(final String sessionId) {
         Log.d(this.getClass().getSimpleName(), "getUserInfo");
         AppController.api.getUserInfo(sessionId, new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
-                Log.d(this.getClass().getSimpleName(), "startMainActivity: getUserInfo.success: user="+user.getDisplayName()+" id="+user.getId()+" newUser="+user.newUser);
+                Log.d(SplashActivity.this.getClass().getSimpleName(), "startMainActivity: getUserInfo.success: user="+user.getDisplayName()+" id="+user.getId()+" newUser="+user.newUser);
 
                 // clear session id, redirect to login page
                 if (user.getId() == -1) {
-                    Toast.makeText(context, "Cannot find user. Please login again.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SplashActivity.this, "Cannot find user. Please login again.", Toast.LENGTH_LONG).show();
                     AppController.getInstance().clearPreferences();
-                    startActivity(new Intent(context, LoginActivity.class));
-                    finish();
+                    LoginActivity.startLoginActivity(SplashActivity.this);
                 }
 
                 // new user flow
                 if(user.isNewUser() || StringUtils.isEmpty(user.getDisplayName())) {
                     if (!user.isEmailValidated()) {
-                        Toast.makeText(context, "Please verify your email and login again.", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(context, LoginActivity.class));
-                        finish();
+                        Toast.makeText(SplashActivity.this, SplashActivity.this.getString(R.string.signup_email_unverified)+user.email, Toast.LENGTH_LONG).show();
+                        AppController.getInstance().clearPreferences();
+                        LoginActivity.startLoginActivity(SplashActivity.this);
                     } else {
-                        Intent intent = new Intent(context, SignupDetailActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, SignupDetailActivity.class);
                         intent.putExtra("first_name", user.firstName);
                         startActivity(intent);
                         finish();
@@ -96,7 +94,7 @@ public class SplashActivity extends Activity {
                     // display splash
                     new Handler().postDelayed(new Runnable() {
                         public void run() {
-                            startActivity(new Intent(context, MainActivity.class));
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
                             finish();
                         }
                     }, DefaultValues.SPLASH_DISPLAY_MILLIS);
@@ -105,6 +103,8 @@ public class SplashActivity extends Activity {
 
             @Override
             public void failure(RetrofitError error) {
+                AppController.getInstance().clearPreferences();
+
                 showNetworkProblemAlert();
 
                 /*

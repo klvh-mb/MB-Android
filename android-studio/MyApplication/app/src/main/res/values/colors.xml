@@ -10,11 +10,12 @@
     <color name="dark_gray_2">#222</color>
     <color name="dark_gray_3">#111</color>
     <color name="sharp_pink">#FF6795</color>
-    <color name="purple">#ECDAFF</color>
+    <color name="purple">#AF8AE7</color>
     <color name="light_purple">#ECDAFF</color>
     <color name="light_purple_2">#FBE7FF</color>
     <color name="light_purple_3">#FFF5FF</color>
 
+    <color name="signup_yellow">#FFBE42</color>
     <color name="input_text">#111</color>
     <color name="view_bg">#FCF7FD</color>
     <color name="feed_bg">#d3d6db</color>

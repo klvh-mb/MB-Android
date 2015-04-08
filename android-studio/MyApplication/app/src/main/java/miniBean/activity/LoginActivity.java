@@ -98,6 +98,7 @@ public class LoginActivity extends Activity {
                             alert(R.string.login_error_title, R.string.login_error_message);
                         }
                     }
+
                     @Override
                     public void failure(RetrofitError error) {
                         AnimationUtil.cancel(spinner);
@@ -242,9 +243,9 @@ public class LoginActivity extends Activity {
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
 
-    private void startMainActivity() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
+    public static void startLoginActivity(Activity activity) {
+        activity.startActivity(new Intent(activity, LoginActivity.class));
+        activity.finish();
     }
 
     @Override

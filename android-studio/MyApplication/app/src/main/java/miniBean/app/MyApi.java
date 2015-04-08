@@ -37,6 +37,9 @@ public interface MyApi {
     @POST("/authenticate/mobile/facebook") //your facebook login function in your api
     public void loginByFacebbok(@Query("access_token") String access_token, Callback<Response> cb);
 
+    @GET("/init-new-user")
+    public void initNewUser(@Query("key") String key, Callback<UserVM> cb);
+
     @GET("/get-newsfeeds/{offset}") //a function in your api to get all the Newsfeed list
     public void getNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
 
@@ -165,15 +168,25 @@ public interface MyApi {
 
     @FormUrlEncoded
     @POST("/saveSignupInfo")
-    public void signUpInfo(@Field("parent_displayname") String parent_displayname, @Field("parent_birth_year") Integer parent_birth_year,
-                           @Field("parent_location") Integer parent_location,@Field("parent_type") String parent_type,
-                           @Field("num_children") String num_children,@Field("bb_gender1") String bb_gender1,
-                           @Field("bb_gender2") String bb_gender2,@Field("bb_gender3") String bb_gender3,
-                           @Field("bb_birth_year1") String bb_birth_year1,@Field("bb_birth_month1") String bb_birth_month1,
-                           @Field("bb_birth_day1") String bb_birth_day1,@Field("bb_birth_year2") String bb_birth_year2,
-                           @Field("bb_birth_month2") String bb_birth_month2,@Field("bb_birth_day2") String bb_birth_day2,
-                           @Field("bb_birth_year3") String bb_birth_year3,@Field("bb_birth_month3") String bb_birth_month3,
-                           @Field("bb_birth_day3") String bb_birth_day3, @Query("key") String key,Callback<Response> cb);
+    public void signUpInfo(@Field("parent_displayname") String parent_displayname,
+                           @Field("parent_birth_year") Integer parent_birth_year,
+                           @Field("parent_location") Integer parent_location,
+                           @Field("parent_type") String parent_type,
+                           @Field("num_children") String num_children,
+                           @Field("bb_gender1") String bb_gender1,
+                           @Field("bb_gender2") String bb_gender2,
+                           @Field("bb_gender3") String bb_gender3,
+                           @Field("bb_birth_year1") String bb_birth_year1,
+                           @Field("bb_birth_month1") String bb_birth_month1,
+                           @Field("bb_birth_day1") String bb_birth_day1,
+                           @Field("bb_birth_year2") String bb_birth_year2,
+                           @Field("bb_birth_month2") String bb_birth_month2,
+                           @Field("bb_birth_day2") String bb_birth_day2,
+                           @Field("bb_birth_year3") String bb_birth_year3,
+                           @Field("bb_birth_month3") String bb_birth_month3,
+                           @Field("bb_birth_day3") String bb_birth_day3,
+                           @Query("key") String key,
+                           Callback<Response> cb);
 
 	 @GET("/get-all-districts")
     public void getAllDistricts(@Query("key") String key, Callback<List<LocationVM>> cb);

@@ -24,12 +24,10 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.LocationVM;
+import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 public class SignupDetailActivity extends Activity {
@@ -52,16 +50,7 @@ public class SignupDetailActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        AppController.api = restAdapter.create(MyApi.class);
-
-        setContentView(R.layout.signup_detail);
-
+        setContentView(R.layout.signup_detail_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.signup_actionbar);
@@ -100,18 +89,15 @@ public class SignupDetailActivity extends Activity {
 
         this.babyArray=new String[]{"1","2","3"};
 
-        locationVMList = new ArrayList<LocationVM>();
-
-
         this.day=new String[]{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
         this.month=new String[]{"1","2","3","4","5","6","7","8","9","10","11","12"};
         this.year=new String[]{"1990","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015"};
 
+        locationVMList = new ArrayList<LocationVM>();
         setLocation();
 
         ArrayAdapter<String> babyAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,babyArray);
         babySpinner.setAdapter(babyAdapter);
-
 
         ArrayAdapter<String> dayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,day);
         daySpinner1.setAdapter(dayAdapter);
@@ -193,7 +179,6 @@ public class SignupDetailActivity extends Activity {
 
                 displayname=displayName.getText().toString();
 
-
                 if(parent.getText().toString().equals("Soon-tobe-Dad")){
                     parenttype="SOON_DAD";
                 }else if(parent.getText().toString().equals("Soon-tobe-Mom")){
@@ -214,7 +199,6 @@ public class SignupDetailActivity extends Activity {
                         month1 = monthSpinner1.getSelectedItem().toString();
                         day1 = daySpinner1.getSelectedItem().toString();
                     }else if(babynum.equals("2")){
-
                         babygen1 = baby1.getText().toString();
                         year1 = yearSpinner1.getSelectedItem().toString();
                         month1 = monthSpinner1.getSelectedItem().toString();
@@ -224,7 +208,6 @@ public class SignupDetailActivity extends Activity {
                         year2 = yearSpinner2.getSelectedItem().toString();
                         month2 = monthSpinner2.getSelectedItem().toString();
                         day2 = daySpinner2.getSelectedItem().toString();
-
                     }else if(babynum.equals("3")){
                         babygen1 = baby1.getText().toString();
                         year1 = yearSpinner1.getSelectedItem().toString();
@@ -241,40 +224,51 @@ public class SignupDetailActivity extends Activity {
                         year3 = yearSpinner3.getSelectedItem().toString();
                         month3 = monthSpinner3.getSelectedItem().toString();
                         day3 = daySpinner3.getSelectedItem().toString();
-
                     }
-
-
                 }
 
+                int defaultParentBirthYear = 9999;
+                AppController.api.signUpInfo(displayname, defaultParentBirthYear, locationId, parenttype, babynum,
+                        babygen1, babygen2, babygen3,
+                        year1, month1, day1, year2, month2, day2, year3, month3, day3,
+                        AppController.getInstance().getSessionId(),
+                        new Callback<Response>() {
+                            @Override
+                            public void success(Response response, Response response2) {
+                                initNewUser();
+                            }
 
-               AppController.api.signUpInfo(displayname, 1992, locationId, parenttype, babynum, babygen1, babygen2, babygen3, year1,
-                       month1, day1, year2, month2, day2, year3, month3, day3, AppController.getInstance().getSessionId(), new Callback<Response>() {
-                   @Override
-                   public void success(Response response, Response response2) {
-
-                       Intent intent=new Intent(SignupDetailActivity.this,MainActivity.class);
-                       startActivity(intent);
-
-                   }
-
-                   @Override
-                   public void failure(RetrofitError error) {
-                            error.printStackTrace();
-                   }
-               });
+                            @Override
+                            public void failure(RetrofitError error) {
+                                error.printStackTrace();
+                            }
+                        });
             };
-
         });
     }
 
-    public void setVisible(int id){
+    private void initNewUser() {
+        AppController.api.initNewUser(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
+            @Override
+            public void success(UserVM userVM, Response response) {
+                Intent intent = new Intent(SignupDetailActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    private void setVisible(int id){
         RadioButton type= (RadioButton) parentType.findViewById(id);
-        if(!type.getText().toString().equals("Not-mom-or-dad")){
+        if (!type.getText().toString().equals("Not-mom-or-dad")) {
             babynumberLayout.setVisibility(View.VISIBLE);
             setDetailVisible();
-        }else{
+        } else {
             babynumberLayout.setVisibility(View.GONE);
             detailLayout.setVisibility(View.GONE);
             detailLayout1.setVisibility(View.GONE);
@@ -282,7 +276,7 @@ public class SignupDetailActivity extends Activity {
         }
     }
 
-    public void setDetailVisible(){
+    private void setDetailVisible(){
         if (babySpinner.getSelectedItem()=="1"){
             detailLayout.setVisibility(View.VISIBLE);
             detailLayout1.setVisibility(View.GONE);
@@ -324,7 +318,6 @@ public class SignupDetailActivity extends Activity {
 
     private void setLocation(){
         AppController.api.getAllDistricts(AppController.getInstance().getSessionId(),new Callback< List < LocationVM>>(){
-
             @Override
             public void success(List<LocationVM> locationVMs, Response response) {
                 locations = new ArrayList<String>();
@@ -336,7 +329,6 @@ public class SignupDetailActivity extends Activity {
 
                 ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(SignupDetailActivity.this,android.R.layout.simple_spinner_item,locations);
                 locationSpinner.setAdapter(locationAdapter);
-
             }
 
             @Override
@@ -345,29 +337,10 @@ public class SignupDetailActivity extends Activity {
             }
         });
     }
-
     @Override
     public void onBackPressed() {
-        if (isTaskRoot()) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.exit_app)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            AppController.getInstance().clearPreferences();
-                            AppController.getInstance().clearAll();
-                            SignupDetailActivity.super.onBackPressed();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
+
+        LoginActivity.startLoginActivity(SignupDetailActivity.this);
     }
 }

@@ -66,7 +66,7 @@ public class SignupActivity extends Activity {
                 .build();
         AppController.api = restAdapter.create(MyApi.class);
 
-        setContentView(R.layout.signup);
+        setContentView(R.layout.signup_activity);
 
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -112,12 +112,13 @@ public class SignupActivity extends Activity {
         signupViews();
 
     }
-    public void signUp(String lname,String fname,String email,String password,String repeatPassword){
-        AppController.api.signUp(lname,fname,email,password,repeatPassword,new Callback<Response>() {
+
+    private void signUp(String lname,String fname,String email,String password,String repeatPassword) {
+        AppController.api.signUp(lname,fname,email,password,repeatPassword, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                if(response.getStatus()==200){
-                        intiateSuccessPopup();
+                if(response.getStatus() == 200){
+                    initiateSuccessPopup();
                 }
             }
 
@@ -130,23 +131,26 @@ public class SignupActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-            super.onBackPressed();
-        Intent intent=new Intent(SignupActivity.this,LoginActivity.class);
-        startActivity(intent);
-    }
-    private void intiateSuccessPopup() {
-        try {
+        super.onBackPressed();
 
+        LoginActivity.startLoginActivity(SignupActivity.this);
+    }
+
+    private void initiateSuccessPopup() {
+        try {
             LayoutInflater inflater = (LayoutInflater) SignupActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View layout = inflater.inflate(R.layout.signupsucceess_popup_window,
+            View layout = inflater.inflate(R.layout.signup_succeess_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
 
-            TextView emailText= (TextView) layout.findViewById(R.id.emailText);
+            TextView emailText = (TextView) layout.findViewById(R.id.emailText);
+            Button okButton = (Button) layout.findViewById(R.id.okButton);
 
             signupSuccessPopup = new PopupWindow(
-                    layout,300, ViewGroup.LayoutParams.WRAP_CONTENT,
+                    layout,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
                     true);
             signupSuccessPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             signupSuccessPopup.setOutsideTouchable(false);
@@ -155,13 +159,18 @@ public class SignupActivity extends Activity {
 
             emailText.setText(email.getText().toString());
 
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LoginActivity.startLoginActivity(SignupActivity.this);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void signupViews()
-    {
+    private void signupViews() {
         email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -175,39 +184,30 @@ public class SignupActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
                 Validation.isEmailAddress(email, true);
-
             }
         });
-
     }
 
-    public int showValidation()
-    {
+    private int showValidation() {
         int validData = 0;
-        if(lastName.getText().toString().equals(""))
-        {
+        if(lastName.getText().toString().equals("")) {
             Validation.hasText(lastName);
             validData = 1;
         }
-        if(email .getText().toString().equals(""))
-        {
+        if(email.getText().toString().equals("")) {
             Validation.hasText(email );
             validData = 1;
         }
-        if(firstName.getText().toString().equals(""))
-        {
+        if(firstName.getText().toString().equals("")) {
             Validation.hasText(firstName );
             validData = 1;
         }
-        if(password.getText().toString().equals(""))
-        {
+        if(password.getText().toString().equals("")) {
             Validation.hasText(password);
             validData = 1;
         }
-        if(repeatPassword.getText().toString().equals(""))
-        {
+        if(repeatPassword.getText().toString().equals("")) {
             Validation.hasText(repeatPassword);
             validData = 1;
         }
@@ -215,18 +215,14 @@ public class SignupActivity extends Activity {
         return validData;
     }
 
-    public int passwordCompare(String password,String rePassword)
-    {
+    private int passwordCompare(String password,String rePassword) {
         if(password.equals(rePassword)){
-
             return 0;
-        }else {
+        } else {
             repeatPassword.setError("INCORRECT");
             return 1;
         }
-
     }
-
 
     private void loginToFacebook() {
         String access_token = session.getString("access_token", null);
@@ -324,6 +320,7 @@ public class SignupActivity extends Activity {
         session.edit().putString("sessionID", key).apply();
         return true;
     }
+
     private void alert(String title, String message) {
         new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
                 .setTitle(title)
@@ -337,6 +334,7 @@ public class SignupActivity extends Activity {
                 })
                 .show();
     }
+
     private void alert(int title, int message) {
         alert(getString(title), getString(message));
     }
