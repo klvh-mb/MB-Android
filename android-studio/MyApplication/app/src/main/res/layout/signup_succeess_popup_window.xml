@@ -11,13 +11,14 @@
         android:background="@drawable/rect_border_popup"
         android:orientation="horizontal"
         android:padding="20dp"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:elevation="5dp">
 
         <TextView
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Verification email has been sent to"
+            android:text="@string/signup_success_title"
             android:textSize="18dp"
             android:textStyle="bold"
             android:textColor="@color/dark_gray_3" />
@@ -37,19 +38,21 @@
             android:layout_below="@+id/emailText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Note:if you did not receive our verification email,please make sure it is not in spam folder"
             android:textColor="@color/dark_gray"
-            android:textSize="16dp" />
+            android:textSize="14dp"
+            android:text="@string/signup_success_note" />
         <Button
             android:id="@+id/okButton"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="35dp"
             android:text="OK"
             android:background="@color/signup_yellow"
-            android:textSize="16dp"
+            android:textSize="18dp"
             android:layout_below="@+id/noteText"
             android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="false" />
 
     </RelativeLayout>
 

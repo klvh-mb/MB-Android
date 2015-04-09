@@ -251,8 +251,7 @@ public class SignupDetailActivity extends Activity {
         AppController.api.initNewUser(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM userVM, Response response) {
-                Intent intent = new Intent(SignupDetailActivity.this, MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(SignupDetailActivity.this, MainActivity.class));
                 finish();
             }
 

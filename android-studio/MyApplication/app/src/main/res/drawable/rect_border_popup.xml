@@ -7,7 +7,7 @@
 
     <stroke
         android:width="5dp"
-        android:color="@color/purple" />
+        android:color="@color/signup_blue" />
 
     <corners
         android:radius="10dp">

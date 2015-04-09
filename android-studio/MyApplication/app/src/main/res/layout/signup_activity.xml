@@ -23,42 +23,58 @@
 
     <TextView
         android:id="@+id/facebookText"
-        android:text="Use Facebook To Signup"
-        android:textStyle="bold"
-        android:textSize="18dp"
+        android:text="@string/signup_fb_title"
+        android:textSize="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/dark_gray" />
+        android:layout_marginTop="25dp"
+        android:textColor="@color/like_blue"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp" />
     <ImageView
         android:id="@+id/facebookButton"
         android:layout_below="@+id/facebookText"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
-        android:src="@drawable/facebook_login" />
+        android:src="@drawable/facebook_login"
+        android:focusableInTouchMode="true"
+        android:focusable="true" />
     <TextView
         android:id="@+id/noteText"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Note:minibean will not post to your fb account"
+        android:text="@string/signup_fb_note"
         android:layout_below="@+id/facebookButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:textColor="@color/gray" />
+        android:textColor="@color/gray"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:id="@+id/dashLine"
+        android:src="@drawable/dash_line"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_below="@+id/noteText"
+        android:layout_marginTop="15dp"
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/signupText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use Email To Signup"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        android:layout_below="@+id/noteText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:textColor="@color/dark_gray" />
+        android:text="@string/signup_email_title"
+        android:textSize="15dp"
+        android:layout_below="@+id/dashLine"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/like_blue"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp" />
     <LinearLayout
         android:id="@+id/editLayout"
         android:layout_below="@+id/signupText"
@@ -73,48 +89,55 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
-                android:id="@+id/lastNameEdittext"
+                android:id="@+id/lastNameEditText"
                 android:layout_weight=".5"
-                android:hint="last name"
+                android:hint="@string/signup_lastname_hint"
                 android:textSize="15sp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/edit_text_round"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                android:singleLine="true" />
             <EditText
-                android:id="@+id/firstNameEdittext"
+                android:id="@+id/firstNameEditText"
                 android:layout_weight=".5"
-                android:hint="first name"
+                android:hint="@string/signup_firstname_hint"
                 android:layout_marginLeft="5dp"
                 android:textSize="15sp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/edit_text_round"/>
+                android:background="@drawable/edit_text_round"
+                android:singleLine="true" />
         </LinearLayout>
         <EditText
-            android:id="@+id/emailEdittext"
+            android:id="@+id/emailEditText"
             android:layout_marginTop="15dp"
             android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/edit_text_round"
-            android:hint="email"/>
+            android:hint="@string/signup_email_hint"
+            android:singleLine="true" />
         <EditText
-            android:id="@+id/passwordEdittext"
+            android:id="@+id/passwordEditText"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
-            android:hint="password"
+            android:hint="@string/signup_password_hint"
             android:textSize="15sp"
             android:layout_height="40dp"
-            android:background="@drawable/edit_text_round"/>
+            android:background="@drawable/edit_text_round"
+            android:singleLine="true"
+            android:password="true" />
         <EditText
-            android:id="@+id/repeatPassword"
+            android:id="@+id/repeatPasswordEditText"
             android:layout_marginTop="15dp"
-            android:hint="confirm password"
+            android:hint="@string/signup_password_confirm_hint"
             android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/edit_text_round"/>
+            android:background="@drawable/edit_text_round"
+            android:singleLine="true"
+            android:password="true" />
     </LinearLayout>
 
     <Button
@@ -124,7 +147,7 @@
         android:layout_below="@+id/editLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:text="SIGN UP"
+        android:text="@string/signup"
         android:background="#FFBE42"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
@@ -144,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Terms"
+            android:text="@string/signup_terms"
             android:checked="true"
             android:textSize="13dp"
             android:layout_weight="0.5"
@@ -156,7 +179,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Privacy"
+            android:text="@string/signup_privacy"
             android:textSize="13dp"
             android:checked="true"
             android:layout_marginRight="50dp"

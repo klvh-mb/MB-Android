@@ -129,7 +129,7 @@
                 android:gravity="center"
                 android:textSize="22dp"
                 android:textColor="@color/dark_gray_3"
-                />
+                android:textStyle="bold" />
          </LinearLayout>
         <TextView
             android:layout_marginTop="25dp"
@@ -154,6 +154,17 @@
              android:id="@+id/signupText" />
 
     </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:id="@+id/dashLine"
+        android:src="@drawable/dash_line"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/loginMenu"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp" />
 
     <RelativeLayout
         android:id="@+id/facebookMenu"

@@ -14,14 +14,28 @@
     <string name="base_url">http://192.168.1.115:9000</string>
     <!--string name="base_url">http://www.minibean.hk</string-->
     <string name="app_id">798543453496777</string>
-    <string name="login_error_title">登入錯誤</string>
-    <string name="login_error_message">登入錯誤。請重試</string>
-    <string name="login_id_error_message">登入電郵或密碼錯誤</string>
     <string name="connection_timeout_title">網路問題</string>
     <string name="connection_timeout_message">網路出現問題。請檢查是否已經上缐</string>
 
-    <!-- Signup -->
+    <!-- Login / Signup -->
     <string name="login">登入</string>
+    <string name="login_error_title">登入錯誤</string>
+    <string name="login_error_message">登入錯誤。請重試</string>
+    <string name="login_id_error_message">登入電郵或密碼錯誤</string>
+    <string name="signup">註冊</string>
+    <string name="signup_fb_title">以 Facebook 註冊\n(無需驗證電郵，一分鐘完成)</string>
+    <string name="signup_fb_note">註: 小萌豆絕對不會發佈或留言到您的 facebook 帳戶中</string>
+    <string name="signup_email_title">以電郵註冊</string>
+    <string name="signup_lastname_hint">姓</string>
+    <string name="signup_firstname_hint">名</string>
+    <string name="signup_email_hint">您的電郵</string>
+    <string name="signup_password_hint">密碼</string>
+    <string name="signup_password_confirm_hint">再次輸入密碼</string>
+    <string name="signup_privacy">私隱權聲明</string>
+    <string name="signup_terms">使用條款細則</string>
+    <string name="signup_success_title">歡迎加入 miniBean 小萌豆! 我們已經將認證電郵發送到</string>
+    <string name="signup_success_title_2">請點擊電郵中的連結即可使用帳號。</string>
+    <string name="signup_success_note">註: 若您沒有收到會員認證電郵，請檢查廣告信件匣，部分電郵信箱會誤判我們所發出的郵件為廣告電郵</string>
     <string name="signup_email_unverified">電郵尚未認證，請登入電郵並按認證連結 - </string>
 
     <!-- Main -->
