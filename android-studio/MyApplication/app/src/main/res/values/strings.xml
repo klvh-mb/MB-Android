@@ -36,7 +36,12 @@
     <string name="signup_success_title">歡迎加入 miniBean 小萌豆! 我們已經將認證電郵發送到</string>
     <string name="signup_success_title_2">請點擊電郵中的連結即可使用帳號。</string>
     <string name="signup_success_note">註: 若您沒有收到會員認證電郵，請檢查廣告信件匣，部分電郵信箱會誤判我們所發出的郵件為廣告電郵</string>
-    <string name="signup_email_unverified">電郵尚未認證，請登入電郵並按認證連結 - </string>
+    <string name="signup_error_email_unverified">電郵尚未認證，請登入電郵並按認證連結 - </string>
+    <string name="signup_error_email_already_exists">電郵已被登記</string>
+    <string name="signup_error_password_not_identical">密碼不同</string>
+    <string name="signup_error_please_check">請檢查輸入資料</string>
+    <string name="signup_error_field_required">必須填寫</string>
+    <string name="signup_error_email_format">電郵格式不對</string>
 
     <!-- Main -->
     <string name="tabset_frontpage">首頁</string>

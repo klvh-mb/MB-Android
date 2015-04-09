@@ -75,6 +75,22 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/signup_error_email_already_exists"
+        android:textColor="#ffff0202"
+        android:textSize="16dp"
+        android:layout_toRightOf="@+id/signupText"
+        android:layout_alignParentTop="false"
+        android:layout_alignBaseline="@+id/signupText"
+        android:gravity="right"
+        android:layout_marginRight="35dp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
     <LinearLayout
         android:id="@+id/editLayout"
         android:layout_below="@+id/signupText"

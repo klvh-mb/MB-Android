@@ -4,6 +4,9 @@ import android.widget.EditText;
 
 import java.util.regex.Pattern;
 
+import miniBean.R;
+import miniBean.app.AppController;
+
 public class Validation {
 
     // Regular Expression
@@ -11,8 +14,12 @@ public class Validation {
     private static final String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     // Error Messages
-    private static final String REQUIRED_MSG = "required";
-    private static final String EMAIL_MSG = "invalid email";
+    private static final String REQUIRED_MSG = AppController.getInstance().getString(R.string.signup_error_field_required);
+    private static final String EMAIL_MSG = AppController.getInstance().getString(R.string.signup_error_email_format);
+
+    public static boolean isEmailAddress(EditText editText) {
+        return isEmailAddress(editText, true);
+    }
 
     // call this method when you need to check email validation
     public static boolean isEmailAddress(EditText editText, boolean required) {

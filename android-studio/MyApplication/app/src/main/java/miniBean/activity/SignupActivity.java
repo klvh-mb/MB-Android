@@ -3,10 +3,10 @@ package miniBean.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +32,8 @@ public class SignupActivity extends AbstractLoginActivity {
     private Button signupButton;
     private PopupWindow signupSuccessPopup;
     private ImageView facebookButton;
+    private TextView errorMessage;
     private ProgressBar spinner;
-    public SharedPreferences session = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,19 +52,20 @@ public class SignupActivity extends AbstractLoginActivity {
         repeatPassword = (EditText) findViewById(R.id.repeatPasswordEditText);
         signupButton = (Button) findViewById(R.id.signupButton);
         facebookButton = (ImageView) findViewById(R.id.facebookButton);
+        errorMessage = (TextView) findViewById(R.id.errorMessage);
         spinner = (ProgressBar) findViewById(R.id.spinner);
         spinner.setVisibility(View.INVISIBLE);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int validation=showValidation();
-                int passwordCheck=passwordCompare(password.getText().toString(),repeatPassword.getText().toString());
+                boolean valid = showValidation();
+                boolean passwordValid = passwordCompare(password.getText().toString(),repeatPassword.getText().toString());
 
-                if (validation == 0 && passwordCheck == 0) {
+                if (valid && passwordValid) {
                     signUp(lastName.getText().toString(), firstName.getText().toString(), email.getText().toString(), password.getText().toString(), repeatPassword.getText().toString());
                 } else {
-                    Toast.makeText(SignupActivity.this,"Enter Data Again",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignupActivity.this,getString(R.string.signup_error_please_check),Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -91,12 +92,14 @@ public class SignupActivity extends AbstractLoginActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                Validation.isEmailAddress(email, true);
+                //Validation.isEmailAddress(email, true);
             }
         });
     }
 
     private void signUp(String lname,String fname,String email,String password,String repeatPassword) {
+        showErrorMessage(false);
+
         AppController.api.signUp(lname,fname,email,password,repeatPassword, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -107,6 +110,9 @@ public class SignupActivity extends AbstractLoginActivity {
 
             @Override
             public void failure(RetrofitError error) {
+                if(error.getResponse().getStatus() == 400){
+                    showErrorMessage(true);
+                }
                 error.printStackTrace();
             }
         });
@@ -121,6 +127,13 @@ public class SignupActivity extends AbstractLoginActivity {
             signupSuccessPopup = null;
         }
         LoginActivity.startLoginActivity(SignupActivity.this);
+    }
+
+    private void showErrorMessage(boolean show) {
+        if (show)
+            errorMessage.setVisibility(View.VISIBLE);
+        else
+            errorMessage.setVisibility(View.INVISIBLE);
     }
 
     private void initiateSuccessPopup() {
@@ -157,38 +170,28 @@ public class SignupActivity extends AbstractLoginActivity {
         }
     }
 
-    private int showValidation() {
-        int validData = 0;
-        if(lastName.getText().toString().equals("")) {
-            Validation.hasText(lastName);
-            validData = 1;
-        }
-        if(email.getText().toString().equals("")) {
-            Validation.hasText(email );
-            validData = 1;
-        }
-        if(firstName.getText().toString().equals("")) {
-            Validation.hasText(firstName );
-            validData = 1;
-        }
-        if(password.getText().toString().equals("")) {
-            Validation.hasText(password);
-            validData = 1;
-        }
-        if(repeatPassword.getText().toString().equals("")) {
-            Validation.hasText(repeatPassword);
-            validData = 1;
-        }
-
-        return validData;
+    private boolean showValidation() {
+        boolean valid = true;
+        if (!Validation.hasText(lastName))
+            valid = false;
+        if (!Validation.hasText(firstName))
+            valid = false;
+        if (!Validation.hasText(email) || !Validation.isEmailAddress(email))
+            valid = false;
+        if (!Validation.hasText(password))
+            valid = false;
+        if (!Validation.hasText(repeatPassword))
+            valid = false;
+        return valid;
     }
 
-    private int passwordCompare(String password,String rePassword) {
+    private boolean passwordCompare(String password,String rePassword) {
         if(password.equals(rePassword)){
-            return 0;
+            repeatPassword.setError(null);
+            return true;
         } else {
-            repeatPassword.setError("INCORRECT");
-            return 1;
+            repeatPassword.setError(getString(R.string.signup_error_password_not_identical));
+            return false;
         }
     }
 }

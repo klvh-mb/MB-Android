@@ -72,7 +72,7 @@ public class SplashActivity extends Activity {
                 // new user flow
                 if(user.isNewUser() || StringUtils.isEmpty(user.getDisplayName())) {
                     if (!user.isEmailValidated()) {
-                        Toast.makeText(SplashActivity.this, SplashActivity.this.getString(R.string.signup_email_unverified)+user.email, Toast.LENGTH_LONG).show();
+                        Toast.makeText(SplashActivity.this, SplashActivity.this.getString(R.string.signup_error_email_unverified)+user.email, Toast.LENGTH_LONG).show();
                         AppController.getInstance().clearPreferences();
                         LoginActivity.startLoginActivity(SplashActivity.this);
                     } else {
