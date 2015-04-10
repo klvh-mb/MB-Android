@@ -42,7 +42,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:id="@+id/editCoverImage"
-                    android:src="@drawable/edit_post"
+                    android:src="@drawable/edit_photo"
                     android:adjustViewBounds="true"
                     android:layout_gravity="bottom|right"
                     android:layout_alignRight="@+id/userCoverPic"
@@ -73,10 +73,9 @@
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:id="@+id/editUserImage"
-                            android:src="@drawable/edit_post"
+                            android:src="@drawable/edit_photo"
                             android:adjustViewBounds="true"
-                            android:layout_gravity="bottom|right"
-                            android:layout_margin="5dp" />
+                            android:layout_gravity="bottom|right" />
 
                     </FrameLayout>
 

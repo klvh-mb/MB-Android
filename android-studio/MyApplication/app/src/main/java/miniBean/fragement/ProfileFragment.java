@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.edit_cover_photo)), SELECT_PICTURE);
                 isPhoto = true;
                 coverPhotoClicked = true;
             }
@@ -86,7 +86,7 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.edit_user_photo)), SELECT_PICTURE);
                 isPhoto = true;
                 profilePhotoClicked = true;
             }

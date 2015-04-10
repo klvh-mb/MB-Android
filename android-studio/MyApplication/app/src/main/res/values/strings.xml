@@ -105,6 +105,8 @@
     <string name="logout">登出</string>
     <string name="my_profile_actionbar_title">我的主頁</string>
     <string name="user_profile_actionbar_title">主頁</string>
+    <string name="edit_user_photo">更改個人照片</string>
+    <string name="edit_cover_photo">更改封面照片</string>
     <string name="request_actionbar_title">邀請</string>
     <string name="notification_actionbar_title">通知</string>
     <string name="no_notification">- 沒有訊息 -</string>
