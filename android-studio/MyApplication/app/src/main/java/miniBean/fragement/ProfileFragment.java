@@ -40,7 +40,7 @@ import retrofit.mime.TypedFile;
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = ProfileFragment.class.getName();
-    private ImageView userCoverPic, userPic;
+    private ImageView userCoverPic, userPic, editCoverImage;
     private ProgressBar spinner;
     private TextView questionsCount, answersCount, bookmarksCount, userName;
     private LinearLayout questionMenu, answerMenu, bookmarksMenu;
@@ -62,12 +62,13 @@ public class ProfileFragment extends Fragment {
         bookmarksCount = (TextView) view.findViewById(R.id.bookmarksCount);
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
         userPic = (ImageView) view.findViewById(R.id.userImage);
+        editCoverImage = (ImageView) view.findViewById(R.id.editCoverImage);
         spinner = (ProgressBar) view.findViewById(R.id.spinner);
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
 
-        userCoverPic.setOnClickListener(new View.OnClickListener() {
+        editCoverImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -78,7 +79,6 @@ public class ProfileFragment extends Fragment {
                 coverPhotoClicked = true;
             }
         });
-
 
         userPic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,14 +144,16 @@ public class ProfileFragment extends Fragment {
             Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
             Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
             if (bp != null) {
-                if(coverPhotoClicked){
+                if (coverPhotoClicked) {
                     userCoverPic.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                     userCoverPic.setVisibility(View.VISIBLE);
                     changeCoverPhoto(userId);
-                } else if(profilePhotoClicked) {
+                    coverPhotoClicked = false;
+                } else if (profilePhotoClicked) {
                     userPic.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                     userPic.setVisibility(View.VISIBLE);
                     changeProfilePhoto(userId);
+                    profilePhotoClicked = false;
                 }
             }
         }
@@ -193,8 +195,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                //error.printStackTrace();
-                showNetworkProblemAlert();
+                error.printStackTrace();
             }
         });
     }
@@ -307,20 +308,5 @@ public class ProfileFragment extends Fragment {
                 error.printStackTrace();
             }
         });
-    }
-
-
-    private void showNetworkProblemAlert() {
-        new AlertDialog.Builder(getActivity(), android.R.style.Theme_Holo_Light_Dialog)
-                .setTitle("Network Error")
-                .setMessage("Server is not connected...")
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        getActivity().finish();
-                    }
-                })
-                .show();
     }
 }

@@ -94,15 +94,18 @@ public class MainActivity extends FragmentActivity {
 
         init();
 
+        AnimationUtil.show(spinner);
         NotificationCache.refresh(new Callback<NotificationsParentVM>() {
             @Override
             public void success(NotificationsParentVM notificationsParentVM, Response response) {
+                AnimationUtil.cancel(spinner);
                 setUnreadNotificationsCount();
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                AnimationUtil.cancel(spinner);
+                error.printStackTrace();
             }
         });
     }
@@ -238,6 +241,10 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void init() {
+        if (LocalCommunityTabCache.getMyCommunities() == null) {
+            LocalCommunityTabCache.refreshMyCommunities();
+        }
+
         if (LocalCommunityTabCache.isCommunityCategoryMapListEmpty()) {
             AnimationUtil.show(spinner);
 

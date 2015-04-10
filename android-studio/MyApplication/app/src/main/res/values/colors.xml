@@ -14,6 +14,7 @@
     <color name="light_purple">#ECDAFF</color>
     <color name="light_purple_2">#FBE7FF</color>
     <color name="light_purple_3">#FFF5FF</color>
+    <color name="yellow">#F3F300</color>
 
     <color name="signup_yellow">#FFBE42</color>
     <color name="signup_blue">#8379F1</color>
@@ -27,7 +28,14 @@
     <color name="timestamp">#a0a3a7</color>
     <color name="tabset_selected">#9071BE</color>
     <color name="actionbar_bg">#AF8AE7</color>
-    <color name="actionbar_selected_text">#BD94F9</color>
     <color name="actionbar_bg_light">#D2ACEE</color>
+    <color name="actionbar_selected_text">#BD94F9</color>
+
+    <color name="pn_actionbar_bg">#67BB67</color>
+    <color name="pn_bg">#F7FFF6</color>
+    <color name="pn_green">#57A857</color>
+    <color name="pn_light_green">#A3D0A4</color>
+    <color name="pn_orange">#CD8400</color>
+    <color name="pn_highlight_text">#5F1B1B</color>
 
 </resources>

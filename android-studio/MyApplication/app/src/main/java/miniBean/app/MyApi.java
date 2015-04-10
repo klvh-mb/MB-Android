@@ -31,136 +31,6 @@ import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 
 public interface MyApi {
-    @POST("/mobile/login") //your login function in your api
-    public void login(@Query("email") String email, @Query("password") String password, Callback<Response> cb);
-
-    @POST("/authenticate/mobile/facebook") //your facebook login function in your api
-    public void loginByFacebbok(@Query("access_token") String access_token, Callback<Response> cb);
-
-    @GET("/init-new-user")
-    public void initNewUser(@Query("key") String key, Callback<UserVM> cb);
-
-    @GET("/get-newsfeeds/{offset}") //a function in your api to get all the Newsfeed list
-    public void getNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
-
-    @GET("/get-my-communities") //a function in your api to get all the joined communities list
-    public void getMyCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
-
-    @GET("/communityQnA/questions/{id}")
-    public void getCommunityInitialPosts(@Path("id") Long id, @Query("key") String key, Callback<PostArray> callback);
-
-    @GET("/communityQnA/questions/next/{id}/{time}")
-    public void getCommunityNextPosts(@Path("id") Long id, @Path("time") String time, @Query("key") String key, Callback<List<CommunityPostVM>> callback);
-
-    @GET("/get-social-community-categories-map")
-    public void getTopicCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, @Query("key") String key, Callback<List<CommunityCategoryMapVM>> callback);
-
-    @GET("/get-zodiac-year-communities")
-    public void getZodiacYearCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
-
-    @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
-    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, @Query("key") String key, Callback<CommunityPostVM> callback);
-
-    @GET("/community/join/{id}") //a function in your api send join request to Community
-    public void sendJoinRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/community/leave/{id}") //a function in your api leave community.
-    public void sendLeaveRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/get-user-info") //a function in your api get User all Information
-    public void getUserInfo(@Query("key") String key, Callback<UserVM> cb);
-
-    @GET("/profile/{id}") //a function in your api get User all Information
-    public void getUserProfile(@Path("id") Long id, @Query("key") String key, Callback<ProfileVM> cb);
-
-    @GET("/get-bookmark-summary") //a function in your api get bookmark summary
-    public void getBookmarkSummary(@Query("key") String key, Callback<BookmarkSummaryVM> cb);
-
-    @POST("/communityQnA/question/answer") //a function in your api answer on question.
-    public void answerOnQuestion(@Body CommentPost commentPost, @Query("key") String key, Callback<CommentResponse> cb);
-
-    @POST("/communityQnA/question/post")
-    public void setQuestion(@Body NewPost newPost, @Query("key") String key, Callback<PostResponse> cb);
-
-    @Multipart
-    @POST("/image/uploadCommentPhoto") //a function in your api upload image for comment
-    public void uploadCommentPhoto(@Part("commentId") String id, @Part("comment-photo0") TypedFile photo, Callback<Response> cb);
-
-    @Multipart
-    @POST("/image/uploadPostPhoto") //a function in your api upload image for comment
-    public void uploadPostPhoto(@Part("postId") String id, @Part("post-photo0") TypedFile photo, Callback<Response> cb);
-
-    @GET("/get-headerBar-data")
-    //a function in your api to get all header meta data (notifications and requests).
-    public void getHeaderBarData(@Query("key") String key, Callback<NotificationsParentVM> cb);
-
-    //'/accept-friend-request?friend_id=:id&notify_id=:notify_id'
-    @GET("/accept-friend-request") //a function in your api accept friend request.
-    public void acceptFriendRequest(@Query("friend_id") Long friend_id, @Query("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
-
-    //'/accept-join-request/:member_id/:group_id/:notify_id'
-    @GET("/accept-join-request/{member_id}/{group_id}/{notify_id}")
-    //a function in your api accept join request to Community
-    public void acceptCommJoinRequest(@Path("member_id") Long member_id, @Path("group_id") Long group_id, @Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
-
-    //'/accept-invite-request/:member_id/:group_id/:notify_id'
-    @GET("/accept-invite-request/{member_id}/{group_id}/{notify_id}")
-    //a function in your api accept invite request to Community
-    public void acceptCommInviteRequest(@Path("member_id") Long member_id, @Path("group_id") Long group_id, @Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
-
-    //'/ignore-it/:notify_id'
-    @GET("/ignore-it/{notify_id}") //a function in your api accept invite request to Community
-    public void ignoreIt(@Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/bookmark-post/{post_id}")
-    public void setBookmark(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/unbookmark-post/{post_id}")
-    public void setUnBookmark(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/like-comment/{comment_id}")
-    public void setLikeComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/unlike-comment/{comment_id}")
-    public void setUnLikeComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/like-post/{post_id}")
-    public void setLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/unlike-post/{post_id}")
-    public void setUnLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/delete-post/{post_id}")
-    public void deletePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/delete-comment/{comment_id}")
-    public void deleteComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/get-user-newsfeeds-posts/{offset}/{id}")
-    public void getUserPosts(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
-
-    @GET("/get-user-newsfeeds-comments/{offset}/{id}")
-    public void getUserComments(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
-
-    @GET("/get-bookmarked-posts/{offset}")
-    public void getBookmarkedPosts(@Path("offset") Long offset,@Query("key") String key, Callback<List<CommunityPostVM>> cb);
-
-    @GET("/comments/{id}/{offset}")
-    public void getComments(@Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
-
-    @GET("/community/{id}")
-    public void getCommunity(@Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
-
-    @Multipart
-    @POST("/image/upload-cover-photo")
-    public void uploadCoverPhoto(@Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
-
-    @Multipart
-    @POST("/image/upload-profile-photo")
-    public void uploadProfilePhoto(@Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
-
-    @GET("/mark-as-read/{ids}")
-    public void markAsRead(@Path("ids")String id, @Query("key") String key, Callback<Response> cb);
 
     @POST("/signup")
     public void signUp(@Query("lname") String lanme,@Query("fname") String fname,@Query("email") String email,@Query("password") String password,@Query("repeatPassword") String repeatPassword,Callback<Response> cb);
@@ -188,8 +58,149 @@ public interface MyApi {
                            @Query("key") String key,
                            Callback<Response> cb);
 
-	 @GET("/get-all-districts")
+    @GET("/get-all-districts")
     public void getAllDistricts(@Query("key") String key, Callback<List<LocationVM>> cb);
+
+    @POST("/mobile/login") //your login function in your api
+    public void login(@Query("email") String email, @Query("password") String password, Callback<Response> cb);
+
+    @POST("/authenticate/mobile/facebook") //your facebook login function in your api
+    public void loginByFacebbok(@Query("access_token") String access_token, Callback<Response> cb);
+
+    @GET("/init-new-user")
+    public void initNewUser(@Query("key") String key, Callback<UserVM> cb);
+
+    @GET("/get-user-info") //a function in your api get User all Information
+    public void getUserInfo(@Query("key") String key, Callback<UserVM> cb);
+
+    @GET("/get-newsfeeds/{offset}") //a function in your api to get all the Newsfeed list
+    public void getNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
+
+    @GET("/get-my-communities") //a function in your api to get all the joined communities list
+    public void getMyCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
+
+    @GET("/community/{id}")
+    public void getCommunity(@Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
+
+    @GET("/communityQnA/questions/{id}")
+    public void getCommunityInitialPosts(@Path("id") Long id, @Query("key") String key, Callback<PostArray> callback);
+
+    @GET("/communityQnA/questions/next/{id}/{time}")
+    public void getCommunityNextPosts(@Path("id") Long id, @Path("time") String time, @Query("key") String key, Callback<List<CommunityPostVM>> callback);
+
+    @GET("/get-social-community-categories-map")
+    public void getTopicCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, @Query("key") String key, Callback<List<CommunityCategoryMapVM>> callback);
+
+    @GET("/get-zodiac-year-communities")
+    public void getZodiacYearCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
+
+    @GET("/community/join/{id}") //a function in your api send join request to Community
+    public void sendJoinRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/community/leave/{id}") //a function in your api leave community.
+    public void sendLeaveRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
+    public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, @Query("key") String key, Callback<CommunityPostVM> callback);
+
+    @GET("/comments/{id}/{offset}")
+    public void getComments(@Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
+
+    @POST("/communityQnA/question/answer") //a function in your api answer on question.
+    public void answerOnQuestion(@Body CommentPost commentPost, @Query("key") String key, Callback<CommentResponse> cb);
+
+    @POST("/communityQnA/question/post")
+    public void setQuestion(@Body NewPost newPost, @Query("key") String key, Callback<PostResponse> cb);
+
+    @Multipart
+    @POST("/image/uploadPostPhoto") //a function in your api upload image for comment
+    public void uploadPostPhoto(@Part("postId") String id, @Part("post-photo0") TypedFile photo, Callback<Response> cb);
+
+    @Multipart
+    @POST("/image/uploadCommentPhoto") //a function in your api upload image for comment
+    public void uploadCommentPhoto(@Part("commentId") String id, @Part("comment-photo0") TypedFile photo, Callback<Response> cb);
+
+    @GET("/bookmark-post/{post_id}")
+    public void setBookmark(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/unbookmark-post/{post_id}")
+    public void setUnBookmark(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/like-comment/{comment_id}")
+    public void setLikeComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/unlike-comment/{comment_id}")
+    public void setUnLikeComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/like-post/{post_id}")
+    public void setLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/unlike-post/{post_id}")
+    public void setUnLikePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/delete-post/{post_id}")
+    public void deletePost(@Path("post_id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/delete-comment/{comment_id}")
+    public void deleteComment(@Path("comment_id") Long comment_id, @Query("key") String key, Callback<Response> cb);
+
+    //
+    // Profile APIs
+    //
+
+    @GET("/profile/{id}")
+    public void getUserProfile(@Path("id") Long id, @Query("key") String key, Callback<ProfileVM> cb);
+
+    @Multipart
+    @POST("/image/upload-cover-photo")
+    public void uploadCoverPhoto(@Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
+
+    @Multipart
+    @POST("/image/upload-profile-photo")
+    public void uploadProfilePhoto(@Part("profile-photo") TypedFile photo,@Query("key") String key, Callback<Response> cb);
+
+    @GET("/get-bookmark-summary") //a function in your api get bookmark summary
+    public void getBookmarkSummary(@Query("key") String key, Callback<BookmarkSummaryVM> cb);
+
+    @GET("/get-headerBar-data")
+    //a function in your api to get all header meta data (notifications and requests).
+    public void getHeaderBarData(@Query("key") String key, Callback<NotificationsParentVM> cb);
+
+    @GET("/mark-as-read/{ids}")
+    public void markAsRead(@Path("ids")String id, @Query("key") String key, Callback<Response> cb);
+
+    //'/accept-friend-request?friend_id=:id&notify_id=:notify_id'
+    @GET("/accept-friend-request") //a function in your api accept friend request.
+    public void acceptFriendRequest(@Query("friend_id") Long friend_id, @Query("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
+
+    //'/accept-join-request/:member_id/:group_id/:notify_id'
+    @GET("/accept-join-request/{member_id}/{group_id}/{notify_id}")
+    //a function in your api accept join request to Community
+    public void acceptCommJoinRequest(@Path("member_id") Long member_id, @Path("group_id") Long group_id, @Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
+
+    //'/accept-invite-request/:member_id/:group_id/:notify_id'
+    @GET("/accept-invite-request/{member_id}/{group_id}/{notify_id}")
+    //a function in your api accept invite request to Community
+    public void acceptCommInviteRequest(@Path("member_id") Long member_id, @Path("group_id") Long group_id, @Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
+
+    //'/ignore-it/:notify_id'
+    @GET("/ignore-it/{notify_id}") //a function in your api accept invite request to Community
+    public void ignoreIt(@Path("notify_id") Long notify_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/get-user-newsfeeds-posts/{offset}/{id}")
+    public void getUserPosts(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
+
+    @GET("/get-user-newsfeeds-comments/{offset}/{id}")
+    public void getUserComments(@Path("offset") Long offset,@Path("id") Long id, @Query("key") String key, Callback<PostArray> cb);
+
+    @GET("/get-bookmarked-posts/{offset}")
+    public void getBookmarkedPosts(@Path("offset") Long offset,@Query("key") String key, Callback<List<CommunityPostVM>> cb);
+
+    //
+    // PN APIs
+    //
+
+
 
 }
 

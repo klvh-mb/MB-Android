@@ -6,9 +6,9 @@
     android:toDegrees="1080" >
 
     <shape
-        android:innerRadiusRatio="3"
+        android:innerRadiusRatio="4"
         android:shape="ring"
-        android:thicknessRatio="8"
+        android:thicknessRatio="10"
         android:useLevel="false" >
         <size
             android:height="76dip"
@@ -16,7 +16,7 @@
 
         <gradient
             android:angle="0"
-            android:endColor="@color/actionbar_bg_light"
+            android:endColor="@color/light_gray"
             android:startColor="@android:color/transparent"
             android:type="sweep"
             android:useLevel="false" />
