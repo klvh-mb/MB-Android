@@ -135,11 +135,11 @@
 
                 <LinearLayout
                     android:id="@+id/babynumberLayout"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/parentRadio"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -206,32 +206,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Birthday::"/>
+                    <ImageView
+                        android:id="@+id/birthday1"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_below="@+id/sexRadio"
+                        android:src="@drawable/calendar"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/birthdayText"/>
+                    <TextView
 
-                    <Spinner
-                        android:id="@+id/daySpinner1"
-                        android:layout_toRightOf="@+id/birthdayText"
-                        android:layout_below="@+id/birthdayText"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_width="80dp"
+                        android:id="@+id/birthdayLabel1"
+                        android:layout_width="90dp"
                         android:layout_height="20dp"
-                        ></Spinner>
-                    <Spinner
-                        android:id="@+id/monthSpinner1"
-                        android:layout_below="@+id/daySpinner1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/birthday1"
                         android:layout_toRightOf="@+id/birthdayText"
-                        android:layout_width="80dp"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_height="20dp"
-                        ></Spinner>
-                    <Spinner
-                        android:id="@+id/yearSpinner1"
-                        android:layout_toRightOf="@+id/birthdayText"
-                        android:layout_below="@+id/monthSpinner1"
-                        android:layout_width="80dp"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_height="20dp"
-                        ></Spinner>
-
+                        />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -275,32 +267,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Birthday::"/>
-
-                    <Spinner
-                        android:id="@+id/daySpinner2"
-                        android:layout_toRightOf="@+id/birthdayText1"
-                        android:layout_below="@+id/birthdayText1"
-                        android:layout_width="80dp"
-                        android:background="@drawable/spinner_bg"
+                    <ImageView
+                        android:id="@+id/birthday2"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_below="@+id/sexRadio1"
+                        android:src="@drawable/calendar"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/birthdayText1"/>
+                    <TextView
+                        android:id="@+id/birthdayLabel2"
+                        android:layout_width="90dp"
                         android:layout_height="20dp"
-                        ></Spinner>
-                    <Spinner
-                        android:id="@+id/monthSpinner2"
-                        android:layout_below="@+id/daySpinner2"
+                        android:layout_below="@+id/birthday2"
                         android:layout_toRightOf="@+id/birthdayText1"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"
-                        ></Spinner>
-                    <Spinner
-                        android:id="@+id/yearSpinner2"
-                        android:layout_toRightOf="@+id/birthdayText1"
-                        android:layout_below="@+id/monthSpinner2"
-                        android:layout_width="80dp"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_height="20dp"
-                        ></Spinner>
-
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -343,37 +326,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Birthday::"/>
-
-                    <Spinner
-                        android:id="@+id/daySpinner3"
+                    <ImageView
+                        android:id="@+id/birthday3"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_below="@+id/sexRadio2"
+                        android:src="@drawable/calendar"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/birthdayText2"/>
+                    <TextView
+                        android:id="@+id/birthdayLabel3"
+                        android:layout_width="90dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/birthday3"
                         android:layout_toRightOf="@+id/birthdayText2"
-                        android:layout_below="@+id/birthdayText2"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"></Spinner>
-                    <Spinner
-                        android:id="@+id/monthSpinner3"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_below="@+id/daySpinner3"
-                        android:layout_toRightOf="@+id/birthdayText2"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"></Spinner>
-                    <Spinner
-                        android:id="@+id/yearSpinner3"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_toRightOf="@+id/birthdayText2"
-                        android:layout_below="@+id/monthSpinner3"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"></Spinner>
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        />
 
                 </RelativeLayout>
-
             </RelativeLayout>
-
         </RelativeLayout>
-
     </ScrollView>
-
     <Button
         android:id="@+id/finishButton"
         android:layout_centerHorizontal="true"
@@ -385,5 +359,4 @@
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginBottom="20dp" />
-
 </RelativeLayout>
