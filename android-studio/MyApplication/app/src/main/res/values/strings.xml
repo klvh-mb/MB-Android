@@ -115,6 +115,16 @@
     <string name="bookmarks_title">我的收藏</string>
 
     <!-- PN tab -->
+    <string name="filter_schools_all">全部</string>
+    <string name="filter_schools_yes">有</string>
+    <string name="filter_schools_no">沒有</string>
+    <string name="filter_schools_type_public">非牟利</string>
+    <string name="filter_schools_type_private">私立</string>
+    <string name="filter_schools_curriculum_local">本地</string>
+    <string name="filter_schools_curriculum_nonlocal">非本地</string>
+    <string name="filter_schools_time_am">上午</string>
+    <string name="filter_schools_time_pm">下午</string>
+    <string name="filter_schools_time_wd">全日</string>
 
     <!-- Dialog -->
     <string name="cancel_new_post">退出發佈話題?</string>

@@ -8,7 +8,7 @@
         android:id="@+id/mainActionsLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/actionbar_bg_light">
+        android:background="@drawable/actionbar_bg_purple">
 
         <RelativeLayout
             android:layout_width="fill_parent"

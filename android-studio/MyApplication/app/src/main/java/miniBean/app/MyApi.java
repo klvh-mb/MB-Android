@@ -79,15 +79,6 @@ public interface MyApi {
     @GET("/get-my-communities") //a function in your api to get all the joined communities list
     public void getMyCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
 
-    @GET("/community/{id}")
-    public void getCommunity(@Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
-
-    @GET("/communityQnA/questions/{id}")
-    public void getCommunityInitialPosts(@Path("id") Long id, @Query("key") String key, Callback<PostArray> callback);
-
-    @GET("/communityQnA/questions/next/{id}/{time}")
-    public void getCommunityNextPosts(@Path("id") Long id, @Path("time") String time, @Query("key") String key, Callback<List<CommunityPostVM>> callback);
-
     @GET("/get-social-community-categories-map")
     public void getTopicCommunityCategoriesMap(@Query("indexOnly") Boolean indexOnly, @Query("key") String key, Callback<List<CommunityCategoryMapVM>> callback);
 
@@ -100,14 +91,20 @@ public interface MyApi {
     @GET("/community/leave/{id}") //a function in your api leave community.
     public void sendLeaveRequest(@Path("id") Long id, @Query("key") String key, Callback<Response> cb);
 
+    @GET("/community/{id}")
+    public void getCommunity(@Path("id")Long comm_id, @Query("key") String key, Callback<CommunityVM> cb);
+
+    @GET("/communityQnA/questions/{id}")
+    public void getCommunityInitialPosts(@Path("id") Long id, @Query("key") String key, Callback<PostArray> callback);
+
+    @GET("/communityQnA/questions/next/{id}/{time}")
+    public void getCommunityNextPosts(@Path("id") Long id, @Path("time") String time, @Query("key") String key, Callback<List<CommunityPostVM>> callback);
+
     @GET("/qna-landing/{qnaId}/{communityId}")  //a function in your api to get one post
     public void qnaLanding(@Path("qnaId") Long qnaId, @Path("communityId") Long communityId, @Query("key") String key, Callback<CommunityPostVM> callback);
 
     @GET("/comments/{id}/{offset}")
     public void getComments(@Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
-
-    @POST("/communityQnA/question/answer") //a function in your api answer on question.
-    public void answerOnQuestion(@Body CommentPost commentPost, @Query("key") String key, Callback<CommentResponse> cb);
 
     @POST("/communityQnA/question/post")
     public void setQuestion(@Body NewPost newPost, @Query("key") String key, Callback<PostResponse> cb);
@@ -115,6 +112,9 @@ public interface MyApi {
     @Multipart
     @POST("/image/uploadPostPhoto") //a function in your api upload image for comment
     public void uploadPostPhoto(@Part("postId") String id, @Part("post-photo0") TypedFile photo, Callback<Response> cb);
+
+    @POST("/communityQnA/question/answer")
+    public void answerOnQuestion(@Body CommentPost commentPost, @Query("key") String key, Callback<CommentResponse> cb);
 
     @Multipart
     @POST("/image/uploadCommentPhoto") //a function in your api upload image for comment

@@ -56,6 +56,11 @@ public class UserProfileFragment extends Fragment {
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         bookmarksMenu.setVisibility(View.GONE);
 
+        ImageView editCoverImage = (ImageView) view.findViewById(R.id.editCoverImage);
+        editCoverImage.setVisibility(View.GONE);
+        ImageView editUserImage = (ImageView) view.findViewById(R.id.editUserImage);
+        editUserImage.setVisibility(View.GONE);
+
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

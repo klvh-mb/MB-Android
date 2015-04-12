@@ -3,6 +3,9 @@ package miniBean.util;
 import java.util.Arrays;
 import java.util.List;
 
+import miniBean.R;
+import miniBean.app.AppController;
+
 /**
  * Should read from server.
  */
@@ -43,6 +46,39 @@ public class DefaultValues {
     );
     public static List<String> FILTER_MY_COMM_TARGETING_INFO = Arrays.asList(
             new String[] {"FEEDBACK"}
+    );
+
+    public static List<String> FILTER_SCHOOLS_COUPON = Arrays.asList(
+            new String[] {
+                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    AppController.getInstance().getString(R.string.filter_schools_yes),
+                    AppController.getInstance().getString(R.string.filter_schools_no)
+            }
+    );
+
+    public static List<String> FILTER_SCHOOLS_TYPE = Arrays.asList(
+            new String[] {
+                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    AppController.getInstance().getString(R.string.filter_schools_type_private),
+                    AppController.getInstance().getString(R.string.filter_schools_type_public)
+            }
+    );
+
+    public static List<String> FILTER_SCHOOLS_CURRICULUM = Arrays.asList(
+            new String[] {
+                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    AppController.getInstance().getString(R.string.filter_schools_curriculum_local),
+                    AppController.getInstance().getString(R.string.filter_schools_curriculum_nonlocal)
+            }
+    );
+
+    public static List<String> FILTER_SCHOOLS_TIME = Arrays.asList(
+            new String[] {
+                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    AppController.getInstance().getString(R.string.filter_schools_time_am),
+                    AppController.getInstance().getString(R.string.filter_schools_time_pm),
+                    AppController.getInstance().getString(R.string.filter_schools_time_wd)
+            }
     );
 
 }
