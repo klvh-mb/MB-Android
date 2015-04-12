@@ -3,15 +3,16 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import miniBean.R;
@@ -45,7 +47,14 @@ public class SignupDetailActivity extends Activity {
     private List<LocationVM> locationVMList;
 
     private int locationId;
+    private Calendar calendar;
+    private ImageView birthday1,birthday2,birthday3;
+    private TextView birthdayLabel1,birthdayLabel2,birthdayLabel3;
 
+    private String year1,month1,day1,year2,month2,day2,year3,month3,day3;
+
+
+    private boolean birthdayClick1=false,birthdayClick2=false,birthdayClick3=false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +68,15 @@ public class SignupDetailActivity extends Activity {
 
         titleText= (TextView) findViewById(R.id.titleText);
 
+        birthday1= (ImageView) findViewById(R.id.birthday1);
+        birthday2= (ImageView) findViewById(R.id.birthday2);
+        birthday3= (ImageView) findViewById(R.id.birthday3);
+
+
+        birthdayLabel1= (TextView) findViewById(R.id.birthdayLabel1);
+        birthdayLabel2= (TextView) findViewById(R.id.birthdayLabel2);
+        birthdayLabel3= (TextView) findViewById(R.id.birthdayLabel3);
+
         detailLayout= (RelativeLayout) findViewById(R.id.babyDetaiLayout);
         detailLayout1= (RelativeLayout) findViewById(R.id.babyDetaiLayout1);
         detailLayout2= (RelativeLayout) findViewById(R.id.babyDetaiLayout2);
@@ -68,30 +86,16 @@ public class SignupDetailActivity extends Activity {
         babyGender2= (RadioGroup) findViewById(R.id.babyRadio2);
         babyGender3= (RadioGroup) findViewById(R.id.babyRadio3);
 
+        calendar = Calendar.getInstance();
+
         displayName= (EditText) findViewById(R.id.displaynameEdit);
         locationSpinner= (Spinner) findViewById(R.id.locationSpinner);
 
         babySpinner= (Spinner) findViewById(R.id.babySpinner);
 
-        daySpinner1= (Spinner) findViewById(R.id.daySpinner1);
-        monthSpinner1= (Spinner) findViewById(R.id.monthSpinner1);
-        yearSpinner1= (Spinner) findViewById(R.id.yearSpinner1);
-
-        daySpinner2= (Spinner) findViewById(R.id.daySpinner2);
-        monthSpinner2= (Spinner) findViewById(R.id.monthSpinner2);
-        yearSpinner2= (Spinner) findViewById(R.id.yearSpinner2);
-
-        daySpinner3= (Spinner) findViewById(R.id.daySpinner3);
-        monthSpinner3= (Spinner) findViewById(R.id.monthSpinner3);
-        yearSpinner3= (Spinner) findViewById(R.id.yearSpinner3);
-
         finishButton= (Button) findViewById(R.id.finishButton);
 
         this.babyArray=new String[]{"1","2","3"};
-
-        this.day=new String[]{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-        this.month=new String[]{"1","2","3","4","5","6","7","8","9","10","11","12"};
-        this.year=new String[]{"1990","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015"};
 
         locationVMList = new ArrayList<LocationVM>();
         setLocation();
@@ -99,20 +103,6 @@ public class SignupDetailActivity extends Activity {
         ArrayAdapter<String> babyAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,babyArray);
         babySpinner.setAdapter(babyAdapter);
 
-        ArrayAdapter<String> dayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,day);
-        daySpinner1.setAdapter(dayAdapter);
-        daySpinner2.setAdapter(dayAdapter);
-        daySpinner3.setAdapter(dayAdapter);
-
-        ArrayAdapter<String> monthAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,month);
-        monthSpinner1.setAdapter(monthAdapter);
-        monthSpinner2.setAdapter(monthAdapter);
-        monthSpinner3.setAdapter(monthAdapter);
-
-        ArrayAdapter<String> yearAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,year);
-        yearSpinner1.setAdapter(yearAdapter);
-        yearSpinner2.setAdapter(yearAdapter);
-        yearSpinner3.setAdapter(yearAdapter);
 
         titleText.setText("Hi " + getIntent().getStringExtra("first_name"));
 
@@ -171,13 +161,56 @@ public class SignupDetailActivity extends Activity {
             }
         });
 
+        birthday1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                birthdayClick1=true;
+                birthdayClick2=false;
+                birthdayClick3=false;
+                setDate();
+            }
+        });
+
+        birthday2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                birthdayClick1=false;
+                birthdayClick2=true;
+                birthdayClick3=false;
+                setDate();
+            }
+        });
+
+        birthday3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                birthdayClick1=false;
+                birthdayClick2=false;
+                birthdayClick3=true;
+                setDate();
+            }
+        });
+
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String displayname="",parenttype="",babynum="",babygen1="",babygen2="",babygen3="",year1="",month1="",day1="",year2="",month2="",day2="",year3="",month3="",day3="";
+                String displayname="",parenttype="",babynum="",babygen1="",babygen2="",babygen3="";
+                //year1="";month1="";day1="";year2="";month2="";day2="";year3="";month3="";day3="";
 
                 displayname=displayName.getText().toString();
+
+                System.out.println("day1:::"+day1);
+                System.out.println("month1::"+month1);
+                System.out.println("year1::"+year1);
+
+                System.out.println("day2:::"+day2);
+                System.out.println("month2::"+month2);
+                System.out.println("year2::"+year2);
+
+                System.out.println("day3:::"+day3);
+                System.out.println("month3::"+month3);
+                System.out.println("year3::"+year3);
 
                 if(parent.getText().toString().equals("Soon-tobe-Dad")){
                     parenttype="SOON_DAD";
@@ -195,35 +228,13 @@ public class SignupDetailActivity extends Activity {
                     babynum=babySpinner.getSelectedItem().toString();
                     if(babynum.equals("1")){
                         babygen1 = baby1.getText().toString();
-                        year1 = yearSpinner1.getSelectedItem().toString();
-                        month1 = monthSpinner1.getSelectedItem().toString();
-                        day1 = daySpinner1.getSelectedItem().toString();
                     }else if(babynum.equals("2")){
                         babygen1 = baby1.getText().toString();
-                        year1 = yearSpinner1.getSelectedItem().toString();
-                        month1 = monthSpinner1.getSelectedItem().toString();
-                        day1 = daySpinner1.getSelectedItem().toString();
-
                         babygen2 = baby2.getText().toString();
-                        year2 = yearSpinner2.getSelectedItem().toString();
-                        month2 = monthSpinner2.getSelectedItem().toString();
-                        day2 = daySpinner2.getSelectedItem().toString();
                     }else if(babynum.equals("3")){
                         babygen1 = baby1.getText().toString();
-                        year1 = yearSpinner1.getSelectedItem().toString();
-                        month1 = monthSpinner1.getSelectedItem().toString();
-                        day1 = daySpinner1.getSelectedItem().toString();
-
                         babygen2 = baby2.getText().toString();
-                        year2 = yearSpinner2.getSelectedItem().toString();
-                        month2 = monthSpinner2.getSelectedItem().toString();
-                        day2 = daySpinner2.getSelectedItem().toString();
-
-
                         babygen3 = baby3.getText().toString();
-                        year3 = yearSpinner3.getSelectedItem().toString();
-                        month3 = monthSpinner3.getSelectedItem().toString();
-                        day3 = daySpinner3.getSelectedItem().toString();
                     }
                 }
 
@@ -235,6 +246,7 @@ public class SignupDetailActivity extends Activity {
                         new Callback<Response>() {
                             @Override
                             public void success(Response response, Response response2) {
+                                System.out.println("signup info success:::::::::::");
                                 initNewUser();
                             }
 
@@ -248,9 +260,11 @@ public class SignupDetailActivity extends Activity {
     }
 
     private void initNewUser() {
+        System.out.println("initUser called:::::::::::");
         AppController.api.initNewUser(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM userVM, Response response) {
+                System.out.println("initUser success:::::::::::");
                 startActivity(new Intent(SignupDetailActivity.this, MainActivity.class));
                 finish();
             }
@@ -341,5 +355,90 @@ public class SignupDetailActivity extends Activity {
         super.onBackPressed();
 
         LoginActivity.startLoginActivity(SignupDetailActivity.this);
+    }
+
+    public void updatedate() {
+        if (birthdayClick1) {
+            birthdayLabel1.setText(calendar.get(Calendar.YEAR) + "-" + showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+            year1=calendar.get(Calendar.YEAR)+"";
+            month1=showMonth(calendar.get(Calendar.MONTH))+"";
+            day1=calendar.get(Calendar.DAY_OF_MONTH)+"";
+
+            day2=month2=year2="";
+            day3=month3=year3="";
+        }else if(birthdayClick2){
+            birthdayLabel2.setText(calendar.get(Calendar.YEAR) + "-" + showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+            year2=calendar.get(Calendar.YEAR)+"";
+            month2=showMonth(calendar.get(Calendar.MONTH))+"";
+            day2=calendar.get(Calendar.DAY_OF_MONTH)+"";
+
+            day3=month3=year3="";
+        }else if(birthdayClick3){
+            birthdayLabel3.setText(calendar.get(Calendar.YEAR) + "-" + showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+            year3=calendar.get(Calendar.YEAR)+"";
+            month3=showMonth(calendar.get(Calendar.MONTH))+"";
+            day3=calendar.get(Calendar.DAY_OF_MONTH)+"";
+        }
+    }
+    public void setDate(){
+
+        new DatePickerDialog(SignupDetailActivity.this,d,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(calendar.DAY_OF_MONTH)).show();
+    }
+
+    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar.set(Calendar.YEAR,year);
+            calendar.set(Calendar.MONTH,monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            updatedate();
+        }
+
+    };
+
+    public int showMonth(int month)
+    {
+        int showMonth = month;
+        switch(showMonth)
+        {
+            case 0:
+                showMonth = showMonth + 1;
+                break;
+            case 1:
+                showMonth = showMonth + 1;
+                break;
+            case 2:
+                showMonth = showMonth + 1;
+                break;
+            case 3:
+                showMonth = showMonth + 1;
+                break;
+            case 4:
+                showMonth = showMonth + 1;
+                break;
+            case 5:
+                showMonth = showMonth + 1;
+                break;
+            case 6:
+                showMonth = showMonth + 1;
+                break;
+            case 7:
+                showMonth = showMonth + 1;
+                break;
+            case 8:
+                showMonth = showMonth + 1;
+                break;
+            case 9:
+                showMonth = showMonth + 1;
+                break;
+            case 10:
+                showMonth = showMonth + 1;
+                break;
+            case 11:
+                showMonth = showMonth + 1;
+                break;
+
+        }
+        return showMonth;
     }
 }
