@@ -171,6 +171,4 @@ public class MyProfileFragment extends Fragment {
             fragment.onActivityResult(requestCode, resultCode, intent);
         }
     }
-
-
 }

@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Field;
 
 import miniBean.R;
@@ -31,8 +33,8 @@ public class UserProfileFragment extends Fragment {
     private static final String TAG = UserProfileFragment.class.getName();
     private ImageView userCoverPic, userPic;
     private ProgressBar spinner;
-    private TextView questionsCount, answersCount, bookmarksCount, userName;
-    private LinearLayout questionMenu, answerMenu, bookmarksMenu;
+    private TextView questionsCount, answersCount, bookmarksCount, userName, userInfoText;
+    private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +52,12 @@ public class UserProfileFragment extends Fragment {
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         bookmarksMenu.setVisibility(View.GONE);
+        settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
+        settingsMenu.setVisibility(View.GONE);
+
+        userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
+        userInfoLayout.setVisibility(View.GONE);
+        userInfoText = (TextView) view.findViewById(R.id.userInfoText);
 
         ImageView editCoverImage = (ImageView) view.findViewById(R.id.editCoverImage);
         editCoverImage.setVisibility(View.GONE);
@@ -121,6 +129,14 @@ public class UserProfileFragment extends Fragment {
                 userName.setText(profile.getDn());
                 questionsCount.setText(profile.getQc() + "");
                 answersCount.setText(profile.getAc() + "");
+
+                // admin only
+                if (AppController.isUserAdmin()) {
+                    userInfoText.setText(profile.toString());
+                    userInfoLayout.setVisibility(View.VISIBLE);
+                } else {
+                    userInfoLayout.setVisibility(View.GONE);
+                }
 
                 ImageUtil.displayThumbnailProfileImage(userId, userPic);
                 ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {

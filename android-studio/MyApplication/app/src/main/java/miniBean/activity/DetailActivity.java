@@ -65,7 +65,7 @@ public class DetailActivity extends FragmentActivity {
     private FrameLayout mainFrameLayout;
     private Button pageButton;
     private ImageButton backButton, nextButton;
-    private ImageView backImage, bookmarkAction, moreAction;
+    private ImageView backImage, bookmarkAction;
     private TextView commentEdit;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
@@ -133,7 +133,8 @@ public class DetailActivity extends FragmentActivity {
         });
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        // getActionBar().setCustomView(R.layout.detail_actionbar,);
+        //getActionBar().setCustomView(R.layout.detail_actionbar);
+
         getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.detail_actionbar, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
@@ -141,14 +142,13 @@ public class DetailActivity extends FragmentActivity {
                         Gravity.CENTER
                 )
         );
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar_bg)));
-        // getActionBar().setDisplayHomeAsUpEnabled(true);
-        // getActionBar().setIcon(
-        //       new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-        // getActionBar().setTitle("Details");
+
+        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        //getActionBar().setTitle("Details");
 
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
-        moreAction = (ImageView) findViewById(R.id.notification);
 
         final Long postID = getIntent().getLongExtra("postId", 0L);
 
@@ -646,15 +646,14 @@ public class DetailActivity extends FragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_actions, menu);
+        // comment out more options for now...
+        //MenuInflater inflater = getMenuInflater();
+        //inflater.inflate(R.menu.activity_main_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.a:
                 System.out.println("Report clicked...");
@@ -664,7 +663,6 @@ public class DetailActivity extends FragmentActivity {
                 return true;
             default:
                 return false;
-
         }
     }
 

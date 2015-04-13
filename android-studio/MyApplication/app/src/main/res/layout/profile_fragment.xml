@@ -285,28 +285,59 @@
                     android:layout_below="@id/menuBookmarks"
                     android:background="@drawable/bar1" />
 
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:background="@drawable/bar1"
-                    android:layout_above="@+id/menuSettings" />
-
                 <LinearLayout
-                    android:id="@+id/menuSettings"
+                    android:id="@+id/userInfoLayout"
                     android:layout_width="fill_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:background="#ffffff"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="10dp"
                     android:gravity="center_vertical"
-                    android:layout_alignParentBottom="true">
+                    android:layout_alignParentBottom="false"
+                    android:layout_below="@+id/menuBookmarks"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="15dp">
 
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_gravity="center"
-                        android:gravity="center_vertical" >
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/userInfoText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_weight="75"
+                            android:text="-"
+                            android:textSize="14dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/admin_green" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/menuSettings">
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@drawable/bar1"
+                        android:layout_above="@+id/menuSettings" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="10dp">
 
                         <ImageView
                             android:id="@+id/settingsPic"
@@ -331,13 +362,13 @@
                             android:layout_weight="5"
                             android:src="@drawable/arrow_right" />
                     </LinearLayout>
-                </LinearLayout>
 
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:background="@drawable/bar1"
-                    android:layout_alignBottom="@+id/menuSettings" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@drawable/bar1"
+                        android:layout_alignBottom="@+id/menuSettings" />
+                </LinearLayout>
 
             </RelativeLayout>
         </RelativeLayout>

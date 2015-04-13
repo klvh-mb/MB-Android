@@ -12,6 +12,28 @@ public class ProfileVM {
     public long n_c;
     //public List<User> l_f;
 
+    public boolean isf;
+    public boolean isP;
+
+    public boolean isfv = true;
+    public boolean isaV = true;
+    public boolean iscV = true;
+    public boolean isdV = true;
+
+    // admin readonly fields
+    public String n;
+    public boolean mb;
+    public boolean fb;
+    public boolean vl;
+    public String em;
+    public String sd;
+    public String ll;
+    public Long tl;
+    public Long qc;
+    public Long ac;
+    public Long lc;
+    public Long wc;
+
     public long getId() {
         return id;
     }
@@ -220,28 +242,19 @@ public class ProfileVM {
         this.wc = wc;
     }
 
-    boolean isf;
-    boolean isP;
-
-    boolean isfv = true;
-    boolean isaV = true;
-    boolean iscV = true;
-    boolean isdV = true;
-
-    // admin readonly fields
-    public String n;
-    public boolean mb;
-    public boolean fb;
-    public boolean vl;
-    public String em;
-    public String sd;
-    public String ll;
-    public Long tl;
-    public Long qc;
-    public Long ac;
-    public Long lc;
-    public Long wc;
-
-
+    @Override
+    public String toString() {
+        return "id=" + id +
+                "\nemail=" + em +
+                "\nemailValidated=" + vl +
+                "\nmobileSignup=" + mb +
+                "\nfbLogin=" + fb +
+                "\nsignupDate=" + sd +
+                "\nlastLogin=" + ll +
+                "\ntotalLogin=" + tl +
+                "\nquestionsCount=" + qc +
+                "\nanswersCount=" + ac +
+                "\nlikesCount=" + lc;
+    }
 }
 

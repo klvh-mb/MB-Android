@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
     private ImageView userCoverPic, userPic, editCoverImage;
     private ProgressBar spinner;
     private TextView questionsCount, answersCount, bookmarksCount, userName;
-    private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu;
+    private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
     private Long userId;
     private Boolean isPhoto = false;
     private final Integer SELECT_PICTURE = 1;
@@ -69,6 +69,8 @@ public class ProfileFragment extends Fragment {
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
+        userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
+        userInfoLayout.setVisibility(View.GONE);
 
         editCoverImage.setOnClickListener(new View.OnClickListener() {
             @Override
