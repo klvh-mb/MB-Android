@@ -100,7 +100,7 @@ public class SignupActivity extends AbstractLoginActivity {
     private void signUp(String lname,String fname,String email,String password,String repeatPassword) {
         showErrorMessage(false);
 
-        AppController.api.signUp(lname,fname,email,password,repeatPassword, new Callback<Response>() {
+        AppController.getApi().signUp(lname,fname,email,password,repeatPassword, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 if(response.getStatus() == 200){

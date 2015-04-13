@@ -157,11 +157,11 @@ public class DetailActivity extends FragmentActivity {
             public void onClick(View v) {
                 if (!isBookmarked) {
                     bookmark(postID);
-                    bookmarkAction.setImageResource(R.drawable.bookmarked);
+                    bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
                     isBookmarked = true;
                 } else {
                     unbookmark(postID);
-                    bookmarkAction.setImageResource(R.drawable.bookmark);
+                    bookmarkAction.setImageResource(R.drawable.ic_bookmark);
                     isBookmarked = false;
                 }
             }
@@ -186,7 +186,7 @@ public class DetailActivity extends FragmentActivity {
         Long postID = intent.getLongExtra("postId", 0L);
         Long commID = intent.getLongExtra("commId", 0L);
 
-        AppController.api.qnaLanding(postID, commID, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
+        AppController.getApi().qnaLanding(postID, commID, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
             @Override
             public void success(CommunityPostVM post, Response response) {
                 communityName.setText(post.getCn());
@@ -196,9 +196,9 @@ public class DetailActivity extends FragmentActivity {
 
                 isBookmarked = post.isBookmarked;
                 if (isBookmarked) {
-                    bookmarkAction.setImageResource(R.drawable.bookmarked);
+                    bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
                 } else {
-                    bookmarkAction.setImageResource(R.drawable.bookmark);
+                    bookmarkAction.setImageResource(R.drawable.ic_bookmark);
                 }
 
                 postVm.setPost(true);
@@ -464,7 +464,7 @@ public class DetailActivity extends FragmentActivity {
         AnimationUtil.show(spinner);
 
         Log.d(this.getClass().getSimpleName(), "doComment: postId="+getIntent().getLongExtra("postId", 0L)+" comment="+comment.substring(0, Math.min(5, comment.length())));
-        AppController.api.answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
+        AppController.getApi().answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, Response response) {
                 if (photos.size() > 0) {
@@ -493,7 +493,7 @@ public class DetailActivity extends FragmentActivity {
     private void uploadPhoto(String commentId,File photo) {
         //File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
-        AppController.api.uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
+        AppController.getApi().uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
             @Override
             public void success(Response array, Response response) {
                 getComments(getIntent().getLongExtra("postId", 0L), 0);  // reload page
@@ -616,10 +616,10 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void bookmark(Long postId) {
-        AppController.api.setBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().setBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                bookmarkAction.setImageResource(R.drawable.bookmarked);
+                bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
             }
 
             @Override
@@ -630,10 +630,10 @@ public class DetailActivity extends FragmentActivity {
     }
 
     private void unbookmark(Long postId) {
-        AppController.api.setUnBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().setUnBookmark(postId, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                bookmarkAction.setImageResource(R.drawable.bookmark);
+                bookmarkAction.setImageResource(R.drawable.ic_bookmark);
             }
 
             @Override
@@ -671,7 +671,7 @@ public class DetailActivity extends FragmentActivity {
     private void getComments(Long postID, final int offset) {
         AnimationUtil.show(spinner);
 
-        AppController.api.getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
+        AppController.getApi().getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
 
             @Override
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {

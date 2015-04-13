@@ -111,7 +111,7 @@ public class NotificationListFragment extends Fragment {
         }
     }
     private void markAsRead(String ids){
-        AppController.api.markAsRead(ids,AppController.getInstance().getSessionId(),new Callback<Response>() {
+        AppController.getApi().markAsRead(ids,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
 

@@ -143,7 +143,7 @@ public class LocalCommunityTabCache {
     }
 
     public static void refreshMyCommunities() {
-        AppController.api.getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>() {
+        AppController.getApi().getMyCommunities(AppController.getInstance().getSessionId(), new Callback<CommunitiesParentVM>() {
             @Override
             public void success(CommunitiesParentVM communitiesParentVM, Response response) {
                 Log.d(LocalCommunityTabCache.class.getSimpleName(), "refreshMyCommunities.api.success: my communities size - " + communitiesParentVM.communities.size());

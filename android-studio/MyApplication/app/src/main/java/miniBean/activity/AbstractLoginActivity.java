@@ -126,7 +126,7 @@ public abstract class AbstractLoginActivity extends Activity {
         AnimationUtil.show(spinner);
 
         Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken: access_token - " + access_token);
-        AppController.api.loginByFacebbok(access_token, new Callback<Response>() {
+        AppController.getApi().loginByFacebbok(access_token, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");

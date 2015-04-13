@@ -117,7 +117,7 @@ public class RequestListAdapter extends BaseAdapter {
     }
 
     public void acceptCommJoinRequest(Long member_id, Long group_id, Long notif_id, final View v) {
-        AppController.api.acceptCommJoinRequest(member_id, group_id, notif_id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().acceptCommJoinRequest(member_id, group_id, notif_id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response user, retrofit.client.Response response) {
                 ((Button) v.findViewById(R.id.acceptButton)).setVisibility(View.INVISIBLE);
@@ -132,7 +132,7 @@ public class RequestListAdapter extends BaseAdapter {
     }
 
     public void acceptFriendRequest(Long friend_id, Long notif_id, final View v) {
-        AppController.api.acceptFriendRequest(friend_id, notif_id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().acceptFriendRequest(friend_id, notif_id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response user, retrofit.client.Response response) {
                 ((Button) v.findViewById(R.id.acceptButton)).setVisibility(View.INVISIBLE);
@@ -148,7 +148,7 @@ public class RequestListAdapter extends BaseAdapter {
     }
 
     public void acceptCommInviteRequest(Long member_id, Long group_id, Long notif_id, final View v) {
-        AppController.api.acceptCommInviteRequest(member_id, group_id, notif_id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().acceptCommInviteRequest(member_id, group_id, notif_id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response user, retrofit.client.Response response) {
                 ((Button) v.findViewById(R.id.acceptButton)).setVisibility(View.INVISIBLE);
@@ -163,7 +163,7 @@ public class RequestListAdapter extends BaseAdapter {
     }
 
     public void ignoreIt(final NotificationVM item) {
-        AppController.api.ignoreIt(item.getNid(), AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().ignoreIt(item.getNid(), AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response user, retrofit.client.Response response) {
                 requestItems.remove(item);

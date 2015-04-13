@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.activity.MyProfileActionActivity;
-import miniBean.app.AppController;
 import miniBean.app.NotificationCache;
 import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.NotificationVM;
@@ -30,7 +28,7 @@ import retrofit.client.Response;
 public class MyProfileFragment extends Fragment {
 
     public List<NotificationVM> requestNotif, notifAll;
-    private ImageView setting, back;
+    private ImageView back;
     private ViewGroup request, notification;
     private TextView requestCount, notificationCount;
     private View actionBarView;
@@ -55,7 +53,6 @@ public class MyProfileFragment extends Fragment {
         notification = (ViewGroup) actionBarView.findViewById(R.id.notificationLayout);
         requestCount = (TextView) actionBarView.findViewById(R.id.requestCount);
         notificationCount = (TextView) actionBarView.findViewById(R.id.notificationCount);
-        setting = (ImageView) actionBarView.findViewById(R.id.setting);
 
         back = (ImageView) actionBarView.findViewById(R.id.backAction);
         back.setVisibility(View.INVISIBLE);
@@ -107,26 +104,6 @@ public class MyProfileFragment extends Fragment {
                 notificactionFragment.setArguments(bundle);
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.children_fragement, notificactionFragment).commit();
-                */
-            }
-        });
-
-        setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyProfileActionActivity.class);
-                intent.putExtra("key","settings");
-                startActivity(intent);
-
-                /*
-                request.setVisibility(View.INVISIBLE);
-                notification.setVisibility(View.INVISIBLE);
-                setting.setVisibility(View.INVISIBLE);
-                ((TextView) actionBarView.findViewById(R.id.title)).setText(getString(R.string.settings_actionbar_title));
-
-                Fragment settingsFragment = new SettingsFragment();
-                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.children_fragement, settingsFragment).commit();
                 */
             }
         });

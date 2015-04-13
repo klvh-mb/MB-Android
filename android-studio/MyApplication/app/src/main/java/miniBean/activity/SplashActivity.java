@@ -57,7 +57,7 @@ public class SplashActivity extends Activity {
 
     private void startMainActivity(final String sessionId) {
         Log.d(this.getClass().getSimpleName(), "getUserInfo");
-        AppController.api.getUserInfo(sessionId, new Callback<UserVM>() {
+        AppController.getApi().getUserInfo(sessionId, new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
                 Log.d(SplashActivity.this.getClass().getSimpleName(), "startMainActivity: getUserInfo.success: user="+user.getDisplayName()+" id="+user.getId()+" newUser="+user.newUser);

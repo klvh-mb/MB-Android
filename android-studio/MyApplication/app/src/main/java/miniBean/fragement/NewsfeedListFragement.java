@@ -146,7 +146,7 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getNewsFeed(int offset) {
-        AppController.api.getNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        AppController.getApi().getNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(final PostArray array, retrofit.client.Response response) {
                 loadFeedItemsToList(array.getPosts());
@@ -161,7 +161,7 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getUserQuestion(int offset,Long id) {
-        AppController.api.getUserPosts(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        AppController.getApi().getUserPosts(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response2) {
                 loadFeedItemsToList(array.getPosts());
@@ -176,7 +176,7 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getUserAnswer(int offset,Long id) {
-        AppController.api.getUserComments(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        AppController.getApi().getUserComments(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
 
             @Override
             public void success(PostArray array, Response response2) {
@@ -192,7 +192,7 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getBookmark(int offset) {
-        AppController.api.getBookmarkedPosts(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
+        AppController.getApi().getBookmarkedPosts(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> posts, Response response) {
                 loadFeedItemsToList(posts);

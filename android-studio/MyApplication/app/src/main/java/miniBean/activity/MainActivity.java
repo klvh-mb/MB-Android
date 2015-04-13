@@ -251,7 +251,7 @@ public class MainActivity extends FragmentActivity {
             topicCommunityTabLoaded = false;
             yearCommunityTabLoaded = false;
 
-            AppController.api.getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
+            AppController.getApi().getTopicCommunityCategoriesMap(false, AppController.getInstance().getSessionId(),
                     new Callback<List<CommunityCategoryMapVM>>() {
                         @Override
                         public void success(List<CommunityCategoryMapVM> array, retrofit.client.Response response) {
@@ -272,7 +272,7 @@ public class MainActivity extends FragmentActivity {
                         }
                     });
 
-            AppController.api.getZodiacYearCommunities(AppController.getInstance().getSessionId(),
+            AppController.getApi().getZodiacYearCommunities(AppController.getInstance().getSessionId(),
                     new Callback<CommunitiesParentVM>() {
                         @Override
                         public void success(CommunitiesParentVM communitiesParent, retrofit.client.Response response) {

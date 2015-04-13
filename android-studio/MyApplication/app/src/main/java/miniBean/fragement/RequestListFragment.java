@@ -3,7 +3,6 @@ package miniBean.fragement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -110,7 +109,7 @@ public class RequestListFragment extends Fragment {
         return view;
     }
     private void markAsRead(String ids){
-        AppController.api.markAsRead(ids,AppController.getInstance().getSessionId(),new Callback<Response>() {
+        AppController.getApi().markAsRead(ids,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
 

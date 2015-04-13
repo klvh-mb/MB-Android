@@ -83,9 +83,9 @@ public class TopicCommunityListAdapter extends BaseAdapter {
         }
 
         if (item.getIsM()) {
-            imageAction.setImageResource(R.drawable.add);
+            imageAction.setImageResource(R.drawable.ic_check);
         } else {
-            imageAction.setImageResource(R.drawable.check);
+            imageAction.setImageResource(R.drawable.ic_add);
         }
 
         imageAction.setOnClickListener(new View.OnClickListener() {
@@ -120,12 +120,12 @@ public class TopicCommunityListAdapter extends BaseAdapter {
     }
 
     public void joinCommunity(final CommunitiesWidgetChildVM communityVM, final ImageView joinImageView) {
-        AppController.api.sendJoinRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().sendJoinRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 Toast.makeText(inflater.getContext(), TopicCommunityListAdapter.this.activity.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(true);
-                joinImageView.setImageResource(R.drawable.add);
+                joinImageView.setImageResource(R.drawable.ic_check);
 
                 LocalCommunityTabCache.refreshMyCommunities();
             }
@@ -139,12 +139,12 @@ public class TopicCommunityListAdapter extends BaseAdapter {
     }
 
     public void leaveCommunity(final CommunitiesWidgetChildVM communityVM, final ImageView joinImageView) {
-        AppController.api.sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 Toast.makeText(inflater.getContext(), TopicCommunityListAdapter.this.activity.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(false);
-                joinImageView.setImageResource(R.drawable.check);
+                joinImageView.setImageResource(R.drawable.ic_add);
 
                 LocalCommunityTabCache.refreshMyCommunities();
             }

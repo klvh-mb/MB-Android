@@ -51,9 +51,9 @@ public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
     public static String BASE_URL;
-    public static MyApi api;
 
     private static AppController mInstance;
+    private static MyApi api;
     private static UserVM user;
 
     private SharedPreferences session;
@@ -62,12 +62,18 @@ public class AppController extends Application {
         return mInstance;
     }
 
+    public static synchronized MyApi getApi() {
+        if (api == null)
+            init();
+        return api;
+    }
+
     public static synchronized void setUser(UserVM vm) {
         user = vm;
     }
 
-    public static synchronized UserVM getUser() {
-        return user;
+    public static synchronized boolean isUserAdmin() {
+        return user != null && user.isAdmin();
     }
 
     @Override

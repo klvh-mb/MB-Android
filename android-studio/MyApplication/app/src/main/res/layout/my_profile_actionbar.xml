@@ -41,7 +41,7 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="10dp"
                 android:id="@+id/requestLayout">
 
                 <ImageView
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:id="@+id/notificationLayout"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="10dp">
 
                 <ImageView
                     android:id="@+id/notification"
@@ -103,15 +103,6 @@
                     android:layout_marginBottom="7dp" />
             </FrameLayout>
 
-            <ImageView
-                android:id="@+id/setting"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/w_setup"
-                android:layout_alignParentEnd="false"
-                android:layout_marginRight="10dp" />
         </LinearLayout>
 
 

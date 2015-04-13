@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.app.AppController;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
@@ -26,7 +27,6 @@ import miniBean.viewmodel.CommunityPostVM;
 public class NewsfeedListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private LinearLayout iconsLayout;
     private List<CommunityPostVM> feedItems;
     private boolean isNewsfeed = true;
     private int lastPosition = -1;
@@ -72,7 +72,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
         TextView name = (TextView) convertView.findViewById(R.id.postTitle);
         TextView username = (TextView) convertView.findViewById(R.id.username);
         TextView timeText = (TextView) convertView.findViewById(R.id.time);
-        TextView numComment = (TextView) convertView.findViewById(R.id.numComment);
+        TextView numComments = (TextView) convertView.findViewById(R.id.numComments);
         ImageView communityIcon = (ImageView) convertView.findViewById(R.id.commIcon);
         TextView commName = (TextView) convertView.findViewById(R.id.commName);
 
@@ -82,9 +82,18 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
         name.setText(item.getPtl());
         username.setText(item.getP());
-        numComment.setText(item.getN_c() + "");
-
+        numComments.setText(item.getN_c()+"");
         timeText.setText(DateTimeUtil.getTimeAgo(item.getUt()));
+
+        // num views
+        LinearLayout numViewsLayout = (LinearLayout) convertView.findViewById(R.id.numViewsLayout);
+        if (AppController.isUserAdmin()) {
+            TextView numViews = (TextView) convertView.findViewById(R.id.numViews);
+            numViews.setText(item.getNov()+"");
+            numViewsLayout.setVisibility(View.VISIBLE);
+        } else {
+            numViewsLayout.setVisibility(View.GONE);
+        }
 
         if (isNewsfeed) {
             commName.setText(item.getCn());
@@ -101,7 +110,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
             communityIcon.setVisibility(View.GONE);
         }
 
-        // icons
+        // Post icons
         LinearLayout iconsLayout = (LinearLayout) convertView.findViewById(R.id.iconsLayout);
         ImageView iconImage = (ImageView) convertView.findViewById(R.id.iconImage);
         ImageView iconNew = (ImageView) convertView.findViewById(R.id.iconNew);

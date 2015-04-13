@@ -48,7 +48,7 @@ public class LoginActivity extends AbstractLoginActivity {
             public void onClick(View view) {
                 AnimationUtil.show(spinner);
 
-                AppController.api.login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
+                AppController.getApi().login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
                         if (!saveToSession(response)) {

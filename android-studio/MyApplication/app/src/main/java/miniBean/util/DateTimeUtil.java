@@ -18,8 +18,11 @@ public class DateTimeUtil {
     public static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     public static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
-    private static final String DATE_FORMAT_NOW = "yyyy-MM-dd";
-    private static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
+    private static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+
+    private static final String DATETIME_FORMAT = "yyyy-MM-dd h:mma";
+    private static SimpleDateFormat sdtf = new SimpleDateFormat(DATETIME_FORMAT);
 
     private DateTimeUtil() {}
 
@@ -53,6 +56,10 @@ public class DateTimeUtil {
     }
 
     public static String getTimeAgo(long time) {
+        return getTimeAgo(time, false);
+    }
+
+    public static String getTimeAgo(long time, boolean withHrMin) {
         long diff = getTimeDiffFromNow(time);
         if (diff == -1)
             return null;
@@ -73,6 +80,8 @@ public class DateTimeUtil {
             return diff / DAY_MILLIS + AppController.getInstance().getString(R.string.timeago_days);
         } else {
             Date date = new Date(time);
+            if (withHrMin)
+                return sdtf.format(date);
             return sdf.format(date);
         }
     }

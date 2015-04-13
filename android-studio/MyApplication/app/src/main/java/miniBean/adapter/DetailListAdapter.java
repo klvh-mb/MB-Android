@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
@@ -171,10 +170,10 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
         });
 
         // delete
-        if (item.isO() || (AppController.getUser() != null && AppController.getUser().isAdmin())) {
+        if (item.isO() || (AppController.isUserAdmin())) {
             if (item.isO()) {
                 deleteText.setTextColor(this.activity.getResources().getColor(R.color.like_blue));
-            } else if (AppController.getUser().isAdmin()) {
+            } else if (AppController.isUserAdmin()) {
                 deleteText.setTextColor(this.activity.getResources().getColor(R.color.admin_green));
             }
             deleteText.setVisibility(View.VISIBLE);
@@ -347,7 +346,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     private void likeComment(Long id) {
-        AppController.api.setLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().setLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
 
@@ -361,7 +360,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     private void unLikeComment(Long id) {
-        AppController.api.setUnLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().setUnLikeComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
 
@@ -375,7 +374,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     private void likePost(Long id) {
-        AppController.api.setLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().setLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
 
@@ -389,7 +388,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     private void unLikePost(Long id) {
-        AppController.api.setUnLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().setUnLikePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
 
@@ -403,7 +402,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     private void deletePost(Long id) {
-        AppController.api.deletePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().deletePost(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 Toast.makeText(inflater.getContext(), DetailListAdapter.this.activity.getString(R.string.post_delete_success), Toast.LENGTH_SHORT).show();
@@ -419,7 +418,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
     }
 
     private void deleteComment(Long id, final int position) {
-        AppController.api.deleteComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().deleteComment(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 Toast.makeText(inflater.getContext(), DetailListAdapter.this.activity.getString(R.string.comment_delete_success), Toast.LENGTH_SHORT).show();

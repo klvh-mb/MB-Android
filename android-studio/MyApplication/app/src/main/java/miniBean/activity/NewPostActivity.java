@@ -275,7 +275,7 @@ public class NewPostActivity extends FragmentActivity {
         }
 
         Log.d(this.getClass().getSimpleName(), "doPost: communityId=" + communityId + " title=" + title);
-        AppController.api.setQuestion(new NewPost(communityId, title, content, isPhoto), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
+        AppController.getApi().setQuestion(new NewPost(communityId, title, content, isPhoto), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
                 postSuccess = true;
@@ -306,7 +306,7 @@ public class NewPostActivity extends FragmentActivity {
     private void uploadPhoto(String postId,File photo) {
        // File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
         TypedFile typedFile = new TypedFile("application/octet-stream", photo);
-        AppController.api.uploadPostPhoto(postId, typedFile, new Callback<Response>() {
+        AppController.getApi().uploadPostPhoto(postId, typedFile, new Callback<Response>() {
             @Override
             public void success(Response array, retrofit.client.Response response) {
 

@@ -155,9 +155,9 @@ public class CommunityFragment extends Fragment {
         getNewsFeedByCommunityId(currentCommunity);
         Log.d(this.getClass().getSimpleName(), "initialiazeData: community - " + commName);
         if (!currentCommunity.isM) {
-            joinImageView.setImageResource(R.drawable.check);
+            joinImageView.setImageResource(R.drawable.ic_add);
         } else {
-            joinImageView.setImageResource(R.drawable.add);
+            joinImageView.setImageResource(R.drawable.ic_check);
         }
         joinImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +187,7 @@ public class CommunityFragment extends Fragment {
     }
 
     private void getCommunity(Long id) {
-        AppController.api.getCommunity(id, AppController.getInstance().getSessionId(), new Callback<CommunityVM>() {
+        AppController.getApi().getCommunity(id, AppController.getInstance().getSessionId(), new Callback<CommunityVM>() {
 
             @Override
             public void success(CommunityVM communityVM, Response response) {
@@ -208,7 +208,7 @@ public class CommunityFragment extends Fragment {
 
         ImageUtil.displayCommunityCoverImage(community.id, communityCoverPic);
 
-        AppController.api.getCommunityInitialPosts(community.id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        AppController.getApi().getCommunityInitialPosts(community.id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response) {
                 feedItems.addAll(array.getPosts());
@@ -237,12 +237,12 @@ public class CommunityFragment extends Fragment {
     }
 
     public void joinCommunity(final CommunitiesWidgetChildVM communityVM, final ImageView joinImageView) {
-        AppController.api.sendJoinRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().sendJoinRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 Toast.makeText(CommunityFragment.this.getActivity(), CommunityFragment.this.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(true);
-                joinImageView.setImageResource(R.drawable.add);
+                joinImageView.setImageResource(R.drawable.ic_check);
                 LocalCommunityTabCache.refreshMyCommunities();
             }
 
@@ -255,12 +255,12 @@ public class CommunityFragment extends Fragment {
     }
 
     public void leaveCommunity(final CommunitiesWidgetChildVM communityVM, final ImageView joinImageView) {
-        AppController.api.sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+        AppController.getApi().sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 Toast.makeText(CommunityFragment.this.getActivity().getBaseContext(), CommunityFragment.this.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
                 communityVM.setIsM(false);
-                joinImageView.setImageResource(R.drawable.check);
+                joinImageView.setImageResource(R.drawable.ic_add);
                 LocalCommunityTabCache.refreshMyCommunities();
             }
 
@@ -273,7 +273,7 @@ public class CommunityFragment extends Fragment {
     }
 
     public void loadNewsfeed(Long id, String date, int offset) {
-        AppController.api.getCommunityNextPosts(id, date, AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
+        AppController.getApi().getCommunityNextPosts(id, date, AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> communityPostVMs, Response response) {
                 Log.d(CommunityFragment.this.getClass().getSimpleName(), "loadNewsfeed.success: communityPostVMs.size=" + communityPostVMs.size());

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -239,7 +240,7 @@ public class SignupDetailActivity extends Activity {
                 }
 
                 int defaultParentBirthYear = 9999;
-                AppController.api.signUpInfo(displayname, defaultParentBirthYear, locationId, parenttype, babynum,
+                AppController.getApi().signUpInfo(displayname, defaultParentBirthYear, locationId, parenttype, babynum,
                         babygen1, babygen2, babygen3,
                         year1, month1, day1, year2, month2, day2, year3, month3, day3,
                         AppController.getInstance().getSessionId(),
@@ -260,11 +261,11 @@ public class SignupDetailActivity extends Activity {
     }
 
     private void initNewUser() {
-        System.out.println("initUser called:::::::::::");
-        AppController.api.initNewUser(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
+        Log.d(this.getClass().getSimpleName(), "iniNewUser");
+        AppController.getApi().initNewUser(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM userVM, Response response) {
-                System.out.println("initUser success:::::::::::");
+                Log.d(SignupDetailActivity.class.getSimpleName(), "iniNewUser.success");
                 startActivity(new Intent(SignupDetailActivity.this, MainActivity.class));
                 finish();
             }
@@ -330,7 +331,7 @@ public class SignupDetailActivity extends Activity {
     }
 
     private void setLocation(){
-        AppController.api.getAllDistricts(AppController.getInstance().getSessionId(),new Callback< List < LocationVM>>(){
+        AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(),new Callback< List < LocationVM>>(){
             @Override
             public void success(List<LocationVM> locationVMs, Response response) {
                 locations = new ArrayList<String>();

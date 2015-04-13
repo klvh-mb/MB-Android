@@ -25,6 +25,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import miniBean.R;
+import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.util.AnimationUtil;
@@ -43,7 +44,7 @@ public class ProfileFragment extends Fragment {
     private ImageView userCoverPic, userPic, editCoverImage;
     private ProgressBar spinner;
     private TextView questionsCount, answersCount, bookmarksCount, userName;
-    private LinearLayout questionMenu, answerMenu, bookmarksMenu;
+    private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu;
     private Long userId;
     private Boolean isPhoto = false;
     private final Integer SELECT_PICTURE = 1;
@@ -67,6 +68,7 @@ public class ProfileFragment extends Fragment {
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
+        settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
 
         editCoverImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +124,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        settingsMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyProfileActionActivity.class);
+                intent.putExtra("id",userId);
+                intent.putExtra("key","settings");
+                startActivity(intent);
+            }
+        });
+
         getUserInfo();
         getBookmarkSummary();
 
@@ -162,7 +174,7 @@ public class ProfileFragment extends Fragment {
     private void getUserInfo() {
         AnimationUtil.show(spinner);
 
-        AppController.api.getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
+        AppController.getApi().getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
                 Log.d(ProfileFragment.this.getClass().getSimpleName(), "questionsCount - "+user.getQuestionsCount());
@@ -201,7 +213,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getBookmarkSummary() {
-        AppController.api.getBookmarkSummary(AppController.getInstance().getSessionId(), new Callback<BookmarkSummaryVM>() {
+        AppController.getApi().getBookmarkSummary(AppController.getInstance().getSessionId(), new Callback<BookmarkSummaryVM>() {
             @Override
             public void success(BookmarkSummaryVM bookmarkSummary, retrofit.client.Response response) {
                 Log.d(ProfileFragment.this.getClass().getSimpleName(), "bookmarksCount - "+bookmarkSummary.getQc());
@@ -238,7 +250,7 @@ public class ProfileFragment extends Fragment {
         AnimationUtil.show(spinner);
 
         ImageUtil.clearCoverImageCache(id);
-        AppController.api.uploadCoverPhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>() {
+        AppController.getApi().uploadCoverPhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 new Handler().postDelayed(new Runnable() {
@@ -278,7 +290,7 @@ public class ProfileFragment extends Fragment {
         AnimationUtil.show(spinner);
 
         ImageUtil.clearProfileImageCache(id);
-        AppController.api.uploadProfilePhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
+        AppController.getApi().uploadProfilePhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
             @Override
             public void success(Response response, Response response2) {
                 new Handler().postDelayed(new Runnable() {

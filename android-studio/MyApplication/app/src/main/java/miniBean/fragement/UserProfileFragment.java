@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -27,7 +23,6 @@ import miniBean.app.AppController;
 import miniBean.util.AnimationUtil;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.ProfileVM;
-import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
@@ -120,7 +115,7 @@ public class UserProfileFragment extends Fragment {
     private void getUserProfile(final long userId) {
         AnimationUtil.show(spinner);
 
-        AppController.api.getUserProfile(userId, AppController.getInstance().getSessionId(), new Callback<ProfileVM>() {
+        AppController.getApi().getUserProfile(userId, AppController.getInstance().getSessionId(), new Callback<ProfileVM>() {
             @Override
             public void success(ProfileVM profile, retrofit.client.Response response) {
                 userName.setText(profile.getDn());
