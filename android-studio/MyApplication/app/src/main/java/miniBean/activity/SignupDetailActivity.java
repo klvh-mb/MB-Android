@@ -3,7 +3,6 @@ package miniBean.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,14 +45,14 @@ public class SignupDetailActivity extends Activity {
     public List<String> locations;
     private List<LocationVM> locationVMList;
 
-    private int locationId;
+    private int locationId = -1;
     private Calendar calendar;
     private ImageView birthday1,birthday2,birthday3;
     private TextView birthdayLabel1,birthdayLabel2,birthdayLabel3;
 
     private String year1,month1,day1,year2,month2,day2,year3,month3,day3;
 
-    private boolean birthdayClick1=false,birthdayClick2=false,birthdayClick3=false;
+    private boolean birthdayClick1 = false, birthdayClick2 = false, birthdayClick3 = false;
 
     private DatePickerDialog.OnDateSetListener datePicker = new DatePickerDialog.OnDateSetListener(){
         @Override
@@ -61,7 +60,7 @@ public class SignupDetailActivity extends Activity {
             calendar.set(Calendar.YEAR,year);
             calendar.set(Calendar.MONTH,monthOfYear);
             calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-            updatedate();
+            setBirthdays();
         }
     };
 
@@ -80,6 +79,7 @@ public class SignupDetailActivity extends Activity {
         parentType = (RadioGroup) findViewById(R.id.parentRadio);
 
         babynumberLayout = (LinearLayout) findViewById(R.id.babyNumberLayout);
+        babynumberLayout.setVisibility(View.GONE);
 
         babyDetailsLayout1 = (LinearLayout) findViewById(R.id.babyDetailsLayout1);
         babyDetailsLayout1.setVisibility(View.GONE);
@@ -123,7 +123,7 @@ public class SignupDetailActivity extends Activity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int id = parentType.getCheckedRadioButtonId();
                 parent = (RadioButton) findViewById(id);
-                setVisible(id);
+                setMoreDetailsVisible(id);
             }
         });
 
@@ -154,14 +154,11 @@ public class SignupDetailActivity extends Activity {
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                String loc=locationSpinner.getSelectedItem().toString();
-
-                for(LocationVM vm: locationVMList)
-                {
+                locationId = -1;
+                String loc = locationSpinner.getSelectedItem().toString();
+                for(LocationVM vm: locationVMList) {
                     if(vm.getDisplayName().equals(loc)){
-                        locationId=Integer.parseInt(vm.getId().toString());
-                        System.out.println("locationid:::::"+vm.getId());
+                        locationId = Integer.parseInt(vm.getId().toString());
                         break;
                     }
                 }
@@ -179,7 +176,7 @@ public class SignupDetailActivity extends Activity {
                 birthdayClick1=true;
                 birthdayClick2=false;
                 birthdayClick3=false;
-                setDate();
+                showDatePicker();
             }
         };
         birthday1.setOnClickListener(onClickListener);
@@ -191,7 +188,7 @@ public class SignupDetailActivity extends Activity {
                 birthdayClick1=false;
                 birthdayClick2=true;
                 birthdayClick3=false;
-                setDate();
+                showDatePicker();
             }
         };
         birthday2.setOnClickListener(onClickListener);
@@ -203,7 +200,7 @@ public class SignupDetailActivity extends Activity {
                 birthdayClick1=false;
                 birthdayClick2=false;
                 birthdayClick3=true;
-                setDate();
+                showDatePicker();
             }
         };
         birthday3.setOnClickListener(onClickListener);
@@ -212,68 +209,73 @@ public class SignupDetailActivity extends Activity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String displayname="",parenttype="",babynum="",babygen1="",babygen2="",babygen3="";
-
-                displayname=displayName.getText().toString();
-
-                Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year1="+year1+" day1="+day1+" month1="+month1);
-                Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year2="+year2+" day2="+day2+" month2="+month2);
-                Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year3="+year3+" day3="+day3+" month3="+month3);
-
-                if(parent.getText().toString().equals("Soon-tobe-Dad")){
-                    parenttype="SOON_DAD";
-                }else if(parent.getText().toString().equals("Soon-tobe-Mom")){
-                    parenttype="SOON_MOM";
-                }else if(parent.getText().toString().equals("Not-mom-or-dad")){
-                    parenttype="NA";
-                }else if(parent.getText().toString().equals("MOM")){
-                    parenttype="MOM";
-                }else if(parent.getText().toString().equals("DAD")){
-                    parenttype="DAD";
-                }
-
-                if(!parenttype.equals("NA")){
-                    babynum=babySpinner.getSelectedItem().toString();
-                    if(babynum.equals("1")){
-                        babygen1 = baby1.getText().toString();
-                    }else if(babynum.equals("2")){
-                        babygen1 = baby1.getText().toString();
-                        babygen2 = baby2.getText().toString();
-                    }else if(babynum.equals("3")){
-                        babygen1 = baby1.getText().toString();
-                        babygen2 = baby2.getText().toString();
-                        babygen3 = baby3.getText().toString();
-                    }
-                }
-
-                int defaultParentBirthYear = 9999;
-                AppController.getApi().signUpInfo(displayname, defaultParentBirthYear, locationId, parenttype, babynum,
-                        babygen1, babygen2, babygen3,
-                        year1, month1, day1, year2, month2, day2, year3, month3, day3,
-                        AppController.getInstance().getSessionId(),
-                        new Callback<Response>() {
-                            @Override
-                            public void success(Response response, Response response2) {
-                                System.out.println("signup info success:::::::::::");
-                                initNewUser();
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-                                error.printStackTrace();
-                            }
-                        });
+                submitDetails();
             };
         });
     }
 
+    private void submitDetails() {
+        Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year1="+year1+" day1="+day1+" month1="+month1);
+        Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year2="+year2+" day2="+day2+" month2="+month2);
+        Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year3="+year3+" day3="+day3+" month3="+month3);
+
+        String displayname = "", parenttype = "", babynum = "", babygen1 = "", babygen2 = "", babygen3 = "";
+
+        displayname = displayName.getText().toString();
+
+        if (parent.getText().toString().equals(getString(R.string.signup_details_mom))) {
+            parenttype = "MOM";
+        } else if(parent.getText().toString().equals(getString(R.string.signup_details_dad))) {
+            parenttype = "DAD";
+        } else if(parent.getText().toString().equals(getString(R.string.signup_details_soon_mom))) {
+            parenttype = "SOON_MOM";
+        } else if (parent.getText().toString().equals(getString(R.string.signup_details_soon_dad))) {
+            parenttype = "SOON_DAD";
+        } else if(parent.getText().toString().equals(getString(R.string.signup_details_not_parent))) {
+            parenttype = "NA";
+        }
+
+        if (parenttype.equals("NA")) {
+            babynum = "0";
+        } else {
+            babynum = babySpinner.getSelectedItem().toString();
+            if (babynum.equals("1")) {
+                babygen1 = baby1.getText().toString();
+            } else if(babynum.equals("2")) {
+                babygen1 = baby1.getText().toString();
+                babygen2 = baby2.getText().toString();
+            } else if(babynum.equals("3")) {
+                babygen1 = baby1.getText().toString();
+                babygen2 = baby2.getText().toString();
+                babygen3 = baby3.getText().toString();
+            }
+        }
+
+        int defaultParentBirthYear = 9999;
+        AppController.getApi().signUpInfo(displayname, defaultParentBirthYear, locationId, parenttype, babynum,
+                babygen1, babygen2, babygen3,
+                year1, month1, day1, year2, month2, day2, year3, month3, day3,
+                AppController.getInstance().getSessionId(),
+                new Callback<Response>() {
+                    @Override
+                    public void success(Response response, Response response2) {
+                        Log.d(SignupDetailActivity.class.getSimpleName(), "submitDetails: api.signUpInfo.success");
+                        initNewUser();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
+    }
+
     private void initNewUser() {
-        Log.d(this.getClass().getSimpleName(), "iniNewUser");
+        Log.d(this.getClass().getSimpleName(), "initNewUser");
         AppController.getApi().initNewUser(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM userVM, Response response) {
-                Log.d(SignupDetailActivity.class.getSimpleName(), "iniNewUser.success");
+                Log.d(SignupDetailActivity.class.getSimpleName(), "initNewUser.success");
                 startActivity(new Intent(SignupDetailActivity.this, MainActivity.class));
                 finish();
             }
@@ -285,11 +287,11 @@ public class SignupDetailActivity extends Activity {
         });
     }
 
-    private void setVisible(int id){
-        RadioButton type= (RadioButton) parentType.findViewById(id);
-        if (!type.getText().toString().equals("Not-mom-or-dad")) {
+    private void setMoreDetailsVisible(int id){
+        RadioButton type = (RadioButton) parentType.findViewById(id);
+        if (!type.getText().toString().equals(getString(R.string.signup_details_not_parent))) {
             babynumberLayout.setVisibility(View.VISIBLE);
-            setDetailVisible();
+            setBabyDetailsVisible();
         } else {
             babynumberLayout.setVisibility(View.GONE);
             babyDetailsLayout1.setVisibility(View.GONE);
@@ -298,7 +300,7 @@ public class SignupDetailActivity extends Activity {
         }
     }
 
-    private void setDetailVisible(){
+    private void setBabyDetailsVisible(){
         if (babySpinner.getSelectedItem()=="1"){
             babyDetailsLayout1.setVisibility(View.VISIBLE);
             babyDetailsLayout2.setVisibility(View.GONE);
@@ -367,76 +369,30 @@ public class SignupDetailActivity extends Activity {
         LoginActivity.startLoginActivity(SignupDetailActivity.this);
     }
 
-    public void updatedate() {
+    private void setBirthdays() {
         if (birthdayClick1) {
-            birthdayLabel1.setText(calendar.get(Calendar.YEAR) + "-" + showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
-            year1=calendar.get(Calendar.YEAR)+"";
-            month1=showMonth(calendar.get(Calendar.MONTH))+"";
-            day1=calendar.get(Calendar.DAY_OF_MONTH)+"";
-
-            day2=month2=year2="";
-            day3=month3=year3="";
-        }else if(birthdayClick2){
-            birthdayLabel2.setText(calendar.get(Calendar.YEAR) + "-" + showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
-            year2=calendar.get(Calendar.YEAR)+"";
-            month2=showMonth(calendar.get(Calendar.MONTH))+"";
-            day2=calendar.get(Calendar.DAY_OF_MONTH)+"";
-
-            day3=month3=year3="";
-        }else if(birthdayClick3){
-            birthdayLabel3.setText(calendar.get(Calendar.YEAR) + "-" + showMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
-            year3=calendar.get(Calendar.YEAR)+"";
-            month3=showMonth(calendar.get(Calendar.MONTH))+"";
-            day3=calendar.get(Calendar.DAY_OF_MONTH)+"";
+            birthdayLabel1.setText(calendar.get(Calendar.YEAR) + "-" + getMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+            year1 = calendar.get(Calendar.YEAR)+"";
+            month1 = getMonth(calendar.get(Calendar.MONTH))+"";
+            day1 = calendar.get(Calendar.DAY_OF_MONTH)+"";
+        } else if(birthdayClick2) {
+            birthdayLabel2.setText(calendar.get(Calendar.YEAR) + "-" + getMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+            year2 = calendar.get(Calendar.YEAR)+"";
+            month2 = getMonth(calendar.get(Calendar.MONTH))+"";
+            day2 = calendar.get(Calendar.DAY_OF_MONTH)+"";
+        } else if(birthdayClick3) {
+            birthdayLabel3.setText(calendar.get(Calendar.YEAR) + "-" + getMonth(calendar.get(Calendar.MONTH)) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
+            year3 = calendar.get(Calendar.YEAR)+"";
+            month3 = getMonth(calendar.get(Calendar.MONTH))+"";
+            day3 = calendar.get(Calendar.DAY_OF_MONTH)+"";
         }
     }
 
-    private void setDate(){
+    private void showDatePicker(){
         new DatePickerDialog(SignupDetailActivity.this,datePicker,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(calendar.DAY_OF_MONTH)).show();
     }
 
-    private int showMonth(int month) {
-        int showMonth = month;
-        switch(showMonth)
-        {
-            case 0:
-                showMonth = showMonth + 1;
-                break;
-            case 1:
-                showMonth = showMonth + 1;
-                break;
-            case 2:
-                showMonth = showMonth + 1;
-                break;
-            case 3:
-                showMonth = showMonth + 1;
-                break;
-            case 4:
-                showMonth = showMonth + 1;
-                break;
-            case 5:
-                showMonth = showMonth + 1;
-                break;
-            case 6:
-                showMonth = showMonth + 1;
-                break;
-            case 7:
-                showMonth = showMonth + 1;
-                break;
-            case 8:
-                showMonth = showMonth + 1;
-                break;
-            case 9:
-                showMonth = showMonth + 1;
-                break;
-            case 10:
-                showMonth = showMonth + 1;
-                break;
-            case 11:
-                showMonth = showMonth + 1;
-                break;
-
-        }
-        return showMonth;
+    private int getMonth(int month) {
+        return month + 1;
     }
 }
