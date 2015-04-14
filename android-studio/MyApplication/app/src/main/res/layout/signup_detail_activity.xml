@@ -2,361 +2,587 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/view_bg">
+    android:background="@color/white">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bgImage"
+        android:src="@drawable/logo_beans_bg"
+        android:scaleType="fitEnd" />
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/finishButton">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:paddingBottom="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true">
 
             <TextView
                 android:id="@+id/titleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textSize="28dp"
+                android:textColor="@color/like_blue"
+                android:gravity="left"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
+                android:singleLine="true" />
 
             <LinearLayout
                 android:id="@+id/displaynameLayout"
                 android:layout_below="@+id/titleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="horizontal">
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_marginTop="25dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:text="Display Name"/>
+                    android:textSize="16dp"
+                    android:text="@string/signup_details_displayname_title"
+                    android:textColor="@color/dark_gray_3"
+                    android:layout_weight="3"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="true" />
 
                 <EditText
                     android:id="@+id/displaynameEdit"
                     android:background="@drawable/edit_text_round"
-                    android:layout_marginLeft="25dp"
-                    android:textSize="15sp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="7"
+                    android:layout_gravity="center_vertical"
+                    android:hint="暱稱" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/noteText"
-                android:layout_width="200dp"
-                android:layout_marginRight="15dp"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:textSize="10dp"
-                android:text="Note:please select a name you want other users will see"
-                android:layout_below="@+id/displaynameLayout"/>
+                android:weightSum="10"
+                android:layout_below="@+id/displaynameLayout"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/displaynameNoteLayout">
 
-            <TextView
-                android:id="@+id/locationText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Location :"
-                android:layout_below="@+id/noteText"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
-                android:textSize="15dp"/>
-
-            <Spinner
-                android:id="@+id/locationSpinner"
-                android:layout_toRightOf="@+id/locationText"
-                android:layout_below="@+id/noteText"
-                android:background="@drawable/spinner_bg"
-                android:layout_width="150dp"
-                android:layout_height="20dp"/>
-
-            <TextView
-                android:id="@+id/youareText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You are :"
-                android:layout_below="@+id/locationText"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
-                android:textSize="15dp"/>
-
-            <RelativeLayout
-                android:id="@+id/radioLayout"
-                android:layout_below="@+id/youareText"
-                android:layout_width="wrap_content"
-                android:layout_toRightOf="@+id/youareText"
-                android:layout_height="wrap_content">
-
-                <RadioGroup
-                    android:id="@+id/parentRadio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <RadioButton
-                        android:id="@+id/momRadiobutton"
-                        android:text="MOM"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <RadioButton
-                        android:id="@+id/dadRadiobutton"
-                        android:text="DAD"
-                        android:layout_toRightOf="@+id/momRadiobutton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <RadioButton
-                        android:id="@+id/SoontobeDadRadiobutton"
-                        android:layout_below="@+id/momRadiobutton"
-                        android:text="Soon-tobe-Dad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <RadioButton
-                        android:id="@+id/SoontobeMomRadiobutton"
-                        android:text="Soon-tobe-Mom"
-                        android:layout_below="@+id/momRadiobutton"
-                        android:layout_toRightOf="@+id/SoontobeDadRadiobutton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <RadioButton
-                        android:id="@+id/notMomdadRadiobutton"
-                        android:layout_below="@+id/SoontobeMomRadiobutton"
-                        android:text="Not-mom-or-dad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </RadioGroup>
-
-                <LinearLayout
-                    android:id="@+id/babynumberLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/parentRadio"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:id="@+id/textView"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3" />
 
-                    <TextView
-                        android:id="@+id/babyText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="You have"/>
+                <TextView
+                    android:id="@+id/displaynameNoteText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textSize="12dp"
+                    android:text="@string/signup_details_displayname_note"
+                    android:layout_below="@+id/displaynameLayout"
+                    android:textColor="@color/red"
+                    android:layout_weight="7"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="5dp" />
+            </LinearLayout>
 
-                    <Spinner
-                        android:id="@+id/babySpinner"
-                        android:layout_toRightOf="@+id/babyText"
-                        android:layout_below="@+id/notMomDadCheckbox"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_width="60dp"
-                        android:layout_height="20dp"></Spinner>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/locationLayout"
+                android:layout_below="@+id/displaynameNoteLayout"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:weightSum="10">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="baby"
-                        android:layout_below="@+id/notMomDadCheckbox"
-                        android:layout_toRightOf="@+id/babySpinner"/>
+                <TextView
+                    android:id="@+id/locationText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signup_details_location_title"
+                    android:layout_below="@+id/displaynameLayout"
+                    android:textSize="16dp"
+                    android:textColor="@color/dark_gray_3"
+                    android:layout_weight="3"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="true" />
 
-                </LinearLayout>
+                <Spinner
+                    android:id="@+id/locationSpinner"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/locationText"
+                    android:layout_alignTop="@+id/locationText"
+                    android:spinnerMode="dropdown"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10"
+                android:layout_below="@+id/locationLayout"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/locationNoteLayout" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/locationNoteText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textSize="12dp"
+                    android:text="@string/signup_details_location_note"
+                    android:layout_below="@+id/displaynameLayout"
+                    android:textColor="@color/gray"
+                    android:layout_weight="7"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/moreInfoLayout"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_below="@+id/locationNoteLayout">
+
+                <TextView
+                    android:id="@+id/youareText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signup_details_status_title"
+                    android:layout_below="@+id/locationText"
+                    android:textSize="16dp"
+                    android:textColor="@color/dark_gray_3"
+                    android:singleLine="true" />
 
                 <RelativeLayout
-                    android:id="@+id/babyDetaiLayout"
-                    android:layout_below="@+id/babynumberLayout"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:id="@+id/radioLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_below="@+id/youareText"
+                    android:layout_marginTop="10dp">
 
-                    <TextView
-                        android:id="@+id/BabyGender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Baby is ::"/>
-
-                    <LinearLayout
-                        android:id="@+id/sexRadio"
-                        android:layout_toRightOf="@+id/BabyGender"
-                        android:layout_width="wrap_content"
+                    <RadioGroup
+                        android:id="@+id/parentRadio"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <RadioGroup
-                            android:id="@+id/babyRadio1"
+                        <RadioButton
+                            android:id="@+id/momRadiobutton"
+                            android:text="@string/signup_details_mom"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Male"/>
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Female"/>
-                        </RadioGroup>
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp" />
+                        <RadioButton
+                            android:id="@+id/dadRadiobutton"
+                            android:text="@string/signup_details_dad"
+                            android:layout_toRightOf="@+id/momRadiobutton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp" />
+                        <RadioButton
+                            android:id="@+id/SoontobeDadRadiobutton"
+                            android:layout_below="@+id/momRadiobutton"
+                            android:text="@string/signup_details_soon_mom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp" />
+                        <RadioButton
+                            android:id="@+id/SoontobeMomRadiobutton"
+                            android:text="@string/signup_details_soon_dad"
+                            android:layout_below="@+id/momRadiobutton"
+                            android:layout_toRightOf="@+id/SoontobeDadRadiobutton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp" />
+                        <RadioButton
+                            android:id="@+id/notMomdadRadiobutton"
+                            android:layout_below="@+id/SoontobeMomRadiobutton"
+                            android:text="@string/signup_details_not_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/babyNumberLayout"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/parentRadio"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/babyText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/signup_details_text_you_have"
+                            android:textSize="16dp"
+                            android:textColor="@color/dark_gray_3"
+                            android:layout_gravity="center_vertical" />
+
+                        <Spinner
+                            android:id="@+id/babySpinner"
+                            android:layout_toRightOf="@+id/babyText"
+                            android:layout_below="@+id/notMomDadCheckbox"
+                            android:background="@drawable/spinner_bg"
+                            android:layout_width="50dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:spinnerMode="dropdown"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:gravity="center"
+                            android:textAlignment="center"></Spinner>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/signup_details_text_babies"
+                            android:layout_below="@+id/notMomDadCheckbox"
+                            android:layout_toRightOf="@+id/babySpinner"
+                            android:textColor="@color/dark_gray_3"
+                            android:textSize="16dp"
+                            android:layout_gravity="center_vertical" />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/birthdayText"
-                        android:layout_below="@+id/sexRadio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Birthday::"/>
-                    <ImageView
-                        android:id="@+id/birthday1"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_below="@+id/sexRadio"
-                        android:src="@drawable/calendar"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@+id/birthdayText"/>
-                    <TextView
-
-                        android:id="@+id/birthdayLabel1"
-                        android:layout_width="90dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_below="@+id/birthday1"
-                        android:layout_toRightOf="@+id/birthdayText"
-                        />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/babyDetaiLayout1"
-                    android:layout_below="@+id/babyDetaiLayout"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/BabyGender1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Baby is ::"/>
-
                     <LinearLayout
-                        android:id="@+id/sexRadio1"
-                        android:layout_toRightOf="@+id/BabyGender1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:orientation="vertical"
+                        android:id="@+id/babyDetailsLayout1"
+                        android:layout_below="@+id/babyNumberLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
 
-                        <RadioGroup
-                            android:id="@+id/babyRadio2"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-                            <RadioButton
+
+                            <TextView
+                                android:id="@+id/babyGender1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Male"/>
-                            <RadioButton
+                                android:text="@string/signup_details_text_baby_is"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@color/dark_gray_3"
+                                android:textSize="16dp" />
+
+                            <LinearLayout
+                                android:id="@+id/sexRadio1"
+                                android:layout_toRightOf="@+id/babyGender1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Female"/>
-                        </RadioGroup>
+                                android:orientation="horizontal"
+                                android:layout_gravity="center_vertical">
+
+                                <RadioGroup
+                                    android:id="@+id/babyRadio1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="5dp">
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/signup_details_boy"
+                                        android:textSize="16dp" />
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/signup_details_girl"
+                                        android:layout_marginLeft="15dp"
+                                        android:textSize="16dp" />
+                                </RadioGroup>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:id="@+id/birthdayText1"
+                                android:layout_below="@+id/babyGender1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/signup_details_text_birthday"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@color/dark_gray_3"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/birthdayLabel1"
+                                android:layout_width="120dp"
+                                android:layout_height="30dp"
+                                android:layout_below="@+id/birthday1"
+                                android:layout_toRightOf="@+id/birthdayText1"
+                                android:layout_marginLeft="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="16dp"
+                                android:textColor="@color/like_blue"
+                                android:background="@drawable/rect_border_bottom"
+                                android:gravity="center" />
+
+                            <ImageView
+                                android:id="@+id/birthday1"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_below="@+id/sexRadio1"
+                                android:src="@drawable/calendar"
+                                android:layout_marginLeft="15dp"
+                                android:layout_toRightOf="@+id/birthdayText1"
+                                android:layout_gravity="center_vertical" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/birthdayText1"
-                        android:layout_below="@+id/sexRadio1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Birthday::"/>
-                    <ImageView
-                        android:id="@+id/birthday2"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_below="@+id/sexRadio1"
-                        android:src="@drawable/calendar"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@+id/birthdayText1"/>
-                    <TextView
-                        android:id="@+id/birthdayLabel2"
-                        android:layout_width="90dp"
-                        android:layout_height="20dp"
-                        android:layout_below="@+id/birthday2"
-                        android:layout_toRightOf="@+id/birthdayText1"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/babyDetaiLayout2"
-                    android:layout_below="@+id/babyDetaiLayout1"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/BabyGender2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Baby is ::"/>
-
                     <LinearLayout
-                        android:id="@+id/sexRadio2"
-                        android:layout_toRightOf="@+id/BabyGender2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:orientation="vertical"
+                        android:id="@+id/babyDetailsLayout2"
+                        android:layout_below="@+id/babyDetailsLayout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
 
-                        <RadioGroup
-                            android:id="@+id/babyRadio3"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-                            <RadioButton
+
+                            <TextView
+                                android:id="@+id/babyGender2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Male"/>
-                            <RadioButton
+                                android:text="@string/signup_details_text_baby_is"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="16dp"
+                                android:textColor="@color/dark_gray_3" />
+
+                            <LinearLayout
+                                android:id="@+id/sexRadio2"
+                                android:layout_toRightOf="@+id/babyGender2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Female"/>
-                        </RadioGroup>
+                                android:orientation="horizontal"
+                                android:layout_gravity="center_vertical">
+
+                                <RadioGroup
+                                    android:id="@+id/babyRadio2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="5dp">
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/signup_details_boy"
+                                        android:textSize="16dp" />
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/signup_details_girl"
+                                        android:layout_marginLeft="15dp"
+                                        android:textSize="16dp" />
+                                </RadioGroup>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/birthdayText2"
+                                android:layout_below="@+id/babyGender2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/signup_details_text_birthday"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@color/dark_gray_3"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/birthdayLabel2"
+                                android:layout_width="120dp"
+                                android:layout_height="30dp"
+                                android:layout_below="@+id/birthday2"
+                                android:layout_toRightOf="@+id/birthdayText2"
+                                android:layout_marginLeft="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="16dp"
+                                android:textColor="@color/like_blue"
+                                android:background="@drawable/rect_border_bottom"
+                                android:gravity="center" />
+
+                            <ImageView
+                                android:id="@+id/birthday2"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_below="@+id/sexRadio2"
+                                android:src="@drawable/calendar"
+                                android:layout_marginLeft="15dp"
+                                android:layout_toRightOf="@+id/birthdayText2"
+                                android:layout_gravity="center_vertical" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/birthdayText2"
-                        android:layout_below="@+id/sexRadio2"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:id="@+id/babyDetailsLayout3"
+                        android:layout_below="@+id/babyDetailsLayout2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Birthday::"/>
-                    <ImageView
-                        android:id="@+id/birthday3"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_below="@+id/sexRadio2"
-                        android:src="@drawable/calendar"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@+id/birthdayText2"/>
-                    <TextView
-                        android:id="@+id/birthdayLabel3"
-                        android:layout_width="90dp"
-                        android:layout_height="20dp"
-                        android:layout_below="@+id/birthday3"
-                        android:layout_toRightOf="@+id/birthdayText2"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        />
+                        android:layout_marginTop="20dp">
+
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/babyGender3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/signup_details_text_baby_is"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="16dp"
+                                android:textColor="@color/dark_gray_3" />
+
+                            <LinearLayout
+                                android:id="@+id/sexRadio3"
+                                android:layout_toRightOf="@+id/babyGender3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_gravity="center_vertical">
+
+                                <RadioGroup
+                                    android:id="@+id/babyRadio3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="5dp">
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/signup_details_boy"
+                                        android:textSize="16dp" />
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/signup_details_girl"
+                                        android:layout_marginLeft="15dp"
+                                        android:textSize="16dp" />
+                                </RadioGroup>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:id="@+id/birthdayText3"
+                                android:layout_below="@+id/babyGender3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/signup_details_text_birthday"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@color/dark_gray_3"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/birthdayLabel3"
+                                android:layout_width="120dp"
+                                android:layout_height="30dp"
+                                android:layout_below="@+id/birthday3"
+                                android:layout_toRightOf="@+id/birthdayText3"
+                                android:layout_marginLeft="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="16dp"
+                                android:textColor="@color/like_blue"
+                                android:background="@drawable/rect_border_bottom"
+                                android:gravity="center" />
+
+                            <ImageView
+                                android:id="@+id/birthday3"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_below="@+id/sexRadio3"
+                                android:src="@drawable/calendar"
+                                android:layout_marginLeft="15dp"
+                                android:layout_toRightOf="@+id/birthdayText3"
+                                android:layout_gravity="center_vertical" />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </RelativeLayout>
-            </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/finishButton"
+                android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/signup_details_complete"
+                android:background="@color/signup_yellow"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/moreInfoLayout"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp" />
         </RelativeLayout>
     </ScrollView>
-    <Button
-        android:id="@+id/finishButton"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Finish! bring me in "
-        android:background="@color/signup_yellow"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:layout_marginBottom="20dp" />
 </RelativeLayout>

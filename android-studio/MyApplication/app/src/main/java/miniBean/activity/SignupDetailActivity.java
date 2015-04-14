@@ -1,9 +1,9 @@
 
 package miniBean.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -34,14 +33,14 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class SignupDetailActivity extends Activity {
-    private String[] babyArray,day,month,year;
-    private Spinner locationSpinner,babySpinner,daySpinner1,daySpinner2,daySpinner3,monthSpinner1,monthSpinner2,monthSpinner3,yearSpinner1,yearSpinner2,yearSpinner3;
+    private String[] babyNumberArray;
+    private Spinner locationSpinner,babySpinner;
     private Button finishButton;
     private EditText displayName;
     private RadioGroup parentType,babyGender1,babyGender2,babyGender3;
     private RadioButton parent,baby1,baby2,baby3;
     private LinearLayout babynumberLayout;
-    private RelativeLayout detailLayout,detailLayout1,detailLayout2;
+    private LinearLayout babyDetailsLayout1,babyDetailsLayout2,babyDetailsLayout3;
     private TextView titleText;
 
     public List<String> locations;
@@ -54,58 +53,79 @@ public class SignupDetailActivity extends Activity {
 
     private String year1,month1,day1,year2,month2,day2,year3,month3,day3;
 
-
     private boolean birthdayClick1=false,birthdayClick2=false,birthdayClick3=false;
+
+    private DatePickerDialog.OnDateSetListener datePicker = new DatePickerDialog.OnDateSetListener(){
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar.set(Calendar.YEAR,year);
+            calendar.set(Calendar.MONTH,monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            updatedate();
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.signup_detail_activity);
 
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.signup_actionbar);
+        //getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        //getActionBar().setCustomView(R.layout.signup_actionbar);
+        getActionBar().hide();
 
-        babynumberLayout= (LinearLayout) findViewById(R.id.babynumberLayout);
+        titleText = (TextView) findViewById(R.id.titleText);
 
-        titleText= (TextView) findViewById(R.id.titleText);
+        parentType = (RadioGroup) findViewById(R.id.parentRadio);
 
-        birthday1= (ImageView) findViewById(R.id.birthday1);
-        birthday2= (ImageView) findViewById(R.id.birthday2);
-        birthday3= (ImageView) findViewById(R.id.birthday3);
+        babynumberLayout = (LinearLayout) findViewById(R.id.babyNumberLayout);
 
+        babyDetailsLayout1 = (LinearLayout) findViewById(R.id.babyDetailsLayout1);
+        babyDetailsLayout1.setVisibility(View.GONE);
+        babyDetailsLayout2 = (LinearLayout) findViewById(R.id.babyDetailsLayout2);
+        babyDetailsLayout2.setVisibility(View.GONE);
+        babyDetailsLayout3 = (LinearLayout) findViewById(R.id.babyDetailsLayout3);
+        babyDetailsLayout3.setVisibility(View.GONE);
 
-        birthdayLabel1= (TextView) findViewById(R.id.birthdayLabel1);
-        birthdayLabel2= (TextView) findViewById(R.id.birthdayLabel2);
-        birthdayLabel3= (TextView) findViewById(R.id.birthdayLabel3);
+        babyGender1 = (RadioGroup) findViewById(R.id.babyRadio1);
+        babyGender2 = (RadioGroup) findViewById(R.id.babyRadio2);
+        babyGender3 = (RadioGroup) findViewById(R.id.babyRadio3);
 
-        detailLayout= (RelativeLayout) findViewById(R.id.babyDetaiLayout);
-        detailLayout1= (RelativeLayout) findViewById(R.id.babyDetaiLayout1);
-        detailLayout2= (RelativeLayout) findViewById(R.id.babyDetaiLayout2);
+        birthday1 = (ImageView) findViewById(R.id.birthday1);
+        birthday2 = (ImageView) findViewById(R.id.birthday2);
+        birthday3 = (ImageView) findViewById(R.id.birthday3);
 
-        parentType= (RadioGroup) findViewById(R.id.parentRadio);
-        babyGender1= (RadioGroup) findViewById(R.id.babyRadio1);
-        babyGender2= (RadioGroup) findViewById(R.id.babyRadio2);
-        babyGender3= (RadioGroup) findViewById(R.id.babyRadio3);
+        birthdayLabel1 = (TextView) findViewById(R.id.birthdayLabel1);
+        birthdayLabel2 = (TextView) findViewById(R.id.birthdayLabel2);
+        birthdayLabel3 = (TextView) findViewById(R.id.birthdayLabel3);
 
         calendar = Calendar.getInstance();
 
-        displayName= (EditText) findViewById(R.id.displaynameEdit);
-        locationSpinner= (Spinner) findViewById(R.id.locationSpinner);
+        displayName = (EditText) findViewById(R.id.displaynameEdit);
+        locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
 
-        babySpinner= (Spinner) findViewById(R.id.babySpinner);
-
-        finishButton= (Button) findViewById(R.id.finishButton);
-
-        this.babyArray=new String[]{"1","2","3"};
+        finishButton = (Button) findViewById(R.id.finishButton);
 
         locationVMList = new ArrayList<LocationVM>();
         setLocation();
 
-        ArrayAdapter<String> babyAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,babyArray);
+        babyNumberArray = new String[]{"1","2","3"};
+        ArrayAdapter<String> babyAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,babyNumberArray);
+
+        babySpinner = (Spinner) findViewById(R.id.babySpinner);
         babySpinner.setAdapter(babyAdapter);
 
+        titleText.setText(getIntent().getStringExtra("first_name") + " " + getString(R.string.signup_details_greeting));
 
-        titleText.setText("Hi " + getIntent().getStringExtra("first_name"));
+        parentType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int id = parentType.getCheckedRadioButtonId();
+                parent = (RadioButton) findViewById(id);
+                setVisible(id);
+            }
+        });
 
         babyGender1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -131,15 +151,6 @@ public class SignupDetailActivity extends Activity {
             }
         });
 
-        parentType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                int id = parentType.getCheckedRadioButtonId();
-                parent = (RadioButton) findViewById(id);
-                setVisible(id);
-            }
-        });
-
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -162,7 +173,7 @@ public class SignupDetailActivity extends Activity {
             }
         });
 
-        birthday1.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 birthdayClick1=true;
@@ -170,9 +181,11 @@ public class SignupDetailActivity extends Activity {
                 birthdayClick3=false;
                 setDate();
             }
-        });
+        };
+        birthday1.setOnClickListener(onClickListener);
+        birthdayLabel1.setOnClickListener(onClickListener);
 
-        birthday2.setOnClickListener(new View.OnClickListener() {
+        onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 birthdayClick1=false;
@@ -180,9 +193,11 @@ public class SignupDetailActivity extends Activity {
                 birthdayClick3=false;
                 setDate();
             }
-        });
+        };
+        birthday2.setOnClickListener(onClickListener);
+        birthdayLabel2.setOnClickListener(onClickListener);
 
-        birthday3.setOnClickListener(new View.OnClickListener() {
+        onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 birthdayClick1=false;
@@ -190,28 +205,21 @@ public class SignupDetailActivity extends Activity {
                 birthdayClick3=true;
                 setDate();
             }
-        });
+        };
+        birthday3.setOnClickListener(onClickListener);
+        birthdayLabel3.setOnClickListener(onClickListener);
 
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String displayname="",parenttype="",babynum="",babygen1="",babygen2="",babygen3="";
-                //year1="";month1="";day1="";year2="";month2="";day2="";year3="";month3="";day3="";
 
                 displayname=displayName.getText().toString();
 
-                System.out.println("day1:::"+day1);
-                System.out.println("month1::"+month1);
-                System.out.println("year1::"+year1);
-
-                System.out.println("day2:::"+day2);
-                System.out.println("month2::"+month2);
-                System.out.println("year2::"+year2);
-
-                System.out.println("day3:::"+day3);
-                System.out.println("month3::"+month3);
-                System.out.println("year3::"+year3);
+                Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year1="+year1+" day1="+day1+" month1="+month1);
+                Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year2="+year2+" day2="+day2+" month2="+month2);
+                Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year3="+year3+" day3="+day3+" month3="+month3);
 
                 if(parent.getText().toString().equals("Soon-tobe-Dad")){
                     parenttype="SOON_DAD";
@@ -284,42 +292,42 @@ public class SignupDetailActivity extends Activity {
             setDetailVisible();
         } else {
             babynumberLayout.setVisibility(View.GONE);
-            detailLayout.setVisibility(View.GONE);
-            detailLayout1.setVisibility(View.GONE);
-            detailLayout2.setVisibility(View.GONE);
+            babyDetailsLayout1.setVisibility(View.GONE);
+            babyDetailsLayout2.setVisibility(View.GONE);
+            babyDetailsLayout3.setVisibility(View.GONE);
         }
     }
 
     private void setDetailVisible(){
         if (babySpinner.getSelectedItem()=="1"){
-            detailLayout.setVisibility(View.VISIBLE);
-            detailLayout1.setVisibility(View.GONE);
-            detailLayout2.setVisibility(View.GONE);
+            babyDetailsLayout1.setVisibility(View.VISIBLE);
+            babyDetailsLayout2.setVisibility(View.GONE);
+            babyDetailsLayout3.setVisibility(View.GONE);
         }else if(babySpinner.getSelectedItem()=="2"){
-            detailLayout1.setVisibility(View.VISIBLE);
-            detailLayout.setVisibility(View.VISIBLE);
-            detailLayout2.setVisibility(View.GONE);
+            babyDetailsLayout1.setVisibility(View.VISIBLE);
+            babyDetailsLayout2.setVisibility(View.VISIBLE);
+            babyDetailsLayout3.setVisibility(View.GONE);
         }else if(babySpinner.getSelectedItem()=="3"){
-            detailLayout2.setVisibility(View.VISIBLE);
-            detailLayout.setVisibility(View.VISIBLE);
-            detailLayout1.setVisibility(View.VISIBLE);
+            babyDetailsLayout1.setVisibility(View.VISIBLE);
+            babyDetailsLayout2.setVisibility(View.VISIBLE);
+            babyDetailsLayout3.setVisibility(View.VISIBLE);
         }
 
         babySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (babySpinner.getSelectedItem()=="1"){
-                    detailLayout.setVisibility(View.VISIBLE);
-                    detailLayout1.setVisibility(View.GONE);
-                    detailLayout2.setVisibility(View.GONE);
+                    babyDetailsLayout1.setVisibility(View.VISIBLE);
+                    babyDetailsLayout2.setVisibility(View.GONE);
+                    babyDetailsLayout3.setVisibility(View.GONE);
                 }else if(babySpinner.getSelectedItem()=="2"){
-                    detailLayout1.setVisibility(View.VISIBLE);
-                    detailLayout.setVisibility(View.VISIBLE);
-                    detailLayout2.setVisibility(View.GONE);
+                    babyDetailsLayout1.setVisibility(View.VISIBLE);
+                    babyDetailsLayout2.setVisibility(View.VISIBLE);
+                    babyDetailsLayout3.setVisibility(View.GONE);
                 }else if(babySpinner.getSelectedItem()=="3"){
-                    detailLayout2.setVisibility(View.VISIBLE);
-                    detailLayout.setVisibility(View.VISIBLE);
-                    detailLayout1.setVisibility(View.VISIBLE);
+                    babyDetailsLayout1.setVisibility(View.VISIBLE);
+                    babyDetailsLayout2.setVisibility(View.VISIBLE);
+                    babyDetailsLayout3.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -336,6 +344,7 @@ public class SignupDetailActivity extends Activity {
             public void success(List<LocationVM> locationVMs, Response response) {
                 locations = new ArrayList<String>();
 
+                locations.add(getString(R.string.signup_details_location));
                 for(int i=0; i<locationVMs.size(); i++){
                     locations.add(locationVMs.get(i).getDisplayName());
                     locationVMList.addAll(locationVMs);
@@ -381,24 +390,12 @@ public class SignupDetailActivity extends Activity {
             day3=calendar.get(Calendar.DAY_OF_MONTH)+"";
         }
     }
-    public void setDate(){
 
-        new DatePickerDialog(SignupDetailActivity.this,d,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(calendar.DAY_OF_MONTH)).show();
+    private void setDate(){
+        new DatePickerDialog(SignupDetailActivity.this,datePicker,calendar.get(calendar.YEAR),calendar.get(calendar.MONTH),calendar.get(calendar.DAY_OF_MONTH)).show();
     }
 
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener(){
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            calendar.set(Calendar.YEAR,year);
-            calendar.set(Calendar.MONTH,monthOfYear);
-            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-            updatedate();
-        }
-
-    };
-
-    public int showMonth(int month)
-    {
+    private int showMonth(int month) {
         int showMonth = month;
         switch(showMonth)
         {

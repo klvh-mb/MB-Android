@@ -33,7 +33,7 @@
             android:textStyle="bold"
             android:textColor="@color/dark_gray_3" />
         <TextView
-            android:id="@+id/noteText"
+            android:id="@+id/displaynameNoteText"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/emailText"
             android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
             android:text="OK"
             android:background="@color/signup_yellow"
             android:textSize="18dp"
-            android:layout_below="@+id/noteText"
+            android:layout_below="@+id/displaynameNoteText"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:textStyle="bold"

@@ -43,6 +43,27 @@
     <string name="signup_error_field_required">必須填寫</string>
     <string name="signup_error_email_format">電郵格式不對</string>
 
+    <string name="signup_details_greeting">您好!</string>
+    <string name="signup_details_greeting_note">請給我們一分鐘來完成登記，您所提供的資料是以便我們能把您加入到最相關的社群</string>
+    <string name="signup_details_displayname_title">顯示名稱 : </string>
+    <string name="signup_details_displayname_note">註: 其他用戶只會看到您的顯示名稱，請選用一個您喜愛的暱稱。您之前填寫的姓名和電郵絶對不會對外顯示。</string>
+    <string name="signup_details_location_title">您的地區 : </string>
+    <string name="signup_details_location_note">註: 小萌豆會按您的地區推介資訊給您</string>
+    <string name="signup_details_location">地區</string>
+    <string name="signup_details_status_title">您現在是 : </string>
+    <string name="signup_details_mom">媽媽</string>
+    <string name="signup_details_dad">爸爸</string>
+    <string name="signup_details_soon_mom">準媽媽</string>
+    <string name="signup_details_soon_dad">準爸爸</string>
+    <string name="signup_details_not_parent">沒有小寶寶</string>
+    <string name="signup_details_text_you_have">您有</string>
+    <string name="signup_details_text_babies">個小寶寶</string>
+    <string name="signup_details_text_baby_is">小寶寶是 : </string>
+    <string name="signup_details_boy">BB仔</string>
+    <string name="signup_details_girl">BB女</string>
+    <string name="signup_details_text_birthday">生日 : </string>
+    <string name="signup_details_complete">完成! 立刻進入</string>
+
     <!-- Main -->
     <string name="tabset_frontpage">首頁</string>
     <string name="tabset_communities">社群</string>
