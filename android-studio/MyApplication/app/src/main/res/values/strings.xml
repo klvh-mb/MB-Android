@@ -121,7 +121,7 @@
     <string name="list_loading_error">加載出現問題。請檢查網路再重試</string>
     <string name="list_loaded_all">- 已加載全部 -</string>
     <string name="sharing_app_not_installed"> 沒有安裝。</string>
-    <string name="sharing_message_note">分享自 miniBean 小萌豆</string>
+    <string name="sharing_message_note">(分享自 miniBean 小萌豆)</string>
     <!--string name="sharing_message_note">全新 miniBean 小萌豆 Android App:</string-->
 
     <!-- Profile tab -->

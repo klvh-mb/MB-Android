@@ -2,6 +2,9 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +16,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
@@ -25,11 +32,22 @@ import miniBean.util.PostUtil;
 import miniBean.viewmodel.CommunityPostVM;
 
 public class NewsfeedListAdapter extends BaseAdapter {
+    private TextView name;
+    private TextView username;
+    private TextView timeText;
+    private TextView numComments;
+    private ImageView communityIcon;
+    private TextView commName;
+
     private Activity activity;
     private LayoutInflater inflater;
     private List<CommunityPostVM> feedItems;
     private boolean isNewsfeed = true;
     private int lastPosition = -1;
+
+    private ActivityUtil activityUtil;
+
+    private LinearLayout postImagesLayout;
 
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this(activity, feedItems, true);
@@ -37,6 +55,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems, boolean isNewsfeed) {
         this.activity = activity;
+        this.activityUtil = new ActivityUtil(activity);
         this.feedItems = feedItems;
         this.isNewsfeed = isNewsfeed;
     }
@@ -69,12 +88,15 @@ public class NewsfeedListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.newsfeed_list_item, null);
 
-        TextView name = (TextView) convertView.findViewById(R.id.postTitle);
-        TextView username = (TextView) convertView.findViewById(R.id.username);
-        TextView timeText = (TextView) convertView.findViewById(R.id.time);
-        TextView numComments = (TextView) convertView.findViewById(R.id.numComments);
-        ImageView communityIcon = (ImageView) convertView.findViewById(R.id.commIcon);
-        TextView commName = (TextView) convertView.findViewById(R.id.commName);
+        name = (TextView) convertView.findViewById(R.id.postTitle);
+        username = (TextView) convertView.findViewById(R.id.username);
+        timeText = (TextView) convertView.findViewById(R.id.time);
+        numComments = (TextView) convertView.findViewById(R.id.numComments);
+        communityIcon = (ImageView) convertView.findViewById(R.id.commIcon);
+        commName = (TextView) convertView.findViewById(R.id.commName);
+
+        // images
+        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
 
         final CommunityPostVM item = feedItems.get(position);
 
@@ -128,9 +150,20 @@ public class NewsfeedListAdapter extends BaseAdapter {
             iconsLayout.setVisibility(View.VISIBLE);
             iconHot.setVisibility(View.VISIBLE);
         }
-        if (PostUtil.isImagePost(item)) {
-            iconsLayout.setVisibility(View.VISIBLE);
-            iconImage.setVisibility(View.VISIBLE);
+        //if (PostUtil.isImagePost(item)) {
+        //    iconsLayout.setVisibility(View.VISIBLE);
+        //    iconImage.setVisibility(View.VISIBLE);
+        //}
+
+        // images
+        // NOTE: need to load images from UIL cache each time as ListAdapter items are being recycled...
+        //       without this item will not show images correctly
+        if(item.hasImage) {
+            Log.d(this.getClass().getSimpleName(), "getView: load "+item.getImgs().length+" images to post #"+position+" - "+item.getPtl());
+            loadImages(item, postImagesLayout);
+            postImagesLayout.setVisibility(View.VISIBLE);
+        } else {
+            postImagesLayout.setVisibility(View.GONE);
         }
 
         //Animation animation = AnimationUtils.loadAnimation(activity.getBaseContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
@@ -145,5 +178,66 @@ public class NewsfeedListAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    private void loadImages(final CommunityPostVM item, final LinearLayout layout) {
+        layout.removeAllViewsInLayout();
+
+        final int padding = activityUtil.getRealDimension(3);
+        final int totalPadding = padding * DefaultValues.MAX_POST_IMAGES;
+        for (Long imageId : item.getImgs()) {
+            ImageView postImage = new ImageView(this.activity);
+            postImage.setAdjustViewBounds(true);
+            postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            postImage.setPadding(0, 0, padding, 0);
+            layout.addView(postImage);
+
+            ImageUtil.displayPostImage(imageId, postImage, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    if (loadedImage != null) {
+                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "|" + loadedImage.getHeight());
+
+                        int displayDimension = (activityUtil.getDisplayDimensions().width() / DefaultValues.MAX_POST_IMAGES) - totalPadding;
+
+                        // obsolete
+                        /*
+                        int width = loadedImage.getWidth();
+                        int height = loadedImage.getHeight();
+
+                        float scaleAspect = 1;
+                        if (width >= height) {  // landscape... scale according to width
+                            scaleAspect = (float)displayDimension / (float)width;
+                            width = displayDimension;
+                            height = (int)(height * scaleAspect);
+                        } else {    // portrait... scale according to height
+                            scaleAspect = (float)displayDimension / (float)height;
+                            width = (int)(width * scaleAspect);
+                            height = displayDimension;
+                        }
+
+                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: after resize - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
+                        */
+
+                        Drawable d = new BitmapDrawable(
+                                NewsfeedListAdapter.this.activity.getResources(),
+                                ImageUtil.cropToSquare(loadedImage, displayDimension));     // crop to square
+                        ImageView imageView = (ImageView)view;
+                        imageView.setImageDrawable(d);
+                        imageView.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        }
     }
 }

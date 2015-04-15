@@ -16,7 +16,7 @@
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="15dp"
             android:id="@+id/postTitleLayout"
-            android:layout_marginRight="5dp">
+            android:layout_marginRight="15dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -85,6 +85,17 @@
             android:layout_marginLeft="3dp"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/postImages"
+        android:layout_below="@+id/postBody"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"></LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/feedLayout"

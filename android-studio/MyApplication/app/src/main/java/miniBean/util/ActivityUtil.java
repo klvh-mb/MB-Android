@@ -26,6 +26,8 @@ public class ActivityUtil {
 
     private Activity activity;
 
+    private Rect displayDimensions = null;
+
     public ActivityUtil(Activity activity) {
         this.activity = activity;
     }
@@ -53,12 +55,15 @@ public class ActivityUtil {
     }
 
     public Rect getDisplayDimensions() {
-        int padding = 60;
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int width = displaymetrics.widthPixels - padding;
-        int height = displaymetrics.heightPixels - padding;
-        return new Rect(0, 0, width, height);
+        if (displayDimensions == null) {
+            int padding = 60;
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int width = displaymetrics.widthPixels - padding;
+            int height = displaymetrics.heightPixels - padding;
+            displayDimensions = new Rect(0, 0, width, height);
+        }
+        return displayDimensions;
     }
 
     //

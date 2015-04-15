@@ -268,6 +268,24 @@ public class ImageUtil {
         return bp;
     }
 
+    public static Bitmap cropToSquare(Bitmap bitmap) {
+        return cropToSquare(bitmap, -1);
+    }
+
+    public static Bitmap cropToSquare(Bitmap bitmap, int dimension) {
+        int width  = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int newWidth = (height > width) ? width : height;
+        int newHeight = (height > width)? height - ( height - width) : height;
+        int crop = (width - height) / 2;
+        crop = (crop < 0)? 0: crop;
+        Bitmap cropImg = Bitmap.createBitmap(bitmap, crop, 0, newWidth, newHeight);
+
+        if (dimension != -1)
+            cropImg = Bitmap.createScaledBitmap(cropImg, dimension, dimension, false);
+        return cropImg;
+    }
+
     public static Drawable getEmptyDrawable() {
         LevelListDrawable d = new LevelListDrawable();
         Drawable empty = AppController.getInstance().getResources().getDrawable(R.drawable.empty);
