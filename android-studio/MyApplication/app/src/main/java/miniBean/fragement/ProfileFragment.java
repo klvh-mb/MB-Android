@@ -75,10 +75,7 @@ public class ProfileFragment extends Fragment {
         editCoverImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, getString(R.string.edit_cover_photo)), SELECT_PICTURE);
+                ImageUtil.openPhotoPicker(ProfileFragment.this.getActivity(), getString(R.string.edit_cover_photo));
                 isPhoto = true;
                 coverPhotoClicked = true;
             }
@@ -87,10 +84,7 @@ public class ProfileFragment extends Fragment {
         userPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, getString(R.string.edit_user_photo)), SELECT_PICTURE);
+                ImageUtil.openPhotoPicker(ProfileFragment.this.getActivity(), getString(R.string.edit_user_photo));
                 isPhoto = true;
                 profilePhotoClicked = true;
             }

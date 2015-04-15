@@ -12,7 +12,9 @@ import android.util.Log;
 import miniBean.R;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.UserVM;
+import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 
 import org.acra.*;
@@ -73,7 +75,25 @@ public class AppController extends Application {
     }
 
     public static synchronized boolean isUserAdmin() {
+        UserVM user = getUser();
         return user != null && user.isAdmin();
+    }
+
+    private static UserVM getUser() {
+        if (user == null) {
+            AppController.getApi().getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
+                @Override
+                public void success(UserVM user, retrofit.client.Response response) {
+                    setUser(user);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    error.printStackTrace();
+                }
+            });
+        }
+        return user;
     }
 
     @Override

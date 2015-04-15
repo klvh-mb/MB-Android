@@ -1,6 +1,8 @@
 package miniBean.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +30,8 @@ import miniBean.app.AppController;
  * Created by keithlei on 3/16/15.
  */
 public class ImageUtil {
+
+    public static final int SELECT_PICTURE = 1;
 
     public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 350;
     public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 350;
@@ -225,19 +229,35 @@ public class ImageUtil {
 
     // Select photo
 
+    public static void openPhotoPicker(Activity activity) {
+        openPhotoPicker(activity, activity.getString(R.string.photo_select));
+    }
+
+    public static void openPhotoPicker(Activity activity, String title) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);
+        intent.setData(android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        //intent.setType("image/*");
+        //intent.setAction(Intent.ACTION_GET_CONTENT);
+        activity.startActivityForResult(Intent.createChooser(intent, title), SELECT_PICTURE);
+    }
+
     public static String getRealPathFromUri(Context context, Uri contentUri) {
         Cursor cursor = null;
         try {
-            String[] projection = {MediaStore.Images.Media.DATA};
-            cursor = context.getContentResolver().query(contentUri, projection, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, filePathColumn, null, null, null);
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(filePathColumn[0]);
+                String filePath = cursor.getString(columnIndex);
+                return filePath;
+            }
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
+        return "";
     }
 
     public static Bitmap resizeAsPreviewThumbnail(String path) {

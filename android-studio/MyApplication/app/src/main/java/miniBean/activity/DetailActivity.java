@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +16,6 @@ import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -62,7 +60,6 @@ import retrofit.mime.TypedFile;
 
 public class DetailActivity extends FragmentActivity {
 
-    private final Integer SELECT_PICTURE = 1;
     private FrameLayout mainFrameLayout;
     private Button pageButton;
     private ImageButton backButton, nextButton;
@@ -390,10 +387,7 @@ public class DetailActivity extends FragmentActivity {
                     if (photos.size() == DefaultValues.MAX_COMMENT_IMAGES) {
                         Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_max_images), Toast.LENGTH_SHORT).show();
                     } else {
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+                        ImageUtil.openPhotoPicker(DetailActivity.this);
                     }
                 }
             });
@@ -426,11 +420,11 @@ public class DetailActivity extends FragmentActivity {
         photos = new ArrayList<>();
     }
 
-    private void setCommentImage(Bitmap bp) {
+    private void setCommentImage(Bitmap bitmap) {
         ImageView commentImage = commentImages.get(photos.size());
-        commentImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
+        commentImage.setImageDrawable(new BitmapDrawable(this.getResources(), bitmap));
         commentImage.setVisibility(View.VISIBLE);
-        File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
+        File photo = new File(selectedImagePath);
         photos.add(photo);
     }
 
@@ -444,23 +438,27 @@ public class DetailActivity extends FragmentActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SELECT_PICTURE) {
-            if (data == null)
-                return;
+        if (requestCode == ImageUtil.SELECT_PICTURE && resultCode == RESULT_OK &&
+                data != null && photos.size() < DefaultValues.MAX_COMMENT_IMAGES) {
 
             selectedImageUri = data.getData();
             selectedImagePath = ImageUtil.getRealPathFromUri(this, selectedImageUri);
 
             String path = selectedImageUri.getPath();
-            Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
-            Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
-            if (bp != null && photos.size() < DefaultValues.MAX_COMMENT_IMAGES) {
-                setCommentImage(bp);
-            }
+            Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri=" + path + " selectedImagePath=" + selectedImagePath);
 
-            // pop back soft keyboard
-            activityUtil.popupInputMethodWindow();
+            Bitmap bitmap = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
+            if (bitmap != null) {
+                setCommentImage(bitmap);
+            } else {
+                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.photo_not_found), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.photo_not_found), Toast.LENGTH_SHORT).show();
         }
+
+        // pop back soft keyboard
+        activityUtil.popupInputMethodWindow();
     }
 
     private void doComment() {
@@ -477,9 +475,7 @@ public class DetailActivity extends FragmentActivity {
             @Override
             public void success(CommentResponse array, Response response) {
                 if (photos.size() > 0) {
-                    for(File singlePhoto : photos) {
-                        uploadPhoto(array.getId(),singlePhoto);
-                    }
+                    uploadPhotos(array.getId());
                 } else {
                     getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page
                 }
@@ -499,20 +495,21 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    private void uploadPhoto(String commentId,File photo) {
-        //File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
-        TypedFile typedFile = new TypedFile("application/octet-stream", photo);
-        AppController.getApi().uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
-            @Override
-            public void success(Response array, Response response) {
-                getComments(getIntent().getLongExtra("postId", 0L), 0);  // reload page
-            }
+    private void uploadPhotos(String commentId) {
+        for (File photo : photos) {
+            TypedFile typedFile = new TypedFile("application/octet-stream", photo);
+            AppController.getApi().uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
+                @Override
+                public void success(Response array, Response response) {
+                    getComments(getIntent().getLongExtra("postId", 0L), 0);  // reload page
+                }
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-            }
-        });
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    retrofitError.printStackTrace(); //to see if you have errors
+                }
+            });
+        }
     }
 
     private void initiatePaginationPopup() {

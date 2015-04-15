@@ -104,6 +104,8 @@
     <string name="comment_max_images">最多可加入3張圖</string>
     <string name="comment_success">成功回覆話題</string>
     <string name="comment_failed">暫時不能回覆話題，請稍後重試</string>
+    <string name="photo_select">請選擇圖片</string>
+    <string name="photo_not_found">尋找不到圖片</string>
     <string name="timeago_just_now">剛剛</string>
     <string name="timeago_min">分鐘前</string>
     <string name="timeago_hrs">小時前</string>

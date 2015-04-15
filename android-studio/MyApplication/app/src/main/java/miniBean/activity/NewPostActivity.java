@@ -47,6 +47,7 @@ import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
 public class NewPostActivity extends FragmentActivity {
+
     private RelativeLayout communityLayout;
     private LinearLayout selectCommunityLayout;
     private TextView selectCommunityText;
@@ -54,8 +55,6 @@ public class NewPostActivity extends FragmentActivity {
     private TextView communityName;
     private ImageView communityIcon;
     private ImageView backImage, postImage, browseImage;
-    private Boolean isPhoto = false;
-    private final Integer SELECT_PICTURE = 1;
     private TextView postTitle, postContent, post;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
@@ -121,14 +120,9 @@ public class NewPostActivity extends FragmentActivity {
         browseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-                isPhoto = true;
+                ImageUtil.openPhotoPicker(NewPostActivity.this);
             }
         });
-
 
         if (postImages.size() == 0) {
             postImages.add((ImageView) findViewById(R.id.postImage1));
@@ -169,27 +163,30 @@ public class NewPostActivity extends FragmentActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SELECT_PICTURE) {
-            if (data == null)
-                return;
+        if (requestCode == ImageUtil.SELECT_PICTURE && resultCode == RESULT_OK &&
+                data != null && photos.size() < DefaultValues.MAX_POST_IMAGES) {
 
             selectedImageUri = data.getData();
             selectedImagePath = ImageUtil.getRealPathFromUri(this, selectedImageUri);
 
             String path = selectedImageUri.getPath();
-            Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri="+path+" selectedImagePath="+selectedImagePath);
-            Bitmap bp = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
-            if (bp != null && photos.size() < DefaultValues.MAX_POST_IMAGES) {
-                /*postImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
-                postImage.setVisibility(View.VISIBLE);*/
-                setPostImages(bp);
-            }
+            Log.d(this.getClass().getSimpleName(), "onActivityResult: selectedImageUri=" + path + " selectedImagePath=" + selectedImagePath);
 
+            Bitmap bitmap = ImageUtil.resizeAsPreviewThumbnail(selectedImagePath);
+            if (bitmap != null) {
+                setPostImage(bitmap);
+            } else {
+                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.photo_not_found), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.photo_not_found), Toast.LENGTH_SHORT).show();
         }
+
+        // pop back soft keyboard
+        activityUtil.popupInputMethodWindow();
     }
 
-
-    private void setPostImages(Bitmap bp){
+    private void setPostImage(Bitmap bp){
         ImageView postImage = postImages.get(photos.size());
         postImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
         postImage.setVisibility(View.VISIBLE);
@@ -198,13 +195,11 @@ public class NewPostActivity extends FragmentActivity {
     }
 
     private void removePostImage(){
-
         if (photos.size() > 0) {
             int toRemove = photos.size()-1;
             postImages.get(toRemove).setImageDrawable(null);
             photos.remove(toRemove);
         }
-
     }
 
     private void initiateMyCommunityPopup() {
@@ -275,17 +270,17 @@ public class NewPostActivity extends FragmentActivity {
         }
 
         Log.d(this.getClass().getSimpleName(), "doPost: communityId=" + communityId + " title=" + title);
-        AppController.getApi().setQuestion(new NewPost(communityId, title, content, isPhoto), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
+        AppController.getApi().setQuestion(new NewPost(communityId, title, content, (photos.size() > 0)), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
                 postSuccess = true;
 
-                if (photos.size()>0) {
-                    for (File singlePhoto : photos) {
-                        uploadPhoto(postResponse.getId(), singlePhoto);
-                    }
+                if (photos.size() > 0) {
+                    uploadPhotos(postResponse.getId());
                 }
+
                 onBackPressed();
+                finish();
                 Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_LONG).show();
 
                 /*  Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
@@ -303,20 +298,21 @@ public class NewPostActivity extends FragmentActivity {
         });
     }
 
-    private void uploadPhoto(String postId,File photo) {
-       // File photo = new File(ImageUtil.getRealPathFromUri(this, selectedImageUri));
-        TypedFile typedFile = new TypedFile("application/octet-stream", photo);
-        AppController.getApi().uploadPostPhoto(postId, typedFile, new Callback<Response>() {
-            @Override
-            public void success(Response array, retrofit.client.Response response) {
+    private void uploadPhotos(String postId) {
+        for (File photo : photos) {
+            TypedFile typedFile = new TypedFile("application/octet-stream", photo);
+            AppController.getApi().uploadPostPhoto(postId, typedFile, new Callback<Response>() {
+                @Override
+                public void success(Response array, retrofit.client.Response response) {
 
-            }
+                }
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace(); //to see if you have errors
-            }
-        });
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    retrofitError.printStackTrace(); //to see if you have errors
+                }
+            });
+        }
     }
 
     @Override
