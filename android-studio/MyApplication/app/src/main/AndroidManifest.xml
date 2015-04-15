@@ -61,7 +61,9 @@
         <activity
             android:name=".activity.SignupDetailActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".activity.TermsActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="org.acra.CrashReportDialog"
             android:theme="@android:style/Theme.Dialog"
             android:launchMode="singleInstance"

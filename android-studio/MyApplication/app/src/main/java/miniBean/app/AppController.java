@@ -80,6 +80,7 @@ public class AppController extends Application {
     }
 
     private static UserVM getUser() {
+        /*
         if (user == null) {
             AppController.getApi().getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
                 @Override
@@ -93,6 +94,7 @@ public class AppController extends Application {
                 }
             });
         }
+        */
         return user;
     }
 
