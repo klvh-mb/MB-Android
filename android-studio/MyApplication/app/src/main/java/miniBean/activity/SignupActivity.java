@@ -2,16 +2,17 @@
 package miniBean.activity;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -34,7 +35,7 @@ public class SignupActivity extends AbstractLoginActivity {
     private ImageView facebookButton;
     private TextView errorMessage;
     private ProgressBar spinner;
-
+    private CheckBox termsCheckbox;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,17 @@ public class SignupActivity extends AbstractLoginActivity {
         errorMessage = (TextView) findViewById(R.id.errorMessage);
         spinner = (ProgressBar) findViewById(R.id.spinner);
         spinner.setVisibility(View.INVISIBLE);
+        termsCheckbox= (CheckBox) findViewById(R.id.termsCheckbox);
+
+        termsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    Intent intent=new Intent(SignupActivity.this,TermsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override

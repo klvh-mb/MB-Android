@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,6 +44,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
+import miniBean.adapter.EmoListAdapter;
 import miniBean.adapter.PopupPageListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
@@ -53,6 +57,7 @@ import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
+import miniBean.viewmodel.EmoticonVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -60,6 +65,7 @@ import retrofit.mime.TypedFile;
 
 public class DetailActivity extends FragmentActivity {
 
+    private final Integer SELECT_PICTURE = 1;
     private FrameLayout mainFrameLayout;
     private Button pageButton;
     private ImageButton backButton, nextButton;
@@ -72,7 +78,7 @@ public class DetailActivity extends FragmentActivity {
     private PopupPageListAdapter pageAdapter;
     private List<CommunityPostCommentVM> communityItems;
     private TextView questionText;
-    private PopupWindow commentPopup, paginationPopup;
+    private PopupWindow commentPopup, paginationPopup,emoPopup;
     private Boolean isBookmarked = false;
     private ProgressBar spinner;
     private TextView communityName, numPostViews, numPostComments;
@@ -83,6 +89,9 @@ public class DetailActivity extends FragmentActivity {
     private int noOfComments;
     private int curPage = 1;
     private CommunityPostCommentVM postVm = new CommunityPostCommentVM();
+
+    private String emoText;
+    private List<EmoticonVM> emoticonVMList;
 
     private TextView commentPostButton;
     private ImageView commentBrowseButton, commentCancelButton;
@@ -118,9 +127,9 @@ public class DetailActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 Long commId = getIntent().getLongExtra("commId", 0L);
-                Intent intent = new Intent(DetailActivity.this,CommunityActivity.class);
+                Intent intent = new Intent(DetailActivity.this, CommunityActivity.class);
                 intent.putExtra("flag", "FromDetailActivity");
-                intent.putExtra("id", commId+"");
+                intent.putExtra("id", commId + "");
                 startActivity(intent);
             }
         });
@@ -133,8 +142,7 @@ public class DetailActivity extends FragmentActivity {
         });
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        //getActionBar().setCustomView(R.layout.detail_actionbar);
-
+        // getActionBar().setCustomView(R.layout.detail_actionbar,);
         getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.detail_actionbar, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
@@ -407,6 +415,14 @@ public class DetailActivity extends FragmentActivity {
                 }
             }
 
+            ImageView emoBrowseImage;
+            emoBrowseImage = (ImageView) layout.findViewById(R.id.emoImage);
+            emoBrowseImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        emoPopup();
+                }
+            });
             Log.d(this.getClass().getSimpleName(), "initiateCommentPopup: " + selectedImagePath);
         } catch (Exception e) {
             e.printStackTrace();
@@ -702,4 +718,64 @@ public class DetailActivity extends FragmentActivity {
             }
         });
     }
+
+    private void emoPopup() {
+        mainFrameLayout.getForeground().setAlpha(20);
+        mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
+
+        try {
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) DetailActivity.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.emo_popup_window,
+                    (ViewGroup) findViewById(R.id.popupElement));
+
+            emoPopup = new PopupWindow(layout,400,270,true);
+
+            getEmoticons();
+
+            emoticonVMList=new ArrayList<EmoticonVM>();
+
+            EmoListAdapter emoListAdapter=new EmoListAdapter(this,emoticonVMList);
+
+            GridView gridView= (GridView) layout.findViewById(R.id.emoGrid);
+            gridView.setAdapter(emoListAdapter);
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    emoText=emoticonVMList.get(i).getCode();
+                    System.out.println("text:::"+emoText);
+                    commentEditText.append(emoText);
+                    emoPopup.dismiss();
+                }
+            });
+
+            emoPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
+            emoPopup.setOutsideTouchable(false);
+            emoPopup.setFocusable(true);
+            emoPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getEmoticons(){
+        AppController.getApi().getEmoticons(AppController.getInstance().getSessionId(),new Callback<List<EmoticonVM>>() {
+            @Override
+            public void success(List<EmoticonVM> emoticonVMs, Response response) {
+                emoticonVMList.addAll(emoticonVMs);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+
+            }
+        });
+    }
+
 }

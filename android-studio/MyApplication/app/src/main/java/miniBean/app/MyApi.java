@@ -10,6 +10,7 @@ import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
+import miniBean.viewmodel.EmoticonVM;
 import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.NewPost;
@@ -201,6 +202,8 @@ public interface MyApi {
     //
 
 
+    @GET("/image/getEmoticons")
+    public void getEmoticons(@Query("key") String key, Callback<List<EmoticonVM>> cb);
 
 }
 

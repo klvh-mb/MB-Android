@@ -34,6 +34,13 @@
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/browse"
                 android:layout_gravity="bottom" />
+            <ImageView
+                android:id="@+id/emoImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/browse"
+                android:layout_gravity="bottom" />
 
             <ImageView
                 android:id="@+id/commentImage1"
