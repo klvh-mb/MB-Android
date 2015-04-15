@@ -50,6 +50,7 @@ import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
+import miniBean.util.SharingUtil;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunityPostCommentVM;
@@ -65,7 +66,7 @@ public class DetailActivity extends FragmentActivity {
     private FrameLayout mainFrameLayout;
     private Button pageButton;
     private ImageButton backButton, nextButton;
-    private ImageView backImage, bookmarkAction;
+    private ImageView backImage, whatsappAction, bookmarkAction;
     private TextView commentEdit;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
@@ -80,6 +81,8 @@ public class DetailActivity extends FragmentActivity {
     private TextView communityName, numPostViews, numPostComments;
     private ImageView communityIcon;
     private EditText commentEditText;
+
+    private long postId, commId;
     private int noOfComments;
     private int curPage = 1;
     private CommunityPostCommentVM postVm = new CommunityPostCommentVM();
@@ -148,24 +151,11 @@ public class DetailActivity extends FragmentActivity {
         //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         //getActionBar().setTitle("Details");
 
+        postId = getIntent().getLongExtra("postId", 0L);
+        commId = getIntent().getLongExtra("commId", 0L);
+
+        whatsappAction = (ImageView) findViewById(R.id.whatsappAction);
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
-
-        final Long postID = getIntent().getLongExtra("postId", 0L);
-
-        bookmarkAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isBookmarked) {
-                    bookmark(postID);
-                    bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
-                    isBookmarked = true;
-                } else {
-                    unbookmark(postID);
-                    bookmarkAction.setImageResource(R.drawable.ic_bookmark);
-                    isBookmarked = false;
-                }
-            }
-        });
 
         communityItems = new ArrayList<>();
         backImage = (ImageView) findViewById(R.id.backImage);
@@ -182,13 +172,9 @@ public class DetailActivity extends FragmentActivity {
     private void getQnaDetail() {
         AnimationUtil.show(spinner);
 
-        Intent intent = getIntent();
-        Long postID = intent.getLongExtra("postId", 0L);
-        Long commID = intent.getLongExtra("commId", 0L);
-
-        AppController.getApi().qnaLanding(postID, commID, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
+        AppController.getApi().qnaLanding(postId, commId, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
             @Override
-            public void success(CommunityPostVM post, Response response) {
+            public void success(final CommunityPostVM post, Response response) {
                 communityName.setText(post.getCn());
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");
@@ -228,6 +214,29 @@ public class DetailActivity extends FragmentActivity {
                 }
 
                 setPageButtons(curPage);
+
+                // actionbar actions...
+                whatsappAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharingUtil.shareToWhatapp(post, DetailActivity.this);
+                    }
+                });
+
+                bookmarkAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!isBookmarked) {
+                            bookmark(post.getId());
+                            bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
+                            isBookmarked = true;
+                        } else {
+                            unbookmark(post.getId());
+                            bookmarkAction.setImageResource(R.drawable.ic_bookmark);
+                            isBookmarked = false;
+                        }
+                    }
+                });
 
                 AnimationUtil.cancel(spinner);
             }

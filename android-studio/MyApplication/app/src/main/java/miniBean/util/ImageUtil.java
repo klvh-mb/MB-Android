@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LevelListDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -264,5 +266,13 @@ public class ImageUtil {
             return null;
         }
         return bp;
+    }
+
+    public static Drawable getEmptyDrawable() {
+        LevelListDrawable d = new LevelListDrawable();
+        Drawable empty = AppController.getInstance().getResources().getDrawable(R.drawable.empty);
+        d.addLevel(0, 0, empty);
+        d.setBounds(0, 0, empty.getIntrinsicWidth(), empty.getIntrinsicHeight());
+        return d;
     }
 }

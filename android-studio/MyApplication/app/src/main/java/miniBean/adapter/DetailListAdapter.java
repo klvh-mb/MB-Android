@@ -45,6 +45,7 @@ import miniBean.util.ActivityUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
+import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import retrofit.Callback;
@@ -223,7 +224,7 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
             }
         }
 
-        Spanned spanned = activityUtil.getDisplayTextFromHtml(item.getD(), this);
+        Spanned spanned = HtmlUtil.fromHtml(item.getD(), this);
         postBodyText.setText(spanned);
         postBodyText.setMovementMethod(LinkMovementMethod.getInstance());
 

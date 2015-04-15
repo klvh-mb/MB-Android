@@ -1,0 +1,84 @@
+package miniBean.util;
+
+import android.content.Context;
+import android.content.Intent;
+import android.text.Html;
+import android.widget.Toast;
+
+import miniBean.R;
+import miniBean.app.AppController;
+import miniBean.viewmodel.CommunityPostVM;
+
+/**
+ * Created by keithlei on 3/16/15.
+ */
+public class SharingUtil {
+
+    public static enum SharingType {
+        WHATSAPP
+    }
+
+    public static final String SHARING_MESSAGE_NOTE = AppController.getInstance().getString(R.string.sharing_message_note);
+    //public static final String SHARING_MESSAGE_NOTE = AppController.getInstance().getString(R.string.sharing_message_note) + HtmlUtil.LINE_BREAK + createAndroidAppDownloadUrl();
+
+    private SharingUtil() {}
+
+    public static void shareToWhatapp(CommunityPostVM post, Context context) {
+        shareTo(createMessage(post), SharingType.WHATSAPP, context);
+    }
+
+    /**
+     * http://www.whatsapp.com/faq/en/android/28000012
+     *
+     * @param message
+     * @param type
+     * @param context
+     */
+    public static void shareTo(String message, SharingType type, Context context) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(message).toString());
+        sendIntent.setType("text/plain");
+
+        switch(type) {
+            case WHATSAPP:
+                sendIntent.setPackage("com.whatsapp");
+                break;
+        }
+
+        try {
+            context.startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(AppController.getInstance(),
+                    getSharingTypeName(type) + AppController.getInstance().getString(R.string.sharing_app_not_installed),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static String createMessage(CommunityPostVM post) {
+        String message = post.getPtl();
+        String url = createPostLandingUrl(post);
+        message = message +
+                HtmlUtil.LINE_BREAK +
+                url +
+                HtmlUtil.LINE_BREAK +
+                SHARING_MESSAGE_NOTE;
+        return message;
+    }
+
+    private static String getSharingTypeName(SharingType type) {
+        switch(type) {
+            case WHATSAPP:
+                return "Whatsapp";
+        }
+        return "";
+    }
+
+    public static String createPostLandingUrl(CommunityPostVM post) {
+        return AppController.BASE_URL + "/#!/qna-landing/id/" + post.getId() + "/communityId/" + post.getCid();
+    }
+
+    public static String createAndroidAppDownloadUrl() {
+        return AppController.BASE_URL + "/apps/android";
+    }
+}
