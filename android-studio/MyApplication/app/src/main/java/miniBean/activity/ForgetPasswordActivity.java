@@ -7,7 +7,7 @@ import android.webkit.WebView;
 import miniBean.R;
 import miniBean.util.MyWebViewClient;
 
-public class TermsActivity extends FragmentActivity {
+public class ForgetPasswordActivity extends FragmentActivity {
 
     private WebView webView;
 
@@ -21,11 +21,12 @@ public class TermsActivity extends FragmentActivity {
         webView.setWebViewClient(new MyWebViewClient());
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(MyWebViewClient.TERMS_URL);
+        webView.loadUrl(MyWebViewClient.FOGET_PASSWORD_URL);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        LoginActivity.startLoginActivity(this);
     }
 }

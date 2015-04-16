@@ -132,26 +132,27 @@
                 android:textStyle="bold" />
          </LinearLayout>
         <TextView
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="忘記密碼"
             android:textColor="#ffffff"
             android:textSize="16dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/mainComponent"/>
+            android:layout_below="@+id/mainComponent"
+            android:padding="5dp"
+            android:layout_margin="20dp"
+            android:id="@+id/forgetPasswordText" />
          <TextView
-             android:layout_marginTop="25dp"
-             android:layout_marginRight="20dp"
-            android:layout_width="wrap_content"
+             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="新會員注册"
             android:textColor="#ffffff"
             android:textSize="16dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/mainComponent"
-             android:id="@+id/signupText" />
+             android:id="@+id/signupText"
+             android:padding="5dp"
+             android:layout_margin="20dp" />
 
     </RelativeLayout>
 

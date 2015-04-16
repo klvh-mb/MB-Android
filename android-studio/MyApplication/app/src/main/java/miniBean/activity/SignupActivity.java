@@ -38,7 +38,8 @@ public class SignupActivity extends AbstractLoginActivity {
     private ImageView facebookButton;
     private TextView errorMessage;
     private ProgressBar spinner;
-    private CheckBox termsCheckbox;
+    private CheckBox termsCheckbox, privacyCheckbox;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +58,26 @@ public class SignupActivity extends AbstractLoginActivity {
         signupButton = (Button) findViewById(R.id.signupButton);
         facebookButton = (ImageView) findViewById(R.id.facebookButton);
         errorMessage = (TextView) findViewById(R.id.errorMessage);
+        termsCheckbox = (CheckBox) findViewById(R.id.termsCheckbox);
+        privacyCheckbox = (CheckBox) findViewById(R.id.privacyCheckbox);
         spinner = (ProgressBar) findViewById(R.id.spinner);
         spinner.setVisibility(View.INVISIBLE);
-        termsCheckbox= (CheckBox) findViewById(R.id.termsCheckbox);
 
         termsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     Intent intent=new Intent(SignupActivity.this,TermsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        privacyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    Intent intent=new Intent(SignupActivity.this,PrivacyActivity.class);
                     startActivity(intent);
                 }
             }
@@ -138,7 +150,7 @@ public class SignupActivity extends AbstractLoginActivity {
             signupSuccessPopup.dismiss();
             signupSuccessPopup = null;
         }
-        LoginActivity.startLoginActivity(SignupActivity.this);
+        LoginActivity.startLoginActivity(this);
     }
 
     private void showErrorMessage(boolean show) {

@@ -221,36 +221,6 @@ public class SignupDetailActivity extends Activity {
         });
     }
 
-    private String getParentType(RadioButton radioButton) {
-        if (radioButton == null)
-            return "";
-
-        if (radioButton.getText().toString().equals(getString(R.string.signup_details_mom))) {
-            return "MOM";
-        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_dad))) {
-            return "DAD";
-        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_soon_mom))) {
-            return "SOON_MOM";
-        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_soon_dad))) {
-            return "SOON_DAD";
-        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_not_parent))) {
-            return "NA";
-        }
-        return "";
-    }
-
-    private String getGender(RadioButton radioButton) {
-        if (radioButton == null)
-            return "";
-
-        if (radioButton.getText().toString().equals(getString(R.string.signup_details_boy))) {
-            return "Male";
-        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_girl))) {
-            return "Female";
-        }
-        return "";
-    }
-
     private void submitDetails() {
         String displayname = "";
 
@@ -302,6 +272,7 @@ public class SignupDetailActivity extends Activity {
                     });
         }
     }
+
     private void initNewUser() {
         Log.d(this.getClass().getSimpleName(), "initNewUser");
         AppController.getApi().initNewUser(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
@@ -317,6 +288,36 @@ public class SignupDetailActivity extends Activity {
                 error.printStackTrace();
             }
         });
+    }
+
+    private String getParentType(RadioButton radioButton) {
+        if (radioButton == null)
+            return "";
+
+        if (radioButton.getText().toString().equals(getString(R.string.signup_details_mom))) {
+            return "MOM";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_dad))) {
+            return "DAD";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_soon_mom))) {
+            return "SOON_MOM";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_soon_dad))) {
+            return "SOON_DAD";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_not_parent))) {
+            return "NA";
+        }
+        return "";
+    }
+
+    private String getGender(RadioButton radioButton) {
+        if (radioButton == null)
+            return "";
+
+        if (radioButton.getText().toString().equals(getString(R.string.signup_details_boy))) {
+            return "Male";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_girl))) {
+            return "Female";
+        }
+        return "";
     }
 
     private void setMoreDetailsVisible(int id) {

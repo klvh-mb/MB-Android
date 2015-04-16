@@ -62,7 +62,13 @@
             android:name=".activity.SignupDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.TermsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PrivacyActivity"
             android:screenOrientation="portrait" />
         <activity android:name="org.acra.CrashReportDialog"
             android:theme="@android:style/Theme.Dialog"

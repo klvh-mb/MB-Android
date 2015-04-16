@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -29,6 +30,7 @@ public class LoginActivity extends AbstractLoginActivity {
     private TextView login;
     private ImageView fbLoginButton;
     private TextView signup;
+    private TextView forgetPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class LoginActivity extends AbstractLoginActivity {
         fbLoginButton = (ImageView) findViewById(R.id.buttonFbLogin);
         login = (TextView) findViewById(R.id.buttonLogin);
         signup = (TextView) findViewById(R.id.signupText);
+        forgetPassword = (TextView) findViewById(R.id.forgetPasswordText);
 
         spinner = (ProgressBar)findViewById(R.id.spinner);
 
@@ -81,6 +84,14 @@ public class LoginActivity extends AbstractLoginActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this,SignupActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
                 startActivity(intent);
             }
         });
