@@ -17,6 +17,7 @@ import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.PostResponse;
 import miniBean.viewmodel.ProfileVM;
+import miniBean.viewmodel.UserProfileDataVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.client.Response;
@@ -204,6 +205,10 @@ public interface MyApi {
 
     @GET("/image/getEmoticons")
     public void getEmoticons(@Query("key") String key, Callback<List<EmoticonVM>> cb);
+
+    @POST("/updateUserProfileData")
+    public void updateUserProfileData(@Body UserProfileDataVM userProfileDataVM, @Query("key") String key, Callback<UserVM> cb);
+
 
 }
 

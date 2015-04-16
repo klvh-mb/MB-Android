@@ -49,6 +49,7 @@
                     android:layout_alignBottom="@+id/userCoverPic"
                     android:layout_margin="10dp" />
 
+
                 <RelativeLayout
                     android:layout_marginTop="6dp"
                     android:layout_width="fill_parent"
@@ -95,18 +96,35 @@
                         android:singleLine="true"
                         android:gravity="center" />
 
+
                 </RelativeLayout>
 
+            </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/editLayout"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profilePic">
+            <Button
+                android:id="@+id/editButton"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:textSize="10dp"
+                android:background="@drawable/rect_border_bottom"
+                android:text="Edit"
+                android:padding="5dp"/>
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_below="@+id/profilePic"
-                android:layout_marginTop="20dp"
+                android:layout_below="@+id/editLayout"
                 android:background="#ffffff"
                 android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
+                >
 
                 <View
                     android:layout_width="wrap_content"
