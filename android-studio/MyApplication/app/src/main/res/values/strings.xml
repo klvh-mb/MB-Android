@@ -38,6 +38,7 @@
     <string name="signup_success_note">註: 若您沒有收到會員認證電郵，請檢查廣告信件匣，部分電郵信箱會誤判我們所發出的郵件為廣告電郵</string>
     <string name="signup_error_email_unverified">電郵尚未認證，請登入電郵並按認證連結 - </string>
     <string name="signup_error_email_already_exists">電郵已被登記</string>
+    <string name="signup_error_password_min_char">密碼最小4個字</string>
     <string name="signup_error_password_not_identical">密碼不同</string>
     <string name="signup_error_please_check">請檢查輸入資料</string>
     <string name="signup_error_field_required">必須填寫</string>
@@ -63,6 +64,10 @@
     <string name="signup_details_girl">BB女</string>
     <string name="signup_details_text_birthday">生日 : </string>
     <string name="signup_details_complete">完成! 立刻進入</string>
+    <string name="signup_details_error_displayname_not_entered">請填寫顯示名稱</string>
+    <string name="signup_details_error_location_not_entered">請選擇地區</string>
+    <string name="signup_details_error_status_not_entered">請選擇您現在是</string>
+    <string name="signup_details_error_baby_not_entered">請填寫小寶寶性別，出生日期</string>
 
     <!-- Main -->
     <string name="tabset_frontpage">首頁</string>

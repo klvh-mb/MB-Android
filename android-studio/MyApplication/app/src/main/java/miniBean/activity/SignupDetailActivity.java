@@ -1,4 +1,3 @@
-
 package miniBean.activity;
 
 import android.app.Activity;
@@ -19,6 +18,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.parceler.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -220,54 +221,69 @@ public class SignupDetailActivity extends Activity {
         });
     }
 
-    private void submitDetails() {
-        Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year1=" + year1 + " day1=" + day1 + " month1=" + month1);
-        Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year2=" + year2 + " day2=" + day2 + " month2=" + month2);
-        Log.d(SignupDetailActivity.this.getClass().getSimpleName(), "finshButton.onClick: year3=" + year3 + " day3=" + day3 + " month3=" + month3);
+    private String getParentType(RadioButton radioButton) {
+        if (radioButton == null)
+            return "";
 
+        if (radioButton.getText().toString().equals(getString(R.string.signup_details_mom))) {
+            return "MOM";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_dad))) {
+            return "DAD";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_soon_mom))) {
+            return "SOON_MOM";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_soon_dad))) {
+            return "SOON_DAD";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_not_parent))) {
+            return "NA";
+        }
+        return "";
+    }
+
+    private String getGender(RadioButton radioButton) {
+        if (radioButton == null)
+            return "";
+
+        if (radioButton.getText().toString().equals(getString(R.string.signup_details_boy))) {
+            return "Male";
+        } else if (radioButton.getText().toString().equals(getString(R.string.signup_details_girl))) {
+            return "Female";
+        }
+        return "";
+    }
+
+    private void submitDetails() {
         String displayname = "";
 
         displayname = displayName.getText().toString();
 
         if(parentClicked) {
-            if (parent.getText().toString().equals(getString(R.string.signup_details_mom))) {
-                parenttype = "MOM";
-            } else if (parent.getText().toString().equals(getString(R.string.signup_details_dad))) {
-                parenttype = "DAD";
-            } else if (parent.getText().toString().equals(getString(R.string.signup_details_soon_mom))) {
-                parenttype = "SOON_MOM";
-            } else if (parent.getText().toString().equals(getString(R.string.signup_details_soon_dad))) {
-                parenttype = "SOON_DAD";
-            } else if (parent.getText().toString().equals(getString(R.string.signup_details_not_parent))) {
-                parenttype = "NA";
-            }
+            parenttype = getParentType(parent);
 
-
-                if (parenttype.equals("NA")) {
-                    babynum = "0";
-                } else {
-                    babynum = babySpinner.getSelectedItem().toString();
-                    if (babynum.equals("1")) {
-                        if(babySelected){
-                        babygen1 = baby1.getText().toString();
-                        }else{
-                            Toast.makeText(this,"select gender1",Toast.LENGTH_LONG).show();
-                        }
-
-                    } else if (babynum.equals("2")) {
-                        babygen1 = baby1.getText().toString();
-                        babygen2 = baby2.getText().toString();
-                    } else if (babynum.equals("3")) {
-                        babygen1 = baby1.getText().toString();
-                        babygen2 = baby2.getText().toString();
-                        babygen3 = baby3.getText().toString();
-                    }
+            if (parenttype.equals("NA")) {
+                babynum = "0";
+            } else {
+                babynum = babySpinner.getSelectedItem().toString();
+                if (babynum.equals("1")) {
+                    babygen1 = getGender(baby1);
+                } else if (babynum.equals("2")) {
+                    babygen1 = getGender(baby1);
+                    babygen2 = getGender(baby2);
+                } else if (babynum.equals("3")) {
+                    babygen1 = getGender(baby1);
+                    babygen2 = getGender(baby2);
+                    babygen3 = getGender(baby3);
                 }
             }
-
+        }
 
         int defaultParentBirthYear = 9999;
-        if (isValidate()) {
+        if (isValid()) {
+            Log.d(this.getClass().getSimpleName(),
+                    "signupInfo: \n displayname="+displayname+"\n locationId="+locationId+"\n parentType="+parenttype+"\n numBaby="+babynum+
+                            "\n babyGen1="+babygen1+"\n babyBirthday1="+year1+"-"+month1+"-"+day1+
+                            "\n babyGen2="+babygen2+"\n babyBirthday2="+year2+"-"+month2+"-"+day2+
+                            "\n babyGen3="+babygen3+"\n babyBirthday3="+year3+"-"+month3+"-"+day3);
+
             AppController.getApi().signUpInfo(displayname, defaultParentBirthYear, locationId, parenttype, babynum,
                     babygen1, babygen2, babygen3,
                     year1, month1, day1, year2, month2, day2, year3, month3, day3,
@@ -411,37 +427,52 @@ public class SignupDetailActivity extends Activity {
     private int getMonth(int month) {
         return month + 1;
     }
-    private boolean isValidate(){
 
-        if(!Validation.hasText(displayName)){
-            Toast.makeText(this,"enter display name...",Toast.LENGTH_LONG).show();
-            return false;
+    private boolean isValid(){
+        boolean valid = true;
+        String error = "";
+        if (!Validation.hasText(displayName)) {
+            error = appendError(error, getString(R.string.signup_details_error_displayname_not_entered));
+            valid = false;
         }
-        if(locationId==-1){
-            Toast.makeText(this,"Select location...",Toast.LENGTH_LONG).show();
-            return false;
+        if (locationId == -1) {
+            error = appendError(error, getString(R.string.signup_details_error_location_not_entered));
+            valid = false;
         }
-        if(!parentClicked){
-            Toast.makeText(this,"Select parent...",Toast.LENGTH_LONG).show();
-            return false;
+        if (!parentClicked) {
+            error = appendError(error, getString(R.string.signup_details_error_status_not_entered));
+            valid = false;
         }
-        if(parenttype.equals("NA")){
-            return true;
-        }
-
-        if(!parenttype.equals("NA")){
-            System.out.println("baby 1::"+babynum);
-            if(babynum=="1"){
-                System.out.println("baby 2::"+babynum);
-                if(day1==""){
-                    Toast.makeText(this,"Select date 1...",Toast.LENGTH_LONG).show();
-                }else{
-                    return true;
+        if (!parenttype.equals("NA")) {
+            int num = StringUtils.isEmpty(babynum)? 0 : Integer.parseInt(babynum);
+            if (num >= 1) {
+                if (StringUtils.isEmpty(day1) || StringUtils.isEmpty(babygen1)) {
+                    error = appendError(error, getString(R.string.signup_details_error_baby_not_entered));
+                    valid = false;
+                }
+            }
+            if (num >= 2) {
+                if (StringUtils.isEmpty(day2) || StringUtils.isEmpty(babygen2)) {
+                    error = appendError(error, getString(R.string.signup_details_error_baby_not_entered));
+                    valid = false;
+                }
+            }
+            if (num >= 3) {
+                if (StringUtils.isEmpty(day3) || StringUtils.isEmpty(babygen3)) {
+                    error = appendError(error, getString(R.string.signup_details_error_baby_not_entered));
+                    valid = false;
                 }
             }
         }
-        return false;
+
+        if (!valid)
+            Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        return valid;
     }
 
-
+    private String appendError(String error, String newError) {
+        if (!StringUtils.isEmpty(error))
+            error += "\n";
+        return error + newError;
+    }
 }

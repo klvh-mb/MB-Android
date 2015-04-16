@@ -312,7 +312,7 @@
                                 android:layout_weight="3" />
 
                             <LinearLayout
-                                android:id="@+id/sexRadio1"
+                                android:id="@+id/babyGenderRadioLayout1"
                                 android:layout_toRightOf="@+id/babyGender1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -376,7 +376,7 @@
                                 android:id="@+id/birthday1"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:layout_below="@+id/sexRadio1"
+                                android:layout_below="@+id/babyGenderRadioLayout1"
                                 android:src="@drawable/calendar"
                                 android:layout_marginLeft="15dp"
                                 android:layout_toRightOf="@+id/birthdayText1"
@@ -412,7 +412,7 @@
                                 android:layout_weight="3" />
 
                             <LinearLayout
-                                android:id="@+id/sexRadio2"
+                                android:id="@+id/babyGenerRadioLayout2"
                                 android:layout_toRightOf="@+id/babyGender2"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -476,7 +476,7 @@
                                 android:id="@+id/birthday2"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:layout_below="@+id/sexRadio2"
+                                android:layout_below="@+id/babyGenerRadioLayout2"
                                 android:src="@drawable/calendar"
                                 android:layout_marginLeft="15dp"
                                 android:layout_toRightOf="@+id/birthdayText2"
@@ -512,7 +512,7 @@
                                 android:layout_weight="3" />
 
                             <LinearLayout
-                                android:id="@+id/sexRadio3"
+                                android:id="@+id/babyGenderRadioLayout3"
                                 android:layout_toRightOf="@+id/babyGender3"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -576,7 +576,7 @@
                                 android:id="@+id/birthday3"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:layout_below="@+id/sexRadio3"
+                                android:layout_below="@+id/babyGenderRadioLayout3"
                                 android:src="@drawable/calendar"
                                 android:layout_marginLeft="15dp"
                                 android:layout_toRightOf="@+id/birthdayText3"

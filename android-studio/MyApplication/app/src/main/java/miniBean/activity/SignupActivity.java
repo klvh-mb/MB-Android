@@ -20,8 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -71,10 +74,7 @@ public class SignupActivity extends AbstractLoginActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean valid = showValidation();
-                boolean passwordValid = passwordCompare(password.getText().toString(),repeatPassword.getText().toString());
-
-                if (valid && passwordValid) {
+                if (isValid()) {
                     signUp(lastName.getText().toString(), firstName.getText().toString(), email.getText().toString(), password.getText().toString(), repeatPassword.getText().toString());
                 } else {
                     Toast.makeText(SignupActivity.this,getString(R.string.signup_error_please_check),Toast.LENGTH_LONG).show();
@@ -182,7 +182,7 @@ public class SignupActivity extends AbstractLoginActivity {
         }
     }
 
-    private boolean showValidation() {
+    private boolean isValid() {
         boolean valid = true;
         if (!Validation.hasText(lastName))
             valid = false;
@@ -194,17 +194,21 @@ public class SignupActivity extends AbstractLoginActivity {
             valid = false;
         if (!Validation.hasText(repeatPassword))
             valid = false;
+        if (!isPasswordValid(password.getText().toString(),repeatPassword.getText().toString()))
+            valid = false;
         return valid;
     }
 
-    private boolean passwordCompare(String password,String rePassword) {
-        if(password.equals(rePassword)){
-            repeatPassword.setError(null);
-            return true;
-        } else {
+    private boolean isPasswordValid(String password,String rePassword) {
+        if (password.length() < DefaultValues.MIN_CHAR_SIGNUP_PASSWORD) {
+            repeatPassword.setError(getString(R.string.signup_error_password_min_char));
+            return false;
+        } else if (StringUtils.isEmpty(password) || StringUtils.isEmpty(rePassword) || !password.equals(rePassword)) {
             repeatPassword.setError(getString(R.string.signup_error_password_not_identical));
             return false;
         }
+        repeatPassword.setError(null);
+        return true;
     }
 }
 
