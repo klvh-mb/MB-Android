@@ -1,7 +1,5 @@
 package miniBean.fragement;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -25,6 +24,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import miniBean.R;
+import miniBean.activity.EditActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
@@ -51,6 +51,7 @@ public class ProfileFragment extends Fragment {
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
     private boolean coverPhotoClicked = false, profilePhotoClicked=false;
+    private Button editButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +71,16 @@ public class ProfileFragment extends Fragment {
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
         userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
+        editButton= (Button) view.findViewById(R.id.editButton);
         userInfoLayout.setVisibility(View.GONE);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), EditActivity.class);
+                startActivity(intent);
+            }
+        });
 
         editCoverImage.setOnClickListener(new View.OnClickListener() {
             @Override
