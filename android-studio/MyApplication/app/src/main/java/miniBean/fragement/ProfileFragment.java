@@ -24,7 +24,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 import miniBean.R;
-import miniBean.activity.EditActivity;
+import miniBean.activity.EditProfileActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getActivity(), EditActivity.class);
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(intent);
             }
         });

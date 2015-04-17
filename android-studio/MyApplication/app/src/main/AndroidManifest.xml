@@ -35,25 +35,28 @@
             android:noHistory="true"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".activity.DetailActivity"
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CommunityActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.NewsfeedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewPostActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.UserProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.NewsfeedActivity"
+            android:name=".activity.EditProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyProfileActionActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.NewPostActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SignupActivity"

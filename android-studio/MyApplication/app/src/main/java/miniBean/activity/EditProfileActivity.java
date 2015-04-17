@@ -22,7 +22,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class EditActivity extends FragmentActivity {
+public class EditProfileActivity extends FragmentActivity {
 
     private Spinner locationSpinner;
     private Button finishButton;
@@ -41,7 +41,7 @@ public class EditActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.edit_detail_activity);
+        setContentView(R.layout.edit_profile_activity);
 
 
         //getActionBar().hide();
@@ -117,7 +117,7 @@ public class EditActivity extends FragmentActivity {
                     locationVMList.addAll(locationVMs);
                 }
 
-                ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(EditActivity.this, android.R.layout.simple_spinner_item, locations);
+                ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(EditProfileActivity.this, android.R.layout.simple_spinner_item, locations);
                 locationSpinner.setAdapter(locationAdapter);
             }
 
