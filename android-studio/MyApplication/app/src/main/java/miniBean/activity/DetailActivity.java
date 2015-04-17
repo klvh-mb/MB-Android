@@ -467,7 +467,7 @@ public class DetailActivity extends FragmentActivity {
             if (bitmap != null) {
                 setCommentImage(bitmap);
             } else {
-                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.photo_not_found), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.photo_size_too_big), Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.photo_not_found), Toast.LENGTH_SHORT).show();
@@ -486,11 +486,13 @@ public class DetailActivity extends FragmentActivity {
 
         AnimationUtil.show(spinner);
 
+        final boolean withPhotos = photos.size() > 0;
+
         Log.d(this.getClass().getSimpleName(), "doComment: postId="+getIntent().getLongExtra("postId", 0L)+" comment="+comment.substring(0, Math.min(5, comment.length())));
-        AppController.getApi().answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, true), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
+        AppController.getApi().answerOnQuestion(new CommentPost(getIntent().getLongExtra("postId", 0L), comment, withPhotos), AppController.getInstance().getSessionId(), new Callback<CommentResponse>() {
             @Override
             public void success(CommentResponse array, Response response) {
-                if (photos.size() > 0) {
+                if (withPhotos) {
                     uploadPhotos(array.getId());
                 } else {
                     getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page

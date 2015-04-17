@@ -176,7 +176,7 @@ public class NewPostActivity extends FragmentActivity {
             if (bitmap != null) {
                 setPostImage(bitmap);
             } else {
-                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.photo_not_found), Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.photo_size_too_big), Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.photo_not_found), Toast.LENGTH_SHORT).show();
@@ -269,13 +269,15 @@ public class NewPostActivity extends FragmentActivity {
             return;
         }
 
+        final boolean withPhotos = photos.size() > 0;
+
         Log.d(this.getClass().getSimpleName(), "doPost: communityId=" + communityId + " title=" + title);
-        AppController.getApi().setQuestion(new NewPost(communityId, title, content, (photos.size() > 0)), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
+        AppController.getApi().setQuestion(new NewPost(communityId, title, content, withPhotos), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
             @Override
             public void success(PostResponse postResponse, Response response) {
                 postSuccess = true;
 
-                if (photos.size() > 0) {
+                if (withPhotos) {
                     uploadPhotos(postResponse.getId());
                 }
 

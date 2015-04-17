@@ -9,7 +9,7 @@ public class NewPost {
     public NewPost(Long community_id, String questionTitle,String questionText, boolean withPhotos) {
         this.community_id = community_id;
         this.questionTitle = questionTitle;
-        this.questionText=questionText;
+        this.questionText = questionText;
         this.withPhotos = withPhotos;
         this.android = true;
     }
