@@ -1,6 +1,5 @@
 package miniBean.viewmodel;
 
-
 public class UserVM {
     public Long id;
     public String firstName;
@@ -10,7 +9,7 @@ public class UserVM {
     public String birthYear;
     public String gender;
     public String aboutMe;
-    // public Location location;
+    public LocationVM location;
     public Long noOfFriends;
     public int noOfGroups;
     public boolean isLoggedIn = false;
@@ -90,6 +89,14 @@ public class UserVM {
 
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
+    }
+
+    public LocationVM getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationVM location) {
+        this.location = location;
     }
 
     public Long getNoOfFriends() {

@@ -11,6 +11,7 @@ import android.util.Log;
 
 import miniBean.R;
 import miniBean.util.ImageUtil;
+import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -75,8 +76,15 @@ public class AppController extends Application {
     }
 
     public static synchronized boolean isUserAdmin() {
-        UserVM user = getUser();
-        return user != null && user.isAdmin();
+        if (user == null)
+            return false;
+        return user.isAdmin();
+    }
+
+    public static synchronized LocationVM getUserLocation() {
+        if (user == null)
+            return null;
+        return user.getLocation();
     }
 
     private static UserVM getUser() {
