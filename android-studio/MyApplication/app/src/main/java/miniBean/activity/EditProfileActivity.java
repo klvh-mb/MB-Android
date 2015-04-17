@@ -34,6 +34,8 @@ public class EditProfileActivity extends FragmentActivity {
 
     private int locationId = 1;
 
+    private int pos;
+
     public List<String> locations;
     private List<LocationVM> locationVMList;
 
@@ -63,7 +65,6 @@ public class EditProfileActivity extends FragmentActivity {
         locationVMList = new ArrayList<LocationVM>();
 
         setLocation();
-
 
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -119,6 +120,10 @@ public class EditProfileActivity extends FragmentActivity {
 
                 ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(EditProfileActivity.this, android.R.layout.simple_spinner_item, locations);
                 locationSpinner.setAdapter(locationAdapter);
+
+                pos=locationAdapter.getPosition(AppController.getUserLocation().getDisplayName());
+                System.out.println("pos::::::"+pos);
+                locationSpinner.setSelection(pos);
             }
 
             @Override
