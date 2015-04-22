@@ -109,13 +109,12 @@
             <Button
                 android:id="@+id/editButton"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:textSize="10dp"
-                android:background="@drawable/rect_border_bottom"
-                android:text="Edit"
-                android:padding="5dp"/>
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:textSize="14dp"
+                android:background="@drawable/rounded_corner_button"
+                android:text="@string/edit_user_info"
+                android:layout_marginRight="5dp" />
             </RelativeLayout>
 
             <RelativeLayout

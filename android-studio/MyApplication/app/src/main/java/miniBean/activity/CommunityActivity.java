@@ -28,15 +28,8 @@ public class CommunityActivity extends FragmentActivity {
         titleAction = (TextView) this.findViewById(R.id.title);
         editAction = (ImageView) this.findViewById(R.id.editAction);
 
-        Intent intent = getIntent();
-
-        System.out.println("flag comm::"+intent.getStringExtra("flag"));
-        if(intent.getStringExtra("flag") != null) {
-            System.out.println("flag:::::::" + intent.getStringExtra("flag"));
-        }
-
         Bundle bundle = new Bundle();
-        if(getIntent().getStringExtra("flag") != null) {
+        if (getIntent().getStringExtra("flag") != null) {
             bundle.putString("flag", (getIntent().getStringExtra("flag")));
         }
 

@@ -1,5 +1,6 @@
 package miniBean.activity;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -39,23 +41,27 @@ public class EditProfileActivity extends FragmentActivity {
     public List<String> locations;
     private List<LocationVM> locationVMList;
 
+    ImageView backImage;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.edit_profile_activity);
 
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getActionBar().setCustomView(R.layout.my_profile_action_actionbar);
 
-        //getActionBar().hide();
+        TextView titleText = (TextView) findViewById(R.id.title);
+        titleText.setText(getString(R.string.edit_user_info));
 
+        lastNameEdit = (EditText) findViewById(R.id.lastNameEditText);
+        firstNameEdit = (EditText) findViewById(R.id.firstNameEditText);
 
-        lastNameEdit= (EditText) findViewById(R.id.lastNameEditText);
-        firstNameEdit= (EditText) findViewById(R.id.firstNameEditText);
+        displayEmailText = (TextView) findViewById(R.id.displayEmailText);
+        aboutmeEdit = (EditText) findViewById(R.id.aboutmeEdit);
 
-        displayEmailText= (TextView) findViewById(R.id.displayemailText);
-        aboutmeEdit= (EditText) findViewById(R.id.aboutmeEdit);
-
-        profileDataVM=new UserProfileDataVM();
+        profileDataVM = new UserProfileDataVM();
 
         displayName = (EditText) findViewById(R.id.displaynameEdit);
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
@@ -79,14 +85,11 @@ public class EditProfileActivity extends FragmentActivity {
                 }
             }
 
-
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
-
 
         getUserInfo();
 
@@ -103,7 +106,13 @@ public class EditProfileActivity extends FragmentActivity {
             }
         });
 
-
+        ImageView backImage = (ImageView) this.findViewById(R.id.backImage);
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void setLocation() {
@@ -121,8 +130,7 @@ public class EditProfileActivity extends FragmentActivity {
                 ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(EditProfileActivity.this, android.R.layout.simple_spinner_item, locations);
                 locationSpinner.setAdapter(locationAdapter);
 
-                pos=locationAdapter.getPosition(AppController.getUserLocation().getDisplayName());
-                System.out.println("pos::::::"+pos);
+                pos = locationAdapter.getPosition(AppController.getUserLocation().getDisplayName());
                 locationSpinner.setSelection(pos);
             }
 
@@ -143,8 +151,6 @@ public class EditProfileActivity extends FragmentActivity {
                 displayName.setText(userVM.getDisplayName());
                 firstNameEdit.setText(userVM.getFirstName());
                 lastNameEdit.setText(userVM.getLastName());
-
-
             }
             @Override
             public void failure(RetrofitError error) {

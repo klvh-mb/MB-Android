@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-   <!-- <ImageView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/bgImage"
         android:src="@drawable/logo_beans_bg"
-        android:scaleType="fitEnd" />-->
+        android:scaleType="fitEnd" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,49 +21,48 @@
             android:layout_height="match_parent"
             android:focusable="true">
             <LinearLayout
-                android:id="@+id/displayemailLayout"
+                android:id="@+id/displayEmailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="25dp"
+                android:weightSum="10">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
-                    android:text="Login Email"
+                    android:text="@string/edit_user_info_login_method"
                     android:textColor="@color/dark_gray_3"
                     android:layout_weight="3"
                     android:layout_gravity="center_vertical"
                     android:singleLine="true" />
 
                 <TextView
-                    android:id="@+id/displayemailText"
+                    android:id="@+id/displayEmailText"
                     android:background="@drawable/edit_text_round"
                     android:layout_marginLeft="5dp"
                     android:textSize="16dp"
-                    android:textColor="#000000"
                     android:layout_width="0dp"
-                    android:layout_height="35dp"
+                    android:layout_height="40dp"
                     android:layout_weight="7"
                     android:layout_gravity="center_vertical"
-                    />
+                    android:gravity="center_vertical" />
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/displaynameLayout"
-                android:layout_below="@+id/displayemailLayout"
+                android:layout_below="@+id/displayEmailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -81,70 +80,107 @@
                     android:layout_marginLeft="5dp"
                     android:textSize="16dp"
                     android:layout_width="0dp"
-                    android:layout_height="35dp"
+                    android:layout_height="40dp"
                     android:layout_weight="7"
                     android:layout_gravity="center_vertical"
                     android:hint="暱稱" />
 
             </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/aboutmeLayout"
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10"
                 android:layout_below="@+id/displaynameLayout"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/displaynameNoteLayout">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/displaynameNoteText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textSize="12dp"
+                    android:text="@string/signup_details_displayname_note"
+                    android:layout_below="@+id/displaynameLayout"
+                    android:textColor="@color/red"
+                    android:layout_weight="7"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/aboutmeLayout"
+                android:layout_below="@+id/displaynameNoteLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
-                    android:id="@+id/aboutText"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/aboutmeText"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
-                    android:text="about me :"
+                    android:text="@string/edit_user_info_aboutme"
                     android:textColor="@color/dark_gray_3"
-                    android:layout_gravity="center_vertical"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:layout_weight="3" />
 
                 <EditText
                     android:id="@+id/aboutmeEdit"
                     android:background="@drawable/edit_text_round"
-                    android:layout_marginLeft="5dp"
                     android:textSize="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="135dp"
-                    android:layout_toRightOf="@+id/aboutText"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_toRightOf="@+id/aboutmeText"
                     android:layout_gravity="center_vertical"
-                    android:hint="write few lines about yourself" />
-
-            </RelativeLayout>
+                    android:layout_weight="7"
+                    android:layout_marginLeft="5dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/nameLayout"
                 android:layout_below="@+id/aboutmeLayout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:weightSum="10"
+                android:transitionGroup="true">
                 <TextView
                     android:id="@+id/nameText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
-                    android:text="Name :"
+                    android:text="@string/edit_user_info_name"
                     android:textColor="@color/dark_gray_3"
                     android:layout_gravity="center_vertical"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:layout_weight="3" />
 
                 <EditText
                     android:id="@+id/lastNameEditText"
-                    android:layout_weight=".5"
+                    android:layout_weight="3.5"
                     android:hint="@string/signup_lastname_hint"
                     android:textSize="16dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:background="@drawable/edit_text_round"
                     android:layout_marginRight="5dp"
@@ -152,11 +188,11 @@
                     android:singleLine="true" />
                 <EditText
                     android:id="@+id/firstNameEditText"
-                    android:layout_weight=".5"
+                    android:layout_weight="3.5"
                     android:hint="@string/signup_firstname_hint"
                     android:layout_marginLeft="5dp"
                     android:textSize="16dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:background="@drawable/edit_text_round"
                     android:singleLine="true" />
@@ -639,7 +675,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="Update Profile"
+                android:text="@string/edit_user_info_save"
                 android:background="@color/signup_yellow"
                 android:textStyle="bold"
                 android:textSize="20dp"

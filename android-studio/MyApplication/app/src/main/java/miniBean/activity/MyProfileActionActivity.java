@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import miniBean.R;
@@ -52,6 +54,14 @@ public class MyProfileActionActivity extends FragmentActivity {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.children_layout, fragment).commit();
         }
+
+        ImageView backImage = (ImageView) this.findViewById(R.id.backImage);
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         /*
         if(getIntent().getStringExtra("key").equals("request")) {
