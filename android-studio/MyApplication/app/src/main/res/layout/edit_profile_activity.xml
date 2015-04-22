@@ -4,16 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/bgImage"
-        android:src="@drawable/logo_beans_bg"
-        android:scaleType="fitEnd" />
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/view_bg">
 
         <RelativeLayout
             android:paddingBottom="20dp"
@@ -676,7 +670,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:text="@string/edit_user_info_save"
-                android:background="@color/signup_yellow"
+                android:background="@drawable/rounded_corner_signup_button"
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:layout_marginTop="25dp"

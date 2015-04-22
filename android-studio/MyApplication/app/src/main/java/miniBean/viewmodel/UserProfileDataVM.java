@@ -3,12 +3,12 @@ package miniBean.viewmodel;
 
 public class UserProfileDataVM {
 
-    public String parent_aboutme;           // "Its Me"
-    public String parent_birth_year;        // "1992"
-    public String parent_displayname;       //: "shashank"
-    public String parent_firstname;         // "Shashank"
-    public String parent_lastname;          // "Pohare"
-   public int parent_location;          // 20
+    public String parent_aboutme;
+    public String parent_birth_year;
+    public String parent_displayname;
+    public String parent_firstname;
+    public String parent_lastname;
+    public int parent_location;
 
     public int getParent_location() {
         return parent_location;

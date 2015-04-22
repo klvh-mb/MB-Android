@@ -17,6 +17,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserProfileDataVM;
 import miniBean.viewmodel.UserVM;
@@ -100,7 +101,7 @@ public class EditProfileActivity extends FragmentActivity {
                 profileDataVM.setParent_displayname(displayName.getText().toString());
                 profileDataVM.setParent_firstname(firstNameEdit.getText().toString());
                 profileDataVM.setParent_lastname(lastNameEdit.getText().toString());
-                profileDataVM.setParent_birth_year("1992");
+                profileDataVM.setParent_birth_year(String.valueOf(DefaultValues.DEFAULT_PARENT_BIRTH_YEAR));
                 profileDataVM.setParent_location(locationId);
                 setUserProfileData(profileDataVM);
             }

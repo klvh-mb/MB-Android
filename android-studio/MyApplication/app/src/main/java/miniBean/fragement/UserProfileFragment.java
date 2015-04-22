@@ -7,15 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Field;
 
@@ -35,6 +35,7 @@ public class UserProfileFragment extends Fragment {
     private ProgressBar spinner;
     private TextView questionsCount, answersCount, bookmarksCount, userName, userInfoText;
     private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
+    private Button editButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +55,9 @@ public class UserProfileFragment extends Fragment {
         bookmarksMenu.setVisibility(View.GONE);
         settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
         settingsMenu.setVisibility(View.GONE);
+
+        editButton = (Button) view.findViewById(R.id.editButton);
+        editButton.setVisibility(View.GONE);
 
         userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
         userInfoLayout.setVisibility(View.GONE);

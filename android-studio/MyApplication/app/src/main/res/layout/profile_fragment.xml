@@ -105,7 +105,8 @@
             android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/profilePic">
+            android:layout_below="@+id/profilePic"
+            android:minHeight="20dp">
             <Button
                 android:id="@+id/editButton"
                 android:layout_alignParentRight="true"

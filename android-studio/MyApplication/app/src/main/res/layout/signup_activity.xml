@@ -171,7 +171,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:text="@string/signup"
-        android:background="#FFBE42"
+        android:background="@drawable/rounded_corner_signup_button"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:textSize="20dp"

@@ -44,6 +44,8 @@ public class DefaultValues {
     public static int HOT_POST_NOL = 5;
     public static int HOT_POST_NOC = 5;
 
+    public static int DEFAULT_PARENT_BIRTH_YEAR = 9999;
+
     public static List<String> FILTER_MY_COMM_TYPE = Arrays.asList(
             new String[] {"BUSINESS"}
     );

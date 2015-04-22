@@ -27,6 +27,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserVM;
@@ -246,7 +247,6 @@ public class SignupDetailActivity extends Activity {
             }
         }
 
-        int defaultParentBirthYear = 9999;
         if (isValid()) {
             Log.d(this.getClass().getSimpleName(),
                     "signupInfo: \n displayname="+displayname+"\n locationId="+locationId+"\n parentType="+parenttype+"\n numBaby="+babynum+
@@ -254,7 +254,7 @@ public class SignupDetailActivity extends Activity {
                             "\n babyGen2="+babygen2+"\n babyBirthday2="+year2+"-"+month2+"-"+day2+
                             "\n babyGen3="+babygen3+"\n babyBirthday3="+year3+"-"+month3+"-"+day3);
 
-            AppController.getApi().signUpInfo(displayname, defaultParentBirthYear, locationId, parenttype, babynum,
+            AppController.getApi().signUpInfo(displayname, DefaultValues.DEFAULT_PARENT_BIRTH_YEAR, locationId, parenttype, babynum,
                     babygen1, babygen2, babygen3,
                     year1, month1, day1, year2, month2, day2, year3, month3, day3,
                     AppController.getInstance().getSessionId(),
