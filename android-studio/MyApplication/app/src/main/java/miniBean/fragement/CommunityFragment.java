@@ -50,7 +50,6 @@ public class CommunityFragment extends Fragment {
     private ImageView communityCoverPic, communityIcon;
     private CommunitiesWidgetChildVM currentCommunity;
     private Long commId;
-    private String commName;
     private View loadingFooter;
 
     @Override
@@ -80,7 +79,6 @@ public class CommunityFragment extends Fragment {
 
         if(!getArguments().getString("flag").equals("FromDetailActivity")) {
             commId = Long.parseLong(getArguments().getString("id"));
-            commName = getArguments().getString("commName");
             initializeData();
         } else {
             getCommunity(Long.parseLong(getArguments().getString("id")));
@@ -121,15 +119,12 @@ public class CommunityFragment extends Fragment {
     }
 
     private void setCurrentCommunity() {
-        //Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity, comm - " + commname + "|" + commid);
-        //Log.d(this.getClass().getSimpleName(), "onCreateView: LocalCache.getCommunityCategoryMapList() size - " + LocalCache.getCommunityCategoryMapList().size());
-
         currentCommunity = null;
         for (CommunityCategoryMapVM categoryMapVM : LocalCommunityTabCache.getCommunityCategoryMapList()) {
             if (categoryMapVM.communities != null) {
                 for (CommunitiesWidgetChildVM vm : categoryMapVM.communities) {
                     if (vm.getId().equals(commId)) {
-                        Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to topic comm vm [comm - " + commName + "|" + commId + "]   [vm  - " + vm.dn + "|" + vm.getId() + "]");
+                        Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to topic comm vm [commId=" + commId + "] [vm=" + vm.dn + "|" + vm.getId() + "]");
                         currentCommunity = vm;
                         break;
                     }
@@ -138,11 +133,11 @@ public class CommunityFragment extends Fragment {
         }
 
         if (currentCommunity == null) {
-            Log.w(this.getClass().getSimpleName(), "onCreateView: commId not in topic comms, comm - " + commName + "|" + commId);
+            Log.w(this.getClass().getSimpleName(), "onCreateView: commId not in topic comms, commId=" + commId);
             // not in topic comm, could be closed or other special comms, get directly from my communities list
             for (CommunitiesWidgetChildVM vm : LocalCommunityTabCache.getMyCommunities().communities) {
                 if (vm.getId().equals(commId)) {
-                    Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to my comm vm [comm - " + commName + "|" + commId + "]   [vm  - " + vm.dn + "|" + vm.getId() + "]");
+                    Log.d(this.getClass().getSimpleName(), "onCreateView: set currentCommunity to my comm vm [commId=" + commId + "] [vm=" + vm.dn + "|" + vm.getId() + "]");
                     currentCommunity = vm;
                     break;
                 }
@@ -153,7 +148,6 @@ public class CommunityFragment extends Fragment {
     private void initializeData(){
         setCurrentCommunity();
         getNewsFeedByCommunityId(currentCommunity);
-        Log.d(this.getClass().getSimpleName(), "initialiazeData: community - " + commName);
         if (!currentCommunity.isM) {
             joinImageView.setImageResource(R.drawable.ic_add);
         } else {
@@ -191,7 +185,6 @@ public class CommunityFragment extends Fragment {
 
             @Override
             public void success(CommunityVM communityVM, Response response) {
-                commName = communityVM.getN();
                 commId = communityVM.getId();
                 initializeData();
             }

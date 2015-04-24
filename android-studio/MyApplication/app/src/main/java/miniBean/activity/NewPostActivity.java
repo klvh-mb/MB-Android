@@ -287,7 +287,6 @@ public class NewPostActivity extends FragmentActivity {
 
                 /*  Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
                 intent.putExtra("id",getIntent().getLongExtra("id",0l));
-                intent.putExtra("commName",getIntent().getStringExtra("commName"));
                 intent.putExtra("flag","FromPostFragment");
                 startActivity(intent);*/
             }

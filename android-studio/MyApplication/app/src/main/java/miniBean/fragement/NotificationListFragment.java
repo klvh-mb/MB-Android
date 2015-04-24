@@ -1,7 +1,9 @@
 package miniBean.fragement;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -22,9 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.CommunityActivity;
+import miniBean.activity.DetailActivity;
 import miniBean.adapter.NotificationListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
+import miniBean.util.UrlUtil;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -88,7 +93,42 @@ public class NotificationListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NotificationVM item = adapter.getItem(position);
                 if (item != null) {
+                    try {
+                        long postId = UrlUtil.parsePostLandingUrlId(item.getUrl().getOnClick());
+                        long commId = UrlUtil.parsePostLandingUrlCommId(item.getUrl().getOnClick());
+                        Log.d(NotificationListFragment.this.getClass().getSimpleName(), "click notif: postId="+postId+" commId="+commId);
 
+                        Intent intent = new Intent(getActivity(), DetailActivity.class);
+                        intent.putExtra("postId", postId);
+                        intent.putExtra("commId", commId);
+                        intent.putExtra("flag", "FromRequest");
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e(NotificationListFragment.this.getClass().getSimpleName(), "Failed to parse comm id from url", e);
+                    }
+
+                    /*
+                    if (item.getTp().equals("POSTED") ||
+                            item.getTp().equals("POSTED_QUESTION") ||
+                            item.getTp().equals("COMMENTED") ||
+                            item.getTp().equals("ANSWERED") ||
+                            item.getTp().equals("WANT_ANS") ||
+                            item.getTp().equals("LIKED")) {
+                        try {
+                            long postId = UrlUtil.parsePostLandingUrlId(item.getUrl().getOnClick());
+                            long commId = UrlUtil.parsePostLandingUrlCommId(item.getUrl().getOnClick());
+                            Log.d(NotificationListFragment.this.getClass().getSimpleName(), "click notif: postId="+postId+" commId="+commId);
+
+                            Intent intent = new Intent(getActivity(), DetailActivity.class);
+                            intent.putExtra("postId", postId);
+                            intent.putExtra("commId", commId);
+                            intent.putExtra("flag", "FromRequest");
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Log.e(NotificationListFragment.this.getClass().getSimpleName(), "Failed to parse comm id from url", e);
+                        }
+                    }
+                    */
                 }
             }
         });

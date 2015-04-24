@@ -21,7 +21,7 @@ public class ForgetPasswordActivity extends FragmentActivity {
         webView.setWebViewClient(new MyWebViewClient());
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(MyWebViewClient.FOGET_PASSWORD_URL);
+        webView.loadUrl(MyWebViewClient.FORGET_PASSWORD_URL);
     }
 
     @Override

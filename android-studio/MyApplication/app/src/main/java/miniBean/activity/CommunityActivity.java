@@ -34,7 +34,6 @@ public class CommunityActivity extends FragmentActivity {
         }
 
         bundle.putString("id", getIntent().getStringExtra("id"));
-        bundle.putString("commName", getIntent().getStringExtra("commName"));
         CommunityFragment fragment = new CommunityFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragment.setArguments(bundle);
@@ -56,7 +55,6 @@ public class CommunityActivity extends FragmentActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CommunityActivity.this,NewPostActivity.class);
                 intent.putExtra("id",getIntent().getStringExtra("id"));
-                intent.putExtra("commName", getIntent().getStringExtra("commName"));
                 startActivity(intent);
             }
         });

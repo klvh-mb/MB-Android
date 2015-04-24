@@ -57,7 +57,7 @@ public class SharingUtil {
 
     private static String createMessage(CommunityPostVM post) {
         String message = post.getPtl();
-        String url = createPostLandingUrl(post);
+        String url = UrlUtil.createPostLandingUrl(post);
         message = message +
                 HtmlUtil.LINE_BREAK +
                 url +
@@ -67,18 +67,10 @@ public class SharingUtil {
     }
 
     private static String getSharingTypeName(SharingType type) {
-        switch(type) {
+        switch (type) {
             case WHATSAPP:
                 return "Whatsapp";
         }
         return "";
-    }
-
-    public static String createPostLandingUrl(CommunityPostVM post) {
-        return AppController.BASE_URL + "/#!/qna-landing/id/" + post.getId() + "/communityId/" + post.getCid();
-    }
-
-    public static String createAndroidAppDownloadUrl() {
-        return AppController.BASE_URL + "/apps/android";
     }
 }

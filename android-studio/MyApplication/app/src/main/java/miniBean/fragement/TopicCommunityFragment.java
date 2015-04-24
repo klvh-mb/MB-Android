@@ -54,7 +54,6 @@ public class TopicCommunityFragment extends Fragment {
                     intent.putExtra("id", childVM.getId().toString());
                     intent.putExtra("noMember", childVM.getMm().toString());
                     intent.putExtra("noPost", noPost);
-                    intent.putExtra("commName", childVM.getDn());
                     intent.putExtra("icon", childVM.getGi());
                     intent.putExtra("isM", childVM.getIsM());
                     intent.putExtra("flag", "FromTopicFragment");

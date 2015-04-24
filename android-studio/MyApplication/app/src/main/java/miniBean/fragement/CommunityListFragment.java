@@ -69,7 +69,6 @@ public class CommunityListFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), CommunityActivity.class);
                     intent.putExtra("id", commId);
                     intent.putExtra("noMember", noMember);
-                    intent.putExtra("commName", name);
                     intent.putExtra("icon", childVM.getGi());
                     intent.putExtra("isM", childVM.getIsM());
                     intent.putExtra("flag", "FromCommunityFragment");

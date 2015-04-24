@@ -3,6 +3,7 @@ package miniBean.fragement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -26,6 +27,7 @@ import miniBean.activity.CommunityActivity;
 import miniBean.adapter.RequestListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
+import miniBean.util.UrlUtil;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -90,11 +92,28 @@ public class RequestListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NotificationVM item = adapter.getItem(position);
                 if (item != null) {
+                    /*
+                    Log.d(RequestListFragment.this.getClass().getSimpleName(), "Status:" + item.getSta());
+                    Log.d(RequestListFragment.this.getClass().getSimpleName(), "Msg:"+item.getMsg());
+                    Log.d(RequestListFragment.this.getClass().getSimpleName(), "Type:"+item.getTp());
+                    Log.d(RequestListFragment.this.getClass().getSimpleName(), "Update:"+item.getUpd());
+                    Log.d(RequestListFragment.this.getClass().getSimpleName(), "OnClick:"+item.getUrl().getOnClick());
+                    Log.d(RequestListFragment.this.getClass().getSimpleName(), "actor:"+item.getUrl().getActor());
+                    Log.d(RequestListFragment.this.getClass().getSimpleName(), "target:"+item.getUrl().getTarget());
+                    */
+
                     if (item.getTp().equals("COMM_JOIN_APPROVED")) {
-                        Intent intent = new Intent(getActivity(), CommunityActivity.class);
-                        intent.putExtra("id", item.getUrl().getTarget().toString());
-                        intent.putExtra("flag", "FromRequest");
-                        startActivity(intent);
+                        try {
+                            long commId = UrlUtil.parseCommunityUrlId(item.getUrl().getOnClick());
+                            Log.d(RequestListFragment.this.getClass().getSimpleName(), "click request: commId="+commId);
+
+                            Intent intent = new Intent(getActivity(), CommunityActivity.class);
+                            intent.putExtra("id", String.valueOf(commId));
+                            intent.putExtra("flag", "FromRequest");
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Log.e(RequestListFragment.this.getClass().getSimpleName(), "Failed to parse comm id from url", e);
+                        }
                     }
 
                     /*if(item.getTp().equals("FRD_REQUEST")){

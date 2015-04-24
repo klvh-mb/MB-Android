@@ -152,6 +152,22 @@
     <string name="answers_title">回覆的話題</string>
     <string name="bookmarks_title">我的收藏</string>
 
+    <string name="game_daily_signin_title">每日簽到</string>
+    <string name="game_daily_signin_text">立即簽到累積小豆豆!</string>
+    <string name="game_level_title">我的等級</string>
+    <string name="game_level_text">等級 : </string>
+    <string name="game_level_note">( 距離升級到 L5 還差 479 小豆豆 )</string>
+    <string name="game_points_title">我的小豆豆</string>
+    <string name="game_points_total">小豆豆總值 : </string>
+    <string name="game_points_redeem">可兌換 : </string>
+    <string name="game_points_redeemed">已兌換 : </string>
+    <string name="game_referral_title">介紹新會員加入</string>
+    <string name="game_referral_text">用以下連結介紹你的朋友加入~~</string>
+    <string name="game_referral_note1">每個朋友成功註冊。你即可獲得</string>
+    <string name="game_referral_note2">個小豆豆!</string>
+    <string name="game_transaction_title">小豆豆記錄表 (最近30個記錄)</string>
+    <string name="game_transaction_note">由"每日簽到"、"介紹新會員加入"所獲得的小豆豆會立即計算在"小豆豆總數"中。以其他方式獲得的小豆豆會在隔天反應</string>
+
     <!-- PN tab -->
     <string name="filter_schools_all">全部</string>
     <string name="filter_schools_yes">有</string>
