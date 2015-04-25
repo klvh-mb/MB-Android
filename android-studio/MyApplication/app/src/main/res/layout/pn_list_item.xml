@@ -1,0 +1,178 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_border_community"
+    android:layout_width="match_parent"
+    >
+    <LinearLayout
+        android:id="@+id/layout0"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textSize="15sp"
+        android:textColor="#1A20DC"/>
+    <TextView
+        android:id="@+id/pnDistName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="-"
+        android:textColor="#D1942B"
+        android:textSize="15sp"
+        android:layout_toRightOf="@+id/textView1"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/pnAddressText"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textSize="15sp"
+        android:layout_below="@+id/layout0"
+        />
+    <RelativeLayout
+        android:id="@+id/middleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/layout_thin_rounded_corner"
+        android:layout_below="@+id/pnAddressText"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        >
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/couponText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coupon :"/>
+        <ImageView
+            android:id="@+id/couponValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/layout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/curriculumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Curriculum :"/>
+            <TextView
+                android:id="@+id/curriculumValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="-"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout3"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/typeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Type :"/>
+                <TextView
+                    android:id="@+id/typeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"/>
+            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout4"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_below="@+id/layout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time :"/>
+            <TextView
+                android:id="@+id/timeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"/>
+        </LinearLayout>
+  </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/middleLayout"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp">
+    <ImageView
+        android:id="@+id/commentImage"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/comment"/>
+        <TextView
+            android:id="@+id/totalCommentText"
+            android:layout_toRightOf="@+id/commentImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:layout_marginLeft="10dp"
+            android:textSize="10sp"/>
+    <ImageView
+        android:id="@+id/bookmarkImage"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_toRightOf="@+id/totalCommentText"
+        android:src="@drawable/bookmark"
+        android:layout_marginLeft="20dp"/>
+    </RelativeLayout>
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

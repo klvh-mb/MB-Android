@@ -11,11 +11,13 @@ import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
 import miniBean.viewmodel.EmoticonVM;
-import miniBean.viewmodel.NotificationsParentVM;
+import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.NewPost;
+import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.PostResponse;
+import miniBean.viewmodel.PreNurseryVM;
 import miniBean.viewmodel.ProfileVM;
 import miniBean.viewmodel.UserProfileDataVM;
 import miniBean.viewmodel.UserVM;
@@ -198,16 +200,55 @@ public interface MyApi {
     @GET("/get-bookmarked-posts/{offset}")
     public void getBookmarkedPosts(@Path("offset") Long offset,@Query("key") String key, Callback<List<CommunityPostVM>> cb);
 
-    //
-    // PN APIs
-    //
-
-
     @GET("/image/getEmoticons")
     public void getEmoticons(@Query("key") String key, Callback<List<EmoticonVM>> cb);
 
     @POST("/updateUserProfileData")
     public void updateUserProfileData(@Body UserProfileDataVM userProfileDataVM, @Query("key") String key, Callback<UserVM> cb);
+
+    //
+    // PN APIs
+    //
+    @GET("/get-pns-by-district/{id}")
+    public void getPnByDistricts(@Path("id") Long id,@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+
+    @GET("/get-bookmarked-pns")
+    public void getBookmarkPns(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+
+    @GET("/get-pnnewsfeeds/{offset}") //a function in your api to get all the Newsfeed list
+    public void getPNNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
+
+    @GET("/bookmark-pn/{id}")
+    public void setPNBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/unbookmark-pn/{id}")
+    public void setPNUnBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/get-pn-info/{id}")
+    public void getPnInfo(@Path("id") Long post_id,@Query("key") String key, Callback<PreNurseryVM> cb);
+
+    @GET("/search-pns-by-name/{query}")
+    public void searchPnByName(@Path("query")String query,@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+
+    //Kindy APIs
+    @GET("/get-bookmarked-kgs")
+    public void getBookmarkKgs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
+
+    @GET("/get-kgs-by-district/{id}")
+    public void getKGByDistricts(@Path("id") Long id,@Query("key") String key, Callback<List<KindergartenVM>> cb);
+
+    @GET("/search-kgs-by-name/{query}")
+    public void searchKGByName(@Path("query")String query,@Query("key") String key, Callback<List<KindergartenVM>> cb);
+
+    @GET(" /get-kg-info/{id}")
+    public void getKGInfo(@Path("id") Long post_id,@Query("key") String key, Callback<KindergartenVM> cb);
+
+    @GET(" /bookmark-kg/{id}")
+    public void setKGBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/unbookmark-kg/{id}")
+    public void setKGUnBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
 
 
 }

@@ -29,9 +29,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class NewsfeedListFragement extends Fragment {
+public class SchoolNewsfeedListFragement extends Fragment {
 
-    private static final String TAG = NewsfeedListFragement.class.getName();
+    private static final String TAG = SchoolNewsfeedListFragement.class.getName();
     private ListView listView;
     private BaseAdapter listAdapter;
     private List<CommunityPostVM> feedItems;
@@ -62,7 +62,7 @@ public class NewsfeedListFragement extends Fragment {
                 if (post != null) {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
-                    intent.putExtra("flag","fromnewsfeed");
+                    intent.putExtra("flag","fromschool");
                     startActivity(intent);
                 }
             }
@@ -76,15 +76,11 @@ public class NewsfeedListFragement extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 loadingFooter.setVisibility(View.VISIBLE);
-                loadNewsfeed(page - 1);
+                getNewsFeed(page - 1);
             }
         });
 
-        loadNewsfeed(0);
-
-        //System.out.println("lastid::"+getArguments().getString("id"));
-        //Long id=Long.parseLong(getArguments().getString("id"));
-        //getUserQuestion(0,id);
+        getNewsFeed(0);
 
         return view;
     }
@@ -96,32 +92,6 @@ public class NewsfeedListFragement extends Fragment {
     private void setFooterText(int text) {
         TextView footerText = (TextView) listView.findViewById(R.id.listLoadingFooterText);
         footerText.setText(text);
-    }
-
-    private void loadNewsfeed(int offset){
-        Log.d(this.getClass().getSimpleName(), "InfiniteScrollListener offset="+offset+" with key="+getArguments().getString("key"));
-        switch (getArguments().getString("key")) {
-            case "userquestion":
-                getUserQuestion(offset,getArguments().getLong("id"));
-                break;
-            case "useranswer":
-                getUserAnswer(offset,getArguments().getLong("id"));
-                break;
-            case "question":
-                getUserQuestion(offset,getArguments().getLong("id"));
-                break;
-            case "answer":
-                getUserAnswer(offset,getArguments().getLong("id"));
-                break;
-            case "bookmark":
-                getBookmark(offset);
-                break;
-            case "feed":
-                getNewsFeed(offset);
-                break;
-            default:
-                Log.w(this.getClass().getSimpleName(), "InfiniteScrollListener unknown default case with key - "+getArguments().getString("key"));
-        }
     }
 
     private void loadFeedItemsToList(final List<CommunityPostVM> posts) {
@@ -147,9 +117,10 @@ public class NewsfeedListFragement extends Fragment {
     }
 
     private void getNewsFeed(int offset) {
-        AppController.getApi().getNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        AppController.getApi().getPNNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
-            public void success(final PostArray array, retrofit.client.Response response) {
+            public void success(final PostArray array, Response response) {
+                System.out.println("postarray::::::"+array.getPosts().size());
                 loadFeedItemsToList(array.getPosts());
             }
 
@@ -161,49 +132,4 @@ public class NewsfeedListFragement extends Fragment {
         });
     }
 
-    private void getUserQuestion(int offset,Long id) {
-        AppController.getApi().getUserPosts(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
-            @Override
-            public void success(PostArray array, Response response2) {
-                loadFeedItemsToList(array.getPosts());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                setFooterText(R.string.list_loading_error);
-                error.printStackTrace();
-            }
-        });
-    }
-
-    private void getUserAnswer(int offset,Long id) {
-        AppController.getApi().getUserComments(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
-
-            @Override
-            public void success(PostArray array, Response response2) {
-                loadFeedItemsToList(array.getPosts());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                setFooterText(R.string.list_loading_error);
-                error.printStackTrace();
-            }
-        });
-    }
-
-    private void getBookmark(int offset) {
-        AppController.getApi().getBookmarkedPosts(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
-            @Override
-            public void success(List<CommunityPostVM> posts, Response response) {
-                loadFeedItemsToList(posts);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                setFooterText(R.string.list_loading_error);
-                error.printStackTrace();
-            }
-        });
-    }
 }

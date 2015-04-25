@@ -23,6 +23,7 @@ import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.NotificationCache;
 import miniBean.fragement.MainFragement;
 import miniBean.fragement.MyProfileFragment;
+import miniBean.fragement.SchoolsFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
@@ -144,9 +145,9 @@ public class MainActivity extends FragmentActivity {
         getActionBar().show();
 
         if (!schoolsClicked) {
-            /*FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             SchoolsFragment fragement = new SchoolsFragment();
-            fragmentTransaction.replace(R.id.placeHolder, fragement).commit();*/
+            fragmentTransaction.replace(R.id.placeHolder, fragement).commit();
         }
 
         Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);

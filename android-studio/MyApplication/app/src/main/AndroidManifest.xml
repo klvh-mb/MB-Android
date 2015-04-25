@@ -74,6 +74,9 @@
         <activity
             android:name=".activity.PrivacyActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PNCommunityActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="org.acra.CrashReportDialog"
             android:theme="@android:style/Theme.Dialog"
             android:launchMode="singleInstance"

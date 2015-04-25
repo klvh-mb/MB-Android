@@ -55,6 +55,7 @@ public class CommunityActivity extends FragmentActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CommunityActivity.this,NewPostActivity.class);
                 intent.putExtra("id",getIntent().getStringExtra("id"));
+                intent.putExtra("flag","fromcommActivity");
                 startActivity(intent);
             }
         });

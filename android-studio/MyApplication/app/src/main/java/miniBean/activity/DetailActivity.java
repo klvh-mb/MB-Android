@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +16,6 @@ import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -126,11 +124,20 @@ public class DetailActivity extends FragmentActivity {
         communityName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Long commId = getIntent().getLongExtra("commId", 0L);
-                Intent intent = new Intent(DetailActivity.this, CommunityActivity.class);
-                intent.putExtra("flag", "FromDetailActivity");
-                intent.putExtra("id", commId + "");
-                startActivity(intent);
+                if(getIntent().getStringExtra("flag").equals("fromschool")){
+                    Intent intent=new Intent(DetailActivity.this, PNCommunityActivity.class);
+                    intent.putExtra("commid",getIntent().getLongExtra("commid",0l));
+                    intent.putExtra("id", getIntent().getLongExtra("id",0l));
+                    intent.putExtra("flag","fromschool");
+                    startActivity(intent);
+
+                }else{
+                    Long commId = getIntent().getLongExtra("commId", 0L);
+                    Intent intent = new Intent(DetailActivity.this, CommunityActivity.class);
+                    intent.putExtra("flag", "FromDetailActivity");
+                    intent.putExtra("id", commId + "");
+                    startActivity(intent);
+                }
             }
         });
 
@@ -151,7 +158,11 @@ public class DetailActivity extends FragmentActivity {
                 )
         );
 
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
+        if(getIntent().getStringExtra("flag").equals("fromschool")) {
+            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
+        }else{
+            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
+        }
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         //getActionBar().setTitle("Details");

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rootLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/headingLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bookmarked"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/totalBokmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="16"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="schools"
+            android:textStyle="bold"/>
+        </LinearLayout>
+    <View
+        android:layout_below="@+id/headingLayout"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#57B154"/>
+    <ListView
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/headingLayout"
+        android:id="@+id/listBookmark"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@color/view_bg"
+        android:dividerHeight="10dp"
+        android:drawSelectorOnTop="false"
+        android:headerDividersEnabled="true"
+        android:footerDividersEnabled="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+</RelativeLayout>

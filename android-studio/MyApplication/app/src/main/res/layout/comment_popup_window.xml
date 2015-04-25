@@ -39,7 +39,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/browse"
+                android:src="@drawable/emo_smile"
                 android:layout_gravity="bottom" />
 
             <ImageView

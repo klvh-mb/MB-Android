@@ -93,6 +93,7 @@ public class CommunityFragment extends Fragment {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
                     intent.putExtra("comments", post.getN_c());
+                    intent.putExtra("flag","fromcommunity");
                     startActivity(intent);
                 }
             }
