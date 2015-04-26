@@ -142,7 +142,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void pressSchoolsTab() {
-        getActionBar().show();
+        getActionBar().hide();
 
         if (!schoolsClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

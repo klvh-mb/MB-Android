@@ -50,7 +50,7 @@ public class CommunityFragment extends Fragment {
     private ImageView communityCoverPic, communityIcon;
     private CommunitiesWidgetChildVM currentCommunity;
     private Long commId;
-    private View loadingFooter;
+    private View listHeader, loadingFooter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,24 +58,30 @@ public class CommunityFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.community_fragment, container, false);
 
-        loadingFooter = inflater.inflate(R.layout.list_loading_footer, null);
+        spinner = (ProgressBar) view.findViewById(R.id.spinner);
 
-        communityCoverPic = (ImageView) view.findViewById(R.id.communityPic);
-        communityIcon = (ImageView) view.findViewById(R.id.commIcon);
-        commNameText = (TextView) view.findViewById(R.id.commNameText);
-        numMemberText = (TextView) view.findViewById(R.id.noMemberComm);
-        joinImageView = (ImageView) view.findViewById(R.id.join_community);
+        // header
+        listHeader = inflater.inflate(R.layout.community_fragment_list_header, null);
+        communityCoverPic = (ImageView) listHeader.findViewById(R.id.communityPic);
+        communityIcon = (ImageView) listHeader.findViewById(R.id.commIcon);
+        commNameText = (TextView) listHeader.findViewById(R.id.commNameText);
+        numMemberText = (TextView) listHeader.findViewById(R.id.noMemberComm);
+        joinImageView = (ImageView) listHeader.findViewById(R.id.join_community);
 
+        // list
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new NewsfeedListAdapter(getActivity(), feedItems, false);
         listView = (ListView) view.findViewById(R.id.listCommunityFeed);
+
+        // footer
+        loadingFooter = inflater.inflate(R.layout.list_loading_footer, null);
+
+        listView.addHeaderView(listHeader);
         listView.addFooterView(loadingFooter);      // need to add footer before set adapter
         listView.setAdapter(feedListAdapter);
 
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
-
-        spinner = (ProgressBar) view.findViewById(R.id.spinner);
 
         if(!getArguments().getString("flag").equals("FromDetailActivity")) {
             commId = Long.parseLong(getArguments().getString("id"));
@@ -100,7 +106,7 @@ public class CommunityFragment extends Fragment {
         });
 
         listView.setOnScrollListener(new InfiniteScrollListener(
-                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, true) {
+                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, true, true) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 loadingFooter.setVisibility(View.VISIBLE);

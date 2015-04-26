@@ -15,6 +15,8 @@ public abstract class InfiniteScrollListener  implements OnScrollListener {
     private boolean loading = true;
     // Sets the starting page index
     private int startingPageIndex = 0;
+    // Need to offset header by -1 from count
+    private boolean hasHeader = false;
     // Need to offset footer by -1 from count
     private boolean hasFooter = false;
 
@@ -25,8 +27,9 @@ public abstract class InfiniteScrollListener  implements OnScrollListener {
         this.visibleThreshold = visibleThreshold;
     }
 
-    public InfiniteScrollListener(int visibleThreshold, boolean hasFooter) {
+    public InfiniteScrollListener(int visibleThreshold, boolean hasHeader, boolean hasFooter) {
         this.visibleThreshold = visibleThreshold;
+        this.hasHeader = hasHeader;
         this.hasFooter = hasFooter;
     }
 
@@ -41,8 +44,12 @@ public abstract class InfiniteScrollListener  implements OnScrollListener {
     // but first we check if we are waiting for the previous load to finish.
     @Override
     public void onScroll(AbsListView view,int firstVisibleItem,int visibleItemCount,int totalItemCount) {
-        if (hasFooter && totalItemCount > 0)
-            totalItemCount--;
+        if (totalItemCount > 0) {
+            if (hasHeader)
+                totalItemCount--;
+            if (hasFooter)
+                totalItemCount--;
+        }
 
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state

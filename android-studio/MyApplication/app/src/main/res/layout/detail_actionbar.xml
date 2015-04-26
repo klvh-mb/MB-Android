@@ -36,11 +36,10 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_whatsapp"
-            android:padding="3dp"
+            android:layout_toLeftOf="@+id/bookmarkAction"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="false"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@+id/bookmarkAction" />
+            android:padding="3dp"
+            android:layout_marginRight="5dp" />
 
         <ImageView
             android:id="@+id/bookmarkAction"

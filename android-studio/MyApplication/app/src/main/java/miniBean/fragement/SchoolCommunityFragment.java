@@ -109,7 +109,7 @@ public class SchoolCommunityFragment extends Fragment {
         });
 
         postList.setOnScrollListener(new InfiniteScrollListener(
-                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, true) {
+                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, false, true) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 loadNewsfeed(
