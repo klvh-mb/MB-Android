@@ -210,7 +210,7 @@ public interface MyApi {
     // PN APIs
     //
     @GET("/get-pns-by-district/{id}")
-    public void getPnByDistricts(@Path("id") Long id,@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+    public void getPNsByDistricts(@Path("id") Long id,@Query("key") String key, Callback<List<PreNurseryVM>> cb);
 
     @GET("/get-bookmarked-pns")
     public void getBookmarkPns(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
@@ -235,7 +235,7 @@ public interface MyApi {
     public void getBookmarkKgs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
 
     @GET("/get-kgs-by-district/{id}")
-    public void getKGByDistricts(@Path("id") Long id,@Query("key") String key, Callback<List<KindergartenVM>> cb);
+    public void getKGsByDistricts(@Path("id") Long id,@Query("key") String key, Callback<List<KindergartenVM>> cb);
 
     @GET("/search-kgs-by-name/{query}")
     public void searchKGByName(@Path("query")String query,@Query("key") String key, Callback<List<KindergartenVM>> cb);

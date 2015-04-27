@@ -44,12 +44,13 @@ public class SchoolListFragment extends Fragment {
     private TextView districtText,distName,searchKey,totalResultText,noOfSchools;
     private ArrayAdapter<String> locationAdapter;
     private DistrictListAdapter districtListAdapter;
-    private PNListAdapter pnListAdapter;
-    private ListView PNList;
+    private PNListAdapter listAdapter;
+    private ListView listView;
     private Spinner couponSpinner,typeSpinner,timeSpinner,curriculumSpinner;
     private RelativeLayout nurseryLayout,boxLayout,searchResultLayout;
     private LinearLayout cancelLayout;
     private SearchView searchText;
+    private View listHeader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,15 +58,17 @@ public class SchoolListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.school_list_fragment, container, false);
 
-        couponSpinner = (Spinner) view.findViewById(R.id.couponSpinner);
-        typeSpinner = (Spinner) view.findViewById(R.id.typeSpinner);
-        timeSpinner = (Spinner) view.findViewById(R.id.timeSpinner);
-        curriculumSpinner = (Spinner) view.findViewById(R.id.curriculumSpinner);
-        searchKey = (TextView) view.findViewById(R.id.searchText);
-        totalResultText = (TextView) view.findViewById(R.id.searchCountText);
-        searchResultLayout = (RelativeLayout) view.findViewById(R.id.searchResultLayout);
-        cancelLayout = (LinearLayout) view.findViewById(R.id.cancelLayout);
-        noOfSchools = (TextView) view.findViewById(R.id.noOfKindergartens);
+        // header
+        listHeader = inflater.inflate(R.layout.school_list_fragment_header, null);
+        couponSpinner = (Spinner) listHeader.findViewById(R.id.couponSpinner);
+        typeSpinner = (Spinner) listHeader.findViewById(R.id.typeSpinner);
+        timeSpinner = (Spinner) listHeader.findViewById(R.id.timeSpinner);
+        curriculumSpinner = (Spinner) listHeader.findViewById(R.id.curriculumSpinner);
+        searchKey = (TextView) listHeader.findViewById(R.id.searchText);
+        totalResultText = (TextView) listHeader.findViewById(R.id.searchCountText);
+        searchResultLayout = (RelativeLayout) listHeader.findViewById(R.id.searchResultLayout);
+        cancelLayout = (LinearLayout) listHeader.findViewById(R.id.cancelLayout);
+        noOfSchools = (TextView) listHeader.findViewById(R.id.noOfSchools);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, DefaultValues.FILTER_SCHOOLS_COUPON);
         couponSpinner.setAdapter(adapter);
@@ -79,30 +82,30 @@ public class SchoolListFragment extends Fragment {
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, DefaultValues.FILTER_SCHOOLS_TIME);
         timeSpinner.setAdapter(adapter3);
 
-        districtGrid = (GridView)view.findViewById(R.id.districtGrid);
+        districtGrid = (GridView)listHeader.findViewById(R.id.districtGrid);
         districtGrid.setDrawSelectorOnTop(false);
-        districtText = (TextView) view.findViewById(R.id.districtNameText);
-        distName = (TextView) view.findViewById(R.id.distName);
-        PNList = (ListView) view.findViewById(R.id.schoolList);
-        searchText= (SearchView) view.findViewById(R.id.searchWindow);
+        districtText = (TextView) listHeader.findViewById(R.id.districtNameText);
+        distName = (TextView) listHeader.findViewById(R.id.distName);
+        searchText = (SearchView) listHeader.findViewById(R.id.searchWindow);
 
         locationVMList = new ArrayList<LocationVM>();
         preNurseryVMList = new ArrayList<PreNurseryVM>();
         tempVMList = new ArrayList<PreNurseryVM>();
 
-        nurseryLayout = (RelativeLayout) view.findViewById(R.id.nurseryLayout);
-        boxLayout = (RelativeLayout) view.findViewById(R.id.boxLayout);
+        nurseryLayout = (RelativeLayout) listHeader.findViewById(R.id.nurseryLayout);
+        boxLayout = (RelativeLayout) listHeader.findViewById(R.id.boxLayout);
 
         districtText.setText(AppController.getUserLocation().getDisplayName());
         distName.setText(AppController.getUserLocation().getDisplayName());
 
-        getPNByDistrict(AppController.getUserLocation().getId());
+        // list
+        listView = (ListView) view.findViewById(R.id.schoolList);
+        listAdapter = new PNListAdapter(getActivity(),preNurseryVMList);
 
-        pnListAdapter = new PNListAdapter(getActivity(),preNurseryVMList);
+        listView.addHeaderView(listHeader);
+        listView.setAdapter(listAdapter);
 
-        PNList.setAdapter(pnListAdapter);
-
-        PNList.setOnTouchListener(new View.OnTouchListener() {
+        listView.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -112,7 +115,9 @@ public class SchoolListFragment extends Fragment {
             }
         });
 
-        setLocation();
+        getPNsByDistrict(AppController.getUserLocation().getId());
+
+        setDistricts();
 
         districtGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -120,7 +125,7 @@ public class SchoolListFragment extends Fragment {
                 String loc = districtListAdapter.getItem(i).getDisplayName();
                 districtText.setText(loc);
                 distName.setText(loc);
-                getPNByDistrict(locationVMList.get(i).getId());
+                getPNsByDistrict(locationVMList.get(i).getId());
             }
         });
 
@@ -220,8 +225,8 @@ public class SchoolListFragment extends Fragment {
         return view;
     }
 
-    private void setLocation(){
-        AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(),new Callback< List< LocationVM>>(){
+    private void setDistricts(){
+        AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(),new Callback<List< LocationVM>>(){
             @Override
             public void success(List<LocationVM> locationVMs, Response response) {
                 locationVMList.clear();
@@ -239,8 +244,8 @@ public class SchoolListFragment extends Fragment {
         });
     }
 
-    private void getPNByDistrict(Long id){
-        AppController.getApi().getPnByDistricts(id,AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
+    private void getPNsByDistrict(Long id){
+        AppController.getApi().getPNsByDistricts(id,AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
             @Override
             public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
                 preNurseryVMList.clear();
@@ -248,7 +253,7 @@ public class SchoolListFragment extends Fragment {
                 tempVMList.clear();
                 tempVMList.addAll(preNurseryVMs);
                 noOfSchools.setText(preNurseryVMList.size()+"");
-                pnListAdapter.notifyDataSetChanged();
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -313,7 +318,7 @@ public class SchoolListFragment extends Fragment {
                 totalResultText.setText(""+preNurseryVMs.size());
                 PNListAdapter resultListAdapter;
                 resultListAdapter = new PNListAdapter(getActivity(), preNurseryVMs);
-                PNList.setAdapter(resultListAdapter);
+                listView.setAdapter(resultListAdapter);
             }
 
             @Override

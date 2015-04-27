@@ -61,7 +61,7 @@ public class CommunityFragment extends Fragment {
         spinner = (ProgressBar) view.findViewById(R.id.spinner);
 
         // header
-        listHeader = inflater.inflate(R.layout.community_fragment_list_header, null);
+        listHeader = inflater.inflate(R.layout.community_fragment_header, null);
         communityCoverPic = (ImageView) listHeader.findViewById(R.id.communityPic);
         communityIcon = (ImageView) listHeader.findViewById(R.id.commIcon);
         commNameText = (TextView) listHeader.findViewById(R.id.commNameText);
