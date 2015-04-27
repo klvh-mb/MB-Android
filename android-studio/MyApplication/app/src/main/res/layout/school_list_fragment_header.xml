@@ -86,6 +86,7 @@
             <GridView
                 android:id="@+id/districtGrid"
                 android:numColumns="4"
+                android:padding="10dp"
                 android:gravity="center"
                 android:stretchMode="columnWidth"
                 android:layout_width="match_parent"

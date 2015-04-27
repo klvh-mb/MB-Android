@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class SchoolCommunityFragment extends Fragment {
     private TextView websiteValue,postCount;
     private ImageView urlValueImage,editAction;
     private List<PreNurseryVM> preNurseryVMList;
+    private ScrollView scrollView;
 
     private NewsfeedListAdapter feedListAdapter;
     private List<CommunityPostVM> feedItems;
@@ -43,6 +46,7 @@ public class SchoolCommunityFragment extends Fragment {
     private ListView postList;
 
     private ImageView cpValueImage;
+    private LinearLayout feedButtonLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +74,8 @@ public class SchoolCommunityFragment extends Fragment {
         editAction= (ImageView) view.findViewById(R.id.editAction);
         postList= (ListView) view.findViewById(R.id.postList);
         postCount= (TextView) view.findViewById(R.id.postCount);
-
+        feedButtonLayout= (LinearLayout) view.findViewById(R.id.feedButtonLayout);
+        scrollView= (ScrollView) view.findViewById(R.id.scrollview);
 
 
         preNurseryVMList=new ArrayList<PreNurseryVM>();
@@ -134,6 +139,13 @@ public class SchoolCommunityFragment extends Fragment {
                 intent.putExtra("id",String.valueOf(getArguments().getLong("commid")));
                 intent.putExtra("flag","fromschool");
                 startActivity(intent);
+            }
+        });
+
+        feedButtonLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                   scrollView.fullScroll(View.FOCUS_DOWN);
             }
         });
 
