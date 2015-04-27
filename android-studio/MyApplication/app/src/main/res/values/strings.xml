@@ -168,7 +168,21 @@
     <string name="game_transaction_title">小豆豆記錄表 (最近30個記錄)</string>
     <string name="game_transaction_note">由"每日簽到"、"介紹新會員加入"所獲得的小豆豆會立即計算在"小豆豆總數"中。以其他方式獲得的小豆豆會在隔天反應</string>
 
-    <!-- PN tab -->
+    <!-- Schools tab -->
+    <string name="schools_tab_title_pn">幼兒班(PN班)</string>
+    <string name="schools_tab_title_kg">幼稚園(K班)</string>
+    <string name="schools_district_search">地區搜尋</string>
+    <string name="schools_newsfeed">最新討論</string>
+    <string name="schools_bookmarks">正在關注</string>
+    <string name="schools_your_district">您的地區:</string>
+    <string name="schools_info_coupon">學券申請:</string>
+    <string name="schools_info_type">學校類別:</string>
+    <string name="schools_info_curriculum">課程類別:</string>
+    <string name="schools_info_time">課堂:</string>
+    <string name="schools_filter_text_1">有</string>
+    <string name="schools_filter_text_2">間幼稚園提供2-3歲</string>
+    <string name="schools_filter_text_3">幼兒服務 (PN班)</string>
+
     <string name="filter_schools_all">全部</string>
     <string name="filter_schools_yes">有</string>
     <string name="filter_schools_no">沒有</string>

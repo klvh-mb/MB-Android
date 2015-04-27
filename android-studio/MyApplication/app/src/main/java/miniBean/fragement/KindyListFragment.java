@@ -88,8 +88,7 @@ public class KindyListFragment extends Fragment {
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, DefaultValues.FILTER_SCHOOLS_TIME);
         timeSpinner.setAdapter(adapter3);
 
-
-        gridView = (GridView)view.findViewById(R.id.gridView1);
+        gridView = (GridView)view.findViewById(R.id.districtGrid);
         districtText= (TextView) view.findViewById(R.id.districtNameText);
         distName= (TextView) view.findViewById(R.id.distName);
         PNList= (ListView) view.findViewById(R.id.schoolList);

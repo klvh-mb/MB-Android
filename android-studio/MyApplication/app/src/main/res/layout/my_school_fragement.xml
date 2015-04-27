@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/view_bg">
+    android:background="@color/pn_view_bg">
 
     <RelativeLayout
         android:id="@+id/mainActionsLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#57B154">
+        android:background="@drawable/actionbar_bg_green">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -23,8 +23,8 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
                 android:background="@color/white"
-                android:text="Listing"
-                android:textColor="#57B154"
+                android:text="@string/schools_district_search"
+                android:textColor="@color/pn_actionbar_bg"
                 android:elegantTextHeight="false"
                 android:textSize="15dp" />
 
@@ -35,8 +35,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
-                android:background="#57B154"
-                android:text="Newsfeed"
+                android:background="@color/pn_box_border"
+                android:text="@string/schools_newsfeed"
                 android:textColor="@color/white"
                 android:layout_toRightOf="@+id/buttonListing"
                 android:layout_marginRight="2dp"
@@ -48,8 +48,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
-                android:background="#57B154"
-                android:text="Bookmark"
+                android:background="@color/pn_box_border"
+                android:text="@string/schools_bookmarks"
                 android:textColor="@color/white"
                 android:layout_toRightOf="@+id/buttonNewsfeed"
                 android:layout_marginRight="2dp"

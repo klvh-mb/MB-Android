@@ -71,13 +71,13 @@ public class MySchoolsFragment extends Fragment {
 
     private void pressListButton(){
         buttonList.setBackgroundColor(Color.WHITE);
-        buttonList.setTextColor(Color.parseColor("#57B154"));
+        buttonList.setTextColor(getResources().getColor(R.color.pn_box_border));
 
         buttonBookmark.setTextColor(Color.WHITE);
-        buttonBookmark.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonBookmark.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
         buttonNews.setTextColor(Color.WHITE);
-        buttonNews.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
         Fragment schoolListFragment = new SchoolListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
@@ -85,13 +85,13 @@ public class MySchoolsFragment extends Fragment {
     }
 
     private void pressNewsButton(){
-        buttonList.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonList.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
         buttonList.setTextColor(Color.WHITE);
 
         buttonBookmark.setTextColor(Color.WHITE);
-        buttonBookmark.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonBookmark.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
-        buttonNews.setTextColor(Color.parseColor("#57B154"));
+        buttonNews.setTextColor(getResources().getColor(R.color.pn_box_border));
         buttonNews.setBackgroundColor(Color.WHITE);
 
         Fragment schoolFeedListFragment = new SchoolNewsfeedListFragement();
@@ -101,14 +101,14 @@ public class MySchoolsFragment extends Fragment {
     }
 
     private void pressBookmarkButton(){
-        buttonList.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonList.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
         buttonList.setTextColor(Color.WHITE);
 
-        buttonBookmark.setTextColor(Color.parseColor("#57B154"));
+        buttonBookmark.setTextColor(getResources().getColor(R.color.pn_box_border));
         buttonBookmark.setBackgroundColor(Color.WHITE);
 
         buttonNews.setTextColor(Color.WHITE);
-        buttonNews.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
         Fragment schoolBookmarkFragment = new SchoolBookmarkFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();

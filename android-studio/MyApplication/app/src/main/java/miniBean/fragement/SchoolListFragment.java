@@ -27,25 +27,21 @@ import miniBean.R;
 import miniBean.adapter.DistrictListAdapter;
 import miniBean.adapter.PNListAdapter;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 public class SchoolListFragment extends Fragment {
 
     private static final String TAG = SchoolListFragment.class.getName();
-    private GridView gridView;
-    private List<String> locations;
+    private GridView districtGrid;
     private List<LocationVM> locationVMList;
     private List<PreNurseryVM> preNurseryVMList;
     private List<PreNurseryVM> tempVMList;
-    private TextView districtText,distName,searchKey,totalResultText,noOfKindy;
+    private TextView districtText,distName,searchKey,totalResultText,noOfSchools;
     private ArrayAdapter<String> locationAdapter;
     private DistrictListAdapter districtListAdapter;
     private PNListAdapter pnListAdapter;
@@ -54,8 +50,6 @@ public class SchoolListFragment extends Fragment {
     private RelativeLayout nurseryLayout,boxLayout,searchResultLayout;
     private LinearLayout cancelLayout;
     private SearchView searchText;
-    private MyApi api;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,22 +57,15 @@ public class SchoolListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.school_list_fragment, container, false);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-
-        couponSpinner= (Spinner) view.findViewById(R.id.couponSpinner);
-        typeSpinner= (Spinner) view.findViewById(R.id.typeSpinner);
-        timeSpinner= (Spinner) view.findViewById(R.id.timeSpinner);
-        curriculumSpinner= (Spinner) view.findViewById(R.id.curriculumSpinner);
-        searchKey= (TextView) view.findViewById(R.id.searchText);
-        totalResultText= (TextView) view.findViewById(R.id.searchCountText);
-        searchResultLayout= (RelativeLayout) view.findViewById(R.id.searchResultLayout);
-        cancelLayout= (LinearLayout) view.findViewById(R.id.cancelLayout);
-        noOfKindy= (TextView) view.findViewById(R.id.noOfKindergartens);
+        couponSpinner = (Spinner) view.findViewById(R.id.couponSpinner);
+        typeSpinner = (Spinner) view.findViewById(R.id.typeSpinner);
+        timeSpinner = (Spinner) view.findViewById(R.id.timeSpinner);
+        curriculumSpinner = (Spinner) view.findViewById(R.id.curriculumSpinner);
+        searchKey = (TextView) view.findViewById(R.id.searchText);
+        totalResultText = (TextView) view.findViewById(R.id.searchCountText);
+        searchResultLayout = (RelativeLayout) view.findViewById(R.id.searchResultLayout);
+        cancelLayout = (LinearLayout) view.findViewById(R.id.cancelLayout);
+        noOfSchools = (TextView) view.findViewById(R.id.noOfKindergartens);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, DefaultValues.FILTER_SCHOOLS_COUPON);
         couponSpinner.setAdapter(adapter);
@@ -92,22 +79,20 @@ public class SchoolListFragment extends Fragment {
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, DefaultValues.FILTER_SCHOOLS_TIME);
         timeSpinner.setAdapter(adapter3);
 
-
-        gridView = (GridView)view.findViewById(R.id.gridView1);
-        districtText= (TextView) view.findViewById(R.id.districtNameText);
-        distName= (TextView) view.findViewById(R.id.distName);
-        PNList= (ListView) view.findViewById(R.id.schoolList);
-        gridView.setDrawSelectorOnTop(false);
+        districtGrid = (GridView)view.findViewById(R.id.districtGrid);
+        districtGrid.setDrawSelectorOnTop(false);
+        districtText = (TextView) view.findViewById(R.id.districtNameText);
+        distName = (TextView) view.findViewById(R.id.distName);
+        PNList = (ListView) view.findViewById(R.id.schoolList);
         searchText= (SearchView) view.findViewById(R.id.searchWindow);
 
         locationVMList = new ArrayList<LocationVM>();
-        preNurseryVMList=new ArrayList<PreNurseryVM>();
-        tempVMList=new ArrayList<PreNurseryVM>();
+        preNurseryVMList = new ArrayList<PreNurseryVM>();
+        tempVMList = new ArrayList<PreNurseryVM>();
 
-        nurseryLayout= (RelativeLayout) view.findViewById(R.id.nurseryLayout);
-        boxLayout= (RelativeLayout) view.findViewById(R.id.boxLayout);
+        nurseryLayout = (RelativeLayout) view.findViewById(R.id.nurseryLayout);
+        boxLayout = (RelativeLayout) view.findViewById(R.id.boxLayout);
 
-        //getUserInfo();
         districtText.setText(AppController.getUserLocation().getDisplayName());
         distName.setText(AppController.getUserLocation().getDisplayName());
 
@@ -127,18 +112,15 @@ public class SchoolListFragment extends Fragment {
             }
         });
 
-
-
         setLocation();
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        districtGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String loc = districtListAdapter.getItem(i).getDisplayName();
                 districtText.setText(loc);
                 distName.setText(loc);
                 getPNByDistrict(locationVMList.get(i).getId());
-
             }
         });
 
@@ -173,7 +155,6 @@ public class SchoolListFragment extends Fragment {
                 return false;
             }
         });
-
 
         curriculumSpinner.post(new Runnable() {
             public void run() {
@@ -226,8 +207,6 @@ public class SchoolListFragment extends Fragment {
             }
         });
 
-
-
         couponSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -245,17 +224,12 @@ public class SchoolListFragment extends Fragment {
         AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(),new Callback< List< LocationVM>>(){
             @Override
             public void success(List<LocationVM> locationVMs, Response response) {
-                locations = new ArrayList<String>();
+                locationVMList.clear();
+                locationVMList.addAll(locationVMs);
 
-                System.out.println("total:::"+locationVMs.size());
-
-                for(int i=0; i<locationVMs.size(); i++){
-                    locations.add(locationVMs.get(i).getDisplayName());
-                    locationVMList.addAll(locationVMs);
-                }
-               // locationAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,locations);
-                districtListAdapter=new DistrictListAdapter(getActivity(),locationVMs);
-                gridView.setAdapter(districtListAdapter);
+                // locationAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,locations);
+                districtListAdapter = new DistrictListAdapter(getActivity(),locationVMs);
+                districtGrid.setAdapter(districtListAdapter);
             }
 
             @Override
@@ -269,11 +243,11 @@ public class SchoolListFragment extends Fragment {
         AppController.getApi().getPnByDistricts(id,AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
             @Override
             public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
-                System.out.println("url::::::"+response.getUrl());
-               preNurseryVMList.addAll(preNurseryVMs);
+                preNurseryVMList.clear();
+                preNurseryVMList.addAll(preNurseryVMs);
+                tempVMList.clear();
                 tempVMList.addAll(preNurseryVMs);
-                System.out.println("size:::::"+preNurseryVMList.size());
-                noOfKindy.setText(""+preNurseryVMList.size());
+                noOfSchools.setText(preNurseryVMList.size()+"");
                 pnListAdapter.notifyDataSetChanged();
             }
 
@@ -298,8 +272,6 @@ public class SchoolListFragment extends Fragment {
 
     }
 
-
-
     private List<PreNurseryVM> curtFilter(String curtValue,List<PreNurseryVM> tempVMList) {
         List<PreNurseryVM> vm=new ArrayList<PreNurseryVM>();
         System.out.println("curt" + curtValue);
@@ -322,7 +294,6 @@ public class SchoolListFragment extends Fragment {
         return vms;
     }
 
-
     private List<PreNurseryVM> typeFilter(String orgtValue,List<PreNurseryVM> tempVMList) {
         List<PreNurseryVM> vms = new ArrayList<PreNurseryVM>();
         System.out.println("orgtValue" + orgtValue);
@@ -333,7 +304,6 @@ public class SchoolListFragment extends Fragment {
         }
         return vms;
     }
-
 
     private void searchByName(final String query){
         AppController.getApi().searchPnByName(query,AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {

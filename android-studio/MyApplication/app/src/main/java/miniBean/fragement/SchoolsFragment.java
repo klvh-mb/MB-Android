@@ -2,7 +2,6 @@ package miniBean.fragement;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +16,7 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import miniBean.R;
+import miniBean.app.AppController;
 
 public class SchoolsFragment extends Fragment {
 
@@ -32,8 +32,6 @@ public class SchoolsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.schools_main_fragement, container, false);
 
-        getActivity().getActionBar().hide();
-
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         mAdapter = new SchoolPagerAdapter(getChildFragmentManager());
@@ -45,7 +43,7 @@ public class SchoolsFragment extends Fragment {
 
         tabs.setViewPager(viewPager);
         tabs.setTextColor(getResources().getColor(R.color.dark_gray));
-        tabs.setIndicatorColor(Color.parseColor("#57B154"));
+        tabs.setIndicatorColor(getResources().getColor(R.color.pn_box_border));
 
         final int indicatorHeight = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
@@ -66,7 +64,10 @@ public class SchoolsFragment extends Fragment {
 
 class SchoolPagerAdapter extends FragmentPagerAdapter {
 
-    private static String[] TITLES={"Prenursery","Kindy"};
+    private static String[] TITLES = {
+            AppController.getInstance().getString(R.string.schools_tab_title_pn),
+            AppController.getInstance().getString(R.string.schools_tab_title_kg)
+    };
 
     public SchoolPagerAdapter(FragmentManager fm) {
         super(fm);

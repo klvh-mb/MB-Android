@@ -21,7 +21,7 @@
     <color name="signup_yellow">#FFBE42</color>
     <color name="signup_blue">#8379F1</color>
     <color name="input_text">#111</color>
-    <color name="view_bg">#FCF7FD</color>
+    <color name="view_bg">#eee</color>
     <color name="feed_bg">#d3d6db</color>
     <color name="feed_item_bg">#ffffff</color>
     <color name="feed_item_border">#c2c3c8</color>
@@ -33,11 +33,26 @@
     <color name="actionbar_bg_light">#CEA8E9</color>
     <color name="actionbar_selected_text">#BD94F9</color>
 
+
+    <color name="schools_orange">#CD8400</color>
+    <color name="schools_info_text">#5F1B1B</color>
+    <color name="schools_info_box_bg">#FEFFF0</color>
+    <color name="schools_info_box_border">#D1D897</color>
+
+    <color name="pn_view_bg">#eee</color>
     <color name="pn_actionbar_bg">#67BB67</color>
-    <color name="pn_bg">#F7FFF6</color>
+    <color name="pn_box_border">#7BC77E</color>
+    <color name="pn_box_shadow">#8FB389</color>
     <color name="pn_green">#57A857</color>
-    <color name="pn_light_green">#A3D0A4</color>
-    <color name="pn_orange">#CD8400</color>
-    <color name="pn_highlight_text">#5F1B1B</color>
+    <color name="pn_text">#008000</color>
+    <color name="pn_text_light">#4B964B</color>
+
+    <color name="kg_view_bg">#eee</color>
+    <color name="kg_actionbar_bg">#BB5C5D</color>
+    <color name="kg_box_border">#C77B7B</color>
+    <color name="kg_box_shadow">#B38989</color>
+    <color name="kg_green">#B86B6B</color>
+    <color name="kg_text">#A63D3D</color>
+    <color name="kg_text_light">#B86464</color>
 
 </resources>
