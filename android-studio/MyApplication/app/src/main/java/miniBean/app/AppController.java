@@ -62,6 +62,8 @@ public class AppController extends Application {
 
     private SharedPreferences session;
 
+    private boolean isColorCheck=false;
+
     public static synchronized AppController getInstance() {
         return mInstance;
     }
@@ -190,5 +192,13 @@ public class AppController extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isColorCheck() {
+        return isColorCheck;
+    }
+
+    public void setColorCheck(boolean isColorCheck) {
+        this.isColorCheck = isColorCheck;
     }
 }

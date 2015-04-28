@@ -1,6 +1,7 @@
 package miniBean.fragement;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -50,13 +51,18 @@ public class SchoolListFragment extends Fragment {
     private LinearLayout cancelLayout;
     private SearchView searchText;
     private View listHeader;
-    private int currentSelected;
+    private int temp ;
+    private String curtValue,cpValue,typeValue,timeValue;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.school_list_fragment, container, false);
+
+        AppController.getInstance().setColorCheck(false);
 
         // header
         listHeader = inflater.inflate(R.layout.school_list_fragment_header, null);
@@ -90,7 +96,7 @@ public class SchoolListFragment extends Fragment {
 
         locationVMList = new ArrayList<LocationVM>();
         preNurseryVMList = new ArrayList<PreNurseryVM>();
-        tempVMList = new ArrayList<PreNurseryVM>();
+
 
         nurseryLayout = (RelativeLayout) listHeader.findViewById(R.id.nurseryLayout);
         boxLayout = (RelativeLayout) listHeader.findViewById(R.id.boxLayout);
@@ -122,7 +128,19 @@ public class SchoolListFragment extends Fragment {
         districtGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectDistrict(i);
+                String loc = districtListAdapter.getItem(i).getDisplayName();
+                getPNsByDistrict(locationVMList.get(i).getId());
+
+                System.out.println("pn id ::"+locationVMList.get(i).getId());
+
+                for(int j = 0; j < locationVMList.size(); j++){
+                    districtGrid.getChildAt(j).setBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+
+                districtGrid.getChildAt(i).setBackgroundColor(Color.parseColor("#57B154"));
+                yourDistrictNameText.setText(loc);
+                districtNameText.setText(loc);
+                temp=i;
             }
         });
 
@@ -157,58 +175,49 @@ public class SchoolListFragment extends Fragment {
                 return false;
             }
         });
-
-        curriculumSpinner.post(new Runnable() {
-            public void run() {
-                curriculumSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        //curtValue = curriculumSpinner.getSelectedItem().toString();
-                        filterControl(curriculumSpinner.getSelectedItem().toString(),timeSpinner.getSelectedItem().toString(),typeSpinner.getSelectedItem().toString());
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
+        curriculumSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                curtValue=curriculumSpinner.getSelectedItem().toString();
+                filterControl();
             }
-        });
 
-        timeSpinner.post(new Runnable() {
-            public void run() {
-                timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        filterControl(curriculumSpinner.getSelectedItem().toString(),timeSpinner.getSelectedItem().toString(),typeSpinner.getSelectedItem().toString());
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-            }
-        });
-
-        typeSpinner.post(new Runnable() {
-            public void run() {
-                typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        filterControl(curriculumSpinner.getSelectedItem().toString(),timeSpinner.getSelectedItem().toString(),typeSpinner.getSelectedItem().toString());
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
 
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                typeValue=typeSpinner.getSelectedItem().toString();
+                filterControl();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                timeValue=timeSpinner.getSelectedItem().toString();
+                filterControl();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         couponSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                cpValue=couponSpinner.getSelectedItem().toString();
+                filterControl();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -218,15 +227,6 @@ public class SchoolListFragment extends Fragment {
         return view;
     }
 
-    private void selectDistrict(int index) {
-        districtGrid.getChildAt(currentSelected).setBackgroundColor(getResources().getColor(R.color.white));
-        String loc = districtListAdapter.getItem(index).getDisplayName();
-        getPNsByDistrict(locationVMList.get(index).getId());
-        districtGrid.getChildAt(index).setBackgroundResource(R.drawable.rounded_corner_pn_item);
-        districtNameText.setText(loc);
-        currentSelected = index;
-    }
-
     private void setDistricts(){
         AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(),new Callback<List< LocationVM>>(){
             @Override
@@ -234,6 +234,7 @@ public class SchoolListFragment extends Fragment {
                 locationVMList.clear();
                 locationVMList.addAll(locationVMs);
 
+                // locationAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,locations);
                 districtListAdapter = new DistrictListAdapter(getActivity(),locationVMs);
                 districtGrid.setAdapter(districtListAdapter);
             }
@@ -251,9 +252,10 @@ public class SchoolListFragment extends Fragment {
             public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
                 preNurseryVMList.clear();
                 preNurseryVMList.addAll(preNurseryVMs);
-                tempVMList.clear();
-                tempVMList.addAll(preNurseryVMs);
+                filterControl();
+                //tempVMList.clear();
                 noOfSchools.setText(preNurseryVMList.size() + "");
+                //listAdapter = new PNListAdapter(getActivity(),preNurseryVMList);
                 listAdapter.notifyDataSetChanged();
             }
 
@@ -264,49 +266,86 @@ public class SchoolListFragment extends Fragment {
         });
     }
 
-    private void filterControl(String curt,String ct,String orgt){
+    private void filterControl(){
+        List<PreNurseryVM> tempVMList = new ArrayList<PreNurseryVM>();
+        tempVMList.addAll(preNurseryVMList);
 
-        if(curt!=null){
-            tempVMList=curtFilter(curt,tempVMList);
-        }
-        if(ct!=null){
-            tempVMList=timeFilter(ct,tempVMList);
-        }
-        if(orgt!=null){
-            tempVMList=typeFilter(orgt,tempVMList);
-        }
+                if(cpValue!=null) {
+                    tempVMList = cpFilter(cpValue, tempVMList);
+                }
 
+                if(curtValue!=null) {
+                    tempVMList = curtFilter(curtValue, tempVMList);
+                }
+                if(timeValue!=null) {
+                    tempVMList = timeFilter(timeValue, tempVMList);
+                }
+
+                if(typeValue!=null) {
+                    tempVMList = typeFilter(typeValue, tempVMList);
+                }
+                PNListAdapter adapter=new PNListAdapter(getActivity(),tempVMList);
+                listView.setAdapter(adapter);
     }
+
+    private List<PreNurseryVM> cpFilter(String cpValue,List<PreNurseryVM> tempVMList) {
+        List<PreNurseryVM> vm=new ArrayList<PreNurseryVM>();
+        if(!cpValue.equals("??")) {
+            for (int j = 0; j <= (tempVMList.size() - 1); j++) {
+                if (cpValue.equals("?")) {
+                    if(tempVMList.get(j).isCp())
+                    vm.add(tempVMList.get(j));
+                }else {
+                    if(!tempVMList.get(j).isCp()){
+                        vm.add(tempVMList.get(j));
+                    }
+                }
+            }
+        }else{
+            return tempVMList;
+        }
+        return vm;
+    }
+
 
     private List<PreNurseryVM> curtFilter(String curtValue,List<PreNurseryVM> tempVMList) {
         List<PreNurseryVM> vm=new ArrayList<PreNurseryVM>();
-        System.out.println("curt" + curtValue);
+        if(!curtValue.equals("??")){
         for (int j = 0; j <= (tempVMList.size() - 1); j++) {
-            if (tempVMList.get(j).getCurt().toLowerCase().equals(curtValue.toLowerCase())) {
+            if (tempVMList.get(j).getCurt().contains(curtValue)) {
                 vm.add(tempVMList.get(j));
             }
+         }
+        }else{
+            return tempVMList;
         }
         return vm;
     }
 
     private List<PreNurseryVM> timeFilter(String ctValue,List<PreNurseryVM> tempVMList) {
         List<PreNurseryVM> vms = new ArrayList<PreNurseryVM>();
-        System.out.println("ctValue" + ctValue);
-        for (int j = 0; j <= (tempVMList.size() - 1); j++) {
-            if (tempVMList.get(j).getCt().toLowerCase().equals(ctValue.toLowerCase())) {
-                vms.add(tempVMList.get(j));
+        if(!ctValue.equals("??")) {
+            for (int j = 0; j <= (tempVMList.size() - 1); j++) {
+                if (tempVMList.get(j).getCt().contains(ctValue)) {
+                    vms.add(tempVMList.get(j));
+                }
             }
+        }else {
+            return tempVMList;
         }
         return vms;
     }
 
     private List<PreNurseryVM> typeFilter(String orgtValue,List<PreNurseryVM> tempVMList) {
         List<PreNurseryVM> vms = new ArrayList<PreNurseryVM>();
-        System.out.println("orgtValue" + orgtValue);
-        for (int j = 0; j <= (tempVMList.size() - 1); j++) {
-            if (tempVMList.get(j).getOrgt().toLowerCase().equals(orgtValue.toLowerCase())) {
-                vms.add(tempVMList.get(j));
+        if(!orgtValue.equals("??")) {
+            for (int j = 0; j <= (tempVMList.size() - 1); j++) {
+                if (tempVMList.get(j).getOrgt().contains(orgtValue)) {
+                    vms.add(tempVMList.get(j));
+                }
             }
+        }else {
+            return tempVMList;
         }
         return vms;
     }

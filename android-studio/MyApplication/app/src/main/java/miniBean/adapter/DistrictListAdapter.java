@@ -2,15 +2,18 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import miniBean.R;
+import miniBean.app.AppController;
 import miniBean.viewmodel.LocationVM;
 
 public class DistrictListAdapter extends BaseAdapter {
@@ -50,14 +53,19 @@ public class DistrictListAdapter extends BaseAdapter {
         if (view == null)
             view = inflater.inflate(R.layout.district_list_item, null);
 
+        String name = AppController.getUserLocation().getDisplayName();
 
+        RelativeLayout nameBtn = (RelativeLayout) view.findViewById(R.id.nameBtn);
         distName= (TextView) view.findViewById(R.id.distItemText);
-
         final LocationVM item=locationVMList.get(i);
+        if(!AppController.getInstance().isColorCheck()) {
+                if (name.equals(item.getDisplayName())) {
+                    nameBtn.setBackgroundColor(Color.parseColor("#57B154"));
+                    AppController.getInstance().setColorCheck(true);
+                }
+        }
 
         distName.setText(item.getDisplayName());
-
-
         return view;
     }
 }
