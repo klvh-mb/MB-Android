@@ -17,18 +17,14 @@ import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
 import miniBean.adapter.BookmarkListAdapter;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 public class SchoolBookmarkFragment extends Fragment {
 
     private static final String TAG = SchoolBookmarkFragment.class.getName();
-    private MyApi api;
     private ListView bookmarkList;
     private BookmarkListAdapter bookmarkListAdapter;
     private TextView totalBookmark;
@@ -40,15 +36,8 @@ public class SchoolBookmarkFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.school_bookmark_fragment, container, false);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
-
-        bookmarkList= (ListView) view.findViewById(R.id.listBookmark);
-        totalBookmark= (TextView) view.findViewById(R.id.totalBokmark);
+        bookmarkList = (ListView) view.findViewById(R.id.listBookmark);
+        totalBookmark = (TextView) view.findViewById(R.id.totalBookmark);
 
         preNurseryVMList=new ArrayList<PreNurseryVM>();
 
@@ -76,7 +65,7 @@ public class SchoolBookmarkFragment extends Fragment {
             public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
                 totalBookmark.setText(""+preNurseryVMs.size());
                 preNurseryVMList.addAll(preNurseryVMs);
-                bookmarkListAdapter=new BookmarkListAdapter(getActivity(),preNurseryVMList);
+                bookmarkListAdapter = new BookmarkListAdapter(getActivity(),preNurseryVMList);
                 bookmarkList.setAdapter(bookmarkListAdapter);
                 bookmarkListAdapter.notifyDataSetChanged();
             }

@@ -68,6 +68,39 @@ public class CommunityIconUtil {
         iconsMap.put("/assets/app/images/general/icons/zodiac/rooster.png", R.drawable.ci_z_rooster);
         iconsMap.put("/assets/app/images/general/icons/zodiac/snake.png", R.drawable.ci_z_snake);
         iconsMap.put("/assets/app/images/general/icons/zodiac/tiger.png", R.drawable.ci_z_tiger);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/boxhill.png", R.drawable.kg_boxhill);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/cannan.png", R.drawable.kg_cannan);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/catiline.png", R.drawable.kg_catiline);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/creative.png", R.drawable.kg_creative);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/elh.png", R.drawable.kg_elh);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/funful.png", R.drawable.kg_funful);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/hklingliang.png", R.drawable.kg_hklingliang);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/hkpresch.png", R.drawable.kg_hkpresch);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/holytrinity.png", R.drawable.kg_holytrinity);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/kcis.png", R.drawable.kg_kcis);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/kclocal.png", R.drawable.kg_kclocal);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/keenmind.png", R.drawable.kg_keenmind);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/kentville.png", R.drawable.kg_kentville);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/klcbchn.png", R.drawable.kg_klcbchn);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/kllingliang.png", R.drawable.kg_kllingliang);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/learninghabitat.png", R.drawable.kg_learninghabitat);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/ltlingliang.png", R.drawable.kg_ltlingliang);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/rhs.png", R.drawable.kg_rhs);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/sjc.png", R.drawable.kg_sjc);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/skh.png", R.drawable.kg_skh);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/spckg.png", R.drawable.kg_spckg);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/spk.png", R.drawable.kg_spk);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/spn.png", R.drawable.kg_spn);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/stcatherine.png", R.drawable.kg_stcatherine);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/stm.png", R.drawable.kg_stm);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/think.png", R.drawable.kg_think);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/ttp.png", R.drawable.kg_ttp);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/tutortime.png", R.drawable.kg_tutortime);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/victoria.png", R.drawable.kg_victoria);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/wisely.png", R.drawable.kg_wisely);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/yanoitong.png", R.drawable.kg_yanoitong);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/york.png", R.drawable.kg_york);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/zenith.png", R.drawable.kg_zenith);
     }
 
     private CommunityIconUtil() {}

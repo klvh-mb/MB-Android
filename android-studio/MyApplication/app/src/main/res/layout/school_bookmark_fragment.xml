@@ -5,41 +5,44 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:id="@+id/headingLayout"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bookmarked"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/totalBokmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="16"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="schools"
-            android:textStyle="bold"/>
-        </LinearLayout>
-    <View
-        android:layout_below="@+id/headingLayout"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:id="@+id/headingLayout"
         android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginRight="10dp"
-        android:background="#57B154"/>
+        android:background="@drawable/schools_info_box"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schools_pn_bookmark_title_1"
+            android:textSize="16dp"
+            android:textColor="@color/dark_gray_3" />
+        <TextView
+            android:id="@+id/totalBookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="16"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:textColor="@color/pn_text" />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schools_pn_bookmark_title_2"
+            android:textSize="16dp"
+            android:textColor="@color/dark_gray_3" />
+        </LinearLayout>
+
     <ListView
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/headingLayout"
         android:id="@+id/listBookmark"
         android:layout_width="fill_parent"

@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import miniBean.R;
 
-public class MySchoolsFragment extends Fragment {
+public class SchoolsByDistrictFragment extends Fragment {
 
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
@@ -20,7 +20,7 @@ public class MySchoolsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.my_school_fragement, container, false);
+        View view = inflater.inflate(R.layout.schools_by_district_fragement, container, false);
 
         buttonList= (Button) view.findViewById(R.id.buttonListing);
         buttonBookmark= (Button) view.findViewById(R.id.buttonBookmark);

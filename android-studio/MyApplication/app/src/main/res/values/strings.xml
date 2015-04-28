@@ -173,7 +173,7 @@
     <string name="schools_tab_title_kg">幼稚園(K班)</string>
     <string name="schools_district_search">地區搜尋</string>
     <string name="schools_newsfeed">最新討論</string>
-    <string name="schools_bookmarks">正在關注</string>
+    <string name="schools_bookmarks">我的收藏</string>
     <string name="schools_your_district">您的地區:</string>
     <string name="schools_info_coupon">學券申請:</string>
     <string name="schools_info_type">學校類別:</string>
@@ -182,6 +182,8 @@
     <string name="schools_filter_text_1">有</string>
     <string name="schools_filter_text_2">間幼稚園提供2-3歲</string>
     <string name="schools_filter_text_3">幼兒服務 (PN班)</string>
+    <string name="schools_pn_bookmark_title_1">收藏了</string>
+    <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
 
     <string name="filter_schools_all">全部</string>
     <string name="filter_schools_yes">有</string>

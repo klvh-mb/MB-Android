@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/pn_view_bg">
 
     <RelativeLayout
         android:id="@+id/searchView"
-        android:layout_marginTop="10dp"
         android:background="@drawable/schools_edit_text_round"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_margin="10dp">
         <SearchView
             android:id="@+id/searchWindow"
             android:layout_alignParentRight="true"
@@ -20,15 +18,15 @@
             android:layout_height="35dp">
             </SearchView>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/boxLayout"
         android:layout_below="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_corner_pn_grid"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/rounded_corner_pn_grid">
+        android:layout_marginRight="10dp">
         <RelativeLayout
             android:background="@drawable/rounded_corner_pn_grid_top"
             android:layout_width="wrap_content"
@@ -61,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp">
+                android:paddingRight="5dp">
                 <TextView
                     android:id="@+id/districtText"
                     android:layout_width="wrap_content"
@@ -96,6 +94,7 @@
 
         </RelativeLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/nurseryLayout"
         android:layout_below="@+id/boxLayout"
@@ -106,7 +105,9 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:layout_margin="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -257,26 +258,26 @@
                 android:layout_below="@+id/typeLayout"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp">
-            <TextView
-                android:id="@+id/timeText"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_time"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp" />
-            <Spinner
-                android:background="@drawable/spinner_bg"
-                android:id="@+id/timeSpinner"
-                android:layout_marginLeft="5dp"
-                android:layout_width="60dp"
-                android:layout_height="25dp"
-                android:gravity="center"
-                android:layout_gravity="center_vertical">
-             </Spinner>
+                <TextView
+                    android:id="@+id/timeText"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_time"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:id="@+id/timeSpinner"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical">
+                </Spinner>
             </LinearLayout>
-          </RelativeLayout>
         </RelativeLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:visibility="gone"
@@ -319,23 +320,30 @@
             android:layout_toRightOf="@id/returnText"
             android:layout_marginLeft="10dp"/>
         </LinearLayout>
-    <LinearLayout
-        android:id="@+id/cancelLayout"
-        android:layout_alignParentRight="true"
-        android:background="#ED9F34"
-        android:layout_margin="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp">
-    <TextView
-        android:id="@+id/cancelButton"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:textColor="#ffffff"
-        android:textSize="15dp"
-        />
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cancelLayout"
+            android:layout_alignParentRight="true"
+            android:background="#ED9F34"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp">
+            <TextView
+                android:id="@+id/cancelButton"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="#ffffff"
+                android:textSize="15dp" />
+        </LinearLayout>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/pn_green"
+        android:id="@+id/divider"
+        android:layout_below="@+id/nurseryLayout"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.util.CommunityIconUtil;
 import miniBean.viewmodel.PreNurseryVM;
 
 public class BookmarkListAdapter extends BaseAdapter {
@@ -44,21 +45,24 @@ public class BookmarkListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (inflater == null)
-            inflater = (LayoutInflater) activity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if (view == null)
             view = inflater.inflate(R.layout.school_bookmark_item, null);
 
+        icon = (ImageView) view.findViewById(R.id.schoolImage);
+        title = (TextView) view.findViewById(R.id.schoolName);
+        district = (TextView) view.findViewById(R.id.districtText);
+        noOfComment = (TextView) view.findViewById(R.id.totalCommentText);
 
-        icon= (ImageView) view.findViewById(R.id.bookmarkPic);
-        title= (TextView) view.findViewById(R.id.bookmarkName);
-        district= (TextView) view.findViewById(R.id.textDistrict);
-        noOfComment= (TextView) view.findViewById(R.id.totalCommentText);
-        System.out.println("in book adapter:::::::::");
+        PreNurseryVM item = PNlistItem.get(i);
 
-        PreNurseryVM item=PNlistItem.get(i);
-
-        icon.setImageResource(R.drawable.schools_green_book);
+        int iconMapped = CommunityIconUtil.map(item.getIcon());
+        if (iconMapped != -1) {
+            icon.setImageDrawable(view.getResources().getDrawable(iconMapped));
+        } else {
+            icon.setImageResource(R.drawable.schools_green_book);
+        }
 
         title.setText(item.getN());
         district.setText(item.getDis());

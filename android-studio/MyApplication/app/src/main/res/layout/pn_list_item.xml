@@ -1,11 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:background="@drawable/rect_border_community"
     android:layout_width="match_parent"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+    android:background="@color/white">
     <LinearLayout
         android:id="@+id/schoolNameLayout"
         android:layout_width="wrap_content"
@@ -16,15 +16,16 @@
         android:layout_height="wrap_content"
         android:text="-"
         android:textSize="18dp"
-        android:textColor="#1A20DC"/>
+        android:textColor="@color/schools_title"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/pnDistName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="-"
-        android:textColor="@color/schools_orange"
-        android:textSize="15sp"
+        android:textColor="@color/schools_district"
+        android:textSize="15dp"
         android:layout_toRightOf="@+id/textView1"/>
     </LinearLayout>
     <TextView
@@ -35,9 +36,9 @@
         android:text="-"
         android:textSize="15dp"
         android:layout_below="@+id/schoolNameLayout"
-        />
+        android:textColor="@color/gray" />
     <RelativeLayout
-        android:id="@+id/middleLayout"
+        android:id="@+id/schoolInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -46,7 +47,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:padding="5dp">
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -70,11 +72,11 @@
                 android:textColor="@color/dark_gray_3"
                 android:textSize="14dp" />
             <ImageView
-                android:id="@+id/couponValue"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:id="@+id/couponImage"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_marginLeft="5dp"
-                />
+                android:layout_gravity="center_vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -164,24 +166,25 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@+id/middleLayout"
+        android:layout_below="@+id/schoolInfoLayout"
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp">
+        android:layout_marginRight="15dp">
     <ImageView
         android:id="@+id/commentImage"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@drawable/comment"/>
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/comment"
+        android:layout_centerVertical="true" />
         <TextView
             android:id="@+id/totalCommentText"
             android:layout_toRightOf="@+id/commentImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:textSize="14dp"
             android:layout_centerVertical="true" />
     <ImageView
@@ -190,7 +193,8 @@
         android:layout_height="20dp"
         android:layout_toRightOf="@+id/totalCommentText"
         android:src="@drawable/bookmark"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true" />
     </RelativeLayout>
 </RelativeLayout>
 

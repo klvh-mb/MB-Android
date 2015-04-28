@@ -3,31 +3,46 @@
 
     <item android:state_pressed="true" android:state_focused="true">
         <shape>
+            <gradient
+                android:startColor="#ffffff"
+                android:centerColor="#ffffff"
+                android:endColor="#ffffff"
+                android:angle="270" />
             <stroke
                 android:width="2.3dp"
                 android:color="@color/signup_blue" />
             <corners
-                android:radius="25dp" />
+                android:radius="5dp" />
         </shape>
     </item>
 
     <item android:state_pressed="true" android:state_focused="false">
         <shape>
+            <gradient
+                android:startColor="#ffffff"
+                android:centerColor="#ffffff"
+                android:endColor="#ffffff"
+                android:angle="270" />
             <stroke
                 android:width="2.3dp"
                 android:color="@color/signup_blue" />
             <corners
-                android:radius="25dp" />
+                android:radius="5dp" />
         </shape>
     </item>
 
     <item android:state_pressed="false" android:state_focused="true">
         <shape>
+            <gradient
+                android:startColor="#ffffff"
+                android:centerColor="#ffffff"
+                android:endColor="#ffffff"
+                android:angle="270" />
             <stroke
                 android:width="2.3dp"
                 android:color="@color/signup_blue" />
             <corners
-                android:radius="25dp" />
+                android:radius="5dp" />
         </shape>
     </item>
 
@@ -37,13 +52,12 @@
                 android:startColor="#ffffff"
                 android:centerColor="#ffffff"
                 android:endColor="#ffffff"
-                android:angle="270"
-                />
+                android:angle="270" />
             <stroke
                 android:width="0.7dp"
                 android:color="@color/signup_blue" />
             <corners
-                android:radius="25dp" />
+                android:radius="5dp" />
         </shape>
     </item>
 

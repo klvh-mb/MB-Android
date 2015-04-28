@@ -48,13 +48,13 @@ public class SchoolCommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.pn_comm, container, false);
+        View view = inflater.inflate(R.layout.pn_community_activity, container, false);
 
 
         nameText= (TextView) view.findViewById(R.id.pnNameText);
         distText= (TextView) view.findViewById(R.id.distNameText);
         schoolName= (TextView) view.findViewById(R.id.name);
-        cpValueImage= (ImageView) view.findViewById(R.id.cpValueImage);
+        cpValueImage= (ImageView) view.findViewById(R.id.couponImage);
         orgValue= (TextView) view.findViewById(R.id.orgValueText);
         timeValue= (TextView) view.findViewById(R.id.timeValueText);
         typeValue= (TextView) view.findViewById(R.id.typeValueText);

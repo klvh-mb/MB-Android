@@ -16,9 +16,8 @@ android:layout_height="fill_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/white"
         android:orientation="vertical">
-
         <ListView
             android:id="@+id/schoolList"
             android:layout_width="match_parent"

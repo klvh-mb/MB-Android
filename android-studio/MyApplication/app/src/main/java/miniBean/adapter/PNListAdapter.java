@@ -60,7 +60,7 @@ public class PNListAdapter extends BaseAdapter {
          pnName= (TextView) convertView.findViewById(R.id.nameText);
          pnAddress= (TextView) convertView.findViewById(R.id.pnAddressText);
         commentNoText= (TextView) convertView.findViewById(R.id.totalCommentText);
-        couponValue= (ImageView) convertView.findViewById(R.id.couponValue);
+        couponValue= (ImageView) convertView.findViewById(R.id.couponImage);
         curriculumValue= (TextView) convertView.findViewById(R.id.curriculumValue);
         typeValue= (TextView) convertView.findViewById(R.id.typeValue);
         timeValue= (TextView) convertView.findViewById(R.id.timeValue);

@@ -20,7 +20,7 @@ public class MyKindyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.my_school_fragement, container, false);
+        View view = inflater.inflate(R.layout.schools_by_district_fragement, container, false);
 
         buttonList= (Button) view.findViewById(R.id.buttonListing);
         buttonBookmark= (Button) view.findViewById(R.id.buttonBookmark);

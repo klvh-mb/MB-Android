@@ -48,7 +48,7 @@ public class KindyBookmarkFragment extends Fragment {
         api = restAdapter.create(MyApi.class);
 
         bookmarkList= (ListView) view.findViewById(R.id.listBookmark);
-        totalBookmark= (TextView) view.findViewById(R.id.totalBokmark);
+        totalBookmark= (TextView) view.findViewById(R.id.totalBookmark);
 
         kindergartenVMList=new ArrayList<KindergartenVM>();
 

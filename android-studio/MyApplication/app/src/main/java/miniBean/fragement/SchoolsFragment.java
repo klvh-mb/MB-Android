@@ -88,7 +88,7 @@ class SchoolPagerAdapter extends FragmentPagerAdapter {
         Log.d(this.getClass().getSimpleName(), "getItem: item - " + position);
         switch (position) {
             case 0:
-                return new MySchoolsFragment();
+                return new SchoolsByDistrictFragment();
             default:
                 return new MyKindyFragment();
         }
