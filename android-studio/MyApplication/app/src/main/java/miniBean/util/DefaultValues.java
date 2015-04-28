@@ -77,6 +77,7 @@ public class DefaultValues {
             }
     );
 
+    /*
     public static List<String> FILTER_SCHOOLS_TIME = Arrays.asList(
             new String[] {
                     AppController.getInstance().getString(R.string.filter_schools_all),
@@ -85,5 +86,14 @@ public class DefaultValues {
                     AppController.getInstance().getString(R.string.filter_schools_time_wd)
             }
     );
+    */
 
+    public static List<String> FILTER_SCHOOLS_TIME = Arrays.asList(
+            new String[] {
+                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    "AM",
+                    "PM",
+                    "WD"
+            }
+    );
 }

@@ -33,16 +33,12 @@ public class PNCommunityActivity extends FragmentActivity {
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
         editAction= (ImageView) findViewById(R.id.editAction);
 
-
         nurseryVM=new PreNurseryVM();
-
 
         Bundle bundle = new Bundle();
 
-
         bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
         bundle.putLong("id", getIntent().getLongExtra("id", 0l));
-
 
         SchoolCommunityFragment fragment = new SchoolCommunityFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -61,11 +57,10 @@ public class PNCommunityActivity extends FragmentActivity {
                 }else {
                     setUnBookmark(nurseryVM.getId());
                     bookmarkAction.setImageResource(R.drawable.ic_bookmark);
-                    isBookmarked=false;;
+                    isBookmarked=false;
                 }
             }
         });
-
 
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +88,6 @@ public class PNCommunityActivity extends FragmentActivity {
         AppController.getApi().setPNUnBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                System.out.println("unbook url::::"+response2.getUrl());
                 bookmarkAction.setImageResource(R.drawable.ic_bookmark);
             }
 
@@ -105,13 +99,11 @@ public class PNCommunityActivity extends FragmentActivity {
     }
 
     private void getPnInfo(Long id) {
-        System.out.println("iddd::::::"+id);
         AppController.getApi().getPnInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
-
             @Override
             public void success(PreNurseryVM preNurseryVM, Response response) {
-                nurseryVM=preNurseryVM;
-                isBookmarked=nurseryVM.isBookmarked();
+                nurseryVM = preNurseryVM;
+                isBookmarked = nurseryVM.isBookmarked();
                 if(isBookmarked){
                     bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
                 }else{
@@ -121,7 +113,6 @@ public class PNCommunityActivity extends FragmentActivity {
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
-
             }
         });
     }

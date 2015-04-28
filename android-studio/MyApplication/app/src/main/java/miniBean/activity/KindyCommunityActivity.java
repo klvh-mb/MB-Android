@@ -104,8 +104,8 @@ public class KindyCommunityActivity extends FragmentActivity {
 
             @Override
             public void success(PreNurseryVM preNurseryVM, Response response) {
-                nurseryVM=preNurseryVM;
-                isBookmarked=nurseryVM.isBookmarked();
+                nurseryVM = preNurseryVM;
+                isBookmarked = nurseryVM.isBookmarked();
                 if(isBookmarked){
                     bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
                 }else{

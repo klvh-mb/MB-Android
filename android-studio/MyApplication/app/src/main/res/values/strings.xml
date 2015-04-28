@@ -184,6 +184,8 @@
     <string name="schools_filter_text_3">幼兒服務 (PN班)</string>
     <string name="schools_pn_bookmark_title_1">收藏了</string>
     <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
+    <string name="schools_posts">話題 :</string>
+    <string name="schools_discuss_together">一齊討論</string>
 
     <string name="filter_schools_all">全部</string>
     <string name="filter_schools_yes">有</string>

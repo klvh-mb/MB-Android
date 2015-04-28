@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ import retrofit.client.Response;
 
 public class SchoolCommunityFragment extends Fragment {
 
-    private TextView nameText,distText,schoolName,orgValue,typeValue,timeValue,curriculumValue;
+    private TextView nameText,districtText,enNameText,orgValue,typeValue,timeValue,curriculumValue;
     private TextView studentName,halfDayValue,fullDayValue,curriculumContent,addressText,phoneValue;
     private TextView websiteValue,postCount;
     private ImageView urlValueImage,editAction;
@@ -55,8 +57,8 @@ public class SchoolCommunityFragment extends Fragment {
         View view = inflater.inflate(R.layout.pn_community_activity, container, false);
 
         nameText = (TextView) view.findViewById(R.id.pnNameText);
-        distText = (TextView) view.findViewById(R.id.distNameText);
-        schoolName = (TextView) view.findViewById(R.id.name);
+        districtText = (TextView) view.findViewById(R.id.distNameText);
+        enNameText = (TextView) view.findViewById(R.id.enName);
         couponImage = (ImageView) view.findViewById(R.id.couponImage);
         orgValue = (TextView) view.findViewById(R.id.orgValueText);
         timeValue = (TextView) view.findViewById(R.id.timeValueText);
@@ -155,8 +157,13 @@ public class SchoolCommunityFragment extends Fragment {
             @Override
             public void success(PreNurseryVM preNurseryVM, Response response) {
                 nameText.setText(preNurseryVM.getN());
-                distText.setText(preNurseryVM.getDis());
-                schoolName.setText(preNurseryVM.getNe());
+                if (StringUtils.isEmpty(preNurseryVM.getNe())) {
+                    enNameText.setVisibility(View.GONE);
+                } else {
+                    enNameText.setText(preNurseryVM.getNe());
+                    enNameText.setVisibility(View.VISIBLE);
+                }
+                districtText.setText(preNurseryVM.getDis());
                 typeValue.setText(preNurseryVM.getOrgt());
                 timeValue.setText(preNurseryVM.getCt());
                 orgValue.setText(preNurseryVM.getOrg());

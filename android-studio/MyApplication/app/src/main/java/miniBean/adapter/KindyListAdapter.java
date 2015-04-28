@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.util.List;
 
 import miniBean.R;
@@ -21,7 +23,7 @@ public class KindyListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<KindergartenVM> kindergartenVMList;
-    private TextView pnName,pnAddress,commentNoText,curriculumValue,typeValue,timeValue,distName;
+    private TextView pnName,enName,commentNoText,curriculumValue,typeValue,timeValue,distName;
     private ImageView couponValue,bookmarkImage;
     private RelativeLayout schoolMainLayout;
 
@@ -60,7 +62,7 @@ public class KindyListAdapter extends BaseAdapter {
 
         schoolMainLayout = (RelativeLayout) convertView.findViewById(R.id.schoolMainLayout);
         pnName = (TextView) convertView.findViewById(R.id.nameText);
-        pnAddress = (TextView) convertView.findViewById(R.id.pnAddressText);
+        enName = (TextView) convertView.findViewById(R.id.enNameText);
         commentNoText = (TextView) convertView.findViewById(R.id.totalCommentText);
         couponValue = (ImageView) convertView.findViewById(R.id.couponImage);
         curriculumValue = (TextView) convertView.findViewById(R.id.curriculumValue);
@@ -72,7 +74,12 @@ public class KindyListAdapter extends BaseAdapter {
         final KindergartenVM item = kindergartenVMList.get(position);
 
         pnName.setText(item.getN());
-        pnAddress.setText(item.getNe());
+        if (StringUtils.isEmpty(item.getNe())) {
+            enName.setVisibility(View.GONE);
+        } else {
+            enName.setText(item.getNe());
+            enName.setVisibility(View.VISIBLE);
+        }
         commentNoText.setText(item.getNop()+"");
 
         curriculumValue.setText(item.getCurt());
@@ -85,7 +92,6 @@ public class KindyListAdapter extends BaseAdapter {
         } else {
             bookmarkImage.setImageResource(R.drawable.ic_bookmark_white);
         }
-
 
         if(item.isCp()){
             couponValue.setImageResource(R.drawable.value_yes);

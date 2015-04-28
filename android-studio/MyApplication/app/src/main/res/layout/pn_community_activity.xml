@@ -38,7 +38,7 @@
         android:textSize="16dp"
         android:layout_alignBaseline="@+id/pnNameText" />
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/enName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/schools_title"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Post:"
+            android:text="@string/schools_posts"
             android:layout_gravity="center_vertical"
             android:textSize="14dp"
             android:textColor="@color/dark_gray_3" />
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/pale_blue"
-                android:text="NewsFeed"
+                android:text="@string/schools_discuss_together"
                 android:layout_gravity="center_vertical"
                 android:textSize="14dp" />
             <ImageView
@@ -470,9 +470,8 @@
         <View
             android:id="@+id/bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="3dp"
             android:layout_below="@+id/pnPostLayout"
-            android:layout_marginTop="3dp"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             android:background="@drawable/dottedline"
