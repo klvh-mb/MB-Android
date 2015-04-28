@@ -33,16 +33,12 @@ public class KindyCommunityActivity extends FragmentActivity {
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
         editAction= (ImageView) findViewById(R.id.editAction);
 
-
         nurseryVM=new PreNurseryVM();
-
 
         Bundle bundle = new Bundle();
 
-
-        bundle.putLong("commid", getIntent().getLongExtra("commid", 0l));
+        bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
         bundle.putLong("id", getIntent().getLongExtra("id", 0l));
-
 
         SchoolCommunityFragment fragment = new SchoolCommunityFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -61,7 +57,7 @@ public class KindyCommunityActivity extends FragmentActivity {
                 }else {
                     setUnBookmark(nurseryVM.getId());
                     bookmarkAction.setImageResource(R.drawable.ic_bookmark);
-                    isBookmarked=false;;
+                    isBookmarked=false;
                 }
             }
         });
@@ -72,7 +68,7 @@ public class KindyCommunityActivity extends FragmentActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(KindyCommunityActivity.this,NewPostActivity.class);
                 intent.putExtra("id",nurseryVM.getCommId().toString());
-                intent.putExtra("flag","fromschool");
+                intent.putExtra("flag","FromSchool");
                 startActivity(intent);
             }
         });
@@ -93,7 +89,6 @@ public class KindyCommunityActivity extends FragmentActivity {
         AppController.getApi().setPNUnBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                System.out.println("unbook url::::"+response2.getUrl());
                 bookmarkAction.setImageResource(R.drawable.ic_bookmark);
             }
 
@@ -105,7 +100,6 @@ public class KindyCommunityActivity extends FragmentActivity {
     }
 
     private void getPnInfo(Long id) {
-        System.out.println("iddd::::::"+id);
         AppController.getApi().getPnInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
 
             @Override

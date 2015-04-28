@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent">
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
     <RelativeLayout
         android:background="#ffffff"
+        android:descendantFocusability="blocksDescendants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
@@ -22,70 +23,92 @@
         android:id="@+id/pnNameText"
         android:text="-"
         android:textStyle="bold"
-        android:textColor="#1A20DC"
+        android:textColor="@color/schools_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="22dp" />
     <TextView
         android:id="@+id/distNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#D1942B"
+        android:textColor="@color/schools_district"
         android:layout_toRightOf="@+id/pnNameText"
         android:layout_marginLeft="10dp"
-        android:text="-"/>
+        android:text="-"
+        android:textSize="16dp"
+        android:layout_alignBaseline="@+id/pnNameText" />
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="#1A20DC"
+        android:textColor="@color/schools_title"
         android:text="-"
-        android:textStyle="bold"
-        android:layout_below="@+id/pnNameText"/>
+        android:layout_below="@+id/pnNameText"
+        android:textSize="16dp" />
     </RelativeLayout>
     <LinearLayout
-        android:id="@+id/buttonLayout"
+        android:id="@+id/gotoCommLayout"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:padding="15dp"
-        android:layout_centerInParent="true"
         android:layout_below="@+id/titleLayout"
-        android:background="@drawable/rounded_corner_pn_grid">
+        android:background="@drawable/schools_info_box"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="25dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
         <ImageView
             android:id="@+id/postImageView"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/comment"/>
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/comment"
+            android:layout_gravity="center_vertical" />
         <TextView
             android:id="@+id/postLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Post:"/>
+            android:layout_marginLeft="5dp"
+            android:text="Post:"
+            android:layout_gravity="center_vertical"
+            android:textSize="14dp"
+            android:textColor="@color/dark_gray_3" />
         <TextView
             android:id="@+id/postCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="-"/>
-        <TextView
-            android:id="@+id/feedText"
+            android:text="0"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/dark_gray_3"
+            android:textSize="14dp" />
+        <LinearLayout
+            android:id="@+id/feedButtonLayout"
+            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#3484D9"
-            android:layout_marginLeft="30dp"
-            android:text="NewsFeed"/>
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/anim_blue_arrow"/>
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/feedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pale_blue"
+                android:text="NewsFeed"
+                android:layout_gravity="center_vertical"
+                android:textSize="14dp" />
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/anim_blue_arrow"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/infoLayout"
-        android:layout_below="@+id/buttonLayout"
+        android:layout_below="@+id/gotoCommLayout"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -116,11 +139,12 @@
                 android:layout_height="wrap_content"
                 android:text="Coupon :"/>
             <ImageView
-                android:id="@+id/cpValueImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/couponImage"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/value_yes"/>
+                android:src="@drawable/value_yes"
+                android:layout_gravity="center_vertical" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/typeBox"
@@ -446,9 +470,9 @@
         <View
             android:id="@+id/bar"
             android:layout_width="match_parent"
-            android:layout_height="dp"
+            android:layout_height="match_parent"
             android:layout_below="@+id/pnPostLayout"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             android:background="@drawable/dottedline"

@@ -17,18 +17,14 @@ import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
 import miniBean.adapter.KindyBookmarkListAdapter;
 import miniBean.app.AppController;
-import miniBean.app.MyApi;
 import miniBean.viewmodel.KindergartenVM;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 public class KindyBookmarkFragment extends Fragment {
 
     private static final String TAG = KindyBookmarkFragment.class.getName();
-    private MyApi api;
     private ListView bookmarkList;
     private KindyBookmarkListAdapter bookmarkListAdapter;
     private TextView totalBookmark;
@@ -39,13 +35,6 @@ public class KindyBookmarkFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.school_bookmark_fragment, container, false);
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(getResources().getString(R.string.base_url))
-                .setClient(new OkClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        api = restAdapter.create(MyApi.class);
 
         bookmarkList= (ListView) view.findViewById(R.id.listBookmark);
         totalBookmark= (TextView) view.findViewById(R.id.totalBookmark);
@@ -58,9 +47,9 @@ public class KindyBookmarkFragment extends Fragment {
                 KindergartenVM vm=bookmarkListAdapter.getItem(i);
 
                 Intent intent=new Intent(getActivity(), PNCommunityActivity.class);
-                intent.putExtra("commid",vm.getCommId());
+                intent.putExtra("commId",vm.getCommId());
                 intent.putExtra("id", vm.getId());
-                intent.putExtra("flag","fromschool");
+                intent.putExtra("flag","FromSchool");
                 startActivity(intent);
             }
         });

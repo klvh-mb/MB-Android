@@ -62,7 +62,7 @@ public class KindyNewsfeedListFragement extends Fragment {
                 if (post != null) {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
-                    intent.putExtra("flag","fromschool");
+                    intent.putExtra("flag","FromSchool");
                     startActivity(intent);
                 }
             }

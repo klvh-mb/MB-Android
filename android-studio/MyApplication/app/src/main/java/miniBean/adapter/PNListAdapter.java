@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -22,12 +23,12 @@ public class PNListAdapter extends BaseAdapter {
     private List<PreNurseryVM> PNlistItem;
     private TextView pnName,pnAddress,commentNoText,curriculumValue,typeValue,timeValue,distName;
     private ImageView couponValue,bookmarkImage;
+    private RelativeLayout schoolMainLayout;
 
     public PNListAdapter(Activity activity, List<PreNurseryVM> PNlistItem) {
         this.activity = activity;
         this.PNlistItem = PNlistItem;
     }
-
 
     @Override
     public int getCount() {
@@ -57,74 +58,53 @@ public class PNListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.pn_list_item, null);
 
-         pnName= (TextView) convertView.findViewById(R.id.nameText);
-         pnAddress= (TextView) convertView.findViewById(R.id.pnAddressText);
-        commentNoText= (TextView) convertView.findViewById(R.id.totalCommentText);
-        couponValue= (ImageView) convertView.findViewById(R.id.couponImage);
-        curriculumValue= (TextView) convertView.findViewById(R.id.curriculumValue);
-        typeValue= (TextView) convertView.findViewById(R.id.typeValue);
-        timeValue= (TextView) convertView.findViewById(R.id.timeValue);
-        distName= (TextView) convertView.findViewById(R.id.pnDistName);
-        bookmarkImage= (ImageView) convertView.findViewById(R.id.bookmarkImage);
+        schoolMainLayout = (RelativeLayout) convertView.findViewById(R.id.schoolMainLayout);
+        pnName = (TextView) convertView.findViewById(R.id.nameText);
+        pnAddress = (TextView) convertView.findViewById(R.id.pnAddressText);
+        commentNoText = (TextView) convertView.findViewById(R.id.totalCommentText);
+        couponValue = (ImageView) convertView.findViewById(R.id.couponImage);
+        curriculumValue = (TextView) convertView.findViewById(R.id.curriculumValue);
+        typeValue = (TextView) convertView.findViewById(R.id.typeValue);
+        timeValue = (TextView) convertView.findViewById(R.id.timeValue);
+        distName = (TextView) convertView.findViewById(R.id.pnDistName);
+        bookmarkImage = (ImageView) convertView.findViewById(R.id.bookmarkImage);
 
-        final PreNurseryVM item=PNlistItem.get(position);
-
+        final PreNurseryVM item = PNlistItem.get(position);
 
         pnName.setText(item.getN());
         pnAddress.setText(item.getNe());
         commentNoText.setText(item.getNop()+"");
-
-
 
         curriculumValue.setText(item.getCurt());
         timeValue.setText(item.getCt());
         typeValue.setText(item.getOrgt());
         distName.setText(item.getDis());
 
-
-
         if(item.isBookmarked()){
             bookmarkImage.setImageResource(R.drawable.ic_bookmarked);
-        }else{
-            bookmarkImage.setImageResource(R.drawable.ic_bookmark);
+        } else {
+            bookmarkImage.setImageResource(R.drawable.ic_bookmark_white);
         }
-
 
         if(item.isCp()){
             couponValue.setImageResource(R.drawable.value_yes);
 
-        }else {
+        } else {
             couponValue.setImageResource(R.drawable.value_no);
         }
 
-        pnName.setOnClickListener(new View.OnClickListener() {
+        schoolMainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent=new Intent(activity, PNCommunityActivity.class);
-
-                intent.putExtra("commid",item.getCommId());
+                Intent intent = new Intent(activity, PNCommunityActivity.class);
+                intent.putExtra("commId",item.getCommId());
                 intent.putExtra("id",item.getId());
-
-                activity.startActivity(intent);
-
-            }
-        });
-
-        pnAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(activity, PNCommunityActivity.class);
-
-                intent.putExtra("id",item.getId());
-                intent.putExtra("id",item.getId());
-
                 activity.startActivity(intent);
             }
         });
+
         return convertView;
     }
-
 }
 
 

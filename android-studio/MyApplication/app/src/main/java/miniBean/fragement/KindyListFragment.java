@@ -81,7 +81,7 @@ public class KindyListFragment extends Fragment {
         districtGrid = (GridView)listHeader.findViewById(R.id.districtGrid);
         districtGrid.setDrawSelectorOnTop(false);
         districtText = (TextView) listHeader.findViewById(R.id.districtNameText);
-        distName = (TextView) listHeader.findViewById(R.id.distName);
+        distName = (TextView) listHeader.findViewById(R.id.districtNameText);
         searchText = (SearchView) listHeader.findViewById(R.id.searchWindow);
 
         locationVMList = new ArrayList<LocationVM>();

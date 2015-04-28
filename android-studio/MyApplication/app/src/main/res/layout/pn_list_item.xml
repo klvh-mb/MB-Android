@@ -6,172 +6,182 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:background="@color/white">
-    <LinearLayout
-        android:id="@+id/schoolNameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/nameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:textSize="18dp"
-        android:textColor="@color/schools_title"
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/pnDistName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:text="-"
-        android:textColor="@color/schools_district"
-        android:textSize="15dp"
-        android:layout_toRightOf="@+id/textView1"/>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/pnAddressText"
-        android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-"
-        android:textSize="15dp"
-        android:layout_below="@+id/schoolNameLayout"
-        android:textColor="@color/gray" />
+
     <RelativeLayout
-        android:id="@+id/schoolInfoLayout"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/schools_info_box"
-        android:layout_below="@+id/pnAddressText"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:id="@+id/schoolMainLayout">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:id="@+id/schoolNameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/infoRow1Layout"
-            android:weightSum="10">
-
-            <LinearLayout
-                android:id="@+id/couponLayout"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4.5">
-            <TextView
-                android:id="@+id/couponText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_coupon"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="14dp" />
-            <ImageView
-                android:id="@+id/couponImage"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="5dp"
-                android:layout_gravity="center_vertical" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/typeLayout"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_alignParentRight="true"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5.5">
-                <TextView
-                    android:id="@+id/typeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/schools_info_type"
-                    android:textColor="@color/dark_gray_3"
-                    android:textSize="14dp" />
-                <TextView
-                    android:id="@+id/typeValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textColor="@color/schools_info_text"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="14dp" />
-            </LinearLayout>
+            android:text="-"
+            android:textSize="18dp"
+            android:textColor="@color/schools_title"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/pnDistName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="-"
+            android:textColor="@color/schools_district"
+            android:textSize="14dp"
+            android:layout_toRightOf="@+id/textView1"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:id="@+id/pnAddressText"
+            android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="14dp"
+            android:layout_below="@+id/schoolNameLayout"
+            android:textColor="@color/gray" />
+
+        <RelativeLayout
+            android:id="@+id/schoolInfoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/infoRow2Layout"
-            android:layout_below="@+id/infoRow1Layout"
-            android:layout_marginTop="5dp">
+            android:orientation="horizontal"
+            android:background="@drawable/schools_info_box"
+            android:layout_below="@+id/pnAddressText"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
 
             <LinearLayout
-                android:id="@+id/curriculumLayout"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_below="@+id/couponLayout"
-                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4.5">
+                android:id="@+id/infoRow1Layout"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:id="@+id/couponLayout"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4.5">
                 <TextView
-                    android:id="@+id/curriculumText"
+                    android:id="@+id/couponText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/schools_info_curriculum"
+                    android:text="@string/schools_info_coupon"
                     android:textColor="@color/dark_gray_3"
                     android:textSize="14dp" />
-                <TextView
-                    android:id="@+id/curriculumValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/couponImage"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_marginLeft="5dp"
-                    android:text="-"
-                    android:textColor="@color/schools_info_text"
-                    android:textSize="14dp" />
+                    android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/timeLayout"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
-                android:layout_below="@+id/typeLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5.5">
-                <TextView
-                    android:id="@+id/timeText"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/typeLayout"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/schools_info_time"
-                    android:textColor="@color/dark_gray_3"
-                    android:textSize="14dp" />
-                <TextView
-                    android:id="@+id/timeValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    android:textColor="@color/schools_info_text"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="14dp" />
+                    android:layout_weight="5.5">
+                    <TextView
+                        android:id="@+id/typeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_type"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/typeValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textColor="@color/schools_info_text"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14dp" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/infoRow2Layout"
+                android:layout_below="@+id/infoRow1Layout"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:id="@+id/curriculumLayout"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_below="@+id/couponLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4.5">
+                    <TextView
+                        android:id="@+id/curriculumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_curriculum"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/curriculumValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="-"
+                        android:textColor="@color/schools_info_text"
+                        android:textSize="14dp" />
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/timeLayout"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_below="@+id/typeLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5.5">
+                    <TextView
+                        android:id="@+id/timeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_time"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/timeValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textColor="@color/schools_info_text"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@+id/schoolInfoLayout"
+        android:layout_below="@+id/schoolMainLayout"
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="15dp">
+        android:layout_marginRight="15dp"
+        android:id="@+id/actionsLayout">
     <ImageView
         android:id="@+id/commentImage"
         android:layout_width="18dp"
@@ -196,6 +206,7 @@
         android:layout_marginLeft="20dp"
         android:layout_centerVertical="true" />
     </RelativeLayout>
+
 </RelativeLayout>
 
 

@@ -45,8 +45,8 @@ public class SchoolCommunityFragment extends Fragment {
 
     private ListView postList;
 
-    private ImageView cpValueImage;
-    private LinearLayout feedButtonLayout;
+    private ImageView couponImage;
+    private LinearLayout gotoCommLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,38 +54,37 @@ public class SchoolCommunityFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.pn_community_activity, container, false);
 
+        nameText = (TextView) view.findViewById(R.id.pnNameText);
+        distText = (TextView) view.findViewById(R.id.distNameText);
+        schoolName = (TextView) view.findViewById(R.id.name);
+        couponImage = (ImageView) view.findViewById(R.id.couponImage);
+        orgValue = (TextView) view.findViewById(R.id.orgValueText);
+        timeValue = (TextView) view.findViewById(R.id.timeValueText);
+        typeValue = (TextView) view.findViewById(R.id.typeValueText);
+        curriculumValue = (TextView) view.findViewById(R.id.curriValueText);
+        studentName = (TextView) view.findViewById(R.id.studentValue);
+        halfDayValue = (TextView) view.findViewById(R.id.halfDayValue);
+        fullDayValue = (TextView) view.findViewById(R.id.fullDayValue);
+        curriculumContent = (TextView) view.findViewById(R.id.contentText);
+        addressText = (TextView) view.findViewById(R.id.addressValue);
+        phoneValue = (TextView) view.findViewById(R.id.phoneValue);
+        websiteValue = (TextView) view.findViewById(R.id.websiteValue);
+        urlValueImage = (ImageView) view.findViewById(R.id.govtImage);
+        editAction = (ImageView) view.findViewById(R.id.editAction);
+        postList = (ListView) view.findViewById(R.id.postList);
+        postCount = (TextView) view.findViewById(R.id.postCount);
+        gotoCommLayout = (LinearLayout) view.findViewById(R.id.gotoCommLayout);
+        scrollView = (ScrollView) view.findViewById(R.id.scrollview);
 
-        nameText= (TextView) view.findViewById(R.id.pnNameText);
-        distText= (TextView) view.findViewById(R.id.distNameText);
-        schoolName= (TextView) view.findViewById(R.id.name);
-        cpValueImage= (ImageView) view.findViewById(R.id.couponImage);
-        orgValue= (TextView) view.findViewById(R.id.orgValueText);
-        timeValue= (TextView) view.findViewById(R.id.timeValueText);
-        typeValue= (TextView) view.findViewById(R.id.typeValueText);
-        curriculumValue= (TextView) view.findViewById(R.id.curriValueText);
-        studentName= (TextView) view.findViewById(R.id.studentValue);
-        halfDayValue= (TextView) view.findViewById(R.id.halfDayValue);
-        fullDayValue= (TextView) view.findViewById(R.id.fullDayValue);
-        curriculumContent= (TextView) view.findViewById(R.id.contentText);
-        addressText= (TextView) view.findViewById(R.id.addressValue);
-        phoneValue= (TextView) view.findViewById(R.id.phoneValue);
-        websiteValue= (TextView) view.findViewById(R.id.websiteValue);
-        urlValueImage= (ImageView) view.findViewById(R.id.govtImage);
-        editAction= (ImageView) view.findViewById(R.id.editAction);
-        postList= (ListView) view.findViewById(R.id.postList);
-        postCount= (TextView) view.findViewById(R.id.postCount);
-        feedButtonLayout= (LinearLayout) view.findViewById(R.id.feedButtonLayout);
-        scrollView= (ScrollView) view.findViewById(R.id.scrollview);
+        preNurseryVMList = new ArrayList<PreNurseryVM>();
 
+        getPnInfo(getArguments().getLong("id"));
 
-        preNurseryVMList=new ArrayList<PreNurseryVM>();
-
-        getNewsFeedByCommunityId(getArguments().getLong("commid"));
+        getNewsFeedByCommunityId(getArguments().getLong("commId"));
 
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new NewsfeedListAdapter(getActivity(), feedItems, false);
         postList.setAdapter(feedListAdapter);
-
 
         postList.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
@@ -106,8 +105,8 @@ public class SchoolCommunityFragment extends Fragment {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
                     intent.putExtra("id", getArguments().getLong("id"));
-                    intent.putExtra("commid", getArguments().getLong("commid"));
-                    intent.putExtra("flag", "fromschool");
+                    intent.putExtra("commId", getArguments().getLong("commId"));
+                    intent.putExtra("flag", "FromSchool");
                     startActivity(intent);
                 }
             }
@@ -124,25 +123,23 @@ public class SchoolCommunityFragment extends Fragment {
             }
         });
 
-        getPnInfo(getArguments().getLong("id"));
-
         if(getArguments().getBoolean("cp")){
-            cpValueImage.setImageResource(R.drawable.value_yes);
+            couponImage.setImageResource(R.drawable.value_yes);
         }else {
-            cpValueImage.setImageResource(R.drawable.value_no);
+            couponImage.setImageResource(R.drawable.value_no);
         }
 
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),NewPostActivity.class);
-                intent.putExtra("id",String.valueOf(getArguments().getLong("commid")));
-                intent.putExtra("flag","fromschool");
+                intent.putExtra("id",String.valueOf(getArguments().getLong("commId")));
+                intent.putExtra("flag","FromSchool");
                 startActivity(intent);
             }
         });
 
-        feedButtonLayout.setOnClickListener(new View.OnClickListener() {
+        gotoCommLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                    scrollView.fullScroll(View.FOCUS_DOWN);
@@ -171,6 +168,7 @@ public class SchoolCommunityFragment extends Fragment {
                 phoneValue.setText(preNurseryVM.getPho());
                 addressText.setText(preNurseryVM.getAdr());
                 studentName.setText(preNurseryVM.getNadm());
+                postCount.setText(preNurseryVM.getNop()+"");
             }
 
             @Override

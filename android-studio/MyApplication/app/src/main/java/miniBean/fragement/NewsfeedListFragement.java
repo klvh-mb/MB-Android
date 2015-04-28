@@ -62,7 +62,7 @@ public class NewsfeedListFragement extends Fragment {
                 if (post != null) {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
-                    intent.putExtra("flag","fromnewsfeed");
+                    intent.putExtra("flag","FromNewsfeed");
                     startActivity(intent);
                 }
             }

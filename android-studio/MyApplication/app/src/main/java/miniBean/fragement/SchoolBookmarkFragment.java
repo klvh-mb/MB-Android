@@ -47,9 +47,9 @@ public class SchoolBookmarkFragment extends Fragment {
                 PreNurseryVM vm=bookmarkListAdapter.getItem(i);
 
                 Intent intent=new Intent(getActivity(), PNCommunityActivity.class);
-                intent.putExtra("commid",vm.getCommId());
+                intent.putExtra("commId",vm.getCommId());
                 intent.putExtra("id", vm.getId());
-                intent.putExtra("flag","fromschool");
+                intent.putExtra("flag","FromSchool");
                 startActivity(intent);
             }
         });

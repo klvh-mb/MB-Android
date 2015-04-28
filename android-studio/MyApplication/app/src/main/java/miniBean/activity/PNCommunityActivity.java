@@ -40,7 +40,7 @@ public class PNCommunityActivity extends FragmentActivity {
         Bundle bundle = new Bundle();
 
 
-        bundle.putLong("commid", getIntent().getLongExtra("commid", 0l));
+        bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
         bundle.putLong("id", getIntent().getLongExtra("id", 0l));
 
 
@@ -72,7 +72,7 @@ public class PNCommunityActivity extends FragmentActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(PNCommunityActivity.this,NewPostActivity.class);
                 intent.putExtra("id",nurseryVM.getCommId().toString());
-                intent.putExtra("flag","fromschool");
+                intent.putExtra("flag","FromSchool");
                 startActivity(intent);
             }
         });

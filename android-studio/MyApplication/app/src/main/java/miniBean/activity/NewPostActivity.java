@@ -81,7 +81,7 @@ public class NewPostActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.new_post_actionbar);
 
-        if(getIntent().getStringExtra("flag").equals("fromschool")){
+        if(getIntent().getStringExtra("flag").equals("FromSchool")){
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
         }else {
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));

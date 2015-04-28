@@ -124,11 +124,11 @@ public class DetailActivity extends FragmentActivity {
         communityName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getIntent().getStringExtra("flag").equals("fromschool")){
+                if(getIntent().getStringExtra("flag").equals("FromSchool")){
                     Intent intent=new Intent(DetailActivity.this, PNCommunityActivity.class);
-                    intent.putExtra("commid",getIntent().getLongExtra("commid",0l));
+                    intent.putExtra("commId",getIntent().getLongExtra("commId",0l));
                     intent.putExtra("id", getIntent().getLongExtra("id",0l));
-                    intent.putExtra("flag","fromschool");
+                    intent.putExtra("flag","FromSchool");
                     startActivity(intent);
 
                 }else{
@@ -158,7 +158,7 @@ public class DetailActivity extends FragmentActivity {
                 )
         );
 
-        if(getIntent().getStringExtra("flag").equals("fromschool")) {
+        if(getIntent().getStringExtra("flag").equals("FromSchool")) {
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
         }else{
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
