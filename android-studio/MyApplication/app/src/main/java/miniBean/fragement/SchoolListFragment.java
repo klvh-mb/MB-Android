@@ -1,6 +1,7 @@
 package miniBean.fragement;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -51,6 +52,8 @@ public class SchoolListFragment extends Fragment {
     private LinearLayout cancelLayout;
     private SearchView searchText;
     private View listHeader;
+    private int temp ;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -122,10 +125,13 @@ public class SchoolListFragment extends Fragment {
         districtGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                districtGrid.getChildAt(temp).setBackgroundColor(Color.parseColor("#FFFFFF"));
                 String loc = districtListAdapter.getItem(i).getDisplayName();
+                getPNsByDistrict(locationVMList.get(i).getId());
+                districtGrid.getChildAt(i).setBackgroundColor(Color.parseColor("#57B154"));
                 districtText.setText(loc);
                 distName.setText(loc);
-                getPNsByDistrict(locationVMList.get(i).getId());
+                temp=i;
             }
         });
 
@@ -170,7 +176,6 @@ public class SchoolListFragment extends Fragment {
                         System.out.println("clicked::::");
                         filterControl(curriculumSpinner.getSelectedItem().toString(),timeSpinner.getSelectedItem().toString(),typeSpinner.getSelectedItem().toString());
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -202,7 +207,6 @@ public class SchoolListFragment extends Fragment {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         filterControl(curriculumSpinner.getSelectedItem().toString(),timeSpinner.getSelectedItem().toString(),typeSpinner.getSelectedItem().toString());
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -216,7 +220,6 @@ public class SchoolListFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -245,14 +248,14 @@ public class SchoolListFragment extends Fragment {
     }
 
     private void getPNsByDistrict(Long id){
-        AppController.getApi().getPNsByDistricts(id,AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
+        AppController.getApi().getPNsByDistricts(id, AppController.getInstance().getSessionId(), new Callback<List<PreNurseryVM>>() {
             @Override
             public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
                 preNurseryVMList.clear();
                 preNurseryVMList.addAll(preNurseryVMs);
                 tempVMList.clear();
                 tempVMList.addAll(preNurseryVMs);
-                noOfSchools.setText(preNurseryVMList.size()+"");
+                noOfSchools.setText(preNurseryVMList.size() + "");
                 listAdapter.notifyDataSetChanged();
             }
 
