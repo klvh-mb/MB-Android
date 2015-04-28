@@ -93,8 +93,14 @@ public class CommunityFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int headerViewsCount = listView.getHeaderViewsCount();
+                if (position < headerViewsCount) {
+                    // listview header
+                    return;
+                }
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                CommunityPostVM post = feedListAdapter.getItem(position);
+                CommunityPostVM post = feedListAdapter.getItem(position - headerViewsCount);
                 if (post != null) {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
