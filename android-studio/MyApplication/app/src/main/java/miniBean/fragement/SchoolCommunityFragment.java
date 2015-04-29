@@ -144,13 +144,12 @@ public class SchoolCommunityFragment extends Fragment {
         gotoCommLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                   scrollView.fullScroll(View.FOCUS_DOWN);
+                scrollView.fullScroll(View.FOCUS_DOWN);
             }
         });
 
         return view;
     }
-
 
     private void getPnInfo(Long id) {
         AppController.getApi().getPnInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {

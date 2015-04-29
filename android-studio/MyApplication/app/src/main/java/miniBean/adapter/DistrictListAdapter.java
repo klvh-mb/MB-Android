@@ -2,7 +2,6 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,23 @@ public class DistrictListAdapter extends BaseAdapter {
     private List<LocationVM> locationVMList;
     private TextView distName;
 
+    private int oldSelected = 0;
+    private int selected = 0;
+
     public DistrictListAdapter(Activity activity, List<LocationVM> locationVMList) {
         this.activity = activity;
         this.locationVMList = locationVMList;
+        for (int i=0; i<locationVMList.size(); i++) {
+            LocationVM location = locationVMList.get(i);
+            if (location.getId().equals(AppController.getUserLocation().getId())) {
+                setSelectedItem(i);
+            }
+        }
+    }
+
+    public void setSelectedItem(int item) {
+        oldSelected = selected;
+        selected = item;
     }
 
     @Override
@@ -47,24 +60,24 @@ public class DistrictListAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (inflater == null)
-            inflater = (LayoutInflater) activity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (view == null)
-            view = inflater.inflate(R.layout.district_list_item, null);
-
-        String name = AppController.getUserLocation().getDisplayName();
+            view = inflater.inflate(R.layout.schools_district_grid_item, null);
 
         RelativeLayout nameBtn = (RelativeLayout) view.findViewById(R.id.nameBtn);
-        distName= (TextView) view.findViewById(R.id.distItemText);
-        final LocationVM item=locationVMList.get(i);
-        if(!AppController.getInstance().isColorCheck()) {
-                if (name.equals(item.getDisplayName())) {
-                    nameBtn.setBackgroundColor(Color.parseColor("#57B154"));
-                    AppController.getInstance().setColorCheck(true);
-                }
+        distName = (TextView) view.findViewById(R.id.distItemText);
+
+        //Log.d(this.getClass().getSimpleName(), "i="+i+" selected="+selected);
+        if (i == selected) {
+            nameBtn.setBackgroundResource(R.drawable.rounded_corner_pn_grid_item);
+            distName.setTextColor(view.getResources().getColor(R.color.white));
+        } else if (i == oldSelected) {
+            nameBtn.setBackgroundColor(view.getResources().getColor(R.color.white));
+            distName.setTextColor(view.getResources().getColor(R.color.dark_gray_3));
         }
 
+        final LocationVM item = locationVMList.get(i);
         distName.setText(item.getDisplayName());
         return view;
     }

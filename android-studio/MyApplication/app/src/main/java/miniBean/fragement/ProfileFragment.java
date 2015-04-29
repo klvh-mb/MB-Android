@@ -28,6 +28,7 @@ import miniBean.activity.EditProfileActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.app.UserInfoCache;
 import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
@@ -180,40 +181,32 @@ public class ProfileFragment extends Fragment {
     private void getUserInfo() {
         AnimationUtil.show(spinner);
 
-        AppController.getApi().getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
+        UserVM user = UserInfoCache.getUser();
+
+        //Log.d(ProfileFragment.this.getClass().getSimpleName(), "questionsCount - "+user.getQuestionsCount());
+        //Log.d(ProfileFragment.this.getClass().getSimpleName(), "answersCount - "+user.getAnswersCount());
+        //Log.d(ProfileFragment.this.getClass().getSimpleName(), "enableSignInForToday - "+user.isEnableSignInForToday());
+
+        userId = user.getId();
+        userName.setText(user.getDisplayName());
+        questionsCount.setText(user.getQuestionsCount()+"");
+        answersCount.setText(user.getAnswersCount()+"");
+
+        ImageUtil.displayThumbnailProfileImage(userId, userPic);
+        ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
             @Override
-            public void success(UserVM user, retrofit.client.Response response) {
-                Log.d(ProfileFragment.this.getClass().getSimpleName(), "questionsCount - "+user.getQuestionsCount());
-                Log.d(ProfileFragment.this.getClass().getSimpleName(), "answersCount - "+user.getAnswersCount());
-                Log.d(ProfileFragment.this.getClass().getSimpleName(), "enableSignInForToday - "+user.isEnableSignInForToday());
-
-                userId = user.getId();
-                userName.setText(user.getDisplayName());
-                questionsCount.setText(user.getQuestionsCount()+"");
-                answersCount.setText(user.getAnswersCount()+"");
-
-                ImageUtil.displayThumbnailProfileImage(userId, userPic);
-                ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
-                        AnimationUtil.show(spinner);
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        AnimationUtil.cancel(spinner);
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        AnimationUtil.cancel(spinner);
-                    }
-                });
+            public void onLoadingStarted(String imageUri, View view) {
+                AnimationUtil.show(spinner);
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                AnimationUtil.cancel(spinner);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                AnimationUtil.cancel(spinner);
             }
         });
     }

@@ -1,7 +1,6 @@
 package miniBean.fragement;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -51,18 +50,14 @@ public class SchoolListFragment extends Fragment {
     private LinearLayout cancelLayout;
     private SearchView searchText;
     private View listHeader;
-    private int temp ;
+    private int currentSelected = 0;
     private String curtValue,cpValue,typeValue,timeValue;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.school_list_fragment, container, false);
-
-        AppController.getInstance().setColorCheck(false);
 
         // header
         listHeader = inflater.inflate(R.layout.school_list_fragment_header, null);
@@ -97,7 +92,6 @@ public class SchoolListFragment extends Fragment {
         locationVMList = new ArrayList<LocationVM>();
         preNurseryVMList = new ArrayList<PreNurseryVM>();
 
-
         nurseryLayout = (RelativeLayout) listHeader.findViewById(R.id.nurseryLayout);
         boxLayout = (RelativeLayout) listHeader.findViewById(R.id.boxLayout);
 
@@ -128,19 +122,7 @@ public class SchoolListFragment extends Fragment {
         districtGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String loc = districtListAdapter.getItem(i).getDisplayName();
-                getPNsByDistrict(locationVMList.get(i).getId());
-
-                System.out.println("pn id ::"+locationVMList.get(i).getId());
-
-                for(int j = 0; j < locationVMList.size(); j++){
-                    districtGrid.getChildAt(j).setBackgroundColor(Color.parseColor("#FFFFFF"));
-                }
-
-                districtGrid.getChildAt(i).setBackgroundColor(Color.parseColor("#57B154"));
-                yourDistrictNameText.setText(loc);
-                districtNameText.setText(loc);
-                temp=i;
+                selectDistrict(i);
             }
         });
 
@@ -175,6 +157,7 @@ public class SchoolListFragment extends Fragment {
                 return false;
             }
         });
+
         curriculumSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -227,6 +210,20 @@ public class SchoolListFragment extends Fragment {
         return view;
     }
 
+    private void selectDistrict(int index) {
+        districtListAdapter.setSelectedItem(index);
+        districtListAdapter.notifyDataSetChanged();
+        getPNsByDistrict(locationVMList.get(index).getId());
+        /*
+        districtGrid.getChildAt(currentSelected).setBackgroundColor(getResources().getColor(R.color.white));
+        String loc = districtListAdapter.getItem(index).getDisplayName();
+        districtNameText.setText(loc);
+        districtGrid.getChildAt(index).setBackgroundResource(R.drawable.rounded_corner_pn_item);
+        currentSelected = index;
+        getPNsByDistrict(locationVMList.get(index).getId());
+        */
+    }
+
     private void setDistricts(){
         AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(),new Callback<List< LocationVM>>(){
             @Override
@@ -234,7 +231,6 @@ public class SchoolListFragment extends Fragment {
                 locationVMList.clear();
                 locationVMList.addAll(locationVMs);
 
-                // locationAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,locations);
                 districtListAdapter = new DistrictListAdapter(getActivity(),locationVMs);
                 districtGrid.setAdapter(districtListAdapter);
             }

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pn_view_bg">
+
+    <RelativeLayout
+        android:id="@+id/mainActionsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/actionbar_bg_green">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/rankingLayout"
+            android:layout_toLeftOf="@+id/buttonsLayout"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/rankingAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentLeft="true"
+                android:longClickable="false"
+                android:src="@drawable/hot_ranking_flag"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentTop="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_round"
+            android:id="@+id/buttonsLayout">
+            <Button
+                android:id="@+id/buttonListing"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:text="@string/schools_district_search"
+                android:textColor="@color/pn_actionbar_bg"
+                android:elegantTextHeight="false"
+                android:textSize="15dp"
+                android:layout_marginLeft="2dp" />
+
+            <Button
+                android:id="@+id/buttonNewsfeed"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/pn_box_border"
+                android:text="@string/schools_newsfeed"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/buttonListing"
+                android:layout_marginRight="2dp"
+                android:textSize="15dp"
+                android:layout_marginLeft="2dp" />
+            <Button
+                android:id="@+id/buttonBookmark"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/pn_box_border"
+                android:text="@string/schools_bookmarks"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/buttonNewsfeed"
+                android:textSize="15dp"
+                android:layout_marginRight="2dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/editLayout"
+            android:layout_toRightOf="@+id/buttonsLayout">
+
+            <ImageView
+                android:id="@+id/editAction"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/edit_post" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/children_fragement"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/mainActionsLayout">
+    </RelativeLayout>
+</RelativeLayout>

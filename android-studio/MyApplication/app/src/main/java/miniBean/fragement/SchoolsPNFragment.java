@@ -11,20 +11,19 @@ import android.widget.Button;
 
 import miniBean.R;
 
-public class MyKindyFragment extends Fragment {
+public class SchoolsPNFragment extends Fragment {
 
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.schools_by_district_fragement, container, false);
+        View view = inflater.inflate(R.layout.schools_pn_fragement, container, false);
 
-        buttonList= (Button) view.findViewById(R.id.buttonListing);
-        buttonBookmark= (Button) view.findViewById(R.id.buttonBookmark);
-        buttonNews= (Button) view.findViewById(R.id.buttonNewsfeed);
+        buttonList = (Button) view.findViewById(R.id.buttonListing);
+        buttonBookmark = (Button) view.findViewById(R.id.buttonBookmark);
+        buttonNews = (Button) view.findViewById(R.id.buttonNewsfeed);
 
         if(listClicked){
             pressListButton();
@@ -51,7 +50,6 @@ public class MyKindyFragment extends Fragment {
                 bookmarkClicked=true;
                 newsClicked=false;
                 listClicked=false;
-
             }
         });
 
@@ -62,7 +60,6 @@ public class MyKindyFragment extends Fragment {
                 bookmarkClicked=false;
                 newsClicked=true;
                 listClicked=false;
-
             }
         });
 
@@ -71,48 +68,48 @@ public class MyKindyFragment extends Fragment {
 
     private void pressListButton(){
         buttonList.setBackgroundColor(Color.WHITE);
-        buttonList.setTextColor(Color.parseColor("#57B154"));
+        buttonList.setTextColor(getResources().getColor(R.color.pn_box_border));
 
         buttonBookmark.setTextColor(Color.WHITE);
-        buttonBookmark.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonBookmark.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
         buttonNews.setTextColor(Color.WHITE);
-        buttonNews.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
-        Fragment kindyListFragment = new KindyListFragment();
+        Fragment schoolListFragment = new SchoolListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, kindyListFragment).commit();
+        transaction.replace(R.id.children_fragement, schoolListFragment).commit();
     }
 
     private void pressNewsButton(){
-        buttonList.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonList.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
         buttonList.setTextColor(Color.WHITE);
 
         buttonBookmark.setTextColor(Color.WHITE);
-        buttonBookmark.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonBookmark.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
-        buttonNews.setTextColor(Color.parseColor("#57B154"));
+        buttonNews.setTextColor(getResources().getColor(R.color.pn_box_border));
         buttonNews.setBackgroundColor(Color.WHITE);
 
-        Fragment kindyFeedListFragment = new KindyNewsfeedListFragement();
+        Fragment schoolFeedListFragment = new SchoolNewsfeedListFragement();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, kindyFeedListFragment).commit();
+        transaction.replace(R.id.children_fragement, schoolFeedListFragment).commit();
 
     }
+
     private void pressBookmarkButton(){
-        buttonList.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonList.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
         buttonList.setTextColor(Color.WHITE);
 
-        buttonBookmark.setTextColor(Color.parseColor("#57B154"));
+        buttonBookmark.setTextColor(getResources().getColor(R.color.pn_box_border));
         buttonBookmark.setBackgroundColor(Color.WHITE);
 
         buttonNews.setTextColor(Color.WHITE);
-        buttonNews.setBackgroundColor(Color.parseColor("#57B154"));
+        buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
-        Fragment kindyBookmarkFragment = new KindyBookmarkFragment();
+        Fragment schoolBookmarkFragment = new SchoolBookmarkFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, kindyBookmarkFragment).commit();
-
+        transaction.replace(R.id.children_fragement, schoolBookmarkFragment).commit();
     }
 }
 

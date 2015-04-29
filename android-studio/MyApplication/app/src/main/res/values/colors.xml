@@ -5,7 +5,7 @@
     <color name="gray">#888</color>
     <color name="light_gray">#aaa</color>
     <color name="light_gray_2">#ddd</color>
-    <color name="light_gray_3">#eee</color>
+    <color name="light_gray_3">#F6F6F6</color>
     <color name="dark_gray">#555</color>
     <color name="dark_gray_2">#222</color>
     <color name="dark_gray_3">#111</color>
@@ -53,7 +53,7 @@
     <color name="kg_actionbar_bg">#BB5C5D</color>
     <color name="kg_box_border">#C77B7B</color>
     <color name="kg_box_shadow">#B38989</color>
-    <color name="kg_green">#B86B6B</color>
+    <color name="kg_maroon">#B86B6B</color>
     <color name="kg_text">#A63D3D</color>
     <color name="kg_text_light">#B86464</color>
 

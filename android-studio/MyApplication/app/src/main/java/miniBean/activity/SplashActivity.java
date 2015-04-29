@@ -17,6 +17,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.NotificationCache;
+import miniBean.app.UserInfoCache;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -57,7 +58,8 @@ public class SplashActivity extends Activity {
 
     private void startMainActivity(final String sessionId) {
         Log.d(this.getClass().getSimpleName(), "getUserInfo");
-        AppController.getApi().getUserInfo(sessionId, new Callback<UserVM>() {
+
+        UserInfoCache.refresh(sessionId, new Callback<UserVM>() {
             @Override
             public void success(UserVM user, retrofit.client.Response response) {
                 Log.d(SplashActivity.this.getClass().getSimpleName(), "startMainActivity: getUserInfo.success: user="+user.getDisplayName()+" id="+user.getId()+" newUser="+user.newUser);
@@ -86,8 +88,6 @@ public class SplashActivity extends Activity {
                     if (AppController.getInstance().getSessionId() == null) {
                         AppController.getInstance().savePreferences(sessionId);
                     }
-
-                    AppController.setUser(user);
 
                     NotificationCache.refresh();
 

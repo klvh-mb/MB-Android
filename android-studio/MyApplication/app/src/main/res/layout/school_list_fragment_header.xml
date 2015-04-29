@@ -23,7 +23,7 @@
         android:id="@+id/boxLayout"
         android:layout_below="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_pn_grid"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
@@ -75,24 +75,25 @@
                 android:textSize="14dp"
                 android:layout_marginRight="5dp" />
             </LinearLayout>
-            </RelativeLayout>
+        </RelativeLayout>
         <RelativeLayout
             android:layout_below="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <GridView
+            android:layout_height="wrap_content">
+            <miniBean.view.AdaptiveGridView
                 android:id="@+id/districtGrid"
                 android:numColumns="4"
-                android:padding="10dp"
                 android:gravity="center"
                 android:stretchMode="columnWidth"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:fastScrollAlwaysVisible="false"
-                android:columnWidth="10dp">
-                </GridView>
-
+                android:smoothScrollbar="false"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:horizontalSpacing="5dp" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -162,8 +163,9 @@
             android:textSize="16dp"
             android:id="@+id/filterText3"
             android:layout_below="@+id/textLayout"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/filterLayout"

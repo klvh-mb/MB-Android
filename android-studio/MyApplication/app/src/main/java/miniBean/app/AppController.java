@@ -58,11 +58,8 @@ public class AppController extends Application {
 
     private static AppController mInstance;
     private static MyApi api;
-    private static UserVM user;
 
     private SharedPreferences session;
-
-    private boolean isColorCheck=false;
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -74,39 +71,16 @@ public class AppController extends Application {
         return api;
     }
 
-    public static synchronized void setUser(UserVM vm) {
-        user = vm;
-    }
-
     public static synchronized boolean isUserAdmin() {
-        if (user == null)
-            return false;
-        return user.isAdmin();
+        return UserInfoCache.getUser().isAdmin();
     }
 
     public static synchronized LocationVM getUserLocation() {
-        if (user == null)
-            return null;
-        return user.getLocation();
+        return UserInfoCache.getUser().getLocation();
     }
 
     private static UserVM getUser() {
-        /*
-        if (user == null) {
-            AppController.getApi().getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
-                @Override
-                public void success(UserVM user, retrofit.client.Response response) {
-                    setUser(user);
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
-                }
-            });
-        }
-        */
-        return user;
+        return UserInfoCache.getUser();
     }
 
     @Override
@@ -144,7 +118,7 @@ public class AppController extends Application {
         Log.d(this.getClass().getSimpleName(), "clearAll");
         LocalCommunityTabCache.clear();
         NotificationCache.clear();
-        user = null;
+        UserInfoCache.clear();
     }
 
     public void savePreferences(String key) {
@@ -192,13 +166,5 @@ public class AppController extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public boolean isColorCheck() {
-        return isColorCheck;
-    }
-
-    public void setColorCheck(boolean isColorCheck) {
-        this.isColorCheck = isColorCheck;
     }
 }

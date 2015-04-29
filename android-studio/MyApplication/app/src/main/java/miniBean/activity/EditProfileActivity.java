@@ -17,6 +17,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.UserInfoCache;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserProfileDataVM;
@@ -143,22 +144,11 @@ public class EditProfileActivity extends FragmentActivity {
     }
 
     private void getUserInfo() {
-
-        AppController.getApi().getUserInfo(AppController.getInstance().getSessionId(), new Callback<UserVM>() {
-
-            @Override
-            public void success(UserVM userVM, Response response) {
-                displayEmailText.setText(userVM.getEmail());
-                displayName.setText(userVM.getDisplayName());
-                firstNameEdit.setText(userVM.getFirstName());
-                lastNameEdit.setText(userVM.getLastName());
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-
-            }
-        });
+        UserVM user = UserInfoCache.getUser();
+        displayEmailText.setText(user.getEmail());
+        displayName.setText(user.getDisplayName());
+        firstNameEdit.setText(user.getFirstName());
+        lastNameEdit.setText(user.getLastName());
     }
 
     private void setUserProfileData(UserProfileDataVM userProfileDataVM){
