@@ -7,603 +7,611 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
-    <RelativeLayout
-        android:background="#ffffff"
-        android:descendantFocusability="blocksDescendants"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
-        <LinearLayout
-            android:id="@+id/titleLayout"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:background="#ffffff"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
-            android:orientation="vertical"
-            android:layout_marginRight="15dp">
-
+            android:layout_marginBottom="10dp">
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:weightSum="10">
+                android:id="@+id/titleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical"
+                android:layout_marginRight="15dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/pnNameText"
+                        android:text="-"
+                        android:textStyle="bold"
+                        android:textColor="@color/schools_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="22dp" />
+
+                    <TextView
+                        android:id="@+id/distNameText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/schools_district"
+                        android:layout_toRightOf="@+id/pnNameText"
+                        android:layout_marginLeft="10dp"
+                        android:text="-"
+                        android:textSize="16dp"
+                        android:layout_alignBaseline="@+id/pnNameText" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/pnNameText"
-                    android:text="-"
-                    android:textStyle="bold"
+                    android:id="@+id/enName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/schools_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="22dp" />
-
-                <TextView
-                    android:id="@+id/distNameText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/schools_district"
-                    android:layout_toRightOf="@+id/pnNameText"
-                    android:layout_marginLeft="10dp"
                     android:text="-"
-                    android:textSize="16dp"
-                    android:layout_alignBaseline="@+id/pnNameText" />
+                    android:layout_below="@+id/pnNameText"
+                    android:textSize="16dp" />
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/enName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/schools_title"
-                android:text="-"
-                android:layout_below="@+id/pnNameText"
-                android:textSize="16dp" />
-
-        </LinearLayout>
-    <LinearLayout
-        android:id="@+id/gotoCommLayout"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/titleLayout"
-        android:background="@drawable/schools_info_box"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="25dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-        <ImageView
-            android:id="@+id/postImageView"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/comment"
-            android:layout_gravity="center_vertical" />
-        <TextView
-            android:id="@+id/postLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="@string/schools_posts"
-            android:layout_gravity="center_vertical"
-            android:textSize="14dp"
-            android:textColor="@color/dark_gray_3" />
-        <TextView
-            android:id="@+id/postCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="0"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/dark_gray_3"
-            android:textSize="14dp" />
-        <LinearLayout
-            android:id="@+id/feedButtonLayout"
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/feedText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/pale_blue"
-                android:text="@string/schools_discuss_together"
-                android:layout_gravity="center_vertical"
-                android:textSize="14dp" />
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="10dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/anim_blue_arrow"
-                android:layout_gravity="center_vertical" />
-        </LinearLayout>
-    </LinearLayout>
-    <RelativeLayout
-        android:id="@+id/infoLayout"
-        android:layout_below="@+id/gotoCommLayout"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="15dp">
-        <TextView
-            android:id="@+id/infoText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/pn_text"
-            android:text="@string/schools_landing_title_info"
-            android:textIsSelectable="false"
-            android:textSize="18dp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@+id/infoText"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/dottedline"
-            />
-        <LinearLayout
-            android:id="@+id/couponBox"
-            android:layout_below="@+id/infoText"
-            android:layout_marginTop="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_coupon"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-            <ImageView
-                android:id="@+id/couponImage"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/value_yes"
-                android:layout_gravity="center_vertical" />
-            </LinearLayout>
             <LinearLayout
-                android:id="@+id/typeBox"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/couponBox"
+                android:id="@+id/gotoCommLayout"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/titleLayout"
+                android:background="@drawable/schools_info_box"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <ImageView
+                    android:id="@+id/postImageView"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/comment"
+                    android:layout_gravity="center_vertical" />
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/schools_info_type"
-                    android:textColor="@color/dark_gray_3"
-                    android:textSize="15dp" />
-                <TextView
-                    android:id="@+id/typeValueText"
+                    android:id="@+id/postLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="-"
-                    android:textSize="15dp"
-                    android:textColor="@color/schools_info_text" />
+                    android:text="@string/schools_posts"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="14dp"
+                    android:textColor="@color/dark_gray_3" />
+                <TextView
+                    android:id="@+id/postCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="0"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="14dp" />
+                <LinearLayout
+                    android:id="@+id/feedButtonLayout"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/feedText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/pale_blue"
+                        android:text="@string/schools_discuss_together"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="14dp" />
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/anim_blue_arrow"
+                        android:layout_gravity="center_vertical" />
                 </LinearLayout>
-        <LinearLayout
-            android:id="@+id/curriculumBox"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/typeBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_curriculum"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp" />
-            <TextView
-                android:id="@+id/curriValueText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="-"
-                android:textColor="@color/schools_info_text"
-                android:textSize="15dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/timeBox"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/curriculumBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_time"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-            <TextView
-                android:id="@+id/timeValueText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="-"
-                android:textSize="15dp"
-                android:textColor="@color/schools_info_text" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/organisationBox"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/timeBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_org"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp" />
-            <TextView
-                android:id="@+id/orgValueText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="-"
-                android:textColor="@color/schools_info_text"
-                android:textSize="15dp" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/acceptanceLayout"
-        android:layout_below="@+id/infoLayout"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="15dp">
-        <TextView
-            android:id="@+id/acceptanceText"
-            android:textStyle="bold"
-            android:textColor="@color/pn_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/schools_landing_title_pn"
-            android:textSize="18dp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@+id/acceptanceText"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/dottedline"
-            />
-        <LinearLayout
-            android:layout_below="@+id/acceptanceText"
-            android:id="@+id/studentBox"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_students_num"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp" />
-            <TextView
-                android:id="@+id/studentValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="-"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
             </LinearLayout>
-        <LinearLayout
-            android:id="@+id/halfdayBox"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/studentBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/infoLayout"
+                android:layout_below="@+id/gotoCommLayout"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/schools_info_tuition_half_day"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-            <TextView
-                android:id="@+id/halfDayValue"
-                android:layout_marginLeft="5dp"
-                android:text="-"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/fulldayBox"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/halfdayBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_tuition_full_day"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-            <TextView
-                android:id="@+id/fullDayValue"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp" />
-        </LinearLayout>
-       <TextView
-           android:id="@+id/bottomText"
-           android:layout_marginTop="5dp"
-           android:layout_below="@+id/fulldayBox"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:text="@string/schools_info_data_asof"
-           android:textColor="@color/gray"
-           android:textSize="14dp" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/curriculumLayout"
-        android:layout_below="@+id/acceptanceLayout"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="15dp">
-        <TextView
-            android:id="@+id/curriTitleText"
-            android:layout_marginTop="5dp"
-            android:textStyle="bold"
-            android:textColor="@color/pn_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/schools_landing_title_curriculum"
-            android:textSize="18dp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@+id/curriTitleText"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/dottedline"
-            />
+                android:layout_marginRight="15dp">
+                <TextView
+                    android:id="@+id/infoText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/pn_text"
+                    android:text="@string/schools_landing_title_info"
+                    android:textIsSelectable="false"
+                    android:textSize="18dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/infoText"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/dottedline"/>
+                <LinearLayout
+                    android:id="@+id/couponBox"
+                    android:layout_below="@+id/infoText"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_coupon"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                    <ImageView
+                        android:id="@+id/couponImage"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/value_yes"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/typeBox"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/couponBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_type"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="15dp" />
+                    <TextView
+                        android:id="@+id/typeValueText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="-"
+                        android:textSize="15dp"
+                        android:textColor="@color/schools_info_text" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/curriculumBox"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/typeBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_curriculum"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="15dp" />
+                    <TextView
+                        android:id="@+id/curriValueText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="-"
+                        android:textColor="@color/schools_info_text"
+                        android:textSize="15dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/timeBox"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/curriculumBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_time"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                    <TextView
+                        android:id="@+id/timeValueText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="-"
+                        android:textSize="15dp"
+                        android:textColor="@color/schools_info_text" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/organisationBox"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/timeBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_org"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="15dp" />
+                    <TextView
+                        android:id="@+id/orgValueText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="-"
+                        android:textColor="@color/schools_info_text"
+                        android:textSize="15dp" />
+                </LinearLayout>
+            </RelativeLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/curriTitleText"
-            android:layout_marginTop="15dp">
+            <RelativeLayout
+                android:id="@+id/acceptanceLayout"
+                android:layout_below="@+id/infoLayout"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp">
+                <TextView
+                    android:id="@+id/acceptanceText"
+                    android:textStyle="bold"
+                    android:textColor="@color/pn_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_landing_title_pn"
+                    android:textSize="18dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/acceptanceText"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/dottedline"
+                    />
+                <LinearLayout
+                    android:layout_below="@+id/acceptanceText"
+                    android:id="@+id/studentBox"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_students_num"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="15dp" />
+                    <TextView
+                        android:id="@+id/studentValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="-"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/halfdayBox"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/studentBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_tuition_half_day"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                    <TextView
+                        android:id="@+id/halfDayValue"
+                        android:layout_marginLeft="5dp"
+                        android:text="-"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/fulldayBox"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/halfdayBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_tuition_full_day"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                    <TextView
+                        android:id="@+id/fullDayValue"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="15dp" />
+                </LinearLayout>
+               <TextView
+                   android:id="@+id/bottomText"
+                   android:layout_marginTop="5dp"
+                   android:layout_below="@+id/fulldayBox"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="@string/schools_info_data_asof"
+                   android:textColor="@color/gray"
+                   android:textSize="14dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/curriculumLayout"
+                android:layout_below="@+id/acceptanceLayout"
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp">
+                <TextView
+                    android:id="@+id/curriTitleText"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/pn_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_landing_title_curriculum"
+                    android:textSize="18dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/curriTitleText"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/dottedline"
+                    />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/curriTitleText"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/schools_info_curriculum_arrange"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3"
+                        android:id="@+id/textView4" />
+
+                    <TextView
+                        android:id="@+id/contentText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/curriTitleText"
+                        android:text="-"
+                        android:layout_marginLeft="15dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                </LinearLayout>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/contactBox"
+                android:layout_width="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_below="@+id/curriculumLayout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp">
+                <TextView
+                    android:id="@+id/contactTitle"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/pn_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_landing_title_contact"
+                    android:textSize="18dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/contactTitle"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/dottedline"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/addressLayout"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/contactTitle"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/addressText"
+                        android:text="@string/schools_info_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                    <TextView
+                        android:id="@+id/addressValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="5dp" />
+                    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/phoneLayout"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/addressLayout"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/phoneText"
+                        android:text="@string/schools_info_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                    <TextView
+                        android:id="@+id/phoneValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="5dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/webLayout"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/phoneLayout"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/websiteText"
+                        android:text="@string/schools_info_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3" />
+                    <TextView
+                        android:id="@+id/websiteValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/link"
+                        android:text="-"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="5dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/govsiteLayout"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/webLayout"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/govsiteText"
+                        android:text="@string/schools_info_gov_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_3"
+                        android:layout_gravity="center_vertical" />
+                    <ImageView
+                        android:id="@+id/govtImage"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/schools_gov"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_below="@+id/contactBox"
+                android:id="@+id/pnPostLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:layout_marginRight="15dp"
+                android:weightSum="10">
+                <TextView
+                    android:id="@+id/postTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/pn_text"
+                    android:text="@string/schools_landing_title_comm"
+                    android:textSize="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true" />
+
+                <LinearLayout
+                    android:background="@color/pn_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="horizontal"
+                    android:layout_gravity="right"
+                    android:layout_alignParentRight="true"
+                    android:baselineAligned="false"
+                    android:layout_alignParentStart="false">
+                <ImageView
+                    android:id="@+id/editAction"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/edit_post"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New Post"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/bar"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/pnPostLayout"
+                android:background="@drawable/dottedline"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp" />
 
             <TextView
+                android:id="@+id/welcomeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/schools_info_curriculum_arrange"
+                android:layout_below="@+id/bar"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/schools_info_comm_welcome"
                 android:textSize="15dp"
                 android:textColor="@color/dark_gray_3"
-                android:id="@+id/textView4" />
+                android:layout_marginRight="15dp" />
 
-            <TextView
-                android:id="@+id/contentText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/curriTitleText"
-                android:text="-"
-                android:layout_marginLeft="5dp"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-        </LinearLayout>
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/contactBox"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_below="@+id/curriculumLayout"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="15dp">
-        <TextView
-            android:id="@+id/contactTitle"
-            android:layout_marginTop="5dp"
-            android:textStyle="bold"
-            android:textColor="@color/pn_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/schools_landing_title_contact"
-            android:textSize="18dp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@+id/contactTitle"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/dottedline"
-            />
-
-        <LinearLayout
-            android:id="@+id/addressLayout"
-            android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/contactTitle"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/addressText"
-                android:text="@string/schools_info_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-            <TextView
-                android:id="@+id/addressValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp"
-                android:layout_marginLeft="5dp" />
-            </LinearLayout>
-        <LinearLayout
-            android:id="@+id/phoneLayout"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/addressLayout"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/phoneText"
-                android:text="@string/schools_info_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-            <TextView
-                android:id="@+id/phoneValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp"
-                android:layout_marginLeft="5dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/webLayout"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/phoneLayout"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/websiteText"
-                android:text="@string/schools_info_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3" />
-            <TextView
-                android:id="@+id/websiteValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/link"
-                android:text="-"
-                android:textSize="15dp"
-                android:layout_marginLeft="5dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/govsiteLayout"
-            android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/webLayout"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/govsiteText"
-                android:text="@string/schools_info_gov_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="@color/dark_gray_3"
-                android:layout_gravity="center_vertical" />
-            <ImageView
-                android:id="@+id/govtImage"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/schools_gov"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp" />
-        </LinearLayout>
+            <RelativeLayout
+                android:background="@drawable/rounded_corner_pn_grid"
+                android:id="@+id/postMainLayout"
+                android:layout_below="@+id/welcomeText"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Posts"/>
+                <ListView
+                    android:padding="5dp"
+                    android:id="@+id/postList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:dividerHeight="1dp"
+                    android:divider="@color/pn_green">
+                    </ListView>
+            </RelativeLayout>
         </RelativeLayout>
-
-    <LinearLayout
-        android:layout_below="@+id/contactBox"
-        android:id="@+id/pnPostLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:layout_marginRight="15dp">
-        <TextView
-            android:id="@+id/postTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_weight=".9"
-            android:textColor="@color/pn_text"
-            android:text="@string/schools_landing_title_comm"
-            android:textSize="18dp" />
-        <LinearLayout
-            android:background="#57B154"
-            android:layout_weight=".1"
-            android:layout_marginRight="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/editAction"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/edit_post"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Post"
-                android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
-                android:textColor="#ffffff"
-                />
-        </LinearLayout>
-        </LinearLayout>
-        <View
-            android:id="@+id/bar"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@+id/pnPostLayout"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/dottedline"
-            />
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bar"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/schools_info_comm_welcome"
-        android:textSize="15dp"
-        android:textColor="@color/dark_gray_3" />
-    <RelativeLayout
-        android:background="@drawable/rounded_corner_pn_grid"
-        android:id="@+id/postMainLayout"
-        android:layout_below="@+id/welcomeText"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="20dp"
-        >
-        <TextView
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No Posts"/>
-        <ListView
-            android:padding="5dp"
-            android:id="@+id/postList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:dividerHeight="1dp"
-            android:divider="@color/pn_green">
-            </ListView>
-        </RelativeLayout>
-</RelativeLayout>
-</ScrollView>
+    </ScrollView>
 </RelativeLayout>
