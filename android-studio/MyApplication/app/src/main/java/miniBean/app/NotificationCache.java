@@ -18,7 +18,6 @@ public class NotificationCache {
     }
 
     private static void init() {
-
     }
 
     public static void refresh() {

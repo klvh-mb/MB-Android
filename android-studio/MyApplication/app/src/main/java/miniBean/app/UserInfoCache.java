@@ -17,7 +17,6 @@ public class UserInfoCache {
     }
 
     private static void init() {
-
     }
 
     public static void refresh() {

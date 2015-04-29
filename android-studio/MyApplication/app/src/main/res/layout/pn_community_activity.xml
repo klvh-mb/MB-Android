@@ -125,14 +125,17 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp">
         <TextView
             android:id="@+id/infoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textColor="#57B154"
-            android:text="Schools Info"/>
+            android:textColor="@color/pn_text"
+            android:text="@string/schools_landing_title_info"
+            android:textIsSelectable="false"
+            android:textSize="18dp" />
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
@@ -150,7 +153,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Coupon :"/>
+                android:text="@string/schools_info_coupon"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
             <ImageView
                 android:id="@+id/couponImage"
                 android:layout_width="15dp"
@@ -168,13 +173,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Type :"/>
+                    android:text="@string/schools_info_type"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
                 <TextView
                     android:id="@+id/typeValueText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="-"/>
+                    android:text="-"
+                    android:textSize="15dp"
+                    android:textColor="@color/schools_info_text" />
                 </LinearLayout>
         <LinearLayout
             android:id="@+id/curriculumBox"
@@ -185,13 +194,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Curriculum :"/>
+                android:text="@string/schools_info_curriculum"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="15dp" />
             <TextView
                 android:id="@+id/curriValueText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="-"/>
+                android:text="-"
+                android:textColor="@color/schools_info_text"
+                android:textSize="15dp" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/timeBox"
@@ -202,13 +215,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time :"/>
+                android:text="@string/schools_info_time"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
             <TextView
                 android:id="@+id/timeValueText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="-"/>
+                android:text="-"
+                android:textSize="15dp"
+                android:textColor="@color/schools_info_text" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/organisationBox"
@@ -219,13 +236,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Orgnisation :"/>
+                android:text="@string/schools_info_org"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="15dp" />
             <TextView
                 android:id="@+id/orgValueText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="-"/>
+                android:text="-"
+                android:textColor="@color/schools_info_text"
+                android:textSize="15dp" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -235,14 +256,16 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp">
         <TextView
             android:id="@+id/acceptanceText"
             android:textStyle="bold"
-            android:textColor="#57B154"
+            android:textColor="@color/pn_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Acceptance Info"/>
+            android:text="@string/schools_landing_title_pn"
+            android:textSize="18dp" />
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
@@ -261,14 +284,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Student :"/>
+                android:text="@string/schools_info_students_num"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="15dp" />
             <TextView
                 android:id="@+id/studentValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="-"
-                />
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
             </LinearLayout>
         <LinearLayout
             android:id="@+id/halfdayBox"
@@ -279,14 +305,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Half Day Fees :"/>
+                android:text="@string/schools_info_tuition_half_day"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
             <TextView
                 android:id="@+id/halfDayValue"
                 android:layout_marginLeft="5dp"
                 android:text="-"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/fulldayBox"
@@ -297,13 +326,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Full Day Fees :"/>
+                android:text="@string/schools_info_tuition_full_day"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
             <TextView
                 android:id="@+id/fullDayValue"
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"/>
+                android:text="-"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="15dp" />
         </LinearLayout>
        <TextView
            android:id="@+id/bottomText"
@@ -311,7 +344,9 @@
            android:layout_below="@+id/fulldayBox"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="-"/>
+           android:text="@string/schools_info_data_asof"
+           android:textColor="@color/gray"
+           android:textSize="14dp" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/curriculumLayout"
@@ -319,15 +354,17 @@
         android:layout_width="match_parent"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp">
         <TextView
             android:id="@+id/curriTitleText"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
-            android:textColor="#57B154"
+            android:textColor="@color/pn_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Curriculum"/>
+            android:text="@string/schools_landing_title_curriculum"
+            android:textSize="18dp" />
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
@@ -336,29 +373,51 @@
             android:layout_marginRight="15dp"
             android:background="@drawable/dottedline"
             />
-        <TextView
-            android:id="@+id/contentText"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_below="@+id/curriTitleText"
-            android:text="-"/>
-        </RelativeLayout>
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_info_curriculum_arrange"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3"
+                android:id="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/contentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/curriTitleText"
+                android:text="-"
+                android:layout_marginLeft="5dp"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
+        </LinearLayout>
+
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/contactBox"
         android:layout_width="match_parent"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
         android:layout_below="@+id/curriculumLayout"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp">
         <TextView
             android:id="@+id/contactTitle"
             android:layout_marginTop="5dp"
             android:textStyle="bold"
-            android:textColor="#57B154"
+            android:textColor="@color/pn_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contact :"/>
+            android:text="@string/schools_landing_title_contact"
+            android:textSize="18dp" />
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
@@ -377,14 +436,19 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/addressText"
-                android:text="Address :"
+                android:text="@string/schools_info_address"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
             <TextView
                 android:id="@+id/addressValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"/>
+                android:text="-"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="15dp"
+                android:layout_marginLeft="5dp" />
             </LinearLayout>
         <LinearLayout
             android:id="@+id/phoneLayout"
@@ -395,14 +459,19 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/phoneText"
-                android:text="Phone :"
+                android:text="@string/schools_info_phone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
             <TextView
                 android:id="@+id/phoneValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-"/>
+                android:text="-"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="15dp"
+                android:layout_marginLeft="5dp" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/webLayout"
@@ -413,15 +482,19 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/websiteText"
-                android:text="Website :"
+                android:text="@string/schools_info_url"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3" />
             <TextView
                 android:id="@+id/websiteValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#3484D9"
-                android:text="-"/>
+                android:textColor="@color/link"
+                android:text="-"
+                android:textSize="15dp"
+                android:layout_marginLeft="5dp" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/govsiteLayout"
@@ -432,14 +505,19 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/govsiteText"
-                android:text="Govt. site :"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:id="@+id/govtImage"
+                android:text="@string/schools_info_gov_url"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray_3"
+                android:layout_gravity="center_vertical" />
+            <ImageView
+                android:id="@+id/govtImage"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/schools_gov"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp" />
         </LinearLayout>
         </RelativeLayout>
 
@@ -449,16 +527,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="15dp">
         <TextView
             android:id="@+id/postTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:layout_weight=".9"
-            android:textColor="#57B154"
-            android:text="School Community "/>
+            android:textColor="@color/pn_text"
+            android:text="@string/schools_landing_title_comm"
+            android:textSize="18dp" />
         <LinearLayout
             android:background="#57B154"
             android:layout_weight=".1"
@@ -496,7 +576,9 @@
         android:layout_below="@+id/bar"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:text="Welcome to discuss with another parents"/>
+        android:text="@string/schools_info_comm_welcome"
+        android:textSize="15dp"
+        android:textColor="@color/dark_gray_3" />
     <RelativeLayout
         android:background="@drawable/rounded_corner_pn_grid"
         android:id="@+id/postMainLayout"
@@ -505,7 +587,7 @@
         android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="15dp"
         android:layout_marginBottom="20dp"
         >
         <TextView

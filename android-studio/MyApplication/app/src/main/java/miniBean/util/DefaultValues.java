@@ -53,17 +53,21 @@ public class DefaultValues {
             new String[] {"FEEDBACK"}
     );
 
+    public static String FILTER_SCHOOLS_ALL = AppController.getInstance().getString(R.string.filter_schools_all);
+    public static String FILTER_SCHOOLS_YES = AppController.getInstance().getString(R.string.filter_schools_yes);
+    public static String FILTER_SCHOOLS_NO = AppController.getInstance().getString(R.string.filter_schools_no);
+
     public static List<String> FILTER_SCHOOLS_COUPON = Arrays.asList(
             new String[] {
-                    AppController.getInstance().getString(R.string.filter_schools_all),
-                    AppController.getInstance().getString(R.string.filter_schools_yes),
-                    AppController.getInstance().getString(R.string.filter_schools_no)
+                    FILTER_SCHOOLS_ALL,
+                    FILTER_SCHOOLS_YES,
+                    FILTER_SCHOOLS_NO
             }
     );
 
     public static List<String> FILTER_SCHOOLS_TYPE = Arrays.asList(
             new String[] {
-                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    FILTER_SCHOOLS_ALL,
                     AppController.getInstance().getString(R.string.filter_schools_type_private),
                     AppController.getInstance().getString(R.string.filter_schools_type_public)
             }
@@ -71,7 +75,7 @@ public class DefaultValues {
 
     public static List<String> FILTER_SCHOOLS_CURRICULUM = Arrays.asList(
             new String[] {
-                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    FILTER_SCHOOLS_ALL,
                     AppController.getInstance().getString(R.string.filter_schools_curriculum_local),
                     AppController.getInstance().getString(R.string.filter_schools_curriculum_nonlocal)
             }
@@ -80,7 +84,7 @@ public class DefaultValues {
     /*
     public static List<String> FILTER_SCHOOLS_TIME = Arrays.asList(
             new String[] {
-                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    FILTER_SCHOOLS_ALL,
                     AppController.getInstance().getString(R.string.filter_schools_time_am),
                     AppController.getInstance().getString(R.string.filter_schools_time_pm),
                     AppController.getInstance().getString(R.string.filter_schools_time_wd)
@@ -90,7 +94,7 @@ public class DefaultValues {
 
     public static List<String> FILTER_SCHOOLS_TIME = Arrays.asList(
             new String[] {
-                    AppController.getInstance().getString(R.string.filter_schools_all),
+                    FILTER_SCHOOLS_ALL,
                     "AM",
                     "PM",
                     "WD"

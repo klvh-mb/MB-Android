@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
+import miniBean.app.AppController;
 import miniBean.viewmodel.PreNurseryVM;
 
 public class PNListAdapter extends BaseAdapter {
@@ -98,6 +100,16 @@ public class PNListAdapter extends BaseAdapter {
 
         } else {
             couponValue.setImageResource(R.drawable.value_no);
+        }
+
+        // num views
+        LinearLayout numViewsLayout = (LinearLayout) convertView.findViewById(R.id.numViewsLayout);
+        if (AppController.isUserAdmin()) {
+            TextView numViews = (TextView) convertView.findViewById(R.id.numViews);
+            numViews.setText(item.getNov()+"");
+            numViewsLayout.setVisibility(View.VISIBLE);
+        } else {
+            numViewsLayout.setVisibility(View.GONE);
         }
 
         schoolMainLayout.setOnClickListener(new View.OnClickListener() {

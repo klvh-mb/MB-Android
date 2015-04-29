@@ -16,6 +16,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.DistrictCache;
 import miniBean.app.NotificationCache;
 import miniBean.app.UserInfoCache;
 import miniBean.util.DefaultValues;
@@ -90,6 +91,7 @@ public class SplashActivity extends Activity {
                     }
 
                     NotificationCache.refresh();
+                    DistrictCache.refresh();
 
                     // display splash
                     new Handler().postDelayed(new Runnable() {

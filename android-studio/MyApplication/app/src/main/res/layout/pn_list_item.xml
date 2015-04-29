@@ -176,35 +176,60 @@
 
     <RelativeLayout
         android:layout_below="@+id/schoolMainLayout"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
         android:id="@+id/actionsLayout">
-    <ImageView
-        android:id="@+id/commentImage"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:src="@drawable/comment"
-        android:layout_centerVertical="true" />
-        <TextView
-            android:id="@+id/totalCommentText"
-            android:layout_toRightOf="@+id/commentImage"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="-"
-            android:layout_marginLeft="5dp"
-            android:textSize="14dp"
+            android:id="@+id/numViewsLayout"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/numViewsImage"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/view"
+                android:layout_gravity="center_vertical" />
+            <TextView
+                android:id="@+id/numViews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/commentpic"
+                android:textColor="@color/admin_green"
+                android:textSize="12dp"
+                android:layout_gravity="center_vertical"
+                android:text="-"
+                android:layout_marginLeft="3dp" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/commentImage"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/comment"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/numViewsLayout" />
+            <TextView
+                android:id="@+id/totalCommentText"
+                android:layout_toRightOf="@+id/commentImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:layout_marginLeft="5dp"
+                android:textSize="14dp"
+                android:layout_centerVertical="true" />
+        <ImageView
+            android:id="@+id/bookmarkImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/totalCommentText"
+            android:src="@drawable/bookmark"
+            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true" />
-    <ImageView
-        android:id="@+id/bookmarkImage"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_toRightOf="@+id/totalCommentText"
-        android:src="@drawable/bookmark"
-        android:layout_marginLeft="20dp"
-        android:layout_centerVertical="true" />
     </RelativeLayout>
 
 </RelativeLayout>

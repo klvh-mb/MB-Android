@@ -178,14 +178,29 @@
     <string name="schools_info_coupon">學券申請:</string>
     <string name="schools_info_type">學校類別:</string>
     <string name="schools_info_curriculum">課程類別:</string>
-    <string name="schools_info_time">課堂:</string>
+    <string name="schools_info_time">課堂時間:</string>
+    <string name="schools_info_org">辦學團體:</string>
+    <string name="schools_info_students_num">收錄人數:</string>
+    <string name="schools_info_tuition_half_day">半日班全年收費:</string>
+    <string name="schools_info_tuition_full_day">全日班全年收費:</string>
+    <string name="schools_info_data_asof">* 根據教育局提供的幼兒服務資料 (2013年9月資料)</string>
+    <string name="schools_info_curriculum_arrange">課程編排:</string>
+    <string name="schools_info_address">地址:</string>
+    <string name="schools_info_phone">電話:</string>
+    <string name="schools_info_url">網址:</string>
+    <string name="schools_info_gov_url">教局網址:</string>
+    <string name="schools_info_comm_welcome">歡迎和其他家長一起討論</string>
+
     <string name="schools_filter_text_1">有</string>
     <string name="schools_filter_text_2">間幼稚園提供幼兒班(PN班)</string>
     <string name="schools_filter_text_3">幼兒服務 (PN班)</string>
-    <string name="schools_pn_bookmark_title_1">收藏了</string>
-    <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
     <string name="schools_posts">話題 :</string>
     <string name="schools_discuss_together">一齊討論</string>
+    <string name="schools_landing_title_info">學校資料</string>
+    <string name="schools_landing_title_pn">幼兒班(PN班 2-3歲) 收生資料</string>
+    <string name="schools_landing_title_curriculum">課程資料</string>
+    <string name="schools_landing_title_contact">聯絡資料</string>
+    <string name="schools_landing_title_comm">討論區</string>
 
     <string name="filter_schools_all">全部</string>
     <string name="filter_schools_yes">有</string>
@@ -197,6 +212,10 @@
     <string name="filter_schools_time_am">上午</string>
     <string name="filter_schools_time_pm">下午</string>
     <string name="filter_schools_time_wd">全日</string>
+
+    <string name="schools_pn_bookmark_title_1">收藏了</string>
+    <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
+
 
     <!-- Dialog -->
     <string name="cancel_new_post">退出發佈話題?</string>
