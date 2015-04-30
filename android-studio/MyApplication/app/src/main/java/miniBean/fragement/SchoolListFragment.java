@@ -46,7 +46,7 @@ public class SchoolListFragment extends Fragment {
     private DistrictListAdapter districtListAdapter;
     private ListView listView;
     private Spinner couponSpinner,typeSpinner,timeSpinner,curriculumSpinner;
-    private RelativeLayout nurseryLayout,boxLayout,searchResultLayout;
+    private RelativeLayout nurseryLayout,boxLayout,searchResultLayout,searchLayout;
     private LinearLayout cancelLayout;
     private SearchView searchText;
     private View listHeader;
@@ -69,6 +69,7 @@ public class SchoolListFragment extends Fragment {
         searchResultLayout = (RelativeLayout) listHeader.findViewById(R.id.searchResultLayout);
         cancelLayout = (LinearLayout) listHeader.findViewById(R.id.cancelLayout);
         noOfSchools = (TextView) listHeader.findViewById(R.id.noOfSchools);
+        searchLayout= (RelativeLayout) listHeader.findViewById(R.id.searchView);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, DefaultValues.FILTER_SCHOOLS_COUPON);
         couponSpinner.setAdapter(adapter);
@@ -129,6 +130,13 @@ public class SchoolListFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.children_fragement, fragment).addToBackStack(null).commit();
                 searchResultLayout.setVisibility(View.GONE);
+            }
+        });
+
+        searchLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchText.setIconified(false);
             }
         });
 

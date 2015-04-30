@@ -17,7 +17,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class PNCommunityActivity extends FragmentActivity {
-    private ImageView bookmarkAction,editAction;
+    private ImageView bookmarkAction,editAction,backAction;
     private Boolean isBookmarked;
     private PreNurseryVM nurseryVM;
 
@@ -32,6 +32,7 @@ public class PNCommunityActivity extends FragmentActivity {
 
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
         editAction= (ImageView) findViewById(R.id.editAction);
+        backAction= (ImageView) findViewById(R.id.backImage);
 
         nurseryVM=new PreNurseryVM();
 
@@ -39,6 +40,7 @@ public class PNCommunityActivity extends FragmentActivity {
 
         bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
         bundle.putLong("id", getIntent().getLongExtra("id", 0l));
+        bundle.putString("flag",getIntent().getStringExtra("flag"));
 
         SchoolCommunityFragment fragment = new SchoolCommunityFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -59,6 +61,13 @@ public class PNCommunityActivity extends FragmentActivity {
                     bookmarkAction.setImageResource(R.drawable.ic_bookmark);
                     isBookmarked=false;
                 }
+            }
+        });
+
+        backAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -115,5 +124,9 @@ public class PNCommunityActivity extends FragmentActivity {
                 error.printStackTrace();
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

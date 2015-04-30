@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -47,8 +48,9 @@ public class SchoolCommunityFragment extends Fragment {
 
     private ListView postList;
 
-    private ImageView couponImage;
+    private ImageView couponImage,govtImage;
     private LinearLayout gotoCommLayout;
+    private RelativeLayout postLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,12 +79,24 @@ public class SchoolCommunityFragment extends Fragment {
         postCount = (TextView) view.findViewById(R.id.postCount);
         gotoCommLayout = (LinearLayout) view.findViewById(R.id.gotoCommLayout);
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
+        govtImage= (ImageView) view.findViewById(R.id.govtImage);
+        postLayout= (RelativeLayout) view.findViewById(R.id.postMainLayout);
 
         preNurseryVMList = new ArrayList<PreNurseryVM>();
 
         getPnInfo(getArguments().getLong("id"));
 
         getNewsFeedByCommunityId(getArguments().getLong("commId"));
+
+        if(getArguments().getString("flag").equals("FromCommentImage")){
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.fullScroll(View.FOCUS_DOWN);
+                }
+            });
+
+        }
 
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new NewsfeedListAdapter(getActivity(), feedItems, false);
@@ -125,11 +139,6 @@ public class SchoolCommunityFragment extends Fragment {
             }
         });
 
-        if(getArguments().getBoolean("cp")){
-            couponImage.setImageResource(R.drawable.value_yes);
-        }else {
-            couponImage.setImageResource(R.drawable.value_no);
-        }
 
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +150,8 @@ public class SchoolCommunityFragment extends Fragment {
             }
         });
 
+
+
         gotoCommLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +161,7 @@ public class SchoolCommunityFragment extends Fragment {
 
         return view;
     }
+
 
     private void getPnInfo(Long id) {
         AppController.getApi().getPnInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
@@ -175,6 +187,17 @@ public class SchoolCommunityFragment extends Fragment {
                 addressText.setText(preNurseryVM.getAdr());
                 studentName.setText(preNurseryVM.getNadm());
                 postCount.setText(preNurseryVM.getNop()+"");
+
+                if(preNurseryVM.getGovUrl()!=null){
+                  govtImage.setImageResource(R.drawable.schools_gov);
+                }
+
+                if(preNurseryVM.isCp()){
+                    couponImage.setImageResource(R.drawable.value_yes);
+                }else {
+                    couponImage.setImageResource(R.drawable.value_no);
+                }
+
             }
 
             @Override
@@ -185,6 +208,8 @@ public class SchoolCommunityFragment extends Fragment {
         });
 
     }
+
+
     private void getNewsFeedByCommunityId(Long commId) {
         AppController.getApi().getCommunityInitialPosts(commId, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override

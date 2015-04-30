@@ -49,7 +49,7 @@ public class SchoolBookmarkFragment extends Fragment {
                 Intent intent=new Intent(getActivity(), PNCommunityActivity.class);
                 intent.putExtra("commId",vm.getCommId());
                 intent.putExtra("id", vm.getId());
-                intent.putExtra("flag","FromSchool");
+                intent.putExtra("flag","FromSchoolBookmark");
                 startActivity(intent);
             }
         });

@@ -26,7 +26,7 @@ public class PNListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<PreNurseryVM> PNlistItem;
     private TextView pnName,enName,commentNoText,curriculumValue,typeValue,timeValue,distName;
-    private ImageView couponValue,bookmarkImage;
+    private ImageView couponValue,bookmarkImage,commentImage;
     private RelativeLayout schoolMainLayout;
 
     public PNListAdapter(Activity activity, List<PreNurseryVM> PNlistItem) {
@@ -72,7 +72,7 @@ public class PNListAdapter extends BaseAdapter {
         timeValue = (TextView) convertView.findViewById(R.id.timeValue);
         distName = (TextView) convertView.findViewById(R.id.pnDistName);
         bookmarkImage = (ImageView) convertView.findViewById(R.id.bookmarkImage);
-
+        commentImage= (ImageView) convertView.findViewById(R.id.commentImage);
         final PreNurseryVM item = PNlistItem.get(position);
 
         pnName.setText(item.getN());
@@ -118,6 +118,18 @@ public class PNListAdapter extends BaseAdapter {
                 Intent intent = new Intent(activity, PNCommunityActivity.class);
                 intent.putExtra("commId",item.getCommId());
                 intent.putExtra("id",item.getId());
+                intent.putExtra("flag","FromSchoolMainlayout");
+                activity.startActivity(intent);
+            }
+        });
+
+        commentImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, PNCommunityActivity.class);
+                intent.putExtra("commId",item.getCommId());
+                intent.putExtra("id",item.getId());
+                intent.putExtra("flag","FromCommentImage");
                 activity.startActivity(intent);
             }
         });
