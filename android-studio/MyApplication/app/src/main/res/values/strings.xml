@@ -11,8 +11,8 @@
     <!-- Settings -->
     <string name="app_name">miniBean</string>
     <string name="action_settings">Settings</string>
-    <string name="base_url">http://192.168.1.115:9000</string>
-    <!--string name="base_url">http://www.minibean.hk</string-->
+    <!--string name="base_url">http://192.168.1.115:9000</string-->
+    <string name="base_url">http://www.minibean.hk</string>
     <string name="app_id">798543453496777</string>
     <string name="connection_timeout_title">網路問題</string>
     <string name="connection_timeout_message">網路出現問題。請檢查是否已經上缐</string>
@@ -191,6 +191,10 @@
     <string name="schools_info_url">網址:</string>
     <string name="schools_info_gov_url">教局網址:</string>
     <string name="schools_info_comm_welcome">歡迎和其他家長一起討論</string>
+    <string name="schools_search_text_1">搜尋</string>
+    <string name="schools_search_text_2">有</string>
+    <string name="schools_search_text_3">個結果</string>
+    <string name="schools_search_cancel">結束搜尋</string>
 
     <string name="schools_filter_text_1">有</string>
     <string name="schools_filter_text_2">間幼稚園提供幼兒班(PN班)</string>

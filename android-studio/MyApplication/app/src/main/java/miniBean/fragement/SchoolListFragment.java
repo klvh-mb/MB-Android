@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -294,6 +296,19 @@ public class SchoolListFragment extends Fragment {
         return vm;
     }
 
+    private List<PreNurseryVM> typeFilter(String orgtValue,List<PreNurseryVM> filteredVMList) {
+        if(DefaultValues.FILTER_SCHOOLS_ALL.equals(orgtValue)) {
+            return filteredVMList;
+        }
+
+        List<PreNurseryVM> vm = new ArrayList<PreNurseryVM>();
+        for (int i = 0; i < filteredVMList.size(); i++) {
+            if (orgtValue.equalsIgnoreCase(filteredVMList.get(i).getOrgt())) {
+                vm.add(filteredVMList.get(i));
+            }
+        }
+        return vm;
+    }
 
     private List<PreNurseryVM> currFilter(String currValue,List<PreNurseryVM> filteredVMList) {
         if(DefaultValues.FILTER_SCHOOLS_ALL.equals(currValue)) {
@@ -302,7 +317,7 @@ public class SchoolListFragment extends Fragment {
 
         List<PreNurseryVM> vm = new ArrayList<PreNurseryVM>();
         for (int i = 0; i < filteredVMList.size(); i++) {
-            if (filteredVMList.get(i).getCurt().contains(currValue)) {
+            if (currValue.equalsIgnoreCase(filteredVMList.get(i).getCurt())) {
                 vm.add(filteredVMList.get(i));
             }
         }
@@ -316,21 +331,8 @@ public class SchoolListFragment extends Fragment {
 
         List<PreNurseryVM> vm = new ArrayList<PreNurseryVM>();
         for (int i = 0; i < filteredVMList.size(); i++) {
-            if (filteredVMList.get(i).getCt().contains(ctValue)) {
-                vm.add(filteredVMList.get(i));
-            }
-        }
-        return vm;
-    }
-
-    private List<PreNurseryVM> typeFilter(String orgtValue,List<PreNurseryVM> filteredVMList) {
-        if(DefaultValues.FILTER_SCHOOLS_ALL.equals(orgtValue)) {
-            return filteredVMList;
-        }
-
-        List<PreNurseryVM> vm = new ArrayList<PreNurseryVM>();
-        for (int i = 0; i < filteredVMList.size(); i++) {
-            if (filteredVMList.get(i).getOrgt().contains(orgtValue)) {
+            if (!StringUtils.isEmpty(filteredVMList.get(i).getCt()) &&
+                    filteredVMList.get(i).getCt().contains(ctValue)) {
                 vm.add(filteredVMList.get(i));
             }
         }

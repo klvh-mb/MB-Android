@@ -47,6 +47,8 @@
     <color name="pn_green">#57A857</color>
     <color name="pn_text">#008000</color>
     <color name="pn_text_light">#4B964B</color>
+    <color name="pn_bg">#EBFDEA</color>
+    <color name="pn_bg_light">#F3FDF2</color>
 
     <color name="kg_view_bg">#eee</color>
     <color name="kg_actionbar_bg">#BB5C5D</color>
@@ -55,5 +57,8 @@
     <color name="kg_maroon">#B86B6B</color>
     <color name="kg_text">#A63D3D</color>
     <color name="kg_text_light">#B86464</color>
+    <color name="kg_bg">#FFF4F4</color>
+    <color name="kg_bg_light">#FFF9F9</color>
+
 
 </resources>

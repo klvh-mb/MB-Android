@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
-class AdaptiveGridView extends GridView {
+public class AdaptiveGridView extends GridView {
 
     public AdaptiveGridView(Context context, AttributeSet attrs) {
         super(context, attrs);

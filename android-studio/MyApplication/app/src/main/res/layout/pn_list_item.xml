@@ -184,11 +184,12 @@
         android:id="@+id/actionsLayout">
 
         <LinearLayout
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/numViewsLayout"
             android:orientation="horizontal"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp">
             <ImageView
                 android:id="@+id/numViewsImage"
                 android:layout_width="16dp"
@@ -221,14 +222,14 @@
                 android:text="-"
                 android:layout_marginLeft="5dp"
                 android:textSize="14dp"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp" />
         <ImageView
             android:id="@+id/bookmarkImage"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_toRightOf="@+id/totalCommentText"
             android:src="@drawable/bookmark"
-            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true" />
     </RelativeLayout>
 

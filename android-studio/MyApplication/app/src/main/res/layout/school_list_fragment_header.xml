@@ -194,7 +194,7 @@
                 android:layout_toRightOf="@+id/couponText"
                 android:id="@+id/couponSpinner"
                 android:layout_marginLeft="5dp"
-                android:layout_width="60dp"
+                android:layout_width="65dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center">
@@ -220,7 +220,7 @@
                 android:layout_toRightOf="@+id/typeText"
                 android:id="@+id/typeSpinner"
                 android:layout_marginLeft="5dp"
-                android:layout_width="60dp"
+                android:layout_width="65dp"
                 android:layout_height="25dp"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"></Spinner>
@@ -244,7 +244,7 @@
                 android:background="@drawable/spinner_bg"
                 android:id="@+id/curriculumSpinner"
                 android:layout_marginLeft="5dp"
-                android:layout_width="60dp"
+                android:layout_width="65dp"
                 android:layout_height="25dp"
                 android:gravity="center"
                 android:layout_gravity="center_vertical">
@@ -273,7 +273,7 @@
                     android:background="@drawable/spinner_bg"
                     android:id="@+id/timeSpinner"
                     android:layout_marginLeft="5dp"
-                    android:layout_width="60dp"
+                    android:layout_width="65dp"
                     android:layout_height="25dp"
                     android:gravity="center"
                     android:layout_gravity="center_vertical">
@@ -287,58 +287,89 @@
         android:id="@+id/searchResultLayout"
         android:layout_below="@+id/nurseryLayout"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="40dp"
+        android:background="@color/pn_bg"
+        android:layout_marginTop="10dp">
         <LinearLayout
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/textSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"/>
-        <TextView
-            android:id="@+id/searchText"
-            android:layout_toRightOf="@+id/textSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#57B154"
-            android:text="10"
-            android:layout_marginLeft="10dp"/>
-        <TextView
-            android:id="@+id/returnText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="returns"
-            android:layout_toRightOf="@+id/searchText"
-            android:layout_marginLeft="10dp"
-            />
-        <TextView
-            android:id="@+id/searchCountText"
-            android:textColor="#57B154"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10"
-            android:layout_toRightOf="@id/returnText"
-            android:layout_marginLeft="10dp"/>
+            <TextView
+                android:id="@+id/textSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_search_text_1"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="16dp" />
+            <TextView
+                android:id="@+id/searchText"
+                android:layout_toRightOf="@+id/textSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_gray_3"
+                android:text="-"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/hasText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_search_text_2"
+                android:layout_toRightOf="@+id/searchText"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="16dp" />
+            <TextView
+                android:id="@+id/searchCountText"
+                android:textColor="@color/dark_gray_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:layout_toRightOf="@id/hasText"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/resultsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_search_text_3"
+                android:layout_toRightOf="@+id/searchText"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="16dp" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/cancelLayout"
             android:layout_alignParentRight="true"
-            android:background="#ED9F34"
-            android:layout_margin="5dp"
+            android:background="@drawable/rounded_corner_signup_button"
             android:layout_width="wrap_content"
-            android:layout_height="25dp">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp">
             <TextView
                 android:id="@+id/cancelButton"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/schools_search_cancel"
                 android:textColor="#ffffff"
-                android:textSize="15dp" />
+                android:textSize="16dp"
+                android:layout_gravity="center_vertical" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/pn_green"
+            android:id="@+id/divider"
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
     <View
