@@ -368,7 +368,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/pn_green"
-            android:id="@+id/divider"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
