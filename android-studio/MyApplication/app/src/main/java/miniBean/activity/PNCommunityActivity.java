@@ -11,15 +11,16 @@ import android.widget.ImageView;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.fragement.SchoolCommunityFragment;
+import miniBean.util.SharingUtil;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class PNCommunityActivity extends FragmentActivity {
-    private ImageView bookmarkAction,editAction,backAction;
+    private ImageView whatsappAction,bookmarkAction,editAction,backAction;
     private Boolean isBookmarked;
-    private PreNurseryVM nurseryVM;
+    private PreNurseryVM schoolVM;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,11 +31,12 @@ public class PNCommunityActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.pn_community_actionbar);
 
+        whatsappAction = (ImageView) findViewById(R.id.whatsappAction);
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
         editAction= (ImageView) findViewById(R.id.editAction);
         backAction= (ImageView) findViewById(R.id.backImage);
 
-        nurseryVM=new PreNurseryVM();
+        schoolVM = new PreNurseryVM();
 
         Bundle bundle = new Bundle();
 
@@ -49,15 +51,23 @@ public class PNCommunityActivity extends FragmentActivity {
 
         getPnInfo(getIntent().getLongExtra("id", 0l));
 
+        // actionbar actions...
+        whatsappAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharingUtil.shareToWhatapp(schoolVM, PNCommunityActivity.this);
+            }
+        });
+
         bookmarkAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isBookmarked) {
-                    setBookmark(nurseryVM.getId());
+                    setBookmark(schoolVM.getId());
                     bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
                     isBookmarked=true;
                 }else {
-                    setUnBookmark(nurseryVM.getId());
+                    setUnBookmark(schoolVM.getId());
                     bookmarkAction.setImageResource(R.drawable.ic_bookmark);
                     isBookmarked=false;
                 }
@@ -75,7 +85,7 @@ public class PNCommunityActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PNCommunityActivity.this,NewPostActivity.class);
-                intent.putExtra("id",nurseryVM.getCommId().toString());
+                intent.putExtra("id",schoolVM.getCommId().toString());
                 intent.putExtra("flag","FromSchool");
                 startActivity(intent);
             }
@@ -111,8 +121,8 @@ public class PNCommunityActivity extends FragmentActivity {
         AppController.getApi().getPnInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
             @Override
             public void success(PreNurseryVM preNurseryVM, Response response) {
-                nurseryVM = preNurseryVM;
-                isBookmarked = nurseryVM.isBookmarked();
+                schoolVM = preNurseryVM;
+                isBookmarked = schoolVM.isBookmarked();
                 if(isBookmarked){
                     bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
                 }else{

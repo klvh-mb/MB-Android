@@ -101,6 +101,11 @@ public class CommunityIconUtil {
         iconsMap.put("/assets/app/images/general/icons/community/kg/yanoitong.png", R.drawable.kg_yanoitong);
         iconsMap.put("/assets/app/images/general/icons/community/kg/york.png", R.drawable.kg_york);
         iconsMap.put("/assets/app/images/general/icons/community/kg/zenith.png", R.drawable.kg_zenith);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/cyc.png", R.drawable.kg_cyc);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/hkp_klt.png", R.drawable.kg_hkp_klt);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/pcp.png", R.drawable.kg_pcp);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/roselim.png", R.drawable.kg_roselim);
+        iconsMap.put("/assets/app/images/general/icons/community/kg/soka.png", R.drawable.kg_soka);
     }
 
     private CommunityIconUtil() {}

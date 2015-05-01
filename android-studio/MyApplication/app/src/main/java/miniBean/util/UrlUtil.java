@@ -6,15 +6,19 @@ import java.util.regex.Pattern;
 import miniBean.app.AppController;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
+import miniBean.viewmodel.KindergartenVM;
+import miniBean.viewmodel.PreNurseryVM;
 
 /**
  * Created by keithlei on 3/16/15.
  */
 public class UrlUtil {
 
-    private static String QNA_LANDING_URL = AppController.BASE_URL + "/#!/qna-landing/id/%d/communityId/%d";
     private static String COMMUNITY_URL = AppController.BASE_URL + "/#!/qna-landing/id/%d/communityId/%d";
-    private static String APP_DOWNLOAD_URL = AppController.BASE_URL + "/apps/android";
+    private static String QNA_LANDING_URL = AppController.BASE_URL + "/#!/qna-landing/id/%d/communityId/%d";
+    private static String SCHOOL_PN_URL = AppController.BASE_URL + "/schools#!/pn/%d";
+    private static String SCHOOL_KG_URL = AppController.BASE_URL + "/schools#!/kg/%d";
+    private static String APP_DOWNLOAD_URL = AppController.BASE_URL + "/#!/apps/android";
 
     private static String QNA_LANDING_URL_REGEX = ".*/qna-landing/id/(\\d+)/communityId/(\\d+)";
     private static String COMMUNITY_URL_REGEX = ".*/community/(\\d+)";
@@ -25,6 +29,14 @@ public class UrlUtil {
 
     public static String createPostLandingUrl(CommunityPostVM post) {
         return String.format(QNA_LANDING_URL, post.getId(), post.getCid());
+    }
+
+    public static String createSchoolUrl(PreNurseryVM school) {
+        return String.format(SCHOOL_PN_URL, school.getId());
+    }
+
+    public static String createSchoolUrl(KindergartenVM school) {
+        return String.format(SCHOOL_KG_URL, school.getId());
     }
 
     public static String createAndroidAppDownloadUrl() {
