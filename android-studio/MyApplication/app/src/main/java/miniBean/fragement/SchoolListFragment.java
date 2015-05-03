@@ -1,7 +1,6 @@
 package miniBean.fragement;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -45,15 +44,20 @@ public class SchoolListFragment extends Fragment {
     private GridView districtGrid;
     private List<LocationVM> locationVMList;
     private List<PreNurseryVM> pnVMList;
+    private List<PreNurseryVM> searchVMList;
     private TextView yourDistrictNameText,districtNameText,searchKey,totalResultText,noOfSchools,tooManyResultsText;
     private DistrictListAdapter districtListAdapter;
     private ListView listView;
     private Spinner couponSpinner,typeSpinner,timeSpinner,curriculumSpinner;
     private RelativeLayout nurseryLayout,boxLayout,searchResultLayout,searchLayout;
     private LinearLayout cancelLayout;
-    private SearchView searchText;
+    private SearchView searchWindow;
     private View listHeader;
     private String currValue,cpValue,typeValue,timeValue;
+
+    private int dismissSearchPressCount = 0;
+
+    private PNListAdapter listAdapter;
 
     private ActivityUtil activityUtil;
 
@@ -95,7 +99,7 @@ public class SchoolListFragment extends Fragment {
         districtGrid.setDrawSelectorOnTop(false);
         yourDistrictNameText = (TextView) listHeader.findViewById(R.id.yourDistrictNameText);
         districtNameText = (TextView) listHeader.findViewById(R.id.districtNameText);
-        searchText = (SearchView) listHeader.findViewById(R.id.searchWindow);
+        searchWindow = (SearchView) listHeader.findViewById(R.id.searchWindow);
 
         locationVMList = new ArrayList<>();
         pnVMList = new ArrayList<>();
@@ -134,19 +138,24 @@ public class SchoolListFragment extends Fragment {
         cancelLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new SchoolListFragment();
+                /*Fragment fragment = new SchoolListFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.children_fragement, fragment).addToBackStack(null).commit();
                 searchResultLayout.setVisibility(View.GONE);
+                */
 
-                //dismissSearchMode();
+                dismissSearchMode();
             }
         });
 
         searchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchText.setIconified(false);
+                searchWindow.setIconified(false);
+
+                /*
+                // don't need this anymore, set android:windowSoftInputMode="adjustPan"
+                // for MainActivity in AdnroidManifesh.xml
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -155,10 +164,11 @@ public class SchoolListFragment extends Fragment {
                         listView.setSelection(0);
                     }
                 }, 500);
+                */
             }
         });
 
-        searchText.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchWindow.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 boxLayout.setVisibility(View.GONE);
@@ -169,25 +179,18 @@ public class SchoolListFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Enter name to search....", Toast.LENGTH_LONG).show();
                 }
-                activityUtil.hideInputMethodWindow(searchText);
+                activityUtil.hideInputMethodWindow(searchWindow);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    if (!searchText.isIconified()) {
-                        dismissSearchMode();
-                        return true;
+                if (s.length() > 1) {   // start to search with 2 chars
+                    boxLayout.setVisibility(View.GONE);
+                    nurseryLayout.setVisibility(View.GONE);
+                    searchResultLayout.setVisibility(View.VISIBLE);
+                    if (!StringUtils.isEmpty(s)) {
+                        searchByName(s);
                     }
                 }
                 return false;
@@ -248,12 +251,42 @@ public class SchoolListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (!searchWindow.isIconified()) {
+                        activityUtil.hideInputMethodWindow(searchWindow);
+
+                        if (dismissSearchPressCount > 0) {
+                            dismissSearchMode();
+                        } else {
+                            dismissSearchPressCount++;
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
     private void dismissSearchMode() {
         boxLayout.setVisibility(View.VISIBLE);
         nurseryLayout.setVisibility(View.VISIBLE);
         searchResultLayout.setVisibility(View.GONE);
-        searchText.setIconified(true);
-        activityUtil.hideInputMethodWindow(searchText);
+        searchWindow.setIconified(true);
+        activityUtil.hideInputMethodWindow(searchWindow);
+
+        searchVMList = new ArrayList<PreNurseryVM>();
+        listAdapter.refresh(pnVMList);
+        dismissSearchPressCount = 0;
     }
 
     private void selectDistrict(int index) {
@@ -262,6 +295,7 @@ public class SchoolListFragment extends Fragment {
         districtListAdapter.setSelectedItem(index);
         districtListAdapter.notifyDataSetChanged();
         getPNsByDistrict(locationVMList.get(index).getId(), district);
+        searchWindow.setIconified(true);
     }
 
     private void setDistricts(){
@@ -277,8 +311,7 @@ public class SchoolListFragment extends Fragment {
             @Override
             public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
                 Log.d(SchoolListFragment.class.getSimpleName(), "[" + district + "] returned " + preNurseryVMs.size() + " pns");
-                pnVMList.clear();
-                pnVMList.addAll(preNurseryVMs);
+                pnVMList = preNurseryVMs;
                 applyFilters();
                 noOfSchools.setText(preNurseryVMs.size() + "");
             }
@@ -291,28 +324,27 @@ public class SchoolListFragment extends Fragment {
     }
 
     private void applyFilters(){
-        List<PreNurseryVM> filteredVMList = new ArrayList<PreNurseryVM>();
-        filteredVMList.addAll(pnVMList);
-
         if(cpValue!=null) {
-            filteredVMList = cpFilter(cpValue, filteredVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: coupon="+cpValue+" size="+filteredVMList.size());
+            pnVMList = cpFilter(cpValue, pnVMList);
+            Log.d(this.getClass().getSimpleName(), "Filter: coupon="+cpValue+" size="+pnVMList.size());
         }
 
         if(currValue!=null) {
-            filteredVMList = currFilter(currValue, filteredVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: currValue="+currValue+" size="+filteredVMList.size());
+            pnVMList = currFilter(currValue, pnVMList);
+            Log.d(this.getClass().getSimpleName(), "Filter: currValue="+currValue+" size="+pnVMList.size());
         }
+
         if(timeValue!=null) {
-            filteredVMList = timeFilter(timeValue, filteredVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: timeValue="+timeValue+" size="+filteredVMList.size());
+            pnVMList = timeFilter(timeValue, pnVMList);
+            Log.d(this.getClass().getSimpleName(), "Filter: timeValue="+timeValue+" size="+pnVMList.size());
         }
 
         if(typeValue!=null) {
-            filteredVMList = typeFilter(typeValue, filteredVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: typeValue="+typeValue+" size="+filteredVMList.size());
+            pnVMList = typeFilter(typeValue, pnVMList);
+            Log.d(this.getClass().getSimpleName(), "Filter: typeValue="+typeValue+" size="+pnVMList.size());
         }
-        PNListAdapter listAdapter = new PNListAdapter(getActivity(),filteredVMList);
+
+        listAdapter = new PNListAdapter(getActivity(),pnVMList);
         listView.setAdapter(listAdapter);
     }
 
@@ -380,6 +412,7 @@ public class SchoolListFragment extends Fragment {
     }
 
     private void searchByName(final String query){
+        dismissSearchPressCount = 0;
         AppController.getApi().searchPnByName(query,AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
             @Override
             public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
@@ -388,16 +421,17 @@ public class SchoolListFragment extends Fragment {
                 totalResultText.setText("" + preNurseryVMs.size());
 
                 // too many results
-                List<PreNurseryVM> resultList = new ArrayList<PreNurseryVM>();
+                searchVMList = new ArrayList<PreNurseryVM>();
                 if (preNurseryVMs.size() > DefaultValues.MAX_SCHOOLS_SEARCH_COUNT) {
                     tooManyResultsText.setVisibility(View.VISIBLE);
                 } else {
                     tooManyResultsText.setVisibility(View.GONE);
-                    resultList = preNurseryVMs;
+                    searchVMList = preNurseryVMs;
                 }
 
-                PNListAdapter resultListAdapter = new PNListAdapter(getActivity(), resultList);
-                listView.setAdapter(resultListAdapter);
+                //PNListAdapter resultListAdapter = new PNListAdapter(getActivity(), resultList);
+                //listView.setAdapter(resultListAdapter);
+                listAdapter.refresh(searchVMList);
             }
 
             @Override

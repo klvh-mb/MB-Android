@@ -24,28 +24,28 @@ import miniBean.viewmodel.PreNurseryVM;
 public class PNListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<PreNurseryVM> PNlistItem;
+    private List<PreNurseryVM> items;
     private TextView pnName,enName,commentNoText,curriculumValue,typeValue,timeValue,distName;
     private ImageView couponValue,bookmarkImage,commentImage;
     private RelativeLayout schoolMainLayout;
 
-    public PNListAdapter(Activity activity, List<PreNurseryVM> PNlistItem) {
+    public PNListAdapter(Activity activity, List<PreNurseryVM> items) {
         this.activity = activity;
-        this.PNlistItem = PNlistItem;
+        this.items = items;
     }
 
     @Override
     public int getCount() {
-        if (PNlistItem == null)
+        if (items == null)
             return 0;
-        return PNlistItem.size();
+        return items.size();
     }
 
     @Override
     public PreNurseryVM getItem(int location) {
-        if (PNlistItem == null || location > PNlistItem.size()-1)
+        if (items == null || location > items.size()-1)
             return null;
-        return PNlistItem.get(location);
+        return items.get(location);
     }
 
     @Override
@@ -72,8 +72,9 @@ public class PNListAdapter extends BaseAdapter {
         timeValue = (TextView) convertView.findViewById(R.id.timeValue);
         distName = (TextView) convertView.findViewById(R.id.pnDistName);
         bookmarkImage = (ImageView) convertView.findViewById(R.id.bookmarkImage);
-        commentImage= (ImageView) convertView.findViewById(R.id.commentImage);
-        final PreNurseryVM item = PNlistItem.get(position);
+        commentImage = (ImageView) convertView.findViewById(R.id.commentImage);
+
+        final PreNurseryVM item = items.get(position);
 
         pnName.setText(item.getN());
         if (StringUtils.isEmpty(item.getNe())) {
@@ -135,6 +136,11 @@ public class PNListAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    public void refresh(List<PreNurseryVM> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 }
 
