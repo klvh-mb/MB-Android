@@ -1,4 +1,4 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -18,7 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import miniBean.R;
 import miniBean.app.AppController;
 
-public class SchoolsFragment extends Fragment {
+public class SchoolsFragment extends MyFragment {
 
     private static final String TAG = SchoolsFragment.class.getName();
     private ActionBar.Tab Tab1, Tab2, Tab3;
@@ -60,9 +60,22 @@ public class SchoolsFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
+
+    @Override
+    public boolean allowBackPressed() {
+        MyFragment fragment = mAdapter.getFragment(viewPager.getCurrentItem());
+        Log.d(this.getClass().getSimpleName(), "allowBackPressed: call "+fragment.getClass().getSimpleName());
+
+        if (fragment != null)
+            return fragment.allowBackPressed();
+        return super.allowBackPressed();
+    }
 }
 
 class SchoolPagerAdapter extends FragmentPagerAdapter {
+
+    private MyFragment pnFragment;
+    private MyFragment kgFragment;
 
     private static String[] TITLES = {
             AppController.getInstance().getString(R.string.schools_tab_title_pn),
@@ -88,9 +101,20 @@ class SchoolPagerAdapter extends FragmentPagerAdapter {
         Log.d(this.getClass().getSimpleName(), "getItem: item - " + position);
         switch (position) {
             case 0:
-                return new SchoolsPNFragment();
+                pnFragment = new SchoolsPNFragment();
+                return pnFragment;
             default:
-                return new SchoolsKGFragment();
+                kgFragment = new SchoolsKGFragment();
+                return kgFragment;
+        }
+    }
+
+    public MyFragment getFragment(int position) {
+        switch (position) {
+            case 0:
+                return pnFragment;
+            default:
+                return kgFragment;
         }
     }
 }

@@ -21,9 +21,10 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.NotificationCache;
-import miniBean.fragement.MainFragement;
-import miniBean.fragement.MyProfileFragment;
-import miniBean.fragement.SchoolsFragment;
+import miniBean.fragment.MainFragment;
+import miniBean.fragment.MyFragment;
+import miniBean.fragment.MyProfileFragment;
+import miniBean.fragment.SchoolsFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
@@ -44,6 +45,8 @@ public class MainActivity extends FragmentActivity {
 
     private ProgressBar spinner;
     private TextView notificationCount;
+
+    private MyFragment selectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +119,8 @@ public class MainActivity extends FragmentActivity {
 
         if (!commClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            MainFragement fragement = new MainFragement();
-            fragmentTransaction.replace(R.id.placeHolder, fragement).commit();
+            selectedFragment = new MainFragment();
+            fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 
         Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm_sel);
@@ -146,8 +149,8 @@ public class MainActivity extends FragmentActivity {
 
         if (!schoolsClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            SchoolsFragment fragement = new SchoolsFragment();
-            fragmentTransaction.replace(R.id.placeHolder, fragement).commit();
+            selectedFragment = new SchoolsFragment();
+            fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 
         Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);
@@ -176,8 +179,8 @@ public class MainActivity extends FragmentActivity {
 
         if (!profileClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            MyProfileFragment fragement = new MyProfileFragment();
-            fragmentTransaction.replace(R.id.placeHolder, fragement).commit();
+            selectedFragment = new MyProfileFragment();
+            fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
             notificationCount.setVisibility(View.INVISIBLE);
         }
 
@@ -204,6 +207,10 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
+        if (selectedFragment != null && !selectedFragment.allowBackPressed()) {
+            return;
+        }
+
         if (isTaskRoot()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.exit_app)

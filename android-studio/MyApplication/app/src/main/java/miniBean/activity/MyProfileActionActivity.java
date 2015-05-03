@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import miniBean.R;
-import miniBean.fragement.SettingsFragment;
-import miniBean.fragement.NotificationListFragment;
-import miniBean.fragement.RequestListFragment;
+import miniBean.fragment.SettingsFragment;
+import miniBean.fragment.NotificationListFragment;
+import miniBean.fragment.RequestListFragment;
 
 public class MyProfileActionActivity extends FragmentActivity {
 

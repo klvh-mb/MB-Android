@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import miniBean.R;
-import miniBean.fragement.NewsfeedListFragement;
+import miniBean.fragment.NewsfeedListFragement;
 
 public class NewsfeedActivity extends FragmentActivity {
 

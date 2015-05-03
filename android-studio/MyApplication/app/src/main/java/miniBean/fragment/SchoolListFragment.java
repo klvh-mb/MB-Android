@@ -1,8 +1,6 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -38,7 +36,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SchoolListFragment extends Fragment {
+public class SchoolListFragment extends MyFragment {
 
     private static final String TAG = SchoolListFragment.class.getName();
     private GridView districtGrid;
@@ -168,6 +166,28 @@ public class SchoolListFragment extends Fragment {
             }
         });
 
+        /*
+        searchWindow.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d("===>", "keyCode=" + keyCode);
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (!searchWindow.isIconified()) {
+                        activityUtil.hideInputMethodWindow(searchWindow);
+
+                        if (dismissSearchPressCount > 0) {
+                            dismissSearchMode();
+                        } else {
+                            dismissSearchPressCount++;
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        */
+
         searchWindow.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -185,6 +205,7 @@ public class SchoolListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
+                Log.d("===>","s="+s);
                 if (s.length() > 1) {   // start to search with 2 chars
                     boxLayout.setVisibility(View.GONE);
                     nurseryLayout.setVisibility(View.GONE);
@@ -252,29 +273,18 @@ public class SchoolListFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public boolean allowBackPressed() {
+        if (!searchWindow.isIconified()) {
+            activityUtil.hideInputMethodWindow(searchWindow);
 
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    if (!searchWindow.isIconified()) {
-                        activityUtil.hideInputMethodWindow(searchWindow);
-
-                        if (dismissSearchPressCount > 0) {
-                            dismissSearchMode();
-                        } else {
-                            dismissSearchPressCount++;
-                        }
-                        return true;
-                    }
-                }
-                return false;
+            if (dismissSearchPressCount > 0) {
+                dismissSearchMode();
+            } else {
+                dismissSearchPressCount++;
             }
-        });
+            return false;
+        }
+        return true;
     }
 
     private void dismissSearchMode() {

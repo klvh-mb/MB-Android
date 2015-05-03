@@ -1,4 +1,4 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.app.ActionBar;
 import android.content.Intent;
@@ -25,7 +25,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MyProfileFragment extends Fragment {
+public class MyProfileFragment extends MyFragment {
 
     public List<NotificationVM> requestNotif, notifAll;
     private ImageView back;

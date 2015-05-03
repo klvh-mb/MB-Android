@@ -1,9 +1,10 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,12 @@ import android.widget.Button;
 
 import miniBean.R;
 
-public class SchoolsPNFragment extends Fragment {
+public class SchoolsPNFragment extends MyFragment {
 
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
+
+    private MyFragment selectedFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,9 +79,9 @@ public class SchoolsPNFragment extends Fragment {
         buttonNews.setTextColor(Color.WHITE);
         buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
-        Fragment schoolListFragment = new SchoolListFragment();
+        selectedFragment = new SchoolListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, schoolListFragment).commit();
+        transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
 
     private void pressNewsButton(){
@@ -91,10 +94,9 @@ public class SchoolsPNFragment extends Fragment {
         buttonNews.setTextColor(getResources().getColor(R.color.pn_box_border));
         buttonNews.setBackgroundColor(Color.WHITE);
 
-        Fragment schoolFeedListFragment = new SchoolNewsfeedListFragement();
+        selectedFragment = new SchoolNewsfeedListFragement();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, schoolFeedListFragment).commit();
-
+        transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
 
     private void pressBookmarkButton(){
@@ -107,9 +109,16 @@ public class SchoolsPNFragment extends Fragment {
         buttonNews.setTextColor(Color.WHITE);
         buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
-        Fragment schoolBookmarkFragment = new SchoolBookmarkFragment();
+        selectedFragment = new SchoolBookmarkFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, schoolBookmarkFragment).commit();
+        transaction.replace(R.id.children_fragement, selectedFragment).commit();
+    }
+
+    @Override
+    public boolean allowBackPressed() {
+        if (selectedFragment != null)
+            return selectedFragment.allowBackPressed();
+        return super.allowBackPressed();
     }
 }
 

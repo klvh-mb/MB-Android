@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.fragement.CommunityListFragment;
-import miniBean.fragement.TopicCommunityFragment;
+import miniBean.fragment.CommunityListFragment;
+import miniBean.fragment.TopicCommunityFragment;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.fragement.SchoolCommunityFragment;
+import miniBean.fragment.SchoolCommunityFragment;
 import miniBean.util.SharingUtil;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;

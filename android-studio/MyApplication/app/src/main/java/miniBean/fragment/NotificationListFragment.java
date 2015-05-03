@@ -1,4 +1,4 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.CommunityActivity;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.NotificationListAdapter;
 import miniBean.app.AppController;

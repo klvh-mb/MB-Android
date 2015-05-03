@@ -1,4 +1,4 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SchoolBookmarkFragment extends Fragment {
+public class SchoolBookmarkFragment extends MyFragment {
 
     private static final String TAG = SchoolBookmarkFragment.class.getName();
     private ListView bookmarkList;

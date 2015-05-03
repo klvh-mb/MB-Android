@@ -1,4 +1,4 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

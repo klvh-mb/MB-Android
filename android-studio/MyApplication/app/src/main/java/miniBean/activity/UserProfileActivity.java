@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 import miniBean.R;
-import miniBean.fragement.UserProfileFragment;
+import miniBean.fragment.UserProfileFragment;
 
 public class UserProfileActivity extends FragmentActivity {
 

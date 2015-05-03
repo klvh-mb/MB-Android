@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import miniBean.R;
-import miniBean.fragement.CommunityFragment;
+import miniBean.fragment.CommunityFragment;
 
 public class CommunityActivity extends FragmentActivity {
     ImageView backImage, editAction;

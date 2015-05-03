@@ -1,4 +1,4 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

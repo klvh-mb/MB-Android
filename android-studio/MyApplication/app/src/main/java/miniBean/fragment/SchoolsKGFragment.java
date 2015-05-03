@@ -1,4 +1,4 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import miniBean.R;
 
-public class SchoolsKGFragment extends Fragment {
+public class SchoolsKGFragment extends MyFragment {
 
     private Button buttonList,buttonBookmark;
     private boolean listClicked=true,bookmarkClicked;

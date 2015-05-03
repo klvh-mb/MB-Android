@@ -1,4 +1,4 @@
-package miniBean.fragement;
+package miniBean.fragment;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -19,9 +19,9 @@ import miniBean.R;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 
-public class MainFragement extends Fragment {
+public class MainFragment extends MyFragment {
 
-    private static final String TAG = MainFragement.class.getName();
+    private static final String TAG = MainFragment.class.getName();
     private ActionBar.Tab Tab1, Tab2, Tab3;
     private ViewPager viewPager;
     private MyPagerAdapter mAdapter;
