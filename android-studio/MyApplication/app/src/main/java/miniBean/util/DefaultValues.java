@@ -100,4 +100,6 @@ public class DefaultValues {
                     "WD"
             }
     );
+
+    public static int MAX_SCHOOLS_SEARCH_COUNT = 100;
 }

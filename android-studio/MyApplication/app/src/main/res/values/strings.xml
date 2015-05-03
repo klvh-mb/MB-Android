@@ -191,10 +191,12 @@
     <string name="schools_info_url">網址:</string>
     <string name="schools_info_gov_url">教局網址:</string>
     <string name="schools_info_comm_welcome">歡迎和其他家長一起討論</string>
+    <string name="schools_search_hint">搜尋學校名稱(所有區)</string>
     <string name="schools_search_text_1">搜尋</string>
     <string name="schools_search_text_2">有</string>
     <string name="schools_search_text_3">個結果</string>
     <string name="schools_search_cancel">結束搜尋</string>
+    <string name="schools_search_too_many_results">由於搜尋結果太多，請修改搜尋字再重試。</string>
 
     <string name="schools_filter_text_1">有</string>
     <string name="schools_filter_text_2">間幼稚園提供幼兒班(PN班)</string>

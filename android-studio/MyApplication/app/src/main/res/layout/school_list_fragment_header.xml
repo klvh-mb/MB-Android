@@ -13,7 +13,7 @@
         <SearchView
             android:id="@+id/searchWindow"
             android:layout_alignParentRight="true"
-            android:queryHint="Search By Name"
+            android:queryHint="@string/schools_search_hint"
             android:layout_width="wrap_content"
             android:layout_height="35dp">
             </SearchView>
@@ -287,14 +287,16 @@
         android:id="@+id/searchResultLayout"
         android:layout_below="@+id/nurseryLayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:background="@color/pn_bg"
         android:layout_marginTop="10dp">
         <LinearLayout
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/searchTextLayout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
             <TextView
                 android:id="@+id/textSearch"
                 android:layout_width="wrap_content"
@@ -345,6 +347,7 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/dark_gray_3"
                 android:textSize="16dp" />
+
         </LinearLayout>
         <LinearLayout
             android:id="@+id/cancelLayout"
@@ -352,8 +355,10 @@
             android:background="@drawable/rounded_corner_signup_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
             <TextView
                 android:id="@+id/cancelButton"
                 android:layout_centerVertical="true"
@@ -364,6 +369,22 @@
                 android:textSize="16dp"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tooManyResultsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/schools_search_too_many_results"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/dark_gray_3"
+            android:textSize="16dp"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/searchTextLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

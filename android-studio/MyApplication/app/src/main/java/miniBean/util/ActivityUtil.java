@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -42,6 +43,16 @@ public class ActivityUtil {
             public void run() {
                 InputMethodManager imm = (InputMethodManager) activity.getApplicationContext().getSystemService(Service.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 100);
+    }
+
+    public void hideInputMethodWindow(final View window) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(window.getWindowToken(), 0);
             }
         }, 100);
     }

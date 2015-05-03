@@ -13,9 +13,7 @@ import miniBean.R;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserVM;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.client.OkClient;
 
 import org.acra.*;

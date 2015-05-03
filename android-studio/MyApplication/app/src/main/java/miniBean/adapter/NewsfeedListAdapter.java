@@ -206,9 +206,10 @@ public class NewsfeedListAdapter extends BaseAdapter {
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                     if (loadedImage != null) {
-                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "|" + loadedImage.getHeight());
+                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "x" + loadedImage.getHeight());
 
                         int displayDimension = (activityUtil.getDisplayDimensions().width() / DefaultValues.MAX_POST_IMAGES) - totalPadding;
+                        //Log.d(this.getClass().getSimpleName(), "onLoadingComplete: screen size="+activityUtil.getDisplayDimensions().width()+"x"+activityUtil.getDisplayDimensions().height());
 
                         // obsolete
                         /*

@@ -60,6 +60,7 @@ public class CommunityActivity extends FragmentActivity {
             }
         });
     }
+
     @Override
     public void onBackPressed() {
             super.onBackPressed();

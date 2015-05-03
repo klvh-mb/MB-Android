@@ -77,7 +77,7 @@ public class SchoolBookmarkFragment extends Fragment {
                 if (totalBookmark == -1 || totalBookmark != preNurseryVMs.size()) {
                     totalBookmark = preNurseryVMs.size();
                     totalBookmarkText.setText(totalBookmark+"");
-                    preNurseryVMList.addAll(preNurseryVMs);
+                    preNurseryVMList = preNurseryVMs;
                     bookmarkListAdapter = new BookmarkListAdapter(getActivity(), preNurseryVMList);
                     bookmarkList.setAdapter(bookmarkListAdapter);
                     bookmarkListAdapter.notifyDataSetChanged();
