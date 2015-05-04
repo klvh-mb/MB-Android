@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:text="@string/schools_pn_bookmark_title_2"
             android:textSize="16dp"
-            android:textColor="@color/dark_gray_3" />
+            android:textColor="@color/dark_gray_3"
+            android:id="@+id/bookmarkText" />
         </LinearLayout>
 
     <ListView

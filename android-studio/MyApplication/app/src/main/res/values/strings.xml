@@ -226,6 +226,7 @@
 
     <string name="schools_pn_bookmark_title_1">收藏了</string>
     <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
+    <string name="schools_pn_bookmark_title_3">間幼稚園</string>
 
     <!-- Dialog -->
     <string name="cancel_new_post">退出發佈話題?</string>

@@ -68,27 +68,29 @@ public class SchoolsPNListFragment extends AbstractSchoolsListFragment {
 
     @Override
     protected void applyFilters(){
+        List<PreNurseryVM> filteredVMList = new ArrayList<>();
+        filteredVMList.addAll(schoolVMList);
         if(cpValue!=null) {
-            schoolVMList = cpFilter(cpValue, schoolVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: coupon="+cpValue+" size="+schoolVMList.size());
+            filteredVMList = cpFilter(cpValue, filteredVMList);
+            Log.d(this.getClass().getSimpleName(), "Filter: coupon="+cpValue+" size="+filteredVMList.size());
         }
 
         if(currValue!=null) {
-            schoolVMList = currFilter(currValue, schoolVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: currValue="+currValue+" size="+schoolVMList.size());
+            filteredVMList = currFilter(currValue, filteredVMList);
+            Log.d(this.getClass().getSimpleName(), "Filter: currValue="+currValue+" size="+filteredVMList.size());
         }
 
         if(timeValue!=null) {
-            schoolVMList = timeFilter(timeValue, schoolVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: timeValue="+timeValue+" size="+schoolVMList.size());
+            filteredVMList = timeFilter(timeValue, filteredVMList);
+            Log.d(this.getClass().getSimpleName(), "Filter: timeValue="+timeValue+" size="+filteredVMList.size());
         }
 
         if(typeValue!=null) {
-            schoolVMList = typeFilter(typeValue, schoolVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: typeValue="+typeValue+" size="+schoolVMList.size());
+            filteredVMList = typeFilter(typeValue, filteredVMList);
+            Log.d(this.getClass().getSimpleName(), "Filter: typeValue="+typeValue+" size="+filteredVMList.size());
         }
 
-        listAdapter = new PNListAdapter(getActivity(),schoolVMList);
+        listAdapter = new PNListAdapter(getActivity(),filteredVMList);
         listView.setAdapter(listAdapter);
     }
 

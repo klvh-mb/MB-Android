@@ -26,7 +26,7 @@ public class PNBookmarksFragment extends MyFragment {
     private static final String TAG = KGBookmarksFragment.class.getName();
     private ListView bookmarkList;
     private PNBookmarkListAdapter bookmarkListAdapter;
-    private TextView totalBookmarkText;
+    private TextView totalBookmarkText,bookmarkText;
     private List<PreNurseryVM> schoolVMList;
 
     private int totalBookmark = -1;
@@ -39,6 +39,8 @@ public class PNBookmarksFragment extends MyFragment {
 
         bookmarkList = (ListView) view.findViewById(R.id.listBookmark);
         totalBookmarkText = (TextView) view.findViewById(R.id.totalBookmark);
+        bookmarkText = (TextView) view.findViewById(R.id.bookmarkText);
+        bookmarkText.setText(getString(R.string.schools_pn_bookmark_title_2));
 
         bookmarkList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
