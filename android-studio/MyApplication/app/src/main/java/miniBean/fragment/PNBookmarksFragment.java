@@ -2,7 +2,6 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,25 +10,24 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
-import miniBean.adapter.BookmarkListAdapter;
+import miniBean.adapter.PNBookmarkListAdapter;
 import miniBean.app.AppController;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SchoolBookmarkFragment extends MyFragment {
+public class PNBookmarksFragment extends MyFragment {
 
-    private static final String TAG = SchoolBookmarkFragment.class.getName();
+    private static final String TAG = KGBookmarksFragment.class.getName();
     private ListView bookmarkList;
-    private BookmarkListAdapter bookmarkListAdapter;
+    private PNBookmarkListAdapter bookmarkListAdapter;
     private TextView totalBookmarkText;
-    private List<PreNurseryVM> preNurseryVMList;
+    private List<PreNurseryVM> schoolVMList;
 
     private int totalBookmark = -1;
 
@@ -43,8 +41,6 @@ public class SchoolBookmarkFragment extends MyFragment {
 
         bookmarkList = (ListView) view.findViewById(R.id.listBookmark);
         totalBookmarkText = (TextView) view.findViewById(R.id.totalBookmark);
-
-        preNurseryVMList = new ArrayList<PreNurseryVM>();
 
         bookmarkList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,23 +62,24 @@ public class SchoolBookmarkFragment extends MyFragment {
     public void onResume() {
         super.onResume();
 
-        getPNBookmarks();
+        getBookmarkedPNs();
     }
 
-    private void getPNBookmarks(){
-        AppController.getApi().getBookmarkPns(AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
+    private void getBookmarkedPNs(){
+        AppController.getApi().getBookmarkedPNs(AppController.getInstance().getSessionId(), new Callback<List<PreNurseryVM>>() {
             @Override
-            public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
+            public void success(List<PreNurseryVM> vms, Response response) {
                 // first load or bookmark list chanded
-                if (totalBookmark == -1 || totalBookmark != preNurseryVMs.size()) {
-                    totalBookmark = preNurseryVMs.size();
-                    totalBookmarkText.setText(totalBookmark+"");
-                    preNurseryVMList = preNurseryVMs;
-                    bookmarkListAdapter = new BookmarkListAdapter(getActivity(), preNurseryVMList);
+                if (totalBookmark == -1 || totalBookmark != vms.size()) {
+                    totalBookmark = vms.size();
+                    totalBookmarkText.setText(totalBookmark + "");
+                    schoolVMList = vms;
+                    bookmarkListAdapter = new PNBookmarkListAdapter(getActivity(), schoolVMList);
                     bookmarkList.setAdapter(bookmarkListAdapter);
                     bookmarkListAdapter.notifyDataSetChanged();
                 }
             }
+
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();

@@ -212,8 +212,11 @@ public interface MyApi {
     @GET("/get-pns-by-district/{id}")
     public void getPNsByDistricts(@Path("id") Long id,@Query("key") String key, Callback<List<PreNurseryVM>> cb);
 
+    @GET("/search-pns-by-name/{query}")
+    public void searchPNsByName(@Path("query")String query,@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+
     @GET("/get-bookmarked-pns")
-    public void getBookmarkPns(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+    public void getBookmarkedPNs(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
 
     @GET("/get-pnnewsfeeds/{offset}") //a function in your api to get all the Newsfeed list
     public void getPNNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
@@ -227,23 +230,20 @@ public interface MyApi {
     @GET("/get-pn-info/{id}")
     public void getPNInfo(@Path("id") Long post_id,@Query("key") String key, Callback<PreNurseryVM> cb);
 
-    @GET("/search-pns-by-name/{query}")
-    public void searchPNsByName(@Path("query")String query,@Query("key") String key, Callback<List<PreNurseryVM>> cb);
-
     //Kindy APIs
-    @GET("/get-bookmarked-kgs")
-    public void getBookmarkKgs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
-
     @GET("/get-kgs-by-district/{id}")
     public void getKGsByDistricts(@Path("id") Long id,@Query("key") String key, Callback<List<KindergartenVM>> cb);
 
     @GET("/search-kgs-by-name/{query}")
     public void searchKGsByName(@Path("query")String query,@Query("key") String key, Callback<List<KindergartenVM>> cb);
 
-    @GET(" /get-kg-info/{id}")
+    @GET("/get-bookmarked-kgs")
+    public void getBookmarkedKGs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
+
+    @GET("/get-kg-info/{id}")
     public void getKGInfo(@Path("id") Long post_id,@Query("key") String key, Callback<KindergartenVM> cb);
 
-    @GET(" /bookmark-kg/{id}")
+    @GET("/bookmark-kg/{id}")
     public void setKGBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/unbookmark-kg/{id}")

@@ -185,6 +185,7 @@
     <string name="schools_info_tuition_half_day">半日班全年收費:</string>
     <string name="schools_info_tuition_full_day">全日班全年收費:</string>
     <string name="schools_info_data_asof">* 根據教育局提供的幼兒服務資料 (2013年9月資料)</string>
+    <string name="schools_info_school_fee_coupon">以下是兌換學劵後的全年學費 (期數)</string>
     <string name="schools_info_curriculum_arrange">課程編排:</string>
     <string name="schools_info_address">地址:</string>
     <string name="schools_info_phone">電話:</string>
@@ -206,6 +207,8 @@
     <string name="schools_discuss_together">一齊討論</string>
     <string name="schools_landing_title_info">學校資料</string>
     <string name="schools_landing_title_pn">幼兒班(PN班 2-3歲) 收生資料</string>
+    <string name="schools_landing_title_kg_1">學生人數</string>
+    <string name="schools_landing_title_kg_2">全年學費 (2014/15 學年資料)</string>
     <string name="schools_landing_title_curriculum">課程資料</string>
     <string name="schools_landing_title_contact">聯絡資料</string>
     <string name="schools_landing_title_comm">討論區</string>

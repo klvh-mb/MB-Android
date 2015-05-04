@@ -107,7 +107,7 @@ public class SchoolsKGFragment extends MyFragment {
         buttonNews.setTextColor(Color.WHITE);
         buttonNews.setBackgroundColor(getResources().getColor(R.color.kg_box_border));
 
-        selectedFragment = new SchoolBookmarkFragment();
+        selectedFragment = new KGBookmarksFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }

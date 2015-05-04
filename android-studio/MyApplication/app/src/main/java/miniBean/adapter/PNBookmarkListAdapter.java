@@ -15,14 +15,14 @@ import miniBean.R;
 import miniBean.util.CommunityIconUtil;
 import miniBean.viewmodel.PreNurseryVM;
 
-public class BookmarkListAdapter extends BaseAdapter {
+public class PNBookmarkListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<PreNurseryVM> PNlistItem;
     private ImageView icon;
     private TextView noOfComment,title,district;
 
-    public BookmarkListAdapter(Activity activity, List<PreNurseryVM> PNlistItem) {
+    public PNBookmarkListAdapter(Activity activity, List<PreNurseryVM> PNlistItem) {
         this.activity = activity;
         this.PNlistItem = PNlistItem;
     }

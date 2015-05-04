@@ -15,14 +15,14 @@ import miniBean.R;
 import miniBean.util.CommunityIconUtil;
 import miniBean.viewmodel.KindergartenVM;
 
-public class KindyBookmarkListAdapter extends BaseAdapter {
+public class KGBookmarkListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<KindergartenVM> kindergartenVMList;
     private ImageView icon;
     private TextView noOfComment,title,district;
 
-    public KindyBookmarkListAdapter(Activity activity, List<KindergartenVM> kindergartenVMList) {
+    public KGBookmarkListAdapter(Activity activity, List<KindergartenVM> kindergartenVMList) {
         this.activity = activity;
         this.kindergartenVMList = kindergartenVMList;
     }

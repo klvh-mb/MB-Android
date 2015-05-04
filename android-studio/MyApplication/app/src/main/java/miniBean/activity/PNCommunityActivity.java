@@ -3,6 +3,7 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.widget.ImageView;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.fragment.SchoolCommunityFragment;
+import miniBean.fragment.PNCommunityFragment;
 import miniBean.util.SharingUtil;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
@@ -42,7 +43,7 @@ public class PNCommunityActivity extends FragmentActivity {
         bundle.putLong("id", getIntent().getLongExtra("id", 0l));
         bundle.putString("flag",getIntent().getStringExtra("flag"));
 
-        SchoolCommunityFragment fragment = new SchoolCommunityFragment();
+        Fragment fragment = new PNCommunityFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.children_layout, fragment).commit();
@@ -89,6 +90,7 @@ public class PNCommunityActivity extends FragmentActivity {
             }
         });
     }
+
     private void setBookmark(Long id) {
         AppController.getApi().setPNBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
@@ -101,6 +103,7 @@ public class PNCommunityActivity extends FragmentActivity {
             }
         });
     }
+
     private void setUnBookmark(Long id) {
         AppController.getApi().setPNUnBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override

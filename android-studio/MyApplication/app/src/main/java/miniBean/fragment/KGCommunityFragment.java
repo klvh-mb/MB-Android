@@ -2,7 +2,6 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -28,16 +26,16 @@ import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
+import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PostArray;
-import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SchoolCommunityFragment extends Fragment {
+public class KGCommunityFragment extends MyFragment {
 
     private TextView nameText,districtText,enNameText,orgValue,typeValue,timeValue,curriculumValue;
-    private TextView studentName,halfDayValue,fullDayValue,curriculumContent,addressText,phoneValue;
+    private TextView studentNum,halfDayValue,fullDayValue,curriculumContent,addressText,phoneValue;
     private TextView websiteValue,postCount;
     private ImageView urlValueImage,editAction;
     private ScrollView scrollView;
@@ -49,15 +47,14 @@ public class SchoolCommunityFragment extends Fragment {
 
     private ImageView couponImage,govtImage;
     private LinearLayout gotoCommLayout;
-    private RelativeLayout postLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.pn_community_activity, container, false);
+        View view = inflater.inflate(R.layout.kg_community_fragment, container, false);
 
-        nameText = (TextView) view.findViewById(R.id.pnNameText);
+        nameText = (TextView) view.findViewById(R.id.schoolNameText);
         districtText = (TextView) view.findViewById(R.id.distNameText);
         enNameText = (TextView) view.findViewById(R.id.enName);
         couponImage = (ImageView) view.findViewById(R.id.couponImage);
@@ -65,7 +62,7 @@ public class SchoolCommunityFragment extends Fragment {
         timeValue = (TextView) view.findViewById(R.id.timeValueText);
         typeValue = (TextView) view.findViewById(R.id.typeValueText);
         curriculumValue = (TextView) view.findViewById(R.id.curriValueText);
-        studentName = (TextView) view.findViewById(R.id.studentValue);
+        studentNum = (TextView) view.findViewById(R.id.studentValue);
         halfDayValue = (TextView) view.findViewById(R.id.halfDayValue);
         fullDayValue = (TextView) view.findViewById(R.id.fullDayValue);
         curriculumContent = (TextView) view.findViewById(R.id.contentText);
@@ -79,9 +76,8 @@ public class SchoolCommunityFragment extends Fragment {
         gotoCommLayout = (LinearLayout) view.findViewById(R.id.gotoCommLayout);
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         govtImage = (ImageView) view.findViewById(R.id.govtImage);
-        postLayout = (RelativeLayout) view.findViewById(R.id.postMainLayout);
 
-        getPnInfo(getArguments().getLong("id"));
+        getKGInfo(getArguments().getLong("id"));
 
         getNewsFeedByCommunityId(getArguments().getLong("commId"));
 
@@ -159,41 +155,40 @@ public class SchoolCommunityFragment extends Fragment {
     }
 
 
-    private void getPnInfo(Long id) {
-        AppController.getApi().getPNInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
+    private void getKGInfo(Long id) {
+        AppController.getApi().getKGInfo(id, AppController.getInstance().getSessionId(), new Callback<KindergartenVM>() {
             @Override
-            public void success(PreNurseryVM preNurseryVM, Response response) {
-                nameText.setText(preNurseryVM.getN());
-                if (StringUtils.isEmpty(preNurseryVM.getNe())) {
+            public void success(KindergartenVM vm, Response response) {
+                nameText.setText(vm.getN());
+                if (StringUtils.isEmpty(vm.getNe())) {
                     enNameText.setVisibility(View.GONE);
                 } else {
-                    enNameText.setText(preNurseryVM.getNe());
+                    enNameText.setText(vm.getNe());
                     enNameText.setVisibility(View.VISIBLE);
                 }
-                districtText.setText(preNurseryVM.getDis());
-                typeValue.setText(preNurseryVM.getOrgt());
-                timeValue.setText(preNurseryVM.getCt());
-                orgValue.setText(preNurseryVM.getOrg());
-                curriculumContent.setText(preNurseryVM.getCur());
-                curriculumValue.setText(preNurseryVM.getCurt());
-                halfDayValue.setText(preNurseryVM.getFeeHd());
-                fullDayValue.setText(preNurseryVM.getFeeWd());
-                websiteValue.setText(preNurseryVM.getUrl());
-                phoneValue.setText(preNurseryVM.getPho());
-                addressText.setText(preNurseryVM.getAdr());
-                studentName.setText(preNurseryVM.getNadm());
-                postCount.setText(preNurseryVM.getNop()+"");
+                districtText.setText(vm.getDis());
+                typeValue.setText(vm.getOrgt());
+                timeValue.setText(vm.getCt());
+                orgValue.setText(vm.getOrg());
+                curriculumContent.setText(vm.getCur());
+                curriculumValue.setText(vm.getCurt());
+                //halfDayValue.setText(vm.getFeeHd());
+                //fullDayValue.setText(vm.getFeeWd());
+                //studentNum.setText(vm.getNadm());
+                websiteValue.setText(vm.getUrl());
+                phoneValue.setText(vm.getPho());
+                addressText.setText(vm.getAdr());
+                postCount.setText(vm.getNop() + "");
 
-                if(preNurseryVM.getGovUrl()!=null){
-                  govtImage.setImageResource(R.drawable.schools_gov);
+                if (vm.getGovUrl() != null) {
+                    govtImage.setImageResource(R.drawable.schools_gov);
                 }
 
-                if(preNurseryVM.isCp()){
+                if (vm.isCp()) {
                     couponImage.setImageResource(R.drawable.value_yes);
-                }else {
+                } else {
                     couponImage.setImageResource(R.drawable.value_no);
                 }
-
             }
 
             @Override

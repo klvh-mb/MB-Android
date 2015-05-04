@@ -3,6 +3,7 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -10,10 +11,9 @@ import android.widget.ImageView;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.fragment.SchoolCommunityFragment;
+import miniBean.fragment.KGCommunityFragment;
 import miniBean.util.SharingUtil;
 import miniBean.viewmodel.KindergartenVM;
-import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -43,7 +43,7 @@ public class KGCommunityActivity extends FragmentActivity {
         bundle.putLong("id", getIntent().getLongExtra("id", 0l));
         bundle.putString("flag",getIntent().getStringExtra("flag"));
 
-        SchoolCommunityFragment fragment = new SchoolCommunityFragment();
+        Fragment fragment = new KGCommunityFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.children_layout, fragment).commit();
@@ -90,6 +90,7 @@ public class KGCommunityActivity extends FragmentActivity {
             }
         });
     }
+
     private void setBookmark(Long id) {
         AppController.getApi().setKGBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override

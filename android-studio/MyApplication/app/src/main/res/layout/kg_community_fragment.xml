@@ -31,7 +31,7 @@
                     android:weightSum="10">
 
                     <TextView
-                        android:id="@+id/pnNameText"
+                        android:id="@+id/schoolNameText"
                         android:text="-"
                         android:textStyle="bold"
                         android:textColor="@color/schools_title"
@@ -44,11 +44,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/schools_district"
-                        android:layout_toRightOf="@+id/pnNameText"
+                        android:layout_toRightOf="@+id/schoolNameText"
                         android:layout_marginLeft="10dp"
                         android:text="-"
                         android:textSize="16dp"
-                        android:layout_alignBaseline="@+id/pnNameText" />
+                        android:layout_alignBaseline="@+id/schoolNameText" />
                 </LinearLayout>
 
                 <TextView
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/schools_title"
                     android:text="-"
-                    android:layout_below="@+id/pnNameText"
+                    android:layout_below="@+id/schoolNameText"
                     android:textSize="16dp" />
 
             </LinearLayout>
@@ -128,13 +128,14 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp">
+                android:layout_marginRight="15dp"
+                android:visibility="gone">
                 <TextView
                     android:id="@+id/infoText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textColor="@color/pn_text"
+                    android:textColor="@color/kg_text"
                     android:text="@string/schools_landing_title_info"
                     android:textIsSelectable="false"
                     android:textSize="18dp" />
@@ -261,10 +262,10 @@
                 <TextView
                     android:id="@+id/acceptanceText"
                     android:textStyle="bold"
-                    android:textColor="@color/pn_text"
+                    android:textColor="@color/kg_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/schools_landing_title_pn"
+                    android:text="@string/schools_landing_title_kg_1"
                     android:textSize="18dp" />
                 <View
                     android:layout_width="match_parent"
@@ -359,7 +360,7 @@
                     android:id="@+id/curriTitleText"
                     android:layout_marginTop="5dp"
                     android:textStyle="bold"
-                    android:textColor="@color/pn_text"
+                    android:textColor="@color/kg_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/schools_landing_title_curriculum"
@@ -411,7 +412,7 @@
                     android:id="@+id/contactTitle"
                     android:layout_marginTop="5dp"
                     android:textStyle="bold"
-                    android:textColor="@color/pn_text"
+                    android:textColor="@color/kg_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/schools_landing_title_contact"
@@ -472,7 +473,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/webLayout"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_below="@+id/phoneLayout"
                     android:layout_height="wrap_content"
@@ -520,7 +521,7 @@
 
             <RelativeLayout
                 android:layout_below="@+id/contactBox"
-                android:id="@+id/pnPostLayout"
+                android:id="@+id/schoolPostLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -533,14 +534,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textColor="@color/pn_text"
+                    android:textColor="@color/kg_text"
                     android:text="@string/schools_landing_title_comm"
                     android:textSize="18dp"
                     android:layout_gravity="center_vertical"
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
-                    android:background="@color/pn_green"
+                    android:background="@color/kg_maroon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="3dp"
@@ -571,7 +572,7 @@
                 android:id="@+id/bar"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:layout_below="@+id/pnPostLayout"
+                android:layout_below="@+id/schoolPostLayout"
                 android:background="@drawable/dottedline"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -590,7 +591,7 @@
                 android:layout_marginRight="15dp" />
 
             <RelativeLayout
-                android:background="@drawable/rounded_corner_pn_grid"
+                android:background="@drawable/rounded_corner_kg_grid"
                 android:id="@+id/postMainLayout"
                 android:layout_below="@+id/welcomeText"
                 android:layout_marginTop="10dp"
@@ -610,7 +611,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:dividerHeight="1dp"
-                    android:divider="@color/pn_green">
+                    android:divider="@color/kg_maroon">
                     </ListView>
             </RelativeLayout>
         </RelativeLayout>
