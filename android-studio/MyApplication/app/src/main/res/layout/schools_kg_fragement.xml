@@ -38,7 +38,7 @@
             android:id="@+id/buttonsLayout">
             <Button
                 android:id="@+id/buttonListing"
-                android:layout_width="85dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
@@ -48,10 +48,24 @@
                 android:elegantTextHeight="false"
                 android:textSize="15dp"
                 android:layout_marginLeft="2dp" />
-
+            <Button
+                android:id="@+id/buttonNewsfeed"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/kg_box_border"
+                android:text="@string/schools_newsfeed"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/buttonListing"
+                android:layout_marginRight="2dp"
+                android:textSize="15dp"
+                android:layout_marginLeft="2dp"
+                android:visibility="gone" />
             <Button
                 android:id="@+id/buttonBookmark"
-                android:layout_width="85dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="2dp"
@@ -59,9 +73,9 @@
                 android:background="@color/kg_box_border"
                 android:text="@string/schools_bookmarks"
                 android:textColor="@color/white"
+                android:layout_toRightOf="@+id/buttonNewsfeed"
                 android:textSize="15dp"
-                android:layout_marginRight="2dp"
-                android:layout_toRightOf="@+id/buttonListing" />
+                android:layout_marginRight="2dp" />
 
         </RelativeLayout>
 

@@ -25,7 +25,7 @@ public class PNListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<PreNurseryVM> items;
-    private TextView pnName,enName,commentNoText,curriculumValue,typeValue,timeValue,distName;
+    private TextView schoolName,enName,commentNoText,curriculumValue,typeValue,timeValue,distName;
     private ImageView couponValue,bookmarkImage,commentImage;
     private RelativeLayout schoolMainLayout;
 
@@ -60,23 +60,23 @@ public class PNListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.pn_list_item, null);
+            convertView = inflater.inflate(R.layout.school_list_item, null);
 
         schoolMainLayout = (RelativeLayout) convertView.findViewById(R.id.schoolMainLayout);
-        pnName = (TextView) convertView.findViewById(R.id.nameText);
+        schoolName = (TextView) convertView.findViewById(R.id.nameText);
         enName = (TextView) convertView.findViewById(R.id.enNameText);
         commentNoText = (TextView) convertView.findViewById(R.id.totalCommentText);
         couponValue = (ImageView) convertView.findViewById(R.id.couponImage);
         curriculumValue = (TextView) convertView.findViewById(R.id.curriculumValue);
         typeValue = (TextView) convertView.findViewById(R.id.typeValue);
         timeValue = (TextView) convertView.findViewById(R.id.timeValue);
-        distName = (TextView) convertView.findViewById(R.id.pnDistName);
+        distName = (TextView) convertView.findViewById(R.id.distName);
         bookmarkImage = (ImageView) convertView.findViewById(R.id.bookmarkImage);
         commentImage = (ImageView) convertView.findViewById(R.id.commentImage);
 
         final PreNurseryVM item = items.get(position);
 
-        pnName.setText(item.getN());
+        schoolName.setText(item.getN());
         if (StringUtils.isEmpty(item.getNe())) {
             enName.setVisibility(View.GONE);
         } else {

@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/searchView"
-        android:background="@drawable/schools_edit_text_round"
+        android:background="@drawable/schools_kg_edit_text_round"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_margin="10dp">
@@ -16,7 +16,7 @@
             android:queryHint="@string/schools_search_hint"
             android:layout_width="wrap_content"
             android:layout_height="35dp">
-            </SearchView>
+        </SearchView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -24,35 +24,35 @@
         android:layout_below="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corner_pn_grid"
+        android:background="@drawable/rounded_corner_kg_grid"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
         <RelativeLayout
-            android:background="@drawable/rounded_corner_pn_grid_top"
+            android:background="@drawable/rounded_corner_kg_grid_top"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:id="@+id/relativeLayout">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/pn_image"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/schools_mascot"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="5dp" />
-            <ImageView
-                android:id="@+id/pnTitleImage"
-                android:layout_width="165dp"
-                android:layout_height="40dp"
-                android:src="@drawable/schools_pn_title"
-                android:layout_gravity="center_vertical|left"
-                android:scaleType="fitCenter" />
+                <ImageView
+                    android:id="@+id/school_mascot"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/schools_mascot"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="5dp" />
+                <ImageView
+                    android:id="@+id/schoolTitleImage"
+                    android:layout_width="165dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/schools_kg_title"
+                    android:layout_gravity="center_vertical|left"
+                    android:scaleType="fitCenter" />
             </LinearLayout>
             <LinearLayout
                 android:layout_centerVertical="true"
@@ -66,14 +66,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/schools_your_district"
                     android:textSize="14dp" />
-            <TextView
-                android:id="@+id/yourDistrictNameText"
-                android:layout_width="wrap_content"
-                android:textColor="#D1942B"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="14dp"
-                android:layout_marginRight="5dp" />
+                <TextView
+                    android:id="@+id/yourDistrictNameText"
+                    android:layout_width="wrap_content"
+                    android:textColor="#D1942B"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="14dp"
+                    android:layout_marginRight="5dp" />
             </LinearLayout>
         </RelativeLayout>
         <RelativeLayout
@@ -102,7 +102,7 @@
         android:layout_below="@+id/boxLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/schools_edit_text_round"
+        android:background="@drawable/schools_kg_edit_text_round"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
@@ -116,43 +116,43 @@
             android:id="@+id/textLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/districtNameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="-"
-            android:textColor="@color/pn_text"
-            android:layout_marginLeft="5dp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/filterText1"
-            android:layout_marginLeft="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/districtNameText"
-            android:text="@string/schools_filter_text_1"
-            android:textColor="@color/dark_gray_3"
-            android:textSize="16dp" />
-        <TextView
-            android:id="@+id/noOfSchools"
-            android:layout_marginLeft="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/filterText1"
-            android:text="-"
-            android:textColor="@color/pn_text"
-            android:textSize="17dp"
-            android:textStyle="bold" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:text="@string/schools_filter_text_2"
-            android:layout_toRightOf="@+id/noOfSchools"
-            android:textColor="@color/dark_gray_3"
-            android:textSize="16dp"
-            android:id="@+id/filterText2" />
+            <TextView
+                android:id="@+id/districtNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="-"
+                android:textColor="@color/kg_text"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/filterText1"
+                android:layout_marginLeft="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/districtNameText"
+                android:text="@string/schools_filter_text_1"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="16dp" />
+            <TextView
+                android:id="@+id/noOfSchools"
+                android:layout_marginLeft="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/filterText1"
+                android:text="-"
+                android:textColor="@color/kg_text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="@string/schools_filter_text_4"
+                android:layout_toRightOf="@+id/noOfSchools"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="16dp"
+                android:id="@+id/filterText2" />
         </LinearLayout>
 
         <TextView
@@ -181,50 +181,50 @@
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/couponText"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_coupon"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp" />
-            <Spinner
-                android:background="@drawable/spinner_bg"
-                android:layout_toRightOf="@+id/couponText"
-                android:id="@+id/couponSpinner"
-                android:layout_marginLeft="5dp"
-                android:layout_width="65dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:gravity="center">
+                <TextView
+                    android:id="@+id/couponText"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_coupon"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:layout_toRightOf="@+id/couponText"
+                    android:id="@+id/couponSpinner"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center">
                 </Spinner>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/typeLayout"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp">
-             <TextView
-                android:layout_toRightOf="@+id/couponSpinner"
-                android:id="@+id/typeText"
-                android:text="@string/schools_info_type"
-                 android:layout_gravity="center"
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/typeLayout"
+                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                 android:textColor="@color/dark_gray_3"
-                 android:textSize="15dp" />
-            <Spinner
-                android:background="@drawable/spinner_bg"
-                android:layout_toRightOf="@+id/typeText"
-                android:id="@+id/typeSpinner"
-                android:layout_marginLeft="5dp"
-                android:layout_width="65dp"
-                android:layout_height="25dp"
-                android:gravity="center"
-                android:layout_gravity="center_vertical"></Spinner>
-        </LinearLayout>
+                android:layout_marginRight="10dp">
+                <TextView
+                    android:layout_toRightOf="@+id/couponSpinner"
+                    android:id="@+id/typeText"
+                    android:text="@string/schools_info_type"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:layout_toRightOf="@+id/typeText"
+                    android:id="@+id/typeSpinner"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"></Spinner>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/curriculumLayout"
@@ -232,22 +232,22 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/curriculumText"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schools_info_curriculum"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="15dp" />
-            <Spinner
-                android:background="@drawable/spinner_bg"
-                android:id="@+id/curriculumSpinner"
-                android:layout_marginLeft="5dp"
-                android:layout_width="65dp"
-                android:layout_height="25dp"
-                android:gravity="center"
-                android:layout_gravity="center_vertical">
+                <TextView
+                    android:id="@+id/curriculumText"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_curriculum"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:id="@+id/curriculumSpinner"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical">
 
                 </Spinner>
             </LinearLayout>
@@ -288,7 +288,7 @@
         android:layout_below="@+id/nurseryLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/pn_bg"
+        android:background="@color/kg_bg"
         android:layout_marginTop="10dp">
         <LinearLayout
             android:layout_width="wrap_content"
@@ -388,14 +388,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/pn_green"
+            android:background="@color/kg_maroon"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/pn_green"
+        android:background="@color/kg_maroon"
         android:id="@+id/divider"
         android:layout_below="@+id/nurseryLayout"
         android:layout_marginTop="10dp" />

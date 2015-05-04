@@ -21,10 +21,12 @@ public class DistrictListAdapter extends BaseAdapter {
     private List<LocationVM> locationVMList;
     private TextView distName;
 
+    private boolean isPN = false;
+
     private int oldSelected = 0;
     private int selected = 0;
 
-    public DistrictListAdapter(Activity activity, List<LocationVM> locationVMList) {
+    public DistrictListAdapter(Activity activity, List<LocationVM> locationVMList, boolean isPN) {
         this.activity = activity;
         this.locationVMList = locationVMList;
         for (int i=0; i<locationVMList.size(); i++) {
@@ -33,6 +35,7 @@ public class DistrictListAdapter extends BaseAdapter {
                 setSelectedItem(i);
             }
         }
+        this.isPN = isPN;
     }
 
     public void setSelectedItem(int item) {
@@ -70,7 +73,10 @@ public class DistrictListAdapter extends BaseAdapter {
 
         //Log.d(this.getClass().getSimpleName(), "i="+i+" selected="+selected);
         if (i == selected) {
-            nameBtn.setBackgroundResource(R.drawable.rounded_corner_pn_grid_item);
+            if (isPN)
+                nameBtn.setBackgroundResource(R.drawable.rounded_corner_pn_grid_item);
+            else
+                nameBtn.setBackgroundResource(R.drawable.rounded_corner_kg_grid_item);
             distName.setTextColor(view.getResources().getColor(R.color.white));
         } else if (i == oldSelected) {
             nameBtn.setBackgroundColor(view.getResources().getColor(R.color.white));

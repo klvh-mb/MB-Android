@@ -201,6 +201,7 @@
     <string name="schools_filter_text_1">有</string>
     <string name="schools_filter_text_2">間幼稚園提供幼兒班(PN班)</string>
     <string name="schools_filter_text_3">幼兒服務 (PN班)</string>
+    <string name="schools_filter_text_4">間幼稚園</string>
     <string name="schools_posts">話題 :</string>
     <string name="schools_discuss_together">一齊討論</string>
     <string name="schools_landing_title_info">學校資料</string>
@@ -222,7 +223,6 @@
 
     <string name="schools_pn_bookmark_title_1">收藏了</string>
     <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
-
 
     <!-- Dialog -->
     <string name="cancel_new_post">退出發佈話題?</string>

@@ -1,8 +1,6 @@
 package miniBean.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,39 +23,45 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.adapter.DistrictListAdapter;
-import miniBean.adapter.PNListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.LocationVM;
-import miniBean.viewmodel.PreNurseryVM;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-public class SchoolListFragment extends MyFragment {
+public abstract class AbstractSchoolsListFragment extends MyFragment {
 
-    private static final String TAG = SchoolListFragment.class.getName();
-    private GridView districtGrid;
-    private List<LocationVM> locationVMList;
-    private List<PreNurseryVM> pnVMList;
-    private List<PreNurseryVM> searchVMList;
-    private TextView yourDistrictNameText,districtNameText,searchKey,totalResultText,noOfSchools,tooManyResultsText;
-    private DistrictListAdapter districtListAdapter;
-    private ListView listView;
-    private Spinner couponSpinner,typeSpinner,timeSpinner,curriculumSpinner;
-    private RelativeLayout nurseryLayout,boxLayout,searchResultLayout,searchLayout;
-    private LinearLayout cancelLayout;
-    private SearchView searchWindow;
-    private View listHeader;
-    private String currValue,cpValue,typeValue,timeValue;
+    private static final String TAG = AbstractSchoolsListFragment.class.getName();
+    protected GridView districtGrid;
+    protected List<LocationVM> locationVMList;
+    protected TextView yourDistrictNameText,districtNameText,searchKey,totalResultText,noOfSchools,tooManyResultsText;
+    protected DistrictListAdapter districtListAdapter;
+    protected Spinner couponSpinner,typeSpinner,timeSpinner,curriculumSpinner;
+    protected RelativeLayout nurseryLayout,boxLayout,searchResultLayout,searchLayout;
+    protected LinearLayout cancelLayout;
+    protected SearchView searchWindow;
+    protected String currValue,cpValue,typeValue,timeValue;
 
-    private int dismissSearchPressCount = 0;
+    protected int dismissSearchPressCount = 0;
 
-    private PNListAdapter listAdapter;
+    protected View listHeader;
+    protected ListView listView;
 
-    private ActivityUtil activityUtil;
+    protected ActivityUtil activityUtil;
+
+    // PN and KG override
+
+    abstract protected boolean isPN();
+
+    abstract protected void init();
+
+    abstract protected View getHeaderView(LayoutInflater inflater);
+
+    abstract protected void getSchoolsByDistrict(final Long id, final String district);
+
+    abstract protected void searchByName(final String query);
+
+    abstract protected void applyFilters();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class SchoolListFragment extends MyFragment {
         activityUtil = new ActivityUtil(getActivity());
 
         // header
-        listHeader = inflater.inflate(R.layout.school_list_fragment_header, null);
+        listHeader = getHeaderView(inflater);
         couponSpinner = (Spinner) listHeader.findViewById(R.id.couponSpinner);
         typeSpinner = (Spinner) listHeader.findViewById(R.id.typeSpinner);
         timeSpinner = (Spinner) listHeader.findViewById(R.id.timeSpinner);
@@ -100,7 +104,6 @@ public class SchoolListFragment extends MyFragment {
         searchWindow = (SearchView) listHeader.findViewById(R.id.searchWindow);
 
         locationVMList = new ArrayList<>();
-        pnVMList = new ArrayList<>();
 
         nurseryLayout = (RelativeLayout) listHeader.findViewById(R.id.nurseryLayout);
         boxLayout = (RelativeLayout) listHeader.findViewById(R.id.boxLayout);
@@ -122,7 +125,7 @@ public class SchoolListFragment extends MyFragment {
             }
         });
 
-        getPNsByDistrict(AppController.getUserLocation().getId(), AppController.getUserLocation().getDisplayName());
+        getSchoolsByDistrict(AppController.getUserLocation().getId(), AppController.getUserLocation().getDisplayName());
 
         setDistricts();
 
@@ -205,7 +208,6 @@ public class SchoolListFragment extends MyFragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                Log.d("===>","s="+s);
                 if (s.length() > 1) {   // start to search with 2 chars
                     boxLayout.setVisibility(View.GONE);
                     nurseryLayout.setVisibility(View.GONE);
@@ -269,6 +271,9 @@ public class SchoolListFragment extends MyFragment {
             }
         });
 
+        // child init
+        init();
+
         return view;
     }
 
@@ -287,167 +292,29 @@ public class SchoolListFragment extends MyFragment {
         return true;
     }
 
-    private void dismissSearchMode() {
+    protected void dismissSearchMode() {
         boxLayout.setVisibility(View.VISIBLE);
         nurseryLayout.setVisibility(View.VISIBLE);
         searchResultLayout.setVisibility(View.GONE);
         searchWindow.setIconified(true);
         activityUtil.hideInputMethodWindow(searchWindow);
-
-        searchVMList = new ArrayList<PreNurseryVM>();
-        listAdapter.refresh(pnVMList);
         dismissSearchPressCount = 0;
     }
 
-    private void selectDistrict(int index) {
+    protected void selectDistrict(int index) {
         String district = districtListAdapter.getItem(index).getDisplayName();
         districtNameText.setText(district);
         districtListAdapter.setSelectedItem(index);
         districtListAdapter.notifyDataSetChanged();
-        getPNsByDistrict(locationVMList.get(index).getId(), district);
+        getSchoolsByDistrict(locationVMList.get(index).getId(), district);
         searchWindow.setIconified(true);
     }
 
-    private void setDistricts(){
+    protected void setDistricts(){
         List<LocationVM> districts = DistrictCache.getDistricts();
         locationVMList.clear();
         locationVMList.addAll(districts);
-        districtListAdapter = new DistrictListAdapter(getActivity(),districts);
+        districtListAdapter = new DistrictListAdapter(getActivity(),districts,isPN());
         districtGrid.setAdapter(districtListAdapter);
-    }
-
-    private void getPNsByDistrict(final Long id, final String district){
-        AppController.getApi().getPNsByDistricts(id, AppController.getInstance().getSessionId(), new Callback<List<PreNurseryVM>>() {
-            @Override
-            public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
-                Log.d(SchoolListFragment.class.getSimpleName(), "[" + district + "] returned " + preNurseryVMs.size() + " pns");
-                pnVMList = preNurseryVMs;
-                applyFilters();
-                noOfSchools.setText(preNurseryVMs.size() + "");
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
-    }
-
-    private void applyFilters(){
-        if(cpValue!=null) {
-            pnVMList = cpFilter(cpValue, pnVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: coupon="+cpValue+" size="+pnVMList.size());
-        }
-
-        if(currValue!=null) {
-            pnVMList = currFilter(currValue, pnVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: currValue="+currValue+" size="+pnVMList.size());
-        }
-
-        if(timeValue!=null) {
-            pnVMList = timeFilter(timeValue, pnVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: timeValue="+timeValue+" size="+pnVMList.size());
-        }
-
-        if(typeValue!=null) {
-            pnVMList = typeFilter(typeValue, pnVMList);
-            Log.d(this.getClass().getSimpleName(), "Filter: typeValue="+typeValue+" size="+pnVMList.size());
-        }
-
-        listAdapter = new PNListAdapter(getActivity(),pnVMList);
-        listView.setAdapter(listAdapter);
-    }
-
-    private List<PreNurseryVM> cpFilter(String cpValue,List<PreNurseryVM> filteredVMList) {
-        if(DefaultValues.FILTER_SCHOOLS_ALL.equals(cpValue)) {
-            return filteredVMList;
-        }
-
-        List<PreNurseryVM> vm = new ArrayList<PreNurseryVM>();
-        for (int i = 0; i < filteredVMList.size(); i++) {
-            if (DefaultValues.FILTER_SCHOOLS_YES.equals(cpValue)) {
-                if(filteredVMList.get(i).isCp()) {
-                    vm.add(filteredVMList.get(i));
-                }
-            } else if (DefaultValues.FILTER_SCHOOLS_NO.equals(cpValue)) {
-                if(!filteredVMList.get(i).isCp()){
-                    vm.add(filteredVMList.get(i));
-                }
-            }
-        }
-        return vm;
-    }
-
-    private List<PreNurseryVM> typeFilter(String orgtValue,List<PreNurseryVM> filteredVMList) {
-        if(DefaultValues.FILTER_SCHOOLS_ALL.equals(orgtValue)) {
-            return filteredVMList;
-        }
-
-        List<PreNurseryVM> vm = new ArrayList<PreNurseryVM>();
-        for (int i = 0; i < filteredVMList.size(); i++) {
-            if (orgtValue.equalsIgnoreCase(filteredVMList.get(i).getOrgt())) {
-                vm.add(filteredVMList.get(i));
-            }
-        }
-        return vm;
-    }
-
-    private List<PreNurseryVM> currFilter(String currValue,List<PreNurseryVM> filteredVMList) {
-        if(DefaultValues.FILTER_SCHOOLS_ALL.equals(currValue)) {
-            return filteredVMList;
-        }
-
-        List<PreNurseryVM> vm = new ArrayList<PreNurseryVM>();
-        for (int i = 0; i < filteredVMList.size(); i++) {
-            if (currValue.equalsIgnoreCase(filteredVMList.get(i).getCurt())) {
-                vm.add(filteredVMList.get(i));
-            }
-        }
-        return vm;
-    }
-
-    private List<PreNurseryVM> timeFilter(String ctValue,List<PreNurseryVM> filteredVMList) {
-        if(DefaultValues.FILTER_SCHOOLS_ALL.equals(ctValue)) {
-            return filteredVMList;
-        }
-
-        List<PreNurseryVM> vm = new ArrayList<PreNurseryVM>();
-        for (int i = 0; i < filteredVMList.size(); i++) {
-            if (!StringUtils.isEmpty(filteredVMList.get(i).getCt()) &&
-                    filteredVMList.get(i).getCt().contains(ctValue)) {
-                vm.add(filteredVMList.get(i));
-            }
-        }
-        return vm;
-    }
-
-    private void searchByName(final String query){
-        dismissSearchPressCount = 0;
-        AppController.getApi().searchPnByName(query,AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
-            @Override
-            public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
-                Log.d(SchoolListFragment.class.getSimpleName(), "searchByName: returns " + preNurseryVMs.size() + " schools");
-                searchKey.setText("[ "+query+" ]");
-                totalResultText.setText("" + preNurseryVMs.size());
-
-                // too many results
-                searchVMList = new ArrayList<PreNurseryVM>();
-                if (preNurseryVMs.size() > DefaultValues.MAX_SCHOOLS_SEARCH_COUNT) {
-                    tooManyResultsText.setVisibility(View.VISIBLE);
-                } else {
-                    tooManyResultsText.setVisibility(View.GONE);
-                    searchVMList = preNurseryVMs;
-                }
-
-                //PNListAdapter resultListAdapter = new PNListAdapter(getActivity(), resultList);
-                //listView.setAdapter(resultListAdapter);
-                listAdapter.refresh(searchVMList);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
     }
 }

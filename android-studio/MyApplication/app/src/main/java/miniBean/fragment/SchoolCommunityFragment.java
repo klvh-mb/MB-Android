@@ -40,7 +40,6 @@ public class SchoolCommunityFragment extends Fragment {
     private TextView studentName,halfDayValue,fullDayValue,curriculumContent,addressText,phoneValue;
     private TextView websiteValue,postCount;
     private ImageView urlValueImage,editAction;
-    private List<PreNurseryVM> preNurseryVMList;
     private ScrollView scrollView;
 
     private NewsfeedListAdapter feedListAdapter;
@@ -79,10 +78,8 @@ public class SchoolCommunityFragment extends Fragment {
         postCount = (TextView) view.findViewById(R.id.postCount);
         gotoCommLayout = (LinearLayout) view.findViewById(R.id.gotoCommLayout);
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
-        govtImage= (ImageView) view.findViewById(R.id.govtImage);
-        postLayout= (RelativeLayout) view.findViewById(R.id.postMainLayout);
-
-        preNurseryVMList = new ArrayList<PreNurseryVM>();
+        govtImage = (ImageView) view.findViewById(R.id.govtImage);
+        postLayout = (RelativeLayout) view.findViewById(R.id.postMainLayout);
 
         getPnInfo(getArguments().getLong("id"));
 
@@ -95,7 +92,6 @@ public class SchoolCommunityFragment extends Fragment {
                     scrollView.fullScroll(View.FOCUS_DOWN);
                 }
             });
-
         }
 
         feedItems = new ArrayList<CommunityPostVM>();
@@ -164,7 +160,7 @@ public class SchoolCommunityFragment extends Fragment {
 
 
     private void getPnInfo(Long id) {
-        AppController.getApi().getPnInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
+        AppController.getApi().getPNInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
             @Override
             public void success(PreNurseryVM preNurseryVM, Response response) {
                 nameText.setText(preNurseryVM.getN());

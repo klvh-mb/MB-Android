@@ -21,10 +21,10 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.NotificationCache;
-import miniBean.fragment.MainFragment;
+import miniBean.fragment.CommunityMainFragment;
 import miniBean.fragment.MyFragment;
 import miniBean.fragment.MyProfileFragment;
-import miniBean.fragment.SchoolsFragment;
+import miniBean.fragment.SchoolsMainFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
@@ -119,7 +119,7 @@ public class MainActivity extends FragmentActivity {
 
         if (!commClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            selectedFragment = new MainFragment();
+            selectedFragment = new CommunityMainFragment();
             fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 
@@ -149,7 +149,7 @@ public class MainActivity extends FragmentActivity {
 
         if (!schoolsClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            selectedFragment = new SchoolsFragment();
+            selectedFragment = new SchoolsMainFragment();
             fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 

@@ -18,12 +18,12 @@ import com.astuetz.PagerSlidingTabStrip;
 import miniBean.R;
 import miniBean.app.AppController;
 
-public class SchoolsFragment extends MyFragment {
+public class SchoolsMainFragment extends MyFragment {
 
-    private static final String TAG = SchoolsFragment.class.getName();
+    private static final String TAG = SchoolsMainFragment.class.getName();
     private ActionBar.Tab Tab1, Tab2, Tab3;
     private ViewPager viewPager;
-    private SchoolPagerAdapter mAdapter;
+    private SchoolsPagerAdapter mAdapter;
     private PagerSlidingTabStrip tabs;
 
     @Override
@@ -34,7 +34,7 @@ public class SchoolsFragment extends MyFragment {
 
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
-        mAdapter = new SchoolPagerAdapter(getChildFragmentManager());
+        mAdapter = new SchoolsPagerAdapter(getChildFragmentManager());
 
         final int pageMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
@@ -72,7 +72,7 @@ public class SchoolsFragment extends MyFragment {
     }
 }
 
-class SchoolPagerAdapter extends FragmentPagerAdapter {
+class SchoolsPagerAdapter extends FragmentPagerAdapter {
 
     private MyFragment pnFragment;
     private MyFragment kgFragment;
@@ -82,7 +82,7 @@ class SchoolPagerAdapter extends FragmentPagerAdapter {
             AppController.getInstance().getString(R.string.schools_tab_title_kg)
     };
 
-    public SchoolPagerAdapter(FragmentManager fm) {
+    public SchoolsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

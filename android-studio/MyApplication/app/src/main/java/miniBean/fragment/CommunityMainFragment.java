@@ -19,9 +19,9 @@ import miniBean.R;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 
-public class MainFragment extends MyFragment {
+public class CommunityMainFragment extends MyFragment {
 
-    private static final String TAG = MainFragment.class.getName();
+    private static final String TAG = CommunityMainFragment.class.getName();
     private ActionBar.Tab Tab1, Tab2, Tab3;
     private ViewPager viewPager;
     private MyPagerAdapter mAdapter;
@@ -31,7 +31,7 @@ public class MainFragment extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.main_fragement, container, false);
+        View view = inflater.inflate(R.layout.community_main_fragement, container, false);
 
         getActivity().getActionBar().hide();
 

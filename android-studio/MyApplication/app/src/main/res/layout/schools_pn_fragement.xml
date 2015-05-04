@@ -48,7 +48,6 @@
                 android:elegantTextHeight="false"
                 android:textSize="15dp"
                 android:layout_marginLeft="2dp" />
-
             <Button
                 android:id="@+id/buttonNewsfeed"
                 android:layout_width="75dp"

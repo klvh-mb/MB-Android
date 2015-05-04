@@ -33,10 +33,8 @@ public class PNCommunityActivity extends FragmentActivity {
 
         whatsappAction = (ImageView) findViewById(R.id.whatsappAction);
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
-        editAction= (ImageView) findViewById(R.id.editAction);
-        backAction= (ImageView) findViewById(R.id.backImage);
-
-        schoolVM = new PreNurseryVM();
+        editAction = (ImageView) findViewById(R.id.editAction);
+        backAction = (ImageView) findViewById(R.id.backImage);
 
         Bundle bundle = new Bundle();
 
@@ -49,7 +47,7 @@ public class PNCommunityActivity extends FragmentActivity {
         fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.children_layout, fragment).commit();
 
-        getPnInfo(getIntent().getLongExtra("id", 0l));
+        getPNInfo(getIntent().getLongExtra("id", 0l));
 
         // actionbar actions...
         whatsappAction.setOnClickListener(new View.OnClickListener() {
@@ -117,11 +115,11 @@ public class PNCommunityActivity extends FragmentActivity {
         });
     }
 
-    private void getPnInfo(Long id) {
-        AppController.getApi().getPnInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
+    private void getPNInfo(Long id) {
+        AppController.getApi().getPNInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
             @Override
-            public void success(PreNurseryVM preNurseryVM, Response response) {
-                schoolVM = preNurseryVM;
+            public void success(PreNurseryVM vm, Response response) {
+                schoolVM = vm;
                 isBookmarked = schoolVM.isBookmarked();
                 if(isBookmarked){
                     bookmarkAction.setImageResource(R.drawable.ic_bookmarked);

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pn_view_bg">
+
+    <RelativeLayout
+        android:id="@+id/searchView"
+        android:background="@drawable/schools_pn_edit_text_round"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_margin="10dp">
+        <SearchView
+            android:id="@+id/searchWindow"
+            android:layout_alignParentRight="true"
+            android:queryHint="@string/schools_search_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp">
+            </SearchView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/boxLayout"
+        android:layout_below="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_pn_grid"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <RelativeLayout
+            android:background="@drawable/rounded_corner_pn_grid_top"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/relativeLayout">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/school_mascot"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/schools_mascot"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="5dp" />
+            <ImageView
+                android:id="@+id/schoolTitleImage"
+                android:layout_width="165dp"
+                android:layout_height="40dp"
+                android:src="@drawable/schools_pn_title"
+                android:layout_gravity="center_vertical|left"
+                android:scaleType="fitCenter" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingRight="5dp">
+                <TextView
+                    android:id="@+id/yourDistrictText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_your_district"
+                    android:textSize="14dp" />
+            <TextView
+                android:id="@+id/yourDistrictNameText"
+                android:layout_width="wrap_content"
+                android:textColor="#D1942B"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textSize="14dp"
+                android:layout_marginRight="5dp" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <miniBean.view.AdaptiveGridView
+                android:id="@+id/districtGrid"
+                android:numColumns="4"
+                android:gravity="center"
+                android:stretchMode="columnWidth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fastScrollAlwaysVisible="false"
+                android:smoothScrollbar="false"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:horizontalSpacing="5dp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nurseryLayout"
+        android:layout_below="@+id/boxLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/schools_pn_edit_text_round"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/textLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/districtNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:text="-"
+            android:textColor="@color/pn_text"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/filterText1"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/districtNameText"
+            android:text="@string/schools_filter_text_1"
+            android:textColor="@color/dark_gray_3"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/noOfSchools"
+            android:layout_marginLeft="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/filterText1"
+            android:text="-"
+            android:textColor="@color/pn_text"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:text="@string/schools_filter_text_2"
+            android:layout_toRightOf="@+id/noOfSchools"
+            android:textColor="@color/dark_gray_3"
+            android:textSize="16dp"
+            android:id="@+id/filterText2" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schools_filter_text_3"
+            android:textColor="@color/dark_gray_3"
+            android:textSize="16dp"
+            android:id="@+id/filterText3"
+            android:layout_below="@+id/textLayout"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/filterLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/filterText3"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/couponLayout"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/couponText"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_info_coupon"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="15dp" />
+            <Spinner
+                android:background="@drawable/spinner_bg"
+                android:layout_toRightOf="@+id/couponText"
+                android:id="@+id/couponSpinner"
+                android:layout_marginLeft="5dp"
+                android:layout_width="65dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center">
+                </Spinner>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/typeLayout"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp">
+             <TextView
+                android:layout_toRightOf="@+id/couponSpinner"
+                android:id="@+id/typeText"
+                android:text="@string/schools_info_type"
+                 android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 android:textColor="@color/dark_gray_3"
+                 android:textSize="15dp" />
+            <Spinner
+                android:background="@drawable/spinner_bg"
+                android:layout_toRightOf="@+id/typeText"
+                android:id="@+id/typeSpinner"
+                android:layout_marginLeft="5dp"
+                android:layout_width="65dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"></Spinner>
+        </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/curriculumLayout"
+                android:layout_below="@+id/couponLayout"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/curriculumText"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_info_curriculum"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="15dp" />
+            <Spinner
+                android:background="@drawable/spinner_bg"
+                android:id="@+id/curriculumSpinner"
+                android:layout_marginLeft="5dp"
+                android:layout_width="65dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:layout_gravity="center_vertical">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/timeLayout"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/typeLayout"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp">
+                <TextView
+                    android:id="@+id/timeText"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_time"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:id="@+id/timeSpinner"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="65dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical">
+                </Spinner>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/searchResultLayout"
+        android:layout_below="@+id/nurseryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pn_bg"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/searchTextLayout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/textSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_search_text_1"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="16dp" />
+            <TextView
+                android:id="@+id/searchText"
+                android:layout_toRightOf="@+id/textSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_gray_3"
+                android:text="-"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/hasText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_search_text_2"
+                android:layout_toRightOf="@+id/searchText"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="16dp" />
+            <TextView
+                android:id="@+id/searchCountText"
+                android:textColor="@color/dark_gray_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:layout_toRightOf="@id/hasText"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/resultsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_search_text_3"
+                android:layout_toRightOf="@+id/searchText"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cancelLayout"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_corner_signup_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:id="@+id/cancelButton"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_search_cancel"
+                android:textColor="#ffffff"
+                android:textSize="16dp"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tooManyResultsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/schools_search_too_many_results"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/dark_gray_3"
+            android:textSize="16dp"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/searchTextLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/pn_green"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/pn_green"
+        android:id="@+id/divider"
+        android:layout_below="@+id/nurseryLayout"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>

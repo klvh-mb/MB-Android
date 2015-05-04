@@ -2,9 +2,7 @@ package miniBean.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +77,7 @@ public class SchoolsPNFragment extends MyFragment {
         buttonNews.setTextColor(Color.WHITE);
         buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
-        selectedFragment = new SchoolListFragment();
+        selectedFragment = new SchoolsPNListFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
@@ -121,4 +119,3 @@ public class SchoolsPNFragment extends MyFragment {
         return super.allowBackPressed();
     }
 }
-
