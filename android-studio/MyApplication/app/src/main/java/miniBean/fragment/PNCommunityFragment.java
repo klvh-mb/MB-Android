@@ -1,6 +1,7 @@
 package miniBean.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -39,6 +40,7 @@ public class PNCommunityFragment extends MyFragment {
     private TextView websiteValue,postCount;
     private ImageView urlValueImage,editAction;
     private ScrollView scrollView;
+    private String govtUrlValue;
 
     private NewsfeedListAdapter feedListAdapter;
     private List<CommunityPostVM> feedItems;
@@ -150,6 +152,46 @@ public class PNCommunityFragment extends MyFragment {
             }
         });
 
+        phoneValue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent phoneCallIntent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+phoneValue.getText().toString()));
+                startActivity(phoneCallIntent);
+
+            }
+        });
+
+        websiteValue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(websiteValue.getText().toString()));
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                startActivity(intent);
+
+            }
+        });
+
+        addressText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String map = "http://maps.google.co.in/maps?q=" +addressText.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+                startActivity(intent);
+
+            }
+        });
+
+        govtImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(govtUrlValue));
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -178,7 +220,9 @@ public class PNCommunityFragment extends MyFragment {
                 addressText.setText(preNurseryVM.getAdr());
                 postCount.setText(preNurseryVM.getNop() + "");
 
-                if (preNurseryVM.getGovUrl() != null) {
+                govtUrlValue=preNurseryVM.getGovUrl();
+
+                if (govtUrlValue != null) {
                     govtImage.setImageResource(R.drawable.schools_gov);
                 }
 
