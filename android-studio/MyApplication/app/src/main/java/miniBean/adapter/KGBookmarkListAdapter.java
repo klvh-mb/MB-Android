@@ -18,23 +18,23 @@ import miniBean.viewmodel.KindergartenVM;
 public class KGBookmarkListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<KindergartenVM> kindergartenVMList;
+    private List<KindergartenVM> schoolVMList;
     private ImageView icon;
     private TextView noOfComment,title,district;
 
-    public KGBookmarkListAdapter(Activity activity, List<KindergartenVM> kindergartenVMList) {
+    public KGBookmarkListAdapter(Activity activity, List<KindergartenVM> schoolVMList) {
         this.activity = activity;
-        this.kindergartenVMList = kindergartenVMList;
+        this.schoolVMList = schoolVMList;
     }
 
     @Override
     public int getCount() {
-        return kindergartenVMList.size();
+        return schoolVMList.size();
     }
 
     @Override
     public KindergartenVM getItem(int i) {
-        return kindergartenVMList.get(i);
+        return schoolVMList.get(i);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class KGBookmarkListAdapter extends BaseAdapter {
         district = (TextView) view.findViewById(R.id.districtText);
         noOfComment = (TextView) view.findViewById(R.id.totalCommentText);
 
-        KindergartenVM item = kindergartenVMList.get(i);
+        KindergartenVM item = schoolVMList.get(i);
 
         int iconMapped = CommunityIconUtil.map(item.getIcon());
         if (iconMapped != -1) {
@@ -66,7 +66,7 @@ public class KGBookmarkListAdapter extends BaseAdapter {
 
         title.setText(item.getN());
         district.setText(item.getDis());
-        //noOfComment.setText(item.getNop());
+        noOfComment.setText(item.getNop()+"");
 
         return view;
     }

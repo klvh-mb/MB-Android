@@ -24,7 +24,7 @@ public class CommunityMainFragment extends MyFragment {
     private static final String TAG = CommunityMainFragment.class.getName();
     private ActionBar.Tab Tab1, Tab2, Tab3;
     private ViewPager viewPager;
-    private MyPagerAdapter mAdapter;
+    private CommunityPagerAdapter mAdapter;
     private PagerSlidingTabStrip tabs;
 
     @Override
@@ -37,7 +37,7 @@ public class CommunityMainFragment extends MyFragment {
 
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
-        mAdapter = new MyPagerAdapter(getChildFragmentManager());
+        mAdapter = new CommunityPagerAdapter(getChildFragmentManager());
 
         final int pageMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
@@ -65,11 +65,11 @@ public class CommunityMainFragment extends MyFragment {
     }
 }
 
-class MyPagerAdapter extends FragmentPagerAdapter {
+class CommunityPagerAdapter extends FragmentPagerAdapter {
 
     private static String[] TITLES;
 
-    public MyPagerAdapter(FragmentManager fm) {
+    public CommunityPagerAdapter(FragmentManager fm) {
         super(fm);
 
         if (TITLES == null && LocalCommunityTabCache.getCommunityCategoryMapList() != null) {

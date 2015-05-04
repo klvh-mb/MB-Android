@@ -35,8 +35,6 @@ public class PNBookmarksFragment extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        Log.d(this.getClass().getSimpleName(), "...bookmark create view");
-
         View view = inflater.inflate(R.layout.school_bookmark_fragment, container, false);
 
         bookmarkList = (ListView) view.findViewById(R.id.listBookmark);
@@ -50,7 +48,7 @@ public class PNBookmarksFragment extends MyFragment {
                 Intent intent = new Intent(getActivity(), PNCommunityActivity.class);
                 intent.putExtra("commId",vm.getCommId());
                 intent.putExtra("id", vm.getId());
-                intent.putExtra("flag","FromSchoolBookmark");
+                intent.putExtra("flag","FromPNBookmarks");
                 startActivity(intent);
             }
         });

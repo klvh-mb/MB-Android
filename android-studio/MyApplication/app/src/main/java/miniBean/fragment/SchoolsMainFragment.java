@@ -45,6 +45,24 @@ public class SchoolsMainFragment extends MyFragment {
         tabs.setTextColor(getResources().getColor(R.color.dark_gray));
         tabs.setIndicatorColor(getResources().getColor(R.color.pn_box_border));
 
+        tabs.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == SchoolsPagerAdapter.PN_PAGE)
+                    tabs.setIndicatorColor(getResources().getColor(R.color.pn_box_border));
+                else
+                    tabs.setIndicatorColor(getResources().getColor(R.color.kg_box_border));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
         final int indicatorHeight = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
         tabs.setIndicatorHeight(indicatorHeight);
@@ -74,6 +92,9 @@ public class SchoolsMainFragment extends MyFragment {
 
 class SchoolsPagerAdapter extends FragmentPagerAdapter {
 
+    public static final int PN_PAGE = 0;
+    public static final int KG_PAGE = 1;
+
     private MyFragment pnFragment;
     private MyFragment kgFragment;
 
@@ -100,9 +121,10 @@ class SchoolsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Log.d(this.getClass().getSimpleName(), "getItem: item - " + position);
         switch (position) {
-            case 0:
+            case PN_PAGE:
                 pnFragment = new SchoolsPNFragment();
                 return pnFragment;
+            case KG_PAGE:
             default:
                 kgFragment = new SchoolsKGFragment();
                 return kgFragment;
@@ -111,8 +133,9 @@ class SchoolsPagerAdapter extends FragmentPagerAdapter {
 
     public MyFragment getFragment(int position) {
         switch (position) {
-            case 0:
+            case PN_PAGE:
                 return pnFragment;
+            case KG_PAGE:
             default:
                 return kgFragment;
         }

@@ -2,7 +2,6 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +48,8 @@ public class PNCommunityFragment extends MyFragment {
     private ImageView couponImage,govtImage;
     private LinearLayout gotoCommLayout;
 
+    private PreNurseryVM schoolVM;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -78,7 +79,7 @@ public class PNCommunityFragment extends MyFragment {
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         govtImage = (ImageView) view.findViewById(R.id.govtImage);
 
-        getPnInfo(getArguments().getLong("id"));
+        initInfo(getArguments().getLong("id"));
 
         getNewsFeedByCommunityId(getArguments().getLong("commId"));
 
@@ -132,7 +133,6 @@ public class PNCommunityFragment extends MyFragment {
             }
         });
 
-
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,8 +142,6 @@ public class PNCommunityFragment extends MyFragment {
                 startActivity(intent);
             }
         });
-
-
 
         gotoCommLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,8 +153,7 @@ public class PNCommunityFragment extends MyFragment {
         return view;
     }
 
-
-    private void getPnInfo(Long id) {
+    private void initInfo(Long id) {
         AppController.getApi().getPNInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
             @Override
             public void success(PreNurseryVM preNurseryVM, Response response) {
@@ -198,15 +195,13 @@ public class PNCommunityFragment extends MyFragment {
 
             }
         });
-
     }
-
 
     private void getNewsFeedByCommunityId(Long commId) {
         AppController.getApi().getCommunityInitialPosts(commId, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response) {
-                System.out.println("array:::::"+array.getPosts().size());
+                System.out.println("array:::::" + array.getPosts().size());
                 feedItems.addAll(array.getPosts());
                 feedListAdapter.notifyDataSetChanged();
             }
@@ -234,5 +229,8 @@ public class PNCommunityFragment extends MyFragment {
         });
     }
 
+    public void setSchool(PreNurseryVM schoolVM) {
+        this.schoolVM = schoolVM;
+    }
 }
 

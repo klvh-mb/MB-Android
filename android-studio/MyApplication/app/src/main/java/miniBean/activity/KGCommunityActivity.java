@@ -3,7 +3,6 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -37,18 +36,7 @@ public class KGCommunityActivity extends FragmentActivity {
         editAction = (ImageView) findViewById(R.id.editAction);
         backAction = (ImageView) findViewById(R.id.backImage);
 
-        Bundle bundle = new Bundle();
-
-        bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
-        bundle.putLong("id", getIntent().getLongExtra("id", 0l));
-        bundle.putString("flag",getIntent().getStringExtra("flag"));
-
-        Fragment fragment = new KGCommunityFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.children_layout, fragment).commit();
-
-        getKGInfo(getIntent().getLongExtra("id", 0l));
+        getSchoolInfo(getIntent().getLongExtra("id", 0l));
 
         // actionbar actions...
         whatsappAction.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +91,7 @@ public class KGCommunityActivity extends FragmentActivity {
             }
         });
     }
+
     private void setUnBookmark(Long id) {
         AppController.getApi().setKGUnBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
@@ -117,7 +106,7 @@ public class KGCommunityActivity extends FragmentActivity {
         });
     }
 
-    private void getKGInfo(Long id) {
+    private void getSchoolInfo(Long id) {
         AppController.getApi().getKGInfo(id, AppController.getInstance().getSessionId(), new Callback<KindergartenVM>() {
             @Override
             public void success(KindergartenVM vm, Response response) {
@@ -128,6 +117,8 @@ public class KGCommunityActivity extends FragmentActivity {
                 } else {
                     bookmarkAction.setImageResource(R.drawable.ic_bookmark);
                 }
+
+                initFragment();
             }
 
             @Override
@@ -136,6 +127,20 @@ public class KGCommunityActivity extends FragmentActivity {
             }
         });
     }
+
+    private void initFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
+        bundle.putLong("id", getIntent().getLongExtra("id", 0l));
+        bundle.putString("flag", getIntent().getStringExtra("flag"));
+
+        KGCommunityFragment fragment = new KGCommunityFragment();
+        fragment.setSchool(schoolVM);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.children_layout, fragment).commit();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

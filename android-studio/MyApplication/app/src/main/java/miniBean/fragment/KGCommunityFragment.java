@@ -48,6 +48,8 @@ public class KGCommunityFragment extends MyFragment {
     private ImageView couponImage,govtImage;
     private LinearLayout gotoCommLayout;
 
+    private KindergartenVM schoolVM;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -131,7 +133,6 @@ public class KGCommunityFragment extends MyFragment {
             }
         });
 
-
         editAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,8 +143,6 @@ public class KGCommunityFragment extends MyFragment {
             }
         });
 
-
-
         gotoCommLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +152,6 @@ public class KGCommunityFragment extends MyFragment {
 
         return view;
     }
-
 
     private void getKGInfo(Long id) {
         AppController.getApi().getKGInfo(id, AppController.getInstance().getSessionId(), new Callback<KindergartenVM>() {
@@ -197,15 +195,13 @@ public class KGCommunityFragment extends MyFragment {
 
             }
         });
-
     }
-
 
     private void getNewsFeedByCommunityId(Long commId) {
         AppController.getApi().getCommunityInitialPosts(commId, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response) {
-                System.out.println("array:::::"+array.getPosts().size());
+                System.out.println("array:::::" + array.getPosts().size());
                 feedItems.addAll(array.getPosts());
                 feedListAdapter.notifyDataSetChanged();
             }
@@ -233,5 +229,8 @@ public class KGCommunityFragment extends MyFragment {
         });
     }
 
+    public void setSchool(KindergartenVM schoolVM) {
+        this.schoolVM = schoolVM;
+    }
 }
 

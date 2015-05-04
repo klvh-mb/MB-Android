@@ -3,7 +3,6 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -37,18 +36,7 @@ public class PNCommunityActivity extends FragmentActivity {
         editAction = (ImageView) findViewById(R.id.editAction);
         backAction = (ImageView) findViewById(R.id.backImage);
 
-        Bundle bundle = new Bundle();
-
-        bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
-        bundle.putLong("id", getIntent().getLongExtra("id", 0l));
-        bundle.putString("flag",getIntent().getStringExtra("flag"));
-
-        Fragment fragment = new PNCommunityFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.children_layout, fragment).commit();
-
-        getPNInfo(getIntent().getLongExtra("id", 0l));
+        getSchoolInfo(getIntent().getLongExtra("id", 0l));
 
         // actionbar actions...
         whatsappAction.setOnClickListener(new View.OnClickListener() {
@@ -118,24 +106,41 @@ public class PNCommunityActivity extends FragmentActivity {
         });
     }
 
-    private void getPNInfo(Long id) {
+    private void getSchoolInfo(Long id) {
         AppController.getApi().getPNInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
             @Override
             public void success(PreNurseryVM vm, Response response) {
                 schoolVM = vm;
                 isBookmarked = schoolVM.isBookmarked();
-                if(isBookmarked){
+                if (isBookmarked) {
                     bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
-                }else{
+                } else {
                     bookmarkAction.setImageResource(R.drawable.ic_bookmark);
                 }
+
+                initFragment();
             }
+
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
             }
         });
     }
+
+    private void initFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
+        bundle.putLong("id", getIntent().getLongExtra("id", 0l));
+        bundle.putString("flag", getIntent().getStringExtra("flag"));
+
+        PNCommunityFragment fragment = new PNCommunityFragment();
+        fragment.setSchool(schoolVM);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragment.setArguments(bundle);
+        fragmentTransaction.replace(R.id.children_layout, fragment).commit();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

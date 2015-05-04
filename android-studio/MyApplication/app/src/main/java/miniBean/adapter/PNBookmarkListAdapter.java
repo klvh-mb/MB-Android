@@ -18,23 +18,23 @@ import miniBean.viewmodel.PreNurseryVM;
 public class PNBookmarkListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<PreNurseryVM> PNlistItem;
+    private List<PreNurseryVM> schoolVMList;
     private ImageView icon;
     private TextView noOfComment,title,district;
 
-    public PNBookmarkListAdapter(Activity activity, List<PreNurseryVM> PNlistItem) {
+    public PNBookmarkListAdapter(Activity activity, List<PreNurseryVM> schoolVMList) {
         this.activity = activity;
-        this.PNlistItem = PNlistItem;
+        this.schoolVMList = schoolVMList;
     }
 
     @Override
     public int getCount() {
-        return PNlistItem.size();
+        return schoolVMList.size();
     }
 
     @Override
     public PreNurseryVM getItem(int i) {
-        return PNlistItem.get(i);
+        return schoolVMList.get(i);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PNBookmarkListAdapter extends BaseAdapter {
         district = (TextView) view.findViewById(R.id.districtText);
         noOfComment = (TextView) view.findViewById(R.id.totalCommentText);
 
-        PreNurseryVM item = PNlistItem.get(i);
+        PreNurseryVM item = schoolVMList.get(i);
 
         int iconMapped = CommunityIconUtil.map(item.getIcon());
         if (iconMapped != -1) {
@@ -66,7 +66,7 @@ public class PNBookmarkListAdapter extends BaseAdapter {
 
         title.setText(item.getN());
         district.setText(item.getDis());
-        noOfComment.setText(""+item.getNop());
+        noOfComment.setText(item.getNop()+"");
 
         return view;
     }
