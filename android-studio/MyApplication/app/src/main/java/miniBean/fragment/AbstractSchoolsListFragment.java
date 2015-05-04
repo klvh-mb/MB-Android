@@ -279,9 +279,12 @@ public abstract class AbstractSchoolsListFragment extends MyFragment {
 
     @Override
     public boolean allowBackPressed() {
+        // if search mode, back will exit search mode
+        // and swallow the event
         if (!searchWindow.isIconified()) {
             activityUtil.hideInputMethodWindow(searchWindow);
 
+            // HACK!!! to dismiss soft keyboard...
             if (dismissSearchPressCount > 0) {
                 dismissSearchMode();
             } else {
@@ -299,6 +302,7 @@ public abstract class AbstractSchoolsListFragment extends MyFragment {
         searchWindow.setIconified(true);
         activityUtil.hideInputMethodWindow(searchWindow);
         dismissSearchPressCount = 0;
+        listView.smoothScrollToPosition(0);
     }
 
     protected void selectDistrict(int index) {
