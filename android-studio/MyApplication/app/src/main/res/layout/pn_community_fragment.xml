@@ -128,8 +128,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:visibility="visible">
+                android:layout_marginRight="15dp">
                 <TextView
                     android:id="@+id/infoText"
                     android:layout_width="wrap_content"
@@ -422,13 +421,12 @@
                     android:layout_height="3dp"
                     android:layout_below="@+id/contactTitle"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/dottedline"
-                    />
+                    android:background="@drawable/dottedline" />
 
                 <LinearLayout
                     android:id="@+id/addressLayout"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="20dp"
                     android:layout_below="@+id/contactTitle"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -438,20 +436,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
-                        android:textColor="@color/dark_gray_3" />
+                        android:textColor="@color/dark_gray_3"
+                        android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:id="@+id/addressIcon"
+                        android:src="@drawable/ic_loc"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp" />
+
                     <TextView
                         android:id="@+id/addressValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="-"
-                        android:textColor="@color/dark_gray_3"
+                        android:textColor="@color/link"
                         android:textSize="15dp"
-                        android:layout_marginLeft="5dp" />
-                    </LinearLayout>
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/phoneLayout"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_below="@+id/addressLayout"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -461,19 +470,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
-                        android:textColor="@color/dark_gray_3" />
+                        android:textColor="@color/dark_gray_3"
+                        android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:id="@+id/phoneIcon"
+                        android:src="@drawable/ic_call"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp" />
+
                     <TextView
                         android:id="@+id/phoneValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="-"
-                        android:textColor="@color/dark_gray_3"
+                        android:textColor="@color/link"
                         android:textSize="15dp"
-                        android:layout_marginLeft="5dp" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/webLayout"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_below="@+id/phoneLayout"
                     android:layout_height="wrap_content"
@@ -484,7 +504,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
-                        android:textColor="@color/dark_gray_3" />
+                        android:textColor="@color/dark_gray_3"
+                        android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:id="@+id/websiteIcon"
+                        android:src="@drawable/ic_url"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp" />
+
                     <TextView
                         android:id="@+id/websiteValue"
                         android:layout_width="wrap_content"
@@ -492,12 +522,13 @@
                         android:textColor="@color/link"
                         android:text="-"
                         android:textSize="15dp"
-                        android:layout_marginLeft="5dp" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical" />
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/govsiteLayout"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_below="@+id/webLayout"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -509,6 +540,15 @@
                         android:textSize="15dp"
                         android:textColor="@color/dark_gray_3"
                         android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:id="@+id/govsiteIcon"
+                        android:src="@drawable/ic_url"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp" />
+
                     <ImageView
                         android:id="@+id/govtImage"
                         android:layout_width="22dp"
@@ -552,16 +592,17 @@
                     android:layout_gravity="right"
                     android:layout_alignParentRight="true"
                     android:baselineAligned="false"
-                    android:layout_alignParentStart="false">
+                    android:layout_alignParentStart="false"
+                    android:id="@+id/newPostLayout">
                 <ImageView
-                    android:id="@+id/editAction"
+                    android:id="@+id/newPostIcon"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:src="@drawable/edit_post"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="New Post"
+                        android:text="@string/schools_landing_new_post"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
                         android:textColor="#ffffff" />

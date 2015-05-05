@@ -33,7 +33,7 @@ public class KGCommunityActivity extends FragmentActivity {
 
         whatsappAction = (ImageView) findViewById(R.id.whatsappAction);
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
-        editAction = (ImageView) findViewById(R.id.editAction);
+        editAction = (ImageView) findViewById(R.id.newPostIcon);
         backAction = (ImageView) findViewById(R.id.backImage);
 
         getSchoolInfo(getIntent().getLongExtra("id", 0l));
@@ -130,8 +130,8 @@ public class KGCommunityActivity extends FragmentActivity {
 
     private void initFragment() {
         Bundle bundle = new Bundle();
-        bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
-        bundle.putLong("id", getIntent().getLongExtra("id", 0l));
+        bundle.putLong("commId", getIntent().getLongExtra("commId", 0L));
+        bundle.putLong("id", getIntent().getLongExtra("id", 0L));
         bundle.putString("flag", getIntent().getStringExtra("flag"));
 
         KGCommunityFragment fragment = new KGCommunityFragment();

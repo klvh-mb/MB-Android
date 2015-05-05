@@ -28,7 +28,7 @@ public class MyCommunityFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.my_community_fragement, container, false);
 
-        editAction = (ImageView) view.findViewById(R.id.editAction);
+        editAction = (ImageView) view.findViewById(R.id.newPostIcon);
         signInAction = (ImageView) view.findViewById(R.id.signInAction);
         newsfeed = (Button) view.findViewById(R.id.buttonNewsfeed);
         joined = (Button) view.findViewById(R.id.buttonJoined);

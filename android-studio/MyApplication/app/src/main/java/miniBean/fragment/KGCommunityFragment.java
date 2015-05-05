@@ -25,6 +25,7 @@ import miniBean.activity.NewPostActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
+import miniBean.util.ExternalLauncherUtil;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PostArray;
@@ -37,8 +38,8 @@ public class KGCommunityFragment extends MyFragment {
     private TextView nameText,districtText,enNameText,orgValue,typeValue,timeValue,curriculumValue;
     private TextView studentNum,halfDayValue,fullDayValue,curriculumContent,addressText,phoneValue;
     private TextView websiteValue,postCount;
-    private ImageView urlValueImage,editAction;
     private ScrollView scrollView;
+    private String govtUrlValue;
 
     private NewsfeedListAdapter feedListAdapter;
     private List<CommunityPostVM> feedItems;
@@ -46,7 +47,7 @@ public class KGCommunityFragment extends MyFragment {
     private ListView postList;
 
     private ImageView couponImage,pnImage,govtImage;
-    private LinearLayout gotoCommLayout;
+    private LinearLayout gotoCommLayout,newPostLayout;
 
     private KindergartenVM schoolVM;
 
@@ -72,15 +73,14 @@ public class KGCommunityFragment extends MyFragment {
         addressText = (TextView) view.findViewById(R.id.addressValue);
         phoneValue = (TextView) view.findViewById(R.id.phoneValue);
         websiteValue = (TextView) view.findViewById(R.id.websiteValue);
-        urlValueImage = (ImageView) view.findViewById(R.id.govtImage);
-        editAction = (ImageView) view.findViewById(R.id.editAction);
+        newPostLayout = (LinearLayout) view.findViewById(R.id.newPostLayout);
         postList = (ListView) view.findViewById(R.id.postList);
         postCount = (TextView) view.findViewById(R.id.postCount);
         gotoCommLayout = (LinearLayout) view.findViewById(R.id.gotoCommLayout);
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         govtImage = (ImageView) view.findViewById(R.id.govtImage);
 
-        getKGInfo(getArguments().getLong("id"));
+        initInfo();
 
         getNewsFeedByCommunityId(getArguments().getLong("commId"));
 
@@ -125,12 +125,12 @@ public class KGCommunityFragment extends MyFragment {
             }
         });
 
-        editAction.setOnClickListener(new View.OnClickListener() {
+        newPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),NewPostActivity.class);
-                intent.putExtra("id",getArguments().getLong("commId"));
-                intent.putExtra("flag","FromKG");
+                Intent intent = new Intent(getActivity(), NewPostActivity.class);
+                intent.putExtra("id", getArguments().getLong("commId"));
+                intent.putExtra("flag", "FromKG");
                 startActivity(intent);
             }
         });
@@ -142,66 +142,84 @@ public class KGCommunityFragment extends MyFragment {
             }
         });
 
+        addressText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExternalLauncherUtil.launchMap(KGCommunityFragment.this.getActivity(), addressText.getText().toString());
+            }
+        });
+
+        phoneValue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExternalLauncherUtil.launchCall(KGCommunityFragment.this.getActivity(), phoneValue.getText().toString());
+            }
+        });
+
+        websiteValue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExternalLauncherUtil.launchBrowser(KGCommunityFragment.this.getActivity(), websiteValue.getText().toString());
+            }
+        });
+
+        govtImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExternalLauncherUtil.launchBrowser(KGCommunityFragment.this.getActivity(), govtUrlValue);
+            }
+        });
+
         return view;
     }
 
-    private void getKGInfo(Long id) {
-        AppController.getApi().getKGInfo(id, AppController.getInstance().getSessionId(), new Callback<KindergartenVM>() {
+    private void initInfo() {
+        nameText.setText(schoolVM.getN());
+        if (StringUtils.isEmpty(schoolVM.getNe())) {
+            enNameText.setVisibility(View.GONE);
+        } else {
+            enNameText.setText(schoolVM.getNe());
+            enNameText.setVisibility(View.VISIBLE);
+        }
+        districtText.setText(schoolVM.getDis());
+        typeValue.setText(schoolVM.getOrgt());
+        timeValue.setText(schoolVM.getCt());
+        orgValue.setText(schoolVM.getOrg());
+        curriculumContent.setText(schoolVM.getCur());
+        curriculumValue.setText(schoolVM.getCurt());
+        //halfDayValue.setText(schoolVM.getFeeHd());
+        //fullDayValue.setText(schoolVM.getFeeWd());
+        //studentNum.setText(schoolVM.getNadm());
+        websiteValue.setText(schoolVM.getUrl());
+        phoneValue.setText(schoolVM.getPho());
+        addressText.setText(schoolVM.getAdr());
+        postCount.setText(schoolVM.getNop() + "");
+
+        govtUrlValue = schoolVM.getGovUrl();
+        if (govtUrlValue != null) {
+            govtImage.setImageResource(R.drawable.schools_gov);
+        }
+
+        if (schoolVM.isCp()) {
+            couponImage.setImageResource(R.drawable.value_yes);
+        } else {
+            couponImage.setImageResource(R.drawable.value_no);
+        }
+
+        if (schoolVM.hasPN()) {
+            pnImage.setImageResource(R.drawable.value_yes);
+        } else {
+            pnImage.setImageResource(R.drawable.value_no);
+        }
+
+        scrollView.post(new Runnable() {
             @Override
-            public void success(KindergartenVM vm, Response response) {
-                nameText.setText(vm.getN());
-                if (StringUtils.isEmpty(vm.getNe())) {
-                    enNameText.setVisibility(View.GONE);
+            public void run() {
+                if ("FromCommentImage".equals(getArguments().getString("flag"))) {
+                    scrollView.fullScroll(View.FOCUS_DOWN);
                 } else {
-                    enNameText.setText(vm.getNe());
-                    enNameText.setVisibility(View.VISIBLE);
+                    scrollView.fullScroll(View.FOCUS_UP);
                 }
-                districtText.setText(vm.getDis());
-                typeValue.setText(vm.getOrgt());
-                timeValue.setText(vm.getCt());
-                orgValue.setText(vm.getOrg());
-                curriculumContent.setText(vm.getCur());
-                curriculumValue.setText(vm.getCurt());
-                //halfDayValue.setText(vm.getFeeHd());
-                //fullDayValue.setText(vm.getFeeWd());
-                //studentNum.setText(vm.getNadm());
-                websiteValue.setText(vm.getUrl());
-                phoneValue.setText(vm.getPho());
-                addressText.setText(vm.getAdr());
-                postCount.setText(vm.getNop() + "");
-
-                if (vm.getGovUrl() != null) {
-                    govtImage.setImageResource(R.drawable.schools_gov);
-                }
-
-                if (vm.isCp()) {
-                    couponImage.setImageResource(R.drawable.value_yes);
-                } else {
-                    couponImage.setImageResource(R.drawable.value_no);
-                }
-
-                if (vm.hasPN()) {
-                    pnImage.setImageResource(R.drawable.value_yes);
-                } else {
-                    pnImage.setImageResource(R.drawable.value_no);
-                }
-
-                scrollView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if ("FromCommentImage".equals(getArguments().getString("flag"))) {
-                            scrollView.fullScroll(View.FOCUS_DOWN);
-                        } else {
-                            scrollView.fullScroll(View.FOCUS_UP);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-
             }
         });
     }

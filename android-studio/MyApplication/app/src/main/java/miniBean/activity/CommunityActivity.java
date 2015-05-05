@@ -26,7 +26,7 @@ public class CommunityActivity extends FragmentActivity {
         getActionBar().setCustomView(R.layout.community_actionbar);
         backImage = (ImageView) this.findViewById(R.id.backImage);
         titleAction = (TextView) this.findViewById(R.id.title);
-        editAction = (ImageView) this.findViewById(R.id.editAction);
+        editAction = (ImageView) this.findViewById(R.id.newPostIcon);
 
         Bundle bundle = new Bundle();
         if (getIntent().getStringExtra("flag") != null) {

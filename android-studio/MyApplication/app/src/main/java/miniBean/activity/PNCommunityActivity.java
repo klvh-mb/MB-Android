@@ -33,7 +33,7 @@ public class PNCommunityActivity extends FragmentActivity {
 
         whatsappAction = (ImageView) findViewById(R.id.whatsappAction);
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
-        editAction = (ImageView) findViewById(R.id.editAction);
+        editAction = (ImageView) findViewById(R.id.newPostIcon);
         backAction = (ImageView) findViewById(R.id.backImage);
 
         getSchoolInfo(getIntent().getLongExtra("id", 0L));

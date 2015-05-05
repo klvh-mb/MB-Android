@@ -26,6 +26,7 @@ import miniBean.activity.NewPostActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
+import miniBean.util.ExternalLauncherUtil;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.PreNurseryVM;
@@ -38,7 +39,6 @@ public class PNCommunityFragment extends MyFragment {
     private TextView nameText,districtText,enNameText,orgValue,typeValue,timeValue,curriculumValue;
     private TextView studentNum,halfDayValue,fullDayValue,curriculumContent,addressText,phoneValue;
     private TextView websiteValue,postCount;
-    private ImageView urlValueImage,editAction;
     private ScrollView scrollView;
     private String govtUrlValue;
 
@@ -48,7 +48,7 @@ public class PNCommunityFragment extends MyFragment {
     private ListView postList;
 
     private ImageView couponImage,govtImage;
-    private LinearLayout gotoCommLayout;
+    private LinearLayout gotoCommLayout,newPostLayout;
 
     private PreNurseryVM schoolVM;
 
@@ -73,15 +73,14 @@ public class PNCommunityFragment extends MyFragment {
         addressText = (TextView) view.findViewById(R.id.addressValue);
         phoneValue = (TextView) view.findViewById(R.id.phoneValue);
         websiteValue = (TextView) view.findViewById(R.id.websiteValue);
-        urlValueImage = (ImageView) view.findViewById(R.id.govtImage);
-        editAction = (ImageView) view.findViewById(R.id.editAction);
+        newPostLayout = (LinearLayout) view.findViewById(R.id.newPostLayout);
         postList = (ListView) view.findViewById(R.id.postList);
         postCount = (TextView) view.findViewById(R.id.postCount);
         gotoCommLayout = (LinearLayout) view.findViewById(R.id.gotoCommLayout);
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         govtImage = (ImageView) view.findViewById(R.id.govtImage);
 
-        initInfo(getArguments().getLong("id"));
+        initInfo();
 
         getNewsFeedByCommunityId(getArguments().getLong("commId"));
 
@@ -126,12 +125,12 @@ public class PNCommunityFragment extends MyFragment {
             }
         });
 
-        editAction.setOnClickListener(new View.OnClickListener() {
+        newPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),NewPostActivity.class);
-                intent.putExtra("id",getArguments().getLong("commId"));
-                intent.putExtra("flag","FromPN");
+                Intent intent = new Intent(getActivity(), NewPostActivity.class);
+                intent.putExtra("id", getArguments().getLong("commId"));
+                intent.putExtra("flag", "FromPN");
                 startActivity(intent);
             }
         });
@@ -143,102 +142,78 @@ public class PNCommunityFragment extends MyFragment {
             }
         });
 
+        addressText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExternalLauncherUtil.launchMap(PNCommunityFragment.this.getActivity(), addressText.getText().toString());
+            }
+        });
+
         phoneValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent phoneCallIntent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+phoneValue.getText().toString()));
-                startActivity(phoneCallIntent);
-
+                ExternalLauncherUtil.launchCall(PNCommunityFragment.this.getActivity(), phoneValue.getText().toString());
             }
         });
 
         websiteValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse(websiteValue.getText().toString()));
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                startActivity(intent);
-
-            }
-        });
-
-        addressText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String map = "http://maps.google.com.hk/maps?q=" +addressText.getText().toString();
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
-                startActivity(intent);
-
+                ExternalLauncherUtil.launchBrowser(PNCommunityFragment.this.getActivity(), websiteValue.getText().toString());
             }
         });
 
         govtImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse(govtUrlValue));
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                startActivity(intent);
+                ExternalLauncherUtil.launchBrowser(PNCommunityFragment.this.getActivity(), govtUrlValue);
             }
         });
 
         return view;
     }
 
-    private void initInfo(Long id) {
-        AppController.getApi().getPNInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
+    private void initInfo() {
+        nameText.setText(schoolVM.getN());
+        if (StringUtils.isEmpty(schoolVM.getNe())) {
+            enNameText.setVisibility(View.GONE);
+        } else {
+            enNameText.setText(schoolVM.getNe());
+            enNameText.setVisibility(View.VISIBLE);
+        }
+        districtText.setText(schoolVM.getDis());
+        typeValue.setText(schoolVM.getOrgt());
+        timeValue.setText(schoolVM.getCt());
+        orgValue.setText(schoolVM.getOrg());
+        curriculumContent.setText(schoolVM.getCur());
+        curriculumValue.setText(schoolVM.getCurt());
+        halfDayValue.setText(schoolVM.getFeeHd());
+        fullDayValue.setText(schoolVM.getFeeWd());
+        studentNum.setText(schoolVM.getNadm());
+        websiteValue.setText(schoolVM.getUrl());
+        phoneValue.setText(schoolVM.getPho());
+        addressText.setText(schoolVM.getAdr());
+        postCount.setText(schoolVM.getNop() + "");
+
+        govtUrlValue = schoolVM.getGovUrl();
+        if (govtUrlValue != null) {
+            govtImage.setImageResource(R.drawable.schools_gov);
+        }
+
+        if (schoolVM.isCp()) {
+            couponImage.setImageResource(R.drawable.value_yes);
+        } else {
+            couponImage.setImageResource(R.drawable.value_no);
+        }
+
+        scrollView.post(new Runnable() {
             @Override
-            public void success(PreNurseryVM preNurseryVM, Response response) {
-                nameText.setText(preNurseryVM.getN());
-                if (StringUtils.isEmpty(preNurseryVM.getNe())) {
-                    enNameText.setVisibility(View.GONE);
+            public void run() {
+                if ("FromCommentImage".equals(getArguments().getString("flag"))) {
+                    scrollView.fullScroll(View.FOCUS_DOWN);
                 } else {
-                    enNameText.setText(preNurseryVM.getNe());
-                    enNameText.setVisibility(View.VISIBLE);
+                    scrollView.fullScroll(View.FOCUS_UP);
                 }
-                districtText.setText(preNurseryVM.getDis());
-                typeValue.setText(preNurseryVM.getOrgt());
-                timeValue.setText(preNurseryVM.getCt());
-                orgValue.setText(preNurseryVM.getOrg());
-                curriculumContent.setText(preNurseryVM.getCur());
-                curriculumValue.setText(preNurseryVM.getCurt());
-                halfDayValue.setText(preNurseryVM.getFeeHd());
-                fullDayValue.setText(preNurseryVM.getFeeWd());
-                studentNum.setText(preNurseryVM.getNadm());
-                websiteValue.setText(preNurseryVM.getUrl());
-                phoneValue.setText(preNurseryVM.getPho());
-                addressText.setText(preNurseryVM.getAdr());
-                postCount.setText(preNurseryVM.getNop() + "");
-
-                govtUrlValue=preNurseryVM.getGovUrl();
-
-                if (govtUrlValue != null) {
-                    govtImage.setImageResource(R.drawable.schools_gov);
-                }
-
-                if (preNurseryVM.isCp()) {
-                    couponImage.setImageResource(R.drawable.value_yes);
-                } else {
-                    couponImage.setImageResource(R.drawable.value_no);
-                }
-
-                scrollView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if ("FromCommentImage".equals(getArguments().getString("flag"))) {
-                            scrollView.fullScroll(View.FOCUS_DOWN);
-                        } else {
-                            scrollView.fullScroll(View.FOCUS_UP);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-
             }
         });
     }

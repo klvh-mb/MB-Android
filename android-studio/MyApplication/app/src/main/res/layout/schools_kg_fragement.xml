@@ -86,7 +86,7 @@
             android:layout_toRightOf="@+id/buttonsLayout">
 
             <ImageView
-                android:id="@+id/editAction"
+                android:id="@+id/newPostIcon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentRight="true"

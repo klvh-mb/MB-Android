@@ -213,6 +213,7 @@
     <string name="schools_landing_title_curriculum">課程資料</string>
     <string name="schools_landing_title_contact">聯絡資料</string>
     <string name="schools_landing_title_comm">討論區</string>
+    <string name="schools_landing_new_post">新話題</string>
 
     <string name="filter_schools_all">全部</string>
     <string name="filter_schools_yes">有</string>
