@@ -255,8 +255,27 @@ public interface MyApi {
     @GET("/unbookmark-kg/{id}")
     public void setKGUnBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
+    //
+    // Top schools APIs
+    //
 
+    @GET("/get-top-viewed-pns")
+    public void getTopViewedPNs(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
 
+    @GET("/get-top-discussed-pns")
+    public void getTopDiscussedPNs(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+
+    @GET("/get-top-bookmarked-pns")
+    public void getTopBookmarkedPNs(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+
+    @GET("/get-top-viewed-kgs")
+    public void getTopViewedKGs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
+
+    @GET("/get-top-discussed-kgs")
+    public void getTopDiscussedKGs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
+
+    @GET("/get-top-bookmarked-kgs")
+    public void getTopBookmarkedKGs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
 }
 
 

@@ -7,53 +7,47 @@ package miniBean.viewmodel;
  * To change this template use File | Settings | File Templates.
  */
 public class PreNurseryVM {
-    private static final String MAPURL_PREFIX = "http://maps.google.com.hk/maps?q=";
-
-     public Long id;
-     public Long commId;
+    public Long id;
+    public Long commId;
     public String icon;
-      public boolean myd;
-      public String dis;
-      public Long disId;
-        public String n;
-       public String ne;
-      public String url;
-      public String govUrl;
-      public String pho;
-     public String phol;
-       public String em;
-      public String adr;
-      public String map;
+    public boolean myd;
+    public String dis;
+    public Long disId;
+    public String n;
+    public String ne;
+    public String url;
+    public String govUrl;
+    public String pho;
+    public String phol;
+    public String em;
+    public String adr;
+    public String map;
 
-      public String org;
-      public String orgt;
-      public boolean cp;
-      public String ct;
-      public String cur;
-      public String curt;
-      public String feeHd;
-      public String feeWd;
-     public String nadm;
+    public String org;
+    public String orgt;
+    public boolean cp;
+    public String ct;
+    public String cur;
+    public String curt;
+    public String feeHd;
+    public String feeWd;
+    public String nadm;
     
-     public int nop;
-     public int nol;
+    public int nop;
+    public int nol;
     public int nov;
-     public int nob;
+    public int nob;
 
-     public String appTxt = null;
+    public String appTxt = null;
 
-     public boolean isLike = false;
-     public boolean isBookmarked = false;
+    public boolean isLike = false;
+    public boolean isBookmarked = false;
 
     public PreNurseryVM() {
     }
 
     public PreNurseryVM(String name){
         nadm = name;
-    }
-
-    public static String getMapurlPrefix() {
-        return MAPURL_PREFIX;
     }
 
     public Long getId() {

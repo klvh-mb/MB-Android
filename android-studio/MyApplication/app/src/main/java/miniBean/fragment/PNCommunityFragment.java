@@ -166,7 +166,7 @@ public class PNCommunityFragment extends MyFragment {
         addressText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String map = "http://maps.google.co.in/maps?q=" +addressText.getText().toString();
+                String map = "http://maps.google.com.hk/maps?q=" +addressText.getText().toString();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
                 startActivity(intent);
 

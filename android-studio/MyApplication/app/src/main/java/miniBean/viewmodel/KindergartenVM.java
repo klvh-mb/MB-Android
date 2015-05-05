@@ -1,8 +1,6 @@
 package miniBean.viewmodel;
 
 public class KindergartenVM {
-    private static final String MAPURL_PREFIX = "http://maps.google.com.hk/maps?q=";
-
     public Long id;
     public Long commId;
     public String icon;
@@ -37,6 +35,16 @@ public class KindergartenVM {
     public String feePmU;
     public String feeWdU;
 
+    public String cpFeeAmN;
+    public String cpFeePmN;
+    public String cpFeeWdN;
+    public String cpFeeAmL;
+    public String cpFeePmL;
+    public String cpFeeWdL;
+    public String cpFeeAmU;
+    public String cpFeePmU;
+    public String cpFeeWdU;
+
     public String nadAmN;
     public String nadPmN;
     public String nadWdN;
@@ -46,6 +54,9 @@ public class KindergartenVM {
     public String nadAmU;
     public String nadPmU;
     public String nadWdU;
+    public String nadAmT;
+    public String nadPmT;
+    public String nadWdT;
 
     public int nop;
     public int nol;
@@ -57,10 +68,6 @@ public class KindergartenVM {
     public boolean isLike = false;
     public boolean isBookmarked = false;
 
-
-    public static String getMapurlPrefix() {
-        return MAPURL_PREFIX;
-    }
 
     public Long getId() {
         return id;
@@ -236,150 +243,6 @@ public class KindergartenVM {
 
     public void setHasPN(boolean hasPN) {
         this.hasPN = hasPN;
-    }
-
-    public String getFeeAmN() {
-        return feeAmN;
-    }
-
-    public void setFeeAmN(String feeAmN) {
-        this.feeAmN = feeAmN;
-    }
-
-    public String getFeePmN() {
-        return feePmN;
-    }
-
-    public void setFeePmN(String feePmN) {
-        this.feePmN = feePmN;
-    }
-
-    public String getFeeWdN() {
-        return feeWdN;
-    }
-
-    public void setFeeWdN(String feeWdN) {
-        this.feeWdN = feeWdN;
-    }
-
-    public String getFeeAmL() {
-        return feeAmL;
-    }
-
-    public void setFeeAmL(String feeAmL) {
-        this.feeAmL = feeAmL;
-    }
-
-    public String getFeePmL() {
-        return feePmL;
-    }
-
-    public void setFeePmL(String feePmL) {
-        this.feePmL = feePmL;
-    }
-
-    public String getFeeWdL() {
-        return feeWdL;
-    }
-
-    public void setFeeWdL(String feeWdL) {
-        this.feeWdL = feeWdL;
-    }
-
-    public String getFeeAmU() {
-        return feeAmU;
-    }
-
-    public void setFeeAmU(String feeAmU) {
-        this.feeAmU = feeAmU;
-    }
-
-    public String getFeePmU() {
-        return feePmU;
-    }
-
-    public void setFeePmU(String feePmU) {
-        this.feePmU = feePmU;
-    }
-
-    public String getFeeWdU() {
-        return feeWdU;
-    }
-
-    public void setFeeWdU(String feeWdU) {
-        this.feeWdU = feeWdU;
-    }
-
-    public String getNadAmN() {
-        return nadAmN;
-    }
-
-    public void setNadAmN(String nadAmN) {
-        this.nadAmN = nadAmN;
-    }
-
-    public String getNadPmN() {
-        return nadPmN;
-    }
-
-    public void setNadPmN(String nadPmN) {
-        this.nadPmN = nadPmN;
-    }
-
-    public String getNadWdN() {
-        return nadWdN;
-    }
-
-    public void setNadWdN(String nadWdN) {
-        this.nadWdN = nadWdN;
-    }
-
-    public String getNadAmL() {
-        return nadAmL;
-    }
-
-    public void setNadAmL(String nadAmL) {
-        this.nadAmL = nadAmL;
-    }
-
-    public String getNadPmL() {
-        return nadPmL;
-    }
-
-    public void setNadPmL(String nadPmL) {
-        this.nadPmL = nadPmL;
-    }
-
-    public String getNadWdL() {
-        return nadWdL;
-    }
-
-    public void setNadWdL(String nadWdL) {
-        this.nadWdL = nadWdL;
-    }
-
-    public String getNadAmU() {
-        return nadAmU;
-    }
-
-    public void setNadAmU(String nadAmU) {
-        this.nadAmU = nadAmU;
-    }
-
-    public String getNadPmU() {
-        return nadPmU;
-    }
-
-    public void setNadPmU(String nadPmU) {
-        this.nadPmU = nadPmU;
-    }
-
-    public String getNadWdU() {
-        return nadWdU;
-    }
-
-    public void setNadWdU(String nadWdU) {
-        this.nadWdU = nadWdU;
     }
 
     public int getNop() {
