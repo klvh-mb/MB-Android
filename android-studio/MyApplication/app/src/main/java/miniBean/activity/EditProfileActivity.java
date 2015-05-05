@@ -1,6 +1,8 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -12,12 +14,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.UserInfoCache;
+import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserProfileDataVM;
@@ -43,11 +48,15 @@ public class EditProfileActivity extends FragmentActivity {
     public List<String> locations;
     private List<LocationVM> locationVMList;
 
+    protected ActivityUtil activityUtil;
+
     ImageView backImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        activityUtil = new ActivityUtil(this);
 
         setContentView(R.layout.edit_profile_activity);
 
@@ -138,7 +147,7 @@ public class EditProfileActivity extends FragmentActivity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-
+                retrofitError.printStackTrace();
             }
         });
     }
@@ -160,8 +169,33 @@ public class EditProfileActivity extends FragmentActivity {
             }
             @Override
             public void failure(RetrofitError error) {
-                    error.printStackTrace();
+                String errorMsg = EditProfileActivity.this.activityUtil.getResponseBody(error.getResponse());
+                if (error.getResponse() != null &&
+                        error.getResponse().getStatus() == 500) {
+                    if (!StringUtils.isEmpty(errorMsg)) {
+                        alert("Existing DisplayName", errorMsg);
+                    } else {
+                        alert("Error", "Fill correct info");
+                    }
+                } else {
+                    alert("Error", "Fill correct info");
+                }
+                error.printStackTrace();
             }
         });
+    }
+
+    protected void alert(String title, String message) {
+        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
+                .setTitle(title)
+                .setMessage(message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
     }
 }
