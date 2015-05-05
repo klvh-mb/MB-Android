@@ -108,7 +108,7 @@ public class RequestListFragment extends Fragment {
                             Log.d(RequestListFragment.this.getClass().getSimpleName(), "click request: commId="+commId);
 
                             Intent intent = new Intent(getActivity(), CommunityActivity.class);
-                            intent.putExtra("id", String.valueOf(commId));
+                            intent.putExtra("id", commId);
                             intent.putExtra("flag", "FromRequest");
                             startActivity(intent);
                         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class RequestListFragment extends Fragment {
 
                     /*if(item.getTp().equals("FRD_REQUEST")){
                         Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-                        intent.putExtra("id",item.getUrl().getTarget().toString());
+                        intent.putExtra("id",item.getUrl().getTarget());
                         startActivity(intent);
                     }*/
                 }

@@ -51,7 +51,7 @@ public class TopicCommunityFragment extends Fragment {
                 CommunitiesWidgetChildVM childVM = topicAdapter.getItem(position);
                 if (childVM != null) {
                     Intent intent = new Intent(getActivity(), CommunityActivity.class);
-                    intent.putExtra("id", childVM.getId().toString());
+                    intent.putExtra("id", childVM.getId());
                     intent.putExtra("noMember", childVM.getMm().toString());
                     intent.putExtra("noPost", noPost);
                     intent.putExtra("icon", childVM.getGi());

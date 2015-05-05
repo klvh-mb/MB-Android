@@ -84,10 +84,10 @@ public class CommunityFragment extends Fragment {
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
         if(!getArguments().getString("flag").equals("FromDetailActivity")) {
-            commId = Long.parseLong(getArguments().getString("id"));
+            commId = getArguments().getLong("id");
             initializeData();
         } else {
-            getCommunity(Long.parseLong(getArguments().getString("id")));
+            getCommunity(getArguments().getLong("id"));
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -117,7 +117,7 @@ public class CommunityFragment extends Fragment {
             public void onLoadMore(int page, int totalItemsCount) {
                 loadingFooter.setVisibility(View.VISIBLE);
                 loadNewsfeed(
-                        Long.parseLong(getArguments().getString("id")),
+                        getArguments().getLong("id"),
                         feedItems.get(feedItems.size()-1).getUt()+"",       // NOTE: use updateTime not createTime!!
                         page-1);
             }

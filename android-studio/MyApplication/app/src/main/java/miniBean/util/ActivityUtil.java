@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import retrofit.RetrofitError;
 
 /**
  * Created by keithlei on 3/16/15.
@@ -81,7 +82,7 @@ public class ActivityUtil {
     // Retrofit
     //
 
-    public String getResponseBody(retrofit.client.Response response) {
+    public static String getResponseBody(retrofit.client.Response response) {
         BufferedReader reader = null;
         StringBuilder sb = new StringBuilder();
         try {
@@ -100,11 +101,19 @@ public class ActivityUtil {
         return sb.toString();
     }
 
+    public static int getErrorStatusCode(RetrofitError error) {
+        if (error.isNetworkError()) {
+            return 550; // Use another code if you'd prefer
+        }
+
+        return error.getResponse().getStatus();
+    }
+
     //
     // Network
     //
 
-    public boolean isOnline() {
+    public static boolean isOnline() {
         ConnectivityManager conMgr = (ConnectivityManager) AppController.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
 

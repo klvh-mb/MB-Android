@@ -45,7 +45,7 @@ public class KGCommunityFragment extends MyFragment {
 
     private ListView postList;
 
-    private ImageView couponImage,govtImage;
+    private ImageView couponImage,pnImage,govtImage;
     private LinearLayout gotoCommLayout;
 
     private KindergartenVM schoolVM;
@@ -64,6 +64,7 @@ public class KGCommunityFragment extends MyFragment {
         timeValue = (TextView) view.findViewById(R.id.timeValueText);
         typeValue = (TextView) view.findViewById(R.id.typeValueText);
         curriculumValue = (TextView) view.findViewById(R.id.curriValueText);
+        pnImage = (ImageView) view.findViewById(R.id.pnImage);
         studentNum = (TextView) view.findViewById(R.id.studentValue);
         halfDayValue = (TextView) view.findViewById(R.id.halfDayValue);
         fullDayValue = (TextView) view.findViewById(R.id.fullDayValue);
@@ -82,15 +83,6 @@ public class KGCommunityFragment extends MyFragment {
         getKGInfo(getArguments().getLong("id"));
 
         getNewsFeedByCommunityId(getArguments().getLong("commId"));
-
-        if(getArguments().getString("flag").equals("FromCommentImage")){
-            scrollView.post(new Runnable() {
-                @Override
-                public void run() {
-                    scrollView.fullScroll(View.FOCUS_DOWN);
-                }
-            });
-        }
 
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new NewsfeedListAdapter(getActivity(), feedItems, false);
@@ -116,7 +108,7 @@ public class KGCommunityFragment extends MyFragment {
                     intent.putExtra("commId", post.getCid());
                     intent.putExtra("id", getArguments().getLong("id"));
                     intent.putExtra("commId", getArguments().getLong("commId"));
-                    intent.putExtra("flag", "FromSchool");
+                    intent.putExtra("flag", "FromKG");
                     startActivity(intent);
                 }
             }
@@ -137,8 +129,8 @@ public class KGCommunityFragment extends MyFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),NewPostActivity.class);
-                intent.putExtra("id",String.valueOf(getArguments().getLong("commId")));
-                intent.putExtra("flag","FromSchool");
+                intent.putExtra("id",getArguments().getLong("commId"));
+                intent.putExtra("flag","FromKG");
                 startActivity(intent);
             }
         });
@@ -187,6 +179,23 @@ public class KGCommunityFragment extends MyFragment {
                 } else {
                     couponImage.setImageResource(R.drawable.value_no);
                 }
+
+                if (vm.hasPN()) {
+                    pnImage.setImageResource(R.drawable.value_yes);
+                } else {
+                    pnImage.setImageResource(R.drawable.value_no);
+                }
+
+                scrollView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if ("FromCommentImage".equals(getArguments().getString("flag"))) {
+                            scrollView.fullScroll(View.FOCUS_DOWN);
+                        } else {
+                            scrollView.fullScroll(View.FOCUS_UP);
+                        }
+                    }
+                });
             }
 
             @Override
@@ -201,7 +210,6 @@ public class KGCommunityFragment extends MyFragment {
         AppController.getApi().getCommunityInitialPosts(commId, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response) {
-                System.out.println("array:::::" + array.getPosts().size());
                 feedItems.addAll(array.getPosts());
                 feedListAdapter.notifyDataSetChanged();
             }
@@ -217,7 +225,6 @@ public class KGCommunityFragment extends MyFragment {
         AppController.getApi().getCommunityNextPosts(id, date, AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> communityPostVMs, Response response) {
-                System.out.println("on scroll::::::::::::");
                 feedItems.addAll(communityPostVMs);
                 feedListAdapter.notifyDataSetChanged();
             }

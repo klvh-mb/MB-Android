@@ -50,7 +50,6 @@ public class PNBookmarksFragment extends MyFragment {
                 Intent intent = new Intent(getActivity(), PNCommunityActivity.class);
                 intent.putExtra("commId",vm.getCommId());
                 intent.putExtra("id", vm.getId());
-                intent.putExtra("flag","FromPNBookmarks");
                 startActivity(intent);
             }
         });

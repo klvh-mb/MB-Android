@@ -121,26 +121,6 @@ public class DetailActivity extends FragmentActivity {
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
 
-        communityName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(getIntent().getStringExtra("flag").equals("FromSchool")){
-                    Intent intent=new Intent(DetailActivity.this, PNCommunityActivity.class);
-                    intent.putExtra("commId",getIntent().getLongExtra("commId",0l));
-                    intent.putExtra("id", getIntent().getLongExtra("id",0l));
-                    intent.putExtra("flag","FromSchool");
-                    startActivity(intent);
-
-                }else{
-                    Long commId = getIntent().getLongExtra("commId", 0L);
-                    Intent intent = new Intent(DetailActivity.this, CommunityActivity.class);
-                    intent.putExtra("flag", "FromDetailActivity");
-                    intent.putExtra("id", commId + "");
-                    startActivity(intent);
-                }
-            }
-        });
-
         commentEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +129,6 @@ public class DetailActivity extends FragmentActivity {
         });
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        // getActionBar().setCustomView(R.layout.detail_actionbar,);
         getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.detail_actionbar, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
@@ -158,11 +137,9 @@ public class DetailActivity extends FragmentActivity {
                 )
         );
 
-        if(getIntent().getStringExtra("flag").equals("FromSchool")) {
-            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
-        }else{
-            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
-        }
+        // hide it first... show after set actionbar bg with post subtype
+        getActionBar().hide();
+
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         //getActionBar().setTitle("Details");
@@ -185,12 +162,62 @@ public class DetailActivity extends FragmentActivity {
         getQnaDetail();
     }
 
+    private boolean isFromPN(CommunityPostVM post) {
+        String flag = getIntent().getStringExtra("flag");
+        return "FromPN".equals(flag) ||
+                (!"FromKG".equals(flag) && ("PN".equals(post.getSubType()) || "PN_KG".equals(post.getSubType())));
+    }
+
+    private boolean isFromKG(CommunityPostVM post) {
+        String flag = getIntent().getStringExtra("flag");
+        return "FromKG".equals(flag) ||
+                (!"FromPN".equals(flag) && "KG".equals(post.getSubType()));
+    }
+
     private void getQnaDetail() {
         AnimationUtil.show(spinner);
 
         AppController.getApi().qnaLanding(postId, commId, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
             @Override
             public void success(final CommunityPostVM post, Response response) {
+                //Log.d(DetailActivity.class.getSimpleName(), "getQnaDetail: post subtype="+post.getSubType());
+
+                getActionBar().show();
+
+                final boolean isFromPN = isFromPN(post);
+                final boolean isFromKG = isFromKG(post);
+                if (isFromPN) {
+                    getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
+                } else if (isFromKG) {
+                    getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_maroon));
+                } else {
+                    getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
+                }
+
+                communityName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = null;
+                        if (isFromPN) {
+                            intent = new Intent(DetailActivity.this, PNCommunityActivity.class);
+                            intent.putExtra("id", post.getPnId());
+                            intent.putExtra("commId", getIntent().getLongExtra("commId", 0L));
+                            intent.putExtra("flag", "FromPN");
+                        } else if (isFromKG) {
+                            intent = new Intent(DetailActivity.this, KGCommunityActivity.class);
+                            intent.putExtra("id", post.getKgId());
+                            intent.putExtra("commId",getIntent().getLongExtra("commId",0L));
+                            intent.putExtra("flag", "FromKG");
+                        } else {
+                            intent = new Intent(DetailActivity.this, CommunityActivity.class);
+                            intent.putExtra("id", getIntent().getLongExtra("commId", 0L));
+                            intent.putExtra("flag", "FromDetailActivity");
+                        }
+                        startActivity(intent);
+                    }
+                });
+
                 communityName.setText(post.getCn());
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");

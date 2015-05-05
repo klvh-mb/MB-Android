@@ -94,6 +94,9 @@ public class SharingUtil {
 
     private static String createMessage(KindergartenVM school) {
         String message = school.getN();
+        if (!StringUtils.isEmpty(school.getNe())) {
+            message += " "+school.getNe();
+        }
         String url = UrlUtil.createSchoolUrl(school);
         message = message +
                 HtmlUtil.LINE_BREAK +

@@ -185,12 +185,18 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
         final int padding = activityUtil.getRealDimension(3);
         final int totalPadding = padding * DefaultValues.MAX_POST_IMAGES;
+
+        int loadedImageCount = 0;
         for (Long imageId : item.getImgs()) {
+            if (loadedImageCount >= DefaultValues.MAX_POST_IMAGES)
+                break;
+
             ImageView postImage = new ImageView(this.activity);
             postImage.setAdjustViewBounds(true);
             postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             postImage.setPadding(0, 0, padding, 0);
             layout.addView(postImage);
+            loadedImageCount++;
 
             ImageUtil.displayPostImage(imageId, postImage, new SimpleImageLoadingListener() {
                 @Override

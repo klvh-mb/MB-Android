@@ -33,7 +33,7 @@ public class CommunityActivity extends FragmentActivity {
             bundle.putString("flag", (getIntent().getStringExtra("flag")));
         }
 
-        bundle.putString("id", getIntent().getStringExtra("id"));
+        bundle.putLong("id", getIntent().getLongExtra("id",0L));
         CommunityFragment fragment = new CommunityFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragment.setArguments(bundle);
@@ -54,7 +54,7 @@ public class CommunityActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CommunityActivity.this,NewPostActivity.class);
-                intent.putExtra("id",getIntent().getStringExtra("id"));
+                intent.putExtra("id",getIntent().getLongExtra("id",0L));
                 intent.putExtra("flag","FromCommActivity");
                 startActivity(intent);
             }

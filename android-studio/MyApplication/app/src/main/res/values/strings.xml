@@ -180,6 +180,7 @@
     <string name="schools_info_type">學校類別:</string>
     <string name="schools_info_curriculum">課程類別:</string>
     <string name="schools_info_time">課堂時間:</string>
+    <string name="schools_info_pn">PN幼兒班:</string>
     <string name="schools_info_org">辦學團體:</string>
     <string name="schools_info_students_num">收錄人數:</string>
     <string name="schools_info_tuition_half_day">半日班全年收費:</string>

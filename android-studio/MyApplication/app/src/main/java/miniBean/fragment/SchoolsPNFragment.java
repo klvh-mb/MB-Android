@@ -92,7 +92,9 @@ public class SchoolsPNFragment extends MyFragment {
         buttonNews.setTextColor(getResources().getColor(R.color.pn_box_border));
         buttonNews.setBackgroundColor(Color.WHITE);
 
-        selectedFragment = new SchoolNewsfeedListFragement();
+        SchoolsNewsfeedListFragement fragment = new SchoolsNewsfeedListFragement();
+        fragment.setIsPN(true);
+        selectedFragment = fragment;
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }

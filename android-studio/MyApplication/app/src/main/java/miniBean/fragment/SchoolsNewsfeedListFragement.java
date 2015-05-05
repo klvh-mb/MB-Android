@@ -3,7 +3,6 @@ package miniBean.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +28,19 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SchoolNewsfeedListFragement extends MyFragment {
+public class SchoolsNewsfeedListFragement extends MyFragment {
 
-    private static final String TAG = SchoolNewsfeedListFragement.class.getName();
+    private static final String TAG = SchoolsNewsfeedListFragement.class.getName();
     private ListView listView;
     private BaseAdapter listAdapter;
     private List<CommunityPostVM> feedItems;
     private View loadingFooter;
+
+    private boolean isPN = false;
+
+    public void setIsPN(boolean isPN) {
+        this.isPN = isPN;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +67,6 @@ public class SchoolNewsfeedListFragement extends MyFragment {
                 if (post != null) {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
-                    intent.putExtra("flag","FromSchool");
                     startActivity(intent);
                 }
             }
@@ -117,10 +121,9 @@ public class SchoolNewsfeedListFragement extends MyFragment {
     }
 
     private void getNewsFeed(int offset) {
-        AppController.getApi().getPNNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<PostArray>() {
+        Callback<PostArray> callback = new Callback<PostArray>() {
             @Override
             public void success(final PostArray array, Response response) {
-                System.out.println("postarray::::::"+array.getPosts().size());
                 loadFeedItemsToList(array.getPosts());
             }
 
@@ -129,7 +132,12 @@ public class SchoolNewsfeedListFragement extends MyFragment {
                 setFooterText(R.string.list_loading_error);
                 error.printStackTrace();
             }
-        });
+        };
+
+        if (isPN)
+            AppController.getApi().getPNNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), callback);
+        else
+            AppController.getApi().getKGNewsfeed(Long.valueOf(offset), AppController.getInstance().getSessionId(), callback);
     }
 
 }

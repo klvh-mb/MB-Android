@@ -85,15 +85,6 @@ public class PNCommunityFragment extends MyFragment {
 
         getNewsFeedByCommunityId(getArguments().getLong("commId"));
 
-        if(getArguments().getString("flag").equals("FromCommentImage")){
-            scrollView.post(new Runnable() {
-                @Override
-                public void run() {
-                    scrollView.fullScroll(View.FOCUS_DOWN);
-                }
-            });
-        }
-
         feedItems = new ArrayList<CommunityPostVM>();
         feedListAdapter = new NewsfeedListAdapter(getActivity(), feedItems, false);
         postList.setAdapter(feedListAdapter);
@@ -118,7 +109,7 @@ public class PNCommunityFragment extends MyFragment {
                     intent.putExtra("commId", post.getCid());
                     intent.putExtra("id", getArguments().getLong("id"));
                     intent.putExtra("commId", getArguments().getLong("commId"));
-                    intent.putExtra("flag", "FromSchool");
+                    intent.putExtra("flag", "FromPN");
                     startActivity(intent);
                 }
             }
@@ -139,8 +130,8 @@ public class PNCommunityFragment extends MyFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),NewPostActivity.class);
-                intent.putExtra("id",String.valueOf(getArguments().getLong("commId")));
-                intent.putExtra("flag","FromSchool");
+                intent.putExtra("id",getArguments().getLong("commId"));
+                intent.putExtra("flag","FromPN");
                 startActivity(intent);
             }
         });
@@ -231,6 +222,17 @@ public class PNCommunityFragment extends MyFragment {
                 } else {
                     couponImage.setImageResource(R.drawable.value_no);
                 }
+
+                scrollView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if ("FromCommentImage".equals(getArguments().getString("flag"))) {
+                            scrollView.fullScroll(View.FOCUS_DOWN);
+                        } else {
+                            scrollView.fullScroll(View.FOCUS_UP);
+                        }
+                    }
+                });
             }
 
             @Override
@@ -245,7 +247,6 @@ public class PNCommunityFragment extends MyFragment {
         AppController.getApi().getCommunityInitialPosts(commId, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response) {
-                System.out.println("array:::::" + array.getPosts().size());
                 feedItems.addAll(array.getPosts());
                 feedListAdapter.notifyDataSetChanged();
             }
@@ -261,7 +262,6 @@ public class PNCommunityFragment extends MyFragment {
         AppController.getApi().getCommunityNextPosts(id, date, AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> communityPostVMs, Response response) {
-                System.out.println("on scroll::::::::::::");
                 feedItems.addAll(communityPostVMs);
                 feedListAdapter.notifyDataSetChanged();
             }

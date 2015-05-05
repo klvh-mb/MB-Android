@@ -25,7 +25,7 @@ public class NewsfeedActivity extends FragmentActivity {
 
         titleText = (TextView) findViewById(R.id.title);
 
-        Long id = getIntent().getLongExtra("id", 0l);
+        Long id = getIntent().getLongExtra("id", 0L);
         String key = getIntent().getStringExtra("key");
 
         Log.d(this.getClass().getSimpleName(), "onCreate: Id="+id+" key="+key);

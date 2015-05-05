@@ -25,6 +25,7 @@ public class KindergartenVM {
     public String ct;
     public String cur;
     public String curt;
+    public boolean hasPN;
 
     public String feeAmN;
     public String feePmN;
@@ -227,6 +228,14 @@ public class KindergartenVM {
 
     public void setCurt(String curt) {
         this.curt = curt;
+    }
+
+    public boolean hasPN() {
+        return hasPN;
+    }
+
+    public void setHasPN(boolean hasPN) {
+        this.hasPN = hasPN;
     }
 
     public String getFeeAmN() {

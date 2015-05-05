@@ -17,6 +17,7 @@ public class CommunityPostVM {
     public List<CommunityPostCommentVM> cs;
     public Long[] imgs;
     public String type;
+    public String subtype;
     public String ctyp;
     public String cn;
     public String ci;
@@ -31,6 +32,9 @@ public class CommunityPostVM {
     public boolean isLike = false;
     public boolean isWtAns = false;
     public boolean isBookmarked = false;
+
+    public Long pnId;
+    public Long kgId;
 
     public Long getId() {
         return id;
@@ -138,6 +142,14 @@ public class CommunityPostVM {
 
     public String getType() {
         return type;
+    }
+
+    public void setSubType(String subtype) {
+        this.subtype = subtype;
+    }
+
+    public String getSubType() {
+        return subtype;
     }
 
     public void setType(String type) {
@@ -254,5 +266,21 @@ public class CommunityPostVM {
 
     public void setBookmarked(boolean isBookmarked) {
         this.isBookmarked = isBookmarked;
+    }
+
+    public Long getPnId() {
+        return pnId;
+    }
+
+    public void setPnId(Long pnId) {
+        this.pnId = pnId;
+    }
+
+    public Long getKgId() {
+        return kgId;
+    }
+
+    public void setKgId(Long kgId) {
+        this.kgId = kgId;
     }
 }

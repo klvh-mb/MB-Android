@@ -50,7 +50,6 @@ public class KGBookmarksFragment extends MyFragment {
                 Intent intent = new Intent(getActivity(), KGCommunityActivity.class);
                 intent.putExtra("commId",vm.getCommId());
                 intent.putExtra("id", vm.getId());
-                intent.putExtra("flag","FromKGBookmarks");
                 startActivity(intent);
             }
         });

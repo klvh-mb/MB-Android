@@ -36,7 +36,7 @@ public class PNCommunityActivity extends FragmentActivity {
         editAction = (ImageView) findViewById(R.id.editAction);
         backAction = (ImageView) findViewById(R.id.backImage);
 
-        getSchoolInfo(getIntent().getLongExtra("id", 0l));
+        getSchoolInfo(getIntent().getLongExtra("id", 0L));
 
         // actionbar actions...
         whatsappAction.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +72,8 @@ public class PNCommunityActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PNCommunityActivity.this,NewPostActivity.class);
-                intent.putExtra("id",schoolVM.getCommId().toString());
-                intent.putExtra("flag","FromSchool");
+                intent.putExtra("id",schoolVM.getCommId());
+                intent.putExtra("flag","FromPN");
                 startActivity(intent);
             }
         });
@@ -130,8 +130,8 @@ public class PNCommunityActivity extends FragmentActivity {
 
     private void initFragment() {
         Bundle bundle = new Bundle();
-        bundle.putLong("commId", getIntent().getLongExtra("commId", 0l));
-        bundle.putLong("id", getIntent().getLongExtra("id", 0l));
+        bundle.putLong("commId", getIntent().getLongExtra("commId", 0L));
+        bundle.putLong("id", getIntent().getLongExtra("id", 0L));
         bundle.putString("flag", getIntent().getStringExtra("flag"));
 
         PNCommunityFragment fragment = new PNCommunityFragment();

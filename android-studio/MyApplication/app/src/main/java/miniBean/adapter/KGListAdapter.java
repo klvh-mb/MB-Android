@@ -26,8 +26,9 @@ public class KGListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<KindergartenVM> items;
     private TextView schoolName,enName,commentNoText,curriculumValue,typeValue,timeValue,distName;
-    private ImageView couponValue,bookmarkImage,commentImage;
+    private ImageView couponImage,pnImage,bookmarkImage;
     private RelativeLayout schoolMainLayout;
+    private LinearLayout infoRow3Layout,commentLayout;
 
     public KGListAdapter(Activity activity, List<KindergartenVM> items) {
         this.activity = activity;
@@ -66,13 +67,17 @@ public class KGListAdapter extends BaseAdapter {
         schoolName = (TextView) convertView.findViewById(R.id.nameText);
         enName = (TextView) convertView.findViewById(R.id.enNameText);
         commentNoText = (TextView) convertView.findViewById(R.id.totalCommentText);
-        couponValue = (ImageView) convertView.findViewById(R.id.couponImage);
+        couponImage = (ImageView) convertView.findViewById(R.id.couponImage);
         curriculumValue = (TextView) convertView.findViewById(R.id.curriculumValue);
         typeValue = (TextView) convertView.findViewById(R.id.typeValue);
         timeValue = (TextView) convertView.findViewById(R.id.timeValue);
         distName = (TextView) convertView.findViewById(R.id.distName);
         bookmarkImage = (ImageView) convertView.findViewById(R.id.bookmarkImage);
-        commentImage = (ImageView) convertView.findViewById(R.id.commentImage);
+        commentLayout = (LinearLayout) convertView.findViewById(R.id.commentLayout);
+        pnImage = (ImageView) convertView.findViewById(R.id.pnImage);
+
+        infoRow3Layout = (LinearLayout) convertView.findViewById(R.id.infoRow3Layout);
+        infoRow3Layout.setVisibility(View.VISIBLE);
 
         final KindergartenVM item = items.get(position);
 
@@ -97,10 +102,15 @@ public class KGListAdapter extends BaseAdapter {
         }
 
         if(item.isCp()){
-            couponValue.setImageResource(R.drawable.value_yes);
-
+            couponImage.setImageResource(R.drawable.value_yes);
         } else {
-            couponValue.setImageResource(R.drawable.value_no);
+            couponImage.setImageResource(R.drawable.value_no);
+        }
+
+        if(item.hasPN()){
+            pnImage.setImageResource(R.drawable.value_yes);
+        } else {
+            pnImage.setImageResource(R.drawable.value_no);
         }
 
         // num views
@@ -119,12 +129,11 @@ public class KGListAdapter extends BaseAdapter {
                 Intent intent = new Intent(activity, KGCommunityActivity.class);
                 intent.putExtra("commId",item.getCommId());
                 intent.putExtra("id",item.getId());
-                intent.putExtra("flag","FromSchoolMainlayout");
                 activity.startActivity(intent);
             }
         });
 
-        commentImage.setOnClickListener(new View.OnClickListener() {
+        commentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, KGCommunityActivity.class);

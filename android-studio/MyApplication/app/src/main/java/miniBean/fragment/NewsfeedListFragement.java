@@ -82,10 +82,6 @@ public class NewsfeedListFragement extends Fragment {
 
         loadNewsfeed(0);
 
-        //System.out.println("lastid::"+getArguments().getString("id"));
-        //Long id=Long.parseLong(getArguments().getString("id"));
-        //getUserQuestion(0,id);
-
         return view;
     }
 

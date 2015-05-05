@@ -81,9 +81,11 @@ public class NewPostActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.new_post_actionbar);
 
-        if(getIntent().getStringExtra("flag").equals("FromSchool")){
+        if (getIntent().getStringExtra("flag").equals("FromPN")) {
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
-        }else {
+        } else if (getIntent().getStringExtra("flag").equals("FromKG")) {
+            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_maroon));
+        } else {
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
         }
 
@@ -99,14 +101,15 @@ public class NewPostActivity extends FragmentActivity {
         postTitle = (TextView) findViewById(R.id.postTitle);
         postContent = (TextView) findViewById(R.id.postContent);
 
-        if (StringUtils.isEmpty(getIntent().getStringExtra("id"))) {
+        Long commId = getIntent().getLongExtra("id",0L);
+        if (commId == 0L) {
             communityId = null;
             communityLayout.setVisibility(View.VISIBLE);
         } else {
-            communityId = Long.parseLong(getIntent().getStringExtra("id"));
+            communityId = commId;
             communityLayout.setVisibility(View.GONE);
         }
-        Log.d(this.getClass().getSimpleName(), "onCreate: communityId="+communityId);
+        Log.d(this.getClass().getSimpleName(), "onCreate: communityId="+commId);
 
         updateSelectCommunityLayout();
         selectCommunityLayout.setOnClickListener(new View.OnClickListener() {

@@ -72,8 +72,8 @@ public class KGCommunityActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(KGCommunityActivity.this,NewPostActivity.class);
-                intent.putExtra("id",schoolVM.getCommId().toString());
-                intent.putExtra("flag","FromSchool");
+                intent.putExtra("id",schoolVM.getCommId());
+                intent.putExtra("flag","FromKG");
                 startActivity(intent);
             }
         });
