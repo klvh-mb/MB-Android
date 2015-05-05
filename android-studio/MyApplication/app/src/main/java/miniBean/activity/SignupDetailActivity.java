@@ -1,7 +1,9 @@
 package miniBean.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +29,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
 import miniBean.viewmodel.LocationVM;
@@ -55,6 +58,8 @@ public class SignupDetailActivity extends Activity {
     private Calendar calendar;
     private ImageView birthday1,birthday2,birthday3;
     private TextView birthdayLabel1,birthdayLabel2,birthdayLabel3;
+
+    protected ActivityUtil activityUtil;
 
     private String year1,month1,day1,year2,month2,day2,year3,month3,day3;
 
@@ -107,6 +112,8 @@ public class SignupDetailActivity extends Activity {
         birthdayLabel3 = (TextView) findViewById(R.id.birthdayLabel3);
 
         calendar = Calendar.getInstance();
+
+        activityUtil = new ActivityUtil(this);
 
         displayName = (EditText) findViewById(R.id.displaynameEdit);
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
@@ -266,7 +273,21 @@ public class SignupDetailActivity extends Activity {
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
+                        public void failure(RetrofitError error)
+                        {
+                            String errorMsg = SignupDetailActivity.this.activityUtil.getResponseBody(error.getResponse());
+                            System.out.println("status::::"+error.getResponse().getStatus());
+
+                            if (error.getResponse() != null &&
+                                    error.getResponse().getStatus() == 500) {
+                                if (!StringUtils.isEmpty(errorMsg)) {
+                                    alert("Existing DisplayName", errorMsg);
+                                } else {
+                                    alert("Error", "Fill correct info");
+                                }
+                            } else {
+                                alert("Error", "Fill correct info");
+                            }
                             error.printStackTrace();
                         }
                     });
@@ -475,5 +496,19 @@ public class SignupDetailActivity extends Activity {
         if (!StringUtils.isEmpty(error))
             error += "\n";
         return error + newError;
+    }
+
+    protected void alert(String title, String message) {
+        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
+                .setTitle(title)
+                .setMessage(message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
     }
 }
