@@ -1,5 +1,6 @@
 package miniBean.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -7,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import miniBean.R;
+import miniBean.activity.NewPNPostActivity;
 
 public class SchoolsPNFragment extends MyFragment {
 
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
+
+    private ImageView newPostIcon;
 
     private MyFragment selectedFragment;
 
@@ -25,6 +30,7 @@ public class SchoolsPNFragment extends MyFragment {
         buttonList = (Button) view.findViewById(R.id.buttonListing);
         buttonBookmark = (Button) view.findViewById(R.id.buttonBookmark);
         buttonNews = (Button) view.findViewById(R.id.buttonNewsfeed);
+        newPostIcon = (ImageView) view.findViewById(R.id.newPostIcon);
 
         if(listClicked){
             pressListButton();
@@ -61,6 +67,17 @@ public class SchoolsPNFragment extends MyFragment {
                 bookmarkClicked=false;
                 newsClicked=true;
                 listClicked=false;
+            }
+        });
+
+        newPostIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // launch new post page with no comm id, user will select
+                Intent intent = new Intent(SchoolsPNFragment.this.getActivity(), NewPNPostActivity.class);
+                intent.putExtra("id","");
+                intent.putExtra("flag","FromPN");
+                startActivity(intent);
             }
         });
 

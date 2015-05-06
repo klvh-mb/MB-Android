@@ -164,8 +164,18 @@ public class EditProfileActivity extends FragmentActivity {
         AppController.getApi().updateUserProfileData(userProfileDataVM,AppController.getInstance().getSessionId(),new Callback<UserVM>() {
             @Override
             public void success(UserVM userVM, Response response) {
-                getUserInfo();
-                finish();
+                UserInfoCache.refresh(new Callback<UserVM>() {
+                    @Override
+                    public void success(UserVM userVM, Response response) {
+                        getUserInfo();
+                        finish();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
             }
             @Override
             public void failure(RetrofitError error) {

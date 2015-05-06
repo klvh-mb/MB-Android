@@ -19,7 +19,7 @@ import miniBean.util.AnimationUtil;
 
 public class MyCommunityFragment extends Fragment {
 
-    private ImageView signInAction, editAction;
+    private ImageView signInAction, newPostIcon;
     private Button newsfeed, joined;
     private boolean newsfeedPressed = true;
 
@@ -28,7 +28,7 @@ public class MyCommunityFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.my_community_fragement, container, false);
 
-        editAction = (ImageView) view.findViewById(R.id.newPostIcon);
+        newPostIcon = (ImageView) view.findViewById(R.id.newPostIcon);
         signInAction = (ImageView) view.findViewById(R.id.signInAction);
         newsfeed = (Button) view.findViewById(R.id.buttonNewsfeed);
         joined = (Button) view.findViewById(R.id.buttonJoined);
@@ -67,7 +67,7 @@ public class MyCommunityFragment extends Fragment {
             }
         });
 
-        editAction.setOnClickListener(new View.OnClickListener() {
+        newPostIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // launch new post page with no comm id, user will select

@@ -61,10 +61,10 @@ public class PNBookmarksFragment extends MyFragment {
     public void onResume() {
         super.onResume();
 
-        getBookmarkedPNs();
+        getBookmarkedSchools();
     }
 
-    private void getBookmarkedPNs(){
+    private void getBookmarkedSchools(){
         AppController.getApi().getBookmarkedPNs(AppController.getInstance().getSessionId(), new Callback<List<PreNurseryVM>>() {
             @Override
             public void success(List<PreNurseryVM> vms, Response response) {

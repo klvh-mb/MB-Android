@@ -48,46 +48,39 @@ import retrofit.mime.TypedFile;
 
 public class NewPostActivity extends FragmentActivity {
 
-    private RelativeLayout communityLayout;
-    private LinearLayout selectCommunityLayout;
-    private TextView selectCommunityText;
-    private ImageView selectCommunityIcon;
-    private TextView communityName;
-    private ImageView communityIcon;
-    private ImageView backImage, postImage, browseImage;
-    private TextView postTitle, postContent, post;
-    private String selectedImagePath = null;
-    private Uri selectedImageUri = null;
+    protected RelativeLayout communityLayout;
+    protected LinearLayout selectCommunityLayout;
+    protected TextView selectCommunityText;
+    protected ImageView selectCommunityIcon;
+    protected TextView communityName;
+    protected ImageView communityIcon;
+    protected ImageView backImage, postImage, browseImage;
+    protected TextView postTitle, postContent, post;
+    protected String selectedImagePath = null;
+    protected Uri selectedImageUri = null;
 
-    private List<File> photos = new ArrayList<>();
-    private List<ImageView> postImages = new ArrayList<>();
+    protected List<File> photos = new ArrayList<>();
+    protected List<ImageView> postImages = new ArrayList<>();
 
-    private Long communityId;
-    private PopupWindow myCommunityPopup;
-    private PopupMyCommunityListAdapter adapter;
+    protected Long communityId;
+    protected PopupWindow myCommunityPopup;
+    protected PopupMyCommunityListAdapter adapter;
 
-    private boolean postSuccess = false;
+    protected boolean postSuccess = false;
 
-    private ActivityUtil activityUtil;
+    protected ActivityUtil activityUtil;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.new_post);
+        setContentView(R.layout.new_post_activity);
 
         activityUtil = new ActivityUtil(this);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.new_post_actionbar);
-
-        if (getIntent().getStringExtra("flag").equals("FromPN")) {
-            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
-        } else if (getIntent().getStringExtra("flag").equals("FromKG")) {
-            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_maroon));
-        } else {
-            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
-        }
+        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
 
         backImage = (ImageView) findViewById(R.id.backImage);
         post = (TextView) findViewById(R.id.titlePost);
@@ -115,7 +108,7 @@ public class NewPostActivity extends FragmentActivity {
         selectCommunityLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initiateMyCommunityPopup();
+                initMyCommunityPopup();
             }
         });
 
@@ -156,7 +149,7 @@ public class NewPostActivity extends FragmentActivity {
         });
     }
 
-    private void updateSelectCommunityLayout() {
+    protected void updateSelectCommunityLayout() {
         if (communityId == null) {
             selectCommunityText.setVisibility(View.VISIBLE);
             selectCommunityIcon.setVisibility(View.VISIBLE);
@@ -195,7 +188,7 @@ public class NewPostActivity extends FragmentActivity {
         activityUtil.popupInputMethodWindow();
     }
 
-    private void setPostImage(Bitmap bp){
+    protected void setPostImage(Bitmap bp){
         ImageView postImage = postImages.get(photos.size());
         postImage.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
         postImage.setVisibility(View.VISIBLE);
@@ -203,7 +196,7 @@ public class NewPostActivity extends FragmentActivity {
         photos.add(photo);
     }
 
-    private void removePostImage(){
+    protected void removePostImage(){
         if (photos.size() > 0) {
             int toRemove = photos.size()-1;
             postImages.get(toRemove).setImageDrawable(null);
@@ -211,7 +204,15 @@ public class NewPostActivity extends FragmentActivity {
         }
     }
 
-    private void initiateMyCommunityPopup() {
+    /**
+     * To be overriden by child new post activity.
+     * @return
+     */
+    protected List<CommunitiesWidgetChildVM> getMyCommunities() {
+        return LocalCommunityTabCache.getMyCommunities().communities;
+    }
+
+    protected void initMyCommunityPopup() {
         try {
             LayoutInflater inflater = (LayoutInflater) NewPostActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -230,7 +231,7 @@ public class NewPostActivity extends FragmentActivity {
             myCommunityPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
             ListView listView = (ListView) layout.findViewById(R.id.communityList);
-            adapter = new PopupMyCommunityListAdapter(this, LocalCommunityTabCache.getMyCommunities().communities);
+            adapter = new PopupMyCommunityListAdapter(this, getMyCommunities());
             listView.setAdapter(adapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -242,16 +243,16 @@ public class NewPostActivity extends FragmentActivity {
                     communityName.setText(community.getDn());
                     int iconMapped = CommunityIconUtil.map(community.getGi());
                     if (iconMapped != -1) {
-                        //Log.d(this.getClass().getSimpleName(), "getQnaDetail: replace source with local comm icon - " + commIcon);
+                        //Log.d(this.getClass().getSimpleName(), "initMyCommunityPopup: replace source with local comm icon - " + commIcon);
                         communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
                     } else {
-                        Log.d(this.getClass().getSimpleName(), "getQnaDetail: load comm icon from background - " + community.getGi());
+                        Log.d(this.getClass().getSimpleName(), "initMyCommunityPopup: load comm icon from background - " + community.getGi());
                         ImageUtil.displayRoundedCornersImage(community.getGi(), communityIcon);
                     }
 
                     updateSelectCommunityLayout();
                     myCommunityPopup.dismiss();
-                    Log.d(this.getClass().getSimpleName(), "listView.onItemClick: community="+community.getId()+"|"+community.getDn());
+                    Log.d(this.getClass().getSimpleName(), "initMyCommunityPopup: listView.onItemClick: community="+community.getId()+"|"+community.getDn());
                 }
             });
         } catch (Exception e) {
@@ -259,7 +260,7 @@ public class NewPostActivity extends FragmentActivity {
         }
     }
 
-    private void doPost() {
+    protected void doPost() {
         String title = postTitle.getText().toString();
         String content = postContent.getText().toString();
 
@@ -274,7 +275,7 @@ public class NewPostActivity extends FragmentActivity {
         }
 
         if (communityId == null) {
-            initiateMyCommunityPopup();
+            initMyCommunityPopup();
             return;
         }
 
@@ -308,7 +309,7 @@ public class NewPostActivity extends FragmentActivity {
         });
     }
 
-    private void uploadPhotos(String postId) {
+    protected void uploadPhotos(String postId) {
         for (File photo : photos) {
             TypedFile typedFile = new TypedFile("application/octet-stream", photo);
             AppController.getApi().uploadPostPhoto(postId, typedFile, new Callback<Response>() {

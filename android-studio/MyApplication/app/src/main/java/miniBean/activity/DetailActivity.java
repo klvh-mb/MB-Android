@@ -124,7 +124,7 @@ public class DetailActivity extends FragmentActivity {
         commentEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initiateCommentPopup();
+                initCommentPopup();
             }
         });
 
@@ -306,7 +306,7 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    private void initiateCommentPopup() {
+    private void initCommentPopup() {
         mainFrameLayout.getForeground().setAlpha(20);
         mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
 
@@ -461,7 +461,7 @@ public class DetailActivity extends FragmentActivity {
                         emoPopup();
                 }
             });
-            Log.d(this.getClass().getSimpleName(), "initiateCommentPopup: " + selectedImagePath);
+            Log.d(this.getClass().getSimpleName(), "initCommentPopup: " + selectedImagePath);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -568,7 +568,7 @@ public class DetailActivity extends FragmentActivity {
         }
     }
 
-    private void initiatePaginationPopup() {
+    private void initPaginationPopup() {
         mainFrameLayout.getForeground().setAlpha(20);
         mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
 
@@ -622,7 +622,7 @@ public class DetailActivity extends FragmentActivity {
             pageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    initiatePaginationPopup();
+                    initPaginationPopup();
                 }
             });
         }

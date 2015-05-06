@@ -21,7 +21,7 @@ import java.util.List;
 import miniBean.Listener.InfiniteScrollListener;
 import miniBean.R;
 import miniBean.activity.DetailActivity;
-import miniBean.activity.NewPostActivity;
+import miniBean.activity.NewKGPostActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
@@ -128,7 +128,7 @@ public class KGCommunityFragment extends MyFragment {
         newPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), NewPostActivity.class);
+                Intent intent = new Intent(getActivity(), NewKGPostActivity.class);
                 intent.putExtra("id", getArguments().getLong("commId"));
                 intent.putExtra("flag", "FromKG");
                 startActivity(intent);

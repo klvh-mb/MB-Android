@@ -99,6 +99,8 @@
     <string name="new_post_to_popup_title">發佈話題到</string>
     <string name="new_post_to">發佈到:</string>
     <string name="new_post_select_community">請選擇社群</string>
+    <string name="new_post_select_pn_community">請選擇幼兒班討論區</string>
+    <string name="new_post_select_kg_community">請選擇幼稚園討論區</string>
     <string name="new_post_actionbar_title">新話題</string>
     <string name="new_post">發出</string>
     <string name="new_post_title">問題 / 分享⋯⋯</string>

@@ -61,10 +61,10 @@ public class KGBookmarksFragment extends MyFragment {
     public void onResume() {
         super.onResume();
 
-        getBookmarkedKGs();
+        getBookmarkedSchools();
     }
 
-    private void getBookmarkedKGs(){
+    private void getBookmarkedSchools(){
         AppController.getApi().getBookmarkedKGs(AppController.getInstance().getSessionId(), new Callback<List<KindergartenVM>>() {
             @Override
             public void success(List<KindergartenVM> vms, Response response) {

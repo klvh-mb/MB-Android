@@ -18,7 +18,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class PNCommunityActivity extends FragmentActivity {
-    private ImageView whatsappAction,bookmarkAction,editAction,backAction;
+    private ImageView whatsappAction,bookmarkAction,newPostAction,backAction;
     private Boolean isBookmarked;
     private PreNurseryVM schoolVM;
 
@@ -33,7 +33,7 @@ public class PNCommunityActivity extends FragmentActivity {
 
         whatsappAction = (ImageView) findViewById(R.id.whatsappAction);
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
-        editAction = (ImageView) findViewById(R.id.newPostIcon);
+        newPostAction = (ImageView) findViewById(R.id.newPostIcon);
         backAction = (ImageView) findViewById(R.id.backImage);
 
         getSchoolInfo(getIntent().getLongExtra("id", 0L));
@@ -68,10 +68,10 @@ public class PNCommunityActivity extends FragmentActivity {
             }
         });
 
-        editAction.setOnClickListener(new View.OnClickListener() {
+        newPostAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PNCommunityActivity.this,NewPostActivity.class);
+                Intent intent = new Intent(PNCommunityActivity.this,NewPNPostActivity.class);
                 intent.putExtra("id",schoolVM.getCommId());
                 intent.putExtra("flag","FromPN");
                 startActivity(intent);

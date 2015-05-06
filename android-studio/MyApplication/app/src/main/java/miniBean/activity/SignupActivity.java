@@ -128,7 +128,7 @@ public class SignupActivity extends AbstractLoginActivity {
             @Override
             public void success(Response response, Response response2) {
                 if(response.getStatus() == 200){
-                    initiateSuccessPopup();
+                    initSuccessPopup();
                 }
             }
 
@@ -160,7 +160,7 @@ public class SignupActivity extends AbstractLoginActivity {
             errorMessage.setVisibility(View.INVISIBLE);
     }
 
-    private void initiateSuccessPopup() {
+    private void initSuccessPopup() {
         try {
             LayoutInflater inflater = (LayoutInflater) SignupActivity.this
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

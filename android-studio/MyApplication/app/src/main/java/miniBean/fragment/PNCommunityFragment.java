@@ -1,7 +1,6 @@
 package miniBean.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,7 +21,7 @@ import java.util.List;
 import miniBean.Listener.InfiniteScrollListener;
 import miniBean.R;
 import miniBean.activity.DetailActivity;
-import miniBean.activity.NewPostActivity;
+import miniBean.activity.NewPNPostActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
@@ -128,7 +127,7 @@ public class PNCommunityFragment extends MyFragment {
         newPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), NewPostActivity.class);
+                Intent intent = new Intent(getActivity(), NewPNPostActivity.class);
                 intent.putExtra("id", getArguments().getLong("commId"));
                 intent.putExtra("flag", "FromPN");
                 startActivity(intent);
