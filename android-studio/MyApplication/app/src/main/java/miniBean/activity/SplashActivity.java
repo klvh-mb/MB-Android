@@ -19,6 +19,7 @@ import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
 import miniBean.app.NotificationCache;
 import miniBean.app.UserInfoCache;
+import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -128,17 +129,9 @@ public class SplashActivity extends Activity {
     }
 
     private void showNetworkProblemAlert() {
-        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
-                .setTitle(getString(R.string.connection_timeout_title))
-                .setMessage(getString(R.string.connection_timeout_message))
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .show();
+        ActivityUtil.alert(SplashActivity.this,
+                getString(R.string.connection_timeout_title),
+                getString(R.string.connection_timeout_message));
     }
 
     private boolean isOnline() {

@@ -146,8 +146,8 @@ public class EditProfileActivity extends FragmentActivity {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace();
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
             }
         });
     }
@@ -161,7 +161,7 @@ public class EditProfileActivity extends FragmentActivity {
     }
 
     private void setUserProfileData(UserProfileDataVM userProfileDataVM){
-        AppController.getApi().updateUserProfileData(userProfileDataVM,AppController.getInstance().getSessionId(),new Callback<UserVM>() {
+        AppController.getApi().updateUserProfileData(userProfileDataVM, AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM userVM, Response response) {
                 UserInfoCache.refresh(new Callback<UserVM>() {
@@ -177,35 +177,19 @@ public class EditProfileActivity extends FragmentActivity {
                     }
                 });
             }
+
             @Override
             public void failure(RetrofitError error) {
                 String errorMsg = EditProfileActivity.this.activityUtil.getResponseBody(error.getResponse());
-                if (error.getResponse() != null &&
-                        error.getResponse().getStatus() == 500) {
-                    if (!StringUtils.isEmpty(errorMsg)) {
-                        alert("Existing DisplayName", errorMsg);
-                    } else {
-                        alert("Error", "Fill correct info");
-                    }
+                if (error.getResponse().getStatus() == 500 &&
+                        error.getResponse() != null &&
+                        !StringUtils.isEmpty(errorMsg)) {
+                    ActivityUtil.alert(EditProfileActivity.this, errorMsg);
                 } else {
-                    alert("Error", "Fill correct info");
+                    ActivityUtil.alert(EditProfileActivity.this, getString(R.string.signup_details_error_info));
                 }
                 error.printStackTrace();
             }
         });
-    }
-
-    protected void alert(String title, String message) {
-        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
-                .setTitle(title)
-                .setMessage(message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
-                .show();
     }
 }

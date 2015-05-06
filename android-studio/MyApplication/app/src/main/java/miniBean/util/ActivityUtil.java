@@ -1,8 +1,10 @@
 package miniBean.util;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,6 +14,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import org.parceler.apache.commons.lang.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -107,6 +111,26 @@ public class ActivityUtil {
         }
 
         return error.getResponse().getStatus();
+    }
+
+    public static void alert(Context context, String message) {
+        alert(context, null, message);
+    }
+
+    public static void alert(Context context, String title, String message) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        if (!StringUtils.isEmpty(title)) {
+            alertBuilder.setTitle(title);
+        }
+        alertBuilder.show();
     }
 
     //

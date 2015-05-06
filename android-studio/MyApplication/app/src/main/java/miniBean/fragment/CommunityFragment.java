@@ -85,7 +85,7 @@ public class CommunityFragment extends Fragment {
 
         if(!getArguments().getString("flag").equals("FromDetailActivity")) {
             commId = getArguments().getLong("id");
-            initializeData();
+            initData();
         } else {
             getCommunity(getArguments().getLong("id"));
         }
@@ -158,7 +158,7 @@ public class CommunityFragment extends Fragment {
         }
     }
 
-    private void initializeData(){
+    private void initData(){
         setCurrentCommunity();
         getNewsFeedByCommunityId(currentCommunity);
         if (!currentCommunity.isM) {
@@ -199,7 +199,7 @@ public class CommunityFragment extends Fragment {
             @Override
             public void success(CommunityVM communityVM, Response response) {
                 commId = communityVM.getId();
-                initializeData();
+                initData();
             }
 
             @Override

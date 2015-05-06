@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -17,6 +16,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -55,7 +55,9 @@ public class LoginActivity extends AbstractLoginActivity {
                     @Override
                     public void success(Response response, Response response2) {
                         if (!saveToSession(response)) {
-                            alert(R.string.login_error_title, R.string.login_error_message);
+                            ActivityUtil.alert(LoginActivity.this,
+                                    getString(R.string.login_error_title),
+                                    getString(R.string.login_error_message));
                         }
                     }
 
@@ -66,12 +68,18 @@ public class LoginActivity extends AbstractLoginActivity {
                                 error.getResponse().getStatus() == 400) {
                             String errorMsg = LoginActivity.this.activityUtil.getResponseBody(error.getResponse());
                             if (!StringUtils.isEmpty(errorMsg)) {
-                                alert(getString(R.string.login_error_title), errorMsg);
+                                ActivityUtil.alert(LoginActivity.this,
+                                        getString(R.string.login_error_title),
+                                        errorMsg);
                             } else {
-                                alert(R.string.login_error_title, R.string.login_id_error_message);
+                                ActivityUtil.alert(LoginActivity.this,
+                                        getString(R.string.login_error_title),
+                                        getString(R.string.login_id_error_message));
                             }
                         } else {
-                            alert(R.string.login_error_title, R.string.login_error_message);
+                            ActivityUtil.alert(LoginActivity.this,
+                                    getString(R.string.login_error_title),
+                                    getString(R.string.login_error_message));
                         }
 
                         error.printStackTrace();

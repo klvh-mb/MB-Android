@@ -63,7 +63,8 @@
                     android:layout_height="35dp"
                     android:layout_weight="7"
                     android:layout_gravity="center_vertical"
-                    android:hint="暱稱" />
+                    android:hint="暱稱"
+                    android:singleLine="true" />
 
             </LinearLayout>
 

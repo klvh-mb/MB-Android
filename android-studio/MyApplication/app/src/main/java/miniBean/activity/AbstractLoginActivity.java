@@ -17,13 +17,10 @@
 package miniBean.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 
 import com.facebook.android.DialogError;
@@ -100,14 +97,18 @@ public abstract class AbstractLoginActivity extends Activity {
                         @Override
                         public void onError(DialogError error) {
                             AnimationUtil.cancel(spinner);
-                            alert(R.string.login_error_title, R.string.login_error_message);
+                            ActivityUtil.alert(AbstractLoginActivity.this,
+                                    getString(R.string.login_error_title),
+                                    getString(R.string.login_error_message));
                             error.printStackTrace();
                         }
 
                         @Override
                         public void onFacebookError(FacebookError fberror) {
                             AnimationUtil.cancel(spinner);
-                            alert(R.string.login_error_title, R.string.login_error_message);
+                            ActivityUtil.alert(AbstractLoginActivity.this,
+                                    getString(R.string.login_error_title),
+                                    getString(R.string.login_error_message));
                             fberror.printStackTrace();
                         }
 
@@ -131,7 +132,9 @@ public abstract class AbstractLoginActivity extends Activity {
             public void success(Response response, Response response2) {
                 Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");
                 if (!saveToSession(response)) {
-                    alert(R.string.login_error_title, R.string.login_error_message);
+                    ActivityUtil.alert(AbstractLoginActivity.this,
+                            getString(R.string.login_error_title),
+                            getString(R.string.login_error_message));
                 }
 
                 AnimationUtil.cancel(spinner);
@@ -140,7 +143,9 @@ public abstract class AbstractLoginActivity extends Activity {
             @Override
             public void failure(RetrofitError error) {
                 AnimationUtil.cancel(spinner);
-                alert(R.string.login_error_title, R.string.login_error_message);
+                ActivityUtil.alert(AbstractLoginActivity.this,
+                        getString(R.string.login_error_title),
+                        getString(R.string.login_error_message));
                 error.printStackTrace();
             }
         });
@@ -156,8 +161,8 @@ public abstract class AbstractLoginActivity extends Activity {
         AppController.getInstance().savePreferences(key);
 
         Intent intent = new Intent(this, SplashActivity.class);
-        intent.putExtra("flag","FromLoginActivity");
-        intent.putExtra("key",key);
+        intent.putExtra("flag", "FromLoginActivity");
+        intent.putExtra("key", key);
         startActivity(intent);
         finish();
 
@@ -171,24 +176,5 @@ public abstract class AbstractLoginActivity extends Activity {
         Log.d(this.getClass().getSimpleName(), "onActivityResult: facebook.authorizeCallback - requestCode:"+requestCode+" resultCode:"+resultCode+" data:"+data);
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
-
-    protected void alert(int title, int message) {
-        alert(getString(title), getString(message));
-    }
-
-    protected void alert(String title, String message) {
-        new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_Dialog)
-                .setTitle(title)
-                .setMessage(message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //LoginActivity.this.finish();
-                    }
-                })
-                .show();
-    }
-
 }
 

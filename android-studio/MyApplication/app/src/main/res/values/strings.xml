@@ -64,6 +64,7 @@
     <string name="signup_details_girl">BB女</string>
     <string name="signup_details_text_birthday">生日 : </string>
     <string name="signup_details_complete">完成! 立刻進入</string>
+    <string name="signup_details_error_info">請檢查已輸入資料。再重試</string>
     <string name="signup_details_error_displayname_not_entered">請填寫顯示名稱</string>
     <string name="signup_details_error_location_not_entered">請選擇地區</string>
     <string name="signup_details_error_status_not_entered">請選擇您現在是</string>
