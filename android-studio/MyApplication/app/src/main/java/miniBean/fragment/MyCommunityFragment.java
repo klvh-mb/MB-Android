@@ -101,6 +101,7 @@ public class MyCommunityFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("key","feed");
         NewsfeedListFragement fragment = new NewsfeedListFragement();
+        fragment.setHeader(R.layout.my_community_newsfeed_header);
         FragmentManager fragmentManager = getChildFragmentManager();
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

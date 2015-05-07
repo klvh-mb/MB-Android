@@ -295,7 +295,7 @@ public class NewPostActivity extends FragmentActivity {
                 finish();
                 Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_LONG).show();
 
-                /*  Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
+                /*Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
                 intent.putExtra("id",getIntent().getLongExtra("id",0l));
                 intent.putExtra("flag","FromPostFragment");
                 startActivity(intent);*/

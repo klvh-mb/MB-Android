@@ -35,7 +35,14 @@ public class NewsfeedListFragement extends Fragment {
     private ListView listView;
     private BaseAdapter listAdapter;
     private List<CommunityPostVM> feedItems;
-    private View loadingFooter;
+    private View header,loadingFooter;
+
+    private boolean hasHeader = false;
+    private int headerResouceId = -1;
+
+    public void setHeader(int resouceId) {
+        this.headerResouceId = resouceId;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +55,11 @@ public class NewsfeedListFragement extends Fragment {
         feedItems = new ArrayList<CommunityPostVM>();
 
         listView = (ListView) view.findViewById(R.id.list);
+        if (headerResouceId != -1) {
+            header = inflater.inflate(headerResouceId, null);
+            listView.addHeaderView(header);
+            hasHeader = true;
+        }
         listView.addFooterView(loadingFooter);      // need to add footer before set adapter
         listAdapter = getAdapterByFlow("");
         listView.setAdapter(listAdapter);
@@ -57,8 +69,14 @@ public class NewsfeedListFragement extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int headerViewsCount = listView.getHeaderViewsCount();
+                if (position < headerViewsCount) {
+                    // listview header
+                    return;
+                }
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                CommunityPostVM post = (CommunityPostVM) listAdapter.getItem(position);
+                CommunityPostVM post = (CommunityPostVM) listAdapter.getItem(position - headerViewsCount);
                 if (post != null) {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
@@ -72,11 +90,11 @@ public class NewsfeedListFragement extends Fragment {
 
         // pass hasFooter = true to InfiniteScrollListener
         listView.setOnScrollListener(new InfiniteScrollListener(
-                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, false, true) {
+                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, hasHeader, true) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 loadingFooter.setVisibility(View.VISIBLE);
-                loadNewsfeed(page - 1);
+                loadNewsfeed(page-1);
             }
         });
 

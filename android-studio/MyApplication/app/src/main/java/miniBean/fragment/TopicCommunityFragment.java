@@ -3,6 +3,7 @@ package miniBean.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -50,16 +51,11 @@ public class TopicCommunityFragment extends Fragment {
                 position = position - 1;    // offset by header
                 CommunitiesWidgetChildVM childVM = topicAdapter.getItem(position);
                 if (childVM != null) {
+                    Log.d(this.getClass().getSimpleName(), "onCreateView: listView.onItemClick with commId - " + childVM.getId());
                     Intent intent = new Intent(getActivity(), CommunityActivity.class);
                     intent.putExtra("id", childVM.getId());
-                    intent.putExtra("noMember", childVM.getMm().toString());
-                    intent.putExtra("noPost", noPost);
-                    intent.putExtra("icon", childVM.getGi());
-                    intent.putExtra("isM", childVM.getIsM());
                     intent.putExtra("flag", "FromTopicFragment");
                     startActivity(intent);
-
-                    // getFragmentManager().beginTransaction().remove(TopicFragment.this).commit();
                 }
             }
         });

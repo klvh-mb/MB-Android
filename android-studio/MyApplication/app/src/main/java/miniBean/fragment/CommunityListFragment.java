@@ -57,20 +57,12 @@ public class CommunityListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String noMember, commId, name;
                 position = position - 1;    // offset by header
                 CommunitiesWidgetChildVM childVM = listAdapter.getItem(position);
                 if (childVM != null) {
-                    commId = childVM.getId().toString();
-                    noMember = childVM.getMm().toString();
-                    name = childVM.getDn();
-
-                    Log.d(this.getClass().getSimpleName(), "onCreateView: listView.onItemClick with commId - " + commId);
+                    Log.d(this.getClass().getSimpleName(), "onCreateView: listView.onItemClick with commId - " + childVM.getId());
                     Intent intent = new Intent(getActivity(), CommunityActivity.class);
-                    intent.putExtra("id", commId);
-                    intent.putExtra("noMember", noMember);
-                    intent.putExtra("icon", childVM.getGi());
-                    intent.putExtra("isM", childVM.getIsM());
+                    intent.putExtra("id", childVM.getId());
                     intent.putExtra("flag", "FromCommunityFragment");
                     startActivity(intent);
                 }

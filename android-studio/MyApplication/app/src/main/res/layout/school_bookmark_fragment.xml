@@ -6,7 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_marginTop="10dp"
-        android:id="@+id/headingLayout"
+        android:id="@+id/headerLayout"
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,11 +40,11 @@
             android:textSize="16dp"
             android:textColor="@color/dark_gray_3"
             android:id="@+id/bookmarkText" />
-        </LinearLayout>
+    </LinearLayout>
 
     <ListView
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/headingLayout"
+        android:layout_below="@+id/headerLayout"
         android:id="@+id/listBookmark"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
