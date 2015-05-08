@@ -19,6 +19,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
 import miniBean.app.AppController;
+import miniBean.util.CommunityIconUtil;
 import miniBean.viewmodel.PreNurseryVM;
 
 public class PNListAdapter extends BaseAdapter {
@@ -26,7 +27,7 @@ public class PNListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<PreNurseryVM> items;
     private TextView schoolName,enName,commentNoText,curriculumValue,typeValue,timeValue,distName;
-    private ImageView couponImage,pnImage,bookmarkImage;
+    private ImageView icon,couponImage,pnImage,bookmarkImage;
     private RelativeLayout schoolMainLayout;
     private LinearLayout infoRow3Layout,commentLayout;
 
@@ -63,6 +64,7 @@ public class PNListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.school_list_item, null);
 
+        icon = (ImageView) convertView.findViewById(R.id.schoolImage);
         schoolMainLayout = (RelativeLayout) convertView.findViewById(R.id.schoolMainLayout);
         schoolName = (TextView) convertView.findViewById(R.id.nameText);
         enName = (TextView) convertView.findViewById(R.id.enNameText);
@@ -80,6 +82,14 @@ public class PNListAdapter extends BaseAdapter {
         infoRow3Layout.setVisibility(View.GONE);
 
         final PreNurseryVM item = items.get(position);
+
+        int iconMapped = CommunityIconUtil.map(item.getIcon());
+        if (iconMapped != -1) {
+            icon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
+            icon.setVisibility(View.VISIBLE);
+        } else {
+            icon.setVisibility(View.GONE);
+        }
 
         schoolName.setText(item.getN());
         if (StringUtils.isEmpty(item.getNe())) {

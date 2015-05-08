@@ -24,6 +24,7 @@ import miniBean.activity.DetailActivity;
 import miniBean.activity.NewKGPostActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
+import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ExternalLauncherUtil;
 import miniBean.viewmodel.CommunityPostVM;
@@ -46,7 +47,7 @@ public class KGCommunityFragment extends MyFragment {
 
     private ListView postList;
 
-    private ImageView couponImage,pnImage,govtImage;
+    private ImageView icon,couponImage,pnImage,govtImage;
     private LinearLayout gotoCommLayout,newPostLayout;
 
     private KindergartenVM schoolVM;
@@ -57,6 +58,7 @@ public class KGCommunityFragment extends MyFragment {
 
         View view = inflater.inflate(R.layout.kg_community_fragment, container, false);
 
+        icon = (ImageView) view.findViewById(R.id.schoolImage);
         nameText = (TextView) view.findViewById(R.id.schoolNameText);
         districtText = (TextView) view.findViewById(R.id.distNameText);
         enNameText = (TextView) view.findViewById(R.id.enName);
@@ -180,6 +182,13 @@ public class KGCommunityFragment extends MyFragment {
         } else {
             enNameText.setText(schoolVM.getNe());
             enNameText.setVisibility(View.VISIBLE);
+        }
+        int iconMapped = CommunityIconUtil.map(schoolVM.getIcon());
+        if (iconMapped != -1) {
+            icon.setImageDrawable(getResources().getDrawable(iconMapped));
+            icon.setVisibility(View.VISIBLE);
+        } else {
+            icon.setVisibility(View.GONE);
         }
         districtText.setText(schoolVM.getDis());
         typeValue.setText(schoolVM.getOrgt());

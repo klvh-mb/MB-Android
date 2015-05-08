@@ -30,6 +30,14 @@
                     android:layout_height="fill_parent"
                     android:weightSum="10">
 
+                    <ImageView
+                        android:id="@+id/schoolImage"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="5dp"></ImageView>
+
                     <TextView
                         android:id="@+id/schoolNameText"
                         android:text="-"
@@ -37,18 +45,9 @@
                         android:textColor="@color/schools_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="22dp" />
+                        android:textSize="22dp"
+                        android:layout_gravity="center_vertical" />
 
-                    <TextView
-                        android:id="@+id/distNameText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/schools_district"
-                        android:layout_toRightOf="@+id/schoolNameText"
-                        android:layout_marginLeft="10dp"
-                        android:text="-"
-                        android:textSize="16dp"
-                        android:layout_alignBaseline="@+id/schoolNameText" />
                 </LinearLayout>
 
                 <TextView
@@ -58,9 +57,21 @@
                     android:textColor="@color/schools_title"
                     android:text="-"
                     android:layout_below="@+id/schoolNameText"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:layout_gravity="center_vertical" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/distNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/schools_district"
+                android:layout_marginLeft="15dp"
+                android:text="-"
+                android:textSize="16dp"
+                android:layout_below="@+id/titleLayout"
+                android:layout_marginTop="5dp" />
 
             <LinearLayout
                 android:id="@+id/gotoCommLayout"
@@ -70,7 +81,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/titleLayout"
                 android:background="@drawable/schools_info_box"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="15dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"

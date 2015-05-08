@@ -87,7 +87,7 @@
     <string name="community_join_failed">暫時不能關注社群，請稍後重試</string>
     <string name="community_leave_success">成功取消關注社群</string>
     <string name="community_leave_failed">暫時不能退出社群，請稍後重試</string>
-    <string name="community_newsfeed_header_text_1">您「正在關注」的社群的最新話題</string>
+    <string name="community_newsfeed_header_text_1">您「正在關注」的社群最新話題</string>
     <string name="community_newsfeed_header_text_2">會顯示在這「社群動向」中</string>
     <string name="post_delete_confirm">確定刪除話題?</string>
     <string name="post_not_found">尋找不到此話題。話題可能已被刪除</string>
