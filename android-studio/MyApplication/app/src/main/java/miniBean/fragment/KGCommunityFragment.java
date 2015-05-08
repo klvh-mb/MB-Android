@@ -42,6 +42,18 @@ public class KGCommunityFragment extends MyFragment {
     private ScrollView scrollView;
     private String govtUrlValue;
 
+    private TextView TextnumEnrollAM_N,TextnumEnrollAM_LKG,TextnumEnrollAM_UKG,TextTextnumEnrollAM_T;
+    private TextView TextnumEnrollPM_N,TextnumEnrollPM_LKG,TextnumEnrollPM_UKG,TextnumEnrollPM_T;
+    private TextView TextnumEnrollWD_N,TextnumEnrollWD_LKG,TextnumEnrollWD_UKG,TextnumEnrollWD_T;
+
+    private TextView TextannualFeeAM_N,TextannualFeeAM_LKG,TextannualFeeAM_UKG;
+    private TextView TextannualFeePM_N,TextannualFeePM_LKG,TextannualFeePM_UKG;
+    private TextView TextannualFeeWD_N,TextannualFeeWD_LKG,TextannualFeeWD_UKG;
+
+    private TextView TextannualCpFeeAM_N,TextannualCpFeeAM_LKG,TextannualCpFeeAM_UKG;
+    private TextView TextannualCpFeePM_N,TextannualCpFeePM_LKG,TextannualCpFeePM_UKG;
+    private TextView TextannualCpFeeWD_N,TextannualCpFeeWD_LKG,TextannualCpFeeWD_UKG;
+
     private NewsfeedListAdapter feedListAdapter;
     private List<CommunityPostVM> feedItems;
 
@@ -81,6 +93,46 @@ public class KGCommunityFragment extends MyFragment {
         gotoCommLayout = (LinearLayout) view.findViewById(R.id.gotoCommLayout);
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         govtImage = (ImageView) view.findViewById(R.id.govtImage);
+
+        TextnumEnrollAM_N= (TextView) view.findViewById(R.id.TextnumEnrollAM_N);
+        TextnumEnrollAM_LKG= (TextView) view.findViewById(R.id.TextnumEnrollAM_LKG);
+        TextnumEnrollAM_UKG= (TextView) view.findViewById(R.id.TextnumEnrollAM_UKG);
+        TextTextnumEnrollAM_T= (TextView) view.findViewById(R.id.TextTextnumEnrollAM_T);
+
+        TextnumEnrollPM_N= (TextView) view.findViewById(R.id.TextnumEnrollPM_N);
+        TextnumEnrollPM_LKG= (TextView) view.findViewById(R.id.TextnumEnrollPM_LKG);
+        TextnumEnrollPM_UKG= (TextView) view.findViewById(R.id.TextnumEnrollPM_UKG);
+        TextnumEnrollPM_T= (TextView) view.findViewById(R.id.TextnumEnrollPM_T);
+
+        TextnumEnrollWD_N= (TextView) view.findViewById(R.id.TextnumEnrollWD_N);
+        TextnumEnrollWD_LKG= (TextView) view.findViewById(R.id.TextnumEnrollWD_LKG);
+        TextnumEnrollWD_UKG= (TextView) view.findViewById(R.id.TextnumEnrollWD_UKG);
+        TextnumEnrollWD_T= (TextView) view.findViewById(R.id.TextnumEnrollWD_T);
+
+        TextannualFeeAM_N= (TextView) view.findViewById(R.id.TextannualFeeAM_N);
+        TextannualFeeAM_LKG= (TextView) view.findViewById(R.id.TextannualFeeAM_LKG);
+        TextannualFeeAM_UKG= (TextView) view.findViewById(R.id.TextannualFeeAM_UKG);
+
+        TextannualFeePM_N= (TextView) view.findViewById(R.id.TextannualFeePM_N);
+        TextannualFeePM_LKG= (TextView) view.findViewById(R.id.TextannualFeePM_LKG);
+        TextannualFeePM_UKG= (TextView) view.findViewById(R.id.TextannualFeePM_UKG);
+
+        TextannualFeeWD_N= (TextView) view.findViewById(R.id.TextannualFeeWD_N);
+        TextannualFeeWD_LKG= (TextView) view.findViewById(R.id.TextannualFeeWD_LKG);
+        TextannualFeeWD_UKG= (TextView) view.findViewById(R.id.TextannualFeeWD_UKG);
+
+        TextannualCpFeeAM_N= (TextView) view.findViewById(R.id.TextannualCpFeeAM_N);
+        TextannualCpFeeAM_LKG= (TextView) view.findViewById(R.id.TextannualCpFeeAM_LKG);
+        TextannualCpFeeAM_UKG= (TextView) view.findViewById(R.id.TextannualCpFeeAM_UKG);
+
+        TextannualCpFeePM_N= (TextView) view.findViewById(R.id.TextannualCpFeePM_N);
+        TextannualCpFeePM_LKG= (TextView) view.findViewById(R.id.TextannualCpFeePM_LKG);
+        TextannualCpFeePM_UKG= (TextView) view.findViewById(R.id.TextannualCpFeePM_UKG);
+
+        TextannualCpFeeWD_N= (TextView) view.findViewById(R.id.TextannualCpFeeWD_N);
+        TextannualCpFeeWD_LKG= (TextView) view.findViewById(R.id.TextannualCpFeeWD_LKG);
+        TextannualCpFeeWD_UKG= (TextView) view.findViewById(R.id.TextannualCpFeeWD_UKG);
+
 
         initInfo();
 
@@ -203,6 +255,49 @@ public class KGCommunityFragment extends MyFragment {
         phoneValue.setText(schoolVM.getPho());
         addressText.setText(schoolVM.getAdr());
         postCount.setText(schoolVM.getNop() + "");
+
+        //entries for table 1
+        TextnumEnrollAM_N.setText(schoolVM.getNadAmN());
+        TextnumEnrollAM_LKG.setText(schoolVM.getNadAmL());
+        TextnumEnrollAM_UKG.setText(schoolVM.getNadAmU());
+        TextTextnumEnrollAM_T.setText(schoolVM.getNadAmT());
+
+        TextnumEnrollPM_N.setText(schoolVM.getNadPmN());
+        TextnumEnrollPM_LKG.setText(schoolVM.getNadPmL());
+        TextnumEnrollPM_UKG.setText(schoolVM.getNadPmU());
+        TextnumEnrollPM_T.setText(schoolVM.getNadPmT());
+
+        TextnumEnrollWD_N.setText(schoolVM.getNadWdN());
+        TextnumEnrollWD_LKG.setText(schoolVM.getNadWdL());
+        TextnumEnrollWD_UKG.setText(schoolVM.getNadWdU());
+        TextnumEnrollWD_T.setText(schoolVM.getNadWdT());
+
+        //entries for table 2
+        TextannualFeeAM_N.setText(schoolVM.getFeeAmN());
+        TextannualFeeAM_LKG.setText(schoolVM.getFeeAmL());
+        TextannualFeeAM_UKG.setText(schoolVM.getFeeAmU());
+
+        TextannualFeePM_N.setText(schoolVM.getFeePmN());
+        TextannualFeePM_LKG.setText(schoolVM.getFeePmL());
+        TextannualFeePM_UKG.setText(schoolVM.getFeePmU());
+
+        TextannualFeeWD_N.setText(schoolVM.getFeeWdN());
+        TextannualFeeWD_LKG.setText(schoolVM.getFeeWdL());
+        TextannualFeeWD_UKG.setText(schoolVM.getFeeWdU());
+
+        //entries for table 3
+        TextannualCpFeeAM_N.setText(schoolVM.getCpFeeAmN());
+        TextannualCpFeeAM_LKG.setText(schoolVM.getCpFeeAmL());
+        TextannualCpFeeAM_UKG.setText(schoolVM.getCpFeeAmU());
+
+        TextannualCpFeePM_N.setText(schoolVM.getCpFeePmN());
+        TextannualCpFeePM_LKG.setText(schoolVM.getCpFeePmL());
+        TextannualCpFeePM_UKG.setText(schoolVM.getCpFeePmU());
+
+        TextannualCpFeeWD_N.setText(schoolVM.getCpFeeWdN());
+        TextannualCpFeeWD_LKG.setText(schoolVM.getCpFeeWdL());
+        TextannualCpFeeWD_UKG.setText(schoolVM.getCpFeeWdU());
+
 
         govtUrlValue = schoolVM.getGovUrl();
         if (govtUrlValue != null) {

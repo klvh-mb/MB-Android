@@ -12,13 +12,14 @@ import android.widget.ImageView;
 
 import miniBean.R;
 import miniBean.activity.NewPNPostActivity;
+import miniBean.activity.TopPNActivity;
 
 public class SchoolsPNFragment extends MyFragment {
 
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
 
-    private ImageView newPostIcon;
+    private ImageView newPostIcon,rankingActionIcon;
 
     private MyFragment selectedFragment;
 
@@ -31,6 +32,7 @@ public class SchoolsPNFragment extends MyFragment {
         buttonBookmark = (Button) view.findViewById(R.id.buttonBookmark);
         buttonNews = (Button) view.findViewById(R.id.buttonNewsfeed);
         newPostIcon = (ImageView) view.findViewById(R.id.newPostIcon);
+        rankingActionIcon= (ImageView) view.findViewById(R.id.rankingAction);
 
         if(listClicked){
             pressListButton();
@@ -77,6 +79,15 @@ public class SchoolsPNFragment extends MyFragment {
                 Intent intent = new Intent(SchoolsPNFragment.this.getActivity(), NewPNPostActivity.class);
                 intent.putExtra("id","");
                 intent.putExtra("flag","FromPN");
+                startActivity(intent);
+            }
+        });
+
+        rankingActionIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(SchoolsPNFragment.this.getActivity(),TopPNActivity.class);
+                intent.putExtra("flag","SchoolsPNFragment");
                 startActivity(intent);
             }
         });

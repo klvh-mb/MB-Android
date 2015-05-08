@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+    <TextView
+        android:background="@drawable/badge_circle_green"
+        android:textColor="#ffffff"
+        android:id="@+id/serialNoText"
+        android:gravity="center"
+        android:textSize="5dp"
+        android:text="10"
+        android:layout_width="16dp"
+        android:layout_height="16dp" />
+    <TextView
+        android:id="@+id/pnNameText"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/schools_title"
+        android:textSize="10dp"
+        android:text="-"/>
+    <TextView
+        android:textSize="10dp"
+        android:id="@+id/pnDistName"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/schools_district"
+        android:text="-"/>
+    <ImageView
+        android:id="@+id/viewImage"
+        android:layout_marginLeft="5dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_bookmarked"/>
+    <TextView
+        android:textSize="10dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/viewText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"/>
+
+
+</LinearLayout>

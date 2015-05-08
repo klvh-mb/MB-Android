@@ -300,4 +300,248 @@ public class KindergartenVM {
     public void setBookmarked(boolean isBookmarked) {
         this.isBookmarked = isBookmarked;
     }
+
+    public boolean isHasPN() {
+        return hasPN;
+    }
+
+    public String getFeeAmN() {
+        return feeAmN;
+    }
+
+    public void setFeeAmN(String feeAmN) {
+        this.feeAmN = feeAmN;
+    }
+
+    public String getFeePmN() {
+        return feePmN;
+    }
+
+    public void setFeePmN(String feePmN) {
+        this.feePmN = feePmN;
+    }
+
+    public String getFeeWdN() {
+        return feeWdN;
+    }
+
+    public void setFeeWdN(String feeWdN) {
+        this.feeWdN = feeWdN;
+    }
+
+    public String getFeeAmL() {
+        return feeAmL;
+    }
+
+    public void setFeeAmL(String feeAmL) {
+        this.feeAmL = feeAmL;
+    }
+
+    public String getFeePmL() {
+        return feePmL;
+    }
+
+    public void setFeePmL(String feePmL) {
+        this.feePmL = feePmL;
+    }
+
+    public String getFeeWdL() {
+        return feeWdL;
+    }
+
+    public void setFeeWdL(String feeWdL) {
+        this.feeWdL = feeWdL;
+    }
+
+    public String getFeeAmU() {
+        return feeAmU;
+    }
+
+    public void setFeeAmU(String feeAmU) {
+        this.feeAmU = feeAmU;
+    }
+
+    public String getFeePmU() {
+        return feePmU;
+    }
+
+    public void setFeePmU(String feePmU) {
+        this.feePmU = feePmU;
+    }
+
+    public String getFeeWdU() {
+        return feeWdU;
+    }
+
+    public void setFeeWdU(String feeWdU) {
+        this.feeWdU = feeWdU;
+    }
+
+    public String getCpFeeAmN() {
+        return cpFeeAmN;
+    }
+
+    public void setCpFeeAmN(String cpFeeAmN) {
+        this.cpFeeAmN = cpFeeAmN;
+    }
+
+    public String getCpFeePmN() {
+        return cpFeePmN;
+    }
+
+    public void setCpFeePmN(String cpFeePmN) {
+        this.cpFeePmN = cpFeePmN;
+    }
+
+    public String getCpFeeWdN() {
+        return cpFeeWdN;
+    }
+
+    public void setCpFeeWdN(String cpFeeWdN) {
+        this.cpFeeWdN = cpFeeWdN;
+    }
+
+    public String getCpFeeAmL() {
+        return cpFeeAmL;
+    }
+
+    public void setCpFeeAmL(String cpFeeAmL) {
+        this.cpFeeAmL = cpFeeAmL;
+    }
+
+    public String getCpFeePmL() {
+        return cpFeePmL;
+    }
+
+    public void setCpFeePmL(String cpFeePmL) {
+        this.cpFeePmL = cpFeePmL;
+    }
+
+    public String getCpFeeWdL() {
+        return cpFeeWdL;
+    }
+
+    public void setCpFeeWdL(String cpFeeWdL) {
+        this.cpFeeWdL = cpFeeWdL;
+    }
+
+    public String getCpFeeAmU() {
+        return cpFeeAmU;
+    }
+
+    public void setCpFeeAmU(String cpFeeAmU) {
+        this.cpFeeAmU = cpFeeAmU;
+    }
+
+    public String getCpFeePmU() {
+        return cpFeePmU;
+    }
+
+    public void setCpFeePmU(String cpFeePmU) {
+        this.cpFeePmU = cpFeePmU;
+    }
+
+    public String getCpFeeWdU() {
+        return cpFeeWdU;
+    }
+
+    public void setCpFeeWdU(String cpFeeWdU) {
+        this.cpFeeWdU = cpFeeWdU;
+    }
+
+    public String getNadAmN() {
+        return nadAmN;
+    }
+
+    public void setNadAmN(String nadAmN) {
+        this.nadAmN = nadAmN;
+    }
+
+    public String getNadPmN() {
+        return nadPmN;
+    }
+
+    public void setNadPmN(String nadPmN) {
+        this.nadPmN = nadPmN;
+    }
+
+    public String getNadWdN() {
+        return nadWdN;
+    }
+
+    public void setNadWdN(String nadWdN) {
+        this.nadWdN = nadWdN;
+    }
+
+    public String getNadAmL() {
+        return nadAmL;
+    }
+
+    public void setNadAmL(String nadAmL) {
+        this.nadAmL = nadAmL;
+    }
+
+    public String getNadPmL() {
+        return nadPmL;
+    }
+
+    public void setNadPmL(String nadPmL) {
+        this.nadPmL = nadPmL;
+    }
+
+    public String getNadWdL() {
+        return nadWdL;
+    }
+
+    public void setNadWdL(String nadWdL) {
+        this.nadWdL = nadWdL;
+    }
+
+    public String getNadAmU() {
+        return nadAmU;
+    }
+
+    public void setNadAmU(String nadAmU) {
+        this.nadAmU = nadAmU;
+    }
+
+    public String getNadPmU() {
+        return nadPmU;
+    }
+
+    public void setNadPmU(String nadPmU) {
+        this.nadPmU = nadPmU;
+    }
+
+    public String getNadWdU() {
+        return nadWdU;
+    }
+
+    public void setNadWdU(String nadWdU) {
+        this.nadWdU = nadWdU;
+    }
+
+    public String getNadAmT() {
+        return nadAmT;
+    }
+
+    public void setNadAmT(String nadAmT) {
+        this.nadAmT = nadAmT;
+    }
+
+    public String getNadPmT() {
+        return nadPmT;
+    }
+
+    public void setNadPmT(String nadPmT) {
+        this.nadPmT = nadPmT;
+    }
+
+    public String getNadWdT() {
+        return nadWdT;
+    }
+
+    public void setNadWdT(String nadWdT) {
+        this.nadWdT = nadWdT;
+    }
 }
