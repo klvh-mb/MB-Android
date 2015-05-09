@@ -21,6 +21,9 @@ import miniBean.activity.PNCommunityActivity;
 import miniBean.app.AppController;
 import miniBean.util.CommunityIconUtil;
 import miniBean.viewmodel.PreNurseryVM;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class PNListAdapter extends BaseAdapter {
     private Activity activity;
@@ -148,12 +151,62 @@ public class PNListAdapter extends BaseAdapter {
             }
         });
 
+
+
+        bookmarkImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImageView image = (ImageView)view;
+                PreNurseryVM vm=(PreNurseryVM)image.getTag();
+
+                if (!vm.isBookmarked) {
+                    setBookmark(vm.getId());
+                    image.setImageResource(R.drawable.ic_bookmarked);
+                    vm.setBookmarked(true);
+                }else {
+                    setUnBookmark(vm.getId());
+                    image.setImageResource(R.drawable.ic_bookmark);
+                    vm.setBookmarked(false);
+                }
+            }
+        });
+
+        convertView.setTag(items);
+        bookmarkImage.setTag(item);
         return convertView;
+
     }
 
     public void refresh(List<PreNurseryVM> items) {
         this.items = items;
         notifyDataSetChanged();
+    }
+
+    private void setBookmark(Long id) {
+        AppController.getApi().setPNBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                //bookmarkImage.setImageResource(R.drawable.ic_bookmarked);
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    private void setUnBookmark(Long id) {
+        AppController.getApi().setPNUnBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                //bookmarkImage.setImageResource(R.drawable.ic_bookmark);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
     }
 }
 
