@@ -94,45 +94,44 @@ public class KGCommunityFragment extends MyFragment {
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         govtImage = (ImageView) view.findViewById(R.id.govtImage);
 
-        TextnumEnrollAM_N= (TextView) view.findViewById(R.id.TextnumEnrollAM_N);
-        TextnumEnrollAM_LKG= (TextView) view.findViewById(R.id.TextnumEnrollAM_LKG);
-        TextnumEnrollAM_UKG= (TextView) view.findViewById(R.id.TextnumEnrollAM_UKG);
-        TextTextnumEnrollAM_T= (TextView) view.findViewById(R.id.TextTextnumEnrollAM_T);
+        TextnumEnrollAM_N = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell2);
+        TextnumEnrollAM_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell3);
+        TextnumEnrollAM_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell4);
+        TextTextnumEnrollAM_T = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell5);
 
-        TextnumEnrollPM_N= (TextView) view.findViewById(R.id.TextnumEnrollPM_N);
-        TextnumEnrollPM_LKG= (TextView) view.findViewById(R.id.TextnumEnrollPM_LKG);
-        TextnumEnrollPM_UKG= (TextView) view.findViewById(R.id.TextnumEnrollPM_UKG);
-        TextnumEnrollPM_T= (TextView) view.findViewById(R.id.TextnumEnrollPM_T);
+        TextnumEnrollPM_N = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell2);
+        TextnumEnrollPM_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell3);
+        TextnumEnrollPM_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell4);
+        TextnumEnrollPM_T = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell5);
 
-        TextnumEnrollWD_N= (TextView) view.findViewById(R.id.TextnumEnrollWD_N);
-        TextnumEnrollWD_LKG= (TextView) view.findViewById(R.id.TextnumEnrollWD_LKG);
-        TextnumEnrollWD_UKG= (TextView) view.findViewById(R.id.TextnumEnrollWD_UKG);
-        TextnumEnrollWD_T= (TextView) view.findViewById(R.id.TextnumEnrollWD_T);
+        TextnumEnrollWD_N = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell2);
+        TextnumEnrollWD_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell3);
+        TextnumEnrollWD_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell4);
+        TextnumEnrollWD_T = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell5);
 
-        TextannualFeeAM_N= (TextView) view.findViewById(R.id.TextannualFeeAM_N);
-        TextannualFeeAM_LKG= (TextView) view.findViewById(R.id.TextannualFeeAM_LKG);
-        TextannualFeeAM_UKG= (TextView) view.findViewById(R.id.TextannualFeeAM_UKG);
+        TextannualFeeAM_N = (TextView) view.findViewById(R.id.feeTableRow2Cell2);
+        TextannualFeeAM_LKG = (TextView) view.findViewById(R.id.feeTableRow2Cell3);
+        TextannualFeeAM_UKG = (TextView) view.findViewById(R.id.feeTableRow2Cell4);
 
-        TextannualFeePM_N= (TextView) view.findViewById(R.id.TextannualFeePM_N);
-        TextannualFeePM_LKG= (TextView) view.findViewById(R.id.TextannualFeePM_LKG);
-        TextannualFeePM_UKG= (TextView) view.findViewById(R.id.TextannualFeePM_UKG);
+        TextannualFeePM_N = (TextView) view.findViewById(R.id.feeTableRow3Cell2);
+        TextannualFeePM_LKG = (TextView) view.findViewById(R.id.feeTableRow3Cell3);
+        TextannualFeePM_UKG = (TextView) view.findViewById(R.id.feeTableRow3Cell4);
 
-        TextannualFeeWD_N= (TextView) view.findViewById(R.id.TextannualFeeWD_N);
-        TextannualFeeWD_LKG= (TextView) view.findViewById(R.id.TextannualFeeWD_LKG);
-        TextannualFeeWD_UKG= (TextView) view.findViewById(R.id.TextannualFeeWD_UKG);
+        TextannualFeeWD_N = (TextView) view.findViewById(R.id.feeTableRow4Cell2);
+        TextannualFeeWD_LKG = (TextView) view.findViewById(R.id.feeTableRow4Cell3);
+        TextannualFeeWD_UKG = (TextView) view.findViewById(R.id.feeTableRow4Cell4);
 
-        TextannualCpFeeAM_N= (TextView) view.findViewById(R.id.TextannualCpFeeAM_N);
-        TextannualCpFeeAM_LKG= (TextView) view.findViewById(R.id.TextannualCpFeeAM_LKG);
-        TextannualCpFeeAM_UKG= (TextView) view.findViewById(R.id.TextannualCpFeeAM_UKG);
+        TextannualCpFeeAM_N = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell2);
+        TextannualCpFeeAM_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell3);
+        TextannualCpFeeAM_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell4);
 
-        TextannualCpFeePM_N= (TextView) view.findViewById(R.id.TextannualCpFeePM_N);
-        TextannualCpFeePM_LKG= (TextView) view.findViewById(R.id.TextannualCpFeePM_LKG);
-        TextannualCpFeePM_UKG= (TextView) view.findViewById(R.id.TextannualCpFeePM_UKG);
+        TextannualCpFeePM_N = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell2);
+        TextannualCpFeePM_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell3);
+        TextannualCpFeePM_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell4);
 
-        TextannualCpFeeWD_N= (TextView) view.findViewById(R.id.TextannualCpFeeWD_N);
-        TextannualCpFeeWD_LKG= (TextView) view.findViewById(R.id.TextannualCpFeeWD_LKG);
-        TextannualCpFeeWD_UKG= (TextView) view.findViewById(R.id.TextannualCpFeeWD_UKG);
-
+        TextannualCpFeeWD_N = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell2);
+        TextannualCpFeeWD_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell3);
+        TextannualCpFeeWD_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell4);
 
         initInfo();
 

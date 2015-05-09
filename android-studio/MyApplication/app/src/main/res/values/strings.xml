@@ -197,6 +197,14 @@
     <string name="schools_info_phone">電話:</string>
     <string name="schools_info_url">網址:</string>
     <string name="schools_info_gov_url">教局網址:</string>
+    <string name="schools_info_k1">幼兒 3-4歲</string>
+    <string name="schools_info_k2">低班 4-5歲</string>
+    <string name="schools_info_k3">高班 5-6歲</string>
+    <string name="schools_info_am">上午班</string>
+    <string name="schools_info_pm">下午班</string>
+    <string name="schools_info_wd">全日班</string>
+    <string name="schools_info_total">總數</string>
+    <string name="schools_info_fee_note">全年學費(期數)</string>
     <string name="schools_info_comm_welcome">歡迎和其他家長一起討論</string>
     <string name="schools_search_hint">搜尋學校名稱(所有區)</string>
     <string name="schools_search_text_1">搜尋</string>
