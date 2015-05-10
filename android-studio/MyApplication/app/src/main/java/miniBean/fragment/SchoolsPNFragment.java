@@ -77,7 +77,7 @@ public class SchoolsPNFragment extends MyFragment {
             public void onClick(View v) {
                 // launch new post page with no comm id, user will select
                 Intent intent = new Intent(SchoolsPNFragment.this.getActivity(), NewPNPostActivity.class);
-                intent.putExtra("id","");
+                intent.putExtra("id",0L);
                 intent.putExtra("flag","FromPN");
                 startActivity(intent);
             }

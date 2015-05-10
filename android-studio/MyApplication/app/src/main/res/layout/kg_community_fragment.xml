@@ -137,8 +137,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:visibility="gone">
+                android:layout_marginRight="15dp">
                 <TextView
                     android:id="@+id/infoText"
                     android:layout_width="wrap_content"
@@ -324,7 +323,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="match_parent">
                     <TextView
-                        android:background="@drawable/schools_table_first_row"
+                        android:background="@drawable/schools_table_first_cell"
                         android:layout_height="50dp"
                         android:layout_width="65dp"
                         android:id="@+id/acceptanceTableRow1Cell1"
@@ -385,7 +384,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow2Cell3"
                             android:layout_height="match_parent"
@@ -393,14 +392,14 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow2Cell4"
                             android:layout_height="match_parent"
                             android:layout_width="wrap_content"
                             android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow2Cell5"
                             android:layout_height="match_parent"
@@ -408,7 +407,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                     </TableRow>
                     <TableRow
                         android:id="@+id/acceptanceTableRow3"
@@ -430,7 +429,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow3Cell3"
                             android:layout_height="match_parent"
@@ -438,7 +437,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow3Cell4"
                             android:layout_height="match_parent"
@@ -446,7 +445,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow3Cell5"
                             android:layout_height="match_parent"
@@ -454,7 +453,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                     </TableRow>
                     <TableRow
                         android:id="@+id/acceptanceTableRow4"
@@ -476,14 +475,14 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow4Cell3"
                             android:layout_height="match_parent"
                             android:layout_width="wrap_content"                            android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow4Cell4"
                             android:layout_height="match_parent"
@@ -491,7 +490,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/acceptanceTableRow4Cell5"
                             android:layout_height="match_parent"
@@ -499,7 +498,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                     </TableRow>
                 </TableLayout>
 
@@ -509,7 +508,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:text="@string/schools_info_data_asof"
-                   android:textColor="@color/gray"
+                   android:textColor="@color/dark_gray"
                    android:textSize="14dp"
                    android:layout_below="@+id/acceptanceTable" />
             </RelativeLayout>
@@ -551,7 +550,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent">
                         <TextView
-                            android:background="@drawable/schools_table_first_row"
+                            android:background="@drawable/schools_table_first_cell"
                             android:layout_height="50dp"
                             android:layout_width="65dp"
                             android:id="@+id/feeTableRow1Cell1"
@@ -606,7 +605,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/feeTableRow2Cell3"
                             android:layout_height="match_parent"
@@ -614,14 +613,14 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:layout_height="match_parent"
                             android:layout_width="wrap_content"
                             android:id="@+id/feeTableRow2Cell4"
                             android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
 
                     </TableRow>
                     <TableRow
@@ -644,7 +643,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/feeTableRow3Cell3"
                             android:layout_height="match_parent"
@@ -652,14 +651,14 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/feeTableRow3Cell4"
                             android:layout_height="match_parent"
                             android:layout_width="wrap_content"
                             android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
 
                     </TableRow>
                     <TableRow
@@ -682,7 +681,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/feeTableRow4Cell3"
                             android:layout_height="match_parent"
@@ -690,20 +689,31 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/feeTableRow4Cell4"
                             android:layout_height="match_parent"
                             android:layout_width="wrap_content"
                             android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
 
                     </TableRow>
                 </TableLayout>
+
+                <TextView
+                    android:id="@+id/cpFeeText"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_school_fee_coupon"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14dp"
+                    android:layout_below="@+id/feeTable" />
+
                 <TableLayout
                     android:layout_marginTop="15dp"
-                    android:layout_below="@+id/feeTable"
+                    android:layout_below="@+id/cpFeeText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:shrinkColumns="*"
@@ -715,7 +725,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent">
                         <TextView
-                            android:background="@drawable/schools_table_first_row"
+                            android:background="@drawable/schools_table_first_cell"
                             android:layout_height="50dp"
                             android:layout_width="65dp"
                             android:id="@+id/cpFeeTableRow1Cell1"
@@ -770,7 +780,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/cpFeeTableRow2Cell3"
                             android:layout_height="match_parent"
@@ -778,14 +788,14 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/cpFeeTableRow2Cell4"
                             android:layout_height="match_parent"
                             android:layout_width="wrap_content"
                             android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
 
                     </TableRow>
                     <TableRow
@@ -808,7 +818,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/cpFeeTableRow3Cell3"
                             android:layout_height="match_parent"
@@ -816,14 +826,14 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/cpFeeTableRow3Cell4"
                             android:layout_height="match_parent"
                             android:layout_width="wrap_content"
                             android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
 
                     </TableRow>
                     <TableRow
@@ -846,7 +856,7 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/cpFeeTableRow4Cell3"
                             android:layout_height="match_parent"
@@ -854,14 +864,14 @@
                             android:background="@drawable/schools_table_other_cell"
                             android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
                         <TextView
                             android:id="@+id/cpFeeTableRow4Cell4"
                             android:layout_height="match_parent"
                             android:layout_width="wrap_content"
                             android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
                             android:gravity="center"
-                            android:textSize="15dp" />
+                            android:textSize="14dp" />
 
                     </TableRow>
                 </TableLayout>
@@ -875,6 +885,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp">
+
                 <TextView
                     android:id="@+id/curriTitleText"
                     android:layout_marginTop="5dp"

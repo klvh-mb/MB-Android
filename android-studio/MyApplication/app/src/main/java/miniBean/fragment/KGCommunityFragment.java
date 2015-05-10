@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.parceler.apache.commons.lang.StringUtils;
@@ -42,17 +43,19 @@ public class KGCommunityFragment extends MyFragment {
     private ScrollView scrollView;
     private String govtUrlValue;
 
-    private TextView TextnumEnrollAM_N,TextnumEnrollAM_LKG,TextnumEnrollAM_UKG,TextTextnumEnrollAM_T;
-    private TextView TextnumEnrollPM_N,TextnumEnrollPM_LKG,TextnumEnrollPM_UKG,TextnumEnrollPM_T;
-    private TextView TextnumEnrollWD_N,TextnumEnrollWD_LKG,TextnumEnrollWD_UKG,TextnumEnrollWD_T;
+    private TextView numEnrollAM_N,numEnrollAM_LKG,numEnrollAM_UKG,numEnrollAM_T;
+    private TextView numEnrollPM_N,numEnrollPM_LKG,numEnrollPM_UKG,numEnrollPM_T;
+    private TextView numEnrollWD_N,numEnrollWD_LKG,numEnrollWD_UKG,numEnrollWD_T;
 
-    private TextView TextannualFeeAM_N,TextannualFeeAM_LKG,TextannualFeeAM_UKG;
-    private TextView TextannualFeePM_N,TextannualFeePM_LKG,TextannualFeePM_UKG;
-    private TextView TextannualFeeWD_N,TextannualFeeWD_LKG,TextannualFeeWD_UKG;
+    private TextView annualFeeAM_N,annualFeeAM_LKG,annualFeeAM_UKG;
+    private TextView annualFeePM_N,annualFeePM_LKG,annualFeePM_UKG;
+    private TextView annualFeeWD_N,annualFeeWD_LKG,annualFeeWD_UKG;
 
-    private TextView TextannualCpFeeAM_N,TextannualCpFeeAM_LKG,TextannualCpFeeAM_UKG;
-    private TextView TextannualCpFeePM_N,TextannualCpFeePM_LKG,TextannualCpFeePM_UKG;
-    private TextView TextannualCpFeeWD_N,TextannualCpFeeWD_LKG,TextannualCpFeeWD_UKG;
+    private TextView cpFeeText;
+    private TableLayout cpFeeTable;
+    private TextView annualCpFeeAM_N,annualCpFeeAM_LKG,annualCpFeeAM_UKG;
+    private TextView annualCpFeePM_N,annualCpFeePM_LKG,annualCpFeePM_UKG;
+    private TextView annualCpFeeWD_N,annualCpFeeWD_LKG,annualCpFeeWD_UKG;
 
     private NewsfeedListAdapter feedListAdapter;
     private List<CommunityPostVM> feedItems;
@@ -94,44 +97,47 @@ public class KGCommunityFragment extends MyFragment {
         scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         govtImage = (ImageView) view.findViewById(R.id.govtImage);
 
-        TextnumEnrollAM_N = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell2);
-        TextnumEnrollAM_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell3);
-        TextnumEnrollAM_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell4);
-        TextTextnumEnrollAM_T = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell5);
+        numEnrollAM_N = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell2);
+        numEnrollAM_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell3);
+        numEnrollAM_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell4);
+        numEnrollAM_T = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell5);
 
-        TextnumEnrollPM_N = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell2);
-        TextnumEnrollPM_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell3);
-        TextnumEnrollPM_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell4);
-        TextnumEnrollPM_T = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell5);
+        numEnrollPM_N = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell2);
+        numEnrollPM_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell3);
+        numEnrollPM_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell4);
+        numEnrollPM_T = (TextView) view.findViewById(R.id.acceptanceTableRow3Cell5);
 
-        TextnumEnrollWD_N = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell2);
-        TextnumEnrollWD_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell3);
-        TextnumEnrollWD_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell4);
-        TextnumEnrollWD_T = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell5);
+        numEnrollWD_N = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell2);
+        numEnrollWD_LKG = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell3);
+        numEnrollWD_UKG = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell4);
+        numEnrollWD_T = (TextView) view.findViewById(R.id.acceptanceTableRow4Cell5);
 
-        TextannualFeeAM_N = (TextView) view.findViewById(R.id.feeTableRow2Cell2);
-        TextannualFeeAM_LKG = (TextView) view.findViewById(R.id.feeTableRow2Cell3);
-        TextannualFeeAM_UKG = (TextView) view.findViewById(R.id.feeTableRow2Cell4);
+        annualFeeAM_N = (TextView) view.findViewById(R.id.feeTableRow2Cell2);
+        annualFeeAM_LKG = (TextView) view.findViewById(R.id.feeTableRow2Cell3);
+        annualFeeAM_UKG = (TextView) view.findViewById(R.id.feeTableRow2Cell4);
 
-        TextannualFeePM_N = (TextView) view.findViewById(R.id.feeTableRow3Cell2);
-        TextannualFeePM_LKG = (TextView) view.findViewById(R.id.feeTableRow3Cell3);
-        TextannualFeePM_UKG = (TextView) view.findViewById(R.id.feeTableRow3Cell4);
+        annualFeePM_N = (TextView) view.findViewById(R.id.feeTableRow3Cell2);
+        annualFeePM_LKG = (TextView) view.findViewById(R.id.feeTableRow3Cell3);
+        annualFeePM_UKG = (TextView) view.findViewById(R.id.feeTableRow3Cell4);
 
-        TextannualFeeWD_N = (TextView) view.findViewById(R.id.feeTableRow4Cell2);
-        TextannualFeeWD_LKG = (TextView) view.findViewById(R.id.feeTableRow4Cell3);
-        TextannualFeeWD_UKG = (TextView) view.findViewById(R.id.feeTableRow4Cell4);
+        annualFeeWD_N = (TextView) view.findViewById(R.id.feeTableRow4Cell2);
+        annualFeeWD_LKG = (TextView) view.findViewById(R.id.feeTableRow4Cell3);
+        annualFeeWD_UKG = (TextView) view.findViewById(R.id.feeTableRow4Cell4);
 
-        TextannualCpFeeAM_N = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell2);
-        TextannualCpFeeAM_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell3);
-        TextannualCpFeeAM_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell4);
+        cpFeeText = (TextView) view.findViewById(R.id.cpFeeText);
+        cpFeeTable = (TableLayout) view.findViewById(R.id.cpFeeTable);
 
-        TextannualCpFeePM_N = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell2);
-        TextannualCpFeePM_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell3);
-        TextannualCpFeePM_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell4);
+        annualCpFeeAM_N = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell2);
+        annualCpFeeAM_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell3);
+        annualCpFeeAM_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow2Cell4);
 
-        TextannualCpFeeWD_N = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell2);
-        TextannualCpFeeWD_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell3);
-        TextannualCpFeeWD_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell4);
+        annualCpFeePM_N = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell2);
+        annualCpFeePM_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell3);
+        annualCpFeePM_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow3Cell4);
+
+        annualCpFeeWD_N = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell2);
+        annualCpFeeWD_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell3);
+        annualCpFeeWD_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell4);
 
         initInfo();
 
@@ -255,48 +261,55 @@ public class KGCommunityFragment extends MyFragment {
         addressText.setText(schoolVM.getAdr());
         postCount.setText(schoolVM.getNop() + "");
 
-        //entries for table 1
-        TextnumEnrollAM_N.setText(schoolVM.getNadAmN());
-        TextnumEnrollAM_LKG.setText(schoolVM.getNadAmL());
-        TextnumEnrollAM_UKG.setText(schoolVM.getNadAmU());
-        TextTextnumEnrollAM_T.setText(schoolVM.getNadAmT());
+        // acceptanceTable
+        numEnrollAM_N.setText(schoolVM.getNadAmN());
+        numEnrollAM_LKG.setText(schoolVM.getNadAmL());
+        numEnrollAM_UKG.setText(schoolVM.getNadAmU());
+        numEnrollAM_T.setText(schoolVM.getNadAmT());
 
-        TextnumEnrollPM_N.setText(schoolVM.getNadPmN());
-        TextnumEnrollPM_LKG.setText(schoolVM.getNadPmL());
-        TextnumEnrollPM_UKG.setText(schoolVM.getNadPmU());
-        TextnumEnrollPM_T.setText(schoolVM.getNadPmT());
+        numEnrollPM_N.setText(schoolVM.getNadPmN());
+        numEnrollPM_LKG.setText(schoolVM.getNadPmL());
+        numEnrollPM_UKG.setText(schoolVM.getNadPmU());
+        numEnrollPM_T.setText(schoolVM.getNadPmT());
 
-        TextnumEnrollWD_N.setText(schoolVM.getNadWdN());
-        TextnumEnrollWD_LKG.setText(schoolVM.getNadWdL());
-        TextnumEnrollWD_UKG.setText(schoolVM.getNadWdU());
-        TextnumEnrollWD_T.setText(schoolVM.getNadWdT());
+        numEnrollWD_N.setText(schoolVM.getNadWdN());
+        numEnrollWD_LKG.setText(schoolVM.getNadWdL());
+        numEnrollWD_UKG.setText(schoolVM.getNadWdU());
+        numEnrollWD_T.setText(schoolVM.getNadWdT());
 
-        //entries for table 2
-        TextannualFeeAM_N.setText(schoolVM.getFeeAmN());
-        TextannualFeeAM_LKG.setText(schoolVM.getFeeAmL());
-        TextannualFeeAM_UKG.setText(schoolVM.getFeeAmU());
+        // feeTable
+        annualFeeAM_N.setText(schoolVM.getFeeAmN());
+        annualFeeAM_LKG.setText(schoolVM.getFeeAmL());
+        annualFeeAM_UKG.setText(schoolVM.getFeeAmU());
 
-        TextannualFeePM_N.setText(schoolVM.getFeePmN());
-        TextannualFeePM_LKG.setText(schoolVM.getFeePmL());
-        TextannualFeePM_UKG.setText(schoolVM.getFeePmU());
+        annualFeePM_N.setText(schoolVM.getFeePmN());
+        annualFeePM_LKG.setText(schoolVM.getFeePmL());
+        annualFeePM_UKG.setText(schoolVM.getFeePmU());
 
-        TextannualFeeWD_N.setText(schoolVM.getFeeWdN());
-        TextannualFeeWD_LKG.setText(schoolVM.getFeeWdL());
-        TextannualFeeWD_UKG.setText(schoolVM.getFeeWdU());
+        annualFeeWD_N.setText(schoolVM.getFeeWdN());
+        annualFeeWD_LKG.setText(schoolVM.getFeeWdL());
+        annualFeeWD_UKG.setText(schoolVM.getFeeWdU());
 
-        //entries for table 3
-        TextannualCpFeeAM_N.setText(schoolVM.getCpFeeAmN());
-        TextannualCpFeeAM_LKG.setText(schoolVM.getCpFeeAmL());
-        TextannualCpFeeAM_UKG.setText(schoolVM.getCpFeeAmU());
+        // cpFeeTable
+        if (schoolVM.isCp()) {
+            cpFeeText.setVisibility(View.VISIBLE);
+            cpFeeTable.setVisibility(View.VISIBLE);
 
-        TextannualCpFeePM_N.setText(schoolVM.getCpFeePmN());
-        TextannualCpFeePM_LKG.setText(schoolVM.getCpFeePmL());
-        TextannualCpFeePM_UKG.setText(schoolVM.getCpFeePmU());
+            annualCpFeeAM_N.setText(schoolVM.getCpFeeAmN());
+            annualCpFeeAM_LKG.setText(schoolVM.getCpFeeAmL());
+            annualCpFeeAM_UKG.setText(schoolVM.getCpFeeAmU());
 
-        TextannualCpFeeWD_N.setText(schoolVM.getCpFeeWdN());
-        TextannualCpFeeWD_LKG.setText(schoolVM.getCpFeeWdL());
-        TextannualCpFeeWD_UKG.setText(schoolVM.getCpFeeWdU());
+            annualCpFeePM_N.setText(schoolVM.getCpFeePmN());
+            annualCpFeePM_LKG.setText(schoolVM.getCpFeePmL());
+            annualCpFeePM_UKG.setText(schoolVM.getCpFeePmU());
 
+            annualCpFeeWD_N.setText(schoolVM.getCpFeeWdN());
+            annualCpFeeWD_LKG.setText(schoolVM.getCpFeeWdL());
+            annualCpFeeWD_UKG.setText(schoolVM.getCpFeeWdU());
+        } else {
+            cpFeeText.setVisibility(View.GONE);
+            cpFeeTable.setVisibility(View.GONE);
+        }
 
         govtUrlValue = schoolVM.getGovUrl();
         if (govtUrlValue != null) {

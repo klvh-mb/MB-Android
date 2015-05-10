@@ -21,6 +21,10 @@ import miniBean.activity.KGCommunityActivity;
 import miniBean.app.AppController;
 import miniBean.util.CommunityIconUtil;
 import miniBean.viewmodel.KindergartenVM;
+import miniBean.viewmodel.PreNurseryVM;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class KGListAdapter extends BaseAdapter {
     private Activity activity;
@@ -154,12 +158,57 @@ public class KGListAdapter extends BaseAdapter {
             }
         });
 
+        bookmarkImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImageView image = (ImageView)view;
+                KindergartenVM vm = (KindergartenVM)image.getTag();
+
+                if (!vm.isBookmarked) {
+                    bookmark(vm.getId());
+                    image.setImageResource(R.drawable.ic_bookmarked);
+                    vm.setBookmarked(true);
+                } else {
+                    unbookmark(vm.getId());
+                    image.setImageResource(R.drawable.ic_bookmark_white);
+                    vm.setBookmarked(false);
+                }
+            }
+        });
+
+        convertView.setTag(items);
+        bookmarkImage.setTag(item);
+
         return convertView;
     }
 
     public void refresh(List<KindergartenVM> items) {
         this.items = items;
         notifyDataSetChanged();
+    }
+
+    private void bookmark(Long id) {
+        AppController.getApi().bookmarkKG(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {}
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    private void unbookmark(Long id) {
+        AppController.getApi().unbookmarkKG(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {}
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
     }
 }
 

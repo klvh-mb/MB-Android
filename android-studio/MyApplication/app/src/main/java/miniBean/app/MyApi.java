@@ -224,14 +224,14 @@ public interface MyApi {
     @GET("/get-pnnewsfeeds/{offset}")
     public void getPNNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
 
-    @GET("/bookmark-pn/{id}")
-    public void setPNBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
-
-    @GET("/unbookmark-pn/{id}")
-    public void setPNUnBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
-
     @GET("/get-pn-info/{id}")
     public void getPNInfo(@Path("id") Long post_id,@Query("key") String key, Callback<PreNurseryVM> cb);
+
+    @GET("/bookmark-pn/{id}")
+    public void bookmarkPN(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
+
+    @GET("/unbookmark-pn/{id}")
+    public void unbookmarkPN(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
     //
     // KG APIs
@@ -256,10 +256,10 @@ public interface MyApi {
     public void getKGInfo(@Path("id") Long post_id,@Query("key") String key, Callback<KindergartenVM> cb);
 
     @GET("/bookmark-kg/{id}")
-    public void setKGBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
+    public void bookmarkKG(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
     @GET("/unbookmark-kg/{id}")
-    public void setKGUnBookmark(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
+    public void unbookmarkKG(@Path("id") Long post_id, @Query("key") String key, Callback<Response> cb);
 
     //
     // Top schools APIs

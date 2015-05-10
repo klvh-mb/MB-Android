@@ -355,7 +355,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:text="@string/schools_info_data_asof"
-                   android:textColor="@color/gray"
+                   android:textColor="@color/dark_gray"
                    android:textSize="14dp" />
             </RelativeLayout>
             <RelativeLayout

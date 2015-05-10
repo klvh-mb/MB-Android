@@ -50,11 +50,11 @@ public class PNCommunityActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 if (!isBookmarked) {
-                    setBookmark(schoolVM.getId());
+                    bookmark(schoolVM.getId());
                     bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
                     isBookmarked=true;
                 }else {
-                    setUnBookmark(schoolVM.getId());
+                    unbookmark(schoolVM.getId());
                     bookmarkAction.setImageResource(R.drawable.ic_bookmark);
                     isBookmarked=false;
                 }
@@ -79,8 +79,8 @@ public class PNCommunityActivity extends FragmentActivity {
         });
     }
 
-    private void setBookmark(Long id) {
-        AppController.getApi().setPNBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+    private void bookmark(Long id) {
+        AppController.getApi().bookmarkPN(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
@@ -92,8 +92,8 @@ public class PNCommunityActivity extends FragmentActivity {
         });
     }
 
-    private void setUnBookmark(Long id) {
-        AppController.getApi().setPNUnBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+    private void unbookmark(Long id) {
+        AppController.getApi().unbookmarkPN(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 bookmarkAction.setImageResource(R.drawable.ic_bookmark);

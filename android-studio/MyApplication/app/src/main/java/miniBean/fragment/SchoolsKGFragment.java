@@ -77,7 +77,7 @@ public class SchoolsKGFragment extends MyFragment {
             public void onClick(View v) {
                 // launch new post page with no comm id, user will select
                 Intent intent = new Intent(SchoolsKGFragment.this.getActivity(), NewKGPostActivity.class);
-                intent.putExtra("id","");
+                intent.putExtra("id",0L);
                 intent.putExtra("flag","FromKG");
                 startActivity(intent);
             }

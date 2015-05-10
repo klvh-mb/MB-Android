@@ -151,21 +151,19 @@ public class PNListAdapter extends BaseAdapter {
             }
         });
 
-
-
         bookmarkImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ImageView image = (ImageView)view;
-                PreNurseryVM vm=(PreNurseryVM)image.getTag();
+                PreNurseryVM vm = (PreNurseryVM)image.getTag();
 
                 if (!vm.isBookmarked) {
-                    setBookmark(vm.getId());
+                    bookmark(vm.getId());
                     image.setImageResource(R.drawable.ic_bookmarked);
                     vm.setBookmarked(true);
-                }else {
-                    setUnBookmark(vm.getId());
-                    image.setImageResource(R.drawable.ic_bookmark);
+                } else {
+                    unbookmark(vm.getId());
+                    image.setImageResource(R.drawable.ic_bookmark_white);
                     vm.setBookmarked(false);
                 }
             }
@@ -173,8 +171,8 @@ public class PNListAdapter extends BaseAdapter {
 
         convertView.setTag(items);
         bookmarkImage.setTag(item);
-        return convertView;
 
+        return convertView;
     }
 
     public void refresh(List<PreNurseryVM> items) {
@@ -182,12 +180,10 @@ public class PNListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private void setBookmark(Long id) {
-        AppController.getApi().setPNBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+    private void bookmark(Long id) {
+        AppController.getApi().bookmarkPN(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
-            public void success(Response response, Response response2) {
-                //bookmarkImage.setImageResource(R.drawable.ic_bookmarked);
-            }
+            public void success(Response response, Response response2) {}
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
@@ -195,12 +191,10 @@ public class PNListAdapter extends BaseAdapter {
         });
     }
 
-    private void setUnBookmark(Long id) {
-        AppController.getApi().setPNUnBookmark(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
+    private void unbookmark(Long id) {
+        AppController.getApi().unbookmarkPN(id, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
-            public void success(Response response, Response response2) {
-                //bookmarkImage.setImageResource(R.drawable.ic_bookmark);
-            }
+            public void success(Response response, Response response2) {}
 
             @Override
             public void failure(RetrofitError error) {
