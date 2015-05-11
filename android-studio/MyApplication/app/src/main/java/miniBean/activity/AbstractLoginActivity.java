@@ -85,7 +85,7 @@ public abstract class AbstractLoginActivity extends Activity {
             facebook.authorize(
                     this,
                     REQUEST_FACEBOOK_PERMISSIONS,
-                    Facebook.FORCE_DIALOG_AUTH,     // force traditional dialog box instead of new integrated login dialogbox
+                    //Facebook.FORCE_DIALOG_AUTH,     // force traditional dialog box instead of new integrated login dialogbox
                     new Facebook.DialogListener() {
 
                         @Override
