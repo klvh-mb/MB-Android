@@ -23,21 +23,24 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.MyImageGetter;
 import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.PostUtil;
 import miniBean.viewmodel.CommunityPostVM;
 
 public class NewsfeedListAdapter extends BaseAdapter {
-    private TextView name;
+    private TextView postTitle;
     private TextView username;
     private TextView timeText;
     private TextView numComments;
     private ImageView communityIcon;
     private TextView commName;
+    private LinearLayout postImagesLayout;
 
     private Activity activity;
     private LayoutInflater inflater;
@@ -47,7 +50,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
     private ActivityUtil activityUtil;
 
-    private LinearLayout postImagesLayout;
+    private MyImageGetter imageGetter;
 
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this(activity, feedItems, true);
@@ -56,6 +59,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems, boolean isNewsfeed) {
         this.activity = activity;
         this.activityUtil = new ActivityUtil(activity);
+        this.imageGetter = new MyImageGetter(activity);
         this.feedItems = feedItems;
         this.isNewsfeed = isNewsfeed;
     }
@@ -88,7 +92,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.newsfeed_list_item, null);
 
-        name = (TextView) convertView.findViewById(R.id.postTitle);
+        postTitle = (TextView) convertView.findViewById(R.id.postTitle);
         username = (TextView) convertView.findViewById(R.id.username);
         timeText = (TextView) convertView.findViewById(R.id.time);
         numComments = (TextView) convertView.findViewById(R.id.numComments);
@@ -102,7 +106,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
         //Log.d(this.getClass().getSimpleName(), "getView: Post - " + item.getPtl() + "|#comment: " + item.getN_c());
 
-        name.setText(item.getPtl());
+        HtmlUtil.setHtmlText(item.getPtl(), imageGetter, postTitle, false); // disable link movement
         username.setText(item.getP());
         numComments.setText(item.getN_c()+"");
         timeText.setText(DateTimeUtil.getTimeAgo(item.getUt()));

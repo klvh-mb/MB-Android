@@ -46,11 +46,13 @@ import miniBean.adapter.EmoticonListAdapter;
 import miniBean.adapter.PopupPageListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
+import miniBean.app.MyImageGetter;
 import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
+import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.SharingUtil;
 import miniBean.viewmodel.CommentPost;
@@ -78,7 +80,7 @@ public class DetailActivity extends FragmentActivity {
     private PopupPageListAdapter pageAdapter;
     private List<CommunityPostCommentVM> communityItems;
     private TextView questionText;
-    private PopupWindow commentPopup, paginationPopup,emoPopup;
+    private PopupWindow commentPopup, paginationPopup, emoPopup;
     private Boolean isBookmarked = false;
     private ProgressBar spinner;
     private TextView communityName, numPostViews, numPostComments;
@@ -94,11 +96,13 @@ public class DetailActivity extends FragmentActivity {
     private EmoticonListAdapter emoticonListAdapter;
 
     private TextView commentPostButton;
-    private ImageView commentBrowseButton, commentCancelButton;
+    private ImageView commentBrowseButton, commentCancelButton, commentEmoImage;
     private List<ImageView> commentImages = new ArrayList<>();
     private List<File> photos = new ArrayList<>();
 
     private ActivityUtil activityUtil;
+
+    private MyImageGetter imageGetter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,8 @@ public class DetailActivity extends FragmentActivity {
         setContentView(R.layout.detail_activity);
 
         activityUtil = new ActivityUtil(this);
+
+        imageGetter = new MyImageGetter(this);
 
         communityName = (TextView) findViewById(R.id.communityName);
         communityIcon = (ImageView) findViewById(R.id.commIcon);
@@ -223,7 +229,8 @@ public class DetailActivity extends FragmentActivity {
                 communityName.setText(post.getCn());
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");
-                questionText.setText(post.getPtl());
+
+                HtmlUtil.setHtmlText(post.getPtl(), imageGetter, questionText);
 
                 isBookmarked = post.isBookmarked;
                 if (isBookmarked) {
@@ -455,9 +462,8 @@ public class DetailActivity extends FragmentActivity {
                 }
             }
 
-            ImageView emoBrowseImage;
-            emoBrowseImage = (ImageView) layout.findViewById(R.id.emoImage);
-            emoBrowseImage.setOnClickListener(new View.OnClickListener() {
+            commentEmoImage = (ImageView) layout.findViewById(R.id.emoImage);
+            commentEmoImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     initEmoticonPopup();
@@ -778,6 +784,9 @@ public class DetailActivity extends FragmentActivity {
             //Inflate the view from a predefined XML layout
             View layout = inflater.inflate(R.layout.emoticon_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
+
+            // hide soft keyboard when select emoticon
+            activityUtil.hideInputMethodWindow(layout);
 
             emoPopup = new PopupWindow(layout,
                     activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH),

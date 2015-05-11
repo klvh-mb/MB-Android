@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -31,14 +32,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.adapter.EmoticonListAdapter;
 import miniBean.adapter.PopupMyCommunityListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.EmoticonCache;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
+import miniBean.viewmodel.EmoticonVM;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.PostResponse;
 import retrofit.Callback;
@@ -54,16 +59,19 @@ public class NewPostActivity extends FragmentActivity {
     protected ImageView selectCommunityIcon;
     protected TextView communityName;
     protected ImageView communityIcon;
-    protected ImageView backImage, postImage, browseImage;
-    protected TextView postTitle, postContent, post;
+    protected ImageView backImage, browseImage, emoImage;
+    protected TextView postTitle, postContent, postAction, editTextInFocus;
     protected String selectedImagePath = null;
     protected Uri selectedImageUri = null;
 
     protected List<File> photos = new ArrayList<>();
     protected List<ImageView> postImages = new ArrayList<>();
 
+    protected List<EmoticonVM> emoticonVMList = new ArrayList<>();
+    protected EmoticonListAdapter emoticonListAdapter;
+
     protected Long communityId;
-    protected PopupWindow myCommunityPopup;
+    protected PopupWindow myCommunityPopup, emoPopup;
     protected PopupMyCommunityListAdapter adapter;
 
     protected boolean postSuccess = false;
@@ -83,7 +91,7 @@ public class NewPostActivity extends FragmentActivity {
         getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
 
         backImage = (ImageView) findViewById(R.id.backImage);
-        post = (TextView) findViewById(R.id.titlePost);
+        postAction = (TextView) findViewById(R.id.postAction);
         communityLayout = (RelativeLayout) findViewById(R.id.communityLayout);
         selectCommunityLayout = (LinearLayout) findViewById(R.id.selectCommunityLayout);
         selectCommunityText = (TextView) findViewById(R.id.selectCommunityText);
@@ -91,8 +99,25 @@ public class NewPostActivity extends FragmentActivity {
         communityIcon = (ImageView) findViewById(R.id.commIcon);
         communityName = (TextView) findViewById(R.id.communityName);
         browseImage = (ImageView) findViewById(R.id.browseImage);
+        emoImage = (ImageView) findViewById(R.id.emoImage);
         postTitle = (TextView) findViewById(R.id.postTitle);
         postContent = (TextView) findViewById(R.id.postContent);
+        editTextInFocus = postContent;
+
+        postTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    editTextInFocus = postTitle;
+            }
+        });
+        postContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    editTextInFocus = postContent;
+            }
+        });
 
         Long commId = getIntent().getLongExtra("id",0L);
         if (commId == 0L) {
@@ -102,7 +127,7 @@ public class NewPostActivity extends FragmentActivity {
             communityId = commId;
             communityLayout.setVisibility(View.GONE);
         }
-        Log.d(this.getClass().getSimpleName(), "onCreate: communityId="+commId);
+        Log.d(this.getClass().getSimpleName(), "onCreate: communityId=" + commId);
 
         updateSelectCommunityLayout();
         selectCommunityLayout.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +166,18 @@ public class NewPostActivity extends FragmentActivity {
             }
         }
 
-        post.setOnClickListener(new View.OnClickListener() {
+        emoImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initEmoticonPopup();
+            }
+        });
+
+        if (emoticonVMList.isEmpty() && EmoticonCache.getEmoticons().isEmpty()) {
+            EmoticonCache.refresh(null);
+        }
+
+        postAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doPost();
@@ -326,6 +362,50 @@ public class NewPostActivity extends FragmentActivity {
         }
     }
 
+    public void initEmoticonPopup() {
+        try {
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) NewPostActivity.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.emoticon_popup_window,
+                    (ViewGroup) findViewById(R.id.popupElement));
+
+            // hide soft keyboard when select emoticon
+            activityUtil.hideInputMethodWindow(layout);
+
+            emoPopup = new PopupWindow(layout,
+                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH),
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    true);
+
+            emoPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
+            emoPopup.setOutsideTouchable(false);
+            emoPopup.setFocusable(true);
+            emoPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            if (emoticonVMList.isEmpty()) {
+                emoticonVMList = EmoticonCache.getEmoticons();
+            }
+            emoticonListAdapter = new EmoticonListAdapter(this,emoticonVMList);
+
+            GridView gridView = (GridView) layout.findViewById(R.id.emoGrid);
+            gridView.setAdapter(emoticonListAdapter);
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    EmoticonUtil.insertEmoticon(emoticonVMList.get(i), editTextInFocus);
+                    emoPopup.dismiss();
+                    activityUtil.popupInputMethodWindow();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         String title = postTitle.getText().toString();
@@ -354,7 +434,5 @@ public class NewPostActivity extends FragmentActivity {
                 });
         AlertDialog alert = builder.create();
         alert.show();
-        return;
     }
-
 }
