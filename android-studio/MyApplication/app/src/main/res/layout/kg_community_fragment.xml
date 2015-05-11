@@ -325,7 +325,7 @@
                     <TextView
                         android:background="@drawable/schools_table_first_cell"
                         android:layout_height="50dp"
-                        android:layout_width="65dp"
+                        android:layout_width="55dp"
                         android:id="@+id/acceptanceTableRow1Cell1"
                         android:textColor="@color/dark_gray"
                         android:gravity="center"
@@ -359,7 +359,7 @@
                         android:text="@string/schools_info_total"
                         android:id="@+id/acceptanceTableRow1Cell5"
                         android:layout_height="match_parent"
-                        android:layout_width="50dp"
+                        android:layout_width="45dp"
                         android:background="@drawable/schools_table_first_row"                        android:textColor="@color/dark_gray_2"
                         android:gravity="center"
                         android:textSize="14dp" />

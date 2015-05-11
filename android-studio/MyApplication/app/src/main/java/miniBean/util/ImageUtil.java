@@ -13,9 +13,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
@@ -52,6 +54,8 @@ public class ImageUtil {
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
                     cacheOnDisk(true).
+                    bitmapConfig(Bitmap.Config.RGB_565).
+                    imageScaleType(ImageScaleType.IN_SAMPLE_INT).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(0)).build();
 
@@ -59,6 +63,8 @@ public class ImageUtil {
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
                     cacheOnDisk(true).
+                    bitmapConfig(Bitmap.Config.RGB_565).
+                    imageScaleType(ImageScaleType.IN_SAMPLE_INT).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
 
@@ -66,17 +72,15 @@ public class ImageUtil {
             new DisplayImageOptions.Builder().
                     cacheInMemory(true).
                     cacheOnDisk(true).
+                    bitmapConfig(Bitmap.Config.RGB_565).
+                    imageScaleType(ImageScaleType.IN_SAMPLE_INT).
                     showImageOnLoading(R.drawable.image_loading).
                     displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_ROUND_ROUNDED_VALUE)).build();
 
     private static ImageLoader mImageLoader;
 
     static {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                AppController.getInstance().getApplicationContext()).
-                defaultDisplayImageOptions(DEFAULT_IMAGE_OPTIONS).build();
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
-        mImageLoader = ImageLoader.getInstance();
+        init();
     }
 
     public static synchronized ImageLoader getImageLoader() {
@@ -88,6 +92,10 @@ public class ImageUtil {
     public static void init() {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 AppController.getInstance().getApplicationContext()).
+                threadPoolSize(5).
+                threadPriority(Thread.MIN_PRIORITY + 3).
+                denyCacheImageMultipleSizesInMemory().
+                memoryCache(new WeakMemoryCache()).
                 defaultDisplayImageOptions(DEFAULT_IMAGE_OPTIONS).build();
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
         mImageLoader = ImageLoader.getInstance();
@@ -265,21 +273,23 @@ public class ImageUtil {
         opts.inJustDecodeBounds = true;
         Bitmap bp = BitmapFactory.decodeFile(path, opts);
 
-        int orignalHeight = opts.outHeight;
-        int orignalWidth = opts.outWidth;
+        int originalHeight = opts.outHeight;
+        int originalWidth = opts.outWidth;
         int resizeScale = 1;
 
-        if ( orignalWidth > PREVIEW_THUMBNAIL_MAX_WIDTH || orignalHeight > PREVIEW_THUMBNAIL_MAX_HEIGHT ) {
-            final int widthRatio = Math.round((float) orignalWidth / (float) PREVIEW_THUMBNAIL_MAX_WIDTH);
-            final int heightRatio = Math.round((float) orignalHeight / (float) PREVIEW_THUMBNAIL_MAX_HEIGHT);
+        Log.d(ImageUtil.class.getSimpleName(), "resizeAsPreviewThumbnail: outWidth="+originalWidth+" outHeight="+originalHeight);
+        if ( originalWidth > PREVIEW_THUMBNAIL_MAX_WIDTH || originalHeight > PREVIEW_THUMBNAIL_MAX_HEIGHT ) {
+            final int widthRatio = Math.round((float) originalWidth / (float) PREVIEW_THUMBNAIL_MAX_WIDTH);
+            final int heightRatio = Math.round((float) originalHeight / (float) PREVIEW_THUMBNAIL_MAX_HEIGHT);
             resizeScale = heightRatio < widthRatio ? heightRatio : widthRatio;
+            Log.d(ImageUtil.class.getSimpleName(), "resizeAsPreviewThumbnail: resizeScale="+resizeScale);
         }
 
         // put the scale instruction (1 -> scale to (1/1); 8-> scale to 1/8)
         opts.inSampleSize = resizeScale;
         opts.inJustDecodeBounds = false;
 
-        int bmSize = (orignalWidth / resizeScale) * (orignalHeight / resizeScale) * 4;
+        int bmSize = (originalWidth / resizeScale) * (originalHeight / resizeScale) * 4;
         if ( Runtime.getRuntime().freeMemory() > bmSize ) {
             bp = BitmapFactory.decodeFile(path, opts);
         } else {
@@ -300,6 +310,10 @@ public class ImageUtil {
         int crop = (width - height) / 2;
         crop = (crop < 0)? 0: crop;
         Bitmap cropImg = Bitmap.createBitmap(bitmap, crop, 0, newWidth, newHeight);
+        if (bitmap != null) {
+            bitmap.recycle();
+            bitmap = null;
+        }
 
         if (dimension != -1)
             cropImg = Bitmap.createScaledBitmap(cropImg, dimension, dimension, false);

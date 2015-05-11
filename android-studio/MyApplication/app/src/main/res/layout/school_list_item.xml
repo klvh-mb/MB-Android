@@ -277,11 +277,13 @@
 
         <ImageView
             android:id="@+id/bookmarkImage"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_toRightOf="@+id/commentLayout"
             android:src="@drawable/bookmark"
-            android:layout_centerVertical="true" />
+            android:layout_centerInParent="true"
+            android:padding="2dp"
+            android:layout_alignParentStart="false" />
     </RelativeLayout>
 
 </RelativeLayout>
