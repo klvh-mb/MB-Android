@@ -72,7 +72,7 @@ public class MyCommunityFragment extends Fragment {
             public void onClick(View v) {
                 // launch new post page with no comm id, user will select
                 Intent intent = new Intent(MyCommunityFragment.this.getActivity(), NewPostActivity.class);
-                intent.putExtra("id","");
+                intent.putExtra("id",0L);
                 intent.putExtra("flag","FromCommActivity");
                 startActivity(intent);
             }

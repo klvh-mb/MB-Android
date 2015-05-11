@@ -3,18 +3,15 @@
     android:id="@+id/popupElement"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/light_purple"
     android:orientation="horizontal"
-    android:elevation="5dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:background="@drawable/rounded_corner_popup"
+    android:padding="10dp">
     <GridView
         android:id="@+id/emoGrid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numColumns="5"></GridView>
+        android:numColumns="7"
+        android:layout_centerInParent="true"></GridView>
 </RelativeLayout>
 
 

@@ -1,9 +1,14 @@
 package miniBean.util;
 
+import android.widget.TextView;
+
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import miniBean.R;
+import miniBean.viewmodel.EmoticonVM;
 
 /**
  * Created by keithlei on 3/16/15.
@@ -48,5 +53,14 @@ public class EmoticonUtil {
         if (icon == null)
             return -1;
         return icon;
+    }
+
+    public static void insertEmoticon(EmoticonVM emoticon, TextView textView) {
+        String code = emoticon.getCode();
+        String text = (textView.getText() == null)? "" : textView.getText().toString();
+        if (!StringUtils.isEmpty(text) && !text.endsWith(" "))
+            code = " " + code;
+        code += " ";
+        textView.append(code);
     }
 }

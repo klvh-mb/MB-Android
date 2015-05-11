@@ -42,13 +42,15 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.adapter.DetailListAdapter;
-import miniBean.adapter.EmoListAdapter;
+import miniBean.adapter.EmoticonListAdapter;
 import miniBean.adapter.PopupPageListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.EmoticonCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.SharingUtil;
 import miniBean.viewmodel.CommentPost;
@@ -88,8 +90,8 @@ public class DetailActivity extends FragmentActivity {
     private int curPage = 1;
     private CommunityPostCommentVM postVm = new CommunityPostCommentVM();
 
-    private String emoText;
-    private List<EmoticonVM> emoticonVMList;
+    private List<EmoticonVM> emoticonVMList = new ArrayList<>();
+    private EmoticonListAdapter emoticonListAdapter;
 
     private TextView commentPostButton;
     private ImageView commentBrowseButton, commentCancelButton;
@@ -207,7 +209,7 @@ public class DetailActivity extends FragmentActivity {
                         } else if (isFromKG) {
                             intent = new Intent(DetailActivity.this, KGCommunityActivity.class);
                             intent.putExtra("id", post.getKgId());
-                            intent.putExtra("commId",getIntent().getLongExtra("commId",0L));
+                            intent.putExtra("commId", getIntent().getLongExtra("commId", 0L));
                             intent.putExtra("flag", "FromKG");
                         } else {
                             intent = new Intent(DetailActivity.this, CommunityActivity.class);
@@ -458,9 +460,14 @@ public class DetailActivity extends FragmentActivity {
             emoBrowseImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        emoPopup();
+                    initEmoticonPopup();
                 }
             });
+
+            if (emoticonVMList.isEmpty() && EmoticonCache.getEmoticons().isEmpty()) {
+                EmoticonCache.refresh(null);
+            }
+
             Log.d(this.getClass().getSimpleName(), "initCommentPopup: " + selectedImagePath);
         } catch (Exception e) {
             e.printStackTrace();
@@ -759,7 +766,7 @@ public class DetailActivity extends FragmentActivity {
         });
     }
 
-    private void emoPopup() {
+    private void initEmoticonPopup() {
         mainFrameLayout.getForeground().setAlpha(20);
         mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
 
@@ -769,53 +776,37 @@ public class DetailActivity extends FragmentActivity {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             //Inflate the view from a predefined XML layout
-            View layout = inflater.inflate(R.layout.emo_popup_window,
+            View layout = inflater.inflate(R.layout.emoticon_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
 
-            emoPopup = new PopupWindow(layout,400,270,true);
-
-            getEmoticons();
-
-            emoticonVMList=new ArrayList<EmoticonVM>();
-
-            EmoListAdapter emoListAdapter=new EmoListAdapter(this,emoticonVMList);
-
-            GridView gridView= (GridView) layout.findViewById(R.id.emoGrid);
-            gridView.setAdapter(emoListAdapter);
-
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    emoText=emoticonVMList.get(i).getCode();
-                    System.out.println("text:::"+emoText);
-                    commentEditText.append(emoText);
-                    emoPopup.dismiss();
-                }
-            });
+            emoPopup = new PopupWindow(layout,
+                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH),
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    true);
 
             emoPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             emoPopup.setOutsideTouchable(false);
             emoPopup.setFocusable(true);
             emoPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
+            if (emoticonVMList.isEmpty()) {
+                emoticonVMList = EmoticonCache.getEmoticons();
+            }
+            emoticonListAdapter = new EmoticonListAdapter(this,emoticonVMList);
+
+            GridView gridView = (GridView) layout.findViewById(R.id.emoGrid);
+            gridView.setAdapter(emoticonListAdapter);
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    EmoticonUtil.insertEmoticon(emoticonVMList.get(i), commentEditText);
+                    emoPopup.dismiss();
+                    activityUtil.popupInputMethodWindow();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    public void getEmoticons(){
-        AppController.getApi().getEmoticons(AppController.getInstance().getSessionId(),new Callback<List<EmoticonVM>>() {
-            @Override
-            public void success(List<EmoticonVM> emoticonVMs, Response response) {
-                emoticonVMList.addAll(emoticonVMs);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-
-            }
-        });
-    }
-
 }

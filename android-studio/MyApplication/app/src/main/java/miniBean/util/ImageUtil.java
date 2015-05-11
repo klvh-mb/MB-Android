@@ -310,10 +310,6 @@ public class ImageUtil {
         int crop = (width - height) / 2;
         crop = (crop < 0)? 0: crop;
         Bitmap cropImg = Bitmap.createBitmap(bitmap, crop, 0, newWidth, newHeight);
-        if (bitmap != null) {
-            bitmap.recycle();
-            bitmap = null;
-        }
 
         if (dimension != -1)
             cropImg = Bitmap.createScaledBitmap(cropImg, dimension, dimension, false);

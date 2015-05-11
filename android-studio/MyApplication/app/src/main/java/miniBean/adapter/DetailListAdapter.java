@@ -339,12 +339,6 @@ public class DetailListAdapter extends BaseAdapter implements Html.ImageGetter {
                         ImageView imageView = (ImageView)view;
                         imageView.setImageDrawable(d);
                         imageView.setVisibility(View.VISIBLE);
-
-                        // free up mem
-                        if (loadedImage != null) {
-                            loadedImage.recycle();
-                            loadedImage = null;
-                        }
                     }
                 }
             });
