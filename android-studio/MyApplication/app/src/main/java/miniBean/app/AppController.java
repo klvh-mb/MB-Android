@@ -106,7 +106,7 @@ public class AppController extends Application {
 
         ImageUtil.init();
 
-        ACRA.init(getInstance());
+        //ACRA.init(getInstance());
     }
 
     /**

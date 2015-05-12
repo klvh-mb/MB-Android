@@ -1,0 +1,1179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff">
+
+    <RelativeLayout
+        android:id="@+id/rootLayout"
+        android:background="#fff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+        <LinearLayout
+            android:id="@+id/titleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical"
+            android:layout_marginRight="15dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="10">
+
+                <ImageView
+                    android:id="@+id/schoolImage"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"></ImageView>
+
+                <TextView
+                    android:id="@+id/schoolNameText"
+                    android:text="-"
+                    android:textStyle="bold"
+                    android:textColor="@color/schools_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/enName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/schools_title"
+                android:text="-"
+                android:layout_below="@+id/schoolNameText"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/distNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/schools_district"
+            android:layout_marginLeft="15dp"
+            android:text="-"
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/titleLayout" />
+
+        <LinearLayout
+            android:id="@+id/gotoCommLayout"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/titleLayout"
+            android:background="@drawable/schools_info_box"
+            android:layout_marginRight="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:id="@+id/postImageView"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/comment"
+                android:layout_gravity="center_vertical" />
+            <TextView
+                android:id="@+id/postLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/schools_posts"
+                android:layout_gravity="center_vertical"
+                android:textSize="14dp"
+                android:textColor="@color/dark_gray_3" />
+            <TextView
+                android:id="@+id/postCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="0"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/dark_gray_3"
+                android:textSize="14dp" />
+            <LinearLayout
+                android:id="@+id/feedButtonLayout"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/feedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/pale_blue"
+                    android:text="@string/schools_discuss_together"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="14dp" />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/anim_blue_arrow"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/infoLayout"
+            android:layout_below="@+id/gotoCommLayout"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp">
+            <TextView
+                android:id="@+id/infoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/kg_text"
+                android:text="@string/schools_landing_title_info"
+                android:textIsSelectable="false"
+                android:textSize="18dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/infoText"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/dottedline"/>
+            <LinearLayout
+                android:id="@+id/couponBox"
+                android:layout_below="@+id/infoText"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_coupon"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3" />
+                <ImageView
+                    android:id="@+id/couponImage"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/value_yes"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/typeBox"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/couponBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_type"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/typeValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="-"
+                    android:textSize="15dp"
+                    android:textColor="@color/schools_info_text" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/curriculumBox"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/typeBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_curriculum"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/curriValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="-"
+                    android:textColor="@color/schools_info_text"
+                    android:textSize="15dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/timeBox"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/curriculumBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_time"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3" />
+                <TextView
+                    android:id="@+id/timeValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="-"
+                    android:textSize="15dp"
+                    android:textColor="@color/schools_info_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pnBox"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/timeBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_pn"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3" />
+
+                <ImageView
+                    android:id="@+id/pnImage"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/value_yes"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/organisationBox"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/pnBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_org"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp" />
+                <TextView
+                    android:id="@+id/orgValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="-"
+                    android:textColor="@color/schools_info_text"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/acceptanceLayout"
+            android:layout_below="@+id/infoLayout"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp">
+            <TextView
+                android:id="@+id/acceptanceText"
+                android:textStyle="bold"
+                android:textColor="@color/kg_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_landing_title_kg_1"
+                android:textSize="18dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/acceptanceText"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/dottedline"
+                />
+
+            <TableLayout
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/acceptanceText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:shrinkColumns="*"
+                android:stretchColumns="*"
+                android:background="#ffffff"
+                android:id="@+id/acceptanceTable">
+            <TableRow
+
+                android:id="@+id/acceptanceTableRow1"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+                <TextView
+                    android:background="@drawable/schools_table_first_cell"
+                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:id="@+id/acceptanceTableRow1Cell1"
+                    android:textColor="@color/dark_gray"
+                    android:gravity="center"
+                    android:textSize="14dp" />
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/acceptanceTableRow1Cell2"
+                    android:text="@string/schools_info_k1"
+                    android:background="@drawable/schools_table_first_row"
+                    android:textColor="@color/dark_gray_2"
+                    android:gravity="center"
+                    android:textSize="14dp" />
+                <TextView
+                    android:text="@string/schools_info_k2"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/acceptanceTableRow1Cell3"
+                    android:background="@drawable/schools_table_first_row"                        android:textColor="@color/dark_gray_2"
+                    android:gravity="center"
+                    android:textSize="14dp" />
+                <TextView
+                    android:text="@string/schools_info_k3"
+                    android:id="@+id/acceptanceTableRow1Cell4"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/schools_table_first_row"                        android:textColor="@color/dark_gray_2"
+                    android:gravity="center"
+                    android:textSize="14dp" />
+                <TextView
+                    android:text="@string/schools_info_total"
+                    android:id="@+id/acceptanceTableRow1Cell5"
+                    android:layout_height="match_parent"
+                    android:layout_width="45dp"
+                    android:background="@drawable/schools_table_first_row"                        android:textColor="@color/dark_gray_2"
+                    android:gravity="center"
+                    android:textSize="14dp" />
+            </TableRow>
+                <TableRow
+                    android:id="@+id/acceptanceTableRow2"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:text="@string/schools_info_am"
+                        android:id="@+id/acceptanceTableRow2Cell1"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow2Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow2Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow2Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow2Cell5"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/acceptanceTableRow3"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:id="@+id/acceptanceTableRow3Cell1"
+                        android:text="@string/schools_info_pm"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow3Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow3Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow3Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow3Cell5"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                </TableRow>
+                <TableRow
+                    android:id="@+id/acceptanceTableRow4"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/acceptanceTableRow4Cell1"
+                        android:text="@string/schools_info_wd"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow4Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow4Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"                            android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow4Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/acceptanceTableRow4Cell5"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+               android:id="@+id/bottomText"
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="@string/schools_info_data_asof"
+               android:textColor="@color/dark_gray"
+               android:textSize="14dp"
+               android:layout_below="@+id/acceptanceTable" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/feeLayout"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_below="@+id/acceptanceLayout">
+            <TextView
+                android:id="@+id/feeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/kg_text"
+                android:text="@string/schools_landing_title_kg_2"
+                android:textIsSelectable="false"
+                android:textSize="18dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/feeTitle"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/dottedline"/>
+            <TableLayout
+                android:id="@+id/feeTable"
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/feeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:shrinkColumns="*"
+                android:stretchColumns="*"
+                android:background="#ffffff">
+                <TableRow
+                    android:id="@+id/feeTableRow1"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:background="@drawable/schools_table_first_cell"
+                        android:layout_height="50dp"
+                        android:layout_width="65dp"
+                        android:id="@+id/feeTableRow1Cell1"
+                        android:textColor="@color/dark_gray"
+                        android:gravity="center"
+                        android:text="@string/schools_info_fee_note"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow1Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:text="@string/schools_info_k1"
+                        android:background="@drawable/schools_table_first_row"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow1Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:text="@string/schools_info_k2"
+                        android:background="@drawable/schools_table_first_row"                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow1Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:text="@string/schools_info_k3"
+                        android:background="@drawable/schools_table_first_row"                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/feeTableRow2"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:text="@string/schools_info_am"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/feeTableRow2Cell1"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/feeTableRow2Cell2"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow2Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/feeTableRow2Cell4"
+                        android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/feeTableRow3"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:text="@string/schools_info_pm"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/feeTableRow3Cell1"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow3Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow3Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow3Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/feeTableRow4"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:text="@string/schools_info_wd"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/feeTableRow4Cell1"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow4Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow4Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/feeTableRow4Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/cpFeeText"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_info_school_fee_coupon"
+                android:textColor="@color/dark_gray"
+                android:textSize="14dp"
+                android:layout_below="@+id/feeTable" />
+
+            <TableLayout
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/cpFeeText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:shrinkColumns="*"
+                android:stretchColumns="*"
+                android:background="#ffffff"
+                android:id="@+id/cpFeeTable">
+                <TableRow
+                    android:id="@+id/cpFeeTableRow1"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:background="@drawable/schools_table_first_cell"
+                        android:layout_height="50dp"
+                        android:layout_width="65dp"
+                        android:id="@+id/cpFeeTableRow1Cell1"
+                        android:textColor="@color/dark_gray"
+                        android:gravity="center"
+                        android:text="@string/schools_info_fee_note"
+                        android:textSize="13dp" />
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/cpFeeTableRow1Cell2"
+                        android:text="@string/schools_info_k1"
+                        android:background="@drawable/schools_table_first_row"
+                        android:textColor="#000000"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/cpFeeTableRow1Cell3"
+                        android:text="@string/schools_info_k2"
+                        android:background="@drawable/schools_table_first_row"                        android:textColor="#000000"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/cpFeeTableRow1Cell4"
+                        android:text="@string/schools_info_k3"
+                        android:background="@drawable/schools_table_first_row"                        android:textColor="#000000"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/cpFeeTableRow2"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/cpFeeTableRow2Cell1"
+                        android:text="@string/schools_info_am"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow2Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow2Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow2Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/cpFeeTableRow3"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/cpFeeTableRow3Cell1"
+                        android:text="@string/schools_info_pm"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="@color/dark_gray_2"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow3Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow3Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow3Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+
+                </TableRow>
+                <TableRow
+                    android:id="@+id/cpFeeTableRow4"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/cpFeeTableRow4Cell1"
+                        android:text="@string/schools_info_wd"
+                        android:background="@drawable/schools_table_first_column"
+                        android:textColor="#000000"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow4Cell2"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow4Cell3"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"
+                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/cpFeeTableRow4Cell4"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:background="@drawable/schools_table_other_cell"                        android:textColor="@color/dark_gray_3"
+                        android:gravity="center"
+                        android:textSize="14dp" />
+
+                </TableRow>
+            </TableLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/curriculumLayout"
+            android:layout_below="@+id/feeLayout"
+            android:layout_width="match_parent"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:id="@+id/curriTitleText"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/kg_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_landing_title_curriculum"
+                android:textSize="18dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/curriTitleText"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/dottedline"
+                />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/curriTitleText"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_curriculum_arrange"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3"
+                    android:id="@+id/textView4" />
+
+                <TextView
+                    android:id="@+id/contentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/curriTitleText"
+                    android:text="-"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3" />
+            </LinearLayout>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/contactBox"
+            android:layout_width="match_parent"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/curriculumLayout"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp">
+            <TextView
+                android:id="@+id/contactTitle"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/kg_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_landing_title_contact"
+                android:textSize="18dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@+id/contactTitle"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/dottedline" />
+
+            <LinearLayout
+                android:id="@+id/addressLayout"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/contactTitle"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/addressText"
+                    android:text="@string/schools_info_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3"
+                    android:layout_gravity="center_vertical" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:id="@+id/addressIcon"
+                    android:src="@drawable/ic_loc"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/addressValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/link"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/phoneLayout"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/addressLayout"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/phoneText"
+                    android:text="@string/schools_info_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3"
+                    android:layout_gravity="center_vertical" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:id="@+id/phoneIcon"
+                    android:src="@drawable/ic_call"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/phoneValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/link"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/webLayout"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/phoneLayout"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/websiteText"
+                    android:text="@string/schools_info_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3"
+                    android:layout_gravity="center_vertical" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:id="@+id/websiteIcon"
+                    android:src="@drawable/ic_url"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:id="@+id/websiteValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/link"
+                    android:text="-"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/govsiteLayout"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/webLayout"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/govsiteText"
+                    android:text="@string/schools_info_gov_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3"
+                    android:layout_gravity="center_vertical" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:id="@+id/govsiteIcon"
+                    android:src="@drawable/ic_url"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:id="@+id/govtImage"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/schools_gov"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/contactBox"
+            android:id="@+id/schoolPostLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:background="@drawable/schools_info_box"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/communityIcon"
+                android:src="@drawable/comment"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp" />
+
+            <TextView
+                android:id="@+id/postTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/kg_text"
+                android:text="@string/schools_landing_title_comm"
+                android:textSize="22dp"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/communityIcon" />
+
+            <LinearLayout
+                android:background="@color/kg_maroon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:layout_alignParentRight="true"
+                android:baselineAligned="false"
+                android:layout_alignParentStart="false"
+                android:id="@+id/newPostLayout"
+                android:layout_centerVertical="true">
+                <ImageView
+                    android:id="@+id/newPostIcon"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/edit_post"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_landing_new_post"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@+id/schoolPostLayout"
+            android:background="@drawable/dottedline"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bar"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/schools_info_comm_welcome"
+            android:textSize="15dp"
+            android:textColor="@color/dark_gray_3"
+            android:layout_marginRight="15dp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</RelativeLayout>

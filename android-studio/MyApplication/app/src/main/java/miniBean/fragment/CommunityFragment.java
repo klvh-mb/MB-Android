@@ -217,6 +217,9 @@ public class CommunityFragment extends Fragment {
         AppController.getApi().getCommunityInitialPosts(community.id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response) {
+                if (array.getPosts().isEmpty())
+                    setFooterText(R.string.list_no_posts);
+
                 feedItems.addAll(array.getPosts());
                 feedListAdapter.notifyDataSetChanged();
                 commNameText.setText(community.dn);
@@ -279,14 +282,13 @@ public class CommunityFragment extends Fragment {
     }
 
     public void loadNewsfeed(Long id, String date, int offset) {
+        setFooterText(R.string.list_loading);
         AppController.getApi().getCommunityNextPosts(id, date, AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> communityPostVMs, Response response) {
                 Log.d(CommunityFragment.this.getClass().getSimpleName(), "loadNewsfeed.success: communityPostVMs.size=" + communityPostVMs.size());
                 if (communityPostVMs == null || communityPostVMs.size() == 0) {
                     setFooterText(R.string.list_loaded_all);
-                } else {
-                    setFooterText(R.string.list_loading);
                 }
 
                 feedItems.addAll(communityPostVMs);

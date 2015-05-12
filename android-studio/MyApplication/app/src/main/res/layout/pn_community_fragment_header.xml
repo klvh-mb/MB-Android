@@ -131,7 +131,7 @@
             android:id="@+id/infoLayout"
             android:layout_below="@+id/gotoCommLayout"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp">
@@ -260,7 +260,7 @@
             android:id="@+id/acceptanceLayout"
             android:layout_below="@+id/infoLayout"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp">
@@ -357,7 +357,7 @@
             android:id="@+id/curriculumLayout"
             android:layout_below="@+id/acceptanceLayout"
             android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginLeft="15dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp">
@@ -408,7 +408,7 @@
         <RelativeLayout
             android:id="@+id/contactBox"
             android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginLeft="15dp"
             android:layout_below="@+id/curriculumLayout"
             android:layout_height="wrap_content"
@@ -570,11 +570,25 @@
             android:id="@+id/schoolPostLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="35dp"
             android:orientation="horizontal"
-            android:layout_marginRight="15dp"
-            android:weightSum="10">
+            android:weightSum="10"
+            android:background="@drawable/schools_info_box"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/communityIcon"
+                android:src="@drawable/comment"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp" />
+
             <TextView
                 android:id="@+id/postTitleText"
                 android:layout_width="wrap_content"
@@ -584,7 +598,8 @@
                 android:text="@string/schools_landing_title_comm"
                 android:textSize="22dp"
                 android:layout_gravity="center_vertical"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/communityIcon" />
 
             <LinearLayout
                 android:background="@color/pn_green"
@@ -601,11 +616,11 @@
                 android:layout_alignParentStart="false"
                 android:id="@+id/newPostLayout"
                 android:layout_centerVertical="true">
-            <ImageView
-                android:id="@+id/newPostIcon"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/edit_post"/>
+                <ImageView
+                    android:id="@+id/newPostIcon"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/edit_post"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -614,6 +629,7 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="#ffffff" />
             </LinearLayout>
+
         </RelativeLayout>
 
         <View

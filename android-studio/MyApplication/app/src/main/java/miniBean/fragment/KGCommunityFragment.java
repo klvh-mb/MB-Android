@@ -3,44 +3,26 @@ package miniBean.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import miniBean.Listener.InfiniteScrollListener;
 import miniBean.R;
-import miniBean.activity.DetailActivity;
 import miniBean.activity.NewKGPostActivity;
-import miniBean.adapter.NewsfeedListAdapter;
-import miniBean.app.AppController;
 import miniBean.util.CommunityIconUtil;
-import miniBean.util.DefaultValues;
 import miniBean.util.ExternalLauncherUtil;
-import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.KindergartenVM;
-import miniBean.viewmodel.PostArray;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
-public class KGCommunityFragment extends MyFragment {
+public class KGCommunityFragment extends AbstractSchoolCommunityFragment {
 
     private TextView nameText,districtText,enNameText,orgValue,typeValue,timeValue,curriculumValue;
-    private TextView studentNum,halfDayValue,fullDayValue,curriculumContent,addressText,phoneValue;
+    private TextView curriculumContent,addressText,phoneValue;
     private TextView websiteValue,postCount;
-    private ScrollView scrollView;
     private String govtUrlValue;
 
     private TextView numEnrollAM_N,numEnrollAM_LKG,numEnrollAM_UKG,numEnrollAM_T;
@@ -57,21 +39,24 @@ public class KGCommunityFragment extends MyFragment {
     private TextView annualCpFeePM_N,annualCpFeePM_LKG,annualCpFeePM_UKG;
     private TextView annualCpFeeWD_N,annualCpFeeWD_LKG,annualCpFeeWD_UKG;
 
-    private NewsfeedListAdapter feedListAdapter;
-    private List<CommunityPostVM> feedItems;
-
-    private ListView postList;
-
     private ImageView icon,couponImage,pnImage,govtImage;
     private LinearLayout gotoCommLayout,newPostLayout;
 
     private KindergartenVM schoolVM;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    protected View getListHeader(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.kg_community_fragment_header, null);
+    }
 
-        View view = inflater.inflate(R.layout.kg_community_fragment, container, false);
+    @Override
+    protected String getIntentFlag() {
+        return "FromKG";
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         icon = (ImageView) view.findViewById(R.id.schoolImage);
         nameText = (TextView) view.findViewById(R.id.schoolNameText);
@@ -83,18 +68,13 @@ public class KGCommunityFragment extends MyFragment {
         typeValue = (TextView) view.findViewById(R.id.typeValueText);
         curriculumValue = (TextView) view.findViewById(R.id.curriValueText);
         pnImage = (ImageView) view.findViewById(R.id.pnImage);
-        studentNum = (TextView) view.findViewById(R.id.studentValue);
-        halfDayValue = (TextView) view.findViewById(R.id.halfDayValue);
-        fullDayValue = (TextView) view.findViewById(R.id.fullDayValue);
         curriculumContent = (TextView) view.findViewById(R.id.contentText);
         addressText = (TextView) view.findViewById(R.id.addressValue);
         phoneValue = (TextView) view.findViewById(R.id.phoneValue);
         websiteValue = (TextView) view.findViewById(R.id.websiteValue);
         newPostLayout = (LinearLayout) view.findViewById(R.id.newPostLayout);
-        postList = (ListView) view.findViewById(R.id.postList);
         postCount = (TextView) view.findViewById(R.id.postCount);
         gotoCommLayout = (LinearLayout) view.findViewById(R.id.gotoCommLayout);
-        scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         govtImage = (ImageView) view.findViewById(R.id.govtImage);
 
         numEnrollAM_N = (TextView) view.findViewById(R.id.acceptanceTableRow2Cell2);
@@ -139,51 +119,6 @@ public class KGCommunityFragment extends MyFragment {
         annualCpFeeWD_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell3);
         annualCpFeeWD_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell4);
 
-        initInfo();
-
-        getNewsFeedByCommunityId(getArguments().getLong("commId"));
-
-        feedItems = new ArrayList<CommunityPostVM>();
-        feedListAdapter = new NewsfeedListAdapter(getActivity(), feedItems, false);
-        postList.setAdapter(feedListAdapter);
-
-        postList.setOnTouchListener(new View.OnTouchListener() {
-            // Setting on Touch Listener for handling the touch inside ScrollView
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-
-        postList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                CommunityPostVM post = (CommunityPostVM) feedListAdapter.getItem(position);
-                if (post != null) {
-                    intent.putExtra("postId", post.getId());
-                    intent.putExtra("commId", post.getCid());
-                    intent.putExtra("id", getArguments().getLong("id"));
-                    intent.putExtra("commId", getArguments().getLong("commId"));
-                    intent.putExtra("flag", "FromKG");
-                    startActivity(intent);
-                }
-            }
-        });
-
-        postList.setOnScrollListener(new InfiniteScrollListener(
-                DefaultValues.DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD, false, true) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                loadNewsfeed(
-                        getArguments().getLong("id"),
-                        feedItems.get(feedItems.size() - 1).getUt() + "",       // NOTE: use updateTime not createTime!!
-                        page - 1);
-            }
-        });
-
         newPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,7 +132,7 @@ public class KGCommunityFragment extends MyFragment {
         gotoCommLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                scrollView.fullScroll(View.FOCUS_DOWN);
+                listView.smoothScrollToPosition(1);
             }
         });
 
@@ -228,6 +163,8 @@ public class KGCommunityFragment extends MyFragment {
                 ExternalLauncherUtil.launchBrowser(KGCommunityFragment.this.getActivity(), govtUrlValue);
             }
         });
+
+        initInfo();
 
         return view;
     }
@@ -327,47 +264,6 @@ public class KGCommunityFragment extends MyFragment {
         } else {
             pnImage.setImageResource(R.drawable.value_no);
         }
-
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                if ("FromCommentImage".equals(getArguments().getString("flag"))) {
-                    scrollView.fullScroll(View.FOCUS_DOWN);
-                } else {
-                    scrollView.fullScroll(View.FOCUS_UP);
-                }
-            }
-        });
-    }
-
-    private void getNewsFeedByCommunityId(Long commId) {
-        AppController.getApi().getCommunityInitialPosts(commId, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
-            @Override
-            public void success(PostArray array, Response response) {
-                feedItems.addAll(array.getPosts());
-                feedListAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
-    }
-
-    public void loadNewsfeed(Long id, String date, int offset) {
-        AppController.getApi().getCommunityNextPosts(id, date, AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
-            @Override
-            public void success(List<CommunityPostVM> communityPostVMs, Response response) {
-                feedItems.addAll(communityPostVMs);
-                feedListAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
     }
 
     public void setSchool(KindergartenVM schoolVM) {
