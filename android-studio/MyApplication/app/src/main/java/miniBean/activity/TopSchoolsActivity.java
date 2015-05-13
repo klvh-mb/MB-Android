@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class TopSchoolsActivity extends FragmentActivity {
     private TopBookmarkedKGListAdapter topBookmarkedKGListAdapter;
     private List<PreNurseryVM> topViewedPNs,topBookmarkedPNs;
     private List<KindergartenVM> topViewedKGs,topBookmarkedKGs;
+
     private ImageView backAction,scrollButton;
     private ScrollView scrollView;
     private boolean scrollUp=true;
@@ -44,10 +46,14 @@ public class TopSchoolsActivity extends FragmentActivity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.top_schools_actionbar);
 
+        TextView actionbarTitle = (TextView) findViewById(R.id.title);
+
         if (getIntent().getStringExtra("flag").equals("SchoolsPNFragment")) {
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
+            actionbarTitle.setText(getString(R.string.schools_top_pn_ranking));
         } else {
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_maroon));
+            actionbarTitle.setText(getString(R.string.schools_top_kg_ranking));
         }
 
         topViewedPNs = new ArrayList<>();
@@ -59,7 +65,7 @@ public class TopSchoolsActivity extends FragmentActivity {
         topBookmarkedList = (ListView) findViewById(R.id.topBookmarkedList);
         backAction = (ImageView) findViewById(R.id.backImage);
         scrollButton = (ImageView) findViewById(R.id.scrollButton);
-        scrollView = (ScrollView) findViewById(R.id.scrollview);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         backAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +94,6 @@ public class TopSchoolsActivity extends FragmentActivity {
                 }
             }
         });
-
-
     }
 
     private void getTopViewPNs(){
@@ -99,6 +103,7 @@ public class TopSchoolsActivity extends FragmentActivity {
                 topViewedPNs.addAll(vms);
                 topViewedPNListAdapter = new TopViewedPNListAdapter(TopSchoolsActivity.this,topViewedPNs);
                 topViewedList.setAdapter(topViewedPNListAdapter);
+                scrollView.fullScroll(View.FOCUS_UP);
             }
 
             @Override
@@ -115,6 +120,7 @@ public class TopSchoolsActivity extends FragmentActivity {
                 topBookmarkedPNs.addAll(vms);
                 topBookmarkedPNListAdapter = new TopBookmarkedPNListAdapter(TopSchoolsActivity.this,topBookmarkedPNs);
                 topBookmarkedList.setAdapter(topBookmarkedPNListAdapter);
+                scrollView.fullScroll(View.FOCUS_UP);
             }
 
             @Override
@@ -131,6 +137,7 @@ public class TopSchoolsActivity extends FragmentActivity {
                 topViewedKGs.addAll(vms);
                 topViewedKGListAdapter = new TopViewedKGListAdapter(TopSchoolsActivity.this,topViewedKGs);
                 topViewedList.setAdapter(topViewedKGListAdapter);
+                scrollView.fullScroll(View.FOCUS_UP);
             }
 
             @Override
@@ -147,6 +154,7 @@ public class TopSchoolsActivity extends FragmentActivity {
                 topBookmarkedKGs.addAll(vms);
                 topBookmarkedKGListAdapter = new TopBookmarkedKGListAdapter(TopSchoolsActivity.this,topBookmarkedKGs);
                 topBookmarkedList.setAdapter(topBookmarkedKGListAdapter);
+                scrollView.fullScroll(View.FOCUS_UP);
             }
 
             @Override

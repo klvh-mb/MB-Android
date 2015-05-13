@@ -17,7 +17,7 @@ public class TopViewedPNListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<PreNurseryVM> items;
-    private TextView pnName,distName,noOfViews,serialNotext;
+    private TextView schoolName,district,noOfViews,serialNotext;
 
     public TopViewedPNListAdapter(Activity activity, List<PreNurseryVM> items) {
         this.activity = activity;
@@ -52,21 +52,18 @@ public class TopViewedPNListAdapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.top_viewed_schools_item, null);
 
-        pnName= (TextView) convertView.findViewById(R.id.pnNameText);
-        distName= (TextView) convertView.findViewById(R.id.pnDistName);
-        noOfViews= (TextView) convertView.findViewById(R.id.viewText);
-        serialNotext= (TextView) convertView.findViewById(R.id.serialNoText);
+        schoolName = (TextView) convertView.findViewById(R.id.schoolNameText);
+        district = (TextView) convertView.findViewById(R.id.districtText);
+        noOfViews = (TextView) convertView.findViewById(R.id.viewText);
+        serialNotext = (TextView) convertView.findViewById(R.id.serialNoText);
 
         PreNurseryVM item = items.get(position);
 
-        pnName.setText(item.getN());
-        distName.setText(item.getDis());
+        schoolName.setText(item.getN());
+        district.setText(item.getDis());
         noOfViews.setText(item.getNov()+"");
         serialNotext.setText(position+1+"");
 
         return convertView;
     }
-
 }
-
-

@@ -244,6 +244,12 @@
     <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
     <string name="schools_pn_bookmark_title_3">間幼稚園</string>
 
+    <string name="schools_top_pn_ranking">幼兒班排名</string>
+    <string name="schools_top_kg_ranking">幼稚園排名</string>
+    <string name="schools_top_viewed">最多閱覽次數</string>
+    <string name="schools_top_bookmarked">最多媽媽收藏</string>
+    <string name="schools_top_discussed">最多媽媽討論</string>
+
     <!-- Dialog -->
     <string name="cancel_new_post">退出發佈話題?</string>
     <string name="exit_app">是否退出 miniBean小萌豆?</string>

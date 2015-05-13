@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ScrollView
-        android:id="@+id/scrollview"
+        android:id="@+id/scrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     <LinearLayout
@@ -31,11 +31,11 @@
                 android:src="@drawable/schools_green_book"
                 android:layout_gravity="center_vertical" />
             <TextView
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Top Viewed"
+                android:text="@string/schools_top_viewed"
                 android:textSize="18dp"
                 android:textColor="@color/dark_gray_3" />
             </LinearLayout>
@@ -48,12 +48,11 @@
             android:layout_height="3dp">
             </View>
     <ListView
-        android:layout_marginTop="15dp"
         android:layout_below="@+id/headerLayout1"
         android:id="@+id/topViewedList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-     />
+        android:layout_marginTop="10dp" />
         <ImageView
             android:id="@+id/scrollButton"
             android:layout_width="35dp"
@@ -81,11 +80,11 @@
                 android:src="@drawable/schools_green_book"
                 android:layout_gravity="center_vertical" />
             <TextView
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Top Bookmarked"
+                android:text="@string/schools_top_bookmarked"
                 android:textColor="@color/dark_gray_3"
                 android:textSize="18dp" />
         </LinearLayout>
@@ -98,7 +97,7 @@
             android:layout_height="3dp">
         </View>
         <ListView
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_below="@+id/headerLayout2"
             android:id="@+id/topBookmarkedList"
             android:layout_width="match_parent"
