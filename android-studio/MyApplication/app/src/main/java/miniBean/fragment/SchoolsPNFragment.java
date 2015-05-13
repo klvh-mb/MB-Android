@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import miniBean.R;
 import miniBean.activity.NewPNPostActivity;
-import miniBean.activity.TopPNActivity;
+import miniBean.activity.TopSchoolsActivity;
 
 public class SchoolsPNFragment extends MyFragment {
 
@@ -86,7 +86,7 @@ public class SchoolsPNFragment extends MyFragment {
         rankingActionIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(SchoolsPNFragment.this.getActivity(),TopPNActivity.class);
+                Intent intent=new Intent(SchoolsPNFragment.this.getActivity(),TopSchoolsActivity.class);
                 intent.putExtra("flag","SchoolsPNFragment");
                 startActivity(intent);
             }

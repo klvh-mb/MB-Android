@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/actionbar_bg_green">
+        android:id="@+id/actionBarLayout">
 
         <ImageView
             android:id="@+id/backImage"
@@ -26,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="Top PN"
+            android:text="Top Schools"
             android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:textSize="22dp" />
 
     </RelativeLayout>
 </LinearLayout>

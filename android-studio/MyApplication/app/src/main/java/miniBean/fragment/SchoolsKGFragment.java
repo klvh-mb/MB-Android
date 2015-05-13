@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import miniBean.R;
 import miniBean.activity.NewKGPostActivity;
-import miniBean.activity.TopPNActivity;
+import miniBean.activity.TopSchoolsActivity;
 
 public class SchoolsKGFragment extends MyFragment {
 
@@ -87,7 +87,7 @@ public class SchoolsKGFragment extends MyFragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(SchoolsKGFragment.this.getActivity(),TopPNActivity.class);
+                Intent intent=new Intent(SchoolsKGFragment.this.getActivity(),TopSchoolsActivity.class);
                 intent.putExtra("flag","FromSchoolsKGFragment");
                 startActivity(intent);
             }

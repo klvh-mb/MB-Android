@@ -13,13 +13,13 @@ import java.util.List;
 import miniBean.R;
 import miniBean.viewmodel.PreNurseryVM;
 
-public class TopBookmarkPNListAdapter extends BaseAdapter {
+public class TopViewedPNListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<PreNurseryVM> items;
-    private TextView pnName,distName,noOfViews,serialNoText;
+    private TextView pnName,distName,noOfViews,serialNotext;
 
-    public TopBookmarkPNListAdapter(Activity activity, List<PreNurseryVM> items) {
+    public TopViewedPNListAdapter(Activity activity, List<PreNurseryVM> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -50,20 +50,19 @@ public class TopBookmarkPNListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.top_bookmark_pn_item, null);
+            convertView = inflater.inflate(R.layout.top_viewed_schools_item, null);
 
         pnName= (TextView) convertView.findViewById(R.id.pnNameText);
         distName= (TextView) convertView.findViewById(R.id.pnDistName);
         noOfViews= (TextView) convertView.findViewById(R.id.viewText);
-        serialNoText= (TextView) convertView.findViewById(R.id.serialNoText);
+        serialNotext= (TextView) convertView.findViewById(R.id.serialNoText);
 
         PreNurseryVM item = items.get(position);
 
         pnName.setText(item.getN());
         distName.setText(item.getDis());
-       noOfViews.setText(item.getNob()+"");
-        serialNoText.setText(position+1+"");
-
+        noOfViews.setText(item.getNov()+"");
+        serialNotext.setText(position+1+"");
 
         return convertView;
     }

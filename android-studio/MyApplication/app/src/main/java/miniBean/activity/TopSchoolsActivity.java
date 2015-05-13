@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.adapter.TopBookmarkKGListAdapter;
-import miniBean.adapter.TopBookmarkPNListAdapter;
-import miniBean.adapter.TopPNListAdapter;
-import miniBean.adapter.TopViewKGsListAdapter;
+import miniBean.adapter.TopBookmarkedKGListAdapter;
+import miniBean.adapter.TopBookmarkedPNListAdapter;
+import miniBean.adapter.TopViewedPNListAdapter;
+import miniBean.adapter.TopViewedKGListAdapter;
 import miniBean.app.AppController;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
@@ -23,41 +23,43 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TopPNActivity extends FragmentActivity {
-    private ListView topPNList,topBookmarkList;
-    private TopPNListAdapter topPNListAdapter;
-    private TopBookmarkPNListAdapter topBookmarkPNListAdapter;
-    private TopViewKGsListAdapter topViewKGsListAdapter;
-    private TopBookmarkKGListAdapter topBookmarkKGListAdapter;
-    private List<PreNurseryVM> preNurseryVMList,nurseryVMs;
-    private List<KindergartenVM> kindergartenVMList,kindergartenVM;
+public class TopSchoolsActivity extends FragmentActivity {
+    private ListView topViewedList,topBookmarkedList;
+    private TopViewedPNListAdapter topViewedPNListAdapter;
+    private TopBookmarkedPNListAdapter topBookmarkedPNListAdapter;
+    private TopViewedKGListAdapter topViewedKGListAdapter;
+    private TopBookmarkedKGListAdapter topBookmarkedKGListAdapter;
+    private List<PreNurseryVM> topViewedPNs,topBookmarkedPNs;
+    private List<KindergartenVM> topViewedKGs,topBookmarkedKGs;
     private ImageView backAction,scrollButton;
     private ScrollView scrollView;
     private boolean scrollUp=true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.top_pn_activity);
-
+        setContentView(R.layout.top_schools_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        if(getIntent().getStringExtra("flag").equals("SchoolsPNFragment")){
-            getActionBar().setCustomView(R.layout.top_pn_actionbar);
-        }else {
-            getActionBar().setCustomView(R.layout.top_kg_actionbar);
+        getActionBar().setCustomView(R.layout.top_schools_actionbar);
+
+        if (getIntent().getStringExtra("flag").equals("SchoolsPNFragment")) {
+            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
+        } else {
+            getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_maroon));
         }
 
-        preNurseryVMList=new ArrayList<PreNurseryVM>();
-        nurseryVMs=new ArrayList<PreNurseryVM>();
-        kindergartenVMList=new ArrayList<KindergartenVM>();
-        kindergartenVM=new ArrayList<KindergartenVM>();
+        topViewedPNs = new ArrayList<>();
+        topBookmarkedPNs = new ArrayList<>();
+        topViewedKGs = new ArrayList<>();
+        topBookmarkedKGs = new ArrayList<>();
 
-        topPNList= (ListView) findViewById(R.id.listTopPN);
-        topBookmarkList= (ListView) findViewById(R.id.listTopBookmarkedPN);
-        backAction= (ImageView) findViewById(R.id.backImage);
-        scrollButton= (ImageView) findViewById(R.id.scrollButton);
-        scrollView= (ScrollView) findViewById(R.id.scrollview);
+        topViewedList = (ListView) findViewById(R.id.topViewedList);
+        topBookmarkedList = (ListView) findViewById(R.id.topBookmarkedList);
+        backAction = (ImageView) findViewById(R.id.backImage);
+        scrollButton = (ImageView) findViewById(R.id.scrollButton);
+        scrollView = (ScrollView) findViewById(R.id.scrollview);
 
         backAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,12 +95,12 @@ public class TopPNActivity extends FragmentActivity {
     private void getTopViewPNs(){
         AppController.getApi().getTopViewedPNs(AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
             @Override
-            public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
-                System.out.println("size:::::::1::"+preNurseryVMs.size());
-                preNurseryVMList.addAll(preNurseryVMs);
-                topPNListAdapter=new TopPNListAdapter(TopPNActivity.this,preNurseryVMList);
-                topPNList.setAdapter(topPNListAdapter);
+            public void success(List<PreNurseryVM> vms, Response response) {
+                topViewedPNs.addAll(vms);
+                topViewedPNListAdapter = new TopViewedPNListAdapter(TopSchoolsActivity.this,topViewedPNs);
+                topViewedList.setAdapter(topViewedPNListAdapter);
             }
+
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
@@ -109,11 +111,10 @@ public class TopPNActivity extends FragmentActivity {
     private void getTopBookmarkPNs(){
         AppController.getApi().getTopBookmarkedPNs(AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
             @Override
-            public void success(List<PreNurseryVM> preNurseryVMs, Response response) {
-                System.out.println("size:::::::2::"+preNurseryVMs.size());
-                nurseryVMs.addAll(preNurseryVMs);
-                topBookmarkPNListAdapter=new TopBookmarkPNListAdapter(TopPNActivity.this,nurseryVMs);
-                topBookmarkList.setAdapter(topBookmarkPNListAdapter);
+            public void success(List<PreNurseryVM> vms, Response response) {
+                topBookmarkedPNs.addAll(vms);
+                topBookmarkedPNListAdapter = new TopBookmarkedPNListAdapter(TopSchoolsActivity.this,topBookmarkedPNs);
+                topBookmarkedList.setAdapter(topBookmarkedPNListAdapter);
             }
 
             @Override
@@ -126,11 +127,10 @@ public class TopPNActivity extends FragmentActivity {
     private void getTopViewsKGs(){
         AppController.getApi().getTopViewedKGs(AppController.getInstance().getSessionId(),new Callback<List<KindergartenVM>>() {
             @Override
-            public void success(List<KindergartenVM> kindergartenVMs, Response response) {
-                System.out.println("size:::::::1::" + kindergartenVMs.size());
-                kindergartenVMList.addAll(kindergartenVMs);
-                topViewKGsListAdapter=new TopViewKGsListAdapter(TopPNActivity.this,kindergartenVMList);
-                topPNList.setAdapter(topViewKGsListAdapter);
+            public void success(List<KindergartenVM> vms, Response response) {
+                topViewedKGs.addAll(vms);
+                topViewedKGListAdapter = new TopViewedKGListAdapter(TopSchoolsActivity.this,topViewedKGs);
+                topViewedList.setAdapter(topViewedKGListAdapter);
             }
 
             @Override
@@ -138,23 +138,22 @@ public class TopPNActivity extends FragmentActivity {
                 error.printStackTrace();
             }
         });
-
     }
 
     private void getTopBookmarkKGs(){
         AppController.getApi().getTopBookmarkedKGs(AppController.getInstance().getSessionId(),new Callback<List<KindergartenVM>>() {
             @Override
-            public void success(List<KindergartenVM> kindergartenVMs, Response response) {
-               kindergartenVM.addAll(kindergartenVMs);
-                topBookmarkKGListAdapter=new TopBookmarkKGListAdapter(TopPNActivity.this,kindergartenVM);
-                topBookmarkList.setAdapter(topBookmarkKGListAdapter);
+            public void success(List<KindergartenVM> vms, Response response) {
+                topBookmarkedKGs.addAll(vms);
+                topBookmarkedKGListAdapter = new TopBookmarkedKGListAdapter(TopSchoolsActivity.this,topBookmarkedKGs);
+                topBookmarkedList.setAdapter(topBookmarkedKGListAdapter);
             }
+
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
             }
         });
-
     }
 
     @Override

@@ -11,15 +11,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.viewmodel.PreNurseryVM;
+import miniBean.viewmodel.KindergartenVM;
 
-public class TopPNListAdapter extends BaseAdapter {
+public class TopBookmarkedKGListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<PreNurseryVM> items;
-    private TextView pnName,distName,noOfViews,serialNotext;
+    private List<KindergartenVM> items;
+    private TextView pnName,distName,noOfViews,serialNoText;
 
-    public TopPNListAdapter(Activity activity, List<PreNurseryVM> items) {
+    public TopBookmarkedKGListAdapter(Activity activity, List<KindergartenVM> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -32,7 +32,7 @@ public class TopPNListAdapter extends BaseAdapter {
     }
 
     @Override
-    public PreNurseryVM getItem(int location) {
+    public KindergartenVM getItem(int location) {
         if (items == null || location > items.size()-1)
             return null;
         return items.get(location);
@@ -50,19 +50,20 @@ public class TopPNListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.top_pn_item, null);
+            convertView = inflater.inflate(R.layout.top_bookmarked_schools_item, null);
 
         pnName= (TextView) convertView.findViewById(R.id.pnNameText);
         distName= (TextView) convertView.findViewById(R.id.pnDistName);
         noOfViews= (TextView) convertView.findViewById(R.id.viewText);
-        serialNotext= (TextView) convertView.findViewById(R.id.serialNoText);
+        serialNoText= (TextView) convertView.findViewById(R.id.serialNoText);
 
-        PreNurseryVM item = items.get(position);
+        KindergartenVM item = items.get(position);
 
         pnName.setText(item.getN());
         distName.setText(item.getDis());
-        noOfViews.setText(item.getNov()+"");
-        serialNotext.setText(position+1+"");
+       noOfViews.setText(item.getNob()+"");
+        serialNoText.setText(position+"");
+
 
         return convertView;
     }

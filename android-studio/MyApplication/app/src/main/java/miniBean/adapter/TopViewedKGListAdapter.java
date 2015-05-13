@@ -13,13 +13,13 @@ import java.util.List;
 import miniBean.R;
 import miniBean.viewmodel.KindergartenVM;
 
-public class TopViewKGsListAdapter extends BaseAdapter {
+public class TopViewedKGListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<KindergartenVM> items;
     private TextView pnName,distName,noOfViews;
 
-    public TopViewKGsListAdapter(Activity activity, List<KindergartenVM> items) {
+    public TopViewedKGListAdapter(Activity activity, List<KindergartenVM> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -50,7 +50,7 @@ public class TopViewKGsListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.top_pn_item, null);
+            convertView = inflater.inflate(R.layout.top_viewed_schools_item, null);
 
         pnName= (TextView) convertView.findViewById(R.id.pnNameText);
         distName= (TextView) convertView.findViewById(R.id.pnDistName);

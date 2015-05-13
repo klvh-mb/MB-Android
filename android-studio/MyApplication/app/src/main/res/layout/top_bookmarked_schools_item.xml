@@ -7,7 +7,7 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
     <TextView
-        android:background="@drawable/badge_circle_green"
+        android:background="@drawable/badge_circle_yellow"
         android:textColor="#ffffff"
         android:id="@+id/serialNoText"
         android:gravity="center"

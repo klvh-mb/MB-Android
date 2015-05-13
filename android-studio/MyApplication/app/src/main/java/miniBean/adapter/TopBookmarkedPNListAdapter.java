@@ -11,15 +11,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.viewmodel.KindergartenVM;
+import miniBean.viewmodel.PreNurseryVM;
 
-public class TopBookmarkKGListAdapter extends BaseAdapter {
+public class TopBookmarkedPNListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<KindergartenVM> items;
+    private List<PreNurseryVM> items;
     private TextView pnName,distName,noOfViews,serialNoText;
 
-    public TopBookmarkKGListAdapter(Activity activity, List<KindergartenVM> items) {
+    public TopBookmarkedPNListAdapter(Activity activity, List<PreNurseryVM> items) {
         this.activity = activity;
         this.items = items;
     }
@@ -32,7 +32,7 @@ public class TopBookmarkKGListAdapter extends BaseAdapter {
     }
 
     @Override
-    public KindergartenVM getItem(int location) {
+    public PreNurseryVM getItem(int location) {
         if (items == null || location > items.size()-1)
             return null;
         return items.get(location);
@@ -50,19 +50,19 @@ public class TopBookmarkKGListAdapter extends BaseAdapter {
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.top_bookmark_pn_item, null);
+            convertView = inflater.inflate(R.layout.top_bookmarked_schools_item, null);
 
         pnName= (TextView) convertView.findViewById(R.id.pnNameText);
         distName= (TextView) convertView.findViewById(R.id.pnDistName);
         noOfViews= (TextView) convertView.findViewById(R.id.viewText);
         serialNoText= (TextView) convertView.findViewById(R.id.serialNoText);
 
-        KindergartenVM item = items.get(position);
+        PreNurseryVM item = items.get(position);
 
         pnName.setText(item.getN());
         distName.setText(item.getDis());
        noOfViews.setText(item.getNob()+"");
-        serialNoText.setText(position+"");
+        serialNoText.setText(position+1+"");
 
 
         return convertView;
