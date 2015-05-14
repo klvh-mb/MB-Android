@@ -88,8 +88,6 @@ public abstract class AbstractSchoolCommunityFragment extends MyFragment {
                 if (post != null) {
                     intent.putExtra("postId", post.getId());
                     intent.putExtra("commId", post.getCid());
-                    intent.putExtra("id", getArguments().getLong("id"));
-                    intent.putExtra("commId", getArguments().getLong("commId"));
                     intent.putExtra("flag", getIntentFlag());
                     startActivity(intent);
                 }
@@ -102,7 +100,7 @@ public abstract class AbstractSchoolCommunityFragment extends MyFragment {
             public void onLoadMore(int page, int totalItemsCount) {
                 loadingFooter.setVisibility(View.VISIBLE);
                 loadNewsfeed(
-                        getArguments().getLong("id"),
+                        getArguments().getLong("commId"),
                         feedItems.get(feedItems.size() - 1).getUt() + "",       // NOTE: use updateTime not createTime!!
                         page - 1);
             }
