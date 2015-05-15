@@ -2,7 +2,6 @@ package miniBean.app;
 
 import android.app.Application;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -11,8 +10,8 @@ import android.util.Log;
 
 import miniBean.R;
 import miniBean.util.ImageUtil;
+import miniBean.util.SharedPreferencesUtil;
 import miniBean.viewmodel.LocationVM;
-import miniBean.viewmodel.UserVM;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -57,8 +56,6 @@ public class AppController extends Application {
     private static AppController mInstance;
     private static MyApi api;
 
-    private SharedPreferences session;
-
     public static synchronized AppController getInstance() {
         return mInstance;
     }
@@ -77,17 +74,11 @@ public class AppController extends Application {
         return UserInfoCache.getUser().getLocation();
     }
 
-    private static UserVM getUser() {
-        return UserInfoCache.getUser();
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
 
         mInstance = this;
-
-        session = getSharedPreferences("prefs", 0);
 
         init();
 
@@ -106,7 +97,13 @@ public class AppController extends Application {
 
         ImageUtil.init();
 
-        //ACRA.init(getInstance());
+        ACRA.init(getInstance());
+    }
+
+    public static void initCaches() {
+        NotificationCache.refresh();
+        DistrictCache.refresh();
+        EmoticonCache.refresh();
     }
 
     /**
@@ -119,22 +116,16 @@ public class AppController extends Application {
         UserInfoCache.clear();
     }
 
-    public void savePreferences(String key) {
-        if (session == null)
-            session = getSharedPreferences("prefs", 0);
-        session.edit().putString("sessionID", key).apply();
-    }
-
-    public void clearPreferences() {
-        if (session == null)
-            session = getSharedPreferences("prefs", 0);
-        SharedPreferences.Editor editor = session.edit();
-        editor.remove("sessionID");
-        editor.commit();
+    public void saveSessionId(String sessionId) {
+        SharedPreferencesUtil.getInstance().saveString(SharedPreferencesUtil.SESSION_ID, sessionId);
     }
 
     public String getSessionId() {
-        return session.getString("sessionID", null);
+        return SharedPreferencesUtil.getInstance().getString(SharedPreferencesUtil.SESSION_ID);
+    }
+
+    public void clearPreferences() {
+        SharedPreferencesUtil.getInstance().clearAll();
     }
 
     public void exitApp() {

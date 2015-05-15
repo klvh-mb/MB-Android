@@ -117,8 +117,8 @@ public class CommunityFragment extends Fragment {
                 loadingFooter.setVisibility(View.VISIBLE);
                 loadNewsfeed(
                         getArguments().getLong("id"),
-                        feedItems.get(feedItems.size()-1).getUt()+"",       // NOTE: use updateTime not createTime!!
-                        page-1);
+                        feedItems.get(feedItems.size() - 1).getUt()+"",       // NOTE: use updateTime not createTime!!
+                        page - 1);
             }
         });
 

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import miniBean.util.SharedPreferencesUtil;
 import miniBean.viewmodel.LocationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -31,10 +32,11 @@ public class DistrictCache {
 
         AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(),new Callback<List< LocationVM>>(){
             @Override
-            public void success(List<LocationVM> locationVMs, Response response) {
-                districts = locationVMs;
+            public void success(List<LocationVM> vms, Response response) {
+                districts = vms;
+                SharedPreferencesUtil.getInstance().saveDistricts(vms);
                 if (callback != null) {
-                    callback.success(districts, response);
+                    callback.success(vms, response);
                 }
             }
 
@@ -46,11 +48,12 @@ public class DistrictCache {
     }
 
     public static List<LocationVM> getDistricts() {
+        if (districts == null)
+            districts = SharedPreferencesUtil.getInstance().getDistricts();
         return districts;
     }
 
     public static void clear() {
-        districts.clear();
-        districts = null;
+        SharedPreferencesUtil.getInstance().clear(SharedPreferencesUtil.DISTRICTS);
     }
 }

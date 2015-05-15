@@ -174,7 +174,7 @@ public class NewPostActivity extends FragmentActivity {
         });
 
         if (emoticonVMList.isEmpty() && EmoticonCache.getEmoticons().isEmpty()) {
-            EmoticonCache.refresh(null);
+            EmoticonCache.refresh();
         }
 
         postAction.setOnClickListener(new View.OnClickListener() {

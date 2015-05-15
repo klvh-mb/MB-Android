@@ -471,7 +471,7 @@ public class DetailActivity extends FragmentActivity {
             });
 
             if (emoticonVMList.isEmpty() && EmoticonCache.getEmoticons().isEmpty()) {
-                EmoticonCache.refresh(null);
+                EmoticonCache.refresh();
             }
 
             Log.d(this.getClass().getSimpleName(), "initCommentPopup: " + selectedImagePath);

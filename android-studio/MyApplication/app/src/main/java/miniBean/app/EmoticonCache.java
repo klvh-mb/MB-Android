@@ -1,8 +1,10 @@
 package miniBean.app;
 
-import java.util.ArrayList;
+import android.util.Log;
+
 import java.util.List;
 
+import miniBean.util.SharedPreferencesUtil;
 import miniBean.viewmodel.EmoticonVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -10,7 +12,7 @@ import retrofit.client.Response;
 
 public class EmoticonCache {
 
-    private static List<EmoticonVM> emoticons = new ArrayList<>();
+    private static List<EmoticonVM> emoticons;
 
     private EmoticonCache() {}
 
@@ -26,29 +28,32 @@ public class EmoticonCache {
     }
 
     public static void refresh(final Callback<List<EmoticonVM>> callback) {
-        if (emoticons.isEmpty()) {
-            AppController.getApi().getEmoticons(AppController.getInstance().getSessionId(), new Callback<List<EmoticonVM>>() {
-                @Override
-                public void success(List<EmoticonVM> vms, Response response) {
-                    emoticons = vms;
-                    if (callback != null) {
-                        callback.success(emoticons, response);
-                    }
-                }
+        Log.d(EmoticonCache.class.getSimpleName(), "refresh");
 
-                @Override
-                public void failure(RetrofitError error) {
-                    error.printStackTrace();
+        AppController.getApi().getEmoticons(AppController.getInstance().getSessionId(), new Callback<List<EmoticonVM>>() {
+            @Override
+            public void success(List<EmoticonVM> vms, Response response) {
+                emoticons = vms;
+                SharedPreferencesUtil.getInstance().saveEmoticons(vms);
+                if (callback != null) {
+                    callback.success(vms, response);
                 }
-            });
-        }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
     }
 
     public static List<EmoticonVM> getEmoticons() {
+        if (emoticons == null)
+            emoticons = SharedPreferencesUtil.getInstance().getEmoticons();
         return emoticons;
     }
 
     public static void clear() {
-        emoticons = null;
+        SharedPreferencesUtil.getInstance().clear(SharedPreferencesUtil.EMOTICONS);
     }
 }

@@ -181,7 +181,8 @@
                 android:layout_height="25dp"
                 android:src="@drawable/emo_smile"
                 android:layout_toLeftOf="@+id/browseImage"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp" />
 
             <ImageView
                 android:id="@+id/browseImage"

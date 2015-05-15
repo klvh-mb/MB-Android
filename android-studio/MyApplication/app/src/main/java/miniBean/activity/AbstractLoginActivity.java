@@ -18,7 +18,6 @@ package miniBean.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -31,6 +30,7 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
+import miniBean.util.SharedPreferencesUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -47,15 +47,11 @@ public abstract class AbstractLoginActivity extends Activity {
     // Instance of Facebook Class
     protected Facebook facebook = new Facebook(APP_ID);
 
-    protected SharedPreferences session;
-
     protected ActivityUtil activityUtil;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        session = getSharedPreferences("prefs", 0);
 
         activityUtil = new ActivityUtil(this);
     }
@@ -63,8 +59,8 @@ public abstract class AbstractLoginActivity extends Activity {
     protected void loginToFacebook(final ProgressBar spinner) {
         AnimationUtil.show(spinner);
 
-        String access_token = session.getString("access_token", null);
-        long expires = session.getLong("access_expires", 0);
+        String access_token = SharedPreferencesUtil.getInstance().getString(SharedPreferencesUtil.FB_ACCESS_TOKEN);
+        long expires = SharedPreferencesUtil.getInstance().getLong(SharedPreferencesUtil.FB_ACCESS_EXPIRES);
 
         Log.d(this.getClass().getSimpleName(), "loginToFacebook: access_token - " + access_token);
 
@@ -158,7 +154,7 @@ public abstract class AbstractLoginActivity extends Activity {
 
         String key = activityUtil.getResponseBody(response);
         Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
-        AppController.getInstance().savePreferences(key);
+        AppController.getInstance().saveSessionId(key);
 
         Intent intent = new Intent(this, SplashActivity.class);
         intent.putExtra("flag", "FromLoginActivity");

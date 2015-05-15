@@ -17,6 +17,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
+import miniBean.app.EmoticonCache;
 import miniBean.app.NotificationCache;
 import miniBean.app.UserInfoCache;
 import miniBean.util.ActivityUtil;
@@ -88,11 +89,10 @@ public class SplashActivity extends Activity {
                 } else {
                     // save to preferences
                     if (AppController.getInstance().getSessionId() == null) {
-                        AppController.getInstance().savePreferences(sessionId);
+                        AppController.getInstance().saveSessionId(sessionId);
                     }
 
-                    NotificationCache.refresh();
-                    DistrictCache.refresh();
+                    AppController.initCaches();
 
                     // display splash
                     new Handler().postDelayed(new Runnable() {

@@ -123,7 +123,7 @@ public class LoginActivity extends AbstractLoginActivity {
 
         String key = activityUtil.getResponseBody(response);
         Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
-        AppController.getInstance().savePreferences(key);
+        AppController.getInstance().saveSessionId(key);
 
         Intent intent = new Intent(this, SplashActivity.class);
         intent.putExtra("flag","FromLoginActivity");

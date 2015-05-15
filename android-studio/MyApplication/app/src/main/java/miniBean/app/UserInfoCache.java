@@ -2,13 +2,14 @@ package miniBean.app;
 
 import android.util.Log;
 
+import miniBean.util.SharedPreferencesUtil;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
 public class UserInfoCache {
 
-    private static UserVM userVM;
+    private static UserVM userInfo;
 
     private UserInfoCache() {}
 
@@ -32,8 +33,9 @@ public class UserInfoCache {
 
         AppController.getApi().getUserInfo(sessionId, new Callback<UserVM>() {
             @Override
-            public void success(UserVM user, retrofit.client.Response response) {
-                userVM = user;
+            public void success(UserVM userVM, retrofit.client.Response response) {
+                userInfo = userVM;
+                SharedPreferencesUtil.getInstance().saveUserInfo(userVM);
                 if (callback != null) {
                     callback.success(userVM, response);
                 }
@@ -47,10 +49,12 @@ public class UserInfoCache {
     }
 
     public static UserVM getUser() {
-        return userVM;
+        if (userInfo == null)
+            userInfo = SharedPreferencesUtil.getInstance().getUserInfo();
+        return userInfo;
     }
 
     public static void clear() {
-        userVM = null;
+        SharedPreferencesUtil.getInstance().clear(SharedPreferencesUtil.USER_INFO);
     }
 }
