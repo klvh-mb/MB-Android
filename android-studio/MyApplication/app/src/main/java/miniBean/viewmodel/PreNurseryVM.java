@@ -38,7 +38,8 @@ public class PreNurseryVM {
     public int nov;
     public int nob;
 
-    public String appTxt = null;
+    public String appDateTxt = null;
+    public String openDateTxt = null;
 
     public boolean isLike = false;
     public boolean isBookmarked = false;
@@ -274,13 +275,22 @@ public class PreNurseryVM {
         this.nob = nob;
     }
 
-    public String getAppTxt() {
-        return appTxt;
+    public String getAppDateTxt() {
+        return appDateTxt;
     }
 
-    public void setAppTxt(String appTxt) {
-        this.appTxt = appTxt;
+    public void setAppDateTxt(String appDateTxt) {
+        this.appDateTxt = appDateTxt;
     }
+
+    public String getOpenDateTxt() {
+        return openDateTxt;
+    }
+
+    public void setOpenDateTxt(String openDateTxt) {
+        this.openDateTxt = openDateTxt;
+    }
+
 
     public boolean isLike() {
         return isLike;

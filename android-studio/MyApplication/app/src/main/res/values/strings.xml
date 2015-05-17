@@ -243,6 +243,8 @@
     <string name="schools_pn_bookmark_title_1">收藏了</string>
     <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
     <string name="schools_pn_bookmark_title_3">間幼稚園</string>
+    <string name="schools_bookmark_application_date">[申請日期]</string>
+
 
     <string name="schools_top_pn_ranking">幼兒班排名</string>
     <string name="schools_top_kg_ranking">幼稚園排名</string>

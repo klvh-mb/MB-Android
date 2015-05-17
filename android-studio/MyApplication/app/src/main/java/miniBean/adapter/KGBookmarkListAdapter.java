@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.util.List;
 
 import miniBean.R;
@@ -20,7 +22,7 @@ public class KGBookmarkListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<KindergartenVM> schoolVMList;
     private ImageView icon;
-    private TextView noOfComment,title,district;
+    private TextView noOfComment,title,district,appDateText;
 
     public KGBookmarkListAdapter(Activity activity, List<KindergartenVM> schoolVMList) {
         this.activity = activity;
@@ -54,6 +56,7 @@ public class KGBookmarkListAdapter extends BaseAdapter {
         title = (TextView) view.findViewById(R.id.schoolName);
         district = (TextView) view.findViewById(R.id.districtText);
         noOfComment = (TextView) view.findViewById(R.id.totalCommentText);
+        appDateText = (TextView) view.findViewById(R.id.appDateText);
 
         KindergartenVM item = schoolVMList.get(i);
 
@@ -67,6 +70,13 @@ public class KGBookmarkListAdapter extends BaseAdapter {
         title.setText(item.getN());
         district.setText(item.getDis());
         noOfComment.setText(item.getNop()+"");
+
+        if (StringUtils.isEmpty(item.appDateTxt)) {
+            appDateText.setVisibility(View.GONE);
+        } else {
+            appDateText.setText(activity.getString(R.string.schools_bookmark_application_date)+" "+item.appDateTxt);
+            appDateText.setVisibility(View.VISIBLE);
+        }
 
         return view;
     }
