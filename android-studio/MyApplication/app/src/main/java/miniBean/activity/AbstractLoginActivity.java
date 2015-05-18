@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import miniBean.R;
 import miniBean.app.AppController;
@@ -172,5 +173,16 @@ public abstract class AbstractLoginActivity extends Activity {
         Log.d(this.getClass().getSimpleName(), "onActivityResult: facebook.authorizeCallback - requestCode:"+requestCode+" resultCode:"+resultCode+" data:"+data);
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+    }
+
 }
 

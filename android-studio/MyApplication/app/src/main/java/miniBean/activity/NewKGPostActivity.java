@@ -2,6 +2,8 @@ package miniBean.activity;
 
 import android.os.Bundle;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import java.util.List;
 
 import miniBean.R;
@@ -46,5 +48,16 @@ public class NewKGPostActivity extends NewPostActivity {
                 error.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 }

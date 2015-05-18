@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import miniBean.R;
 import miniBean.fragment.NewsfeedListFragement;
 
@@ -51,6 +53,17 @@ public class NewsfeedActivity extends FragmentActivity {
         NewsfeedListFragement newsfeedFragment = new NewsfeedListFragement();
         newsfeedFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.placeHolders, newsfeedFragment).commit();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 }
 

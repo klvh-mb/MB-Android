@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import miniBean.R;
 import miniBean.fragment.SettingsFragment;
 import miniBean.fragment.NotificationListFragment;
@@ -89,6 +91,17 @@ public class MyProfileActionActivity extends FragmentActivity {
             transaction.replace(R.id.children_layout, logoutFragment).commit();
         }
         */
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 }
 

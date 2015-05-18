@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import java.util.List;
 
 import miniBean.R;
@@ -95,6 +97,9 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        EasyTracker.getInstance(this).activityStart(this);
+
 
         init();
 
@@ -316,4 +321,14 @@ public class MainActivity extends FragmentActivity {
             notificationCount.setText(count+"");
         }
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+    }
+
+
+
 }
+

@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
@@ -41,6 +43,7 @@ public class SplashActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
+        EasyTracker.getInstance(this).activityStart(this);
         String sessionId = AppController.getInstance().getSessionId();
 
         Intent intent = getIntent();
@@ -144,4 +147,13 @@ public class SplashActivity extends Activity {
         }
         return true;
     }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
+    }
+
+
 }
