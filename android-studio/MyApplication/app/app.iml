@@ -99,6 +99,7 @@
     <orderEntry type="library" exported="" name="parceler-0.2.13" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="acra-4.6.1" level="project" />
+    <orderEntry type="library" exported="" name="libGoogleAnalyticsServices" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />

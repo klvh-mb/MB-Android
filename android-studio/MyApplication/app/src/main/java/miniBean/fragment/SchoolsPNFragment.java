@@ -16,6 +16,8 @@ import miniBean.activity.TopSchoolsActivity;
 
 public class SchoolsPNFragment extends MyFragment {
 
+    public static final String INTENT_FLAG = "FromPN";
+
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
 
@@ -78,7 +80,7 @@ public class SchoolsPNFragment extends MyFragment {
                 // launch new post page with no comm id, user will select
                 Intent intent = new Intent(SchoolsPNFragment.this.getActivity(), NewPNPostActivity.class);
                 intent.putExtra("id",0L);
-                intent.putExtra("flag","FromPN");
+                intent.putExtra("flag",INTENT_FLAG);
                 startActivity(intent);
             }
         });
@@ -87,7 +89,7 @@ public class SchoolsPNFragment extends MyFragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(SchoolsPNFragment.this.getActivity(),TopSchoolsActivity.class);
-                intent.putExtra("flag","SchoolsPNFragment");
+                intent.putExtra("flag",INTENT_FLAG);
                 startActivity(intent);
             }
         });

@@ -1,9 +1,7 @@
 package miniBean.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,9 +16,6 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.DistrictCache;
-import miniBean.app.EmoticonCache;
-import miniBean.app.NotificationCache;
 import miniBean.app.UserInfoCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
