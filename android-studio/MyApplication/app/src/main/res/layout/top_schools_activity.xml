@@ -18,7 +18,7 @@
         android:id="@+id/topViewedLayout"
         android:background="@drawable/schools_pn_edit_text_round"
         android:layout_width="wrap_content"
-        android:layout_height="800dp"
+        android:layout_height="1200dp"
         android:padding="10dp">
         <LinearLayout
             android:id="@+id/headerLayout1"
@@ -68,7 +68,7 @@
         android:id="@+id/topBookmarkedLayout"
         android:background="@drawable/schools_pn_edit_text_round"
         android:layout_width="wrap_content"
-        android:layout_height="800dp">
+        android:layout_height="1200dp">
         <LinearLayout
             android:id="@+id/headerLayout2"
             android:orientation="horizontal"

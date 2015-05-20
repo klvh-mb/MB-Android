@@ -1,9 +1,11 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -81,6 +83,50 @@ public class TopSchoolsActivity extends FragmentActivity {
             getTopViewsKGs();
             getTopBookmarkKGs();
         }
+
+        topViewedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(getIntent().getStringExtra("flag").equals("SchoolsPNFragment")) {
+                    PreNurseryVM vm = topViewedPNListAdapter.getItem(i);
+                    System.out.println("clicked:::::");
+                    Intent intent = new Intent(TopSchoolsActivity.this, PNCommunityActivity.class);
+                    intent.putExtra("commId", vm.getCommId());
+                    intent.putExtra("id", vm.getId());
+                    startActivity(intent);
+                }else{
+                    KindergartenVM vm = topViewedKGListAdapter.getItem(i);
+                    System.out.println("clicked:::::");
+                    Intent intent = new Intent(TopSchoolsActivity.this, KGCommunityActivity.class);
+                    intent.putExtra("commId", vm.getCommId());
+                    intent.putExtra("id", vm.getId());
+                    startActivity(intent);
+
+                }
+            }
+        });
+
+        topBookmarkedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(getIntent().getStringExtra("flag").equals("SchoolsPNFragment")) {
+                PreNurseryVM vm = topBookmarkedPNListAdapter.getItem(i);
+                System.out.println("clicked:::::");
+                Intent intent = new Intent(TopSchoolsActivity.this, PNCommunityActivity.class);
+                intent.putExtra("commId",vm.getCommId());
+                intent.putExtra("id", vm.getId());
+                startActivity(intent);
+            }else{
+                    KindergartenVM vm = topBookmarkedKGListAdapter.getItem(i);
+                    System.out.println("clicked:::::");
+                    Intent intent = new Intent(TopSchoolsActivity.this, KGCommunityActivity.class);
+                    intent.putExtra("commId", vm.getCommId());
+                    intent.putExtra("id", vm.getId());
+                    startActivity(intent);
+
+                }
+            }
+        });
 
         scrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +214,8 @@ public class TopSchoolsActivity extends FragmentActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
 }
 
 
