@@ -6,8 +6,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -17,8 +17,8 @@
         android:layout_margin="10dp"
         android:id="@+id/topViewedLayout"
         android:background="@drawable/schools_pn_edit_text_round"
-        android:layout_width="wrap_content"
-        android:layout_height="1200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp">
         <LinearLayout
             android:id="@+id/headerLayout1"
@@ -51,7 +51,7 @@
         android:layout_below="@+id/headerLayout1"
         android:id="@+id/topViewedList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp" />
         <ImageView
             android:id="@+id/scrollButton"
@@ -67,8 +67,8 @@
         android:layout_margin="10dp"
         android:id="@+id/topBookmarkedLayout"
         android:background="@drawable/schools_pn_edit_text_round"
-        android:layout_width="wrap_content"
-        android:layout_height="1200dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/headerLayout2"
             android:orientation="horizontal"
@@ -97,12 +97,12 @@
             android:layout_height="3dp">
         </View>
         <ListView
-            android:layout_marginTop="10dp"
             android:layout_below="@+id/headerLayout2"
             android:id="@+id/topBookmarkedList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             />
+
     </RelativeLayout>
 </LinearLayout>
     </ScrollView>

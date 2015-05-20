@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -137,6 +139,7 @@ public class TopSchoolsActivity extends FragmentActivity {
                 topViewedPNs.addAll(vms);
                 topViewedPNListAdapter = new TopViewedPNListAdapter(TopSchoolsActivity.this,topViewedPNs);
                 topViewedList.setAdapter(topViewedPNListAdapter);
+               setListViewHeightBasedOnChildren(topViewedList);
                 scrollView.fullScroll(View.FOCUS_UP);
             }
 
@@ -154,6 +157,7 @@ public class TopSchoolsActivity extends FragmentActivity {
                 topBookmarkedPNs.addAll(vms);
                 topBookmarkedPNListAdapter = new TopBookmarkedPNListAdapter(TopSchoolsActivity.this,topBookmarkedPNs);
                 topBookmarkedList.setAdapter(topBookmarkedPNListAdapter);
+                setListViewHeightBasedOnChildren(topBookmarkedList);
                 scrollView.fullScroll(View.FOCUS_UP);
             }
 
@@ -202,6 +206,30 @@ public class TopSchoolsActivity extends FragmentActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        BaseAdapter listAdapter = (BaseAdapter) listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height=totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1));
+
+        System.out.println("hhhh:::"+totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1)));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
+
+
 }
 
 
