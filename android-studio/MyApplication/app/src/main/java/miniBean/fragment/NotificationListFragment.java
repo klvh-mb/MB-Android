@@ -27,6 +27,7 @@ import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.NotificationListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 import miniBean.util.DefaultValues;
 import miniBean.util.UrlUtil;
 import miniBean.viewmodel.NotificationVM;
@@ -34,7 +35,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class NotificationListFragment extends Fragment {
+public class NotificationListFragment extends TrackedFragment {
 
     private static final String TAG = NotificationListFragment.class.getName();
     NotificationListAdapter adapter;

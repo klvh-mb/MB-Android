@@ -28,6 +28,7 @@ import miniBean.activity.EditProfileActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 import miniBean.app.UserInfoCache;
 import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
@@ -39,7 +40,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends TrackedFragment {
 
     private static final String TAG = ProfileFragment.class.getName();
     private ImageView userCoverPic, userPic, editCoverImage;

@@ -2,7 +2,6 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +25,7 @@ import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.RequestListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 import miniBean.util.DefaultValues;
 import miniBean.util.UrlUtil;
 import miniBean.viewmodel.NotificationVM;
@@ -33,7 +33,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class RequestListFragment extends Fragment {
+public class RequestListFragment extends TrackedFragment {
 
     private static final String TAG = RequestListFragment.class.getName();
     RequestListAdapter adapter;

@@ -3,7 +3,6 @@ package miniBean.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,7 @@ import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
@@ -29,7 +29,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class NewsfeedListFragement extends Fragment {
+public class NewsfeedListFragement extends TrackedFragment {
 
     private static final String TAG = NewsfeedListFragement.class.getName();
     private ListView listView;

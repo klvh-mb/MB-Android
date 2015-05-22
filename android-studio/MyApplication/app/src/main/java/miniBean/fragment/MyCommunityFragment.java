@@ -15,9 +15,10 @@ import android.widget.ImageView;
 
 import miniBean.R;
 import miniBean.activity.NewPostActivity;
+import miniBean.app.TrackedFragment;
 import miniBean.util.AnimationUtil;
 
-public class MyCommunityFragment extends Fragment {
+public class MyCommunityFragment extends TrackedFragment {
 
     private ImageView signInAction, newPostIcon;
     private Button newsfeed, joined;

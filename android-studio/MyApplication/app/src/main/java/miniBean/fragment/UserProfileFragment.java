@@ -21,13 +21,14 @@ import java.lang.reflect.Field;
 import miniBean.R;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.ProfileVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
-public class UserProfileFragment extends Fragment {
+public class UserProfileFragment extends TrackedFragment {
 
     private static final String TAG = UserProfileFragment.class.getName();
     private ImageView userCoverPic, userPic;

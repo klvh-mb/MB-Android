@@ -2,7 +2,6 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,11 @@ import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.TopicCommunityListAdapter;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.app.TrackedFragment;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
-public class TopicCommunityFragment extends Fragment {
+public class TopicCommunityFragment extends TrackedFragment {
 
     public ListView listView;
     public TopicCommunityListAdapter topicAdapter;

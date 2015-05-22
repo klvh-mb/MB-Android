@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +25,7 @@ import miniBean.activity.DetailActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.app.TrackedFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
@@ -39,7 +39,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class CommunityFragment extends Fragment {
+public class CommunityFragment extends TrackedFragment {
 
     private TextView numMemberText, commNameText;
     private ListView listView;

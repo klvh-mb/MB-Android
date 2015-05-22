@@ -2,7 +2,6 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +18,12 @@ import miniBean.R;
 import miniBean.activity.CommunityActivity;
 import miniBean.adapter.CommunityListAdapter;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.app.TrackedFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
-public class CommunityListFragment extends Fragment {
+public class CommunityListFragment extends TrackedFragment {
 
     private static final String TAG = CommunityListFragment.class.getName();
     ProgressBar spinner;

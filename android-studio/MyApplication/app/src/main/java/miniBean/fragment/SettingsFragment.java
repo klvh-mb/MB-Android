@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,9 @@ import android.widget.RelativeLayout;
 import miniBean.R;
 import miniBean.activity.LoginActivity;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends TrackedFragment {
     private static final String TAG = SettingsFragment.class.getName();
     private RelativeLayout relativeLayout;
 
