@@ -3,15 +3,13 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.KGCommunityFragment;
 import miniBean.util.SharingUtil;
 import miniBean.viewmodel.KindergartenVM;
@@ -19,7 +17,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class KGCommunityActivity extends FragmentActivity {
+public class KGCommunityActivity extends TrackedFragmentActivity {
     private ImageView whatsappAction,bookmarkAction,newPostAction,backAction;
     private Boolean isBookmarked;
     private KindergartenVM schoolVM;
@@ -87,6 +85,7 @@ public class KGCommunityActivity extends FragmentActivity {
             public void success(Response response, Response response2) {
                 bookmarkAction.setImageResource(R.drawable.ic_bookmarked);
             }
+
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
@@ -146,17 +145,6 @@ public class KGCommunityActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 
 }

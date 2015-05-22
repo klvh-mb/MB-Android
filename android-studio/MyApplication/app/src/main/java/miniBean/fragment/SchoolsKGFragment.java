@@ -13,8 +13,9 @@ import android.widget.ImageView;
 import miniBean.R;
 import miniBean.activity.NewKGPostActivity;
 import miniBean.activity.TopSchoolsActivity;
+import miniBean.app.TrackedFragment;
 
-public class SchoolsKGFragment extends MyFragment {
+public class SchoolsKGFragment extends TrackedFragment {
 
     public static final String INTENT_FLAG = "FromKG";
 
@@ -23,7 +24,7 @@ public class SchoolsKGFragment extends MyFragment {
 
     private ImageView newPostIcon,rankingActionIcon;
 
-    private MyFragment selectedFragment;
+    private TrackedFragment selectedFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

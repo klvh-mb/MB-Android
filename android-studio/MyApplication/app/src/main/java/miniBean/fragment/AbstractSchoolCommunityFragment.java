@@ -19,6 +19,7 @@ import miniBean.R;
 import miniBean.activity.DetailActivity;
 import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
@@ -26,7 +27,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public abstract class AbstractSchoolCommunityFragment extends MyFragment {
+public abstract class AbstractSchoolCommunityFragment extends TrackedFragment {
 
     protected NewsfeedListAdapter feedListAdapter;
     protected List<CommunityPostVM> feedItems;

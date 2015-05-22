@@ -16,7 +16,6 @@
 
 package miniBean.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +28,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
 import miniBean.util.SharedPreferencesUtil;
@@ -36,7 +36,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public abstract class AbstractLoginActivity extends Activity {
+public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
     // Your Facebook APP ID
     protected static String APP_ID = "798543453496777"; // Replace with your App ID
@@ -173,16 +173,5 @@ public abstract class AbstractLoginActivity extends Activity {
         Log.d(this.getClass().getSimpleName(), "onActivityResult: facebook.authorizeCallback - requestCode:"+requestCode+" resultCode:"+resultCode+" data:"+data);
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }
 

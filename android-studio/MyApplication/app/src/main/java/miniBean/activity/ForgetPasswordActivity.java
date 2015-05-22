@@ -1,15 +1,13 @@
 package miniBean.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.webkit.WebView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import miniBean.R;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.MyWebViewClient;
 
-public class ForgetPasswordActivity extends FragmentActivity {
+public class ForgetPasswordActivity extends TrackedFragmentActivity {
 
     private WebView webView;
 
@@ -31,16 +29,4 @@ public class ForgetPasswordActivity extends FragmentActivity {
         super.onBackPressed();
         LoginActivity.startLoginActivity(this);
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }

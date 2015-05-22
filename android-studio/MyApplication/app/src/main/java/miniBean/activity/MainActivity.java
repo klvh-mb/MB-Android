@@ -7,7 +7,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -15,16 +14,15 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.NotificationCache;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.CommunityMainFragment;
-import miniBean.fragment.MyFragment;
+import miniBean.app.TrackedFragment;
 import miniBean.fragment.MyProfileFragment;
 import miniBean.fragment.SchoolsMainFragment;
 import miniBean.util.AnimationUtil;
@@ -35,7 +33,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends TrackedFragmentActivity {
 
     private Button community, profile, schools;
     private boolean commClicked = false, schoolsClicked = false, profileClicked = false;
@@ -48,7 +46,7 @@ public class MainActivity extends FragmentActivity {
     private ProgressBar spinner;
     private TextView notificationCount;
 
-    private MyFragment selectedFragment;
+    private TrackedFragment selectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +93,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
-
-        EasyTracker.getInstance(this).activityStart(this);
-
 
         init();
 
@@ -321,14 +316,5 @@ public class MainActivity extends FragmentActivity {
             notificationCount.setText(count+"");
         }
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
-
-
 }
 

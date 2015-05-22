@@ -1,4 +1,3 @@
-
 package miniBean.activity;
 
 import android.content.Context;
@@ -19,8 +18,6 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.analytics.tracking.android.EasyTracker;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
@@ -223,17 +220,6 @@ public class SignupActivity extends AbstractLoginActivity {
         }
         repeatPassword.setError(null);
         return true;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 }
 

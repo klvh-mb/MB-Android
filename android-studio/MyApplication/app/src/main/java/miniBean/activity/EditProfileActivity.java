@@ -2,7 +2,6 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import org.parceler.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -21,6 +18,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
@@ -31,7 +29,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class EditProfileActivity extends FragmentActivity {
+public class EditProfileActivity extends TrackedFragmentActivity {
 
     private Spinner locationSpinner;
     private Button finishButton;
@@ -192,15 +190,4 @@ public class EditProfileActivity extends FragmentActivity {
             }
         });
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }

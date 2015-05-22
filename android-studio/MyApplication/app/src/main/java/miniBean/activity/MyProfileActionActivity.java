@@ -3,20 +3,18 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import miniBean.R;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.SettingsFragment;
 import miniBean.fragment.NotificationListFragment;
 import miniBean.fragment.RequestListFragment;
 
-public class MyProfileActionActivity extends FragmentActivity {
+public class MyProfileActionActivity extends TrackedFragmentActivity {
 
     private TextView titleText;
 
@@ -91,17 +89,6 @@ public class MyProfileActionActivity extends FragmentActivity {
             transaction.replace(R.id.children_layout, logoutFragment).commit();
         }
         */
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 }
 

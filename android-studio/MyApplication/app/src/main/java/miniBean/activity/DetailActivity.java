@@ -10,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Gravity;
@@ -34,8 +33,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import org.parceler.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -49,6 +46,7 @@ import miniBean.adapter.PopupPageListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
 import miniBean.app.MyImageGetter;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ActivityUtil;
 import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
@@ -67,7 +65,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
-public class DetailActivity extends FragmentActivity {
+public class DetailActivity extends TrackedFragmentActivity {
 
     private final Integer SELECT_PICTURE = 1;
     private FrameLayout mainFrameLayout;
@@ -819,17 +817,5 @@ public class DetailActivity extends FragmentActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 }

@@ -2,17 +2,15 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import miniBean.R;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.NewsfeedListFragement;
 
-public class NewsfeedActivity extends FragmentActivity {
+public class NewsfeedActivity extends TrackedFragmentActivity {
 
     private TextView titleText;
 
@@ -30,7 +28,7 @@ public class NewsfeedActivity extends FragmentActivity {
         Long id = getIntent().getLongExtra("id", 0L);
         String key = getIntent().getStringExtra("key");
 
-        Log.d(this.getClass().getSimpleName(), "onCreate: Id="+id+" key="+key);
+        Log.d(this.getClass().getSimpleName(), "onCreate: Id=" + id + " key=" + key);
         switch (getIntent().getStringExtra("key")) {
             case "question":
             case "userquestion":
@@ -46,24 +44,13 @@ public class NewsfeedActivity extends FragmentActivity {
         }
 
         Bundle bundle = new Bundle();
-        bundle.putLong("id",id);
-        bundle.putString("key",key);
+        bundle.putLong("id", id);
+        bundle.putString("key", key);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         NewsfeedListFragement newsfeedFragment = new NewsfeedListFragement();
         newsfeedFragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.placeHolders, newsfeedFragment).commit();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 }
 

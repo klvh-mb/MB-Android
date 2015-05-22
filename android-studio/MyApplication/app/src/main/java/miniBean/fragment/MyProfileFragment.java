@@ -19,13 +19,14 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.app.NotificationCache;
+import miniBean.app.TrackedFragment;
 import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.NotificationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MyProfileFragment extends MyFragment {
+public class MyProfileFragment extends TrackedFragment {
 
     public List<NotificationVM> requestNotif, notifAll;
     private ImageView back;

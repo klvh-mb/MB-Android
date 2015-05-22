@@ -2,15 +2,13 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import miniBean.R;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.UserProfileFragment;
 
-public class UserProfileActivity extends FragmentActivity {
+public class UserProfileActivity extends TrackedFragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,16 +34,6 @@ public class UserProfileActivity extends FragmentActivity {
         profileFragement.setArguments(bundle);
         //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.placeHolder, profileFragement).commit();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 }
 

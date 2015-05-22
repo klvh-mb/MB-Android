@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,8 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import org.parceler.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -39,6 +36,7 @@ import miniBean.adapter.PopupMyCommunityListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
@@ -53,7 +51,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
-public class NewPostActivity extends FragmentActivity {
+public class NewPostActivity extends TrackedFragmentActivity {
 
     protected RelativeLayout communityLayout;
     protected LinearLayout selectCommunityLayout;
@@ -436,16 +434,5 @@ public class NewPostActivity extends FragmentActivity {
                 });
         AlertDialog alert = builder.create();
         alert.show();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 }

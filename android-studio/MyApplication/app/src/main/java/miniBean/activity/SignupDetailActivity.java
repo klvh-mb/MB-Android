@@ -1,6 +1,5 @@
 package miniBean.activity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import org.parceler.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -29,6 +26,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
@@ -38,7 +36,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SignupDetailActivity extends Activity {
+public class SignupDetailActivity extends TrackedFragmentActivity {
     private String[] babyNumberArray;
     private Spinner locationSpinner, babySpinner;
     private Button finishButton;
@@ -490,16 +488,5 @@ public class SignupDetailActivity extends Activity {
         if (!StringUtils.isEmpty(error))
             error += "\n";
         return error + newError;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 }

@@ -25,11 +25,12 @@ import miniBean.R;
 import miniBean.adapter.DistrictListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
+import miniBean.app.TrackedFragment;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.LocationVM;
 
-public abstract class AbstractSchoolsListFragment extends MyFragment {
+public abstract class AbstractSchoolsListFragment extends TrackedFragment {
 
     private static final String TAG = AbstractSchoolsListFragment.class.getName();
     protected GridView districtGrid;

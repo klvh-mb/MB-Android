@@ -206,6 +206,7 @@
     <string name="schools_info_wd">全日班</string>
     <string name="schools_info_total">總數</string>
     <string name="schools_info_fee_note">全年學費(期數)</string>
+    <string name="schools_info_not_provide">沒有直接代辦</string>
     <string name="schools_info_comm_welcome">歡迎和其他家長一起討論</string>
     <string name="schools_search_hint">搜尋學校名稱(所有區)</string>
     <string name="schools_search_text_1">搜尋</string>
@@ -220,6 +221,7 @@
     <string name="schools_filter_text_4">間幼稚園</string>
     <string name="schools_posts">話題 :</string>
     <string name="schools_discuss_together">一齊討論</string>
+    <string name="schools_landing_title_important_dates">重要日期</string>
     <string name="schools_landing_title_info">學校資料</string>
     <string name="schools_landing_title_pn">幼兒班(PN班 2-3歲) 收生資料</string>
     <string name="schools_landing_title_kg_1">學生人數</string>

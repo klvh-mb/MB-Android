@@ -17,8 +17,9 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 
-public class SchoolsMainFragment extends MyFragment {
+public class SchoolsMainFragment extends TrackedFragment {
 
     private static final String TAG = SchoolsMainFragment.class.getName();
     private ActionBar.Tab Tab1, Tab2, Tab3;
@@ -81,7 +82,7 @@ public class SchoolsMainFragment extends MyFragment {
 
     @Override
     public boolean allowBackPressed() {
-        MyFragment fragment = mAdapter.getFragment(viewPager.getCurrentItem());
+        TrackedFragment fragment = mAdapter.getFragment(viewPager.getCurrentItem());
         Log.d(this.getClass().getSimpleName(), "allowBackPressed: call "+fragment.getClass().getSimpleName());
 
         if (fragment != null)
@@ -95,8 +96,8 @@ class SchoolsPagerAdapter extends FragmentPagerAdapter {
     public static final int PN_PAGE = 0;
     public static final int KG_PAGE = 1;
 
-    private MyFragment pnFragment;
-    private MyFragment kgFragment;
+    private TrackedFragment pnFragment;
+    private TrackedFragment kgFragment;
 
     private static String[] TITLES = {
             AppController.getInstance().getString(R.string.schools_tab_title_pn),
@@ -131,7 +132,7 @@ class SchoolsPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
-    public MyFragment getFragment(int position) {
+    public TrackedFragment getFragment(int position) {
         switch (position) {
             case PN_PAGE:
                 return pnFragment;

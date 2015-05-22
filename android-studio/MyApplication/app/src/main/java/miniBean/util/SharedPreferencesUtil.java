@@ -67,7 +67,7 @@ public class SharedPreferencesUtil {
 
     private void saveObject(String key, Object obj) {
         String json = new Gson().toJson(obj);
-        Log.d(this.getClass().getSimpleName(), "=====> saveObject: key="+json);
+        //Log.d(this.getClass().getSimpleName(), "[DEBUG] saveObject: key="+json);
         this.prefs.edit().putString(key, json).commit();
     }
 
@@ -86,7 +86,7 @@ public class SharedPreferencesUtil {
     public UserVM getUserInfo() {
         String json = this.prefs.getString(USER_INFO, null);
         UserVM userInfo = new Gson().fromJson(json, UserVM.class);
-        Log.d(this.getClass().getSimpleName(), "=====> getUserInfo: json="+json);
+        //Log.d(this.getClass().getSimpleName(), "[DEBUG] getUserInfo: json="+json);
         return userInfo;
     }
 
@@ -94,7 +94,7 @@ public class SharedPreferencesUtil {
         Type type = new TypeToken<List<LocationVM>>() {}.getType();
         String json = this.prefs.getString(DISTRICTS, null);
         List<LocationVM> districts = new Gson().fromJson(json, type);
-        Log.d(this.getClass().getSimpleName(), "=====> getDistricts: size="+districts.size());
+        //Log.d(this.getClass().getSimpleName(), "[DEBUG] getDistricts: size="+districts.size());
         return districts;
     }
 
@@ -102,7 +102,7 @@ public class SharedPreferencesUtil {
         Type type = new TypeToken<List<EmoticonVM>>() {}.getType();
         String json = this.prefs.getString(EMOTICONS, null);
         List<EmoticonVM> emoticons = new Gson().fromJson(json, type);
-        Log.d(this.getClass().getSimpleName(), "=====> getEmoticons: size="+emoticons.size());
+        //Log.d(this.getClass().getSimpleName(), "[DEBUG] getEmoticons: size="+emoticons.size());
         return emoticons;
     }
 

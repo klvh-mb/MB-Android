@@ -1,6 +1,5 @@
 package miniBean.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -10,12 +9,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
@@ -23,7 +21,7 @@ import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends TrackedFragmentActivity {
 
     private boolean fromLoginActivity = false;
 
@@ -35,10 +33,9 @@ public class SplashActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
-        EasyTracker.getInstance(this).activityStart(this);
         String sessionId = AppController.getInstance().getSessionId();
 
         Intent intent = getIntent();
@@ -142,13 +139,4 @@ public class SplashActivity extends Activity {
         }
         return true;
     }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
-
 }

@@ -17,9 +17,10 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import miniBean.R;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.app.TrackedFragment;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 
-public class CommunityMainFragment extends MyFragment {
+public class CommunityMainFragment extends TrackedFragment {
 
     private static final String TAG = CommunityMainFragment.class.getName();
     private ActionBar.Tab Tab1, Tab2, Tab3;

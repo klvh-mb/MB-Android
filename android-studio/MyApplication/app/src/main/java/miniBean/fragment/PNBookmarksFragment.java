@@ -2,7 +2,6 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,13 @@ import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
 import miniBean.adapter.PNBookmarkListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragment;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class PNBookmarksFragment extends MyFragment {
+public class PNBookmarksFragment extends TrackedFragment {
 
     private static final String TAG = KGBookmarksFragment.class.getName();
     private ListView bookmarkList;

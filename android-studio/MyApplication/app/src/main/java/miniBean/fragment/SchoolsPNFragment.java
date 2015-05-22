@@ -13,8 +13,9 @@ import android.widget.ImageView;
 import miniBean.R;
 import miniBean.activity.NewPNPostActivity;
 import miniBean.activity.TopSchoolsActivity;
+import miniBean.app.TrackedFragment;
 
-public class SchoolsPNFragment extends MyFragment {
+public class SchoolsPNFragment extends TrackedFragment {
 
     public static final String INTENT_FLAG = "FromPN";
 
@@ -23,7 +24,7 @@ public class SchoolsPNFragment extends MyFragment {
 
     private ImageView newPostIcon,rankingActionIcon;
 
-    private MyFragment selectedFragment;
+    private TrackedFragment selectedFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

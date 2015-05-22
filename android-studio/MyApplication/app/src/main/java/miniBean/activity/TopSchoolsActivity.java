@@ -3,7 +3,6 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,8 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +22,7 @@ import miniBean.adapter.TopBookmarkedPNListAdapter;
 import miniBean.adapter.TopViewedPNListAdapter;
 import miniBean.adapter.TopViewedKGListAdapter;
 import miniBean.app.AppController;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.SchoolsKGFragment;
 import miniBean.fragment.SchoolsPNFragment;
 import miniBean.viewmodel.KindergartenVM;
@@ -33,7 +31,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TopSchoolsActivity extends FragmentActivity {
+public class TopSchoolsActivity extends TrackedFragmentActivity {
     private ListView topViewedList,topBookmarkedList;
     private TopViewedPNListAdapter topViewedPNListAdapter;
     private TopBookmarkedPNListAdapter topBookmarkedPNListAdapter;
@@ -242,18 +240,6 @@ public class TopSchoolsActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
     }
 }
 

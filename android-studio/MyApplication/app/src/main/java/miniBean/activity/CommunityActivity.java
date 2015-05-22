@@ -3,18 +3,16 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import miniBean.R;
+import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.CommunityFragment;
 
-public class CommunityActivity extends FragmentActivity {
+public class CommunityActivity extends TrackedFragmentActivity {
     ImageView backImage, editAction;
     TextView titleAction;
 
@@ -67,16 +65,4 @@ public class CommunityActivity extends FragmentActivity {
     public void onBackPressed() {
             super.onBackPressed();
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
-    }
-
 }
