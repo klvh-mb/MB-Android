@@ -100,12 +100,16 @@ class CommunityPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Log.d(this.getClass().getSimpleName(), "getItem: item - " + position);
         switch (position) {
-            case 0:
-                return new MyCommunityFragment();
-            default:
-                TopicCommunityFragment topicFragment = new TopicCommunityFragment();
-                topicFragment.setCommunities(LocalCommunityTabCache.getCommunityCategoryMapList().get(position).communities);
-                return topicFragment;
+            case 0: {
+                MyCommunityFragment fragment = new MyCommunityFragment();
+                return fragment;
+            }
+            default: {
+                TopicCommunityFragment fragment = new TopicCommunityFragment();
+                fragment.setTrackedOnce();
+                fragment.setCommunities(LocalCommunityTabCache.getCommunityCategoryMapList().get(position).communities);
+                return fragment;
+            }
         }
     }
 }

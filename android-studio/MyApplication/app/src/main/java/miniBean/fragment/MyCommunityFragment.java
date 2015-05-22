@@ -88,9 +88,10 @@ public class MyCommunityFragment extends TrackedFragment {
         newsfeed.setBackgroundColor(getResources().getColor(R.color.actionbar_bg_light));
         newsfeed.setTextColor(Color.WHITE);
 
-        Fragment communityFragment = new CommunityListFragment();
+        TrackedFragment fragment = new CommunityListFragment();
+        fragment.setTrackedOnce();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, communityFragment).commit();
+        transaction.replace(R.id.children_fragement, fragment).commit();
     }
 
     private void pressNewsfeedButton() {
@@ -102,6 +103,7 @@ public class MyCommunityFragment extends TrackedFragment {
         Bundle bundle = new Bundle();
         bundle.putString("key","feed");
         NewsfeedListFragement fragment = new NewsfeedListFragement();
+        fragment.setTrackedOnce();
         fragment.setHeader(R.layout.my_community_newsfeed_header);
         FragmentManager fragmentManager = getChildFragmentManager();
         fragment.setArguments(bundle);

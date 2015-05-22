@@ -68,8 +68,6 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        setUntracked(true);
-
         View view = inflater.inflate(R.layout.school_list_fragment, container, false);
 
         activityUtil = new ActivityUtil(getActivity());
@@ -155,6 +153,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         searchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AbstractSchoolsListFragment.this.trackFragmentShow();
                 searchWindow.setIconified(false);
 
                 /*
@@ -309,6 +308,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
     }
 
     protected void selectDistrict(int index) {
+        this.trackFragmentShow();
         String district = districtListAdapter.getItem(index).getDisplayName();
         districtNameText.setText(district);
         districtListAdapter.setSelectedItem(index);

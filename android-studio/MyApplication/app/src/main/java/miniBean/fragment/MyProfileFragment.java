@@ -62,9 +62,10 @@ public class MyProfileFragment extends TrackedFragment {
         requestCount.setVisibility(View.INVISIBLE);
         notificationCount.setVisibility(View.INVISIBLE);
 
-        Fragment profileFragment = new ProfileFragment();
+        TrackedFragment fragment = new ProfileFragment();
+        fragment.setTrackedOnce();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.children_fragement, profileFragment,"profile").commit();
+        transaction.replace(R.id.children_fragement, fragment,"profile").commit();
 
         request.setOnClickListener(new View.OnClickListener() {
             @Override

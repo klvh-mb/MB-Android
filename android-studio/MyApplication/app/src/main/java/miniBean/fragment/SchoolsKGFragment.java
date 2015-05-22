@@ -111,6 +111,7 @@ public class SchoolsKGFragment extends TrackedFragment {
         buttonNews.setBackgroundColor(getResources().getColor(R.color.kg_box_border));
 
         selectedFragment = new SchoolsKGListFragment();
+        selectedFragment.setTrackedOnce();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
@@ -128,6 +129,7 @@ public class SchoolsKGFragment extends TrackedFragment {
         SchoolsNewsfeedListFragement fragment = new SchoolsNewsfeedListFragement();
         fragment.setIsPN(false);
         selectedFragment = fragment;
+        selectedFragment.setTrackedOnce();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
@@ -143,6 +145,7 @@ public class SchoolsKGFragment extends TrackedFragment {
         buttonNews.setBackgroundColor(getResources().getColor(R.color.kg_box_border));
 
         selectedFragment = new KGBookmarksFragment();
+        selectedFragment.setTrackedOnce();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }

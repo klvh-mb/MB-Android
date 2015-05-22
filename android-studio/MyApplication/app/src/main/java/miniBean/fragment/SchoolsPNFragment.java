@@ -110,6 +110,7 @@ public class SchoolsPNFragment extends TrackedFragment {
         buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
         selectedFragment = new SchoolsPNListFragment();
+        selectedFragment.setTrackedOnce();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
@@ -127,6 +128,7 @@ public class SchoolsPNFragment extends TrackedFragment {
         SchoolsNewsfeedListFragement fragment = new SchoolsNewsfeedListFragement();
         fragment.setIsPN(true);
         selectedFragment = fragment;
+        selectedFragment.setTrackedOnce();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
@@ -142,6 +144,7 @@ public class SchoolsPNFragment extends TrackedFragment {
         buttonNews.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
 
         selectedFragment = new PNBookmarksFragment();
+        selectedFragment.setTrackedOnce();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
