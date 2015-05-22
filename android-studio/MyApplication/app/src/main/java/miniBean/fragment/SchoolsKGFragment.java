@@ -29,6 +29,7 @@ public class SchoolsKGFragment extends TrackedFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.schools_kg_fragement, container, false);
 
         buttonList = (Button) view.findViewById(R.id.buttonListing);

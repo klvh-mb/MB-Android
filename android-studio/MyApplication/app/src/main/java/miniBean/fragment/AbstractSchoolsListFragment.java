@@ -68,7 +68,9 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        final View view = inflater.inflate(R.layout.school_list_fragment, container, false);
+        setUntracked(true);
+
+        View view = inflater.inflate(R.layout.school_list_fragment, container, false);
 
         activityUtil = new ActivityUtil(getActivity());
 

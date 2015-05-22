@@ -39,6 +39,7 @@ public class MyProfileFragment extends TrackedFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.my_profile_fragement, container, false);
 
         actionBarView = inflater.inflate(R.layout.my_profile_actionbar, null);

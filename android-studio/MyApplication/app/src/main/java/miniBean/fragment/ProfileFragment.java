@@ -58,6 +58,9 @@ public class ProfileFragment extends TrackedFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
+        setUntracked(true);
+
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
         userName = (TextView) view.findViewById(R.id.usernameText);

@@ -10,7 +10,13 @@ import com.google.analytics.tracking.android.MapBuilder;
 
 public abstract class TrackedFragment extends Fragment {
 
+    protected boolean untracked = false;
+
     protected EasyTracker tracker;
+
+    protected void setUntracked(boolean untracked) {
+        this.untracked = untracked;
+    }
 
     protected EasyTracker getTracker() {
         if (tracker == null)
@@ -21,6 +27,9 @@ public abstract class TrackedFragment extends Fragment {
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // NOTE: init tracker here
+        getTracker();
     }
 
     /**
@@ -30,9 +39,11 @@ public abstract class TrackedFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.d(this.getClass().getSimpleName(), "[DEBUG] fragment resumes");
-        getTracker().set(Fields.SCREEN_NAME, getClass().getSimpleName());
-        getTracker().send(MapBuilder.createAppView().build());
+        if (!untracked) {
+            Log.d(this.getClass().getSimpleName(), "[DEBUG] fragment resumes");
+            getTracker().set(Fields.SCREEN_NAME, getClass().getSimpleName());
+            getTracker().send(MapBuilder.createAppView().build());
+        }
     }
 
     /**
