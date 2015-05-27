@@ -5,11 +5,15 @@
     tools:context=".MainActivity"
     android:background="@color/white">
 
+    <com.yalantis.phoenix.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@drawable/bar1"
         android:dividerHeight="1dp" />
-
+    </com.yalantis.phoenix.PullToRefreshView>
 </RelativeLayout>

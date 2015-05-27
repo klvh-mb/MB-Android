@@ -43,4 +43,5 @@ dependencies {
     compile files('libs/android-viewbadger.jar')
     compile files('libs/libGoogleAnalyticsServices.jar')
     compile files('libs/acra-4.6.1.jar')
+    compile project(':library')
 }

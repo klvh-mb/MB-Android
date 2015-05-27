@@ -13,6 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.yalantis.phoenix.PullToRefreshView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +37,14 @@ public class NewsfeedListFragement extends TrackedFragment {
     private ListView listView;
     private BaseAdapter listAdapter;
     private List<CommunityPostVM> feedItems;
-    private View header,loadingFooter;
+    private View header,loadingFooter,loadingHeader;
 
     private boolean hasHeader = false;
     private int headerResouceId = -1;
+
+    private PullToRefreshView pullListView;
+    public static final int REFRESH_DELAY = 1000;
+
 
     public void setHeader(int resouceId) {
         this.headerResouceId = resouceId;
@@ -51,6 +57,7 @@ public class NewsfeedListFragement extends TrackedFragment {
         View view = inflater.inflate(R.layout.newsfeed_list_fragment, container, false);
 
         loadingFooter = inflater.inflate(R.layout.list_loading_footer, null);
+        pullListView= (PullToRefreshView) view.findViewById(R.id.pull_to_refresh);
 
         feedItems = new ArrayList<CommunityPostVM>();
 
@@ -65,6 +72,21 @@ public class NewsfeedListFragement extends TrackedFragment {
         listView.setAdapter(listAdapter);
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
+
+        pullListView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pullListView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        feedItems.clear();
+                        pullListView.setRefreshing(false);
+                        loadNewsfeed(0);
+                        listAdapter.notifyDataSetChanged();
+                    }
+                }, REFRESH_DELAY);
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
