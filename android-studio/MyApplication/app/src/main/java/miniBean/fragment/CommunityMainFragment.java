@@ -45,6 +45,7 @@ public class CommunityMainFragment extends TrackedFragment {
         viewPager.setPageMargin(pageMargin);
         viewPager.setAdapter(mAdapter);
 
+
         tabs.setViewPager(viewPager);
         tabs.setTextColor(getResources().getColor(R.color.dark_gray));
         tabs.setIndicatorColor(getResources().getColor(R.color.actionbar_selected_text));
