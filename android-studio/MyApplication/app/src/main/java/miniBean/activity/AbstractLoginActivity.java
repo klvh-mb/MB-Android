@@ -21,10 +21,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
 
+// FB API v4.0
+//import com.facebook.CallbackManager;
+//import com.facebook.FacebookCallback;
+//import com.facebook.FacebookException;
+//import com.facebook.FacebookSdk;
+//import com.facebook.login.LoginManager;
+//import com.facebook.login.LoginResult;
+
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
-import com.google.analytics.tracking.android.EasyTracker;
 
 import miniBean.R;
 import miniBean.app.AppController;
@@ -48,17 +55,56 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
     // Instance of Facebook Class
     protected Facebook facebook = new Facebook(APP_ID);
 
+    // FB API v4.0
+    //protected CallbackManager callbackManager;
+
     protected ActivityUtil activityUtil;
+
+    protected ProgressBar spinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         activityUtil = new ActivityUtil(this);
+
+        // FB API v4.0
+        /*
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onComplete: fb doLoginUsingAccessToken");
+                doLoginUsingAccessToken(loginResult.getAccessToken().getToken(), spinner);
+            }
+
+            @Override
+            public void onCancel() {
+                AnimationUtil.cancel(spinner);
+                Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onCancel: fb login cancelled");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                AnimationUtil.cancel(spinner);
+                ActivityUtil.alert(AbstractLoginActivity.this,
+                        getString(R.string.login_error_title),
+                        getString(R.string.login_error_message));
+                e.printStackTrace();
+            }
+        });
+        */
     }
 
     protected void loginToFacebook(final ProgressBar spinner) {
+        this.spinner = spinner;
+
         AnimationUtil.show(spinner);
+
+        // FB API v4.0
+        //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(REQUEST_FACEBOOK_PERMISSIONS));
 
         String access_token = SharedPreferencesUtil.getInstance().getString(SharedPreferencesUtil.FB_ACCESS_TOKEN);
         long expires = SharedPreferencesUtil.getInstance().getLong(SharedPreferencesUtil.FB_ACCESS_EXPIRES);
@@ -87,7 +133,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
                         @Override
                         public void onComplete(Bundle values) {
-                            Log.d(this.getClass().getSimpleName(), "loginToFacebook.onComplete: fb doLoginUsingAccessToken");
+                            Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onComplete: fb doLoginUsingAccessToken");
                             doLoginUsingAccessToken(facebook.getAccessToken(), spinner);
                         }
 
@@ -112,7 +158,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
                         @Override
                         public void onCancel() {
                             AnimationUtil.cancel(spinner);
-                            Log.d(this.getClass().getSimpleName(), "loginToFacebook.onCancel: fb login cancelled");
+                            Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onCancel: fb login cancelled");
                         }
 
                     });
@@ -168,10 +214,18 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(this.getClass().getSimpleName(), "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(this.getClass().getSimpleName(), "onActivityResult: facebook.authorizeCallback - requestCode:"+requestCode+" resultCode:"+resultCode+" data:"+data);
-        facebook.authorizeCallback(requestCode, resultCode, data);
+        Log.d(this.getClass().getSimpleName(), "onActivityResult: callbackManager - requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + data);
+
+        try {
+            facebook.authorizeCallback(requestCode, resultCode, data);
+
+            // FB API v4.0
+            //callbackManager.onActivityResult(requestCode, resultCode, data);
+        } catch (Exception e) {
+            Log.d(this.getClass().getSimpleName(), "onActivityResult: callbackManager exception");
+            e.printStackTrace();
+        }
     }
 }
 
