@@ -75,6 +75,7 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
                 pullListView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        pullListView.setRefreshing(false);
                         refreshList();
                     }
                 }, DefaultValues.PULL_TO_REFRESH_DELAY);
@@ -144,7 +145,6 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
 
     protected void refreshList() {
         feedItems.clear();
-        pullListView.setRefreshing(false);
         loadNewsfeed(0);
         listAdapter.notifyDataSetChanged();
     }

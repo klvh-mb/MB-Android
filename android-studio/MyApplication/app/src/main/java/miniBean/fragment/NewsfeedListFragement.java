@@ -1,7 +1,6 @@
 package miniBean.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.PostArray;
 import retrofit.Callback;
