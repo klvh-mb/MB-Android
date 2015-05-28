@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -74,6 +75,9 @@ public class PullToRefreshView extends ViewGroup {
 
         setWillNotDraw(false);
         ViewCompat.setChildrenDrawingOrderEnabled(this, true);
+
+        // hide by default
+        mRefreshView.setVisibility(GONE);
     }
 
     public void setRefreshStyle(int type) {
@@ -123,6 +127,9 @@ public class PullToRefreshView extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
+        // hide refresh view if not being dragged
+        mRefreshView.setVisibility(mIsBeingDragged ? VISIBLE : GONE);
+
         if (!isEnabled() || canChildScrollUp() || mRefreshing) {
             return false;
         }
@@ -168,6 +175,9 @@ public class PullToRefreshView extends ViewGroup {
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent ev) {
+
+        // hide refresh view if not being dragged
+        mRefreshView.setVisibility(mIsBeingDragged? VISIBLE : GONE);
 
         if (!mIsBeingDragged) {
             return super.onTouchEvent(ev);

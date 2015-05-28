@@ -34,6 +34,7 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
     protected BaseAdapter listAdapter;
     protected List<CommunityPostVM> feedItems;
     protected View header,loadingFooter;
+    protected TextView footerText;
 
     protected boolean hasHeader = false;
     protected int headerResouceId = -1;
@@ -68,6 +69,8 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
         listView.setAdapter(listAdapter);
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
+
+        footerText = (TextView) listView.findViewById(R.id.listLoadingFooterText);
 
         pullListView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
@@ -131,9 +134,11 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
         // NOTE: delay infinite scroll by a short interval to make UI looks smooth
         if (feedItems.size() == 0) {
             Log.d(this.getClass().getSimpleName(), "loadFeedItemsToList: first batch completed");
+            showFooter(false);
             feedItems.addAll(posts);
             listAdapter.notifyDataSetChanged();
         } else {
+            showFooter(true);
             new Handler().postDelayed(new Runnable() {
                 public void run() {
                     feedItems.addAll(posts);
@@ -150,7 +155,10 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
     }
 
     protected void setFooterText(int text) {
-        TextView footerText = (TextView) listView.findViewById(R.id.listLoadingFooterText);
         footerText.setText(text);
+    }
+
+    protected void showFooter(boolean show) {
+        loadingFooter.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 }

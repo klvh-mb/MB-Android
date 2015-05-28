@@ -109,7 +109,7 @@ public class MyRefreshView extends BaseRefreshView implements Animatable {
         mSky = Bitmap.createScaledBitmap(mSky, mScreenWidth, mSkyHeight, true);
         mTown = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.buildings);
         mTown = Bitmap.createScaledBitmap(mTown, mScreenWidth, (int) (mScreenWidth * TOWN_RATIO), true);
-        mSun = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.sun);
+        mSun = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.bean);
         mSun = Bitmap.createScaledBitmap(mSun, mSunSize, mSunSize, true);
     }
 
