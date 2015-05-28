@@ -18,6 +18,7 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 
 import com.yalantis.phoenix.refresh_view.BaseRefreshView;
+import com.yalantis.phoenix.refresh_view.MyRefreshView;
 import com.yalantis.phoenix.refresh_view.SunRefreshView;
 import com.yalantis.phoenix.util.Utils;
 
@@ -79,7 +80,8 @@ public class PullToRefreshView extends ViewGroup {
         setRefreshing(false);
         switch (type) {
             case STYLE_SUN:
-                mBaseRefreshView = new SunRefreshView(getContext(), this);
+                //mBaseRefreshView = new SunRefreshView(getContext(), this);
+                mBaseRefreshView = new MyRefreshView(getContext(), this);
                 break;
             default:
                 throw new InvalidParameterException("Type does not exist");
