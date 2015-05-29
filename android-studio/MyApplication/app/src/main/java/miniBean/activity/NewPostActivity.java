@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import miniBean.app.EmoticonCache;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ActivityUtil;
+import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
@@ -61,6 +63,8 @@ public class NewPostActivity extends TrackedFragmentActivity {
     protected ImageView communityIcon;
     protected ImageView backImage, browseImage, emoImage;
     protected TextView postTitle, postContent, postAction, editTextInFocus;
+    protected ProgressBar spinner;
+
     protected String selectedImagePath = null;
     protected Uri selectedImageUri = null;
 
@@ -75,6 +79,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
     protected PopupMyCommunityListAdapter adapter;
 
     protected boolean postSuccess = false;
+    protected int imageUploadSuccessCount = 0;
 
     protected ActivityUtil activityUtil;
 
@@ -103,6 +108,9 @@ public class NewPostActivity extends TrackedFragmentActivity {
         postTitle = (TextView) findViewById(R.id.postTitle);
         postContent = (TextView) findViewById(R.id.postContent);
         editTextInFocus = postContent;
+
+        spinner = (ProgressBar) findViewById(R.id.spinner);
+        AnimationUtil.cancel(spinner);
 
         postTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -248,6 +256,84 @@ public class NewPostActivity extends TrackedFragmentActivity {
         return LocalCommunityTabCache.getMyCommunities().communities;
     }
 
+    protected void doPost() {
+        String title = postTitle.getText().toString().trim();
+        String content = postContent.getText().toString().trim();
+
+        if (StringUtils.isEmpty(title)) {
+            Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.invalid_post_title_empty), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (StringUtils.isEmpty(content)) {
+            Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.invalid_post_body_empty), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (communityId == null) {
+            initMyCommunityPopup();
+            return;
+        }
+
+        AnimationUtil.show(spinner);
+
+        final boolean withPhotos = photos.size() > 0;
+
+        Log.d(this.getClass().getSimpleName(), "doPost: communityId=" + communityId + " title=" + title);
+        AppController.getApi().newCommunityPost(new NewPost(communityId, title, content, withPhotos), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
+            @Override
+            public void success(PostResponse postResponse, Response response) {
+                postSuccess = true;
+
+                if (withPhotos) {
+                    uploadPhotos(postResponse.getId());
+                } else {
+                    complete();
+                }
+
+                /*Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
+                intent.putExtra("id",getIntent().getLongExtra("id",0l));
+                intent.putExtra("flag","FromPostFragment");
+                startActivity(intent);*/
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_failed), Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+            }
+        });
+    }
+
+    protected void uploadPhotos(String postId) {
+        for (File photo : photos) {
+            photo = ImageUtil.resizeAsJPG(photo);   // IMPORTANT: resize before upload
+            TypedFile typedFile = new TypedFile("application/octet-stream", photo);
+            AppController.getApi().uploadPostPhoto(postId, typedFile, new Callback<Response>() {
+                @Override
+                public void success(Response array, retrofit.client.Response response) {
+                    imageUploadSuccessCount++;
+                    if (imageUploadSuccessCount >= photos.size()) {
+                        imageUploadSuccessCount = 0;
+                        complete();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    retrofitError.printStackTrace(); //to see if you have errors
+                }
+            });
+        }
+    }
+
+    protected void complete() {
+        AnimationUtil.cancel(spinner);
+        onBackPressed();
+        finish();
+        Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_LONG).show();
+    }
+
     protected void initMyCommunityPopup() {
         try {
             LayoutInflater inflater = (LayoutInflater) NewPostActivity.this
@@ -296,73 +382,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
         }
     }
 
-    protected void doPost() {
-        String title = postTitle.getText().toString();
-        String content = postContent.getText().toString();
-
-        if (StringUtils.isEmpty(title)) {
-            Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.invalid_post_title_empty), Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (StringUtils.isEmpty(content)) {
-            Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.invalid_post_body_empty), Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (communityId == null) {
-            initMyCommunityPopup();
-            return;
-        }
-
-        final boolean withPhotos = photos.size() > 0;
-
-        Log.d(this.getClass().getSimpleName(), "doPost: communityId=" + communityId + " title=" + title);
-        AppController.getApi().setQuestion(new NewPost(communityId, title, content, withPhotos), AppController.getInstance().getSessionId(), new Callback<PostResponse>() {
-            @Override
-            public void success(PostResponse postResponse, Response response) {
-                postSuccess = true;
-
-                if (withPhotos) {
-                    uploadPhotos(postResponse.getId());
-                }
-
-                onBackPressed();
-                finish();
-                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_LONG).show();
-
-                /*Intent intent = new Intent(PostActivity.this,CommunityActivity.class);
-                intent.putExtra("id",getIntent().getLongExtra("id",0l));
-                intent.putExtra("flag","FromPostFragment");
-                startActivity(intent);*/
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_failed), Toast.LENGTH_SHORT).show();
-                error.printStackTrace();
-            }
-        });
-    }
-
-    protected void uploadPhotos(String postId) {
-        for (File photo : photos) {
-            TypedFile typedFile = new TypedFile("application/octet-stream", photo);
-            AppController.getApi().uploadPostPhoto(postId, typedFile, new Callback<Response>() {
-                @Override
-                public void success(Response array, retrofit.client.Response response) {
-
-                }
-
-                @Override
-                public void failure(RetrofitError retrofitError) {
-                    retrofitError.printStackTrace(); //to see if you have errors
-                }
-            });
-        }
-    }
-
-    public void initEmoticonPopup() {
+    protected void initEmoticonPopup() {
         try {
             //We need to get the instance of the LayoutInflater, use the context of this activity
             LayoutInflater inflater = (LayoutInflater) NewPostActivity.this

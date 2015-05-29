@@ -111,7 +111,7 @@ public interface MyApi {
     public void getComments(@Path("id")Long post_id,@Path("offset") int offset, @Query("key") String key, Callback<List<CommunityPostCommentVM>> cb);
 
     @POST("/communityQnA/question/post")
-    public void setQuestion(@Body NewPost newPost, @Query("key") String key, Callback<PostResponse> cb);
+    public void newCommunityPost(@Body NewPost newPost, @Query("key") String key, Callback<PostResponse> cb);
 
     @Multipart
     @POST("/image/uploadPostPhoto") //a function in your api upload image for comment

@@ -90,12 +90,11 @@
             android:name=".activity.TopSchoolsActivity"
             android:screenOrientation="portrait" />
 
-        <!-- FB API v4.0 -->
-        <!--activity android:name="com.facebook.FacebookActivity"
+        <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" /-->
+            android:label="@string/app_name" />
         <activity android:name="org.acra.CrashReportDialog"
             android:theme="@android:style/Theme.Dialog"
             android:launchMode="singleInstance"

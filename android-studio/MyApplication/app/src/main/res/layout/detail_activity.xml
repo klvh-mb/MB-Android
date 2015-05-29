@@ -14,7 +14,8 @@
         android:visibility="visible"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/progress_spinner"
-        android:layout_gravity="center"></ProgressBar>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"></ProgressBar>
 
     <LinearLayout
         android:orientation="vertical"

@@ -244,13 +244,15 @@ public class ProfileFragment extends TrackedFragment {
     }
 
     private void changeCoverPhoto(final long id){
-        Log.d(this.getClass().getSimpleName(), "changeCoverPhoto: Id="+id);
-        File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
-        TypedFile typedFile = new TypedFile("application/octet-stream", photo);
-
         AnimationUtil.show(spinner);
 
+        Log.d(this.getClass().getSimpleName(), "changeCoverPhoto: Id=" + id);
+
         ImageUtil.clearCoverImageCache(id);
+
+        File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
+        photo = ImageUtil.resizeAsJPG(photo);   // IMPORTANT: resize before upload
+        TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.getApi().uploadCoverPhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
@@ -284,13 +286,15 @@ public class ProfileFragment extends TrackedFragment {
     }
 
     private void changeProfilePhoto(final long id) {
-        Log.d(this.getClass().getSimpleName(), "changeProfilePhoto: Id=" + id);
-        File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
-        TypedFile typedFile = new TypedFile("application/octet-stream", photo);
-
         AnimationUtil.show(spinner);
 
+        Log.d(this.getClass().getSimpleName(), "changeProfilePhoto: Id=" + id);
+
         ImageUtil.clearProfileImageCache(id);
+
+        File photo = new File(ImageUtil.getRealPathFromUri(getActivity(), selectedImageUri));
+        photo = ImageUtil.resizeAsJPG(photo);   // IMPORTANT: resize before upload
+        TypedFile typedFile = new TypedFile("application/octet-stream", photo);
         AppController.getApi().uploadProfilePhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
             @Override
             public void success(Response response, Response response2) {

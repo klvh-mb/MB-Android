@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 import miniBean.R;
 import miniBean.app.AppController;
@@ -33,10 +35,17 @@ import miniBean.app.AppController;
  */
 public class ImageUtil {
 
+    public static final String MINIBEAN_TEMP_DIR_NAME = "miniBean";
+
     public static final int SELECT_PICTURE = 1;
 
     public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 350;
     public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 350;
+
+    public static final int IMAGE_UPLOAD_MAX_WIDTH = 1024;
+    public static final int IMAGE_UPLOAD_MAX_HEIGHT = 1024;
+
+    public static final int IMAGE_COMPRESS_QUALITY = 85;
 
     public static final String COMMUNITY_COVER_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-cover-community-image-by-id/";
     public static final String THUMBNAIL_COMMUNITY_COVER_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-thumbnail-cover-community-image-by-id/";
@@ -79,6 +88,8 @@ public class ImageUtil {
 
     private static ImageLoader mImageLoader;
 
+    private static File tempDir;
+
     static {
         init();
     }
@@ -99,6 +110,43 @@ public class ImageUtil {
                 defaultDisplayImageOptions(DEFAULT_IMAGE_OPTIONS).build();
         com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
         mImageLoader = ImageLoader.getInstance();
+
+        initImageTempDir();
+    }
+
+    // miniBean temp directory
+
+    public static void initImageTempDir() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File externalRoot = Environment.getExternalStorageDirectory();
+            Log.d(ImageUtil.class.getSimpleName(), "initImageTempDir: externalRoot="+externalRoot.getAbsolutePath());
+
+            tempDir = new File(externalRoot, MINIBEAN_TEMP_DIR_NAME);
+            if (!tempDir.exists()) {
+                tempDir.mkdir();
+                Log.d(ImageUtil.class.getSimpleName(), "initImageTempDir: create tempDir=" + tempDir.getAbsolutePath());
+            } else {
+                clearTempDir();
+            }
+        } else {
+            Log.e(ImageUtil.class.getSimpleName(), "initImageTempDir: no external storage!!!");
+            tempDir = null;
+        }
+    }
+
+    public static File getTempDir() {
+        return tempDir;
+    }
+
+    private static void clearTempDir() {
+        if (tempDir != null && tempDir.exists()) {
+            File[] children = tempDir.listFiles();
+            for (File f : children) {
+                if (!f.isDirectory()) {
+                    f.delete();
+                }
+            }
+        }
     }
 
     // Community cover image
@@ -269,6 +317,14 @@ public class ImageUtil {
     }
 
     public static Bitmap resizeAsPreviewThumbnail(String path) {
+        return resizeImage(path, PREVIEW_THUMBNAIL_MAX_WIDTH, PREVIEW_THUMBNAIL_MAX_HEIGHT);
+    }
+
+    public static Bitmap resizeToUpload(String path) {
+        return resizeImage(path, IMAGE_UPLOAD_MAX_WIDTH, IMAGE_UPLOAD_MAX_HEIGHT);
+    }
+
+    public static Bitmap resizeImage(String path, int maxWidth, int maxHeight) {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inJustDecodeBounds = true;
         Bitmap bp = BitmapFactory.decodeFile(path, opts);
@@ -277,25 +333,61 @@ public class ImageUtil {
         int originalWidth = opts.outWidth;
         int resizeScale = 1;
 
-        Log.d(ImageUtil.class.getSimpleName(), "resizeAsPreviewThumbnail: outWidth="+originalWidth+" outHeight="+originalHeight);
-        if ( originalWidth > PREVIEW_THUMBNAIL_MAX_WIDTH || originalHeight > PREVIEW_THUMBNAIL_MAX_HEIGHT ) {
-            final int widthRatio = Math.round((float) originalWidth / (float) PREVIEW_THUMBNAIL_MAX_WIDTH);
-            final int heightRatio = Math.round((float) originalHeight / (float) PREVIEW_THUMBNAIL_MAX_HEIGHT);
+        Log.d(ImageUtil.class.getSimpleName(), "resizeImage: outWidth="+originalWidth+" outHeight="+originalHeight);
+        if ( originalWidth > maxWidth || originalHeight > maxHeight ) {
+            final int widthRatio = Math.round((float) originalWidth / (float) maxWidth);
+            final int heightRatio = Math.round((float) originalHeight / (float) maxHeight);
             resizeScale = heightRatio < widthRatio ? heightRatio : widthRatio;
-            Log.d(ImageUtil.class.getSimpleName(), "resizeAsPreviewThumbnail: resizeScale="+resizeScale);
+            Log.d(ImageUtil.class.getSimpleName(), "resizeImage: resizeScale="+resizeScale);
         }
 
         // put the scale instruction (1 -> scale to (1/1); 8-> scale to 1/8)
         opts.inSampleSize = resizeScale;
         opts.inJustDecodeBounds = false;
 
+        /*
         int bmSize = (originalWidth / resizeScale) * (originalHeight / resizeScale) * 4;
         if ( Runtime.getRuntime().freeMemory() > bmSize ) {
             bp = BitmapFactory.decodeFile(path, opts);
         } else {
             return null;
         }
+        */
+
+        bp = BitmapFactory.decodeFile(path, opts);
         return bp;
+    }
+
+    public static File resizeAsJPG(File image) {
+        return resizeAsFormat(Bitmap.CompressFormat.JPEG, image);
+    }
+
+    public static File resizeAsFormat(Bitmap.CompressFormat format, File image) {
+        if (tempDir == null) {
+            Log.e(ImageUtil.class.getSimpleName(), "resizeAsFormat: tempDir is null!!!");
+            return image;
+        }
+
+        File resizedImage = new File(tempDir, image.getName());
+        if (!tempDir.canWrite()) {
+            Log.e(ImageUtil.class.getSimpleName(), "resizeAsFormat: "+tempDir.getAbsolutePath()+" cannot be written!!!");
+            return image;
+        }
+
+        try {
+            FileOutputStream out = new FileOutputStream(resizedImage);
+            Bitmap resizedBitmap = ImageUtil.resizeToUpload(image.getAbsolutePath());
+            resizedBitmap.compress(format, IMAGE_COMPRESS_QUALITY, out);
+            Log.d(ImageUtil.class.getSimpleName(), "resizeAsFormat: successfully resized to path=" + resizedImage.getAbsolutePath());
+            if (out != null) {
+                out.close();
+                out = null;
+            }
+        } catch (Exception e) {
+            Log.e(ImageUtil.class.getSimpleName(), "resizeAsFormat: " + e.getMessage(), e);
+        }
+
+        return resizedImage;
     }
 
     public static Bitmap cropToSquare(Bitmap bitmap) {

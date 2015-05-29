@@ -67,7 +67,6 @@ import retrofit.mime.TypedFile;
 
 public class DetailActivity extends TrackedFragmentActivity {
 
-    private final Integer SELECT_PICTURE = 1;
     private FrameLayout mainFrameLayout;
     private Button pageButton;
     private ImageButton backButton, nextButton;
@@ -529,7 +528,7 @@ public class DetailActivity extends TrackedFragmentActivity {
     }
 
     private void doComment() {
-        String comment = commentEditText.getText().toString();
+        String comment = commentEditText.getText().toString().trim();
         if (StringUtils.isEmpty(comment)) {
             Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.invalid_comment_body_empty), Toast.LENGTH_SHORT).show();
             return;
@@ -566,6 +565,7 @@ public class DetailActivity extends TrackedFragmentActivity {
 
     private void uploadPhotos(String commentId) {
         for (File photo : photos) {
+            photo = ImageUtil.resizeAsJPG(photo);   // IMPORTANT: resize before upload
             TypedFile typedFile = new TypedFile("application/octet-stream", photo);
             AppController.getApi().uploadCommentPhoto(commentId, typedFile, new Callback<Response>() {
                 @Override

@@ -43,6 +43,15 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+/**
+ * For Hosting activity, set the no history property as false if have
+ * android:noHistory="false"
+ *
+ * For Activity to be started, set the launch mode as standard if have
+ * android:launchMode="standard"
+ *
+ * http://stackoverflow.com/a/14088099
+ */
 public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
     // Your Facebook APP ID
