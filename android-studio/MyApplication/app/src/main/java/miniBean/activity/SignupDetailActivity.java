@@ -292,7 +292,7 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
             @Override
             public void success(UserVM userVM, Response response) {
                 Log.d(SignupDetailActivity.class.getSimpleName(), "initNewUser.success");
-                startActivity(new Intent(SignupDetailActivity.this, MainActivity.class));
+                startActivity(new Intent(SignupDetailActivity.this, SplashActivity.class));
                 finish();
             }
 

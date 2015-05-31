@@ -115,6 +115,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
         // FB API v4.0
         //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(REQUEST_FACEBOOK_PERMISSIONS));
 
+        // FB API v3.0
         String access_token = SharedPreferencesUtil.getInstance().getString(SharedPreferencesUtil.FB_ACCESS_TOKEN);
         long expires = SharedPreferencesUtil.getInstance().getLong(SharedPreferencesUtil.FB_ACCESS_EXPIRES);
 
@@ -227,6 +228,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
         Log.d(this.getClass().getSimpleName(), "onActivityResult: callbackManager - requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + data);
 
         try {
+            // FB API v3.0
             facebook.authorizeCallback(requestCode, resultCode, data);
 
             // FB API v4.0
