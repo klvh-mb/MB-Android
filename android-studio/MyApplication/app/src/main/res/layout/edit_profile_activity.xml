@@ -46,13 +46,13 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:id="@+id/fbLoginIcon"
-                        android:src="@drawable/ic_fb" />
+                        android:src="@drawable/ic_fb_logo" />
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:id="@+id/mbLoginIcon"
-                        android:src="@drawable/ic_mb" />
+                        android:src="@drawable/ic_mb_logo" />
                 </LinearLayout>
 
             </LinearLayout>
