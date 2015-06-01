@@ -14,15 +14,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="true">
+
             <LinearLayout
-                android:id="@+id/displayEmailLayout"
+                android:id="@+id/loginLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="25dp"
-                android:weightSum="10">
+                android:layout_marginTop="15dp"
+                android:weightSum="10" >
 
                 <TextView
                     android:layout_width="0dp"
@@ -34,13 +35,56 @@
                     android:layout_gravity="center_vertical"
                     android:singleLine="true" />
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:layout_marginLeft="5dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/fbLoginIcon"
+                        android:src="@drawable/ic_fb" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/mbLoginIcon"
+                        android:src="@drawable/ic_mb" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/displayEmailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:weightSum="10"
+                android:layout_below="@+id/loginLayout">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="@string/edit_user_info_email"
+                    android:textColor="@color/dark_gray_3"
+                    android:layout_weight="3"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="true" />
+
                 <TextView
                     android:id="@+id/displayEmailText"
                     android:background="@drawable/edit_text_round"
                     android:layout_marginLeft="5dp"
                     android:textSize="16dp"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_weight="7"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical" />
@@ -74,7 +118,7 @@
                     android:layout_marginLeft="5dp"
                     android:textSize="16dp"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_weight="7"
                     android:layout_gravity="center_vertical"
                     android:hint="暱稱"
@@ -90,7 +134,7 @@
                 android:layout_below="@+id/displaynameLayout"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/displaynameNoteLayout">
 
                 <TextView
@@ -123,7 +167,7 @@
                 android:layout_marginRight="25dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/aboutmeText"
@@ -140,17 +184,18 @@
                     android:background="@drawable/edit_text_round"
                     android:textSize="16dp"
                     android:layout_width="0dp"
-                    android:layout_height="80dp"
+                    android:layout_height="65dp"
                     android:layout_toRightOf="@+id/aboutmeText"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="7"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:gravity="top" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/nameLayout"
                 android:layout_below="@+id/aboutmeLayout"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -176,7 +221,7 @@
                     android:hint="@string/signup_lastname_hint"
                     android:textSize="16dp"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/edit_text_round"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp"
@@ -188,7 +233,7 @@
                     android:layout_marginLeft="5dp"
                     android:textSize="16dp"
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/edit_text_round"
                     android:singleLine="true" />
             </LinearLayout>
@@ -201,7 +246,7 @@
                 android:id="@+id/locationLayout"
                 android:layout_below="@+id/nameLayout"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="25dp"
                 android:weightSum="10">
 
@@ -243,7 +288,7 @@
                 android:layout_below="@+id/locationLayout"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/locationNoteLayout" >
 
                 <TextView

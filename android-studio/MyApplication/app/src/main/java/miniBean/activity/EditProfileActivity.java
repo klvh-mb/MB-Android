@@ -33,6 +33,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
 
     private Spinner locationSpinner;
     private Button finishButton;
+    private ImageView fbLoginIcon, mbLoginIcon;
     private EditText displayName,aboutmeEdit;
     private TextView displayEmailText;
     private EditText lastNameEdit,firstNameEdit;
@@ -63,6 +64,9 @@ public class EditProfileActivity extends TrackedFragmentActivity {
 
         TextView titleText = (TextView) findViewById(R.id.title);
         titleText.setText(getString(R.string.edit_user_info));
+
+        fbLoginIcon = (ImageView) findViewById(R.id.fbLoginIcon);
+        mbLoginIcon = (ImageView) findViewById(R.id.mbLoginIcon);
 
         lastNameEdit = (EditText) findViewById(R.id.lastNameEditText);
         firstNameEdit = (EditText) findViewById(R.id.firstNameEditText);
@@ -152,10 +156,15 @@ public class EditProfileActivity extends TrackedFragmentActivity {
 
     private void getUserInfo() {
         UserVM user = UserInfoCache.getUser();
+        fbLoginIcon.setVisibility(user.isFbLogin()? View.VISIBLE : View.GONE);
+        mbLoginIcon.setVisibility(user.isFbLogin()? View.GONE : View.VISIBLE);
         displayEmailText.setText(user.getEmail());
         displayName.setText(user.getDisplayName());
+        aboutmeEdit.setText(user.getAboutMe());
         firstNameEdit.setText(user.getFirstName());
         lastNameEdit.setText(user.getLastName());
+
+        //(new ActivityUtil(this)).hideInputMethodWindow(this.finishButton);
     }
 
     private void setUserProfileData(UserProfileDataVM userProfileDataVM){

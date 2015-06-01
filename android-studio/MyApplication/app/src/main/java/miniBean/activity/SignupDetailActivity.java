@@ -228,9 +228,7 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
     }
 
     private void submitDetails() {
-        String displayname = "";
-
-        displayname = displayName.getText().toString();
+        final String displayname = displayName.getText().toString().trim();
 
         if(parentClicked) {
             parenttype = getParentType(parent);
@@ -278,7 +276,10 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
                                     !StringUtils.isEmpty(errorMsg)) {
                                 ActivityUtil.alert(SignupDetailActivity.this, errorMsg);
                             } else {
-                                ActivityUtil.alert(SignupDetailActivity.this, getString(R.string.signup_details_error_info));
+                                //ActivityUtil.alert(SignupDetailActivity.this, getString(R.string.signup_details_error_info));
+                                ActivityUtil.alert(SignupDetailActivity.this,
+                                        "\""+displayname+"\" "+getString(R.string.signup_details_error_displayname_already_exists));
+
                             }
                             error.printStackTrace();
                         }

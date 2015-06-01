@@ -47,7 +47,7 @@
     <string name="signup_details_greeting">您好!</string>
     <string name="signup_details_greeting_note">請給我們一分鐘來完成登記，您所提供的資料是以便我們能把您加入到最相關的社群</string>
     <string name="signup_details_displayname_title">顯示名稱 : </string>
-    <string name="signup_details_displayname_note">註: 其他用戶只會看到您的顯示名稱，請選用一個您喜愛的暱稱。您之前填寫的姓名和電郵絶對不會對外顯示。</string>
+    <string name="signup_details_displayname_note">註: 其他用戶只會看到您的顯示名稱，請選用一個您喜愛的暱稱。您的姓名和電郵絶對不會對外顯示。</string>
     <string name="signup_details_location_title">您的地區 : </string>
     <string name="signup_details_location_note">註: 小萌豆會按您的地區推介資訊給您</string>
     <string name="signup_details_location">-地區-</string>
@@ -65,6 +65,7 @@
     <string name="signup_details_text_birthday">生日 : </string>
     <string name="signup_details_complete">完成! 立刻進入</string>
     <string name="signup_details_error_info">請檢查已輸入資料。再重試</string>
+    <string name="signup_details_error_displayname_already_exists">已被選用。請選擇另一個顯示名稱重試</string>
     <string name="signup_details_error_displayname_not_entered">請填寫顯示名稱</string>
     <string name="signup_details_error_location_not_entered">請選擇地區</string>
     <string name="signup_details_error_status_not_entered">請選擇您現在是</string>
@@ -145,6 +146,7 @@
     <string name="user_profile_actionbar_title">主頁</string>
     <string name="edit_user_info">更改資料</string>
     <string name="edit_user_info_login_method">登入方式 : </string>
+    <string name="edit_user_info_email">電郵 : </string>
     <string name="edit_user_info_aboutme">個人簡介 : </string>
     <string name="edit_user_info_name">姓名 : </string>
     <string name="edit_user_info_save">儲存資料</string>
