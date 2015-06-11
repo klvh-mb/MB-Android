@@ -8,10 +8,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
-        android:layout_centerInParent="true"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/progress_spinner"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="255dp" />
 
     <ImageView
         android:id="@+id/LoginScreen"
@@ -74,7 +76,6 @@
                     android:singleLine="true"
                     android:textSize="20dp"
                     android:background="@color/white"
-                    android:enabled="true"
                     android:alpha="0.7"
                     android:elevation="-5dp"
                     android:autoText="false"
@@ -108,7 +109,6 @@
                     android:singleLine="true"
                     android:password="true"
                     android:focusable="true"
-                    android:enabled="true"
                     android:editable="true"
                     android:textSize="20dp"
                     android:background="@color/white"
@@ -130,7 +130,9 @@
                 android:textSize="22dp"
                 android:textColor="@color/dark_gray_3"
                 android:textStyle="bold" />
-         </LinearLayout>
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

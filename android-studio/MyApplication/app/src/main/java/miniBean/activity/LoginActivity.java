@@ -17,18 +17,16 @@ import org.parceler.apache.commons.lang.StringUtils;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.util.ActivityUtil;
-import miniBean.util.AnimationUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class LoginActivity extends AbstractLoginActivity {
 
-    private ProgressBar spinner;
     private EditText username = null;
     private EditText password = null;
-    private TextView login;
-    private ImageView fbLoginButton;
+    private TextView loginButton;
+    private ImageView facebookButton;
     private TextView signup;
     private TextView forgetPassword;
 
@@ -40,16 +38,21 @@ public class LoginActivity extends AbstractLoginActivity {
 
         username = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
-        fbLoginButton = (ImageView) findViewById(R.id.buttonFbLogin);
-        login = (TextView) findViewById(R.id.buttonLogin);
+        facebookButton = (ImageView) findViewById(R.id.buttonFbLogin);
+        loginButton = (TextView) findViewById(R.id.buttonLogin);
         signup = (TextView) findViewById(R.id.signupText);
         forgetPassword = (TextView) findViewById(R.id.forgetPasswordText);
 
-        spinner = (ProgressBar)findViewById(R.id.spinner);
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.spinner);
+        spinner.setVisibility(View.INVISIBLE);
 
-        login.setOnClickListener(new View.OnClickListener() {
+        setSpinner(spinner);
+        setLoginButton(loginButton);
+        setFacebookButton(facebookButton);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                AnimationUtil.show(spinner);
+                showSpinner(true);
 
                 AppController.getApi().login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
@@ -63,7 +66,8 @@ public class LoginActivity extends AbstractLoginActivity {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        AnimationUtil.cancel(spinner);
+                        showSpinner(false);
+                        loginButton.setEnabled(true);
                         if (error.getResponse() != null &&
                                 error.getResponse().getStatus() == 400) {
                             String errorMsg = LoginActivity.this.activityUtil.getResponseBody(error.getResponse());
@@ -91,7 +95,7 @@ public class LoginActivity extends AbstractLoginActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,SignupActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });
@@ -107,10 +111,10 @@ public class LoginActivity extends AbstractLoginActivity {
         /*
          * Login my_community_fragement Click event
 		 * */
-        fbLoginButton.setOnClickListener(new View.OnClickListener() {
+        facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginToFacebook(spinner);
+                loginToFacebook();
             }
         });
     }
@@ -126,8 +130,8 @@ public class LoginActivity extends AbstractLoginActivity {
         AppController.getInstance().saveSessionId(key);
 
         Intent intent = new Intent(this, SplashActivity.class);
-        intent.putExtra("flag","FromLoginActivity");
-        intent.putExtra("key",key);
+        intent.putExtra("flag", "FromLoginActivity");
+        intent.putExtra("key", key);
         startActivity(intent);
         finish();
 
@@ -163,4 +167,3 @@ public class LoginActivity extends AbstractLoginActivity {
         }
     }
 }
-
