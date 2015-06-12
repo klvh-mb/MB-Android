@@ -43,7 +43,10 @@ public class UserInfoCache {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                if (callback != null) {
+                    callback.failure(error);
+                }
+                Log.e(UserInfoCache.class.getSimpleName(), "refresh: failure", error);
             }
         });
     }

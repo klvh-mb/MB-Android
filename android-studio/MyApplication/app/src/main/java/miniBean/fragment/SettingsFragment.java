@@ -16,16 +16,16 @@ import miniBean.app.TrackedFragment;
 
 public class SettingsFragment extends TrackedFragment {
     private static final String TAG = SettingsFragment.class.getName();
-    private RelativeLayout relativeLayout;
+    private RelativeLayout logout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.settings_fragment, container, false);
 
-        relativeLayout = (RelativeLayout) view.findViewById(R.id.logout);
+        logout = (RelativeLayout) view.findViewById(R.id.logout);
 
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // confirm exit

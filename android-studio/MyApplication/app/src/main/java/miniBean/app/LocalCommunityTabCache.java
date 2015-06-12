@@ -153,7 +153,7 @@ public class LocalCommunityTabCache {
 
             @Override
             public void failure(RetrofitError error) {
-
+                Log.e(LocalCommunityTabCache.class.getSimpleName(), "refreshMyCommunities.api.failure", error);
             }
         });
     }
