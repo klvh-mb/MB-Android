@@ -69,7 +69,7 @@ public interface MyApi {
     public void login(@Query("email") String email, @Query("password") String password, Callback<Response> cb);
 
     @POST("/authenticate/mobile/facebook") //your facebook login function in your api
-    public void loginByFacebbok(@Query("access_token") String access_token, Callback<Response> cb);
+    public void loginByFacebook(@Query("access_token") String access_token, Callback<Response> cb);
 
     @GET("/init-new-user")
     public void initNewUser(@Query("key") String key, Callback<UserVM> cb);

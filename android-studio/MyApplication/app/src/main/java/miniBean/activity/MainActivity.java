@@ -123,22 +123,22 @@ public class MainActivity extends TrackedFragmentActivity {
             fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 
-        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm_sel);
+        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_comm_sel);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         community.setCompoundDrawables(icon, null, null, null);
         community.setTextColor(getResources().getColor(R.color.sharp_pink));
         commClicked = true;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.tag);
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_tag);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         schools.setCompoundDrawables(icon, null, null, null);
-        schools.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        schools.setTextColor(getResources().getColor(R.color.dark_gray));
         schoolsClicked = false;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.profile);
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_profile);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         profile.setCompoundDrawables(icon, null, null, null);
-        profile.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        profile.setTextColor(getResources().getColor(R.color.dark_gray));
         profileClicked = false;
 
         setUnreadNotificationsCount();
@@ -153,22 +153,22 @@ public class MainActivity extends TrackedFragmentActivity {
             fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 
-        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);
+        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_comm);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         community.setCompoundDrawables(icon, null, null, null);
-        community.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        community.setTextColor(getResources().getColor(R.color.dark_gray));
         commClicked = false;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.tag_sel);
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_tag_sel);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         schools.setCompoundDrawables(icon, null, null, null);
         schools.setTextColor(getResources().getColor(R.color.sharp_pink));
         schoolsClicked = true;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.profile);
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_profile);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         profile.setCompoundDrawables(icon, null, null, null);
-        profile.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        profile.setTextColor(getResources().getColor(R.color.dark_gray));
         profileClicked = false;
 
         setUnreadNotificationsCount();
@@ -184,19 +184,19 @@ public class MainActivity extends TrackedFragmentActivity {
             notificationCount.setVisibility(View.INVISIBLE);
         }
 
-        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.comm);
+        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_comm);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         community.setCompoundDrawables(icon, null, null, null);
-        community.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        community.setTextColor(getResources().getColor(R.color.dark_gray));
         commClicked = false;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.tag);
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_tag);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         schools.setCompoundDrawables(icon, null, null, null);
-        schools.setTextColor(getResources().getColor(R.color.dark_gray_3));
+        schools.setTextColor(getResources().getColor(R.color.dark_gray));
         schoolsClicked = false;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.profile_sel);
+        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_profile_sel);
         icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
         profile.setCompoundDrawables(icon, null, null, null);
         profile.setTextColor(getResources().getColor(R.color.sharp_pink));

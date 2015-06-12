@@ -136,7 +136,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
         if (access_token != null) {
             facebook.setAccessToken(access_token);
-            doLoginUsingAccessToken(access_token, spinner);
+            doLoginUsingAccessToken(access_token);
             //fbLoginButton.setVisibility(View.INVISIBLE);
         }
 
@@ -157,7 +157,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
                         @Override
                         public void onComplete(Bundle values) {
                             Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onComplete: fb doLoginUsingAccessToken");
-                            doLoginUsingAccessToken(facebook.getAccessToken(), spinner);
+                            doLoginUsingAccessToken(facebook.getAccessToken());
                         }
 
                         @Override
@@ -189,11 +189,11 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
         }
     }
 
-    protected void doLoginUsingAccessToken(String access_token, final ProgressBar spinner) {
+    protected void doLoginUsingAccessToken(String access_token) {
         showSpinner(true);
 
         Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken: access_token - " + access_token);
-        AppController.getApi().loginByFacebbok(access_token, new Callback<Response>() {
+        AppController.getApi().loginByFacebook(access_token, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 showSpinner(false);
@@ -212,7 +212,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
                 ActivityUtil.alert(AbstractLoginActivity.this,
                         getString(R.string.login_error_title),
                         getString(R.string.login_error_message));
-                error.printStackTrace();
+                Log.e(AbstractLoginActivity.class.getSimpleName(), "doLoginUsingAccessToken: failure", error);
             }
         });
     }
