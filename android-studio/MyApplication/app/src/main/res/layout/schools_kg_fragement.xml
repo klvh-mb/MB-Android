@@ -61,8 +61,7 @@
                 android:layout_toRightOf="@+id/buttonListing"
                 android:layout_marginRight="2dp"
                 android:textSize="15dp"
-                android:layout_marginLeft="2dp"
-                android:visibility="gone" />
+                android:layout_marginLeft="2dp" />
             <Button
                 android:id="@+id/buttonBookmark"
                 android:layout_width="75dp"

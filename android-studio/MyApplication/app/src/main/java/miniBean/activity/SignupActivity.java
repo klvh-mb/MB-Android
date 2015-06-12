@@ -36,7 +36,6 @@ public class SignupActivity extends AbstractLoginActivity {
     private PopupWindow signupSuccessPopup;
     private ImageView facebookButton;
     private TextView errorMessage;
-    private ProgressBar spinner;
     private CheckBox termsCheckbox, privacyCheckbox;
 
     @Override
@@ -59,8 +58,13 @@ public class SignupActivity extends AbstractLoginActivity {
         errorMessage = (TextView) findViewById(R.id.errorMessage);
         termsCheckbox = (CheckBox) findViewById(R.id.termsCheckbox);
         privacyCheckbox = (CheckBox) findViewById(R.id.privacyCheckbox);
-        spinner = (ProgressBar) findViewById(R.id.spinner);
+
+        ProgressBar spinner = (ProgressBar) findViewById(R.id.spinner);
         spinner.setVisibility(View.INVISIBLE);
+
+        setSpinner(spinner);
+        setLoginButton(signupButton);
+        setFacebookButton(facebookButton);
 
         termsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -96,7 +100,7 @@ public class SignupActivity extends AbstractLoginActivity {
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginToFacebook(spinner);
+                loginToFacebook();
             }
         });
 

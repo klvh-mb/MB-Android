@@ -27,55 +27,57 @@
         <View
             android:id="@+id/viewBar"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_below="@+id/button_component"
-            android:background="@color/light_gray_2"></View>
+            android:background="@color/light_gray"></View>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="42dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:transitionGroup="false">
 
                 <Button
                     android:id="@+id/comms"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".33"
                     android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/comm"
+                    android:drawableLeft="@drawable/mn_comm"
                     android:text="@string/tabset_communities"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="25dp"
-                    android:textSize="16dp" />
+                    android:textSize="15dp"
+                    android:paddingLeft="35dp"
+                    android:paddingRight="25dp" />
 
                 <Button
                     android:id="@+id/schools"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".34"
                     android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/tag"
+                    android:drawableLeft="@drawable/mn_tag"
                     android:text="@string/tabset_schools"
+                    android:textSize="15dp"
                     android:paddingLeft="25dp"
-                    android:paddingRight="25dp"
-                    android:textSize="16dp" />
+                    android:paddingRight="20dp" />
 
                 <Button
                     android:id="@+id/profiles"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".33"
                     android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/profile"
+                    android:drawableLeft="@drawable/mn_profile"
                     android:text="@string/tabset_profile"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="25dp"
-                    android:textSize="16dp" />
+                    android:textSize="15dp"
+                    android:paddingLeft="35dp"
+                    android:paddingRight="35dp" />
             </LinearLayout>
 
             <TextView
@@ -88,10 +90,10 @@
                 android:textColor="#FFF"
                 android:background="@drawable/badge_circle"
                 android:layout_alignTop="@+id/setting"
-                android:gravity="center"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="20dp"
+                android:gravity="center" />
         </FrameLayout>
     </LinearLayout>
 </RelativeLayout>

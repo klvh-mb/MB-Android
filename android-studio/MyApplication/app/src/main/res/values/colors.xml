@@ -9,7 +9,7 @@
     <color name="dark_gray">#555</color>
     <color name="dark_gray_2">#222</color>
     <color name="dark_gray_3">#111</color>
-    <color name="sharp_pink">#FF6795</color>
+    <color name="sharp_pink">#FF8CA3</color>
     <color name="purple">#AF8AE7</color>
     <color name="light_purple">#ECDAFF</color>
     <color name="light_purple_2">#FBE7FF</color>
@@ -20,12 +20,12 @@
     <color name="light_orange">#fff1dc</color>
     <color name="red">#FF0000</color>
 
-    <color name="main_menubar_bg">#FCFAF8</color>
+    <color name="main_menubar_bg">#fff</color>
     <color name="signup_yellow">#FFBE42</color>
     <color name="signup_blue">#8379F1</color>
     <color name="input_text">#111</color>
-    <color name="view_bg">#eee</color>
-    <color name="feed_bg">#d3d6db</color>
+    <color name="view_bg">#FCFAF8</color>
+    <color name="feed_bg">#FCFAF8</color>
     <color name="feed_item_bg">#ffffff</color>
     <color name="feed_item_border">#c2c3c8</color>
     <color name="like_blue">#3334FE</color>
@@ -43,7 +43,7 @@
     <color name="schools_info_box_bg">#FEFFF0</color>
     <color name="schools_info_box_border">#D1D897</color>
 
-    <color name="pn_view_bg">#eee</color>
+    <color name="pn_view_bg">#FCFAF8</color>
     <color name="pn_actionbar_bg">#67BB67</color>
     <color name="pn_box_border">#7BC77E</color>
     <color name="pn_box_shadow">#8FB389</color>
@@ -53,7 +53,7 @@
     <color name="pn_bg">#EBFDEA</color>
     <color name="pn_bg_light">#F3FDF2</color>
 
-    <color name="kg_view_bg">#eee</color>
+    <color name="kg_view_bg">#FCFAF8</color>
     <color name="kg_actionbar_bg">#BB5C5D</color>
     <color name="kg_box_border">#C77B7B</color>
     <color name="kg_box_shadow">#B38989</color>

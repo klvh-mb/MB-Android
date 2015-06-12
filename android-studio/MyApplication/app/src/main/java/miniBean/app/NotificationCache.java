@@ -39,7 +39,10 @@ public class NotificationCache {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                if (callback != null) {
+                    callback.failure(error);
+                }
+                Log.e(NotificationCache.class.getSimpleName(), "refresh: failure", error);
             }
         });
     }
