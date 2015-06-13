@@ -47,7 +47,7 @@
                 android:id="@+id/timepic"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/time"
+                android:src="@drawable/ic_time"
                 android:layout_gravity="center_vertical" />
 
             <TextView

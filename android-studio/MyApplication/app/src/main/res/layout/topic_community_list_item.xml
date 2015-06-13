@@ -75,7 +75,7 @@
                 android:layout_height="18dp"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/noPost"
-                android:src="@drawable/profile_community" />
+                android:src="@drawable/ic_member" />
 
             <TextView
                 android:id="@+id/noMember"

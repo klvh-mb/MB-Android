@@ -116,10 +116,10 @@
 
             <ImageView
                 android:id="@+id/userpic"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/profile"
+                android:src="@drawable/ic_user"
                 android:layout_gravity="center_vertical" />
 
             <TextView
@@ -129,7 +129,8 @@
                 android:layout_toRightOf="@id/userpic"
                 android:textSize="12dp"
                 android:layout_gravity="center_vertical"
-                android:textColor="@color/light_gray" />
+                android:textColor="@color/light_gray"
+                android:layout_marginLeft="3dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -140,9 +141,9 @@
 
             <ImageView
                 android:id="@+id/timepic"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/time"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_time"
                 android:layout_gravity="center_vertical" />
 
             <TextView
@@ -164,10 +165,11 @@
 
             <ImageView
                 android:id="@+id/commentpic"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:src="@drawable/comment"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp" />
 
             <TextView
                 android:id="@+id/numComments"
@@ -187,8 +189,8 @@
 
             <ImageView
                 android:id="@+id/numViewsImage"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
                 android:src="@drawable/view"
                 android:layout_gravity="center_vertical" />
 
