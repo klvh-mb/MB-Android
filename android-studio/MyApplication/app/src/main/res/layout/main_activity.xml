@@ -33,51 +33,95 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="42dp">
+            android:layout_height="45dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:orientation="horizontal"
-                android:weightSum="1"
+                android:weightSum="100"
                 android:transitionGroup="false">
 
-                <Button
-                    android:id="@+id/comms"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".33"
+                    android:id="@+id/commsLayout"
                     android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/mn_comm"
-                    android:text="@string/tabset_communities"
-                    android:textSize="15dp"
-                    android:paddingLeft="35dp"
-                    android:paddingRight="25dp" />
+                    android:layout_weight="33"
+                    android:gravity="center">
 
-                <Button
-                    android:id="@+id/schools"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".34"
-                    android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/mn_tag"
-                    android:text="@string/tabset_schools"
-                    android:textSize="15dp"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="20dp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/commsImage"
+                        android:src="@drawable/mn_comm"
+                        android:layout_gravity="center" />
 
-                <Button
-                    android:id="@+id/profiles"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tabset_communities"
+                        android:id="@+id/commsText"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".33"
+                    android:id="@+id/schoolsLayout"
                     android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/mn_profile"
-                    android:text="@string/tabset_profile"
-                    android:textSize="15dp"
-                    android:paddingLeft="35dp"
-                    android:paddingRight="35dp" />
+                    android:layout_weight="34"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/schoolsImage"
+                        android:src="@drawable/mn_tag"
+                        android:layout_gravity="center" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tabset_schools"
+                        android:id="@+id/schoolsText"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/profileLayout"
+                    android:background="@color/main_menubar_bg"
+                    android:layout_weight="33"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/profileImage"
+                        android:src="@drawable/mn_profile"
+                        android:layout_gravity="center" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tabset_profile"
+                        android:id="@+id/profileText"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <TextView

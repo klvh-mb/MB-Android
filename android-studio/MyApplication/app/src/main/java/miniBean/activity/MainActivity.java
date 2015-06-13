@@ -3,14 +3,13 @@ package miniBean.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,10 +34,19 @@ import retrofit.client.Response;
 
 public class MainActivity extends TrackedFragmentActivity {
 
-    private Button community, profile, schools;
-    private boolean commClicked = false, schoolsClicked = false, profileClicked = false;
+    private LinearLayout commsLayout;
+    private ImageView commsImage;
+    private TextView commsText;
 
-    private int realTabIconWidth, realTabIconHeight;
+    private LinearLayout schoolsLayout;
+    private ImageView schoolsImage;
+    private TextView schoolsText;
+
+    private LinearLayout profileLayout;
+    private ImageView profileImage;
+    private TextView profileText;
+
+    private boolean commsClicked = false, schoolsClicked = false, profileClicked = false;
 
     private boolean topicCommunityTabLoaded = false;
     private boolean yearCommunityTabLoaded = false;
@@ -56,18 +64,22 @@ public class MainActivity extends TrackedFragmentActivity {
 
         getActionBar().hide();
 
-        community = (Button) findViewById(R.id.comms);
-        profile = (Button) findViewById(R.id.profiles);
-        schools = (Button) findViewById(R.id.schools);
+        commsLayout = (LinearLayout) findViewById(R.id.commsLayout);
+        commsImage = (ImageView) findViewById(R.id.commsImage);
+        commsText = (TextView) findViewById(R.id.commsText);
+
+        schoolsLayout = (LinearLayout) findViewById(R.id.schoolsLayout);
+        schoolsImage = (ImageView) findViewById(R.id.schoolsImage);
+        schoolsText = (TextView) findViewById(R.id.schoolsText);
+
+        profileLayout = (LinearLayout) findViewById(R.id.profileLayout);
+        profileImage = (ImageView) findViewById(R.id.profileImage);
+        profileText = (TextView) findViewById(R.id.profileText);
         notificationCount = (TextView) findViewById(R.id.notificationCount);
+
         spinner = (ProgressBar) findViewById(R.id.spinner);
 
-        Rect rect = community.getCompoundDrawables()[0].getBounds();
-        realTabIconWidth = rect.width();
-        realTabIconHeight = rect.height();
-        Log.d(this.getClass().getSimpleName(), "onCreate: realDimension - " + rect.width() + ":" + rect.height());
-
-        community.setOnClickListener(new View.OnClickListener() {
+        commsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(MainActivity.this.getClass().getSimpleName(), "onClick: Community tab clicked");
@@ -75,7 +87,7 @@ public class MainActivity extends TrackedFragmentActivity {
             }
         });
 
-        schools.setOnClickListener(new View.OnClickListener() {
+        schoolsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(MainActivity.this.getClass().getSimpleName(), "onClick: Schools tab clicked");
@@ -83,7 +95,7 @@ public class MainActivity extends TrackedFragmentActivity {
             }
         });
 
-        profile.setOnClickListener(new View.OnClickListener() {
+        profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(MainActivity.this.getClass().getSimpleName(), "onClick: Profile tab clicked");
@@ -117,28 +129,19 @@ public class MainActivity extends TrackedFragmentActivity {
     private void pressCommunityTab() {
         getActionBar().hide();
 
-        if (!commClicked) {
+        if (!commsClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             selectedFragment = new CommunityMainFragment();
             fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 
-        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_comm_sel);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        community.setCompoundDrawables(icon, null, null, null);
-        community.setTextColor(getResources().getColor(R.color.sharp_pink));
-        commClicked = true;
+        setMenuButton(commsImage, commsText, R.drawable.mn_comm_sel, R.color.sharp_pink);
+        commsClicked = true;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_tag);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        schools.setCompoundDrawables(icon, null, null, null);
-        schools.setTextColor(getResources().getColor(R.color.dark_gray));
+        setMenuButton(schoolsImage, schoolsText, R.drawable.mn_tag, R.color.dark_gray);
         schoolsClicked = false;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_profile);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        profile.setCompoundDrawables(icon, null, null, null);
-        profile.setTextColor(getResources().getColor(R.color.dark_gray));
+        setMenuButton(profileImage, profileText, R.drawable.mn_profile, R.color.dark_gray);
         profileClicked = false;
 
         setUnreadNotificationsCount();
@@ -153,22 +156,13 @@ public class MainActivity extends TrackedFragmentActivity {
             fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 
-        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_comm);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        community.setCompoundDrawables(icon, null, null, null);
-        community.setTextColor(getResources().getColor(R.color.dark_gray));
-        commClicked = false;
+        setMenuButton(commsImage, commsText, R.drawable.mn_comm, R.color.dark_gray);
+        commsClicked = false;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_tag_sel);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        schools.setCompoundDrawables(icon, null, null, null);
-        schools.setTextColor(getResources().getColor(R.color.sharp_pink));
+        setMenuButton(schoolsImage, schoolsText, R.drawable.mn_tag_sel, R.color.sharp_pink);
         schoolsClicked = true;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_profile);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        profile.setCompoundDrawables(icon, null, null, null);
-        profile.setTextColor(getResources().getColor(R.color.dark_gray));
+        setMenuButton(profileImage, profileText, R.drawable.mn_profile, R.color.dark_gray);
         profileClicked = false;
 
         setUnreadNotificationsCount();
@@ -184,25 +178,21 @@ public class MainActivity extends TrackedFragmentActivity {
             notificationCount.setVisibility(View.INVISIBLE);
         }
 
-        Drawable icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_comm);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        community.setCompoundDrawables(icon, null, null, null);
-        community.setTextColor(getResources().getColor(R.color.dark_gray));
-        commClicked = false;
+        setMenuButton(commsImage, commsText, R.drawable.mn_comm, R.color.dark_gray);
+        commsClicked = false;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_tag);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        schools.setCompoundDrawables(icon, null, null, null);
-        schools.setTextColor(getResources().getColor(R.color.dark_gray));
+        setMenuButton(schoolsImage, schoolsText, R.drawable.mn_tag, R.color.dark_gray);
         schoolsClicked = false;
 
-        icon = getApplicationContext().getResources().getDrawable(R.drawable.mn_profile_sel);
-        icon.setBounds(0, 0, realTabIconWidth, realTabIconHeight);
-        profile.setCompoundDrawables(icon, null, null, null);
-        profile.setTextColor(getResources().getColor(R.color.sharp_pink));
+        setMenuButton(profileImage, profileText, R.drawable.mn_profile_sel, R.color.sharp_pink);
         profileClicked = true;
 
         setUnreadNotificationsCount();
+    }
+
+    private void setMenuButton(ImageView imageView, TextView textView, int image, int textColor) {
+        imageView.setImageDrawable(this.getResources().getDrawable(image));
+        textView.setTextColor(this.getResources().getColor(textColor));
     }
 
     @Override

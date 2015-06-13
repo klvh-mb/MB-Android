@@ -9,7 +9,7 @@
     <color name="dark_gray">#555</color>
     <color name="dark_gray_2">#222</color>
     <color name="dark_gray_3">#111</color>
-    <color name="sharp_pink">#FF8CA3</color>
+    <color name="sharp_pink">#FF76A4</color>
     <color name="purple">#AF8AE7</color>
     <color name="light_purple">#ECDAFF</color>
     <color name="light_purple_2">#FBE7FF</color>
@@ -20,7 +20,7 @@
     <color name="light_orange">#fff1dc</color>
     <color name="red">#FF0000</color>
 
-    <color name="main_menubar_bg">#fff</color>
+    <color name="main_menubar_bg">#FCFAF8</color>
     <color name="signup_yellow">#FFBE42</color>
     <color name="signup_blue">#8379F1</color>
     <color name="input_text">#111</color>
