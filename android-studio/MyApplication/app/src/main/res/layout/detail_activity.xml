@@ -192,7 +192,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="70"
                     android:background="@drawable/edit_text"
-                    android:drawableLeft="@drawable/mn_comm"
+                    android:drawableLeft="@drawable/ic_reply"
                     android:layout_marginRight="5dp"
                     android:paddingLeft="5dp"
                     android:text="@string/post_comment_bar_hint"

@@ -138,10 +138,10 @@ public class MainActivity extends TrackedFragmentActivity {
         setMenuButton(commsImage, commsText, R.drawable.mn_comm_sel, R.color.sharp_pink);
         commsClicked = true;
 
-        setMenuButton(schoolsImage, schoolsText, R.drawable.mn_tag, R.color.dark_gray);
+        setMenuButton(schoolsImage, schoolsText, R.drawable.mn_tag, R.color.dark_gray_2);
         schoolsClicked = false;
 
-        setMenuButton(profileImage, profileText, R.drawable.mn_profile, R.color.dark_gray);
+        setMenuButton(profileImage, profileText, R.drawable.mn_profile, R.color.dark_gray_2);
         profileClicked = false;
 
         setUnreadNotificationsCount();
@@ -156,13 +156,13 @@ public class MainActivity extends TrackedFragmentActivity {
             fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
         }
 
-        setMenuButton(commsImage, commsText, R.drawable.mn_comm, R.color.dark_gray);
+        setMenuButton(commsImage, commsText, R.drawable.mn_comm, R.color.dark_gray_2);
         commsClicked = false;
 
         setMenuButton(schoolsImage, schoolsText, R.drawable.mn_tag_sel, R.color.sharp_pink);
         schoolsClicked = true;
 
-        setMenuButton(profileImage, profileText, R.drawable.mn_profile, R.color.dark_gray);
+        setMenuButton(profileImage, profileText, R.drawable.mn_profile, R.color.dark_gray_2);
         profileClicked = false;
 
         setUnreadNotificationsCount();
@@ -178,10 +178,10 @@ public class MainActivity extends TrackedFragmentActivity {
             notificationCount.setVisibility(View.INVISIBLE);
         }
 
-        setMenuButton(commsImage, commsText, R.drawable.mn_comm, R.color.dark_gray);
+        setMenuButton(commsImage, commsText, R.drawable.mn_comm, R.color.dark_gray_2);
         commsClicked = false;
 
-        setMenuButton(schoolsImage, schoolsText, R.drawable.mn_tag, R.color.dark_gray);
+        setMenuButton(schoolsImage, schoolsText, R.drawable.mn_tag, R.color.dark_gray_2);
         schoolsClicked = false;
 
         setMenuButton(profileImage, profileText, R.drawable.mn_profile_sel, R.color.sharp_pink);

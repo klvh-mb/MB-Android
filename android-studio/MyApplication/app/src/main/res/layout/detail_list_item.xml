@@ -50,8 +50,8 @@
 
                 <ImageView
                     android:id="@+id/timeImg"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:src="@drawable/ic_time"
                     android:layout_centerVertical="true" />
 

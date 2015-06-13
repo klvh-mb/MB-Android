@@ -57,21 +57,22 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
             android:gravity="center_vertical">
 
             <LinearLayout
                 android:id="@+id/noMemberLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/noPostLayout">
+                android:layout_toRightOf="@+id/noPostLayout"
+                android:layout_gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/pro_image"
-                    android:layout_width="15dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_member" />
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_member"
+                    android:layout_gravity="center_vertical" />
 
                 <TextView
                     android:id="@+id/noMemberComm"
@@ -81,7 +82,8 @@
                     android:layout_toRightOf="@+id/pro_image"
                     android:textColor="#AAAAAA"
                     android:textSize="14dp"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    android:text="-" />
             </LinearLayout>
         </LinearLayout>
 
@@ -97,7 +99,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="15dp"
                 android:src="@drawable/ic_add"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
