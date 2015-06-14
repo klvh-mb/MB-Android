@@ -37,6 +37,11 @@
     <color name="actionbar_bg_light">#CEA8E9</color>
     <color name="actionbar_selected_text">#BD94F9</color>
 
+    <color name="game_view_bg">#F2FFFC</color>
+    <color name="game_box_border">#7ACFF2</color>
+    <color name="game_title_border">#2EAB66</color>
+    <color name="game_title_text">#556fb5</color>
+
     <color name="schools_district">#CD8400</color>
     <color name="schools_title">#1A20DC</color>
     <color name="schools_info_text">#5F1B1B</color>

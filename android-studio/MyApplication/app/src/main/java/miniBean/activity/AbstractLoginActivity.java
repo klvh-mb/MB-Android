@@ -166,7 +166,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
                             ActivityUtil.alert(AbstractLoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
-                            error.printStackTrace();
+                            Log.e(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onError", error);
                         }
 
                         @Override
@@ -175,13 +175,13 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
                             ActivityUtil.alert(AbstractLoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
-                            fberror.printStackTrace();
+                            Log.e(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onFacebookError", fberror);
                         }
 
                         @Override
                         public void onCancel() {
                             showSpinner(false);
-                            Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onCancel: fb login cancelled");
+                            Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onCancel");
                         }
 
                     });

@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainFrameLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:foreground="#01000000">
+    android:layout_height="match_parent">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -120,9 +119,8 @@
         android:id="@+id/postActions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:weightSum="1"
-        android:layout_below="@+id/postImages">
+        android:layout_below="@+id/postImages"
+        android:background="@color/white">
 
         <RelativeLayout
             android:layout_width="wrap_content"
