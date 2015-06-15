@@ -22,9 +22,9 @@ import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class TopicCommunityFragment extends TrackedFragment {
 
-    public ListView listView;
-    public TopicCommunityListAdapter topicAdapter;
-    public List<CommunitiesWidgetChildVM> communities;
+    private ListView listView;
+    private TopicCommunityListAdapter topicAdapter;
+    private List<CommunitiesWidgetChildVM> communities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

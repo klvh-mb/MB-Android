@@ -43,8 +43,12 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
 
     abstract protected void loadNewsfeed(int offset);
 
-    protected void setHeader(int resouceId) {
+    protected void setHeaderResouce(int resouceId) {
         this.headerResouceId = resouceId;
+    }
+
+    protected View getHeaderView() {
+        return this.header;
     }
 
     @Override

@@ -97,7 +97,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
 
         backImage = (ImageView) findViewById(R.id.backImage);
         postAction = (TextView) findViewById(R.id.postAction);
-        communityLayout = (RelativeLayout) findViewById(R.id.communityLayout);
+        communityLayout = (RelativeLayout) findViewById(R.id.commLayout1);
         selectCommunityLayout = (LinearLayout) findViewById(R.id.selectCommunityLayout);
         selectCommunityText = (TextView) findViewById(R.id.selectCommunityText);
         selectCommunityIcon = (ImageView) findViewById(R.id.selectCommunityIcon);

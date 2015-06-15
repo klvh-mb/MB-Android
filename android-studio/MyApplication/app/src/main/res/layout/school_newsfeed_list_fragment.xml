@@ -10,6 +10,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="@drawable/bar1"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="0.8dp" />
 
 </RelativeLayout>
