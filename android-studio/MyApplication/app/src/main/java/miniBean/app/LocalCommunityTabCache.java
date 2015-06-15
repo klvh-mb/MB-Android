@@ -7,6 +7,8 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.fragment.CommunityListFragment;
+import miniBean.fragment.MyCommunityPagerFragment;
+import miniBean.fragment.MyNewsfeedListFragement;
 import miniBean.fragment.TopicCommunityFragment;
 import miniBean.util.DefaultValues;
 import miniBean.viewmodel.CommunitiesParentVM;
@@ -31,6 +33,7 @@ public class LocalCommunityTabCache {
     private static List<CommunityCategoryMapVM> communityCategoryMapList;
 
     // tabs to refresh
+    private static MyNewsfeedListFragement myNewsfeedListFragement;
     private static CommunityListFragment myCommunityFragment;
     private static List<TopicCommunityFragment> topicCommunityFragments;
 
@@ -124,9 +127,14 @@ public class LocalCommunityTabCache {
     //
 
     public static void clear() {
+        myNewsfeedListFragement = null;
         myCommunitiesParentVM = null;
         communityCategoryMapList = new ArrayList<>();
         init();
+    }
+
+    public static void setMyNewsfeedListFragement(MyNewsfeedListFragement fragment) {
+        LocalCommunityTabCache.myNewsfeedListFragement = fragment;
     }
 
     public static void setMyCommunityFragment(CommunityListFragment fragment) {
@@ -166,8 +174,10 @@ public class LocalCommunityTabCache {
     }
 
     private static void notifyChange() {
+        if (myNewsfeedListFragement != null) {
+            myNewsfeedListFragement.notifyChange();
+        }
         if (myCommunityFragment != null) {
-            Log.d(LocalCommunityTabCache.class.getSimpleName(), "notifyChange: refresh CommunityFragment");
             myCommunityFragment.notifyChange(getMyCommunities().communities);
         }
         for (TopicCommunityFragment fragment : topicCommunityFragments) {

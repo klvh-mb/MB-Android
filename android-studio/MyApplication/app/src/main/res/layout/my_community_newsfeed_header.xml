@@ -1,68 +1,115 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/view_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/gameSummary"></RelativeLayout>
+        android:id="@+id/commsPagerTabs">
 
-    <View
-        android:id="@+id/viewBar"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_below="@+id/gameSummary"
-        android:background="@drawable/bar1"></View>
+        <RelativeLayout
 
-    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/commsPager"
-        android:layout_width="match_parent"
-        android:layout_height="135dp"
-        android:layout_below="@+id/viewBar"></android.support.v4.view.ViewPager>
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_round_purple"
+            android:id="@+id/buttonsLayout">
+
+            <Button
+                android:id="@+id/topicCommsButton"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/view_bg"
+                android:text="@string/community_tab_topic"
+                android:textColor="@color/actionbar_selected_text"
+                android:elegantTextHeight="false"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/yearCommsButton"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/actionbar_selected_text"
+                android:text="@string/community_tab_year"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/topicCommsButton"
+                android:layout_marginRight="1dp"
+                android:textSize="15dp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <View
         android:id="@+id/viewBar1"
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
-        android:layout_below="@+id/commsPager"
-        android:background="@drawable/bar1"></View>
+        android:background="@drawable/bar1"
+        android:layout_below="@+id/commsPagerTabs"></View>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/commsPager"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_below="@+id/viewBar1"
-        android:background="@color/view_bg"
-        android:id="@+id/viewSpace"></LinearLayout>
+        android:layout_height="135dp"
+        android:layout_below="@+id/viewBar1"></android.support.v4.view.ViewPager>
 
     <View
         android:id="@+id/viewBar2"
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
-        android:layout_below="@+id/viewSpace"
-        android:background="@drawable/bar1"></View>
+        android:background="@drawable/bar1"
+        android:layout_below="@+id/commsPager"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@+id/viewBar2"
+        android:id="@+id/commsPagerIndicator">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:id="@+id/dots"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true">
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viewBar3"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@drawable/bar1"
+        android:layout_below="@+id/commsPagerIndicator"
+        android:visibility="gone"></View>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/headerLayout"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="25dp"
         android:background="@drawable/schools_info_box"
         android:paddingLeft="15dp"
-        android:paddingTop="5dp"
         android:paddingRight="15dp"
         android:paddingBottom="5dp"
         android:layout_marginBottom="10dp"
-        android:layout_below="@+id/viewBar2">
+        android:layout_below="@+id/viewBar3"
+        android:paddingTop="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/community_newsfeed_header_text_1"
-            android:textSize="14dp"
+            android:textSize="13dp"
             android:textColor="@color/dark_gray_2"
             android:layout_gravity="center_horizontal" />
 
@@ -70,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/community_newsfeed_header_text_2"
-            android:textSize="14dp"
+            android:textSize="13dp"
             android:textColor="@color/dark_gray_2"
             android:layout_gravity="center_horizontal" />
 

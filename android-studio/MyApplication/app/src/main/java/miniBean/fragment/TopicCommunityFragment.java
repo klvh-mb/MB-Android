@@ -43,6 +43,7 @@ public class TopicCommunityFragment extends TrackedFragment {
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
+        /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -59,6 +60,7 @@ public class TopicCommunityFragment extends TrackedFragment {
                 }
             }
         });
+        */
 
         LocalCommunityTabCache.addTopicCommunityFragment(this);
 
@@ -67,7 +69,6 @@ public class TopicCommunityFragment extends TrackedFragment {
 
     public void notifyChange() {
         topicAdapter.notifyDataSetChanged();
-        //progressBarComm.setVisibility(View.GONE);
     }
 
     @Override

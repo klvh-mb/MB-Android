@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import miniBean.R;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragment;
+import miniBean.util.ActivityUtil;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 
 public class CommunityMainFragment extends TrackedFragment {
@@ -38,8 +38,7 @@ public class CommunityMainFragment extends TrackedFragment {
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         mAdapter = new CommunityMainPagerAdapter(getChildFragmentManager());
 
-        final int pageMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+        int pageMargin = ActivityUtil.getRealDimension(2, this.getResources());
         viewPager.setPageMargin(pageMargin);
         viewPager.setAdapter(mAdapter);
         
@@ -47,12 +46,10 @@ public class CommunityMainFragment extends TrackedFragment {
         tabs.setTextColor(getResources().getColor(R.color.dark_gray));
         tabs.setIndicatorColor(getResources().getColor(R.color.actionbar_selected_text));
 
-        final int indicatorHeight = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+        int indicatorHeight = ActivityUtil.getRealDimension(5, this.getResources());
         tabs.setIndicatorHeight(indicatorHeight);
 
-        final int textSize = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        final int textSize = ActivityUtil.getRealDimension(16, this.getResources());
         tabs.setTextSize(textSize);
 
         return view;
@@ -64,13 +61,18 @@ public class CommunityMainFragment extends TrackedFragment {
     }
 }
 
-class CommunityMainPagerAdapter extends FragmentPagerAdapter {
+/**
+ * Obsolete... already replace CommunityMainPagerAdapter with MyCommunityPagerAdapter
+ * Now just placeholder of 1 fragment MyCommunityFragment. Should remove completely later...
+ */
+class CommunityMainPagerAdapter extends FragmentStatePagerAdapter {
 
     private static String[] TITLES;
 
     public CommunityMainPagerAdapter(FragmentManager fm) {
         super(fm);
 
+        /*
         if (TITLES == null && LocalCommunityTabCache.getCommunityCategoryMapList() != null) {
             Log.d(this.getClass().getSimpleName(), "CommunityMainPagerAdapter: TITLES size="+LocalCommunityTabCache.getCommunityCategoryMapList().size());
             TITLES = new String[LocalCommunityTabCache.getCommunityCategoryMapList().size()]; // TODO
@@ -82,21 +84,27 @@ class CommunityMainPagerAdapter extends FragmentPagerAdapter {
             TITLES[index] = mapList.getName();
             index++;
         }
+        */
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return TITLES[position];
+        //return TITLES[position];
+        return "";
     }
 
     @Override
     public int getCount() {
-        return TITLES.length;
+        //return TITLES.length;
+        return 1;
     }
 
     @Override
     public Fragment getItem(int position) {
         Log.d(this.getClass().getSimpleName(), "getItem: item - " + position);
+        MyCommunityFragment fragment = new MyCommunityFragment();
+        return fragment;
+        /*
         switch (position) {
             case 0: {
                 MyCommunityFragment fragment = new MyCommunityFragment();
@@ -109,5 +117,6 @@ class CommunityMainPagerAdapter extends FragmentPagerAdapter {
                 return fragment;
             }
         }
+        */
     }
 }

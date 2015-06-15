@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/communityPic"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:scaleType="fitCenter"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -26,7 +26,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
-            android:textSize="17dp"
+            android:textSize="16dp"
             android:textColor="@color/dark_gray_2" />
 
         <RelativeLayout
@@ -50,8 +50,8 @@
 
                     <ImageView
                         android:id="@+id/memberImg"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_member"
                         android:layout_gravity="center_vertical" />
 
@@ -61,7 +61,7 @@
                         android:layout_height="fill_parent"
                         android:layout_marginLeft="5dp"
                         android:text="-"
-                        android:textSize="14dp"
+                        android:textSize="13dp"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -76,7 +76,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/community_new_topics"
                         android:textColor="#FF6795"
-                        android:textSize="14dp" />
+                        android:textSize="13dp"
+                        android:layout_gravity="center_vertical" />
 
                     <TextView
                         android:id="@+id/numTopicsToday"
@@ -84,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="-"
-                        android:textSize="14dp"
+                        android:textSize="13dp"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
             </LinearLayout>

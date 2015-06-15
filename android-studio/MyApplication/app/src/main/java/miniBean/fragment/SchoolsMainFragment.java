@@ -5,10 +5,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragment;
+import miniBean.util.ActivityUtil;
 
 public class SchoolsMainFragment extends TrackedFragment {
 
@@ -37,8 +37,7 @@ public class SchoolsMainFragment extends TrackedFragment {
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         mAdapter = new SchoolsPagerAdapter(getChildFragmentManager());
 
-        final int pageMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+        int pageMargin = ActivityUtil.getRealDimension(2, this.getResources());
         viewPager.setPageMargin(pageMargin);
         viewPager.setAdapter(mAdapter);
 
@@ -64,12 +63,10 @@ public class SchoolsMainFragment extends TrackedFragment {
             }
         });
 
-        final int indicatorHeight = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+        int indicatorHeight = ActivityUtil.getRealDimension(5, this.getResources());
         tabs.setIndicatorHeight(indicatorHeight);
 
-        final int textSize = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        int textSize = ActivityUtil.getRealDimension(16, this.getResources());
         tabs.setTextSize(textSize);
 
         return view;
@@ -91,7 +88,7 @@ public class SchoolsMainFragment extends TrackedFragment {
     }
 }
 
-class SchoolsPagerAdapter extends FragmentPagerAdapter {
+class SchoolsPagerAdapter extends FragmentStatePagerAdapter {
 
     public static final int PN_PAGE = 0;
     public static final int KG_PAGE = 1;
