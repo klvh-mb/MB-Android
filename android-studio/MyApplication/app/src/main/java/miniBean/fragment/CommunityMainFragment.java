@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,13 +61,18 @@ public class CommunityMainFragment extends TrackedFragment {
     }
 }
 
-class CommunityMainPagerAdapter extends FragmentPagerAdapter {
+/**
+ * Obsolete... already replace CommunityMainPagerAdapter with MyCommunityPagerAdapter
+ * Now just placeholder of 1 fragment MyCommunityFragment. Should remove completely later...
+ */
+class CommunityMainPagerAdapter extends FragmentStatePagerAdapter {
 
     private static String[] TITLES;
 
     public CommunityMainPagerAdapter(FragmentManager fm) {
         super(fm);
 
+        /*
         if (TITLES == null && LocalCommunityTabCache.getCommunityCategoryMapList() != null) {
             Log.d(this.getClass().getSimpleName(), "CommunityMainPagerAdapter: TITLES size="+LocalCommunityTabCache.getCommunityCategoryMapList().size());
             TITLES = new String[LocalCommunityTabCache.getCommunityCategoryMapList().size()]; // TODO
@@ -80,21 +84,27 @@ class CommunityMainPagerAdapter extends FragmentPagerAdapter {
             TITLES[index] = mapList.getName();
             index++;
         }
+        */
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return TITLES[position];
+        //return TITLES[position];
+        return "";
     }
 
     @Override
     public int getCount() {
-        return TITLES.length;
+        //return TITLES.length;
+        return 1;
     }
 
     @Override
     public Fragment getItem(int position) {
         Log.d(this.getClass().getSimpleName(), "getItem: item - " + position);
+        MyCommunityFragment fragment = new MyCommunityFragment();
+        return fragment;
+        /*
         switch (position) {
             case 0: {
                 MyCommunityFragment fragment = new MyCommunityFragment();
@@ -107,5 +117,6 @@ class CommunityMainPagerAdapter extends FragmentPagerAdapter {
                 return fragment;
             }
         }
+        */
     }
 }

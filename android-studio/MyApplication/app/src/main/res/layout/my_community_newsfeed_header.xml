@@ -11,7 +11,7 @@
         <RelativeLayout
 
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:background="@drawable/button_round_purple"
             android:id="@+id/buttonsLayout">
@@ -20,9 +20,9 @@
                 android:id="@+id/topicCommsButton"
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/view_bg"
                 android:text="@string/community_tab_topic"
                 android:textColor="@color/actionbar_selected_text"
@@ -34,13 +34,13 @@
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/actionbar_selected_text"
                 android:text="@string/community_tab_year"
                 android:textColor="@color/white"
                 android:layout_toRightOf="@+id/topicCommsButton"
-                android:layout_marginRight="2dp"
+                android:layout_marginRight="1dp"
                 android:textSize="15dp" />
 
         </RelativeLayout>

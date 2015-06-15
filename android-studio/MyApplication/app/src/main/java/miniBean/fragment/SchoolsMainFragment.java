@@ -5,10 +5,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +88,7 @@ public class SchoolsMainFragment extends TrackedFragment {
     }
 }
 
-class SchoolsPagerAdapter extends FragmentPagerAdapter {
+class SchoolsPagerAdapter extends FragmentStatePagerAdapter {
 
     public static final int PN_PAGE = 0;
     public static final int KG_PAGE = 1;

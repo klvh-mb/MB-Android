@@ -1,10 +1,9 @@
 package miniBean.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +46,10 @@ public class MyNewsfeedListFragement extends NewsfeedListFragement {
         int pageMargin = ActivityUtil.getRealDimension(2, this.getResources());
         viewPager.setPageMargin(pageMargin);
 
+        // init adapter
+        mAdapter = new MyCommunityPagerAdapter(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, getChildFragmentManager());
+        viewPager.setAdapter(mAdapter);
+
         // comms pager buttons
         topicCommsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,13 +90,13 @@ public class MyNewsfeedListFragement extends NewsfeedListFragement {
         topicCommsButton.setBackgroundColor(getResources().getColor(R.color.actionbar_bg_light));
         topicCommsButton.setTextColor(getResources().getColor(R.color.view_bg));
 
-        mAdapter = new MyCommunityPagerAdapter(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, getChildFragmentManager());
-        viewPager.setAdapter(mAdapter);
+        mAdapter.setCommunityTabType(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY);
+        notifyChange();
+
+        viewPager.setCurrentItem(0);
 
         // pager indicator
         addDots(mAdapter.getCount(), dotsLayout, viewPager);
-
-        notifyChange();
     }
 
     private void pressYearCommsButton() {
@@ -102,17 +105,17 @@ public class MyNewsfeedListFragement extends NewsfeedListFragement {
         yearCommsButton.setBackgroundColor(getResources().getColor(R.color.actionbar_bg_light));
         yearCommsButton.setTextColor(getResources().getColor(R.color.view_bg));
 
-        mAdapter = new MyCommunityPagerAdapter(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY, getChildFragmentManager());
-        viewPager.setAdapter(mAdapter);
+        mAdapter.setCommunityTabType(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY);
+        notifyChange();
+
+        viewPager.setCurrentItem(0);
 
         // pager indicator
         addDots(mAdapter.getCount(), dotsLayout, viewPager);
-
-        notifyChange();
     }
 }
 
-class MyCommunityPagerAdapter extends FragmentPagerAdapter {
+class MyCommunityPagerAdapter extends FragmentStatePagerAdapter {
 
     public static final int COMMUNITIES_PER_PAGE = 4;
 
@@ -122,9 +125,13 @@ class MyCommunityPagerAdapter extends FragmentPagerAdapter {
     public MyCommunityPagerAdapter(LocalCommunityTabCache.CommunityTabType tabType, FragmentManager fm) {
         super(fm);
 
+        setCommunityTabType(tabType);
+    }
+
+    public void setCommunityTabType(LocalCommunityTabCache.CommunityTabType tabType) {
         this.tabType = tabType;
-        this.title  = LocalCommunityTabCache.getCommunityCategoryMapByType(tabType).getName();
-        Log.d(this.getClass().getSimpleName(), "create: tabType="+tabType.name()+" title="+title);
+        this.title = LocalCommunityTabCache.getCommunityCategoryMapByType(tabType).getName();
+        Log.d(this.getClass().getSimpleName(), "setCommunityTabType: tabType="+tabType.name()+" title="+title);
     }
 
     @Override
