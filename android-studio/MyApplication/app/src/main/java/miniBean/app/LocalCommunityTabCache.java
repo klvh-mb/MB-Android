@@ -18,7 +18,7 @@ import retrofit.client.Response;
 
 public class LocalCommunityTabCache {
 
-    public static enum CommunityTabType {
+    public enum CommunityTabType {
         MY_COMMUNITY,
         TOPIC_COMMUNITY,
         ZODIAC_YEAR_COMMUNITY
@@ -91,14 +91,17 @@ public class LocalCommunityTabCache {
         return communityCategoryMapList;
     }
 
-    public static void addToCommunityCategoryMapList(CommunityTabType tabType, List<CommunityCategoryMapVM> mapList) {
-        Log.d(LocalCommunityTabCache.class.getSimpleName(), "addToCommunityCategoryMapList: tabType="+tabType.name());
+    public static CommunityCategoryMapVM getCommunityCategoryMapByType(CommunityTabType tabType) {
         if (communityCategoryMapList.size() <= tabType.ordinal()) {
-            Log.d(LocalCommunityTabCache.class.getSimpleName(), "addToCommunityCategoryMapList: tabType not found");
-            return;
+            Log.d(LocalCommunityTabCache.class.getSimpleName(), "getCommunityCategoryMapByType: tabType not found");
+            return null;
         }
 
-        CommunityCategoryMapVM communityCategoryMapVM = communityCategoryMapList.get(tabType.ordinal());
+        return communityCategoryMapList.get(tabType.ordinal());
+    }
+
+    public static void addToCommunityCategoryMapList(CommunityTabType tabType, List<CommunityCategoryMapVM> mapList) {
+        CommunityCategoryMapVM communityCategoryMapVM = getCommunityCategoryMapByType(tabType);
         for (CommunityCategoryMapVM mapVM : mapList) {
             Log.d(LocalCommunityTabCache.class.getSimpleName(), "addToCommunityCategoryMapList: map="+mapVM.getName());
             for (CommunitiesWidgetChildVM commVM : mapVM.communities) {
@@ -109,13 +112,7 @@ public class LocalCommunityTabCache {
     }
 
     public static void addToCommunityCategoryMapList(CommunityTabType tabType, CommunitiesParentVM communitiesParent) {
-        Log.d(LocalCommunityTabCache.class.getSimpleName(), "addToCommunityCategoryMapList: tabType="+tabType.name());
-        if (communityCategoryMapList.size() <= tabType.ordinal()) {
-            Log.d(LocalCommunityTabCache.class.getSimpleName(), "addToCommunityCategoryMapList: tabType not found");
-            return;
-        }
-
-        CommunityCategoryMapVM communityCategoryMapVM = communityCategoryMapList.get(tabType.ordinal());
+        CommunityCategoryMapVM communityCategoryMapVM = getCommunityCategoryMapByType(tabType);
         for (CommunitiesWidgetChildVM commVM : communitiesParent.communities) {
             Log.d(LocalCommunityTabCache.class.getSimpleName(), "addToCommunityCategoryMapList: comm="+commVM.getDn());
             communityCategoryMapVM.communities.add(commVM);
