@@ -3,8 +3,48 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/gameSummary"></RelativeLayout>
+
+    <View
+        android:id="@+id/viewBar"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_below="@+id/gameSummary"
+        android:background="@drawable/bar1"></View>
+
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/commsPager"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:layout_below="@+id/viewBar"></android.support.v4.view.ViewPager>
+
+    <View
+        android:id="@+id/viewBar1"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_below="@+id/commsPager"
+        android:background="@drawable/bar1"></View>
+
     <LinearLayout
-        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_below="@+id/viewBar1"
+        android:background="@color/view_bg"
+        android:id="@+id/viewSpace"></LinearLayout>
+
+    <View
+        android:id="@+id/viewBar2"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_below="@+id/viewSpace"
+        android:background="@drawable/bar1"></View>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/headerLayout"
         android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
@@ -16,7 +56,8 @@
         android:paddingTop="5dp"
         android:paddingRight="15dp"
         android:paddingBottom="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/viewBar2">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

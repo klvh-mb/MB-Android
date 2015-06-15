@@ -30,7 +30,7 @@ public class DistrictCache {
     public static void refresh(final Callback<List<LocationVM>> callback) {
         Log.d(DistrictCache.class.getSimpleName(), "refresh");
 
-        AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(),new Callback<List< LocationVM>>(){
+        AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(), new Callback<List<LocationVM>>() {
             @Override
             public void success(List<LocationVM> vms, Response response) {
                 districts = vms;
@@ -41,8 +41,11 @@ public class DistrictCache {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace();
+            public void failure(RetrofitError error) {
+                if (callback != null) {
+                    callback.failure(error);
+                }
+                Log.e(DistrictCache.class.getSimpleName(), "refresh: failure", error);
             }
         });
     }

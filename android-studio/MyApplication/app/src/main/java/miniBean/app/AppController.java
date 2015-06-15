@@ -32,8 +32,7 @@ import java.security.MessageDigest;
         resToastText = R.string.crash_toast_text)
         */
 @ReportsCrashes(
-        //mailTo = "minibean.hk@gmail.com",
-        mailTo = "keithlei01@gmail.com",
+        mailTo = "minibean.hk@gmail.com",
         mode = ReportingInteractionMode.DIALOG,
         customReportContent = {
                 ReportField.BUILD, ReportField.USER_APP_START_DATE, ReportField.USER_CRASH_DATE,

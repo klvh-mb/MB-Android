@@ -43,8 +43,12 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
 
     abstract protected void loadNewsfeed(int offset);
 
-    protected void setHeader(int resouceId) {
+    protected void setHeaderResouce(int resouceId) {
         this.headerResouceId = resouceId;
+    }
+
+    protected View getHeaderView() {
+        return this.header;
     }
 
     @Override
@@ -125,26 +129,26 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
     }
 
     protected void loadFeedItemsToList(final List<CommunityPostVM> posts) {
-        if (posts == null || posts.size() == 0) {
-            setFooterText(R.string.list_loaded_all);
-        } else {
-            setFooterText(R.string.list_loading);
-        }
-
-        // NOTE: delay infinite scroll by a short interval to make UI looks smooth
         if (feedItems.size() == 0) {
-            Log.d(this.getClass().getSimpleName(), "loadFeedItemsToList: first batch completed");
-            showFooter(false);
+            //Log.d(this.getClass().getSimpleName(), "loadFeedItemsToList: first batch completed");
             feedItems.addAll(posts);
             listAdapter.notifyDataSetChanged();
+            showFooter(false);
         } else {
-            showFooter(true);
+            // NOTE: delay infinite scroll by a short interval to make UI looks smooth
             new Handler().postDelayed(new Runnable() {
                 public void run() {
                     feedItems.addAll(posts);
                     listAdapter.notifyDataSetChanged();
                 }
             }, DefaultValues.DEFAULT_INFINITE_SCROLL_DELAY);
+            showFooter(true);
+        }
+
+        if (posts == null || posts.size() == 0) {
+            setFooterText(R.string.list_loaded_all);
+        } else {
+            setFooterText(R.string.list_loading);
         }
     }
 
@@ -155,6 +159,7 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
     }
 
     protected void setFooterText(int text) {
+        showFooter(true);
         footerText.setText(text);
     }
 

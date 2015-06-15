@@ -97,10 +97,10 @@
         <View
             android:layout_marginTop="5dp"
             android:layout_below="@+id/headerLayout2"
-            android:id="@+id/bar1"
             android:background="@drawable/dottedline"
             android:layout_width="match_parent"
-            android:layout_height="3dp">
+            android:layout_height="3dp"
+            android:id="@+id/bar">
         </View>
         <ListView
             android:layout_below="@+id/headerLayout2"

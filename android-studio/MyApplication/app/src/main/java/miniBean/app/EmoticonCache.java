@@ -42,7 +42,10 @@ public class EmoticonCache {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                if (callback != null) {
+                    callback.failure(error);
+                }
+                Log.e(EmoticonCache.class.getSimpleName(), "refresh: failure", error);
             }
         });
     }

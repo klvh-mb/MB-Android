@@ -118,15 +118,20 @@ public class ActivityUtil {
     }
 
     public static void alert(Context context, String title, String message) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context)
-                .setMessage(message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        alert(context, title, message,
+                new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
+    }
+
+    public static void alert(Context context, String title, String message, DialogInterface.OnClickListener onClick) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, onClick);
         if (!StringUtils.isEmpty(title)) {
             alertBuilder.setTitle(title);
         }

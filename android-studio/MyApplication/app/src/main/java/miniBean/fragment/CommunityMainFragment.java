@@ -1,6 +1,5 @@
 package miniBean.fragment;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,9 +22,8 @@ import miniBean.viewmodel.CommunityCategoryMapVM;
 public class CommunityMainFragment extends TrackedFragment {
 
     private static final String TAG = CommunityMainFragment.class.getName();
-    private ActionBar.Tab Tab1, Tab2, Tab3;
     private ViewPager viewPager;
-    private CommunityPagerAdapter mAdapter;
+    private CommunityMainPagerAdapter mAdapter;
     private PagerSlidingTabStrip tabs;
 
     @Override
@@ -38,7 +36,7 @@ public class CommunityMainFragment extends TrackedFragment {
 
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
-        mAdapter = new CommunityPagerAdapter(getChildFragmentManager());
+        mAdapter = new CommunityMainPagerAdapter(getChildFragmentManager());
 
         final int pageMargin = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
@@ -66,21 +64,21 @@ public class CommunityMainFragment extends TrackedFragment {
     }
 }
 
-class CommunityPagerAdapter extends FragmentPagerAdapter {
+class CommunityMainPagerAdapter extends FragmentPagerAdapter {
 
     private static String[] TITLES;
 
-    public CommunityPagerAdapter(FragmentManager fm) {
+    public CommunityMainPagerAdapter(FragmentManager fm) {
         super(fm);
 
         if (TITLES == null && LocalCommunityTabCache.getCommunityCategoryMapList() != null) {
-            Log.d(this.getClass().getSimpleName(), "MyPagerAdapter: TITLES size="+LocalCommunityTabCache.getCommunityCategoryMapList().size());
+            Log.d(this.getClass().getSimpleName(), "CommunityMainPagerAdapter: TITLES size="+LocalCommunityTabCache.getCommunityCategoryMapList().size());
             TITLES = new String[LocalCommunityTabCache.getCommunityCategoryMapList().size()]; // TODO
         }
 
         int index = 0;
         for (CommunityCategoryMapVM mapList : LocalCommunityTabCache.getCommunityCategoryMapList()) {
-            Log.d(this.getClass().getSimpleName(), "MyPagerAdapter: TITLES["+index+"]="+mapList.getName());
+            Log.d(this.getClass().getSimpleName(), "CommunityMainPagerAdapter: TITLES["+index+"]="+mapList.getName());
             TITLES[index] = mapList.getName();
             index++;
         }

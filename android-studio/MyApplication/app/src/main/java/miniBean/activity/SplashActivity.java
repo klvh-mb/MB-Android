@@ -1,6 +1,7 @@
 package miniBean.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -55,7 +56,7 @@ public class SplashActivity extends TrackedFragmentActivity {
     }
 
     private void startMainActivity(final String sessionId) {
-        Log.d(this.getClass().getSimpleName(), "getUserInfo");
+        Log.d(this.getClass().getSimpleName(), "startMainActivity: UserInfoCache.refresh");
 
         UserInfoCache.refresh(sessionId, new Callback<UserVM>() {
             @Override
@@ -103,22 +104,25 @@ public class SplashActivity extends TrackedFragmentActivity {
             public void failure(RetrofitError error) {
                 AppController.getInstance().clearPreferences();
 
-                showNetworkProblemAlert();
-
-                /*
-                if (RetrofitError.Kind.NETWORK.equals(retrofitError.getKind().name()) ||
-                        RetrofitError.Kind.HTTP.equals(retrofitError.getKind().name())) {
-
+                if (RetrofitError.Kind.NETWORK.equals(error.getKind().name()) ||
+                        RetrofitError.Kind.HTTP.equals(error.getKind().name())) {
+                    showNetworkProblemAlert();
                 } else {
-
+                    ActivityUtil.alert(SplashActivity.this,
+                            getString(R.string.login_error_title),
+                            getString(R.string.login_error_message),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    LoginActivity.startLoginActivity(SplashActivity.this);
+                                }
+                            });
                 }
 
+                /*
                 if (!isOnline()) {
                     SplashActivity.this.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
                 }
                 */
-
-                error.printStackTrace();
             }
         });
     }

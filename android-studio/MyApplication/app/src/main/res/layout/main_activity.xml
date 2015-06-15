@@ -27,55 +27,101 @@
         <View
             android:id="@+id/viewBar"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.8dp"
             android:layout_below="@+id/button_component"
-            android:background="@color/light_gray_2"></View>
+            android:background="@color/light_gray"></View>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="45dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:transitionGroup="false">
 
-                <Button
-                    android:id="@+id/comms"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".33"
+                    android:id="@+id/commsLayout"
                     android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/comm"
-                    android:text="@string/tabset_communities"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="25dp"
-                    android:textSize="16dp" />
+                    android:layout_weight="33"
+                    android:gravity="center">
 
-                <Button
-                    android:id="@+id/schools"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".34"
-                    android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/tag"
-                    android:text="@string/tabset_schools"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="25dp"
-                    android:textSize="16dp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/commsImage"
+                        android:src="@drawable/mn_comm"
+                        android:layout_gravity="center" />
 
-                <Button
-                    android:id="@+id/profiles"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tabset_communities"
+                        android:id="@+id/commsText"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".33"
+                    android:id="@+id/schoolsLayout"
                     android:background="@color/main_menubar_bg"
-                    android:drawableLeft="@drawable/profile"
-                    android:text="@string/tabset_profile"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="25dp"
-                    android:textSize="16dp" />
+                    android:layout_weight="34"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/schoolsImage"
+                        android:src="@drawable/mn_tag"
+                        android:layout_gravity="center" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tabset_schools"
+                        android:id="@+id/schoolsText"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/profileLayout"
+                    android:background="@color/main_menubar_bg"
+                    android:layout_weight="33"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:id="@+id/profileImage"
+                        android:src="@drawable/mn_profile"
+                        android:layout_gravity="center" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tabset_profile"
+                        android:id="@+id/profileText"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <TextView
@@ -88,10 +134,10 @@
                 android:textColor="#FFF"
                 android:background="@drawable/badge_circle"
                 android:layout_alignTop="@+id/setting"
-                android:gravity="center"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginBottom="10dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="20dp"
+                android:gravity="center" />
         </FrameLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -128,7 +128,7 @@
 
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="1dp"
+                    android:layout_height="0.8dp"
                     android:background="@drawable/bar1" />
 
                 <LinearLayout
@@ -183,7 +183,7 @@
 
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="1dp"
+                    android:layout_height="0.8dp"
                     android:layout_below="@id/menuQuestion"
                     android:background="@drawable/bar1" />
 
@@ -242,7 +242,7 @@
 
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="1dp"
+                    android:layout_height="0.8dp"
                     android:layout_below="@id/menuAnswer"
                     android:background="@drawable/bar1" />
 
@@ -299,7 +299,7 @@
 
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="1dp"
+                    android:layout_height="0.8dp"
                     android:layout_below="@id/menuBookmarks"
                     android:background="@drawable/bar1" />
 
@@ -345,7 +345,7 @@
 
                     <View
                         android:layout_width="wrap_content"
-                        android:layout_height="1dp"
+                        android:layout_height="0.8dp"
                         android:background="@drawable/bar1"
                         android:layout_above="@+id/menuSettings" />
 
@@ -383,7 +383,7 @@
 
                     <View
                         android:layout_width="wrap_content"
-                        android:layout_height="1dp"
+                        android:layout_height="0.8dp"
                         android:background="@drawable/bar1"
                         android:layout_alignBottom="@+id/menuSettings" />
                 </LinearLayout>
