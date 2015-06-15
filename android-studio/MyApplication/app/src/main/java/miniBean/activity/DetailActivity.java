@@ -596,8 +596,8 @@ public class DetailActivity extends TrackedFragmentActivity {
 
             paginationPopup = new PopupWindow(
                     layout,
-                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH),
-                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT),
+                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH, this.getResources()),
+                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT, this.getResources()),
                     true);
 
             paginationPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
@@ -789,7 +789,7 @@ public class DetailActivity extends TrackedFragmentActivity {
             activityUtil.hideInputMethodWindow(layout);
 
             emoPopup = new PopupWindow(layout,
-                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH),
+                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     true);
 

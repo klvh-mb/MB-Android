@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -32,7 +33,7 @@ public class ActivityUtil {
 
     private Activity activity;
 
-    private Rect displayDimensions = null;
+    private static Rect displayDimensions = null;
 
     public ActivityUtil(Activity activity) {
         this.activity = activity;
@@ -66,11 +67,11 @@ public class ActivityUtil {
     // Device
     //
 
-    public int getRealDimension(int size) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, activity.getResources().getDisplayMetrics());
+    public static int getRealDimension(int size, Resources resources) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, resources.getDisplayMetrics());
     }
 
-    public Rect getDisplayDimensions() {
+    public static Rect getDisplayDimensions(Activity activity) {
         if (displayDimensions == null) {
             int padding = 60;
             DisplayMetrics displaymetrics = new DisplayMetrics();

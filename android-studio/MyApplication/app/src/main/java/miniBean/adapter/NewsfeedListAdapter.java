@@ -187,7 +187,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
     private void loadImages(final CommunityPostVM item, final LinearLayout layout) {
         layout.removeAllViewsInLayout();
 
-        final int padding = activityUtil.getRealDimension(3);
+        final int padding = activityUtil.getRealDimension(3, this.activity.getResources());
         final int totalPadding = padding * DefaultValues.MAX_POST_IMAGES;
 
         int loadedImageCount = 0;
@@ -218,7 +218,9 @@ public class NewsfeedListAdapter extends BaseAdapter {
                     if (loadedImage != null) {
                         Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "x" + loadedImage.getHeight());
 
-                        int displayDimension = (activityUtil.getDisplayDimensions().width() / DefaultValues.MAX_POST_IMAGES) - totalPadding;
+                        int displayDimension =
+                                (activityUtil.getDisplayDimensions(NewsfeedListAdapter.this.activity).width() /
+                                        DefaultValues.MAX_POST_IMAGES) - totalPadding;
                         //Log.d(this.getClass().getSimpleName(), "onLoadingComplete: screen size="+activityUtil.getDisplayDimensions().width()+"x"+activityUtil.getDisplayDimensions().height());
 
                         // obsolete
