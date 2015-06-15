@@ -3,440 +3,457 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:background="@color/white"
+    android:background="@color/view_bg"
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="10">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_weight="5"
-            android:id="@+id/comm1">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/commImageLayout1" >
-
-                <ImageView
-                    android:id="@+id/commImage1"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:scaleType="fitCenter"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_centerVertical="true"></ImageView>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/commLayout1"
-                android:layout_toRightOf="@+id/commImageLayout1"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/commName1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="@color/dark_gray_2" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/summaryLayout1"
-                android:layout_below="@+id/commImageLayout1">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
-
-                    <ImageView
-                        android:id="@+id/memberIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:layout_toRightOf="@+id/noPost1"
-                        android:src="@drawable/ic_member"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:id="@+id/noMember1"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/memberImg"
-                        android:text="-"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical" />
-
-                    <ImageView
-                        android:id="@+id/postIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/post"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center_vertical" />
-
-                    <TextView
-                        android:id="@+id/noPost1"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/postIcon"
-                        android:text="-"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/joinButton1"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/ic_add" />
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <View
-            android:id="@+id/viewBar1"
-            android:layout_width="0.8dp"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/commsPager"
-            android:background="@drawable/bar1"></View>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_weight="5"
-            android:id="@+id/comm2">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/commImageLayout2" >
-
-                <ImageView
-                    android:id="@+id/commImage2"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:scaleType="fitCenter"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_centerVertical="true"></ImageView>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/commLayout2"
-                android:layout_toRightOf="@+id/commImageLayout2"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/commName2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="@color/dark_gray_2" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/summaryLayout2"
-                android:layout_below="@+id/commImageLayout2">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
-
-                    <ImageView
-                        android:id="@+id/memberIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:layout_toRightOf="@+id/noPost2"
-                        android:src="@drawable/ic_member"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:id="@+id/noMember2"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/memberImg"
-                        android:text="-"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical" />
-
-                    <ImageView
-                        android:id="@+id/postIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/post"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center_vertical" />
-
-                    <TextView
-                        android:id="@+id/noPost2"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/postIcon"
-                        android:text="-"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/joinButton2"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/ic_add" />
-            </RelativeLayout>
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:id="@+id/viewBar"
-        android:layout_width="match_parent"
-        android:layout_height="0.8dp"
-        android:layout_below="@+id/commsPager"
-        android:background="@drawable/bar1"></View>
-
-    <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@drawable/bar1"
+            android:visibility="gone"></View>
+
+        <LinearLayout
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_weight="5"
-            android:id="@+id/comm3">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/commImageLayout3" >
-
-                <ImageView
-                    android:id="@+id/commImage3"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:scaleType="fitCenter"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_centerVertical="true"></ImageView>
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/commLayout3"
-                android:layout_toRightOf="@+id/commImageLayout3"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/commName3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="@color/dark_gray_2" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/commImageLayout3"
-                android:id="@+id/summaryLayout3">
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_weight="5"
+                android:id="@+id/comm1"
+                android:background="@color/white">
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
+                    android:id="@+id/commImageLayout1" >
 
                     <ImageView
-                        android:id="@+id/memberIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:layout_toRightOf="@+id/noPost3"
-                        android:src="@drawable/ic_member"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:id="@+id/noMember3"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/commImage1"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="fitCenter"
                         android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/memberImg"
-                        android:text="-"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical" />
-
-                    <ImageView
-                        android:id="@+id/postIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/post"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center_vertical" />
-
-                    <TextView
-                        android:id="@+id/noPost3"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/postIcon"
-                        android:text="-"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"></ImageView>
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/joinButton3"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/ic_add" />
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commLayout1"
+                    android:layout_toRightOf="@+id/commImageLayout1"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/commName1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_2" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/summaryLayout1"
+                    android:layout_below="@+id/commImageLayout1">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true">
+
+                        <ImageView
+                            android:id="@+id/memberIcon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_toRightOf="@+id/noPost1"
+                            android:src="@drawable/ic_member"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp" />
+
+                        <TextView
+                            android:id="@+id/noMember1"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@id/memberImg"
+                            android:text="-"
+                            android:textSize="10dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <ImageView
+                            android:id="@+id/postIcon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/post"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:id="@+id/noPost1"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/postIcon"
+                            android:text="-"
+                            android:textSize="10dp"
+                            android:layout_gravity="center_vertical" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/joinButton1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_add" />
+                </RelativeLayout>
+
             </RelativeLayout>
 
-        </RelativeLayout>
+            <View
+                android:layout_width="0.8dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bar1"></View>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_weight="5"
+                android:id="@+id/comm2"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commImageLayout2" >
+
+                    <ImageView
+                        android:id="@+id/commImage2"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"></ImageView>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commLayout2"
+                    android:layout_toRightOf="@+id/commImageLayout2"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/commName2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_2" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/summaryLayout2"
+                    android:layout_below="@+id/commImageLayout2">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true">
+
+                        <ImageView
+                            android:id="@+id/memberIcon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_toRightOf="@+id/noPost2"
+                            android:src="@drawable/ic_member"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp" />
+
+                        <TextView
+                            android:id="@+id/noMember2"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@id/memberImg"
+                            android:text="-"
+                            android:textSize="10dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <ImageView
+                            android:id="@+id/postIcon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/post"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:id="@+id/noPost2"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/postIcon"
+                            android:text="-"
+                            android:textSize="10dp"
+                            android:layout_gravity="center_vertical" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/joinButton2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_add" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
 
         <View
-            android:id="@+id/viewBar2"
-            android:layout_width="0.8dp"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/commsPager"
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
             android:background="@drawable/bar1"></View>
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:orientation="horizontal"
-            android:padding="5dp"
-            android:layout_weight="5"
-            android:id="@+id/comm4">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/commImageLayout4" >
-
-                <ImageView
-                    android:id="@+id/commImage4"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:scaleType="fitCenter"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_centerVertical="true"></ImageView>
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/commLayout4"
-                android:layout_toRightOf="@+id/commImageLayout4"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/commName4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="@color/dark_gray_2" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/summaryLayout4"
-                android:layout_below="@+id/commImageLayout4">
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_weight="5"
+                android:id="@+id/comm3"
+                android:background="@color/white">
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
+                    android:id="@+id/commImageLayout3" >
 
                     <ImageView
-                        android:id="@+id/memberIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:layout_toRightOf="@+id/noPost4"
-                        android:src="@drawable/ic_member"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp" />
-
-                    <TextView
-                        android:id="@+id/noMember4"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/commImage3"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="fitCenter"
                         android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/memberImg"
-                        android:text="-"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical" />
-
-                    <ImageView
-                        android:id="@+id/postIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/post"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center_vertical" />
-
-                    <TextView
-                        android:id="@+id/noPost4"
-                        android:layout_width="25dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/postIcon"
-                        android:text="-"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"></ImageView>
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/joinButton4"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/ic_add" />
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commLayout3"
+                    android:layout_toRightOf="@+id/commImageLayout3"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/commName3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_2" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/commImageLayout3"
+                    android:id="@+id/summaryLayout3">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true">
+
+                        <ImageView
+                            android:id="@+id/memberIcon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_toRightOf="@+id/noPost3"
+                            android:src="@drawable/ic_member"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp" />
+
+                        <TextView
+                            android:id="@+id/noMember3"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@id/memberImg"
+                            android:text="-"
+                            android:textSize="10dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <ImageView
+                            android:id="@+id/postIcon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/post"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:id="@+id/noPost3"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/postIcon"
+                            android:text="-"
+                            android:textSize="10dp"
+                            android:layout_gravity="center_vertical" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/joinButton3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_add" />
+                </RelativeLayout>
+
             </RelativeLayout>
 
-        </RelativeLayout>
+            <View
+                android:layout_width="0.8dp"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/commsPager"
+                android:background="@drawable/bar1"></View>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_weight="5"
+                android:id="@+id/comm4"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commImageLayout4" >
+
+                    <ImageView
+                        android:id="@+id/commImage4"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"></ImageView>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commLayout4"
+                    android:layout_toRightOf="@+id/commImageLayout4"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/commName4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/dark_gray_2" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/summaryLayout4"
+                    android:layout_below="@+id/commImageLayout4">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true">
+
+                        <ImageView
+                            android:id="@+id/memberIcon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_toRightOf="@+id/noPost4"
+                            android:src="@drawable/ic_member"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp" />
+
+                        <TextView
+                            android:id="@+id/noMember4"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@id/memberImg"
+                            android:text="-"
+                            android:textSize="10dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <ImageView
+                            android:id="@+id/postIcon"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/post"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:id="@+id/noPost4"
+                            android:layout_width="25dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toRightOf="@+id/postIcon"
+                            android:text="-"
+                            android:textSize="10dp"
+                            android:layout_gravity="center_vertical" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/joinButton4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_add" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@drawable/bar1"
+            android:visibility="gone"></View>
+
     </LinearLayout>
 </LinearLayout>

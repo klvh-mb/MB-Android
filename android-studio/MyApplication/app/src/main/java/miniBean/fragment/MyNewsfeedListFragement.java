@@ -1,43 +1,114 @@
 package miniBean.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.util.List;
 
 import miniBean.R;
 import miniBean.app.LocalCommunityTabCache;
+import miniBean.util.ActivityUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class MyNewsfeedListFragement extends NewsfeedListFragement {
 
     private static final String TAG = MyNewsfeedListFragement.class.getName();
 
+    private Button topicCommsButton, yearCommsButton;
+    private boolean topicCommsPressed = true;
+
     private ViewPager viewPager;
     private MyCommunityPagerAdapter mAdapter;
+
+    private LinearLayout dotsLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         View headerView = getHeaderView();
-        viewPager = (ViewPager) headerView.findViewById(R.id.commsPager);
-        mAdapter = new MyCommunityPagerAdapter(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, getChildFragmentManager());
 
-        final int pageMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+        topicCommsButton = (Button) headerView.findViewById(R.id.topicCommsButton);
+        yearCommsButton = (Button) headerView.findViewById(R.id.yearCommsButton);
+
+        viewPager = (ViewPager) headerView.findViewById(R.id.commsPager);
+        dotsLayout = (LinearLayout) view.findViewById(R.id.dots);
+
+        int pageMargin = ActivityUtil.getRealDimension(2, this.getResources());
         viewPager.setPageMargin(pageMargin);
-        viewPager.setAdapter(mAdapter);
+
+        // comms pager buttons
+        topicCommsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!topicCommsPressed) {
+                    pressTopicCommsButton();
+                    topicCommsPressed = true;
+                }
+            }
+
+        });
+
+        yearCommsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (topicCommsPressed) {
+                    pressYearCommsButton();
+                    topicCommsPressed = false;
+                }
+            }
+        });
+
+        pressTopicCommsButton();
+
+        LocalCommunityTabCache.setMyNewsfeedListFragement(this);
 
         return view;
+    }
+
+    public void notifyChange() {
+        mAdapter.notifyDataSetChanged();
+        viewPager.invalidate();
+    }
+
+    private void pressTopicCommsButton() {
+        yearCommsButton.setBackgroundColor(getResources().getColor(R.color.view_bg));
+        yearCommsButton.setTextColor(getResources().getColor(R.color.actionbar_selected_text));
+        topicCommsButton.setBackgroundColor(getResources().getColor(R.color.actionbar_bg_light));
+        topicCommsButton.setTextColor(getResources().getColor(R.color.view_bg));
+
+        mAdapter = new MyCommunityPagerAdapter(LocalCommunityTabCache.CommunityTabType.TOPIC_COMMUNITY, getChildFragmentManager());
+        viewPager.setAdapter(mAdapter);
+
+        // pager indicator
+        addDots(mAdapter.getCount(), dotsLayout, viewPager);
+
+        notifyChange();
+    }
+
+    private void pressYearCommsButton() {
+        topicCommsButton.setBackgroundColor(getResources().getColor(R.color.view_bg));
+        topicCommsButton.setTextColor(getResources().getColor(R.color.actionbar_selected_text));
+        yearCommsButton.setBackgroundColor(getResources().getColor(R.color.actionbar_bg_light));
+        yearCommsButton.setTextColor(getResources().getColor(R.color.view_bg));
+
+        mAdapter = new MyCommunityPagerAdapter(LocalCommunityTabCache.CommunityTabType.ZODIAC_YEAR_COMMUNITY, getChildFragmentManager());
+        viewPager.setAdapter(mAdapter);
+
+        // pager indicator
+        addDots(mAdapter.getCount(), dotsLayout, viewPager);
+
+        notifyChange();
     }
 }
 
@@ -78,6 +149,18 @@ class MyCommunityPagerAdapter extends FragmentPagerAdapter {
                 return fragment;
             }
         }
+    }
+
+    /**
+     * HACK... returns POSITION_NONE will refresh pager more frequent than needed... but works in this case
+     * http://stackoverflow.com/questions/12510404/reorder-pages-in-fragmentstatepageradapter-using-getitempositionobject-object
+     *
+     * @param object
+     * @return
+     */
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
     private List<CommunitiesWidgetChildVM> getCommunitiesForPage(int position) {

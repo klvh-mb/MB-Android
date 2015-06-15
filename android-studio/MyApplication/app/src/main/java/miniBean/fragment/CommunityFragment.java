@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,7 @@ import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragment;
 import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.CommunityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
@@ -52,6 +52,8 @@ public class CommunityFragment extends TrackedFragment {
     private Long commId;
     private View listHeader, loadingFooter;
 
+    private CommunityUtil communityUtil;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -59,6 +61,8 @@ public class CommunityFragment extends TrackedFragment {
         View view = inflater.inflate(R.layout.community_fragment, container, false);
 
         spinner = (ProgressBar) view.findViewById(R.id.spinner);
+
+        communityUtil = new CommunityUtil(getActivity());
 
         // header
         listHeader = inflater.inflate(R.layout.community_fragment_header, null);
@@ -165,18 +169,19 @@ public class CommunityFragment extends TrackedFragment {
         } else {
             joinImageView.setImageResource(R.drawable.ic_check);
         }
+
         joinImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!(currentCommunity.isM)) {
-                    joinCommunity(currentCommunity, joinImageView);
+                    communityUtil.joinCommunity(currentCommunity, joinImageView);
                 } else {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setMessage(CommunityFragment.this.getString(R.string.community_leave_confirm));
                     alertDialogBuilder.setPositiveButton(CommunityFragment.this.getString(R.string.confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            leaveCommunity(currentCommunity, joinImageView);
+                            communityUtil.leaveCommunity(currentCommunity, joinImageView);
                         }
                     });
                     alertDialogBuilder.setNegativeButton(CommunityFragment.this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -240,42 +245,6 @@ public class CommunityFragment extends TrackedFragment {
             public void failure(RetrofitError error) {
                 AnimationUtil.cancel(spinner);
                 error.printStackTrace();
-            }
-        });
-    }
-
-    public void joinCommunity(final CommunitiesWidgetChildVM communityVM, final ImageView joinImageView) {
-        AppController.getApi().sendJoinRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
-            @Override
-            public void success(Response response, Response response2) {
-                Toast.makeText(CommunityFragment.this.getActivity(), CommunityFragment.this.getString(R.string.community_join_success), Toast.LENGTH_SHORT).show();
-                communityVM.setIsM(true);
-                joinImageView.setImageResource(R.drawable.ic_check);
-                LocalCommunityTabCache.refreshMyCommunities();
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Toast.makeText(CommunityFragment.this.getActivity(), CommunityFragment.this.getString(R.string.community_join_failed), Toast.LENGTH_SHORT).show();
-                retrofitError.printStackTrace();
-            }
-        });
-    }
-
-    public void leaveCommunity(final CommunitiesWidgetChildVM communityVM, final ImageView joinImageView) {
-        AppController.getApi().sendLeaveRequest(communityVM.id, AppController.getInstance().getSessionId(), new Callback<Response>() {
-            @Override
-            public void success(Response response, Response response2) {
-                Toast.makeText(CommunityFragment.this.getActivity().getBaseContext(), CommunityFragment.this.getString(R.string.community_leave_success), Toast.LENGTH_SHORT).show();
-                communityVM.setIsM(false);
-                joinImageView.setImageResource(R.drawable.ic_add);
-                LocalCommunityTabCache.refreshMyCommunities();
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                Toast.makeText(CommunityFragment.this.getActivity().getBaseContext(), CommunityFragment.this.getString(R.string.community_leave_failed), Toast.LENGTH_SHORT).show();
-                retrofitError.printStackTrace();
             }
         });
     }

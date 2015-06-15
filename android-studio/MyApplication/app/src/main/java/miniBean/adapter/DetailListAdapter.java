@@ -273,7 +273,7 @@ public class DetailListAdapter extends BaseAdapter {
             ImageView postImage = new ImageView(this.activity);
             postImage.setAdjustViewBounds(true);
             postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10));
+            postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10, this.activity.getResources()));
             layout.addView(postImage);
 
             /*
@@ -312,7 +312,7 @@ public class DetailListAdapter extends BaseAdapter {
                         int height = loadedImage.getHeight();
 
                         // always stretch to screen width
-                        int displayWidth = activityUtil.getDisplayDimensions().width();
+                        int displayWidth = ActivityUtil.getDisplayDimensions(DetailListAdapter.this.activity).width();
                         float scaleAspect = (float)displayWidth / (float)width;
                         width = displayWidth;
                         height = (int)(height * scaleAspect);

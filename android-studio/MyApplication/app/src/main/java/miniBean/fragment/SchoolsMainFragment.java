@@ -18,6 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragment;
+import miniBean.util.ActivityUtil;
 
 public class SchoolsMainFragment extends TrackedFragment {
 
@@ -37,8 +38,7 @@ public class SchoolsMainFragment extends TrackedFragment {
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         mAdapter = new SchoolsPagerAdapter(getChildFragmentManager());
 
-        final int pageMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+        int pageMargin = ActivityUtil.getRealDimension(2, this.getResources());
         viewPager.setPageMargin(pageMargin);
         viewPager.setAdapter(mAdapter);
 
@@ -64,12 +64,10 @@ public class SchoolsMainFragment extends TrackedFragment {
             }
         });
 
-        final int indicatorHeight = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+        int indicatorHeight = ActivityUtil.getRealDimension(5, this.getResources());
         tabs.setIndicatorHeight(indicatorHeight);
 
-        final int textSize = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        int textSize = ActivityUtil.getRealDimension(16, this.getResources());
         tabs.setTextSize(textSize);
 
         return view;

@@ -344,8 +344,8 @@ public class NewPostActivity extends TrackedFragmentActivity {
 
             myCommunityPopup = new PopupWindow(
                     layout,
-                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH),
-                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT),
+                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH, this.getResources()),
+                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT, this.getResources()),
                     true);
             myCommunityPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             myCommunityPopup.setOutsideTouchable(false);
@@ -396,7 +396,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
             activityUtil.hideInputMethodWindow(layout);
 
             emoPopup = new PopupWindow(layout,
-                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH),
+                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     true);
 

@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/commImage"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:scaleType="fitCenter"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -19,7 +19,7 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:id="@+id/commLayout"
         android:layout_toRightOf="@+id/commImage">
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:textSize="17dp"
+            android:textSize="16dp"
             android:textColor="@color/dark_gray_2" />
 
     </RelativeLayout>
@@ -49,10 +49,11 @@
 
             <ImageView
                 android:id="@+id/memberIcon"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_toRightOf="@+id/noPost1"
-                android:src="@drawable/ic_member" />
+                android:src="@drawable/ic_member"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/noMember"
@@ -61,15 +62,16 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/memberImg"
                 android:text="-"
-                android:textSize="14dp"
+                android:textSize="13dp"
                 android:layout_gravity="center_vertical" />
 
             <ImageView
                 android:id="@+id/postIcon"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/post"
-                android:layout_marginLeft="25dp" />
+                android:layout_marginLeft="25dp"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/noPost"
@@ -78,7 +80,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/postIcon"
                 android:text="-"
-                android:textSize="14dp"
+                android:textSize="13dp"
                 android:layout_gravity="center_vertical" />
 
         </LinearLayout>

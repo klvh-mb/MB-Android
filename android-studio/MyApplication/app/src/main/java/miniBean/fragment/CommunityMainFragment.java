@@ -17,6 +17,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import miniBean.R;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragment;
+import miniBean.util.ActivityUtil;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 
 public class CommunityMainFragment extends TrackedFragment {
@@ -38,8 +39,7 @@ public class CommunityMainFragment extends TrackedFragment {
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         mAdapter = new CommunityMainPagerAdapter(getChildFragmentManager());
 
-        final int pageMargin = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+        int pageMargin = ActivityUtil.getRealDimension(2, this.getResources());
         viewPager.setPageMargin(pageMargin);
         viewPager.setAdapter(mAdapter);
         
@@ -47,12 +47,10 @@ public class CommunityMainFragment extends TrackedFragment {
         tabs.setTextColor(getResources().getColor(R.color.dark_gray));
         tabs.setIndicatorColor(getResources().getColor(R.color.actionbar_selected_text));
 
-        final int indicatorHeight = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+        int indicatorHeight = ActivityUtil.getRealDimension(5, this.getResources());
         tabs.setIndicatorHeight(indicatorHeight);
 
-        final int textSize = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        final int textSize = ActivityUtil.getRealDimension(16, this.getResources());
         tabs.setTextSize(textSize);
 
         return view;
