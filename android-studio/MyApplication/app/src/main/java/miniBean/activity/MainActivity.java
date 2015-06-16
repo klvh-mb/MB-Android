@@ -295,6 +295,10 @@ public class MainActivity extends TrackedFragmentActivity {
 
     private void setUnreadNotificationsCount() {
         NotificationsParentVM notificationsParentVM = NotificationCache.getNotifications();
+        if (notificationsParentVM == null) {
+            return;
+        }
+
         long count = notificationsParentVM.getRequestCounts() + notificationsParentVM.getNotifyCounts();
 
         Log.d(this.getClass().getSimpleName(), "setUnreadNotificationsCount: requestCount="+notificationsParentVM.getRequestCounts()+" notifCount="+notificationsParentVM.getNotifyCounts());
