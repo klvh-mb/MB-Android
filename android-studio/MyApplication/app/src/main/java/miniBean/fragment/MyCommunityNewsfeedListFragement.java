@@ -22,9 +22,9 @@ import miniBean.util.ActivityUtil;
 import miniBean.util.SharedPreferencesUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
-public class MyNewsfeedListFragement extends NewsfeedListFragement {
+public class MyCommunityNewsfeedListFragement extends NewsfeedListFragement {
 
-    private static final String TAG = MyNewsfeedListFragement.class.getName();
+    private static final String TAG = MyCommunityNewsfeedListFragement.class.getName();
 
     private Button topicCommsButton, yearCommsButton;
     private boolean topicCommsPressed = true;
