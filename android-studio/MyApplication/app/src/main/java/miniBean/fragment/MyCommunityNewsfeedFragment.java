@@ -131,7 +131,6 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
         bundle.putString("key","feed");
         MyCommunityNewsfeedListFragement fragment = new MyCommunityNewsfeedListFragement();
         fragment.setTrackedOnce();
-        fragment.setHeaderResouce(R.layout.my_community_newsfeed_list_header);
         FragmentManager fragmentManager = getChildFragmentManager();
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
