@@ -111,6 +111,19 @@ public class DetailListAdapter extends BaseAdapter {
 
         final CommunityPostCommentVM item = postComments.get(position);
 
+        // admin fields
+        LinearLayout adminLayout = (LinearLayout) convertView.findViewById(R.id.adminLayout);
+        if (AppController.isUserAdmin()) {
+            ImageView androidIcon = (ImageView) convertView.findViewById(R.id.androidIcon);
+            ImageView mobileIcon = (ImageView) convertView.findViewById(R.id.mobileIcon);
+            androidIcon.setVisibility(item.isAndroid()? View.VISIBLE : View.GONE);
+            mobileIcon.setVisibility(item.isMobile()? View.VISIBLE : View.GONE);
+
+            adminLayout.setVisibility(View.VISIBLE);
+        } else {
+            adminLayout.setVisibility(View.GONE);
+        }
+
         // like
         if (item.isLike()) {
             like.setImageResource(R.drawable.liked);

@@ -92,7 +92,13 @@ public class NewPostActivity extends TrackedFragmentActivity {
         activityUtil = new ActivityUtil(this);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.new_post_actionbar);
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.new_post_actionbar, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
         getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_purple));
 
         backImage = (ImageView) findViewById(R.id.backImage);

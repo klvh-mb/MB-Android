@@ -5,11 +5,9 @@
     android:layout_gravity="center"
     android:orientation="horizontal">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/backImage"
@@ -27,7 +25,7 @@
             android:layout_gravity="center"
             android:text="@string/post_actionbar_title"
             android:textColor="#ffffff"
-            android:textSize="25dp"
+            android:textSize="22dp"
             android:layout_centerInParent="true"
             android:gravity="center" />
 

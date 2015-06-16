@@ -3,6 +3,7 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -51,7 +52,13 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
         setContentView(R.layout.top_schools_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.top_schools_actionbar);
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.top_schools_actionbar, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
 
         TextView actionbarTitle = (TextView) findViewById(R.id.title);
         RelativeLayout topViewedLayout = (RelativeLayout) findViewById(R.id.topViewedLayout);

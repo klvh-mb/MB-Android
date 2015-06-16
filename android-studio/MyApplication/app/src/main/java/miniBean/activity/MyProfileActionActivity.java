@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +26,13 @@ public class MyProfileActionActivity extends TrackedFragmentActivity {
         setContentView(R.layout.my_profile_action_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.my_profile_action_actionbar);
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.my_profile_action_actionbar, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
 
         titleText = (TextView) findViewById(R.id.title);
 

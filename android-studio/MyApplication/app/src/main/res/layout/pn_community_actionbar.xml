@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="horizontal">
+    android:layout_gravity="center">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,7 +27,7 @@
             android:layout_gravity="center"
             android:text="@string/schools_actionbar_title"
             android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:textSize="22dp" />
 
         <ImageView
             android:id="@+id/whatsappAction"
@@ -61,4 +60,4 @@
             android:src="@drawable/edit_post" />
 
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

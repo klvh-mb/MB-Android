@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +24,14 @@ public class CommunityActivity extends TrackedFragmentActivity {
         setContentView(R.layout.community_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.community_actionbar);
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.community_actionbar, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
+
         backImage = (ImageView) this.findViewById(R.id.backImage);
         titleAction = (TextView) this.findViewById(R.id.title);
         editAction = (ImageView) this.findViewById(R.id.newPostIcon);
