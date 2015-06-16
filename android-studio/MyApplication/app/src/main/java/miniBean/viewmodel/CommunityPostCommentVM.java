@@ -17,6 +17,10 @@ public class CommunityPostCommentVM {
     public boolean isLike = false;     // filled outside
     public boolean isPost;
 
+    public boolean and = false;
+    public boolean ios = false;
+    public boolean mob = false;
+
     // helper method
     public boolean imageLoaded = false;
 
@@ -122,5 +126,29 @@ public class CommunityPostCommentVM {
 
     public void setLike(boolean isLike) {
         this.isLike = isLike;
+    }
+
+    public boolean isAndroid() {
+        return and;
+    }
+
+    public void setAndroid(boolean and) {
+        this.and = and;
+    }
+
+    public boolean isIOS() {
+        return ios;
+    }
+
+    public void setIOS(boolean ios) {
+        this.ios = ios;
+    }
+
+    public boolean isMobile() {
+        return mob;
+    }
+
+    public void setMobile(boolean mob) {
+        this.mob = mob;
     }
 }

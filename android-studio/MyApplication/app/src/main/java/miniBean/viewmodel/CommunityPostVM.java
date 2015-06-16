@@ -33,6 +33,10 @@ public class CommunityPostVM {
     public boolean isWtAns = false;
     public boolean isBookmarked = false;
 
+    public boolean and = false;
+    public boolean ios = false;
+    public boolean mob = false;
+
     public Long pnId;
     public Long kgId;
 
@@ -266,6 +270,30 @@ public class CommunityPostVM {
 
     public void setBookmarked(boolean isBookmarked) {
         this.isBookmarked = isBookmarked;
+    }
+
+    public boolean isAndroid() {
+        return and;
+    }
+
+    public void setAndroid(boolean and) {
+        this.and = and;
+    }
+
+    public boolean isIOS() {
+        return ios;
+    }
+
+    public void setIOS(boolean ios) {
+        this.ios = ios;
+    }
+
+    public boolean isMobile() {
+        return mob;
+    }
+
+    public void setMobile(boolean mob) {
+        this.mob = mob;
     }
 
     public Long getPnId() {
