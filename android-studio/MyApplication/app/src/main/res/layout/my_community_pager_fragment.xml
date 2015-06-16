@@ -76,10 +76,9 @@
                         android:layout_centerVertical="true">
 
                         <ImageView
-                            android:id="@+id/memberIcon"
+                            android:id="@+id/memberIcon1"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:layout_toRightOf="@+id/noPost1"
                             android:src="@drawable/ic_member"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp" />
@@ -89,13 +88,12 @@
                             android:layout_width="25dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@id/memberImg"
                             android:text="-"
                             android:textSize="10dp"
                             android:layout_gravity="center_vertical" />
 
                         <ImageView
-                            android:id="@+id/postIcon"
+                            android:id="@+id/postIcon1"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
                             android:src="@drawable/post"
@@ -107,7 +105,6 @@
                             android:layout_width="25dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@+id/postIcon"
                             android:text="-"
                             android:textSize="10dp"
                             android:layout_gravity="center_vertical" />
@@ -182,10 +179,9 @@
                         android:layout_centerVertical="true">
 
                         <ImageView
-                            android:id="@+id/memberIcon"
+                            android:id="@+id/memberIcon2"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:layout_toRightOf="@+id/noPost2"
                             android:src="@drawable/ic_member"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp" />
@@ -195,13 +191,12 @@
                             android:layout_width="25dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@id/memberImg"
                             android:text="-"
                             android:textSize="10dp"
                             android:layout_gravity="center_vertical" />
 
                         <ImageView
-                            android:id="@+id/postIcon"
+                            android:id="@+id/postIcon2"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
                             android:src="@drawable/post"
@@ -213,7 +208,6 @@
                             android:layout_width="25dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@+id/postIcon"
                             android:text="-"
                             android:textSize="10dp"
                             android:layout_gravity="center_vertical" />
@@ -294,10 +288,9 @@
                         android:layout_centerVertical="true">
 
                         <ImageView
-                            android:id="@+id/memberIcon"
+                            android:id="@+id/memberIcon3"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:layout_toRightOf="@+id/noPost3"
                             android:src="@drawable/ic_member"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp" />
@@ -307,13 +300,12 @@
                             android:layout_width="25dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@id/memberImg"
                             android:text="-"
                             android:textSize="10dp"
                             android:layout_gravity="center_vertical" />
 
                         <ImageView
-                            android:id="@+id/postIcon"
+                            android:id="@+id/postIcon3"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
                             android:src="@drawable/post"
@@ -325,7 +317,6 @@
                             android:layout_width="25dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@+id/postIcon"
                             android:text="-"
                             android:textSize="10dp"
                             android:layout_gravity="center_vertical" />
@@ -401,10 +392,9 @@
                         android:layout_centerVertical="true">
 
                         <ImageView
-                            android:id="@+id/memberIcon"
+                            android:id="@+id/memberIcon4"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
-                            android:layout_toRightOf="@+id/noPost4"
                             android:src="@drawable/ic_member"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="5dp" />
@@ -414,13 +404,12 @@
                             android:layout_width="25dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@id/memberImg"
                             android:text="-"
                             android:textSize="10dp"
                             android:layout_gravity="center_vertical" />
 
                         <ImageView
-                            android:id="@+id/postIcon"
+                            android:id="@+id/postIcon4"
                             android:layout_width="14dp"
                             android:layout_height="14dp"
                             android:src="@drawable/post"
@@ -432,7 +421,6 @@
                             android:layout_width="25dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@+id/postIcon"
                             android:text="-"
                             android:textSize="10dp"
                             android:layout_gravity="center_vertical" />

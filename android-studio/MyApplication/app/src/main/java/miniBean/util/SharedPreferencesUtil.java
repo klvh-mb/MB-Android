@@ -2,7 +2,6 @@ package miniBean.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,8 +20,6 @@ import miniBean.viewmodel.UserVM;
 public class SharedPreferencesUtil {
     public static final String TAG = SharedPreferencesUtil.class.getSimpleName();
     public static final String PREFS = "prefs";
-    private static SharedPreferencesUtil instance = null;
-    private SharedPreferences prefs;
 
     public static final String FB_ACCESS_TOKEN = "access_token";
     public static final String FB_ACCESS_EXPIRES = "access_expires";
@@ -30,6 +27,16 @@ public class SharedPreferencesUtil {
     public static final String USER_INFO = "userInfo";
     public static final String DISTRICTS = "districts";
     public static final String EMOTICONS = "emoticons";
+
+    public static enum Screen {
+        COMMS_TAB,
+        SCHOOLS_TAB,
+        PROFILE_TAB,
+        MY_NEWSFEED_TIPS
+    }
+
+    private static SharedPreferencesUtil instance = null;
+    private SharedPreferences prefs;
 
     private SharedPreferencesUtil() {
         this.prefs = AppController.getInstance().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
@@ -45,12 +52,8 @@ public class SharedPreferencesUtil {
     // Save
     //
 
-    public void saveString(String key, String value) {
-        this.prefs.edit().putString(key, value).commit();
-    }
-
-    public void saveLong(String key, Long value) {
-        this.prefs.edit().putLong(key, value).commit();
+    public void setScreenViewed(Screen screen) {
+        saveBoolean(screen.name(), true);
     }
 
     public void saveUserInfo(UserVM userInfo) {
@@ -65,6 +68,18 @@ public class SharedPreferencesUtil {
         this.saveObject(EMOTICONS, emoticons);
     }
 
+    public void saveString(String key, String value) {
+        this.prefs.edit().putString(key, value).commit();
+    }
+
+    public void saveLong(String key, Long value) {
+        this.prefs.edit().putLong(key, value).commit();
+    }
+
+    public void saveBoolean(String key, Boolean value) {
+        this.prefs.edit().putBoolean(key, value).commit();
+    }
+
     private void saveObject(String key, Object obj) {
         String json = new Gson().toJson(obj);
         //Log.d(this.getClass().getSimpleName(), "[DEBUG] saveObject: key="+json);
@@ -75,12 +90,8 @@ public class SharedPreferencesUtil {
     // Get
     //
 
-    public String getString(String key) {
-        return this.prefs.getString(key, null);
-    }
-
-    public Long getLong(String key) {
-        return this.prefs.getLong(key, 0L);
+    public Boolean isScreenViewed(Screen screen) {
+        return getBoolean(screen.name());
     }
 
     public UserVM getUserInfo() {
@@ -104,6 +115,18 @@ public class SharedPreferencesUtil {
         List<EmoticonVM> emoticons = new Gson().fromJson(json, type);
         //Log.d(this.getClass().getSimpleName(), "[DEBUG] getEmoticons: size="+emoticons.size());
         return emoticons;
+    }
+
+    public String getString(String key) {
+        return this.prefs.getString(key, null);
+    }
+
+    public Long getLong(String key) {
+        return this.prefs.getLong(key, 0L);
+    }
+
+    public Boolean getBoolean(String key) {
+        return this.prefs.getBoolean(key, false);
     }
 
     public void clear(String key) {
