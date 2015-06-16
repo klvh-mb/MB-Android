@@ -11,24 +11,31 @@
         android:background="@drawable/actionbar_bg_purple">
 
         <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/signInLayout"
-            android:layout_toLeftOf="@+id/buttonsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileLayout"
             android:visibility="visible"
-            android:paddingBottom="0dp">
+            android:paddingBottom="0dp"
+            android:layout_centerVertical="true">
 
             <ImageView
-                android:id="@+id/signInAction"
-                android:layout_width="50dp"
-                android:layout_height="fill_parent"
-                android:layout_alignParentRight="false"
-                android:src="@drawable/logo_bean_s"
-                android:layout_alignParentLeft="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp" />
+                android:id="@+id/profileImage"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentStart="false"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/usernameText"
+                android:layout_toRightOf="@+id/profileImage"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -70,27 +77,36 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/editLayout"
-            android:layout_toRightOf="@+id/buttonsLayout">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/actionsLayout"
+            android:gravity="right"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/mascotIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/logo_bean_s"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp" />
 
             <ImageView
                 android:id="@+id/newPostIcon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/edit_post" />
+                android:src="@drawable/edit_post"
+                android:layout_toRightOf="@+id/mascotIcon" />
         </RelativeLayout>
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/children_fragement"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/mainActionsLayout">
 
     </RelativeLayout>
