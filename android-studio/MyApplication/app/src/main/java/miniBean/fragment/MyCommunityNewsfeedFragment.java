@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -12,40 +11,79 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import miniBean.R;
 import miniBean.activity.NewPostActivity;
 import miniBean.app.TrackedFragment;
+import miniBean.app.UserInfoCache;
 import miniBean.util.AnimationUtil;
+import miniBean.util.ImageUtil;
 
-public class MyCommunityFragment extends TrackedFragment {
+public class MyCommunityNewsfeedFragment extends TrackedFragment {
 
-    private ImageView signInAction, newPostIcon;
+    private RelativeLayout profileLayout;
+    private ImageView profileImage;
+    private TextView usernameText;
+    private ImageView mascotIcon, newPostIcon;
     private Button newsfeed, joined;
     private boolean newsfeedPressed = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.my_community_fragement, container, false);
+        View view = inflater.inflate(R.layout.my_community_newsfeed_fragement, container, false);
 
+        profileLayout = (RelativeLayout) view.findViewById(R.id.profileLayout);
+        profileImage = (ImageView) view.findViewById(R.id.profileImage);
+        usernameText = (TextView) view.findViewById(R.id.usernameText);
+
+        mascotIcon = (ImageView) view.findViewById(R.id.mascotIcon);
         newPostIcon = (ImageView) view.findViewById(R.id.newPostIcon);
-        signInAction = (ImageView) view.findViewById(R.id.signInAction);
-        newsfeed = (Button) view.findViewById(R.id.buttonNewsfeed);
-        joined = (Button) view.findViewById(R.id.buttonJoined);
+
+        newsfeed = (Button) view.findViewById(R.id.buttonNewsfeed); // obsolete...
+        joined = (Button) view.findViewById(R.id.buttonJoined);     // obsolete...
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                AnimationUtil.rotateBackForthOnce(signInAction);
+                AnimationUtil.rotateBackForthOnce(mascotIcon);
             }
         }, 2000);
 
-        if (newsfeedPressed) {
-            pressNewsfeedButton();
-        } else {
-            pressJoinedButton();
-        }
+        pressNewsfeedButton();
+
+        // profile
+        ImageUtil.displayMiniProfileImage(UserInfoCache.getUser().getId(), profileImage);
+        usernameText.setText(UserInfoCache.getUser().getDisplayName());
+
+        profileLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // launch profile
+            }
+        });
+
+        mascotIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // launch game
+            }
+        });
+
+        // obsolete...
+
+        newPostIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // launch new post page with no comm id, user will select
+                Intent intent = new Intent(MyCommunityNewsfeedFragment.this.getActivity(), NewPostActivity.class);
+                intent.putExtra("id",0L);
+                intent.putExtra("flag","FromCommActivity");
+                startActivity(intent);
+            }
+        });
 
         newsfeed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,17 +103,6 @@ public class MyCommunityFragment extends TrackedFragment {
                     pressJoinedButton();
                     newsfeedPressed = false;
                 }
-            }
-        });
-
-        newPostIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // launch new post page with no comm id, user will select
-                Intent intent = new Intent(MyCommunityFragment.this.getActivity(), NewPostActivity.class);
-                intent.putExtra("id",0L);
-                intent.putExtra("flag","FromCommActivity");
-                startActivity(intent);
             }
         });
 
@@ -102,9 +129,9 @@ public class MyCommunityFragment extends TrackedFragment {
 
         Bundle bundle = new Bundle();
         bundle.putString("key","feed");
-        MyNewsfeedListFragement fragment = new MyNewsfeedListFragement();
+        MyCommunityNewsfeedListFragement fragment = new MyCommunityNewsfeedListFragement();
         fragment.setTrackedOnce();
-        fragment.setHeaderResouce(R.layout.my_community_newsfeed_header);
+        fragment.setHeaderResouce(R.layout.my_community_newsfeed_list_header);
         FragmentManager fragmentManager = getChildFragmentManager();
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

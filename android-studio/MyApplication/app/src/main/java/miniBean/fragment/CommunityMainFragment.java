@@ -14,10 +14,8 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 
 import miniBean.R;
-import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragment;
 import miniBean.util.ActivityUtil;
-import miniBean.viewmodel.CommunityCategoryMapVM;
 
 public class CommunityMainFragment extends TrackedFragment {
 
@@ -102,7 +100,7 @@ class CommunityMainPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Log.d(this.getClass().getSimpleName(), "getItem: item - " + position);
-        MyCommunityFragment fragment = new MyCommunityFragment();
+        MyCommunityNewsfeedFragment fragment = new MyCommunityNewsfeedFragment();
         return fragment;
         /*
         switch (position) {
