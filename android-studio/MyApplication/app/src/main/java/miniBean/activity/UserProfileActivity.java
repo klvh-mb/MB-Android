@@ -3,6 +3,7 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 
 import miniBean.R;
 import miniBean.app.TrackedFragmentActivity;
@@ -17,7 +18,13 @@ public class UserProfileActivity extends TrackedFragmentActivity {
         setContentView(R.layout.user_profile_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.user_profile_actionbar);
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.user_profile_actionbar, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
 
         Long userId = getIntent().getLongExtra("oid", 0l);
         String name = getIntent().getStringExtra("name");

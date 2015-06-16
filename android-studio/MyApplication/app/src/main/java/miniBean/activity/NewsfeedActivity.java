@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.TextView;
 
 import miniBean.R;
@@ -21,7 +22,13 @@ public class NewsfeedActivity extends TrackedFragmentActivity {
         setContentView(R.layout.newsfeed_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(R.layout.newsfeed_actionbar);
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.newsfeed_actionbar, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
 
         titleText = (TextView) findViewById(R.id.title);
 

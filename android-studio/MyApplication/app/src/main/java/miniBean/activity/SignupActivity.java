@@ -1,5 +1,6 @@
 package miniBean.activity;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,8 +45,16 @@ public class SignupActivity extends AbstractLoginActivity {
 
         setContentView(R.layout.signup_activity);
 
-        //getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        //getActionBar().setCustomView(R.layout.signup_actionbar);
+        /*
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.signup_actionbar, null),
+                new ActionBar.LayoutParams(
+                        ActionBar.LayoutParams.WRAP_CONTENT,
+                        ActionBar.LayoutParams.MATCH_PARENT,
+                        Gravity.CENTER
+                )
+        );
+        */
         getActionBar().hide();
 
         lastName = (EditText) findViewById(R.id.lastNameEditText);
