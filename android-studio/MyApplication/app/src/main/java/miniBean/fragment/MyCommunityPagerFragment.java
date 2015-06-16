@@ -12,7 +12,6 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.TrackedFragment;
-import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 

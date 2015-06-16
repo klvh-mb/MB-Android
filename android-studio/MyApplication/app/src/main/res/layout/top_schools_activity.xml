@@ -45,7 +45,7 @@
         <View
             android:layout_marginTop="5dp"
             android:layout_below="@+id/headerLayout1"
-            android:id="@+id/bar"
+            android:id="@+id/viewBar1"
             android:background="@drawable/dottedline"
             android:layout_width="match_parent"
             android:layout_height="3dp">
@@ -100,7 +100,7 @@
             android:background="@drawable/dottedline"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:id="@+id/bar">
+            android:id="@+id/viewBar2">
         </View>
         <ListView
             android:layout_below="@+id/headerLayout2"
