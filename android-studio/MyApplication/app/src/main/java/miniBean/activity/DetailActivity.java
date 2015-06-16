@@ -249,6 +249,9 @@ public class DetailActivity extends TrackedFragmentActivity {
                 postVm.setLike(post.isLike());
                 postVm.setHasImage(post.isHasImage());
                 postVm.setImgs(post.getImgs());
+                postVm.setAndroid(post.isAndroid());
+                postVm.setIOS(post.isIOS());
+                postVm.setMobile(post.isMobile());
                 noOfComments = post.getN_c();
                 communityItems.add(postVm);
                 communityItems.addAll(post.getCs());
