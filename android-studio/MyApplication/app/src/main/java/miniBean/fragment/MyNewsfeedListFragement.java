@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.util.ActivityUtil;
+import miniBean.util.SharedPreferencesUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class MyNewsfeedListFragement extends NewsfeedListFragement {
@@ -30,6 +33,9 @@ public class MyNewsfeedListFragement extends NewsfeedListFragement {
     private MyCommunityPagerAdapter mAdapter;
 
     private LinearLayout dotsLayout;
+
+    private FrameLayout tipsLayout;
+    private ImageView cancelTipsButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +81,24 @@ public class MyNewsfeedListFragement extends NewsfeedListFragement {
         pressTopicCommsButton();
 
         LocalCommunityTabCache.setMyNewsfeedListFragement(this);
+
+        // tips
+        //SharedPreferencesUtil.getInstance().saveBoolean(SharedPreferencesUtil.Screen.MY_NEWSFEED_TIPS.name(), false);
+        tipsLayout = (FrameLayout) headerView.findViewById(R.id.tipsLayout);
+        if (SharedPreferencesUtil.getInstance().isScreenViewed(SharedPreferencesUtil.Screen.MY_NEWSFEED_TIPS)) {
+            tipsLayout.setVisibility(View.GONE);
+        } else {
+            tipsLayout.setVisibility(View.VISIBLE);
+
+            cancelTipsButton = (ImageView) headerView.findViewById(R.id.cancelTipsButton);
+            cancelTipsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferencesUtil.getInstance().setScreenViewed(SharedPreferencesUtil.Screen.MY_NEWSFEED_TIPS);
+                    tipsLayout.setVisibility(View.GONE);
+                }
+            });
+        }
 
         return view;
     }
