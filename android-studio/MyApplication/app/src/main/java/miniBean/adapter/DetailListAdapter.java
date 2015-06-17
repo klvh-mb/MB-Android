@@ -227,6 +227,9 @@ public class DetailListAdapter extends BaseAdapter {
 
         HtmlUtil.setHtmlText(item.getD(), imageGetter, postBodyText);
 
+        // select body text on long click
+        ActivityUtil.setLongClickSelectAll(postBodyText);
+
         ownerName.setText(item.getOn());
         ownerName.setOnClickListener(new View.OnClickListener() {
             @Override

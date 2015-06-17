@@ -39,6 +39,8 @@ public class KGCommunityFragment extends AbstractSchoolCommunityFragment {
     private TextView annualCpFeePM_N,annualCpFeePM_LKG,annualCpFeePM_UKG;
     private TextView annualCpFeeWD_N,annualCpFeeWD_LKG,annualCpFeeWD_UKG;
 
+    private TextView summerUniformFee, winterUniformFee, schoolBagFee, teaFee, textbooksFee, workbooksFee;
+
     private ImageView icon,couponImage,pnImage,govtImage;
     private LinearLayout gotoCommLayout,newPostLayout;
 
@@ -118,6 +120,13 @@ public class KGCommunityFragment extends AbstractSchoolCommunityFragment {
         annualCpFeeWD_N = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell2);
         annualCpFeeWD_LKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell3);
         annualCpFeeWD_UKG = (TextView) view.findViewById(R.id.cpFeeTableRow4Cell4);
+
+        summerUniformFee = (TextView) view.findViewById(R.id.extraFeesTableRow1Cell2);
+        winterUniformFee = (TextView) view.findViewById(R.id.extraFeesTableRow1Cell4);
+        schoolBagFee = (TextView) view.findViewById(R.id.extraFeesTableRow2Cell2);
+        teaFee = (TextView) view.findViewById(R.id.extraFeesTableRow2Cell4);
+        textbooksFee = (TextView) view.findViewById(R.id.extraFeesTableRow3Cell2);
+        workbooksFee = (TextView) view.findViewById(R.id.extraFeesTableRow3Cell4);
 
         newPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,6 +256,14 @@ public class KGCommunityFragment extends AbstractSchoolCommunityFragment {
             cpFeeText.setVisibility(View.GONE);
             cpFeeTable.setVisibility(View.GONE);
         }
+
+        // extra fees table
+        summerUniformFee.setText(schoolVM.getSufee());
+        winterUniformFee.setText(schoolVM.getWbfee());
+        schoolBagFee.setText(schoolVM.getSbfee());
+        teaFee.setText(schoolVM.getTsfee());
+        textbooksFee.setText(schoolVM.getTbfee());
+        workbooksFee.setText(schoolVM.getWbfee());
 
         govtUrlValue = schoolVM.getGovUrl();
         if (govtUrlValue != null) {
