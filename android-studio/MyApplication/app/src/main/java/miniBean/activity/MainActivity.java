@@ -56,11 +56,19 @@ public class MainActivity extends TrackedFragmentActivity {
 
     private TrackedFragment selectedFragment;
 
+    private static MainActivity mInstance;
+
+    public static synchronized MainActivity getInstance() {
+        return mInstance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
+
+        mInstance = this;
 
         getActionBar().hide();
 
@@ -126,7 +134,7 @@ public class MainActivity extends TrackedFragmentActivity {
         });
     }
 
-    private void pressCommunityTab() {
+    public void pressCommunityTab() {
         getActionBar().hide();
 
         if (!commsClicked) {
@@ -147,7 +155,7 @@ public class MainActivity extends TrackedFragmentActivity {
         setUnreadNotificationsCount();
     }
 
-    private void pressSchoolsTab() {
+    public void pressSchoolsTab() {
         getActionBar().hide();
 
         if (!schoolsClicked) {
@@ -168,7 +176,7 @@ public class MainActivity extends TrackedFragmentActivity {
         setUnreadNotificationsCount();
     }
 
-    private void pressProfileTab() {
+    public void pressProfileTab() {
         getActionBar().show();
 
         if (!profileClicked) {
