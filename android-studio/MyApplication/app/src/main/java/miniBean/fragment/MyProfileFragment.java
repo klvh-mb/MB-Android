@@ -17,11 +17,12 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.MessageActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.app.NotificationCache;
 import miniBean.app.TrackedFragment;
-import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.NotificationVM;
+import miniBean.viewmodel.NotificationsParentVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -30,8 +31,8 @@ public class MyProfileFragment extends TrackedFragment {
 
     public List<NotificationVM> requestNotif, notifAll;
     private ImageView back;
-    private ViewGroup request, notification;
-    private TextView requestCount, notificationCount;
+    private ViewGroup request, notification,message;
+    private TextView requestCount, notificationCount,messageCount;
     private View actionBarView;
 
     private Gson gson = new Gson();
@@ -55,12 +56,15 @@ public class MyProfileFragment extends TrackedFragment {
         notification = (ViewGroup) actionBarView.findViewById(R.id.notificationLayout);
         requestCount = (TextView) actionBarView.findViewById(R.id.requestCount);
         notificationCount = (TextView) actionBarView.findViewById(R.id.notificationCount);
+        messageCount= (TextView) actionBarView.findViewById(R.id.messageCount);
+        message= (ViewGroup) actionBarView.findViewById(R.id.messageLayout);
 
         back = (ImageView) actionBarView.findViewById(R.id.backAction);
         back.setVisibility(View.INVISIBLE);
 
         requestCount.setVisibility(View.INVISIBLE);
         notificationCount.setVisibility(View.INVISIBLE);
+        messageCount.setVisibility(View.INVISIBLE);
 
         TrackedFragment fragment = new ProfileFragment();
         fragment.setTrackedOnce();
@@ -111,7 +115,16 @@ public class MyProfileFragment extends TrackedFragment {
             }
         });
 
-        return view;
+        message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                intent.putExtra("key", "messages");
+                intent.putExtra("notifAll", gson.toJson(notifAll));
+                startActivity(intent);
+            }
+        });
+                return view;
     }
 
     @Override

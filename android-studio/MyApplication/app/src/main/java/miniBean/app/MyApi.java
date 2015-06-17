@@ -10,9 +10,12 @@ import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
+import miniBean.viewmodel.ConversationVM;
 import miniBean.viewmodel.EmoticonVM;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.LocationVM;
+import miniBean.viewmodel.MessagePostVM;
+import miniBean.viewmodel.MessageVM;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.PostArray;
@@ -282,6 +285,39 @@ public interface MyApi {
 
     @GET("/get-top-bookmarked-kgs")
     public void getTopBookmarkedKGs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
+
+    //Messages API's
+
+    @GET("/get-all-conversations")
+    public void getAllConversation(@Query("key") String key, Callback<List<ConversationVM>> cb);
+
+    @GET("/get-messages/{id}/{offset}")
+    public void getMessages(@Path("id") Long id,@Path("offset") Long offset,@Query("key") String key, Callback<Response> cb);
+
+    @GET("/start-conversation/{id}")
+    public void startConversation(@Path("id") Long id,@Query("key") String key, Callback<MessageVM> cb);
+
+    @GET("/delete-conversation/{id}")
+    public void deleteConversation(@Path("id") Long id,@Query("key") String key, Callback<MessageVM> cb);
+
+    @POST("/message/sendMsg")
+    public void sendMessage(@Body MessagePostVM message,@Query("key") String key, Callback<Response> cb);
+
+    @GET("/get-unread-msg-count")
+    public void getUnreadMessageCount(@Query("key") String key, Callback<MessageVM> cb);
+
+    @GET("/image/get-message-image-by-id/{id} ")
+    public void getMessageImage(@Query("key") String key,@Part("messageId") long id, Callback<MessageVM> cb);
+
+    @Multipart
+    @POST("/image/sendMessagePhoto") //a function in your api upload image for message
+    public void uploadMessagePhoto(@Query("key") String key,@Part("messageId") long id, @Part("send-photo0") TypedFile photo, Callback<Response> cb);
+
+    //GCM key API's
+    @POST("/saveGCMKey/{GCMkey}")
+    public void saveGCMkey(@Path("GCMkey") String GCMkey,@Query("key") String key,Callback<Response> cb);
+
+
 }
 
 
