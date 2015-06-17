@@ -37,11 +37,19 @@ public class MyCommunityNewsfeedListFragement extends NewsfeedListFragement {
     private FrameLayout tipsLayout;
     private ImageView cancelTipsButton;
 
+    private View headerView;
+
+    @Override
+    protected View getHeaderView(LayoutInflater inflater) {
+        if (headerView == null) {
+            headerView = inflater.inflate(R.layout.my_community_newsfeed_list_header, null);
+        }
+        return headerView;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        View headerView = getHeaderView();
 
         topicCommsButton = (Button) headerView.findViewById(R.id.topicCommsButton);
         yearCommsButton = (Button) headerView.findViewById(R.id.yearCommsButton);

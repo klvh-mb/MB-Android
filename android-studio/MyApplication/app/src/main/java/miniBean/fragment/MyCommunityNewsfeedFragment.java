@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import miniBean.R;
+import miniBean.activity.MainActivity;
 import miniBean.activity.NewPostActivity;
 import miniBean.app.TrackedFragment;
 import miniBean.app.UserInfoCache;
@@ -61,7 +62,10 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
         profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // launch profile
+                MainActivity mainActivity = MainActivity.getInstance();
+                if (mainActivity != null) {
+                    mainActivity.pressProfileTab();
+                }
             }
         });
 
@@ -71,8 +75,6 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
                 // launch game
             }
         });
-
-        // obsolete...
 
         newPostIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +86,8 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
                 startActivity(intent);
             }
         });
+
+        // obsolete...
 
         newsfeed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +135,6 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
         bundle.putString("key","feed");
         MyCommunityNewsfeedListFragement fragment = new MyCommunityNewsfeedListFragement();
         fragment.setTrackedOnce();
-        fragment.setHeaderResouce(R.layout.my_community_newsfeed_list_header);
         FragmentManager fragmentManager = getChildFragmentManager();
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -10,13 +10,17 @@ import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.text.Selection;
+import android.text.Spannable;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.parceler.apache.commons.lang.StringUtils;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -81,6 +85,29 @@ public class ActivityUtil {
             displayDimensions = new Rect(0, 0, width, height);
         }
         return displayDimensions;
+    }
+
+    //
+    // UI
+    //
+
+    public static void setLongClickSelectAll(TextView textView) {
+        textView.setTextIsSelectable(true);
+        textView.setFocusable(true);
+        textView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (v instanceof TextView) {
+                    TextView textView = (TextView) v;
+                    //textView.setSelectAllOnFocus(true);
+                    //textView.setSelected(true);
+                    Selection.selectAll((Spannable) textView.getText());
+                    textView.setCursorVisible(true);
+                    textView.requestFocus();
+                }
+                return false;
+            }
+        });
     }
 
     //

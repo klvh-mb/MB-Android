@@ -33,22 +33,17 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
     protected ListView listView;
     protected BaseAdapter listAdapter;
     protected List<CommunityPostVM> feedItems;
-    protected View header,loadingFooter;
+    protected View loadingFooter;
     protected TextView footerText;
 
     protected boolean hasHeader = false;
-    protected int headerResouceId = -1;
 
     protected PullToRefreshView pullListView;
 
     abstract protected void loadNewsfeed(int offset);
 
-    protected void setHeaderResouce(int resouceId) {
-        this.headerResouceId = resouceId;
-    }
-
-    protected View getHeaderView() {
-        return this.header;
+    protected View getHeaderView(LayoutInflater inflater) {
+        return null;
     }
 
     @Override
@@ -60,12 +55,12 @@ public abstract class AbstractNewsfeedListFragement extends TrackedFragment {
         loadingFooter = inflater.inflate(R.layout.list_loading_footer, null);
         pullListView = (PullToRefreshView) view.findViewById(R.id.pull_to_refresh);
 
-        feedItems = new ArrayList<CommunityPostVM>();
+        feedItems = new ArrayList<>();
 
         listView = (ListView) view.findViewById(R.id.list);
-        if (headerResouceId != -1) {
-            header = inflater.inflate(headerResouceId, null);
-            listView.addHeaderView(header);
+        View headerView = getHeaderView(inflater);
+        if (headerView != null) {
+            listView.addHeaderView(headerView);
             hasHeader = true;
         }
         listView.addFooterView(loadingFooter);      // need to add footer before set adapter
