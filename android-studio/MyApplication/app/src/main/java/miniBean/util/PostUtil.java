@@ -1,8 +1,5 @@
 package miniBean.util;
 
-import android.text.Html;
-import android.text.Spanned;
-
 import miniBean.viewmodel.CommunityPostVM;
 
 /**

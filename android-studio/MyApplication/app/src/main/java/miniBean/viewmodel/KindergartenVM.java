@@ -58,6 +58,13 @@ public class KindergartenVM {
     public String nadPmT;
     public String nadWdT;
 
+    public String sufee;
+    public String wufee;
+    public String sbfee;
+    public String tsfee;
+    public String tbfee;
+    public String wbfee;
+
     public int nop;
     public int nol;
     public int nov;
@@ -552,5 +559,61 @@ public class KindergartenVM {
 
     public void setNadWdT(String nadWdT) {
         this.nadWdT = nadWdT;
+    }
+
+    public String getSufee() {
+        return sufee;
+    }
+
+    public void setSufee(String sufee) {
+        this.sufee = sufee;
+    }
+
+    public String getWufee() {
+        return wufee;
+    }
+
+    public void setWufee(String wufee) {
+        this.wufee = wufee;
+    }
+
+    public String getSbfee() {
+        return sbfee;
+    }
+
+    public void setSbfee(String sbfee) {
+        this.sbfee = sbfee;
+    }
+
+    public String getTsfee() {
+        return tsfee;
+    }
+
+    public void setTsfee(String tsfee) {
+        this.tsfee = tsfee;
+    }
+
+    public String getTbfee() {
+        return tbfee;
+    }
+
+    public void setTbfee(String tbfee) {
+        this.tbfee = tbfee;
+    }
+
+    public String getWbfee() {
+        return wbfee;
+    }
+
+    public void setWbfee(String wbfee) {
+        this.wbfee = wbfee;
+    }
+
+    public void setIsLike(boolean isLike) {
+        this.isLike = isLike;
+    }
+
+    public void setIsBookmarked(boolean isBookmarked) {
+        this.isBookmarked = isBookmarked;
     }
 }
