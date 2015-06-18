@@ -20,6 +20,7 @@ import miniBean.R;
 import miniBean.activity.KGCommunityActivity;
 import miniBean.app.AppController;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
@@ -105,7 +106,7 @@ public class KGListAdapter extends BaseAdapter {
         commentNoText.setText(item.getNop()+"");
 
         curriculumValue.setText(item.getCurt());
-        timeValue.setText(item.getCt());
+        timeValue.setText(ViewUtil.translateClassTime(item.getCt(), this.activity.getResources()));
         typeValue.setText(item.getOrgt());
         distName.setText(item.getDis());
 

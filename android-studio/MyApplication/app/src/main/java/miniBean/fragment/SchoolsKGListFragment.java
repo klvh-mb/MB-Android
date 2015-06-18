@@ -13,6 +13,7 @@ import miniBean.R;
 import miniBean.adapter.KGListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
@@ -150,8 +151,9 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
 
         List<KindergartenVM> vm = new ArrayList<>();
         for (int i = 0; i < filteredVMList.size(); i++) {
-            if (!StringUtils.isEmpty(filteredVMList.get(i).getCt()) &&
-                    filteredVMList.get(i).getCt().contains(ctValue)) {
+            String classTime = ViewUtil.translateClassTime(filteredVMList.get(i).getCt(), this.getResources());
+            if (!StringUtils.isEmpty(classTime) &&
+                    classTime.contains(ctValue)) {
                 vm.add(filteredVMList.get(i));
             }
         }

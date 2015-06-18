@@ -30,7 +30,7 @@ import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
-import miniBean.util.PostUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunityPostVM;
 
 public class NewsfeedListAdapter extends BaseAdapter {
@@ -153,10 +153,10 @@ public class NewsfeedListAdapter extends BaseAdapter {
         iconHot.setVisibility(View.GONE);
 
         // New and Hot icons are mutually exclusive
-        if (PostUtil.isNewPost(item)) {
+        if (ViewUtil.isNewPost(item)) {
             iconsLayout.setVisibility(View.VISIBLE);
             iconNew.setVisibility(View.VISIBLE);
-        } else if (PostUtil.isHotPost(item)) {
+        } else if (ViewUtil.isHotPost(item)) {
             iconsLayout.setVisibility(View.VISIBLE);
             iconHot.setVisibility(View.VISIBLE);
         }
