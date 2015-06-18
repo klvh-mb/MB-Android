@@ -21,7 +21,7 @@ public class HtmlUtil {
     }
 
     public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView, boolean longClickSelectAll) {
-        setHtmlText(text, imageGetter, textView, true, longClickSelectAll);
+        setHtmlText(text, imageGetter, textView, longClickSelectAll, true);
     }
 
     public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView, boolean longClickSelectAll, boolean linkMovement) {

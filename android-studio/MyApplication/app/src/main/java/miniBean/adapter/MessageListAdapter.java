@@ -34,6 +34,7 @@ public class MessageListAdapter extends BaseAdapter {
     private ActivityUtil activityUtil;
     private ImageView senderImage;
     private MyImageGetter imageGetter;
+
     public MessageListAdapter(Activity activity, List<MessageVM> messageVMs) {
         this.activity = activity;
         this.messageVMs = messageVMs;
@@ -60,38 +61,27 @@ public class MessageListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, final ViewGroup parent) {
 
         LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        int size=messageVMs.size();
-        System.out.print("inside adapter:::"+size);
 
         MessageVM m = messageVMs.get(position);
 
-        System.out.println("kendo::::"+UserInfoCache.getUser().getId());
-        Long long1 = UserInfoCache.getUser().getId();
-        Long long2 = m.getSuid();
-        System.out.println("sender::::"+m.getSuid());
+        Long userId1 = UserInfoCache.getUser().getId();
+        Long userId2 = m.getSuid();
+
         // Identifying the message owner
-        if (long1.longValue()== long2.longValue()) {
+        if (userId1.longValue() == userId2.longValue()) {
             // message belongs to you, so load the right aligned layout
-            System.out.println("right::::::::::::");
             convertView = mInflater.inflate(R.layout.list_item_message_right, null);
         } else {
             // message belongs to other person, load the left aligned layout
             convertView = mInflater.inflate(R.layout.list_item_message_left, null);
+            senderImage = (ImageView) convertView.findViewById(R.id.senderImage);
+            ImageUtil.displayMiniProfileImage(m.getSuid(), senderImage);
         }
 
-        // TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
-        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.messageImages);
-        senderImage= (ImageView) convertView.findViewById(R.id.senderImage);
-
-        txtMsg.setText(m.getTxt());
-        // lblFrom.setText(m.getSnm());
-
-        System.out.println("suid::::"+m.getSuid());
-        ImageUtil.displayThumbnailProfileImage(m.getSuid(),senderImage);
-
         HtmlUtil.setHtmlText(m.getTxt(), imageGetter, txtMsg, true);
 
+        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.messageImages);
         if(m.isHasImage()) {
             //Log.d(this.getClass().getSimpleName(), "getView: load " + m.getImgs().length+ " images to post/comment #" + position + " - ");
 
@@ -120,8 +110,6 @@ public class MessageListAdapter extends BaseAdapter {
 
     private void loadImages(MessageVM item, final LinearLayout layout) {
         layout.removeAllViewsInLayout();
-
-        System.out.println("loadimages:::"+item.getImgs());
 
         ImageView postImage = new ImageView(this.activity);
         postImage.setAdjustViewBounds(true);

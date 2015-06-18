@@ -161,6 +161,7 @@
     <string name="answers_title">回覆的話題</string>
     <string name="bookmarks_title">我的收藏</string>
 
+    <string name="pm_actionbar_title">私人訊息</string>
     <string name="pm_user">私人訊息</string>
 
     <string name="game_daily_signin_title">每日簽到</string>
