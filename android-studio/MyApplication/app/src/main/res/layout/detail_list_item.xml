@@ -130,8 +130,7 @@
             android:textSize="17dp"
             android:textColor="#333"
             android:lineSpacingExtra="5dp"
-            android:textColorLink="@color/link"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="false" />
 
     </LinearLayout>
 

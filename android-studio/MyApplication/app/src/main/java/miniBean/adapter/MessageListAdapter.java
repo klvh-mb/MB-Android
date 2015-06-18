@@ -22,8 +22,8 @@ import miniBean.R;
 import miniBean.app.MyImageGetter;
 import miniBean.app.UserInfoCache;
 import miniBean.util.ActivityUtil;
-import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.MessageVM;
 
 public class MessageListAdapter extends BaseAdapter {
@@ -31,14 +31,12 @@ public class MessageListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<MessageVM> messageVMs;
     private LinearLayout postImagesLayout;
-    private ActivityUtil activityUtil;
     private ImageView senderImage;
     private MyImageGetter imageGetter;
 
     public MessageListAdapter(Activity activity, List<MessageVM> messageVMs) {
         this.activity = activity;
         this.messageVMs = messageVMs;
-        this.activityUtil = new ActivityUtil(activity);
         this.imageGetter = new MyImageGetter(activity);
     }
 
@@ -60,7 +58,8 @@ public class MessageListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
 
-        LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        if (inflater == null)
+            inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         MessageVM m = messageVMs.get(position);
 
@@ -70,16 +69,16 @@ public class MessageListAdapter extends BaseAdapter {
         // Identifying the message owner
         if (userId1.longValue() == userId2.longValue()) {
             // message belongs to you, so load the right aligned layout
-            convertView = mInflater.inflate(R.layout.list_item_message_right, null);
+            convertView = inflater.inflate(R.layout.list_item_message_right, null);
         } else {
             // message belongs to other person, load the left aligned layout
-            convertView = mInflater.inflate(R.layout.list_item_message_left, null);
+            convertView = inflater.inflate(R.layout.list_item_message_left, null);
             senderImage = (ImageView) convertView.findViewById(R.id.senderImage);
             ImageUtil.displayMiniProfileImage(m.getSuid(), senderImage);
         }
 
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
-        HtmlUtil.setHtmlText(m.getTxt(), imageGetter, txtMsg, true);
+        ViewUtil.setHtmlText(m.getTxt(), imageGetter, txtMsg, true, true);
 
         postImagesLayout = (LinearLayout) convertView.findViewById(R.id.messageImages);
         if(m.isHasImage()) {
@@ -100,7 +99,7 @@ public class MessageListAdapter extends BaseAdapter {
         ImageView postImage = new ImageView(this.activity);
         postImage.setAdjustViewBounds(true);
         postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10, this.activity.getResources()));
+        postImage.setPadding(0, 0, 0, ActivityUtil.getRealDimension(10, this.activity.getResources()));
         layout.addView(postImage);
 
         ImageUtil.displayOriginalMessageImage(item.getImgs(), postImage, new SimpleImageLoadingListener() {
@@ -123,7 +122,7 @@ public class MessageListAdapter extends BaseAdapter {
                     int height = loadedImage.getHeight();
 
                     // always stretch to message width
-                    int displayWidth = activityUtil.getDisplayDimensions(MessageListAdapter.this.activity).width();
+                    int displayWidth = ActivityUtil.getDisplayDimensions(MessageListAdapter.this.activity).width();
                     float scaleAspect = (float) displayWidth / (float) width;
                     width = displayWidth;
                     height = (int) (height * scaleAspect);

@@ -52,9 +52,9 @@ import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
-import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.SharingUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunityPostCommentVM;
@@ -229,7 +229,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");
 
-                HtmlUtil.setHtmlText(post.getPtl(), imageGetter, questionText, true);
+                ViewUtil.setHtmlText(post.getPtl(), imageGetter, questionText, true);
 
                 isBookmarked = post.isBookmarked;
                 if (isBookmarked) {

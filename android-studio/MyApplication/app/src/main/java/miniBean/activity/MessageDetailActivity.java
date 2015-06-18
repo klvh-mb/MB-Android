@@ -248,7 +248,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                 @Override
                 public void onClick(View v) {
                     if (photos.size() == DefaultValues.MAX_MESSAGE_IMAGES) {
-                        Toast.makeText(MessageDetailActivity.this, MessageDetailActivity.this.getString(R.string.comment_max_images), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MessageDetailActivity.this, MessageDetailActivity.this.getString(R.string.pm_max_images), Toast.LENGTH_SHORT).show();
                     } else {
                         ImageUtil.openPhotoPicker(MessageDetailActivity.this);
                     }
@@ -298,7 +298,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtil.SELECT_PICTURE && resultCode == RESULT_OK &&
-                data != null && photos.size() < DefaultValues.MAX_COMMENT_IMAGES) {
+                data != null && photos.size() < DefaultValues.MAX_MESSAGE_IMAGES) {
 
             selectedImageUri = data.getData();
             selectedImagePath = ImageUtil.getRealPathFromUri(this, selectedImageUri);

@@ -23,7 +23,7 @@
         android:textSize="15dp"
         android:textStyle="bold"
         android:text="-"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/dark_gray_2" />
     <TextView
         android:id="@+id/firstMessageText"
@@ -33,7 +33,7 @@
         android:layout_below="@+id/senderText"
         android:text="-"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="5dp" />
+        android:layout_marginLeft="10dp" />
 
     <TextView
         android:id="@+id/dateText"

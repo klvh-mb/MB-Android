@@ -28,7 +28,6 @@ import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
-import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunityPostVM;
@@ -106,7 +105,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
         //Log.d(this.getClass().getSimpleName(), "getView: Post - " + item.getPtl() + "|#comment: " + item.getN_c());
 
-        HtmlUtil.setHtmlText(item.getPtl(), imageGetter, postTitle, false, false); // disable link movement
+        ViewUtil.setHtmlText(item.getPtl(), imageGetter, postTitle);
         username.setText(item.getP());
         numComments.setText(item.getN_c()+"");
         timeText.setText(DateTimeUtil.getTimeAgo(item.getUt()));

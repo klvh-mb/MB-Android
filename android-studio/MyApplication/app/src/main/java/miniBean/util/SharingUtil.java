@@ -71,9 +71,9 @@ public class SharingUtil {
         String message = post.getPtl();
         String url = UrlUtil.createPostLandingUrl(post);
         message = message +
-                HtmlUtil.LINE_BREAK +
+                ViewUtil.HTML_LINE_BREAK +
                 url +
-                HtmlUtil.LINE_BREAK +
+                ViewUtil.HTML_LINE_BREAK +
                 SHARING_MESSAGE_NOTE;
         return message;
     }
@@ -85,9 +85,9 @@ public class SharingUtil {
         }
         String url = UrlUtil.createSchoolUrl(school);
         message = message +
-                HtmlUtil.LINE_BREAK +
+                ViewUtil.HTML_LINE_BREAK +
                 url +
-                HtmlUtil.LINE_BREAK +
+                ViewUtil.HTML_LINE_BREAK +
                 SHARING_MESSAGE_NOTE;
         return message;
     }
@@ -99,9 +99,9 @@ public class SharingUtil {
         }
         String url = UrlUtil.createSchoolUrl(school);
         message = message +
-                HtmlUtil.LINE_BREAK +
+                ViewUtil.HTML_LINE_BREAK +
                 url +
-                HtmlUtil.LINE_BREAK +
+                ViewUtil.HTML_LINE_BREAK +
                 SHARING_MESSAGE_NOTE;
         return message;
     }
