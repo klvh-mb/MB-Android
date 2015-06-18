@@ -26,7 +26,7 @@
             android:layout_height="fill_parent"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="Messages"
+            android:text="@string/pm_actionbar_title"
             android:textColor="#ffffff"
             android:textSize="22dp"
             android:gravity="center" />

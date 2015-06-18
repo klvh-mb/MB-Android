@@ -53,14 +53,14 @@ public class ConversationListAdapter extends BaseAdapter {
         if (view == null)
             view = inflater.inflate(R.layout.conversation_list_item, null);
 
-        senderText= (TextView) view.findViewById(R.id.senderText);
-        dateText= (TextView) view.findViewById(R.id.dateText);
-        firstMessageText= (TextView) view.findViewById(R.id.firstMessageText);
-        userPicture= (ImageView) view.findViewById(R.id.userPicture);
+        senderText = (TextView) view.findViewById(R.id.senderText);
+        dateText = (TextView) view.findViewById(R.id.dateText);
+        firstMessageText = (TextView) view.findViewById(R.id.firstMessageText);
+        userPicture = (ImageView) view.findViewById(R.id.userPicture);
 
-        ConversationVM item=conversationVMs.get(i);
+        ConversationVM item = conversationVMs.get(i);
 
-        ImageUtil.displayThumbnailProfileImage(item.getId(), userPicture);
+        ImageUtil.displayMiniProfileImage(item.getId(), userPicture);
 
         senderText.setText(item.getNm());
         dateText.setText(DateTimeUtil.getTimeAgo(item.getLmd()));
