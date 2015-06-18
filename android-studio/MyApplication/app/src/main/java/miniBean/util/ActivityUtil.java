@@ -88,29 +88,6 @@ public class ActivityUtil {
     }
 
     //
-    // UI
-    //
-
-    public static void setLongClickSelectAll(TextView textView) {
-        textView.setTextIsSelectable(true);
-        textView.setFocusable(true);
-        textView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (v instanceof TextView) {
-                    TextView textView = (TextView) v;
-                    //textView.setSelectAllOnFocus(true);
-                    //textView.setSelected(true);
-                    Selection.selectAll((Spannable) textView.getText());
-                    textView.setCursorVisible(true);
-                    textView.requestFocus();
-                }
-                return false;
-            }
-        });
-    }
-
-    //
     // Retrofit
     //
 

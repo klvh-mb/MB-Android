@@ -28,8 +28,6 @@ public class MessageListFragment extends TrackedFragment {
     private ConversationListAdapter adapter;
     private List<ConversationVM> conversationVMList;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -40,7 +38,6 @@ public class MessageListFragment extends TrackedFragment {
         getAllConversation();
 
         conversationVMList=new ArrayList<>();
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

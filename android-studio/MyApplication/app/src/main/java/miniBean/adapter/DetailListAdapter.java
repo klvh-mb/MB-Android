@@ -34,8 +34,8 @@ import miniBean.app.MyImageGetter;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
-import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -225,7 +225,7 @@ public class DetailListAdapter extends BaseAdapter {
             }
         }
 
-        HtmlUtil.setHtmlText(item.getD(), imageGetter, postBodyText, true);
+        ViewUtil.setHtmlText(item.getD(), imageGetter, postBodyText, true, true);
 
         ownerName.setText(item.getOn());
         ownerName.setOnClickListener(new View.OnClickListener() {
