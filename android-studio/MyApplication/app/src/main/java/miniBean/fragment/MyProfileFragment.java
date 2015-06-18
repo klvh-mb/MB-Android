@@ -56,8 +56,8 @@ public class MyProfileFragment extends TrackedFragment {
         notification = (ViewGroup) actionBarView.findViewById(R.id.notificationLayout);
         requestCount = (TextView) actionBarView.findViewById(R.id.requestCount);
         notificationCount = (TextView) actionBarView.findViewById(R.id.notificationCount);
-        messageCount= (TextView) actionBarView.findViewById(R.id.messageCount);
-        message= (ViewGroup) actionBarView.findViewById(R.id.messageLayout);
+        messageCount = (TextView) actionBarView.findViewById(R.id.messageCount);
+        message = (ViewGroup) actionBarView.findViewById(R.id.messageLayout);
 
         back = (ImageView) actionBarView.findViewById(R.id.backAction);
         back.setVisibility(View.INVISIBLE);

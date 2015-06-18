@@ -11,31 +11,33 @@
         android:id="@+id/senderImage"
         android:layout_width="60dp"
         android:layout_height="60dp" />
-<RelativeLayout
-    android:layout_marginLeft="10dp"
-    android:padding="10dp"
-    android:background="@drawable/bg_msg_from"
-    android:layout_toRightOf="@+id/senderImage"
-    android:layout_width="120dp"
-    android:layout_height="wrap_content">
-    <TextView
 
-        android:id="@+id/txtMsg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        />
-    <LinearLayout
-        android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:id="@+id/messageImages"
-        android:layout_below="@+id/txtMsg"></LinearLayout>
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        android:background="@drawable/bg_msg_from"
+        android:layout_toRightOf="@+id/senderImage"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:id="@+id/txtMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            />
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/messageImages"
+            android:layout_below="@+id/txtMsg"></LinearLayout>
+    </RelativeLayout>
+
 </RelativeLayout>

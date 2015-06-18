@@ -59,12 +59,11 @@ public class MessageListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
 
-        LayoutInflater mInflater = (LayoutInflater)activity
-                .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater mInflater = (LayoutInflater)activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         int size=messageVMs.size();
         System.out.print("inside adapter:::"+size);
 
-         MessageVM m = messageVMs.get(position);
+        MessageVM m = messageVMs.get(position);
 
         System.out.println("kendo::::"+UserInfoCache.getUser().getId());
         Long long1 = UserInfoCache.getUser().getId();
@@ -72,31 +71,26 @@ public class MessageListAdapter extends BaseAdapter {
         System.out.println("sender::::"+m.getSuid());
         // Identifying the message owner
         if (long1.longValue()== long2.longValue()) {
-        // message belongs to you, so load the right aligned layout
+            // message belongs to you, so load the right aligned layout
             System.out.println("right::::::::::::");
-        convertView = mInflater.inflate(R.layout.list_item_message_right,
-                null);
-    } else {
-        // message belongs to other person, load the left aligned layout
-        convertView = mInflater.inflate(R.layout.list_item_message_left,
-                null);
-    }
+            convertView = mInflater.inflate(R.layout.list_item_message_right, null);
+        } else {
+            // message belongs to other person, load the left aligned layout
+            convertView = mInflater.inflate(R.layout.list_item_message_left, null);
+        }
 
+        // TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
+        TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
+        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.messageImages);
+        senderImage= (ImageView) convertView.findViewById(R.id.senderImage);
 
-
-//    TextView lblFrom = (TextView) convertView.findViewById(R.id.lblMsgFrom);
-    TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
-    postImagesLayout = (LinearLayout) convertView.findViewById(R.id.messageImages);
-    senderImage= (ImageView) convertView.findViewById(R.id.senderImage);
-
-    txtMsg.setText(m.getTxt());
-  //  lblFrom.setText(m.getSnm());
+        txtMsg.setText(m.getTxt());
+        // lblFrom.setText(m.getSnm());
 
         System.out.println("suid::::"+m.getSuid());
         ImageUtil.displayThumbnailProfileImage(m.getSuid(),senderImage);
 
-        HtmlUtil.setHtmlText(m.getTxt(),imageGetter,txtMsg);
-
+        HtmlUtil.setHtmlText(m.getTxt(), imageGetter, txtMsg, true);
 
         if(m.isHasImage()) {
             //Log.d(this.getClass().getSimpleName(), "getView: load " + m.getImgs().length+ " images to post/comment #" + position + " - ");
@@ -121,72 +115,55 @@ public class MessageListAdapter extends BaseAdapter {
             postImagesLayout.setVisibility(View.GONE);
         }
 
-    return convertView;
+        return convertView;
     }
+
     private void loadImages(MessageVM item, final LinearLayout layout) {
         layout.removeAllViewsInLayout();
 
         System.out.println("loadimages:::"+item.getImgs());
-      //  for (Long imageId : item.getImgs()) {
-            ImageView postImage = new ImageView(this.activity);
-            postImage.setAdjustViewBounds(true);
-            postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10));
-            layout.addView(postImage);
 
-            /*
-            postImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    fullscreenImagePopup(source);
+        ImageView postImage = new ImageView(this.activity);
+        postImage.setAdjustViewBounds(true);
+        postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10, this.activity.getResources()));
+        layout.addView(postImage);
+
+        ImageUtil.displayMessageImage(item.getImgs(), postImage, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                if (loadedImage != null) {
+                    Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "|" + loadedImage.getHeight());
+
+                    int width = loadedImage.getWidth();
+                    int height = loadedImage.getHeight();
+
+                    // always stretch to screen width
+                    int displayWidth = activityUtil.getDisplayDimensions(MessageListAdapter.this.activity).width();
+                    float scaleAspect = (float) displayWidth / (float) width;
+                    width = displayWidth;
+                    height = (int) (height * scaleAspect);
+
+                    Log.d(this.getClass().getSimpleName(), "onLoadingComplete: after resize - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
+
+                    Drawable d = new BitmapDrawable(
+                            MessageListAdapter.this.activity.getResources(),
+                            Bitmap.createScaledBitmap(loadedImage, width, height, false));
+                    ImageView imageView = (ImageView) view;
+                    imageView.setImageDrawable(d);
+                    imageView.setVisibility(View.VISIBLE);
                 }
-            });
-            */
-
-            // obsolete
-            /*
-            String source = activity.getResources().getString(R.string.base_url) + "/image/get-original-post-image-by-id/" + imageId;
-            Log.d(this.getClass().getSimpleName(), "loadImages: source - "+source);
-            new LoadPostImage().execute(source, postImage);
-            */
-
-            ImageUtil.displayMessageImage(item.getImgs(), postImage, new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingStarted(String imageUri, View view) {
-
-                }
-
-                @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-                }
-
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    if (loadedImage != null) {
-                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "|" + loadedImage.getHeight());
-
-                        int width = loadedImage.getWidth();
-                        int height = loadedImage.getHeight();
-
-                        // always stretch to screen width
-                        int displayWidth = activityUtil.getDisplayDimensions().width();
-                        float scaleAspect = (float) displayWidth / (float) width;
-                        width = displayWidth;
-                        height = (int) (height * scaleAspect);
-
-                        Log.d(this.getClass().getSimpleName(), "onLoadingComplete: after resize - " + width + "|" + height + " with scaleAspect=" + scaleAspect);
-
-                        Drawable d = new BitmapDrawable(
-                                MessageListAdapter.this.activity.getResources(),
-                                Bitmap.createScaledBitmap(loadedImage, width, height, false));
-                        ImageView imageView = (ImageView) view;
-                        imageView.setImageDrawable(d);
-                        imageView.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-        //}
-
+            }
+        });
     }
 }

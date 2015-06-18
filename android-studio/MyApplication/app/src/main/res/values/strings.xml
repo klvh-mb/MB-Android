@@ -143,7 +143,7 @@
     <!-- Profile tab -->
     <string name="settings_actionbar_title">設定</string>
     <string name="logout">登出</string>
-    <string name="my_profile_actionbar_title">我的主頁</string>
+    <string name="my_profile_actionbar_title"></string>
     <string name="user_profile_actionbar_title">主頁</string>
     <string name="edit_user_info">更改資料</string>
     <string name="edit_user_info_login_method">登入方式 : </string>
@@ -160,6 +160,8 @@
     <string name="questions_title">發佈的話題</string>
     <string name="answers_title">回覆的話題</string>
     <string name="bookmarks_title">我的收藏</string>
+
+    <string name="pm_user">私人訊息</string>
 
     <string name="game_daily_signin_title">每日簽到</string>
     <string name="game_daily_signin_text">立即簽到累積小豆豆!</string>
@@ -208,6 +210,12 @@
     <string name="schools_info_pm">下午班</string>
     <string name="schools_info_wd">全日班</string>
     <string name="schools_info_total">總數</string>
+    <string name="schools_info_summer_uniform">夏季校服</string>
+    <string name="schools_info_winter_uniform">冬季校服</string>
+    <string name="schools_info_schoolbag">書包</string>
+    <string name="schools_info_tea">茶點</string>
+    <string name="schools_info_textbooks">課本</string>
+    <string name="schools_info_workbooks">練習簿/作業</string>
     <string name="schools_info_fee_note">全年學費(期數)</string>
     <string name="schools_info_not_provide">沒有直接代辦</string>
     <string name="schools_info_comm_welcome">歡迎和其他家長一起討論</string>
@@ -229,6 +237,7 @@
     <string name="schools_landing_title_pn">幼兒班(PN班 2-3歲) 收生資料</string>
     <string name="schools_landing_title_kg_1">學生人數</string>
     <string name="schools_landing_title_kg_2">全年學費 (2014/15 學年資料)</string>
+    <string name="schools_landing_title_kg_3">主要代辦項目參考價目 (2013/14 學年)</string>
     <string name="schools_landing_title_curriculum">課程資料</string>
     <string name="schools_landing_title_contact">聯絡資料</string>
     <string name="schools_landing_title_comm">討論區</string>

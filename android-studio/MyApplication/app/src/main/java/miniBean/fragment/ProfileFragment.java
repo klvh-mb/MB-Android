@@ -55,7 +55,7 @@ public class ProfileFragment extends TrackedFragment {
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
     private boolean coverPhotoClicked = false, profilePhotoClicked=false;
-    private Button editButton,messageButton;
+    private Button editButton, messageButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,8 +76,8 @@ public class ProfileFragment extends TrackedFragment {
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
         userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
-        editButton= (Button) view.findViewById(R.id.editButton);
-        messageButton= (Button) view.findViewById(R.id.messageButton);
+        editButton = (Button) view.findViewById(R.id.editButton);
+        messageButton = (Button) view.findViewById(R.id.messageButton);
         messageButton.setVisibility(View.GONE);
         userInfoLayout.setVisibility(View.GONE);
 
@@ -156,7 +156,6 @@ public class ProfileFragment extends TrackedFragment {
                 startActivity(intent);
             }
         });
-
 
         getUserInfo();
         getBookmarkSummary();
