@@ -131,12 +131,13 @@
 
         <ImageView
             android:id="@+id/cancelTipsButton"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_close"
             android:layout_gravity="right|top"
-            android:layout_marginRight="32dp"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="25dp"
+            android:padding="6dp" />
 
     </FrameLayout>
 

@@ -38,6 +38,7 @@ public class DefaultValues {
 
     public static int MAX_POST_IMAGES = 3;
     public static int MAX_COMMENT_IMAGES = 3;
+    public static int MAX_MESSAGE_IMAGES = 1;
     public static int MAX_POST_IMAGE_DIMENSION = 100;
 
     public static int IMAGE_CORNERS_ROUNDED_VALUE = 38;

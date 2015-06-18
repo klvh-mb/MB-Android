@@ -34,9 +34,5 @@ public class MessageActivity extends TrackedFragmentActivity {
                 onBackPressed();
             }
         });
-
-
     }
-
-
 }

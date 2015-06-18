@@ -69,7 +69,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     private TextView commentEdit;
     private FrameLayout mainFrameLayout;
     private EditText commentEditText;
-    private PopupWindow commentPopup, paginationPopup, emoPopup;
+    private PopupWindow commentPopup, emoPopup;
     private ActivityUtil activityUtil;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
@@ -101,11 +101,11 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         listView = (ListView)findViewById(R.id.list_view_messages);
         title = (TextView) findViewById(R.id.title);
 
-        messageVMList=new ArrayList<>();
+        messageVMList = new ArrayList<>();
 
         title.setText(getIntent().getStringExtra("user_name"));
 
-        getMessages(getIntent().getLongExtra("cid",0l));
+        getMessages(getIntent().getLongExtra("cid", 0l));
 
         commentEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +114,13 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             }
         });
 
+        ImageView backImage = (ImageView) this.findViewById(R.id.backAction);
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initCommentPopup() {
@@ -224,7 +231,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             commentPostButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("clicked:::::::::");
                     doMessage();
                 }
             });
@@ -241,7 +247,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             commentBrowseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (photos.size() == DefaultValues.MAX_COMMENT_IMAGES) {
+                    if (photos.size() == DefaultValues.MAX_MESSAGE_IMAGES) {
                         Toast.makeText(MessageDetailActivity.this, MessageDetailActivity.this.getString(R.string.comment_max_images), Toast.LENGTH_SHORT).show();
                     } else {
                         ImageUtil.openPhotoPicker(MessageDetailActivity.this);
@@ -324,7 +330,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
     @Override
     public void onBackPressed() {
-            super.onBackPressed();
+        super.onBackPressed();
     }
 
     private void initEmoticonPopup() {
@@ -392,7 +398,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(body.in()));
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        System.out.println("ResponseVm::::" + line);
                         responseVm = responseVm + line;
                     }
 
@@ -422,16 +427,12 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     }
 
     private void uploadPhotos(long commentId) {
-        System.out.println("upload photo called::::"+photos.size());
         for (File photo : photos) {
             photo = ImageUtil.resizeAsJPG(photo);   // IMPORTANT: resize before upload
             TypedFile typedFile = new TypedFile("application/octet-stream", photo);
             AppController.getApi().uploadMessagePhoto(AppController.getInstance().getSessionId(),commentId, typedFile, new Callback<Response>() {
                 @Override
                 public void success(Response array, Response response) {
-
-                    System.out.println("upload success::::");
-
 
                 }
 
