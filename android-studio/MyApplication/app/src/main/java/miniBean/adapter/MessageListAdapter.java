@@ -83,24 +83,10 @@ public class MessageListAdapter extends BaseAdapter {
 
         postImagesLayout = (LinearLayout) convertView.findViewById(R.id.messageImages);
         if(m.isHasImage()) {
-            //Log.d(this.getClass().getSimpleName(), "getView: load " + m.getImgs().length+ " images to post/comment #" + position + " - ");
-
             if(m.getImgs()!=null) {
                 loadImages(m, postImagesLayout);
             }
             postImagesLayout.setVisibility(View.VISIBLE);
-
-            /*if (!item.imageLoaded) {
-                Log.d(this.getClass().getSimpleName(), "getView: load "+item.getImgs().length+" images to post/comment #"+position+" - "+item.getD());
-                loadImages(item, postImagesLayout);
-            } else {
-                for(int i = 0; i < postImagesLayout.getChildCount(); i++) {
-                    Log.d(this.getClass().getSimpleName(), "getView: resume image "+i+" visibility for post/comment #"+position+" - "+item.getD());
-                    View childView = postImagesLayout.getChildAt(i);
-                    childView.setVisibility(View.VISIBLE);
-                }
-            }
-            postImagesLayout.setVisibility(View.VISIBLE);*/
         } else {
             postImagesLayout.setVisibility(View.GONE);
         }
@@ -117,7 +103,7 @@ public class MessageListAdapter extends BaseAdapter {
         postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10, this.activity.getResources()));
         layout.addView(postImage);
 
-        ImageUtil.displayMessageImage(item.getImgs(), postImage, new SimpleImageLoadingListener() {
+        ImageUtil.displayOriginalMessageImage(item.getImgs(), postImage, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
 
@@ -136,7 +122,7 @@ public class MessageListAdapter extends BaseAdapter {
                     int width = loadedImage.getWidth();
                     int height = loadedImage.getHeight();
 
-                    // always stretch to screen width
+                    // always stretch to message width
                     int displayWidth = activityUtil.getDisplayDimensions(MessageListAdapter.this.activity).width();
                     float scaleAspect = (float) displayWidth / (float) width;
                     width = displayWidth;

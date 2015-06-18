@@ -8,15 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ListView
-            android:layout_marginTop="10dp"
             android:id="@+id/list_view_messages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@null"
+            android:background="@color/view_bg"
             android:transcriptMode="alwaysScroll"
             android:stackFromBottom="true"
-            android:divider="@null"
-            android:layout_marginBottom="50dp">
+            android:layout_marginBottom="50dp"
+            android:divider="@null">
         </ListView>
 
         <LinearLayout

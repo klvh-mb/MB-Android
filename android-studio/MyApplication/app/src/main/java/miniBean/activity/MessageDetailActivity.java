@@ -98,10 +98,8 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         commentEdit = (TextView) findViewById(R.id.commentEdit);
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout1);
 
-        listView= (ListView)findViewById(R.id.list_view_messages);
-        title= (TextView) findViewById(R.id.title);
-
-        System.out.println("inside message fragment:::::");
+        listView = (ListView)findViewById(R.id.list_view_messages);
+        title = (TextView) findViewById(R.id.title);
 
         messageVMList=new ArrayList<>();
 
@@ -328,6 +326,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     public void onBackPressed() {
             super.onBackPressed();
     }
+
     private void initEmoticonPopup() {
         mainFrameLayout.getForeground().setAlpha(20);
         mainFrameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
@@ -376,7 +375,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     }
 
     private void doMessage() {
-
         String comment = commentEditText.getText().toString().trim();
         if (StringUtils.isEmpty(comment)) {
             Toast.makeText(MessageDetailActivity.this, MessageDetailActivity.this.getString(R.string.invalid_comment_body_empty), Toast.LENGTH_SHORT).show();
@@ -399,29 +397,22 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                     }
 
                     JSONObject obj = new JSONObject(responseVm);
-
                     JSONArray userGroupArray = obj.getJSONArray("message");
+                    JSONObject object1 = userGroupArray.getJSONObject(0);
+                    MessageVM vm = new MessageVM();
+                    uploadPhotos(object1.getLong("id"));
 
-
-                        JSONObject object1 = userGroupArray.getJSONObject(0);
-                        MessageVM vm = new MessageVM();
-                    System.out.println("iddddddddd:::::"+object1.getLong("id"));
-                        uploadPhotos(object1.getLong("id"));
-                /*System.out.println("message id::"+messageVM.getId());
-                uploadPhotos(messageVM.getId());*/
-                        // getMessages(messageVM.getSuid());
-                        commentPopup.dismiss();
-                        getMessages(getIntent().getLongExtra("cid", 0l));
-
-
+                    /*System.out.println("message id::"+messageVM.getId());
+                    uploadPhotos(messageVM.getId());*/
+                    // getMessages(messageVM.getSuid());
+                    commentPopup.dismiss();
+                    getMessages(getIntent().getLongExtra("cid", 0l));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
-
 
             @Override
             public void failure(RetrofitError error) {
@@ -430,64 +421,62 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         });
     }
 
-            private void uploadPhotos(long commentId) {
-                System.out.println("upload photo called::::"+photos.size());
-                for (File photo : photos) {
-                    photo = ImageUtil.resizeAsJPG(photo);   // IMPORTANT: resize before upload
-                    TypedFile typedFile = new TypedFile("application/octet-stream", photo);
-                    AppController.getApi().uploadMessagePhoto(AppController.getInstance().getSessionId(),commentId, typedFile, new Callback<Response>() {
-                        @Override
-                        public void success(Response array, Response response) {
+    private void uploadPhotos(long commentId) {
+        System.out.println("upload photo called::::"+photos.size());
+        for (File photo : photos) {
+            photo = ImageUtil.resizeAsJPG(photo);   // IMPORTANT: resize before upload
+            TypedFile typedFile = new TypedFile("application/octet-stream", photo);
+            AppController.getApi().uploadMessagePhoto(AppController.getInstance().getSessionId(),commentId, typedFile, new Callback<Response>() {
+                @Override
+                public void success(Response array, Response response) {
 
-                            System.out.println("upload success::::");
+                    System.out.println("upload success::::");
 
 
-                        }
-
-                        @Override
-                        public void failure(RetrofitError retrofitError) {
-                            retrofitError.printStackTrace(); //to see if you have errors
-                        }
-                    });
                 }
-            }
 
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    retrofitError.printStackTrace(); //to see if you have errors
+                }
+            });
+        }
+    }
 
-            private void getMessages(Long id) {
-                AppController.getApi().getMessages(id, 0l, AppController.getInstance().getSessionId(), new Callback<Response>() {
-                    @Override
-                    public void success(Response response, Response response1) {
-                        System.out.println("getMEssaged called called :::::"+response1.getUrl());
-                        String responseVm = "";
-                        TypedInput body = response.getBody();
-                        messageVMList.clear();
-                        try {
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(body.in()));
-                            String line;
-                            while ((line = reader.readLine()) != null) {
-                                System.out.println("ResponseVm::::" + line);
-                                responseVm = responseVm + line;
-                            }
+    private void getMessages(Long id) {
+        AppController.getApi().getMessages(id, 0l, AppController.getInstance().getSessionId(), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response1) {
+                String responseVm = "";
+                TypedInput body = response.getBody();
+                messageVMList.clear();
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(body.in()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        responseVm = responseVm + line;
+                    }
 
-                            JSONObject obj = new JSONObject(responseVm);
+                    JSONObject obj = new JSONObject(responseVm);
 
-                            JSONArray userGroupArray = obj.getJSONArray("message");
+                    JSONArray userGroupArray = obj.getJSONArray("message");
 
-                            for (int i = 0; i < userGroupArray.length(); i++) {
-                                JSONObject object1 = userGroupArray.getJSONObject(i);
-                                MessageVM vm = new MessageVM();
-                                vm.setId(object1.getLong("id"));
-                                vm.setHasImage(object1.getBoolean("hasImage"));
-                                vm.setSnm(object1.getString("snm"));
-                                vm.setSuid(object1.getLong("suid"));
-                                vm.setCd(object1.getLong("cd"));
-                                vm.setTxt(object1.getString("txt"));
+                    for (int i = 0; i < userGroupArray.length(); i++) {
+                        JSONObject object1 = userGroupArray.getJSONObject(i);
+                        MessageVM vm = new MessageVM();
+                        vm.setId(object1.getLong("id"));
+                        vm.setHasImage(object1.getBoolean("hasImage"));
+                        vm.setSnm(object1.getString("snm"));
+                        vm.setSuid(object1.getLong("suid"));
+                        vm.setCd(object1.getLong("cd"));
+                        vm.setTxt(object1.getString("txt"));
 
-                                if(!object1.isNull("imgs")) {
-                                    System.out.println("fill image:::"+object1.getLong("imgs"));
-                                    vm.setImgs(object1.getLong("imgs"));
-                                }
-                                messageVMList.add(vm);
+                        if(!object1.isNull("imgs")) {
+                            System.out.println("fill image:::"+object1.getLong("imgs"));
+                            vm.setImgs(object1.getLong("imgs"));
+                        }
+                        messageVMList.add(vm);
+
                         /*tb_user_group group = new tb_user_group();
                         group.setId((long)object1.getInt("id"));
                         group.setHashcode(object1.getString("hashcode"));
@@ -495,46 +484,44 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                         group.setUsg_name(object1.getString("usg_name"));
                         group.setOptid(object1.getInt("optid"));
                         groups.add(group);*/
-                            }
+                    }
 
+                    //messageVMList.addAll(messageVMs);
 
-                            //messageVMList.addAll(messageVMs);
+                    Collections.sort(messageVMList, new Comparator<MessageVM>() {
+                        public int compare(MessageVM m1, MessageVM m2) {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(m1.getCd());
 
-                            Collections.sort(messageVMList, new Comparator<MessageVM>() {
-                                public int compare(MessageVM m1, MessageVM m2) {
-                                    Calendar calendar = Calendar.getInstance();
-                                    calendar.setTimeInMillis(m1.getCd());
+                            Calendar calendar1 = Calendar.getInstance();
+                            calendar1.setTimeInMillis(m1.getCd());
 
-                                    Calendar calendar1 = Calendar.getInstance();
-                                    calendar1.setTimeInMillis(m1.getCd());
+                            //Date date1=calendar.getTimeInMillis();
 
-                                    //Date date1=calendar.getTimeInMillis();
-
-                                    Date date2=calendar1.getTime();
-                                   return Long.compare(m1.getCd(), m2.getCd());
-                                    //return calendar.getTimeInMillis().compare(calendar1.getTimeInMillis());
-                                }
-                            });
-
-
-                            adapter = new MessageListAdapter(MessageDetailActivity.this, messageVMList);
-                            listView.setAdapter(adapter);
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            Date date2=calendar1.getTime();
+                            return Long.compare(m1.getCd(), m2.getCd());
+                            //return calendar.getTimeInMillis().compare(calendar1.getTimeInMillis());
                         }
-                    }
+                    });
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        // System.out.println("url::::"+error.getResponse().getUrl());
-                        error.printStackTrace();
-                    }
-                });
-       }
-  }
+                    adapter = new MessageListAdapter(MessageDetailActivity.this, messageVMList);
+                    listView.setAdapter(adapter);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                // System.out.println("url::::"+error.getResponse().getUrl());
+                error.printStackTrace();
+            }
+        });
+    }
+}
 
 
 
