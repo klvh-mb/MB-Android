@@ -60,7 +60,7 @@ public class ConversationListAdapter extends BaseAdapter {
 
         ConversationVM item = conversationVMs.get(i);
 
-        ImageUtil.displayMiniProfileImage(item.getId(), userPicture);
+        ImageUtil.displayMiniProfileImage(item.getUid(), userPicture);
 
         senderText.setText(item.getNm());
         dateText.setText(DateTimeUtil.getTimeAgo(item.getLmd()));
