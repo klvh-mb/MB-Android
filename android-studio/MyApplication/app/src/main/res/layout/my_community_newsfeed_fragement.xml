@@ -89,7 +89,8 @@
                 android:layout_height="32dp"
                 android:src="@drawable/logo_bean_s"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/newPostIcon" />
 
             <ImageView
                 android:id="@+id/newPostIcon"
@@ -98,7 +99,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/edit_post"
-                android:layout_toRightOf="@+id/mascotIcon" />
+                android:layout_alignParentRight="true" />
         </RelativeLayout>
 
     </RelativeLayout>
