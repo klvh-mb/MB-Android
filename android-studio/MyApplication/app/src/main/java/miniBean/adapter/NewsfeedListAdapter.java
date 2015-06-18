@@ -106,7 +106,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
         //Log.d(this.getClass().getSimpleName(), "getView: Post - " + item.getPtl() + "|#comment: " + item.getN_c());
 
-        HtmlUtil.setHtmlText(item.getPtl(), imageGetter, postTitle, false); // disable link movement
+        HtmlUtil.setHtmlText(item.getPtl(), imageGetter, postTitle, false, false); // disable link movement
         username.setText(item.getP());
         numComments.setText(item.getN_c()+"");
         timeText.setText(DateTimeUtil.getTimeAgo(item.getUt()));

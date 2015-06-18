@@ -345,7 +345,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             activityUtil.hideInputMethodWindow(layout);
 
             emoPopup = new PopupWindow(layout,
-                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH),
+                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     true);
 

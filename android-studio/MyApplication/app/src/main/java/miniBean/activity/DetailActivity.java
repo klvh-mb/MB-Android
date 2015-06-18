@@ -229,7 +229,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");
 
-                HtmlUtil.setHtmlText(post.getPtl(), imageGetter, questionText);
+                HtmlUtil.setHtmlText(post.getPtl(), imageGetter, questionText, true);
 
                 isBookmarked = post.isBookmarked;
                 if (isBookmarked) {

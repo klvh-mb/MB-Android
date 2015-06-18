@@ -17,10 +17,14 @@ public class HtmlUtil {
     private HtmlUtil() {}
 
     public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView) {
-        setHtmlText(text, imageGetter, textView, true);
+        setHtmlText(text, imageGetter, textView, false);
     }
 
-    public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView, boolean linkMovement) {
+    public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView, boolean longClickSelectAll) {
+        setHtmlText(text, imageGetter, textView, true, longClickSelectAll);
+    }
+
+    public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView, boolean longClickSelectAll, boolean linkMovement) {
         //Log.d(this.getClass().getSimpleName(), "getDisplayTextFromHtml: text="+text);
 
         text = text.replace("\n", LINE_BREAK);
@@ -29,7 +33,12 @@ public class HtmlUtil {
         Spanned spanned = Html.fromHtml(text, imageGetter, null);
 
         textView.setText(spanned);
-        if (linkMovement)
+        if (linkMovement) {
             textView.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+
+        if (longClickSelectAll) {
+            ActivityUtil.setLongClickSelectAll(textView);
+        }
     }
 }
