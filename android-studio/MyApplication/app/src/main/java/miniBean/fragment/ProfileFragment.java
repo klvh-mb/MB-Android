@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 
 import miniBean.R;
 import miniBean.activity.EditProfileActivity;
+import miniBean.activity.MessageDetailActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
@@ -34,6 +35,7 @@ import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
+import miniBean.viewmodel.MessageVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -53,7 +55,7 @@ public class ProfileFragment extends TrackedFragment {
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
     private boolean coverPhotoClicked = false, profilePhotoClicked=false;
-    private Button editButton;
+    private Button editButton,messageButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +77,8 @@ public class ProfileFragment extends TrackedFragment {
         settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
         userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
         editButton= (Button) view.findViewById(R.id.editButton);
+        messageButton= (Button) view.findViewById(R.id.messageButton);
+        messageButton.setVisibility(View.GONE);
         userInfoLayout.setVisibility(View.GONE);
 
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +147,17 @@ public class ProfileFragment extends TrackedFragment {
             }
         });
 
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startConversation();
+
+                Intent intent=new Intent(getActivity(), MessageDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         getUserInfo();
         getBookmarkSummary();
 
@@ -178,6 +193,23 @@ public class ProfileFragment extends TrackedFragment {
                 }
             }
         }
+    }
+
+
+    private void startConversation(){
+        AppController.getApi().startConversation(userId,AppController.getInstance().getSessionId(),new Callback<MessageVM>() {
+            @Override
+            public void success(MessageVM messageVM, Response response) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+
+
     }
 
     private void getUserInfo() {

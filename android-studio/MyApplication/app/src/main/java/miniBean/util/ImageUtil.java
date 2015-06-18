@@ -56,6 +56,7 @@ public class ImageUtil {
     public static final String THUMBNAIL_PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-thumbnail-image-by-id/";
     public static final String MINI_PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-mini-image-by-id/";
     public static final String POST_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-post-image-by-id/";
+    public static final String MESSAGE_IMAGE_BY_ID_URL= AppController.BASE_URL + "/image/get-message-image-by-id/";
     public static final String ORIGINAL_POST_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-original-post-image-by-id/";
     //public static final String COMMENT_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-comment-image-by-id/";
 
@@ -225,6 +226,12 @@ public class ImageUtil {
     public static void displayPostImage(long id, ImageView imageView, ImageLoadingListener listener) {
         Log.d(ImageUtil.class.getSimpleName(), "displayPostImage: loading "+POST_IMAGE_BY_ID_URL + id);
         getImageLoader().displayImage(POST_IMAGE_BY_ID_URL + id, imageView, listener);
+    }
+
+    //added by MNT
+    public static void displayMessageImage(long id, ImageView imageView, ImageLoadingListener listener) {
+        Log.d(ImageUtil.class.getSimpleName(), "displayPostImage: loading "+MESSAGE_IMAGE_BY_ID_URL + id);
+        getImageLoader().displayImage(MESSAGE_IMAGE_BY_ID_URL + id, imageView, listener);
     }
 
     public static void displayOriginalPostImage(long id, ImageView imageView) {
