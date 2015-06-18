@@ -15,6 +15,7 @@ import miniBean.R;
 import miniBean.activity.NewPNPostActivity;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.ExternalLauncherUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.PreNurseryVM;
 
 public class PNCommunityFragment extends AbstractSchoolCommunityFragment {
@@ -131,7 +132,7 @@ public class PNCommunityFragment extends AbstractSchoolCommunityFragment {
         }
         districtText.setText(schoolVM.getDis());
         typeValue.setText(schoolVM.getOrgt());
-        timeValue.setText(schoolVM.getCt());
+        timeValue.setText(ViewUtil.translateClassTime(schoolVM.getCt(), this.getResources()));
         orgValue.setText(schoolVM.getOrg());
         curriculumContent.setText(schoolVM.getCur());
         curriculumValue.setText(schoolVM.getCurt());

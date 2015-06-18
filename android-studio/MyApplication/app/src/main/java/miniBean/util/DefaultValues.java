@@ -86,7 +86,6 @@ public class DefaultValues {
             }
     );
 
-    /*
     public static List<String> FILTER_SCHOOLS_TIME = Arrays.asList(
             new String[] {
                     FILTER_SCHOOLS_ALL,
@@ -95,8 +94,8 @@ public class DefaultValues {
                     AppController.getInstance().getString(R.string.filter_schools_time_wd)
             }
     );
-    */
 
+    /*
     public static List<String> FILTER_SCHOOLS_TIME = Arrays.asList(
             new String[] {
                     FILTER_SCHOOLS_ALL,
@@ -105,6 +104,7 @@ public class DefaultValues {
                     "WD"
             }
     );
+    */
 
     public static int MAX_SCHOOLS_SEARCH_COUNT = 100;
 }
