@@ -348,11 +348,14 @@ public class NewPostActivity extends TrackedFragmentActivity {
             View layout = inflater.inflate(R.layout.my_community_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
 
-            myCommunityPopup = new PopupWindow(
-                    layout,
-                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH, this.getResources()),
-                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT, this.getResources()),
-                    true);
+            if (myCommunityPopup == null) {
+                myCommunityPopup = new PopupWindow(
+                        layout,
+                        activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH, this.getResources()),
+                        activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT, this.getResources()),
+                        true);
+            }
+
             myCommunityPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             myCommunityPopup.setOutsideTouchable(false);
             myCommunityPopup.setFocusable(true);
@@ -380,6 +383,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
 
                     updateSelectCommunityLayout();
                     myCommunityPopup.dismiss();
+                    myCommunityPopup = null;
                     Log.d(this.getClass().getSimpleName(), "initMyCommunityPopup: listView.onItemClick: community="+community.getId()+"|"+community.getDn());
                 }
             });
@@ -401,10 +405,12 @@ public class NewPostActivity extends TrackedFragmentActivity {
             // hide soft keyboard when select emoticon
             activityUtil.hideInputMethodWindow(layout);
 
-            emoPopup = new PopupWindow(layout,
-                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true);
+            if (emoPopup == null) {
+                emoPopup = new PopupWindow(layout,
+                        activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true);
+            }
 
             emoPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             emoPopup.setOutsideTouchable(false);
@@ -424,6 +430,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     EmoticonUtil.insertEmoticon(emoticonVMList.get(i), editTextInFocus);
                     emoPopup.dismiss();
+                    emoPopup = null;
                     activityUtil.popupInputMethodWindow();
                 }
             });
@@ -440,8 +447,10 @@ public class NewPostActivity extends TrackedFragmentActivity {
         if (postSuccess ||
                 (StringUtils.isEmpty(title) && StringUtils.isEmpty(content))) {
             super.onBackPressed();
-            if (myCommunityPopup != null)
+            if (myCommunityPopup != null) {
                 myCommunityPopup.dismiss();
+                myCommunityPopup = null;
+            }
             return;
         }
 

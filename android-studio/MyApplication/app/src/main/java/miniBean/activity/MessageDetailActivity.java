@@ -240,6 +240,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                 @Override
                 public void onClick(View v) {
                     commentPopup.dismiss();
+                    commentPopup = null;
                 }
             });
 
@@ -288,14 +289,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         }
     }
 
-    private void removeCommentImage() {
-        if (photos.size() > 0) {
-            int toRemove = photos.size()-1;
-            commentImages.get(toRemove).setImageDrawable(null);
-            photos.remove(toRemove);
-        }
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtil.SELECT_PICTURE && resultCode == RESULT_OK &&
                 data != null && photos.size() < DefaultValues.MAX_MESSAGE_IMAGES) {
@@ -320,6 +313,11 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         activityUtil.popupInputMethodWindow();
     }
 
+    private void resetCommentImages() {
+        commentImages = new ArrayList<>();
+        photos = new ArrayList<>();
+    }
+
     private void setCommentImage(Bitmap bitmap) {
         ImageView commentImage = commentImages.get(photos.size());
         commentImage.setImageDrawable(new BitmapDrawable(this.getResources(), bitmap));
@@ -328,9 +326,12 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         photos.add(photo);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    private void removeCommentImage() {
+        if (photos.size() > 0) {
+            int toRemove = photos.size()-1;
+            commentImages.get(toRemove).setImageDrawable(null);
+            photos.remove(toRemove);
+        }
     }
 
     private void initEmoticonPopup() {
@@ -349,10 +350,13 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             // hide soft keyboard when select emoticon
             activityUtil.hideInputMethodWindow(layout);
 
-            emoPopup = new PopupWindow(layout,
-                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true);
+            if (emoPopup == null) {
+                emoPopup = new PopupWindow(
+                        layout,
+                        activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true);
+            }
 
             emoPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             emoPopup.setOutsideTouchable(false);
@@ -372,6 +376,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     EmoticonUtil.insertEmoticon(emoticonVMList.get(i), commentEditText);
                     emoPopup.dismiss();
+                    emoPopup = null;
                     activityUtil.popupInputMethodWindow();
                 }
             });
@@ -387,11 +392,10 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             return;
         }
 
-        Log.d(this.getClass().getSimpleName(), "doMessage: reciverId=" + getIntent().getLongExtra("uid", 0L) + " comment=" + comment.substring(0, Math.min(5, comment.length())));
+        Log.d(this.getClass().getSimpleName(), "doMessage: receiverId=" + getIntent().getLongExtra("uid", 0L) + " message=" + comment.substring(0, Math.min(5, comment.length())));
         AppController.getApi().sendMessage(new MessagePostVM(getIntent().getLongExtra("uid", 0l), comment, true), AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
             public void success(Response response, Response response1) {
-                System.out.println("doMessaged called called :::::"+response1.getUrl());
                 String responseVm = "";
                 TypedInput body = response.getBody();
                 try {
@@ -404,14 +408,10 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                     JSONObject obj = new JSONObject(responseVm);
                     JSONArray userGroupArray = obj.getJSONArray("message");
                     JSONObject object1 = userGroupArray.getJSONObject(0);
-                    MessageVM vm = new MessageVM();
                     uploadPhotos(object1.getLong("id"));
-
-                    /*System.out.println("message id::"+messageVM.getId());
-                    uploadPhotos(messageVM.getId());*/
-                    // getMessages(messageVM.getSuid());
-                    commentPopup.dismiss();
                     getMessages(getIntent().getLongExtra("cid", 0l));
+
+                    reset();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -421,7 +421,9 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(MessageDetailActivity.this.getClass().getSimpleName(), "doMessage.api.sendMessage: failed with error", error);
+                Toast.makeText(MessageDetailActivity.this, MessageDetailActivity.this.getString(R.string.pm_failed), Toast.LENGTH_SHORT).show();
+                reset();
             }
         });
     }
@@ -497,11 +499,12 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                             Calendar calendar1 = Calendar.getInstance();
                             calendar1.setTimeInMillis(m1.getCd());
 
-                            //Date date1=calendar.getTimeInMillis();
-
-                            Date date2=calendar1.getTime();
-                            return Long.compare(m1.getCd(), m2.getCd());
+                            //Date date1 = calendar.getTimeInMillis();
+                            //Date date2 = calendar1.getTime();
                             //return calendar.getTimeInMillis().compare(calendar1.getTimeInMillis());
+
+                            // return Long.compare(m1.getCd(), m2.getCd());
+                            return ((Long)m1.getCd()).compareTo(m2.getCd());
                         }
                     });
 
@@ -517,10 +520,28 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                // System.out.println("url::::"+error.getResponse().getUrl());
                 error.printStackTrace();
             }
         });
+    }
+
+    private void reset() {
+        if (commentPopup != null) {
+            commentPopup.dismiss();
+            commentPopup = null;
+        }
+        if (emoPopup != null) {
+            emoPopup.dismiss();
+            emoPopup = null;
+        }
+        resetCommentImages();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        reset();
     }
 }
 

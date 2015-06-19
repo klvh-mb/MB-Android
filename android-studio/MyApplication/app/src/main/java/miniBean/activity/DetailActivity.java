@@ -434,6 +434,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 @Override
                 public void onClick(View v) {
                     commentPopup.dismiss();
+                    commentPopup = null;
                 }
             });
 
@@ -483,9 +484,7 @@ public class DetailActivity extends TrackedFragmentActivity {
     }
 
     private void resetCommentImages() {
-        for (ImageView commentImage : commentImages) {
-            commentImage.setImageDrawable(null);
-        }
+        commentImages = new ArrayList<>();
         photos = new ArrayList<>();
     }
 
@@ -548,20 +547,18 @@ public class DetailActivity extends TrackedFragmentActivity {
                 if (withPhotos) {
                     uploadPhotos(array.getId());
                 } else {
-                    getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page
+                    getComments(getIntent().getLongExtra("postId", 0L), 0);  // reload page
                 }
                 Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_success), Toast.LENGTH_LONG).show();
 
-                resetCommentImages();
-                commentPopup.dismiss();
-                commentPopup = null;
+                reset();
             }
 
             @Override
             public void failure(RetrofitError error) {
+                Log.e(DetailActivity.this.getClass().getSimpleName(), "doComment.api.answerOnQuestion: failed with error", error);
                 Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_failed), Toast.LENGTH_SHORT).show();
-                commentPopup.dismiss();
-                error.printStackTrace();
+                reset();
             }
         });
     }
@@ -597,11 +594,13 @@ public class DetailActivity extends TrackedFragmentActivity {
             View layout = inflater.inflate(R.layout.pagination_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
 
-            paginationPopup = new PopupWindow(
-                    layout,
-                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH, this.getResources()),
-                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT, this.getResources()),
-                    true);
+            if (paginationPopup == null) {
+                paginationPopup = new PopupWindow(
+                        layout,
+                        activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH, this.getResources()),
+                        activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT, this.getResources()),
+                        true);
+            }
 
             paginationPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             paginationPopup.setOutsideTouchable(false);
@@ -622,6 +621,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                     Log.d(this.getClass().getSimpleName(), "listView1.onItemClick: Page " + (position + 1));
                     getComments(getIntent().getLongExtra("postId", 0L), position);
                     paginationPopup.dismiss();
+                    paginationPopup = null;
                 }
             });
         } catch (Exception e) {
@@ -791,10 +791,12 @@ public class DetailActivity extends TrackedFragmentActivity {
             // hide soft keyboard when select emoticon
             activityUtil.hideInputMethodWindow(layout);
 
-            emoPopup = new PopupWindow(layout,
-                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true);
+            if (emoPopup == null) {
+                emoPopup = new PopupWindow(layout,
+                        activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true);
+            }
 
             emoPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             emoPopup.setOutsideTouchable(false);
@@ -814,11 +816,35 @@ public class DetailActivity extends TrackedFragmentActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     EmoticonUtil.insertEmoticon(emoticonVMList.get(i), commentEditText);
                     emoPopup.dismiss();
+                    emoPopup = null;
                     activityUtil.popupInputMethodWindow();
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void reset() {
+        if (commentPopup != null) {
+            commentPopup.dismiss();
+            commentPopup = null;
+        }
+        if (emoPopup != null) {
+            emoPopup.dismiss();
+            emoPopup = null;
+        }
+        if (paginationPopup != null) {
+            paginationPopup.dismiss();
+            paginationPopup = null;
+        }
+        resetCommentImages();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        reset();
     }
 }

@@ -164,6 +164,7 @@
     <string name="pm_actionbar_title">私人訊息</string>
     <string name="pm_user">私人訊息</string>
     <string name="pm_max_images">最多可加入1張圖</string>
+    <string name="pm_failed">暫時不能發出訊息，請稍後重試</string>
 
     <string name="game_daily_signin_title">每日簽到</string>
     <string name="game_daily_signin_text">立即簽到累積小豆豆!</string>
