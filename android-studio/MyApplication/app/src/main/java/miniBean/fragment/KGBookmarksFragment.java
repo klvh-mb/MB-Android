@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +25,10 @@ import retrofit.client.Response;
 public class KGBookmarksFragment extends TrackedFragment {
 
     private static final String TAG = KGBookmarksFragment.class.getName();
+
+    private LinearLayout bookmarkTipsLayout, headerLayout;
+    private TextView bookmarkTips;
+
     private ListView bookmarkList;
     private KGBookmarkListAdapter bookmarkListAdapter;
     private TextView totalBookmarkText,bookmarkText;
@@ -37,10 +42,15 @@ public class KGBookmarksFragment extends TrackedFragment {
 
         View view = inflater.inflate(R.layout.school_bookmark_fragment, container, false);
 
+        bookmarkTipsLayout = (LinearLayout) view.findViewById(R.id.bookmarkTipsLayout);
+        bookmarkTips = (TextView) view.findViewById(R.id.bookmarkTips);
+        bookmarkTips.setText(getString(R.string.schools_bookmark_title_kg_tips));
+
+        headerLayout = (LinearLayout) view.findViewById(R.id.headerLayout);
         bookmarkList = (ListView) view.findViewById(R.id.listBookmark);
         totalBookmarkText = (TextView) view.findViewById(R.id.totalBookmark);
         bookmarkText = (TextView) view.findViewById(R.id.bookmarkText);
-        bookmarkText.setText(getString(R.string.schools_pn_bookmark_title_3));
+        bookmarkText.setText(getString(R.string.schools_bookmark_title_kg));
 
         bookmarkList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,6 +86,9 @@ public class KGBookmarksFragment extends TrackedFragment {
                     bookmarkListAdapter = new KGBookmarkListAdapter(getActivity(), schoolVMList);
                     bookmarkList.setAdapter(bookmarkListAdapter);
                     bookmarkListAdapter.notifyDataSetChanged();
+
+                    bookmarkTipsLayout.setVisibility(totalBookmark == 0 ? View.VISIBLE : View.GONE);
+                    headerLayout.setVisibility(totalBookmark == 0? View.GONE : View.VISIBLE);
                 }
             }
 

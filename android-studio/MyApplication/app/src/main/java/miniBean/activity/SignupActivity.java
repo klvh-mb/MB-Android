@@ -136,17 +136,17 @@ public class SignupActivity extends AbstractLoginActivity {
     private void signUp(String lname,String fname,String email,String password,String repeatPassword) {
         showErrorMessage(false);
 
-        AppController.getApi().signUp(lname,fname,email,password,repeatPassword, new Callback<Response>() {
+        AppController.getApi().signUp(lname, fname, email, password, repeatPassword, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                if(response.getStatus() == 200){
+                if (response.getStatus() == 200) {
                     initSuccessPopup();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if(error.getResponse().getStatus() == 400){
+                if (error.getResponse().getStatus() == 400) {
                     showErrorMessage(true);
                 }
                 error.printStackTrace();
@@ -183,11 +183,14 @@ public class SignupActivity extends AbstractLoginActivity {
             TextView emailText = (TextView) layout.findViewById(R.id.emailText);
             Button okButton = (Button) layout.findViewById(R.id.okButton);
 
-            signupSuccessPopup = new PopupWindow(
-                    layout,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true);
+            if (signupSuccessPopup == null) {
+                signupSuccessPopup = new PopupWindow(
+                        layout,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true);
+            }
+
             //signupSuccessPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             //signupSuccessPopup.setOutsideTouchable(false);
             signupSuccessPopup.setFocusable(true);

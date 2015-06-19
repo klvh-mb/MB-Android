@@ -115,8 +115,10 @@ public class DetailListAdapter extends BaseAdapter {
         LinearLayout adminLayout = (LinearLayout) convertView.findViewById(R.id.adminLayout);
         if (AppController.isUserAdmin()) {
             ImageView androidIcon = (ImageView) convertView.findViewById(R.id.androidIcon);
+            ImageView iosIcon = (ImageView) convertView.findViewById(R.id.iosIcon);
             ImageView mobileIcon = (ImageView) convertView.findViewById(R.id.mobileIcon);
             androidIcon.setVisibility(item.isAndroid()? View.VISIBLE : View.GONE);
+            iosIcon.setVisibility(item.isIOS()? View.VISIBLE : View.GONE);
             mobileIcon.setVisibility(item.isMobile()? View.VISIBLE : View.GONE);
 
             adminLayout.setVisibility(View.VISIBLE);

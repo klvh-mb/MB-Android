@@ -89,6 +89,14 @@
                         android:layout_marginLeft="3dp" />
 
                     <ImageView
+                        android:id="@+id/iosIcon"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_ios"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="3dp" />
+
+                    <ImageView
                         android:id="@+id/mobileIcon"
                         android:layout_width="14dp"
                         android:layout_height="14dp"
