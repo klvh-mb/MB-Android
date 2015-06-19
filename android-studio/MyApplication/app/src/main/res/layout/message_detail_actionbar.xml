@@ -46,7 +46,7 @@
                 android:id="@+id/requestLayout">
 
                 <ImageView
-                    android:id="@+id/request"
+                    android:id="@+id/profileButton"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:src="@drawable/w_profile"

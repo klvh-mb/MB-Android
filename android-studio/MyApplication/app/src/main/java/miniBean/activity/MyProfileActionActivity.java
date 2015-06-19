@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import miniBean.R;
 import miniBean.app.TrackedFragmentActivity;
+import miniBean.fragment.MessageListFragment;
 import miniBean.fragment.SettingsFragment;
 import miniBean.fragment.NotificationListFragment;
 import miniBean.fragment.RequestListFragment;
@@ -54,6 +55,10 @@ public class MyProfileActionActivity extends TrackedFragmentActivity {
             case "settings":
                 titleText.setText(getString(R.string.settings_actionbar_title));
                 fragment = new SettingsFragment();
+                break;
+            case "messages":
+                titleText.setText("Message");
+                fragment = new MessageListFragment();
                 break;
         }
 

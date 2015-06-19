@@ -6,7 +6,8 @@
     android:paddingLeft="10dp"
     android:paddingTop="5dp"
     android:paddingRight="10dp"
-    android:paddingBottom="5dp">
+    android:paddingBottom="5dp"
+    android:id="@+id/conversationLayout">
 
     <ImageView
         android:id="@+id/userPicture"

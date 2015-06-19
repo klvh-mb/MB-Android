@@ -10,6 +10,7 @@ public class ConversationVM {
 	 public Boolean isReaded = false;
 	 public Long mc = 0L;
 	 public Boolean hm = false;
+    public int ur;
 
 
     public String getNm() {
@@ -82,5 +83,13 @@ public class ConversationVM {
 
     public void setHm(Boolean hm) {
         this.hm = hm;
+    }
+
+    public int getUr() {
+        return ur;
+    }
+
+    public void setUr(int ur) {
+        this.ur = ur;
     }
 }

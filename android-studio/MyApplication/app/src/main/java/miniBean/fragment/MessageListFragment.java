@@ -1,5 +1,7 @@
 package miniBean.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +30,8 @@ public class MessageListFragment extends TrackedFragment {
     private ConversationListAdapter adapter;
     private List<ConversationVM> conversationVMList;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -39,6 +43,7 @@ public class MessageListFragment extends TrackedFragment {
 
         conversationVMList=new ArrayList<>();
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -47,12 +52,46 @@ public class MessageListFragment extends TrackedFragment {
                 intent.putExtra("user_name",childVM.getNm());
                 intent.putExtra("uid",childVM.getUid());
                 intent.putExtra("cid",childVM.getId());
+
+                AppController.getInstance().setcId(childVM.getId());
+
                 startActivity(intent);
             }
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final ConversationVM childVM = adapter.getItem(i);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setMessage(getActivity().getString(R.string.post_delete_confirm));
+                alertDialogBuilder.setPositiveButton(getActivity().getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        deleteConversation(childVM.getId());
+                    }
+                });
+                alertDialogBuilder.setNegativeButton(getActivity().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                return false;
+            }
+        });
         return view;
     }
+
+    /*@Override
+    public void onResume() {
+        super.onStart();
+        System.out.println("in onResume::::::::::");
+        getAllConversation();
+    }*/
 
     private void getAllConversation(){
         AppController.getApi().getAllConversation(AppController.getInstance().getSessionId(),new Callback<List<ConversationVM>>() {
@@ -60,8 +99,27 @@ public class MessageListFragment extends TrackedFragment {
             public void success(List<ConversationVM> conversationVMs, Response response) {
                 conversationVMList=conversationVMs;
 
-                adapter=new ConversationListAdapter(getActivity(),conversationVMList);
-                listView.setAdapter(adapter);
+                if(conversationVMList.size() == 0){
+                 //   tipText.setVisibility(View.VISIBLE);
+                }else {
+                    adapter=new ConversationListAdapter(getActivity(),conversationVMList);
+                    listView.setAdapter(adapter);
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
+    private void deleteConversation(Long id){
+        AppController.getApi().deleteConversation(id,AppController.getInstance().getSessionId(),new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response1) {
+                getAllConversation();
             }
 
             @Override

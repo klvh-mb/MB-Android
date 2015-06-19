@@ -22,10 +22,10 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.List;
 
 import miniBean.R;
 import miniBean.activity.EditProfileActivity;
-import miniBean.activity.MessageDetailActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
@@ -35,7 +35,7 @@ import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
-import miniBean.viewmodel.MessageVM;
+import miniBean.viewmodel.ResponseConversationVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -150,10 +150,12 @@ public class ProfileFragment extends TrackedFragment {
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startConversation();
-
+               // startConversation();
+/*
                 Intent intent=new Intent(getActivity(), MessageDetailActivity.class);
-                startActivity(intent);
+                intent.putExtra("uid",userId);
+
+                startActivity(intent);*/
             }
         });
 
@@ -196,9 +198,10 @@ public class ProfileFragment extends TrackedFragment {
 
 
     private void startConversation(){
-        AppController.getApi().startConversation(userId,AppController.getInstance().getSessionId(),new Callback<MessageVM>() {
+        AppController.getApi().startConversation(userId,AppController.getInstance().getSessionId(),new Callback<List<ResponseConversationVM>>() {
             @Override
-            public void success(MessageVM messageVM, Response response) {
+            public void success(List<ResponseConversationVM> responseConversationVM, Response response1) {
+                System.out.println("start conversion:::"+response1.getUrl());
 
             }
 

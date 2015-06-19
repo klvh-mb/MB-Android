@@ -22,6 +22,7 @@ import miniBean.R;
 import miniBean.app.MyImageGetter;
 import miniBean.app.UserInfoCache;
 import miniBean.util.ActivityUtil;
+import miniBean.util.DateTimeUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.MessageVM;
@@ -31,12 +32,13 @@ public class MessageListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<MessageVM> messageVMs;
     private LinearLayout postImagesLayout;
+    private ActivityUtil activityUtil;
     private ImageView senderImage;
     private MyImageGetter imageGetter;
-
     public MessageListAdapter(Activity activity, List<MessageVM> messageVMs) {
         this.activity = activity;
         this.messageVMs = messageVMs;
+        this.activityUtil = new ActivityUtil(activity);
         this.imageGetter = new MyImageGetter(activity);
     }
 
@@ -61,7 +63,7 @@ public class MessageListAdapter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-        MessageVM m = messageVMs.get(position);
+         final MessageVM m = messageVMs.get(position);
 
         Long userId1 = UserInfoCache.getUser().getId();
         Long userId2 = m.getSuid();
@@ -78,7 +80,10 @@ public class MessageListAdapter extends BaseAdapter {
         }
 
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
+        TextView dateMsg = (TextView) convertView.findViewById(R.id.messageDate);
         ViewUtil.setHtmlText(m.getTxt(), imageGetter, txtMsg, true, true);
+
+        dateMsg.setText(DateTimeUtil.getTimeAgo(m.getCd()));
 
         postImagesLayout = (LinearLayout) convertView.findViewById(R.id.messageImages);
         if(m.isHasImage()) {
@@ -90,9 +95,8 @@ public class MessageListAdapter extends BaseAdapter {
             postImagesLayout.setVisibility(View.GONE);
         }
 
-        return convertView;
+    return convertView;
     }
-
     private void loadImages(MessageVM item, final LinearLayout layout) {
         layout.removeAllViewsInLayout();
 
