@@ -94,9 +94,6 @@
         <activity
             android:name=".activity.TopSchoolsActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MessageActivity"
-            android:screenOrientation="portrait" />
 
         <!--activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
