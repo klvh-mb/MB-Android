@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -57,12 +58,18 @@ public class ConversationListAdapter extends BaseAdapter {
         if (view == null)
             view = inflater.inflate(R.layout.conversation_list_item, null);
 
+        ConversationVM item = conversationVMs.get(i);
+        RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.conversationLayout);
+
+        if (item.getUr() != 0) {
+            layout.setBackgroundDrawable(this.activity.getResources().getDrawable(R.drawable.rect_border_notification_new));
+        }
         senderText = (TextView) view.findViewById(R.id.senderText);
         dateText = (TextView) view.findViewById(R.id.dateText);
         firstMessageText = (TextView) view.findViewById(R.id.firstMessageText);
         userPicture = (ImageView) view.findViewById(R.id.userPicture);
 
-        ConversationVM item = conversationVMs.get(i);
+
 
         ImageUtil.displayMiniProfileImage(item.getUid(), userPicture);
 

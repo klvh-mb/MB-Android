@@ -22,6 +22,7 @@ import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.PostResponse;
 import miniBean.viewmodel.PreNurseryVM;
 import miniBean.viewmodel.ProfileVM;
+import miniBean.viewmodel.ResponseConversationVM;
 import miniBean.viewmodel.UserProfileDataVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -295,10 +296,10 @@ public interface MyApi {
     public void getMessages(@Path("id") Long id,@Path("offset") Long offset,@Query("key") String key, Callback<Response> cb);
 
     @GET("/start-conversation/{id}")
-    public void startConversation(@Path("id") Long id,@Query("key") String key, Callback<MessageVM> cb);
+    public void startConversation(@Path("id") Long id,@Query("key") String key, Callback<List<ResponseConversationVM>> cb);
 
     @GET("/delete-conversation/{id}")
-    public void deleteConversation(@Path("id") Long id,@Query("key") String key, Callback<MessageVM> cb);
+    public void deleteConversation(@Path("id") Long id,@Query("key") String key, Callback<Response> cb);
 
     @POST("/message/sendMsg")
     public void sendMessage(@Body MessagePostVM message,@Query("key") String key, Callback<Response> cb);
@@ -312,6 +313,7 @@ public interface MyApi {
     @Multipart
     @POST("/image/sendMessagePhoto") //a function in your api upload image for message
     public void uploadMessagePhoto(@Query("key") String key,@Part("messageId") long id, @Part("send-photo0") TypedFile photo, Callback<Response> cb);
+
 
     //GCM key API's
     @POST("/saveGCMKey/{GCMkey}")

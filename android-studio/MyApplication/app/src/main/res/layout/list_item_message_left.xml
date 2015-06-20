@@ -41,6 +41,11 @@
             android:id="@+id/messageImages"
             android:layout_below="@+id/txtMsg"
             android:visibility="gone"></LinearLayout>
+        <TextView
+            android:id="@+id/messageDate"
+            android:layout_below="@id/messageImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
 </RelativeLayout>

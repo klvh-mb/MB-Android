@@ -17,7 +17,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.MessageActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.app.NotificationCache;
 import miniBean.app.TrackedFragment;
@@ -118,7 +117,7 @@ public class MyProfileFragment extends TrackedFragment {
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                Intent intent = new Intent(getActivity(), MyProfileActionActivity.class);
                 intent.putExtra("key", "messages");
                 intent.putExtra("notifAll", gson.toJson(notifAll));
                 startActivity(intent);
@@ -160,6 +159,13 @@ public class MyProfileFragment extends TrackedFragment {
         } else {
             notificationCount.setVisibility(View.VISIBLE);
             notificationCount.setText(notificationsParentVM.getNotifyCounts() + "");
+        }
+
+        if(notificationsParentVM.getMessageCount() == 0) {
+            messageCount.setVisibility(View.INVISIBLE);
+        }else{
+            messageCount.setVisibility(View.VISIBLE);
+            messageCount.setText(notificationsParentVM.getMessageCount() + "");
         }
     }
 

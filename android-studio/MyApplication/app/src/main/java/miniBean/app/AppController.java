@@ -12,6 +12,7 @@ import miniBean.R;
 import miniBean.util.ImageUtil;
 import miniBean.util.SharedPreferencesUtil;
 import miniBean.viewmodel.LocationVM;
+import miniBean.viewmodel.MessageVM;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -54,6 +55,16 @@ public class AppController extends Application {
 
     private static AppController mInstance;
     private static MyApi api;
+    private long cId;
+    public List<MessageVM> messageVMList;
+
+    public long getcId() {
+        return cId;
+    }
+
+    public void setcId(long cId) {
+        this.cId = cId;
+    }
 
     public static synchronized AppController getInstance() {
         return mInstance;
