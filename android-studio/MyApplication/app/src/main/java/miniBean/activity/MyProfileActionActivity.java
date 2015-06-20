@@ -57,7 +57,7 @@ public class MyProfileActionActivity extends TrackedFragmentActivity {
                 fragment = new SettingsFragment();
                 break;
             case "messages":
-                titleText.setText("Message");
+                titleText.setText(getString(R.string.pm_actionbar_title));
                 fragment = new MessageListFragment();
                 break;
         }

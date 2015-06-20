@@ -53,7 +53,7 @@ public class MessageListFragment extends TrackedFragment {
                 intent.putExtra("uid",childVM.getUid());
                 intent.putExtra("cid",childVM.getId());
 
-                AppController.getInstance().setcId(childVM.getId());
+                AppController.getInstance().setConversationId(childVM.getId());
 
                 startActivity(intent);
             }

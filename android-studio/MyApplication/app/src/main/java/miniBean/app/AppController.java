@@ -20,6 +20,7 @@ import org.acra.*;
 import org.acra.annotation.*;
 
 import java.security.MessageDigest;
+import java.util.List;
 
 /**
  * ARCA config
@@ -55,15 +56,16 @@ public class AppController extends Application {
 
     private static AppController mInstance;
     private static MyApi api;
-    private long cId;
+
+    private long conversationId;
     public List<MessageVM> messageVMList;
 
-    public long getcId() {
-        return cId;
+    public long getConversationId() {
+        return conversationId;
     }
 
-    public void setcId(long cId) {
-        this.cId = cId;
+    public void setConversationId(long conversationId) {
+        this.conversationId = conversationId;
     }
 
     public static synchronized AppController getInstance() {
