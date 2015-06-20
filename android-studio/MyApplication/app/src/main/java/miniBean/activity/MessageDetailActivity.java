@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -91,6 +92,20 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     private Intent intent;
     private Button loadMessage;
     private Long offset=1l;
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            System.out.println("in receiver:::");
+            messageVMList.clear();
+            messageVMList.addAll(AppController.getInstance().messageVMList);
+            System.out.println("in rec size::"+messageVMList.size());
+            adapter.notifyDataSetChanged();
+            // adapter = new MessageListAdapter(MessageDetailActivity.this, messageVMList);
+            //listView.setAdapter(adapter);
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,14 +123,13 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
         intent = new Intent(this, BroadcastService.class);
 
-        listView= (ListView)findViewById(R.id.list_view_messages);
-        title= (TextView) findViewById(R.id.title);
-        spinner= (ProgressBar) findViewById(R.id.progressBar);
+        listView = (ListView)findViewById(R.id.list_view_messages);
+        title = (TextView) findViewById(R.id.title);
+        spinner = (ProgressBar) findViewById(R.id.spinner);
+
         AnimationUtil.show(spinner);
 
-        System.out.println("inside message fragment:::::"+getIntent().getLongExtra("cid",0l));
-
-        messageVMList=new ArrayList<>();
+        messageVMList = new ArrayList<>();
 
         title.setText(getIntent().getStringExtra("user_name"));
 
@@ -324,14 +338,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         }
     }
 
-    private void removeCommentImage() {
-        if (photos.size() > 0) {
-            int toRemove = photos.size()-1;
-            commentImages.get(toRemove).setImageDrawable(null);
-            photos.remove(toRemove);
-        }
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageUtil.SELECT_PICTURE && resultCode == RESULT_OK &&
                 data != null && photos.size() < DefaultValues.MAX_MESSAGE_IMAGES) {
@@ -369,7 +375,13 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         photos.add(photo);
     }
 
-
+    private void removeCommentImage() {
+        if (photos.size() > 0) {
+            int toRemove = photos.size()-1;
+            commentImages.get(toRemove).setImageDrawable(null);
+            photos.remove(toRemove);
+        }
+    }
 
     private void initEmoticonPopup() {
         mainFrameLayout.getForeground().setAlpha(20);
@@ -500,7 +512,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                     JSONObject obj = new JSONObject(responseVm);
 
                     JSONArray userGroupArray = obj.getJSONArray("message");
-                    System.out.println("size message::::"+userGroupArray.length());
+                    System.out.println("size message::::" + userGroupArray.length());
                     for (int i = 0; i < userGroupArray.length(); i++) {
                         JSONObject object1 = userGroupArray.getJSONObject(i);
                         MessageVM vm = new MessageVM();
@@ -511,8 +523,8 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                         vm.setCd(object1.getLong("cd"));
                         vm.setTxt(object1.getString("txt"));
 
-                        if(!object1.isNull("imgs")) {
-                            System.out.println("fill image:::"+object1.getLong("imgs"));
+                        if (!object1.isNull("imgs")) {
+                            System.out.println("fill image:::" + object1.getLong("imgs"));
                             vm.setImgs(object1.getLong("imgs"));
                         }
                         messageVMList.add(vm);
@@ -520,26 +532,27 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
                     Collections.sort(messageVMList, new Comparator<MessageVM>() {
                         public int compare(MessageVM m1, MessageVM m2) {
-                            return Long.compare(m1.getCd(), m2.getCd());
+                            //return Long.compare(m1.getCd(), m2.getCd());
+                            return ((Long)m1.getCd()).compareTo(m2.getCd());
                         }
                     });
 
 
-                            adapter = new MessageListAdapter(MessageDetailActivity.this, messageVMList);
-                            listView.setAdapter(adapter);
-                            AnimationUtil.cancel(spinner);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    adapter = new MessageListAdapter(MessageDetailActivity.this, messageVMList);
+                    listView.setAdapter(adapter);
+                    AnimationUtil.cancel(spinner);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
-                });
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
        }
     private void loadMoreMessages(Long id,Long offset) {
         AppController.getApi().getMessages(id, offset, AppController.getInstance().getSessionId(), new Callback<Response>() {
@@ -599,8 +612,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         });
     }
 
-
- private void reset() {
+    private void reset() {
         if (commentPopup != null) {
             commentPopup.dismiss();
             commentPopup = null;
@@ -611,10 +623,10 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         }
         resetCommentImages();
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("Calling the BroadcastService");
 
         startService(intent);
         registerReceiver(broadcastReceiver, new IntentFilter(BroadcastService.BROADCAST_ACTION));
@@ -623,25 +635,11 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     @Override
     public void onPause() {
         super.onPause();
-          unregisterReceiver(broadcastReceiver);
+
+        unregisterReceiver(broadcastReceiver);
         stopService(intent);
     }
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            System.out.println("in receiver:::");
-            messageVMList.clear();
-            messageVMList.addAll(AppController.getInstance().messageVMList);
-            System.out.println("in rec size::"+messageVMList.size());
-            adapter.notifyDataSetChanged();
-           // adapter = new MessageListAdapter(MessageDetailActivity.this, messageVMList);
-            //listView.setAdapter(adapter);
-
-
-        }
-
-    };
-  }
+}
 
 
 

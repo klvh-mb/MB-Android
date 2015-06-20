@@ -10,7 +10,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+//import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import miniBean.R;
 import miniBean.activity.MainActivity;
@@ -29,6 +29,7 @@ public class GCMNotificationIntentService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
+		/*
 		Bundle extras = intent.getExtras();
 		GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 
@@ -63,8 +64,10 @@ public class GCMNotificationIntentService extends IntentService {
 			}
 		}
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
+		*/
 	}
 
+	/*
 	private void sendNotification(String msg) {
 		Log.d(TAG, "Preparing to send notification...: " + msg);
 		mNotificationManager = (NotificationManager) this
@@ -83,4 +86,5 @@ public class GCMNotificationIntentService extends IntentService {
 		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 		Log.d(TAG, "Notification sent successfully.");
 	}
+	*/
 }
