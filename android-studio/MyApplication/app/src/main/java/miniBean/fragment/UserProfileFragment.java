@@ -160,7 +160,7 @@ public class UserProfileFragment extends TrackedFragment {
                     userInfoLayout.setVisibility(View.GONE);
                 }
 
-                ImageUtil.displayThumbnailProfileImage(userId, userPic);
+                ImageUtil.displayProfileImage(userId, userPic);
                 ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
