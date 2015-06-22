@@ -80,7 +80,7 @@ public class MessageListFragment extends TrackedFragment {
                 });
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-                return false;
+                return true;
             }
         });
         return view;
