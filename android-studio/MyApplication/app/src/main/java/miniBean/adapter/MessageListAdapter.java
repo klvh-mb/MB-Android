@@ -76,7 +76,7 @@ public class MessageListAdapter extends BaseAdapter {
             // message belongs to other person, load the left aligned layout
             convertView = inflater.inflate(R.layout.list_item_message_left, null);
             senderImage = (ImageView) convertView.findViewById(R.id.senderImage);
-            ImageUtil.displayMiniProfileImage(m.getSuid(), senderImage);
+            ImageUtil.displayThumbnailProfileImage(m.getSuid(), senderImage);
         }
 
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);

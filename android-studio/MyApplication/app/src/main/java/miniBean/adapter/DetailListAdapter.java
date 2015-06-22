@@ -253,7 +253,7 @@ public class DetailListAdapter extends BaseAdapter {
         postTime.setText(DateTimeUtil.getTimeAgo(item.getCd()));
 
         // profile pic
-        ImageUtil.displayMiniProfileImage(item.getOid(), userPic);
+        ImageUtil.displayThumbnailProfileImage(item.getOid(), userPic);
 
         // images
         // NOTE: need to load images from UIL cache each time as ListAdapter items are being recycled...

@@ -228,7 +228,7 @@ public class ProfileFragment extends TrackedFragment {
         questionsCount.setText(user.getQuestionsCount()+"");
         answersCount.setText(user.getAnswersCount()+"");
 
-        ImageUtil.displayThumbnailProfileImage(userId, userPic);
+        ImageUtil.displayProfileImage(userId, userPic);
         ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -334,7 +334,7 @@ public class ProfileFragment extends TrackedFragment {
             public void success(Response response, Response response2) {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
-                        ImageUtil.displayThumbnailProfileImage(id, userPic, new SimpleImageLoadingListener() {
+                        ImageUtil.displayProfileImage(id, userPic, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
                                 AnimationUtil.show(spinner);

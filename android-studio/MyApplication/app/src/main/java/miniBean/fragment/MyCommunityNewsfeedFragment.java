@@ -56,7 +56,7 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
         pressNewsfeedButton();
 
         // profile
-        ImageUtil.displayMiniProfileImage(UserInfoCache.getUser().getId(), profileImage);
+        ImageUtil.displayThumbnailProfileImage(UserInfoCache.getUser().getId(), profileImage);
         usernameText.setText(UserInfoCache.getUser().getDisplayName());
 
         profileLayout.setOnClickListener(new View.OnClickListener() {

@@ -71,7 +71,7 @@ public class ConversationListAdapter extends BaseAdapter {
 
 
 
-        ImageUtil.displayMiniProfileImage(item.getUid(), userPicture);
+        ImageUtil.displayThumbnailProfileImage(item.getUid(), userPicture);
 
         senderText.setText(item.getNm());
         dateText.setText(DateTimeUtil.getTimeAgo(item.getLmd()));
