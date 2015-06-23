@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import miniBean.R;
+import miniBean.activity.GameActivity;
 import miniBean.activity.MainActivity;
 import miniBean.activity.NewPostActivity;
 import miniBean.app.TrackedFragment;
@@ -73,6 +74,8 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
             @Override
             public void onClick(View v) {
                 // launch game
+                Intent intent = new Intent(MyCommunityNewsfeedFragment.this.getActivity(), GameActivity.class);
+                startActivity(intent);
             }
         });
 

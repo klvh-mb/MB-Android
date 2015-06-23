@@ -6,7 +6,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
@@ -14,8 +16,11 @@ import android.text.Selection;
 import android.text.Spannable;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -126,7 +131,7 @@ public class ActivityUtil {
         alert(context, title, message,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
     }
@@ -141,6 +146,25 @@ public class ActivityUtil {
             alertBuilder.setTitle(title);
         }
         alertBuilder.show();
+    }
+
+    public static AlertDialog alert(Context context, int dialogResourceId, int buttonResourceId, final View.OnClickListener onClick) {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final View alertDialogView = factory.inflate(dialogResourceId, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.setView(alertDialogView);
+        //alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(android.R.string.yes), onClick);
+        Button button = (Button) alertDialogView.findViewById(buttonResourceId);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClick.onClick(view);
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+        return alertDialog;
     }
 
     //

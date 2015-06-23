@@ -1,7 +1,8 @@
 package miniBean.activity;
 
-import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,6 +25,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
 import retrofit.Callback;
@@ -174,36 +176,18 @@ public class SignupActivity extends AbstractLoginActivity {
 
     private void initSuccessPopup() {
         try {
-            LayoutInflater inflater = (LayoutInflater) SignupActivity.this
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            AlertDialog alertDialog = ActivityUtil.alert(
+                    this,
+                    R.layout.signup_success_popup_window,
+                    R.id.okButton,
+                    new View.OnClickListener() {
+                        public void onClick(View view) {
+                            SignupActivity.this.onBackPressed();
+                        }
+                    });
 
-            View layout = inflater.inflate(R.layout.signup_succeess_popup_window,
-                    (ViewGroup) findViewById(R.id.popupElement));
-
-            TextView emailText = (TextView) layout.findViewById(R.id.emailText);
-            Button okButton = (Button) layout.findViewById(R.id.okButton);
-
-            if (signupSuccessPopup == null) {
-                signupSuccessPopup = new PopupWindow(
-                        layout,
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        true);
-            }
-
-            //signupSuccessPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
-            //signupSuccessPopup.setOutsideTouchable(false);
-            signupSuccessPopup.setFocusable(true);
-            signupSuccessPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
+            TextView emailText = (TextView) alertDialog.findViewById(R.id.emailText);
             emailText.setText(email.getText().toString());
-
-            okButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SignupActivity.this.onBackPressed();
-                }
-            });
         } catch (Exception e) {
             e.printStackTrace();
         }
