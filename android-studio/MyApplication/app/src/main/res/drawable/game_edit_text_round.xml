@@ -10,7 +10,7 @@
                 android:angle="270" />
             <stroke
                 android:width="2.3dp"
-                android:color="@color/kg_maroon" />
+                android:color="@color/game_box_border" />
             <corners
                 android:radius="10dp" />
         </shape>
@@ -25,7 +25,7 @@
                 android:angle="270" />
             <stroke
                 android:width="2.3dp"
-                android:color="@color/kg_maroon" />
+                android:color="@color/game_box_border" />
             <corners
                 android:radius="10dp" />
         </shape>
@@ -40,7 +40,7 @@
                 android:angle="270" />
             <stroke
                 android:width="2.3dp"
-                android:color="@color/kg_maroon" />
+                android:color="@color/game_box_border" />
             <corners
                 android:radius="10dp" />
         </shape>
@@ -56,7 +56,7 @@
                 />
             <stroke
                 android:width="0.7dp"
-                android:color="@color/kg_maroon" />
+                android:color="@color/game_box_border" />
             <corners
                 android:radius="10dp" />
         </shape>

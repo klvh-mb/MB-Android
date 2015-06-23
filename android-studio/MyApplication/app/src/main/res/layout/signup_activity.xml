@@ -195,7 +195,8 @@
             android:textSize="13dp"
             android:layout_weight="0.5"
             android:layout_marginLeft="50dp"
-            android:textColor="@color/dark_gray" />
+            android:textColor="@color/dark_gray"
+            android:checked="true" />
 
         <CheckBox
             android:id="@+id/privacyCheckbox"
@@ -206,7 +207,8 @@
             android:textSize="13dp"
             android:layout_marginRight="50dp"
             android:layout_weight="0.5"
-            android:textColor="@color/dark_gray" />
+            android:textColor="@color/dark_gray"
+            android:checked="true" />
     </LinearLayout>
 </RelativeLayout>
 </ScrollView>

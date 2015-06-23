@@ -1,213 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/bgImage"
-        android:src="@drawable/logo_beans_bg"
-        android:scaleType="fitEnd" />
-
+<RelativeLayout
+    android:id="@+id/rootLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <ScrollView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <RelativeLayout
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/view_bg">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_centerInParent="true"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/progress_spinner"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/facebookText"
-        android:text="@string/signup_fb_title"
-        android:textSize="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:textColor="@color/like_blue"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp" />
-    <ImageView
-        android:id="@+id/facebookButton"
-        android:layout_below="@+id/facebookText"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/facebook_login"
-        android:focusableInTouchMode="true"
-        android:focusable="true" />
-    <TextView
-        android:id="@+id/displaynameNoteText"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_fb_note"
-        android:layout_below="@+id/facebookButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/gray"
-        android:textSize="12dp" />
-
-    <ImageView
+        <RelativeLayout
+        android:layout_margin="10dp"
+        android:id="@+id/gameLayout"
+        android:background="@drawable/game_edit_text_round"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:id="@+id/dashLine"
-        android:src="@drawable/dash_line"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_below="@+id/displaynameNoteText"
-        android:layout_marginTop="15dp"
-        android:scaleType="fitXY" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/signupText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_email_title"
-        android:textSize="15dp"
-        android:layout_below="@+id/dashLine"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/like_blue"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp" />
-
-    <TextView
-        android:id="@+id/errorMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/signup_error_email_already_exists"
-        android:textColor="#ffff0202"
-        android:textSize="16dp"
-        android:layout_toRightOf="@+id/signupText"
-        android:layout_alignParentTop="false"
-        android:layout_alignBaseline="@+id/signupText"
-        android:gravity="right"
-        android:layout_marginRight="35dp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
-
-    <LinearLayout
-        android:id="@+id/editLayout"
-        android:layout_below="@+id/signupText"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/lastNameEditText"
-                android:layout_weight=".5"
-                android:hint="@string/signup_lastname_hint"
-                android:textSize="16dp"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/edit_text_round"
-                android:layout_marginRight="5dp"
-                android:singleLine="true" />
-            <EditText
-                android:id="@+id/firstNameEditText"
-                android:layout_weight=".5"
-                android:hint="@string/signup_firstname_hint"
+                android:layout_height="wrap_content"
+                android:id="@+id/section1"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                android:id="@+id/pointsHeaderLayout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/game_l1"
+                    android:layout_gravity="center_vertical" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/game_points_title"
+                    android:textColor="@color/game_title_text"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+                <View
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/pointsHeaderLayout"
+                android:background="@drawable/line_dotted_green"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:id="@+id/viewBar1">
+            </View>
+
+                <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewBar1"
+                android:layout_margin="5dp"
+                android:id="@+id/pointsLayout">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/game_points_total"
+                            android:id="@+id/pointsDesc"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="0"
+                            android:id="@+id/pointsText"
+                            android:textStyle="bold"
+                            android:textSize="15dp"
+                            android:textColor="@color/orange"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/game_points_redeemed"
+                            android:id="@+id/redeemedPointsDesc"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="-"
+                            android:id="@+id/redeemedPointsText"
+                            android:textSize="15dp"
+                            android:textColor="@color/gray"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/game_points_redeemed_tips"
+                            android:id="@+id/redeemedPointsTips"
+                            android:textColor="@color/gray"
+                            android:textSize="12dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="50dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/section2"
+                android:layout_below="@+id/section1"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                android:id="@+id/signinHeaderLayout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@+id/pointsLayout">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/game_daily_signin_title"
+                    android:textColor="@color/game_title_text"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+                <View
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/signinHeaderLayout"
+                android:background="@drawable/line_dotted_green"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/edit_text_round"
-                android:singleLine="true" />
-        </LinearLayout>
-        <EditText
-            android:id="@+id/emailEditText"
-            android:layout_marginTop="15dp"
-            android:textSize="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/edit_text_round"
-            android:hint="@string/signup_email_hint"
-            android:singleLine="true" />
-        <EditText
-            android:id="@+id/passwordEditText"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:hint="@string/signup_password_hint"
-            android:textSize="16dp"
-            android:layout_height="40dp"
-            android:background="@drawable/edit_text_round"
-            android:singleLine="true"
-            android:password="true" />
-        <EditText
-            android:id="@+id/repeatPasswordEditText"
-            android:layout_marginTop="15dp"
-            android:hint="@string/signup_password_confirm_hint"
-            android:textSize="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/edit_text_round"
-            android:singleLine="true"
-            android:password="true" />
-    </LinearLayout>
+                android:layout_height="3dp"
+                android:id="@+id/viewBar2">
+            </View>
 
-    <Button
-        android:id="@+id/signupButton"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/editLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="@string/signup"
-        android:background="@drawable/rounded_corner_signup_button"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+                <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/viewBar2"
+                android:layout_margin="5dp"
+                android:id="@+id/signinLayout"></LinearLayout>
+            </LinearLayout>
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/section3"
+                android:layout_below="@+id/section2"
+                android:layout_marginBottom="10dp">
 
-    <LinearLayout
-        android:id="@+id/checkboxLayout"
-        android:orientation="horizontal"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/signupButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <CheckBox
-            android:id="@+id/termsCheckbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/signup_terms"
-            android:textSize="13dp"
-            android:layout_weight="0.5"
-            android:layout_marginLeft="50dp"
-            android:textColor="@color/dark_gray" />
+                <LinearLayout
+                android:id="@+id/referralHeaderLayout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@+id/signinLayout">
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/game_referral_title"
+                    android:textColor="@color/game_title_text"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/privacyCheckbox"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/signup_privacy"
-            android:textSize="13dp"
-            android:layout_marginRight="50dp"
-            android:layout_weight="0.5"
-            android:textColor="@color/dark_gray" />
-    </LinearLayout>
-</RelativeLayout>
-</ScrollView>
+                <View
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/referralHeaderLayout"
+                android:background="@drawable/line_dotted_green"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:id="@+id/viewBar3">
+            </View>
+
+                <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/viewBar3"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/referralLayout"></LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+</LinearLayout>
+    </ScrollView>
 </RelativeLayout>

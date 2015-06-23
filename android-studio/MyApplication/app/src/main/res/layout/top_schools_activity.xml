@@ -3,7 +3,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/view_bg">
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
@@ -73,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:id="@+id/headerLayout2"
+            android:id="@+id/pointsHeaderLayout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,14 +97,14 @@
         </LinearLayout>
         <View
             android:layout_marginTop="5dp"
-            android:layout_below="@+id/headerLayout2"
+            android:layout_below="@+id/pointsHeaderLayout"
             android:background="@drawable/dottedline"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:id="@+id/viewBar2">
         </View>
         <ListView
-            android:layout_below="@+id/headerLayout2"
+            android:layout_below="@+id/pointsHeaderLayout"
             android:id="@+id/topBookmarkedList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
