@@ -129,7 +129,7 @@ public class MainActivity extends TrackedFragmentActivity {
             @Override
             public void failure(RetrofitError error) {
                 AnimationUtil.cancel(spinner);
-                error.printStackTrace();
+                Log.e(MainActivity.class.getSimpleName(), "onStart: NotificationCache.refresh: failure", error);
             }
         });
     }
@@ -274,7 +274,7 @@ public class MainActivity extends TrackedFragmentActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            error.printStackTrace();
+                            Log.e(MainActivity.class.getSimpleName(), "init.api.getTopicCommunityCategoriesMap: failure", error);
                         }
                     });
 
@@ -295,7 +295,7 @@ public class MainActivity extends TrackedFragmentActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            error.printStackTrace();
+                            Log.e(MainActivity.class.getSimpleName(), "init.api.getZodiacYearCommunities: failure", error);
                         }
                     });
         }

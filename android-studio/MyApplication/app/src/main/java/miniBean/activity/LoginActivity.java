@@ -86,7 +86,7 @@ public class LoginActivity extends AbstractLoginActivity {
                                     getString(R.string.login_error_message));
                         }
 
-                        error.printStackTrace();
+                        Log.e(LoginActivity.class.getSimpleName(), "api.login: failure", error);
                     }
                 });
             }

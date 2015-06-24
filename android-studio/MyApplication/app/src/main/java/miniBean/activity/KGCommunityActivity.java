@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -95,7 +96,7 @@ public class KGCommunityActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(KGCommunityActivity.class.getSimpleName(), "bookmark: failure", error);
             }
         });
     }
@@ -109,7 +110,7 @@ public class KGCommunityActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(KGCommunityActivity.class.getSimpleName(), "unbookmark: failure", error);
             }
         });
     }
@@ -131,7 +132,7 @@ public class KGCommunityActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(KGCommunityActivity.class.getSimpleName(), "getSchoolInfo: failure", error);
             }
         });
     }
