@@ -488,8 +488,8 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                 }
 
                 @Override
-                public void failure(RetrofitError retrofitError) {
-                    retrofitError.printStackTrace(); //to see if you have errors
+                public void failure(RetrofitError error) {
+                    Log.e(MessageDetailActivity.class.getSimpleName(), "uploadPhotos.api.uploadMessagePhoto: failure", error);
                 }
             });
         }
@@ -550,10 +550,11 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(MessageDetailActivity.class.getSimpleName(), "getMessages: failure", error);
             }
         });
-       }
+    }
+
     private void loadMoreMessages(Long id,Long offset) {
         AppController.getApi().getMessages(id, offset, AppController.getInstance().getSessionId(), new Callback<Response>() {
             @Override
@@ -590,7 +591,8 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
                     Collections.sort(messageVMList, new Comparator<MessageVM>() {
                         public int compare(MessageVM m1, MessageVM m2) {
-                            return Long.compare(m1.getCd(), m2.getCd());
+                            //return Long.compare(m1.getCd(), m2.getCd());
+                            return ((Long)m1.getCd()).compareTo(m2.getCd());
                         }
                     });
 
@@ -607,7 +609,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(MessageDetailActivity.class.getSimpleName(), "loadMoreMessages.api.getMessages: failure", error);
             }
         });
     }

@@ -10,7 +10,7 @@
         android:color="@color/signup_blue" />
 
     <corners
-        android:radius="1dp">
+        android:radius="10dp">
     </corners>
 
 </shape>

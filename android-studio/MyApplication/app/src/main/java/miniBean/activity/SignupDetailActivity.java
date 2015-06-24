@@ -26,6 +26,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
@@ -47,8 +48,7 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
     private LinearLayout babyDetailsLayout1, babyDetailsLayout2, babyDetailsLayout3;
     private TextView titleText;
 
-    public List<String> locations;
-    private List<LocationVM> locationVMList;
+    private List<String> districtNames;
 
     String parenttype = "",babynum = "",babygen1 = "", babygen2 = "", babygen3 = "";
 
@@ -126,8 +126,7 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
 
         finishButton = (Button) findViewById(R.id.finishButton);
 
-        locationVMList = new ArrayList<LocationVM>();
-        setLocation();
+        setDistricts();
 
         babyNumberArray = new String[]{"1","2","3"};
         ArrayAdapter<String> babyAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,babyNumberArray);
@@ -177,9 +176,10 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 locationId = -1;
                 String loc = locationSpinner.getSelectedItem().toString();
-                for (LocationVM vm : locationVMList) {
+                List<LocationVM> districts = DistrictCache.getDistricts();
+                for (LocationVM vm : districts) {
                     if (vm.getDisplayName().equals(loc)) {
-                        locationId = Integer.parseInt(vm.getId().toString());
+                        locationId = vm.getId().intValue();
                         break;
                     }
                 }
@@ -395,28 +395,21 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
         });
     }
 
-    private void setLocation() {
-        AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(), new Callback<List<LocationVM>>() {
-            @Override
-            public void success(List<LocationVM> locationVMs, Response response) {
-                locations = new ArrayList<String>();
+    private void setDistricts(){
+        List<LocationVM> districts = DistrictCache.getDistricts();
+        districtNames = new ArrayList<String>();
+        districtNames.add(getString(R.string.signup_details_location));
+        for (int i = 0; i < districts.size(); i++) {
+            districtNames.add(districts.get(i).getDisplayName());
+        }
 
-                locations.add(getString(R.string.signup_details_location));
-                for (int i = 0; i < locationVMs.size(); i++) {
-                    locations.add(locationVMs.get(i).getDisplayName());
-                    locationVMList.addAll(locationVMs);
-                }
-
-                ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(SignupDetailActivity.this, android.R.layout.simple_spinner_item, locations);
-                locationSpinner.setAdapter(locationAdapter);
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-
-            }
-        });
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(
+                SignupDetailActivity.this,
+                android.R.layout.simple_spinner_item,
+                districtNames);
+        locationSpinner.setAdapter(locationAdapter);
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

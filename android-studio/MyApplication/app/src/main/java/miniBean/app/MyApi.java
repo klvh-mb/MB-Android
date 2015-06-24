@@ -12,6 +12,8 @@ import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
 import miniBean.viewmodel.ConversationVM;
 import miniBean.viewmodel.EmoticonVM;
+import miniBean.viewmodel.GameAccountVM;
+import miniBean.viewmodel.GameTransactionVM;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.MessagePostVM;
@@ -287,7 +289,9 @@ public interface MyApi {
     @GET("/get-top-bookmarked-kgs")
     public void getTopBookmarkedKGs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
 
-    //Messages API's
+    //
+    // Messages APIs
+    //
 
     @GET("/get-all-conversations")
     public void getAllConversation(@Query("key") String key, Callback<List<ConversationVM>> cb);
@@ -314,8 +318,29 @@ public interface MyApi {
     @POST("/image/sendMessagePhoto") //a function in your api upload image for message
     public void uploadMessagePhoto(@Query("key") String key,@Part("messageId") long id, @Part("send-photo0") TypedFile photo, Callback<Response> cb);
 
+    //
+    // Game APIs
+    //
 
-    //GCM key API's
+    @POST("/sign-in-for-today")
+    public void signInForToday(@Query("key") String key, Callback<Response> cb);
+
+    @GET("/get-gameaccount")
+    public void getGameAccount(@Query("key") String key, Callback<GameAccountVM> cb);
+
+    @GET("/get-game-transactions/{offset}")
+    public void getGameTransactions(@Path("offset") Long offset, @Query("key") String key, Callback<List<GameTransactionVM>> cb);
+
+    @GET("/get-latest-game-transactions")
+    public void getLatestGameTransactions(@Query("key") String key, Callback<List<GameTransactionVM>> cb);
+
+    @GET("/get-signup-referrals")
+    public void getSignupReferrals(@Query("key") String key, Callback<List<UserVM>> cb);
+
+    //
+    // GCM key APIs
+    //
+
     @POST("/saveGCMKey/{GCMkey}")
     public void saveGCMkey(@Path("GCMkey") String GCMkey,@Query("key") String key,Callback<Response> cb);
 

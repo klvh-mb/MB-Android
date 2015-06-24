@@ -1,6 +1,7 @@
 package miniBean.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -176,7 +177,7 @@ public class SignupActivity extends AbstractLoginActivity {
 
     private void initSuccessPopup() {
         try {
-            AlertDialog alertDialog = ActivityUtil.alert(
+            Dialog dialog = ActivityUtil.alert(
                     this,
                     R.layout.signup_success_popup_window,
                     R.id.okButton,
@@ -186,7 +187,7 @@ public class SignupActivity extends AbstractLoginActivity {
                         }
                     });
 
-            TextView emailText = (TextView) alertDialog.findViewById(R.id.emailText);
+            TextView emailText = (TextView) dialog.findViewById(R.id.emailText);
             emailText.setText(email.getText().toString());
         } catch (Exception e) {
             e.printStackTrace();

@@ -99,10 +99,11 @@ public class BroadcastService extends Service {
                             }
                             messageVMList.add(vm);
                         }
+
                         Collections.sort(messageVMList, new Comparator<MessageVM>() {
                             public int compare(MessageVM m1, MessageVM m2) {
-
-                                return Long.compare(m1.getCd(), m2.getCd());
+                                //return Long.compare(m1.getCd(), m2.getCd());
+                                return ((Long)m1.getCd()).compareTo(m2.getCd());
                             }
                         });
 

@@ -312,7 +312,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                     }
                 }, DefaultValues.DEFAULT_HANDLER_DELAY);
 
-                error.printStackTrace();
+                Log.e(DetailActivity.class.getSimpleName(), "getQnaDetail: failure", error);
             }
         });
     }
@@ -574,8 +574,8 @@ public class DetailActivity extends TrackedFragmentActivity {
                 }
 
                 @Override
-                public void failure(RetrofitError retrofitError) {
-                    retrofitError.printStackTrace(); //to see if you have errors
+                public void failure(RetrofitError error) {
+                    Log.e(DetailActivity.class.getSimpleName(), "uploadPhotos: failure", error);
                 }
             });
         }
@@ -702,7 +702,7 @@ public class DetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace(); //to see if you have errors
+                Log.e(DetailActivity.class.getSimpleName(), "bookmark: failure", error);
             }
         });
     }
@@ -716,8 +716,7 @@ public class DetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace(); //to see if you have errors
-
+                Log.e(DetailActivity.class.getSimpleName(), "unbookmark: failure", error);
             }
         });
     }
@@ -770,7 +769,7 @@ public class DetailActivity extends TrackedFragmentActivity {
             @Override
             public void failure(RetrofitError error) {
                 AnimationUtil.cancel(spinner);
-                error.printStackTrace();
+                Log.e(DetailActivity.class.getSimpleName(), "getComments: failure", error);
             }
         });
     }

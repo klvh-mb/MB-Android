@@ -2,6 +2,7 @@ package miniBean.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -148,23 +149,23 @@ public class ActivityUtil {
         alertBuilder.show();
     }
 
-    public static AlertDialog alert(Context context, int dialogResourceId, int buttonResourceId, final View.OnClickListener onClick) {
+    public static Dialog alert(Context context, int dialogResourceId, int buttonResourceId, final View.OnClickListener onClick) {
         LayoutInflater factory = LayoutInflater.from(context);
-        final View alertDialogView = factory.inflate(dialogResourceId, null);
-        final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.setView(alertDialogView);
-        //alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(android.R.string.yes), onClick);
-        Button button = (Button) alertDialogView.findViewById(buttonResourceId);
+        final View dialogView = factory.inflate(dialogResourceId, null);
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(dialogView);
+        //dialog.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(android.R.string.yes), onClick);
+        Button button = (Button) dialogView.findViewById(buttonResourceId);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClick.onClick(view);
-                alertDialog.dismiss();
+                dialog.dismiss();
             }
         });
-        alertDialog.show();
-        return alertDialog;
+        dialog.show();
+        return dialog;
     }
 
     //
