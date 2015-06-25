@@ -2,16 +2,22 @@ package miniBean.viewmodel;
 
 import java.util.Date;
 
-
 public class CommunityVM {
-	 public Long lu;
-	 public String lun;
-	
-	 public String n;
-	 public String d;
-	 public int nom;
-	 public String tinfo;
-	 public String icon;
+    public Long lu;
+    public String lun;
+    public String n;
+    public String d;
+    public int nom;
+    public String tinfo;
+    public String icon;
+    public Date dte;
+    public long id;
+    public long oid;
+    public boolean sys;
+    public boolean isM;
+    public boolean isP;
+    public boolean isO;
+    public boolean adminP;
 
     public Long getLu() {
         return lu;
@@ -132,16 +138,5 @@ public class CommunityVM {
     public void setAdminP(boolean adminP) {
         this.adminP = adminP;
     }
-
-    public Date dte;
-	 public long id;
-	 public long oid;
-	 public boolean sys;
-	 public boolean isM;
-	 public boolean isP;
-	 public boolean isO;
-	 public boolean adminP;
-	
-
-    }
+}
 

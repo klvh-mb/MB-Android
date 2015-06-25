@@ -186,6 +186,7 @@
     <string name="game_referral_note1">每個朋友成功註冊。你即可獲得</string>
     <string name="game_referral_note2">個小豆豆!</string>
     <string name="game_transaction_title">小豆豆記錄表 (最近30個記錄)</string>
+    <string name="game_transaction_latest_title">小豆豆最新記錄</string>
     <string name="game_transaction_note">由"每日簽到"、"介紹新會員加入"所獲得的小豆豆會立即計算在"小豆豆總數"中。以其他方式獲得的小豆豆會在隔天反應</string>
 
     <!-- Schools tab -->

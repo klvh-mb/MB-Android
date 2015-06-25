@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:id="@+id/rootLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/view_bg">
 
@@ -14,10 +14,10 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <RelativeLayout
-                android:layout_margin="10dp"
                 android:id="@+id/gameLayout"
                 android:background="@drawable/game_edit_text_round"
                 android:layout_width="match_parent"
@@ -215,8 +215,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/section3"
                     android:layout_below="@+id/section2"
-                    android:layout_marginBottom="25dp"
-                    android:visibility="gone">
+                    android:layout_marginBottom="25dp">
 
                     <LinearLayout
                     android:id="@+id/referralHeaderLayout"
@@ -403,11 +402,11 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_margin="10dp"
                 android:id="@+id/gameTransactionsLayout"
                 android:background="@drawable/game_edit_text_round"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:id="@+id/gameTransactionsHeaderLayout"
@@ -439,9 +438,60 @@
 
                 <ListView
                     android:layout_below="@+id/viewBar4"
-                    android:id="@+id/gameTransactionsList"
+                    android:id="@+id/gameTransactionList"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:dividerHeight="0dp"
+                    android:divider="@android:color/transparent"
+                    android:layout_marginTop="5dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/latestGameTransactionsLayout"
+                android:background="@drawable/game_edit_text_round"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/latestGameTransactionsHeaderLayout"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/game_transaction_latest_title"
+                        android:textColor="@color/game_title_text"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_below="@+id/latestGameTransactionsHeaderLayout"
+                    android:background="@drawable/line_dotted_green"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:id="@+id/viewBar5">
+                </View>
+
+                <ListView
+                    android:layout_below="@+id/viewBar5"
+                    android:id="@+id/latestGameTransactionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:dividerHeight="0dp"
+                    android:divider="@android:color/transparent"
+                    android:layout_marginTop="5dp" />
 
             </RelativeLayout>
 

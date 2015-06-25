@@ -198,7 +198,7 @@ public class DetailListAdapter extends BaseAdapter {
         // delete
         if (item.isO() || (AppController.isUserAdmin())) {
             if (item.isO()) {
-                deleteText.setTextColor(this.activity.getResources().getColor(R.color.like_blue));
+                deleteText.setTextColor(this.activity.getResources().getColor(R.color.game_title_text));
             } else if (AppController.isUserAdmin()) {
                 deleteText.setTextColor(this.activity.getResources().getColor(R.color.admin_green));
             }

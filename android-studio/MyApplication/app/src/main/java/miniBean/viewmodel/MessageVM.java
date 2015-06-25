@@ -1,13 +1,13 @@
 package miniBean.viewmodel;
 
 public class MessageVM {
-	 public String snm;
-	 public Long suid;
-	 public Long id;
-	 public long cd;
-	 public String txt;
-	 public boolean hasImage=false;
-	 public Long imgs;
+    public String snm;
+    public Long suid;
+    public Long id;
+    public long cd;
+    public String txt;
+    public boolean hasImage=false;
+    public Long imgs;
 
     public String getSnm() {
         return snm;

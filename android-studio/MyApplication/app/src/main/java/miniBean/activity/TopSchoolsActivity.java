@@ -26,6 +26,7 @@ import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.SchoolsKGFragment;
 import miniBean.fragment.SchoolsPNFragment;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
@@ -41,9 +42,9 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
     private List<PreNurseryVM> topViewedPNs,topBookmarkedPNs;
     private List<KindergartenVM> topViewedKGs,topBookmarkedKGs;
 
-    private ImageView backAction,scrollButton;
+    private ImageView backAction, scrollButton;
     private ScrollView scrollView;
-    private boolean scrollUp=true;
+    private boolean scrollUp = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,13 +154,13 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
     }
 
     private void getTopViewPNs(){
-        AppController.getApi().getTopViewedPNs(AppController.getInstance().getSessionId(),new Callback<List<PreNurseryVM>>() {
+        AppController.getApi().getTopViewedPNs(AppController.getInstance().getSessionId(), new Callback<List<PreNurseryVM>>() {
             @Override
             public void success(List<PreNurseryVM> vms, Response response) {
                 topViewedPNs.addAll(vms);
-                topViewedPNListAdapter = new TopViewedPNListAdapter(TopSchoolsActivity.this,topViewedPNs);
+                topViewedPNListAdapter = new TopViewedPNListAdapter(TopSchoolsActivity.this, topViewedPNs);
                 topViewedList.setAdapter(topViewedPNListAdapter);
-                setListViewHeightBasedOnChildren(topViewedList);
+                ViewUtil.setHeightBasedOnChildren(topViewedList);
                 scrollView.fullScroll(View.FOCUS_UP);
             }
 
@@ -177,7 +178,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 topBookmarkedPNs.addAll(vms);
                 topBookmarkedPNListAdapter = new TopBookmarkedPNListAdapter(TopSchoolsActivity.this, topBookmarkedPNs);
                 topBookmarkedList.setAdapter(topBookmarkedPNListAdapter);
-                setListViewHeightBasedOnChildren(topBookmarkedList);
+                ViewUtil.setHeightBasedOnChildren(topBookmarkedList);
                 scrollView.fullScroll(View.FOCUS_UP);
             }
 
@@ -195,7 +196,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 topViewedKGs.addAll(vms);
                 topViewedKGListAdapter = new TopViewedKGListAdapter(TopSchoolsActivity.this, topViewedKGs);
                 topViewedList.setAdapter(topViewedKGListAdapter);
-                setListViewHeightBasedOnChildren(topViewedList);
+                ViewUtil.setHeightBasedOnChildren(topViewedList);
                 scrollView.fullScroll(View.FOCUS_UP);
             }
 
@@ -213,7 +214,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 topBookmarkedKGs.addAll(vms);
                 topBookmarkedKGListAdapter = new TopBookmarkedKGListAdapter(TopSchoolsActivity.this, topBookmarkedKGs);
                 topBookmarkedList.setAdapter(topBookmarkedKGListAdapter);
-                setListViewHeightBasedOnChildren(topBookmarkedList);
+                ViewUtil.setHeightBasedOnChildren(topBookmarkedList);
                 scrollView.fullScroll(View.FOCUS_UP);
             }
 
@@ -222,26 +223,6 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 error.printStackTrace();
             }
         });
-    }
-
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        BaseAdapter listAdapter = (BaseAdapter) listView.getAdapter();
-        if (listAdapter == null) {
-            // pre-condition
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            View listItem = listAdapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
     }
 
     @Override

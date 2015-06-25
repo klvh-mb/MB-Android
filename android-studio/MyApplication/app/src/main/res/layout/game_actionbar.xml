@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/actionbar_bg_blue">
+        android:background="@drawable/actionbar_bg_purple">
 
         <ImageView
             android:id="@+id/backImage"
@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/mascotIcon"
                 android:layout_centerInParent="true"
-                android:src="@drawable/mascot_green_right"
+                android:src="@drawable/mascot_yellow_right"
                 android:layout_gravity="center_vertical" />
 
             <TextView
