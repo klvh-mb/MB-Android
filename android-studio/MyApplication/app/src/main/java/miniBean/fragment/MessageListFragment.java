@@ -85,13 +85,16 @@ public class MessageListFragment extends TrackedFragment {
         });
         return view;
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        getAllConversation();
+    }
 
-    /*@Override
+    @Override
     public void onResume() {
         super.onStart();
-        System.out.println("in onResume::::::::::");
-        getAllConversation();
-    }*/
+    }
 
     private void getAllConversation(){
         AppController.getApi().getAllConversation(AppController.getInstance().getSessionId(),new Callback<List<ConversationVM>>() {
