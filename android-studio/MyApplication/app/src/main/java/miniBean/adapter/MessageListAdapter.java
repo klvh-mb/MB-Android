@@ -101,7 +101,7 @@ public class MessageListAdapter extends BaseAdapter {
         messageImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fullscreenImagePopup(AppController.BASE_URL + "/image/get-original-private-image-by-id/"+m.getImgs());
+                //fullscreenImagePopup(AppController.BASE_URL + "/image/get-original-private-image-by-id/"+m.getImgs());
             }
         });
 
@@ -150,9 +150,10 @@ public class MessageListAdapter extends BaseAdapter {
             }
         });
     }
+
     private void fullscreenImagePopup(String source) {
         try {
-           // frameLayout.getForeground().setAlpha(20);
+            //frameLayout.getForeground().setAlpha(20);
             //frameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
 
             //We need to get the instance of the LayoutInflater, use the context of this activity
@@ -173,6 +174,5 @@ public class MessageListAdapter extends BaseAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

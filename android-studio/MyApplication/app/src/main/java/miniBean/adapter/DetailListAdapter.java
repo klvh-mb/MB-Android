@@ -378,7 +378,7 @@ public class DetailListAdapter extends BaseAdapter {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(DetailListAdapter.class.getSimpleName(), "likeComment: failure", error);
             }
         });
     }
@@ -392,7 +392,7 @@ public class DetailListAdapter extends BaseAdapter {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(DetailListAdapter.class.getSimpleName(), "unLikeComment: failure", error);
             }
         });
     }
@@ -406,7 +406,7 @@ public class DetailListAdapter extends BaseAdapter {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(DetailListAdapter.class.getSimpleName(), "likePost: failure", error);
             }
         });
     }
@@ -420,7 +420,7 @@ public class DetailListAdapter extends BaseAdapter {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(DetailListAdapter.class.getSimpleName(), "unLikePost: failure", error);
             }
         });
     }
@@ -436,7 +436,7 @@ public class DetailListAdapter extends BaseAdapter {
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(inflater.getContext(), DetailListAdapter.this.activity.getString(R.string.post_delete_failed), Toast.LENGTH_SHORT).show();
-                error.printStackTrace();
+                Log.e(DetailListAdapter.class.getSimpleName(), "deletePost: failure", error);
             }
         });
     }
@@ -454,6 +454,7 @@ public class DetailListAdapter extends BaseAdapter {
             public void failure(RetrofitError error) {
                 Toast.makeText(inflater.getContext(), DetailListAdapter.this.activity.getString(R.string.comment_delete_success), Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
+                Log.e(DetailListAdapter.class.getSimpleName(), "deleteComment: failure", error);
             }
         });
     }
@@ -481,6 +482,5 @@ public class DetailListAdapter extends BaseAdapter {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

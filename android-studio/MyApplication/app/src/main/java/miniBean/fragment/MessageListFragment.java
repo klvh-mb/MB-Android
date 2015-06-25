@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,22 +29,19 @@ public class MessageListFragment extends TrackedFragment {
 
     private static final String TAG = MessageListFragment.class.getName();
     private ListView listView;
+    private TextView tipText;
     private ConversationListAdapter adapter;
-    private List<ConversationVM> conversationVMList;
-
-
+    private List<ConversationVM> conversationVMList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.message_list_fragment, container, false);
 
-        listView= (ListView) view.findViewById(R.id.conversationList);
+        tipText = (TextView) view.findViewById(R.id.tipText);
+        listView = (ListView) view.findViewById(R.id.conversationList);
 
-        getAllConversation();
-
-        conversationVMList=new ArrayList<>();
-
+        getAllConversations();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,51 +82,52 @@ public class MessageListFragment extends TrackedFragment {
                 return true;
             }
         });
+
         return view;
     }
+
     @Override
     public void onStart() {
         super.onStart();
-        getAllConversation();
+        getAllConversations();
     }
 
     @Override
     public void onResume() {
-        super.onStart();
+        super.onResume();
     }
 
-    private void getAllConversation(){
-        AppController.getApi().getAllConversation(AppController.getInstance().getSessionId(),new Callback<List<ConversationVM>>() {
+    private void getAllConversations() {
+        AppController.getApi().getAllConversations(AppController.getInstance().getSessionId(), new Callback<List<ConversationVM>>() {
             @Override
             public void success(List<ConversationVM> conversationVMs, Response response) {
-                conversationVMList=conversationVMs;
+                conversationVMList = conversationVMs;
 
-                if(conversationVMList.size() == 0){
-                 //   tipText.setVisibility(View.VISIBLE);
-                }else {
-                    adapter=new ConversationListAdapter(getActivity(),conversationVMList);
+                if (conversationVMList.size() == 0) {
+                    tipText.setVisibility(View.VISIBLE);
+                } else {
+                    adapter = new ConversationListAdapter(getActivity(), conversationVMList);
                     listView.setAdapter(adapter);
                 }
-
             }
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(MessageListFragment.class.getSimpleName(), "getAllConversations: failure", error);
             }
         });
     }
 
-    private void deleteConversation(Long id){
+    private void deleteConversation(Long id) {
         AppController.getApi().deleteConversation(id,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
             public void success(Response response, Response response1) {
-                getAllConversation();
+                getAllConversations();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(MessageListFragment.class.getSimpleName(), "deleteConversation: failure", error);
             }
         });
     }

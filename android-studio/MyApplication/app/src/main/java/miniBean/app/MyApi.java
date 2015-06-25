@@ -293,7 +293,7 @@ public interface MyApi {
     //
 
     @GET("/get-all-conversations")
-    public void getAllConversation(@Query("key") String key, Callback<List<ConversationVM>> cb);
+    public void getAllConversations(@Query("key") String key, Callback<List<ConversationVM>> cb);
 
     @GET("/get-messages/{id}/{offset}")
     public void getMessages(@Path("id") Long id,@Path("offset") Long offset,@Query("key") String key, Callback<Response> cb);
