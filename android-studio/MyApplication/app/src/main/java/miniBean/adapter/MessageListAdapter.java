@@ -1,16 +1,18 @@
 package miniBean.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -19,6 +21,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.List;
 
 import miniBean.R;
+import miniBean.app.AppController;
 import miniBean.app.MyImageGetter;
 import miniBean.app.UserInfoCache;
 import miniBean.util.ActivityUtil;
@@ -31,7 +34,7 @@ public class MessageListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<MessageVM> messageVMs;
-    private LinearLayout postImagesLayout;
+    private ImageView messageImages;
     private ActivityUtil activityUtil;
     private ImageView senderImage;
     private MyImageGetter imageGetter;
@@ -85,28 +88,32 @@ public class MessageListAdapter extends BaseAdapter {
 
         dateMsg.setText(DateTimeUtil.getTimeAgo(m.getCd()));
 
-        postImagesLayout = (LinearLayout) convertView.findViewById(R.id.messageImages);
+        messageImages = (ImageView) convertView.findViewById(R.id.messageImages);
         if(m.isHasImage()) {
             if(m.getImgs()!=null) {
-                loadImages(m, postImagesLayout);
+                loadImages(m, messageImages);
             }
-            postImagesLayout.setVisibility(View.VISIBLE);
+            messageImages.setVisibility(View.VISIBLE);
         } else {
-            postImagesLayout.setVisibility(View.GONE);
+            messageImages.setVisibility(View.GONE);
         }
+
+        messageImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fullscreenImagePopup(AppController.BASE_URL + "/image/get-original-private-image-by-id/"+m.getImgs());
+            }
+        });
 
     return convertView;
     }
-    private void loadImages(MessageVM item, final LinearLayout layout) {
-        layout.removeAllViewsInLayout();
+    private void loadImages(MessageVM item, final ImageView messageImage) {
 
-        ImageView postImage = new ImageView(this.activity);
-        postImage.setAdjustViewBounds(true);
-        postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        postImage.setPadding(0, 0, 0, ActivityUtil.getRealDimension(10, this.activity.getResources()));
-        layout.addView(postImage);
+        messageImage.setAdjustViewBounds(true);
+        messageImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        messageImage.setPadding(0, 0, 0, ActivityUtil.getRealDimension(10, this.activity.getResources()));
 
-        ImageUtil.displayOriginalMessageImage(item.getImgs(), postImage, new SimpleImageLoadingListener() {
+        ImageUtil.displayOriginalMessageImage(item.getImgs(), messageImage, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
 
@@ -142,5 +149,30 @@ public class MessageListAdapter extends BaseAdapter {
                 }
             }
         });
+    }
+    private void fullscreenImagePopup(String source) {
+        try {
+           // frameLayout.getForeground().setAlpha(20);
+            //frameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
+
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) activity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.image_popup_window,(ViewGroup) activity.findViewById(R.id.popupElement));
+            ImageView fullImage= (ImageView) layout.findViewById(R.id.fullImage);
+
+            PopupWindow imagePopup = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
+            imagePopup.setOutsideTouchable(false);
+            imagePopup.setBackgroundDrawable(new BitmapDrawable(activity.getResources(), ""));
+            imagePopup.setFocusable(true);
+            imagePopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            ImageUtil.displayImage(source, fullImage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
