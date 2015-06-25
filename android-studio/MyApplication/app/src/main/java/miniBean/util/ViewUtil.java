@@ -7,6 +7,9 @@ import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import miniBean.R;
@@ -21,6 +24,30 @@ public class ViewUtil {
     public static final String HTML_LINE_BREAK = "<br>";
 
     private ViewUtil() {}
+
+    //
+    // View
+    //
+
+    public static void setHeightBasedOnChildren(ListView listView) {
+        BaseAdapter listAdapter = (BaseAdapter) listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
 
     //
     // HTML

@@ -1,10 +1,8 @@
 package miniBean.viewmodel;
 
-import java.util.Date;
-
 public class GameTransactionVM {
     public long uid;
-    public Date tt;
+    public long tt;
     public String ty;
     public long tp;
     public String td;
@@ -18,11 +16,11 @@ public class GameTransactionVM {
         this.uid = uid;
     }
 
-    public Date getTt() {
+    public long getTt() {
         return tt;
     }
 
-    public void setTt(Date tt) {
+    public void setTt(long tt) {
         this.tt = tt;
     }
 

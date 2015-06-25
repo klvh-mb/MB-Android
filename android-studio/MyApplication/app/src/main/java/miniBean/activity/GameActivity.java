@@ -8,14 +8,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import miniBean.R;
+import miniBean.adapter.GameTransactionListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
 import miniBean.util.GameConstants;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.GameAccountVM;
+import miniBean.viewmodel.GameTransactionVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -30,6 +38,8 @@ public class GameActivity extends TrackedFragmentActivity {
     private EditText referralUrlEdit;
     private LinearLayout whatsappLayout, copyUrlLayout;
     private ImageView backImage;
+    private ListView gameTransactionList, latestGameTransactionList;
+    private RelativeLayout latestGameTransactionsLayout;
 
     private boolean signedIn;
 
@@ -55,6 +65,9 @@ public class GameActivity extends TrackedFragmentActivity {
         referralUrlEdit = (EditText) this.findViewById(R.id.referralUrlEdit);
         whatsappLayout = (LinearLayout) this.findViewById(R.id.whatsappLayout);
         copyUrlLayout = (LinearLayout) this.findViewById(R.id.copyUrlLayout);
+        gameTransactionList = (ListView) this.findViewById(R.id.gameTransactionList);
+        latestGameTransactionList = (ListView) this.findViewById(R.id.latestGameTransactionList);
+        latestGameTransactionsLayout = (RelativeLayout) this.findViewById(R.id.latestGameTransactionsLayout);
 
         referralNotePoints.setText(GameConstants.POINTS_REFERRAL_SIGNUP+"");
 
@@ -67,6 +80,14 @@ public class GameActivity extends TrackedFragmentActivity {
         });
 
         getGameAccount();
+        getGameTransactions();
+
+        if (UserInfoCache.getUser().isAdmin()) {
+            latestGameTransactionsLayout.setVisibility(View.VISIBLE);
+            getLatestGameTransactions();
+        } else {
+            latestGameTransactionsLayout.setVisibility(View.GONE);
+        }
     }
 
     private void getGameAccount() {
@@ -139,6 +160,42 @@ public class GameActivity extends TrackedFragmentActivity {
             @Override
             public void failure(RetrofitError error) {
                 Log.e(GameActivity.class.getSimpleName(), "signIn: failure", error);
+            }
+        });
+    }
+
+    private void getGameTransactions() {
+        AppController.getApi().getGameTransactions(0L, AppController.getInstance().getSessionId(), new Callback<List<GameTransactionVM>>() {
+            @Override
+            public void success(List<GameTransactionVM> vms, Response response) {
+                List<GameTransactionVM> gameTransactions = new ArrayList<>();
+                gameTransactions.addAll(vms);
+                GameTransactionListAdapter gameTransactionListAdapter = new GameTransactionListAdapter(GameActivity.this, gameTransactions);
+                gameTransactionList.setAdapter(gameTransactionListAdapter);
+                ViewUtil.setHeightBasedOnChildren(gameTransactionList);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(GameActivity.class.getSimpleName(), "getGameTransactions: failure", error);
+            }
+        });
+    }
+
+    private void getLatestGameTransactions() {
+        AppController.getApi().getLatestGameTransactions(AppController.getInstance().getSessionId(), new Callback<List<GameTransactionVM>>() {
+            @Override
+            public void success(List<GameTransactionVM> vms, Response response) {
+                List<GameTransactionVM> gameTransactions = new ArrayList<>();
+                gameTransactions.addAll(vms);
+                GameTransactionListAdapter gameTransactionListAdapter = new GameTransactionListAdapter(GameActivity.this, gameTransactions, true);
+                latestGameTransactionList.setAdapter(gameTransactionListAdapter);
+                ViewUtil.setHeightBasedOnChildren(latestGameTransactionList);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(GameActivity.class.getSimpleName(), "getLatestGameTransactions: failure", error);
             }
         });
     }
