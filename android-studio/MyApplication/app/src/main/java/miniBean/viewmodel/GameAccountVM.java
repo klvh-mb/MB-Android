@@ -7,7 +7,7 @@ public class GameAccountVM {
     public long acpt;
     public long rdpt;
     public long refs;
-    public boolean signTd;
+    public boolean signedIn;
     public long gl;
     public String gln;
     public String gli;
@@ -61,12 +61,12 @@ public class GameAccountVM {
         this.refs = refs;
     }
 
-    public boolean isSignTd() {
-        return signTd;
+    public boolean isSignedIn() {
+        return signedIn;
     }
 
-    public void setSignTd(boolean signTd) {
-        this.signTd = signTd;
+    public void setSignedIn(boolean signedIn) {
+        this.signedIn = signedIn;
     }
 
     public long getGl() {

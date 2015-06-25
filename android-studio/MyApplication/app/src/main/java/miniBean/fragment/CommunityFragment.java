@@ -208,7 +208,7 @@ public class CommunityFragment extends TrackedFragment {
 
             @Override
             public void failure(RetrofitError error) {
-
+                Log.e(CommunityFragment.class.getSimpleName(), "getCommunity: failure", error);
             }
         });
     }
@@ -244,7 +244,7 @@ public class CommunityFragment extends TrackedFragment {
             @Override
             public void failure(RetrofitError error) {
                 AnimationUtil.cancel(spinner);
-                error.printStackTrace();
+                Log.e(CommunityFragment.class.getSimpleName(), "getNewsFeedByCommunityId: failure", error);
             }
         });
     }
@@ -265,7 +265,7 @@ public class CommunityFragment extends TrackedFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(CommunityFragment.class.getSimpleName(), "loadNewsfeed: failure", error);
             }
         });
     }

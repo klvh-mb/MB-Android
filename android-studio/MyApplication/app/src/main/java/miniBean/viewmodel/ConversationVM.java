@@ -1,15 +1,15 @@
 package miniBean.viewmodel;
 
 public class ConversationVM {
-	 public String nm;
-	 public Long uid;
-	 public Long id;
-	 public Long lmd;
-	 public Boolean isToday;
-	 public String lm;
-	 public Boolean isReaded = false;
-	 public Long mc = 0L;
-	 public Boolean hm = false;
+    public String nm;
+    public Long uid;
+    public Long id;
+    public Long lmd;
+    public Boolean isToday;
+    public String lm;
+    public Boolean isRead = false;
+    public Long mc = 0L;
+    public Boolean hm = false;
     public int ur;
 
 
@@ -45,7 +45,7 @@ public class ConversationVM {
         this.lmd = lmd;
     }
 
-    public Boolean getIsToday() {
+    public Boolean isToday() {
         return isToday;
     }
 
@@ -61,12 +61,12 @@ public class ConversationVM {
         this.lm = lm;
     }
 
-    public Boolean getIsReaded() {
-        return isReaded;
+    public Boolean isRead() {
+        return isRead;
     }
 
-    public void setIsReaded(Boolean isReaded) {
-        this.isReaded = isReaded;
+    public void setIsRead(Boolean isRead) {
+        this.isRead = isRead;
     }
 
     public Long getMc() {

@@ -114,9 +114,9 @@ public class CommunityUtil {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
+            public void failure(RetrofitError error) {
                 Toast.makeText(activity, activity.getString(R.string.community_join_failed), Toast.LENGTH_SHORT).show();
-                retrofitError.printStackTrace();
+                Log.e(CommunityUtil.class.getSimpleName(), "joinCommunity: failure", error);
             }
         });
     }
@@ -133,9 +133,9 @@ public class CommunityUtil {
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
+            public void failure(RetrofitError error) {
                 Toast.makeText(activity, activity.getString(R.string.community_leave_failed), Toast.LENGTH_SHORT).show();
-                retrofitError.printStackTrace();
+                Log.e(CommunityUtil.class.getSimpleName(), "leaveCommunity: failure", error);
             }
         });
     }

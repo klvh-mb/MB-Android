@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,10 +32,12 @@ import miniBean.R;
 import miniBean.activity.UserProfileActivity;
 import miniBean.app.AppController;
 import miniBean.app.MyImageGetter;
+import miniBean.app.UserInfoCache;
 import miniBean.util.ActivityUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
+import miniBean.util.MessageUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import retrofit.Callback;
@@ -50,6 +53,7 @@ public class DetailListAdapter extends BaseAdapter {
     private ImageView userPic, like;
     private TextView deleteText, likeText, numLike, postIndex;
     private FrameLayout frameLayout;
+    private Button messageButton;
     private int page;
 
     private LinearLayout postImagesLayout;
@@ -58,12 +62,15 @@ public class DetailListAdapter extends BaseAdapter {
 
     private MyImageGetter imageGetter;
 
+    private MessageUtil messageUtil;
+
     public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> postComments, int page) {
         this.activity = activity;
         this.postComments = postComments;
         this.page = page;
         this.activityUtil = new ActivityUtil(activity);
         this.imageGetter = new MyImageGetter(activity);
+        this.messageUtil = new MessageUtil(activity);
     }
 
     @Override
@@ -105,6 +112,7 @@ public class DetailListAdapter extends BaseAdapter {
         numLike = (TextView) convertView.findViewById(R.id.numLike);
         postIndex = (TextView) convertView.findViewById(R.id.postIndex);
         frameLayout = (FrameLayout) convertView.findViewById(R.id.mainFrameLayout);
+        messageButton = (Button) convertView.findViewById(R.id.messageButton);
 
         // images
         postImagesLayout = (LinearLayout) convertView.findViewById(R.id.postImages);
@@ -155,7 +163,7 @@ public class DetailListAdapter extends BaseAdapter {
                     like.setImageResource(R.drawable.like);
                     int total = item.getNol() - 1;
                     item.setNol(total);
-                    numLike.setText(total+"");
+                    numLike.setText(total + "");
                     item.setLike(false);
                 } else {
                     if (item.isPost()) {
@@ -167,11 +175,25 @@ public class DetailListAdapter extends BaseAdapter {
                     like.setImageResource(R.drawable.liked);
                     int total = item.getNol() + 1;
                     item.setNol(total);
-                    numLike.setText(total+"");
+                    numLike.setText(total + "");
                     item.setLike(true);
                 }
             }
         });
+
+        // PM
+        Log.d(this.getClass().getSimpleName(), "oid="+item.getOid()+ " uid="+UserInfoCache.getUser().getId());
+        if (item.getOid().equals(UserInfoCache.getUser().getId())) {
+            messageButton.setVisibility(View.GONE);
+        } else {
+            messageButton.setVisibility(View.VISIBLE);
+            messageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    messageUtil.startConversation(item.getOid());
+                }
+            });
+        }
 
         // delete
         if (item.isO() || (AppController.isUserAdmin())) {

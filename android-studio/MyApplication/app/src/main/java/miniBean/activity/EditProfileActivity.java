@@ -40,6 +40,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
     private EditText displayName,aboutmeEdit;
     private TextView displayEmailText;
     private EditText lastNameEdit,firstNameEdit;
+    private ImageView backImage;
 
     private UserProfileDataVM profileDataVM;
 
@@ -50,8 +51,6 @@ public class EditProfileActivity extends TrackedFragmentActivity {
     private List<String> districtNames;
 
     protected ActivityUtil activityUtil;
-
-    ImageView backImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,7 +125,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
             }
         });
 
-        ImageView backImage = (ImageView) this.findViewById(R.id.backImage);
+        backImage = (ImageView) this.findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

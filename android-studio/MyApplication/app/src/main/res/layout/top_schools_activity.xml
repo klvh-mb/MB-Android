@@ -5,112 +5,116 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/view_bg">
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_margin="10dp"
-        android:id="@+id/topViewedLayout"
-        android:background="@drawable/schools_pn_edit_text_round"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
         <LinearLayout
-            android:id="@+id/headerLayout1"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/schools_green_book"
-                android:layout_gravity="center_vertical" />
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:id="@+id/topViewedLayout"
+                android:background="@drawable/schools_pn_edit_text_round"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/schools_top_viewed"
-                android:textSize="18dp"
-                android:textColor="@color/dark_gray_3" />
-            </LinearLayout>
-        <View
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/headerLayout1"
-            android:id="@+id/viewBar1"
-            android:background="@drawable/dottedline"
-            android:layout_width="match_parent"
-            android:layout_height="3dp">
-            </View>
-    <ListView
-        android:layout_below="@+id/headerLayout1"
-        android:id="@+id/topViewedList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
-        <ImageView
-            android:id="@+id/scrollButton"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/dropdown_btn"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:visibility="gone" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:id="@+id/topBookmarkedLayout"
-        android:background="@drawable/schools_pn_edit_text_round"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/pointsHeaderLayout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/schools_green_book"
-                android:layout_gravity="center_vertical" />
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/schools_top_bookmarked"
-                android:textColor="@color/dark_gray_3"
-                android:textSize="18dp" />
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:id="@+id/headerLayout1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/schools_green_book"
+                        android:layout_gravity="center_vertical" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/schools_top_viewed"
+                        android:textSize="18dp"
+                        android:textColor="@color/dark_gray_3" />
+                    </LinearLayout>
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/headerLayout1"
+                    android:id="@+id/viewBar1"
+                    android:background="@drawable/dottedline"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp">
+                    </View>
+                <ListView
+                    android:layout_below="@+id/headerLayout1"
+                    android:id="@+id/topViewedList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+                <ImageView
+                    android:id="@+id/scrollButton"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/dropdown_btn"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:id="@+id/topBookmarkedLayout"
+                android:background="@drawable/schools_pn_edit_text_round"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/pointsHeaderLayout"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/schools_green_book"
+                        android:layout_gravity="center_vertical" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/schools_top_bookmarked"
+                        android:textColor="@color/dark_gray_3"
+                        android:textSize="18dp" />
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/pointsHeaderLayout"
+                    android:background="@drawable/dottedline"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:id="@+id/viewBar2">
+                </View>
+                <ListView
+                    android:layout_below="@+id/pointsHeaderLayout"
+                    android:id="@+id/topBookmarkedList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+
+            </RelativeLayout>
         </LinearLayout>
-        <View
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/pointsHeaderLayout"
-            android:background="@drawable/dottedline"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:id="@+id/viewBar2">
-        </View>
-        <ListView
-            android:layout_below="@+id/pointsHeaderLayout"
-            android:id="@+id/topBookmarkedList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
-
-    </RelativeLayout>
-</LinearLayout>
     </ScrollView>
 </RelativeLayout>

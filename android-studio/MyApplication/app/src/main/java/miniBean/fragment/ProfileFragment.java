@@ -22,7 +22,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.List;
 
 import miniBean.R;
 import miniBean.activity.EditProfileActivity;
@@ -35,7 +34,6 @@ import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
-import miniBean.viewmodel.ResponseConversationVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -147,18 +145,6 @@ public class ProfileFragment extends TrackedFragment {
             }
         });
 
-        messageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // startConversation();
-/*
-                Intent intent=new Intent(getActivity(), MessageDetailActivity.class);
-                intent.putExtra("uid",userId);
-
-                startActivity(intent);*/
-            }
-        });
-
         getUserInfo();
         getBookmarkSummary();
 
@@ -194,24 +180,6 @@ public class ProfileFragment extends TrackedFragment {
                 }
             }
         }
-    }
-
-
-    private void startConversation(){
-        AppController.getApi().startConversation(userId,AppController.getInstance().getSessionId(),new Callback<List<ResponseConversationVM>>() {
-            @Override
-            public void success(List<ResponseConversationVM> responseConversationVM, Response response1) {
-                System.out.println("start conversion:::"+response1.getUrl());
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
-
-
     }
 
     private void getUserInfo() {

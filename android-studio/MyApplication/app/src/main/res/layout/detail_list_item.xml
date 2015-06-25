@@ -31,14 +31,22 @@
             android:layout_toRightOf="@+id/userPic"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/postedBy"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:textColor="@color/sharp_pink"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/userPic"
-                android:textSize="14dp"
-                android:layout_marginLeft="5dp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/postedBy"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/sharp_pink"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/userPic"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -60,25 +68,44 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@+id/timeImg"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:layout_centerVertical="true" />
+
+                <Button
+                    android:id="@+id/messageButton"
+                    android:layout_width="35dp"
+                    android:layout_height="20dp"
+                    android:textSize="12dp"
+                    android:text="PM"
+                    android:drawableLeft="@drawable/ic_chat_xs"
+                    android:drawablePadding="3dp"
+                    android:textColor="@color/dark_gray"
+                    android:layout_centerVertical="true"
+                    android:background="@color/white"
+                    android:gravity="center_vertical|left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toRightOf="@+id/postedOn" />
 
                 <TextView
                     android:id="@+id/deleteText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/postedOn"
+                    android:layout_toRightOf="@+id/messageButton"
                     android:textSize="12dp"
                     android:text="@string/delete"
-                    android:textColor="@color/like_blue" />
+                    android:textColor="@color/like_blue"
+                    android:layout_centerVertical="true" />
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/deleteText"
-                    android:layout_marginLeft="3dp"
-                    android:id="@+id/adminLayout">
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/adminLayout"
+                    android:layout_centerVertical="true">
 
                     <ImageView
                         android:id="@+id/androidIcon"
@@ -114,10 +141,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
             android:layout_marginRight="5dp"
             android:text="-"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 
@@ -177,7 +204,8 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_toRightOf="@+id/time"
-                    android:src="@drawable/like" />
+                    android:src="@drawable/like"
+                    android:layout_gravity="center_vertical" />
 
                 <TextView
                     android:id="@+id/likeText"
@@ -188,7 +216,9 @@
                     android:textColor="#777"
                     android:layout_marginRight="3dp"
                     android:textSize="13dp"
-                    android:text="@string/like" />
+                    android:text="@string/like"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical" />
 
                 <TextView
                     android:id="@+id/numLike"

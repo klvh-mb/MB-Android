@@ -14,8 +14,8 @@ import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.CommunityFragment;
 
 public class CommunityActivity extends TrackedFragmentActivity {
-    ImageView backImage, editAction;
-    TextView titleAction;
+    private ImageView backImage, editAction;
+    private TextView titleAction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
