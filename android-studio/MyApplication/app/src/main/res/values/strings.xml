@@ -11,7 +11,7 @@
     <!-- Settings -->
     <string name="app_name">miniBean</string>
     <string name="facebook_app_id">798543453496777</string>
-    <string name="base_url">http://192.168.1.115:9000</string>
+    <string name="base_url">http://192.168.1.122:9000</string>
     <!--string name="base_url">http://www.minibean.hk</string-->
     <string name="action_settings">Settings</string>
     <string name="connection_timeout_title">網路問題</string>
@@ -138,6 +138,8 @@
     <string name="list_loaded_all">- 已加載全部 -</string>
     <string name="sharing_app_not_installed"> 沒有安裝。</string>
     <string name="sharing_message_note">(分享自 miniBean 小萌豆)</string>
+    <string name="sharing_whatsapp_button">Whatsapp分享</string>
+    <string name="sharing_copy_url_button">複製連結</string>
     <!--string name="sharing_message_note">全新 miniBean 小萌豆 Android App:</string-->
 
     <!-- Profile tab -->
@@ -164,7 +166,8 @@
     <string name="pm_actionbar_title">私人訊息</string>
     <string name="pm_user">私人訊息</string>
     <string name="pm_max_images">最多可加入1張圖</string>
-    <string name="pm_failed">暫時不能發出訊息，請稍後重試</string>
+    <string name="pm_start_failed">暫時不能開啟訊息，請稍後重試</string>
+    <string name="pm_send_failed">暫時不能發出訊息，請稍後重試</string>
 
     <string name="game_title">小豆豆中心</string>
     <string name="game_rules_title">積分規則</string>

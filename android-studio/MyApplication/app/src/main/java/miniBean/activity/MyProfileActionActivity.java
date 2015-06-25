@@ -18,6 +18,7 @@ import miniBean.fragment.RequestListFragment;
 
 public class MyProfileActionActivity extends TrackedFragmentActivity {
 
+    private ImageView backImage;
     private TextView titleText;
 
     @Override
@@ -67,7 +68,7 @@ public class MyProfileActionActivity extends TrackedFragmentActivity {
             transaction.replace(R.id.children_layout, fragment).commit();
         }
 
-        ImageView backImage = (ImageView) this.findViewById(R.id.backImage);
+        backImage = (ImageView) this.findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

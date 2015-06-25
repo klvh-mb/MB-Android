@@ -85,13 +85,13 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     private ProgressBar spinner;
 
     private TextView commentPostButton,title;
-    private ImageView commentBrowseButton, commentCancelButton, commentEmoImage,profileButton;
+    private ImageView backImage, commentBrowseButton, commentCancelButton, commentEmoImage, profileButton;
     private List<MessageVM> messageVMList;
     private MessageListAdapter adapter;
     private ListView listView;
     private Intent intent;
     private Button loadMessage;
-    private Long offset=1l;
+    private Long offset = 1l;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -163,7 +163,8 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             }
         });
 
-        ImageView backImage = (ImageView) this.findViewById(R.id.backAction);
+        backImage = (ImageView) this.findViewById(R.id.backAction);
+
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -471,7 +472,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             @Override
             public void failure(RetrofitError error) {
                 Log.e(MessageDetailActivity.this.getClass().getSimpleName(), "doMessage.api.sendMessage: failed with error", error);
-                Toast.makeText(MessageDetailActivity.this, MessageDetailActivity.this.getString(R.string.pm_failed), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MessageDetailActivity.this, MessageDetailActivity.this.getString(R.string.pm_send_failed), Toast.LENGTH_SHORT).show();
                 reset();
             }
         });

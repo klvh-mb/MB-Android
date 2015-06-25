@@ -111,14 +111,19 @@
                 <Button
                     android:id="@+id/messageButton"
                     android:layout_alignParentRight="false"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="35dp"
                     android:textSize="14dp"
                     android:background="@drawable/rounded_corner_button"
                     android:text="@string/pm_user"
                     android:layout_marginRight="10dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp" />
+                    android:drawableLeft="@drawable/ic_chat_s"
+                    android:drawablePadding="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/dark_gray" />
 
                 <Button
                     android:id="@+id/editButton"
@@ -129,7 +134,8 @@
                     android:background="@drawable/rounded_corner_button"
                     android:text="@string/edit_user_info"
                     android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/dark_gray" />
 
             </RelativeLayout>
 

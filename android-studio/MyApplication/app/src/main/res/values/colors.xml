@@ -39,6 +39,8 @@
 
     <color name="game_view_bg">#F2FFFC</color>
     <color name="game_box_border">#7ACFF2</color>
+    <color name="game_box_border_light">#A2E7E7</color>
+    <color name="game_orange">#FF6600</color>
     <color name="game_title_border">#2EAB66</color>
     <color name="game_title_text">#556fb5</color>
 

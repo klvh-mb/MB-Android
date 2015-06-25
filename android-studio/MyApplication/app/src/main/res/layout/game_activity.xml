@@ -3,232 +3,448 @@
     android:id="@+id/rootLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/view_bg">
+
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/view_bg">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-        android:layout_margin="10dp"
-        android:id="@+id/gameLayout"
-        android:background="@drawable/game_edit_text_round"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:orientation="vertical"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:id="@+id/gameLayout"
+                android:background="@drawable/game_edit_text_round"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/section1"
-                android:layout_marginBottom="10dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                android:id="@+id/pointsHeaderLayout"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/game_l1"
-                    android:layout_gravity="center_vertical" />
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/game_points_title"
-                    android:textColor="@color/game_title_text"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-                <View
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/pointsHeaderLayout"
-                android:background="@drawable/line_dotted_green"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:id="@+id/viewBar1">
-            </View>
-
-                <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/viewBar1"
-                android:layout_margin="5dp"
-                android:id="@+id/pointsLayout">
+                    android:id="@+id/section1"
+                    android:layout_marginBottom="25dp">
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
+                    android:id="@+id/pointsHeaderLayout"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/game_l1"
+                        android:layout_gravity="center_vertical" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp">
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/game_points_title"
+                        android:textColor="@color/game_title_text"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/game_points_total"
-                            android:id="@+id/pointsDesc"
-                            android:textColor="@color/dark_gray_2"
-                            android:textSize="14dp"
-                            android:layout_gravity="center_vertical" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="0"
-                            android:id="@+id/pointsText"
-                            android:textStyle="bold"
-                            android:textSize="15dp"
-                            android:textColor="@color/orange"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center_vertical" />
-
-                    </LinearLayout>
+                    <View
+                    android:layout_marginTop="0dp"
+                    android:layout_below="@+id/pointsHeaderLayout"
+                    android:background="@drawable/line_dotted_green"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:id="@+id/viewBar1">
+                </View>
 
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp">
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewBar1"
+                    android:layout_margin="5dp"
+                    android:id="@+id/pointsLayout">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/game_points_redeemed"
-                            android:id="@+id/redeemedPointsDesc"
-                            android:textColor="@color/dark_gray_2"
-                            android:textSize="14dp"
-                            android:layout_gravity="center_vertical" />
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="-"
-                            android:id="@+id/redeemedPointsText"
-                            android:textSize="15dp"
-                            android:textColor="@color/gray"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center_vertical" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/game_points_total"
+                                android:id="@+id/pointsDesc"
+                                android:textColor="@color/dark_gray_2"
+                                android:textSize="14dp"
+                                android:layout_gravity="center_vertical" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="@string/game_points_redeemed_tips"
-                            android:id="@+id/redeemedPointsTips"
-                            android:textColor="@color/gray"
-                            android:textSize="12dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="50dp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:id="@+id/pointsText"
+                                android:textStyle="bold"
+                                android:textSize="15dp"
+                                android:textColor="@color/game_orange"
+                                android:layout_marginLeft="10dp"
+                                android:layout_gravity="center_vertical" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/game_points_redeemed"
+                                android:id="@+id/redeemedPointsDesc"
+                                android:textColor="@color/dark_gray_2"
+                                android:textSize="14dp"
+                                android:layout_gravity="center_vertical" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:id="@+id/redeemedPointsText"
+                                android:textSize="15dp"
+                                android:textColor="@color/gray"
+                                android:layout_marginLeft="10dp"
+                                android:layout_gravity="center_vertical" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/game_points_redeemed_tips"
+                                android:id="@+id/redeemedPointsTips"
+                                android:textColor="@color/gray"
+                                android:textSize="12dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="50dp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/section2"
-                android:layout_below="@+id/section1"
-                android:layout_marginBottom="10dp">
 
                 <LinearLayout
-                android:id="@+id/signinHeaderLayout"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_below="@+id/pointsLayout">
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/game_daily_signin_title"
-                    android:textColor="@color/game_title_text"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                    android:id="@+id/section2"
+                    android:layout_below="@+id/section1"
+                    android:layout_marginBottom="25dp">
+
+                    <LinearLayout
+                        android:id="@+id/signInHeaderLayout"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_below="@+id/pointsLayout"
+                        android:layout_marginBottom="5dp">
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/game_daily_signin_title"
+                            android:textColor="@color/game_title_text"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_below="@+id/signInHeaderLayout"
+                        android:background="@drawable/line_dotted_green"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:id="@+id/viewBar2">
+                    </View>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewBar2"
+                        android:layout_margin="5dp"
+                        android:id="@+id/signInLayout">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/game_daily_signin_text"
+                                android:id="@+id/signInDesc"
+                                android:textColor="@color/dark_gray_2"
+                                android:textSize="14dp"
+                                android:layout_gravity="center_vertical" />
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="28dp"
+                                android:id="@+id/signInImage"
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/game_sign_in"
+                                android:layout_gravity="center_vertical" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/section3"
+                    android:layout_below="@+id/section2"
+                    android:layout_marginBottom="25dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                    android:id="@+id/referralHeaderLayout"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_below="@+id/signInLayout"
+                        android:layout_marginBottom="5dp">
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/game_referral_title"
+                        android:textColor="@color/game_title_text"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                    <View
+                        android:layout_below="@+id/referralHeaderLayout"
+                        android:background="@drawable/line_dotted_green"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:id="@+id/viewBar3">
+                    </View>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewBar3"
+                        android:layout_margin="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/referralLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/game_referral_text"
+                            android:id="@+id/referralDesc"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_margin="3dp" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="3dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/game_referral_note1"
+                                android:id="@+id/referralNote1"
+                                android:textColor="@color/dark_gray_2"
+                                android:textSize="14dp"
+                                android:layout_gravity="center_vertical" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:id="@+id/referralNotePoints"
+                                android:textColor="@color/game_orange"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/game_referral_note2"
+                                android:id="@+id/referralNote2"
+                                android:textColor="@color/dark_gray_2"
+                                android:textSize="14dp"
+                                android:layout_gravity="center_vertical" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:weightSum="10">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:id="@+id/referralUrlEdit"
+                                android:background="@drawable/game_edit_text_round"
+                                android:layout_weight="10"
+                                android:layout_gravity="center_vertical"
+                                android:editable="false"
+                                android:singleLine="true"
+                                android:textColor="@color/dark_gray"
+                                android:enabled="false"
+                                android:focusable="false"
+                                android:textSize="14dp"
+                                android:text="http://www.minibean.hk"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:weightSum="10">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/whatsappLayout"
+                                android:layout_weight="5"
+                                android:layout_margin="3dp"
+                                android:background="@drawable/rounded_corner_button">
+
+                                <ImageView
+                                    android:id="@+id/whatsappImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_whatsapp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sharing_whatsapp_button"
+                                    android:id="@+id/whatsappText"
+                                    android:textColor="@color/game_title_text"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_gravity="center"
+                                    android:textSize="14dp"
+                                    android:singleLine="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/copyUrlLayout"
+                                android:layout_weight="5"
+                                android:layout_margin="3dp"
+                                android:background="@drawable/rounded_corner_button">
+
+                                <ImageView
+                                    android:id="@+id/copyUrlImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_link"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sharing_copy_url_button"
+                                    android:id="@+id/copyUrlText"
+                                    android:textColor="@color/game_title_text"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:textSize="14dp"
+                                    android:singleLine="true" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_margin="10dp"
+                android:id="@+id/gameTransactionsLayout"
+                android:background="@drawable/game_edit_text_round"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/gameTransactionsHeaderLayout"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/game_transaction_title"
+                        android:textColor="@color/game_title_text"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <View
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/signinHeaderLayout"
-                android:background="@drawable/line_dotted_green"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:id="@+id/viewBar2">
-            </View>
+                    android:layout_below="@+id/gameTransactionsHeaderLayout"
+                    android:background="@drawable/line_dotted_green"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:id="@+id/viewBar4">
+                </View>
 
-                <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/viewBar2"
-                android:layout_margin="5dp"
-                android:id="@+id/signinLayout"></LinearLayout>
-            </LinearLayout>
+                <ListView
+                    android:layout_below="@+id/viewBar4"
+                    android:id="@+id/gameTransactionsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/section3"
-                android:layout_below="@+id/section2"
-                android:layout_marginBottom="10dp">
+            </RelativeLayout>
 
-                <LinearLayout
-                android:id="@+id/referralHeaderLayout"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_below="@+id/signinLayout">
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/game_referral_title"
-                    android:textColor="@color/game_title_text"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-                <View
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/referralHeaderLayout"
-                android:background="@drawable/line_dotted_green"
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:id="@+id/viewBar3">
-            </View>
-
-                <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/viewBar3"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="20dp"
-                android:id="@+id/referralLayout"></LinearLayout>
-            </LinearLayout>
-
-        </RelativeLayout>
-</LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>

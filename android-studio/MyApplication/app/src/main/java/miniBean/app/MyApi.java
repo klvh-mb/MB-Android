@@ -24,7 +24,6 @@ import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.PostResponse;
 import miniBean.viewmodel.PreNurseryVM;
 import miniBean.viewmodel.ProfileVM;
-import miniBean.viewmodel.ResponseConversationVM;
 import miniBean.viewmodel.UserProfileDataVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -300,7 +299,7 @@ public interface MyApi {
     public void getMessages(@Path("id") Long id,@Path("offset") Long offset,@Query("key") String key, Callback<Response> cb);
 
     @GET("/start-conversation/{id}")
-    public void startConversation(@Path("id") Long id,@Query("key") String key, Callback<List<ResponseConversationVM>> cb);
+    public void startConversation(@Path("id") Long id,@Query("key") String key, Callback<List<ConversationVM>> cb);
 
     @GET("/delete-conversation/{id}")
     public void deleteConversation(@Path("id") Long id,@Query("key") String key, Callback<Response> cb);

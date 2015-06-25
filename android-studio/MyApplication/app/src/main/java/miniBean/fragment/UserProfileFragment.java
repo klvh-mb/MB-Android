@@ -17,20 +17,18 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.lang.reflect.Field;
-import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.MessageDetailActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragment;
+import miniBean.app.UserInfoCache;
 import miniBean.util.AnimationUtil;
 import miniBean.util.ImageUtil;
+import miniBean.util.MessageUtil;
 import miniBean.viewmodel.ProfileVM;
-import miniBean.viewmodel.ResponseConversationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class UserProfileFragment extends TrackedFragment {
 
@@ -40,12 +38,15 @@ public class UserProfileFragment extends TrackedFragment {
     private TextView questionsCount, answersCount, bookmarksCount, userName, userInfoText;
     private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
     private Button editButton,messageButton;
-    private String nameUser;
-    private Long convID;
+
+    private MessageUtil messageUtil;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
+
+        messageUtil = new MessageUtil(getActivity());
 
         userName = (TextView) view.findViewById(R.id.usernameText);
         questionsCount = (TextView) view.findViewById(R.id.questionsCount);
@@ -73,7 +74,7 @@ public class UserProfileFragment extends TrackedFragment {
         ImageView editUserImage = (ImageView) view.findViewById(R.id.editUserImage);
         editUserImage.setVisibility(View.GONE);
 
-        messageButton= (Button) view.findViewById(R.id.messageButton);
+        messageButton = (Button) view.findViewById(R.id.messageButton);
 
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,16 +126,19 @@ public class UserProfileFragment extends TrackedFragment {
             }
         });
 
-        messageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startConversation();
+        final long userId = getArguments().getLong("oid");
+        if (userId == UserInfoCache.getUser().getId()) {
+            messageButton.setVisibility(View.GONE);
+        } else {
+            messageButton.setVisibility(View.VISIBLE);
+            messageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    messageUtil.startConversation(userId);
+                }
+            });
+        }
 
-
-            }
-        });
-
-        long userId = getArguments().getLong("oid");
         getUserProfile(userId);
 
         return view;
@@ -149,8 +153,6 @@ public class UserProfileFragment extends TrackedFragment {
                 userName.setText(profile.getDn());
                 questionsCount.setText(profile.getQc() + "");
                 answersCount.setText(profile.getAc() + "");
-                nameUser=profile.getDn();
-
 
                 // admin only
                 if (AppController.isUserAdmin()) {
@@ -199,27 +201,5 @@ public class UserProfileFragment extends TrackedFragment {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-    }
-    private void startConversation(){
-        AppController.getApi().startConversation(getArguments().getLong("oid"),AppController.getInstance().getSessionId(),new Callback<List<ResponseConversationVM>>() {
-            @Override
-            public void success(List<ResponseConversationVM> responseConversationVM, Response response1) {
-                Intent intent=new Intent(getActivity(), MessageDetailActivity.class);
-                intent.putExtra("user_name",nameUser);
-                intent.putExtra("uid",getArguments().getLong("oid"));
-                System.out.println("cid:::::::::::::::"+responseConversationVM.get(0).getId());
-                intent.putExtra("cid",responseConversationVM.get(0).getId());
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                //error.printStackTrace();
-                System.out.println("url:::"+error.getResponse().getUrl());
-            }
-        });
-
-
     }
 }
