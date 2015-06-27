@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
 import miniBean.util.GameConstants;
+import miniBean.util.SharingUtil;
+import miniBean.util.UrlUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.GameAccountVM;
 import miniBean.viewmodel.GameTransactionVM;
@@ -29,8 +32,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class GameActivity extends TrackedFragmentActivity {
-
-    public static final String REFERRAL_URL_PREFIX = AppController.BASE_URL + "/signup-promo-code/";
 
     private TextView pointsText, redeemedPointsText;
     private ImageView signInImage;
@@ -93,7 +94,7 @@ public class GameActivity extends TrackedFragmentActivity {
     private void getGameAccount() {
         AppController.getApi().getGameAccount(AppController.getInstance().getSessionId(), new Callback<GameAccountVM>() {
             @Override
-            public void success(GameAccountVM gameAccountVM, Response response) {
+            public void success(final GameAccountVM gameAccountVM, Response response) {
                 pointsText.setText(gameAccountVM.getGmpt()+"");
                 if (gameAccountVM.getRdpt() == 0) {
                     redeemedPointsText.setText("-");
@@ -108,7 +109,7 @@ public class GameActivity extends TrackedFragmentActivity {
                     signInImage.setImageDrawable(getResources().getDrawable(R.drawable.game_sign_in));
                 }
 
-                referralUrlEdit.setText(REFERRAL_URL_PREFIX + gameAccountVM.getPmcde());
+                referralUrlEdit.setText(UrlUtil.createReferralUrl(gameAccountVM));
 
                 signInImage.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -125,14 +126,18 @@ public class GameActivity extends TrackedFragmentActivity {
                 whatsappLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        SharingUtil.shareToWhatapp(gameAccountVM, GameActivity.this);
                     }
                 });
 
                 copyUrlLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        if (ViewUtil.copyToClipboard(referralUrlEdit)) {
+                            Toast.makeText(GameActivity.this, GameActivity.this.getString(R.string.game_referral_url_copy_success), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(GameActivity.this, GameActivity.this.getString(R.string.game_referral_url_copy_failed), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

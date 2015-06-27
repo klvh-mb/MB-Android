@@ -174,6 +174,17 @@ public class ViewUtil {
     // Text
     //
 
+    public static boolean copyToClipboard(TextView textView) {
+        return ClipboardUtil.copyToClipboard(AppController.getInstance(), textView.getText().toString());
+    }
+
+    public static void readFromClipboardTo(TextView textView) {
+        String text = ClipboardUtil.readFromClipboard(AppController.getInstance());
+        if (!StringUtils.isEmpty(text)) {
+            textView.setText(text);
+        }
+    }
+
     public static void setLinksClickable(TextView textView) {
         textView.setTextIsSelectable(true);
         textView.setFocusable(true);

@@ -10,6 +10,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.viewmodel.CommunityPostVM;
+import miniBean.viewmodel.GameAccountVM;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
 
@@ -22,10 +23,16 @@ public class SharingUtil {
         WHATSAPP
     }
 
-    public static final String SHARING_MESSAGE_NOTE = AppController.getInstance().getString(R.string.sharing_message_note);
-    //public static final String SHARING_MESSAGE_NOTE = AppController.getInstance().getString(R.string.sharing_message_note) + HtmlUtil.LINE_BREAK + createAndroidAppDownloadUrl();
+    //public static final String SHARING_MESSAGE_NOTE = AppController.getInstance().getString(R.string.sharing_message_note);
+    public static final String SHARING_MESSAGE_NOTE =
+            ViewUtil.HTML_LINE_BREAK + AppController.getInstance().getString(R.string.sharing_message_note) +
+                    ViewUtil.HTML_LINE_BREAK + UrlUtil.createAndroidAppDownloadUrl();
 
     private SharingUtil() {}
+
+    public static void shareToWhatapp(GameAccountVM gameAccount, Context context) {
+        shareTo(createMessage(gameAccount), SharingType.WHATSAPP, context);
+    }
 
     public static void shareToWhatapp(CommunityPostVM post, Context context) {
         shareTo(createMessage(post), SharingType.WHATSAPP, context);
@@ -65,6 +72,17 @@ public class SharingUtil {
                     getSharingTypeName(type) + AppController.getInstance().getString(R.string.sharing_app_not_installed),
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private static String createMessage(GameAccountVM gameAccount) {
+        String message = AppController.getInstance().getResources().getString(R.string.app_desc);
+        String url = UrlUtil.createReferralUrl(gameAccount);
+        message = message +
+                ViewUtil.HTML_LINE_BREAK +
+                url +
+                ViewUtil.HTML_LINE_BREAK +
+                SHARING_MESSAGE_NOTE;
+        return message;
     }
 
     private static String createMessage(CommunityPostVM post) {
