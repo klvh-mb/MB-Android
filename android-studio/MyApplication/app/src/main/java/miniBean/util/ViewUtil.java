@@ -1,22 +1,52 @@
 package miniBean.util;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.Service;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.text.Html;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.parceler.apache.commons.lang.StringUtils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import miniBean.R;
+import miniBean.app.AppController;
 import miniBean.app.MyImageGetter;
 import miniBean.viewmodel.CommunityPostVM;
+import retrofit.RetrofitError;
 
 /**
  * Created by keithlei on 3/16/15.
@@ -24,6 +54,8 @@ import miniBean.viewmodel.CommunityPostVM;
 public class ViewUtil {
 
     public static final String HTML_LINE_BREAK = "<br>";
+
+    private static Rect displayDimensions = null;
 
     private ViewUtil() {}
 
@@ -45,6 +77,22 @@ public class ViewUtil {
         }
     }
 
+    public static int getRealDimension(int size, Resources resources) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, resources.getDisplayMetrics());
+    }
+
+    public static Rect getDisplayDimensions(Activity activity) {
+        if (displayDimensions == null) {
+            int padding = 60;
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            activity.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int width = displaymetrics.widthPixels - padding;
+            int height = displaymetrics.heightPixels - padding;
+            displayDimensions = new Rect(0, 0, width, height);
+        }
+        return displayDimensions;
+    }
+
     public static void setHeightBasedOnChildren(ListView listView) {
         BaseAdapter listAdapter = (BaseAdapter) listView.getAdapter();
         if (listAdapter == null) {
@@ -60,9 +108,36 @@ public class ViewUtil {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount()-1));
+        params.height = totalHeight +
+                (listView.getDividerHeight() * (listAdapter.getCount()-1)) +
+                ViewUtil.getRealDimension(5, listView.getResources());  // extra margin
         listView.setLayoutParams(params);
         listView.requestLayout();
+    }
+
+    public static void fullscreenImagePopup(Activity activity, String source) {
+        try {
+            //frameLayout.getForeground().setAlpha(20);
+            //frameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
+
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) activity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.image_popup_window,(ViewGroup) activity.findViewById(R.id.popupElement));
+            ImageView fullImage= (ImageView) layout.findViewById(R.id.fullImage);
+
+            PopupWindow imagePopup = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
+            imagePopup.setOutsideTouchable(false);
+            imagePopup.setBackgroundDrawable(new BitmapDrawable(activity.getResources(), ""));
+            imagePopup.setFocusable(true);
+            imagePopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            ImageUtil.displayImage(source, fullImage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //
@@ -124,6 +199,109 @@ public class ViewUtil {
                 return false;
             }
         });
+    }
+
+    //
+    // Popup soft keyboard
+    //
+
+    public static void popupInputMethodWindow(final Activity activity) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) activity.getApplicationContext().getSystemService(Service.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }, 100);
+    }
+
+    public static void hideInputMethodWindow(final Activity activity, final View view) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }, 100);
+    }
+
+    //
+    // Alert dialog
+    //
+
+    public static void alert(Context context, String message) {
+        alert(context, null, message);
+    }
+
+    public static void alert(Context context, String title, String message) {
+        alert(context, title, message,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+    public static void alert(Context context, String title, String message, DialogInterface.OnClickListener onClick) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, onClick);
+        if (!StringUtils.isEmpty(title)) {
+            alertBuilder.setTitle(title);
+        }
+        alertBuilder.show();
+    }
+
+    public static Dialog alert(Context context, int dialogResourceId, int buttonResourceId, final View.OnClickListener onClick) {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final View dialogView = factory.inflate(dialogResourceId, null);
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(dialogView);
+        //dialog.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(android.R.string.yes), onClick);
+        Button button = (Button) dialogView.findViewById(buttonResourceId);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClick.onClick(view);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        return dialog;
+    }
+
+    //
+    // Retrofit
+    //
+
+    public static String getResponseBody(retrofit.client.Response response) {
+        BufferedReader reader = null;
+        StringBuilder sb = new StringBuilder();
+        try {
+            reader = new BufferedReader(new InputStreamReader(response.getBody().in()));
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
+    public static int getErrorStatusCode(RetrofitError error) {
+        if (error.isNetworkError()) {
+            return 550; // Use another code if you'd prefer
+        }
+
+        return error.getResponse().getStatus();
     }
 
     //

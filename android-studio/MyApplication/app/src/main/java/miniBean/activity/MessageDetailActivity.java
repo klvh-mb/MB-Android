@@ -11,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Gravity;
@@ -53,7 +54,6 @@ import miniBean.app.AppController;
 import miniBean.app.BroadcastService;
 import miniBean.app.EmoticonCache;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
@@ -73,7 +73,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     private FrameLayout mainFrameLayout;
     private EditText commentEditText;
     private PopupWindow commentPopup, emoPopup;
-    private ActivityUtil activityUtil;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
 
@@ -112,7 +111,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(R.layout.message_detail_actionbar);
-        activityUtil = new ActivityUtil(this);
 
         commentEdit = (TextView) findViewById(R.id.commentEdit);
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
@@ -242,7 +240,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
                             // popup again
                             commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
-                            activityUtil.popupInputMethodWindow();
+                            ViewUtil.popupInputMethodWindow(MessageDetailActivity.this);
                             return true;
                         }
                     });
@@ -272,7 +270,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             });
             */
 
-            activityUtil.popupInputMethodWindow();
+            ViewUtil.popupInputMethodWindow(this);
 
             commentPostButton = (TextView) layout.findViewById(R.id.postButton);
             commentPostButton.setOnClickListener(new View.OnClickListener() {
@@ -357,7 +355,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         }
 
         // pop back soft keyboard
-        activityUtil.popupInputMethodWindow();
+        ViewUtil.popupInputMethodWindow(this);
     }
 
     private void resetCommentImages() {
@@ -395,12 +393,12 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                     (ViewGroup) findViewById(R.id.popupElement));
 
             // hide soft keyboard when select emoticon
-            activityUtil.hideInputMethodWindow(layout);
+            ViewUtil.hideInputMethodWindow(this, layout);
 
             if (emoPopup == null) {
                 emoPopup = new PopupWindow(
                         layout,
-                        activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         true);
             }
@@ -424,7 +422,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                     EmoticonUtil.insertEmoticon(emoticonVMList.get(i), commentEditText);
                     emoPopup.dismiss();
                     emoPopup = null;
-                    activityUtil.popupInputMethodWindow();
+                    ViewUtil.popupInputMethodWindow(MessageDetailActivity.this);
                 }
             });
         } catch (Exception e) {

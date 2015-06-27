@@ -36,7 +36,6 @@ import com.facebook.android.FacebookError;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.ActivityUtil;
 import miniBean.util.SharedPreferencesUtil;
 import miniBean.util.ViewUtil;
 import retrofit.Callback;
@@ -78,13 +77,9 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
     // FB API v4.0
     //protected CallbackManager callbackManager;
 
-    protected ActivityUtil activityUtil;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        activityUtil = new ActivityUtil(this);
 
         // FB API v4.0
         /*
@@ -157,7 +152,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
                         @Override
                         public void onError(DialogError error) {
                             showSpinner(false);
-                            ActivityUtil.alert(AbstractLoginActivity.this,
+                            ViewUtil.alert(AbstractLoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
                             Log.e(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onError", error);
@@ -166,7 +161,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
                         @Override
                         public void onFacebookError(FacebookError fberror) {
                             showSpinner(false);
-                            ActivityUtil.alert(AbstractLoginActivity.this,
+                            ViewUtil.alert(AbstractLoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
                             Log.e(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onFacebookError", fberror);
@@ -194,7 +189,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
                 Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");
                 if (!saveToSession(response)) {
-                    ActivityUtil.alert(AbstractLoginActivity.this,
+                    ViewUtil.alert(AbstractLoginActivity.this,
                             getString(R.string.login_error_title),
                             getString(R.string.login_error_message));
                 }
@@ -203,7 +198,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
             @Override
             public void failure(RetrofitError error) {
                 showSpinner(false);
-                ActivityUtil.alert(AbstractLoginActivity.this,
+                ViewUtil.alert(AbstractLoginActivity.this,
                         getString(R.string.login_error_title),
                         getString(R.string.login_error_message));
                 Log.e(AbstractLoginActivity.class.getSimpleName(), "doLoginUsingAccessToken: failure", error);
@@ -216,7 +211,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
             return false;
         }
 
-        String key = activityUtil.getResponseBody(response);
+        String key = ViewUtil.getResponseBody(response);
         Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
         AppController.getInstance().saveSessionId(key);
 

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.util.ActivityUtil;
+import miniBean.util.ViewUtil;
 
 public abstract class TrackedFragment extends Fragment {
 
@@ -100,7 +100,7 @@ public abstract class TrackedFragment extends Fragment {
             ImageView dot = new ImageView(this.getActivity());
             dot.setImageDrawable(getResources().getDrawable(imageResource));
 
-            int dimension = ActivityUtil.getRealDimension(PAGER_INDICATOR_DOT_DIMENSION, this.getResources());
+            int dimension = ViewUtil.getRealDimension(PAGER_INDICATOR_DOT_DIMENSION, this.getResources());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dimension, dimension);
             params.gravity = Gravity.CENTER_VERTICAL;
             dotsLayout.addView(dot, params);

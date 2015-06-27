@@ -19,9 +19,9 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
+import miniBean.util.ViewUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -166,7 +166,7 @@ public class SignupActivity extends AbstractLoginActivity {
 
     private void initSuccessPopup() {
         try {
-            Dialog dialog = ActivityUtil.alert(
+            Dialog dialog = ViewUtil.alert(
                     this,
                     R.layout.signup_success_popup_window,
                     R.id.okButton,

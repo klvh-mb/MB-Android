@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +37,6 @@ import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.ActivityUtil;
-import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
@@ -81,15 +78,11 @@ public class NewPostActivity extends TrackedFragmentActivity {
     protected boolean postSuccess = false;
     protected int imageUploadSuccessCount = 0;
 
-    protected ActivityUtil activityUtil;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.new_post_activity);
-
-        activityUtil = new ActivityUtil(this);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.new_post_actionbar, null),
@@ -232,7 +225,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
         }
 
         // pop back soft keyboard
-        activityUtil.popupInputMethodWindow();
+        ViewUtil.popupInputMethodWindow(this);
     }
 
     protected void setPostImage(Bitmap bp){
@@ -350,8 +343,8 @@ public class NewPostActivity extends TrackedFragmentActivity {
             if (myCommunityPopup == null) {
                 myCommunityPopup = new PopupWindow(
                         layout,
-                        activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH, this.getResources()),
-                        activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT, this.getResources()),
                         true);
             }
 
@@ -402,11 +395,11 @@ public class NewPostActivity extends TrackedFragmentActivity {
                     (ViewGroup) findViewById(R.id.popupElement));
 
             // hide soft keyboard when select emoticon
-            activityUtil.hideInputMethodWindow(layout);
+            ViewUtil.hideInputMethodWindow(this, layout);
 
             if (emoPopup == null) {
                 emoPopup = new PopupWindow(layout,
-                        activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         true);
             }
@@ -430,7 +423,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
                     EmoticonUtil.insertEmoticon(emoticonVMList.get(i), editTextInFocus);
                     emoPopup.dismiss();
                     emoPopup = null;
-                    activityUtil.popupInputMethodWindow();
+                    ViewUtil.popupInputMethodWindow(NewPostActivity.this);
                 }
             });
         } catch (Exception e) {

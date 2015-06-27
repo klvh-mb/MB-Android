@@ -24,7 +24,6 @@ import java.util.List;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.MyImageGetter;
-import miniBean.util.ActivityUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
@@ -47,8 +46,6 @@ public class NewsfeedListAdapter extends BaseAdapter {
     private boolean isNewsfeed = true;
     private int lastPosition = -1;
 
-    private ActivityUtil activityUtil;
-
     private MyImageGetter imageGetter;
 
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
@@ -57,7 +54,6 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems, boolean isNewsfeed) {
         this.activity = activity;
-        this.activityUtil = new ActivityUtil(activity);
         this.imageGetter = new MyImageGetter(activity);
         this.feedItems = feedItems;
         this.isNewsfeed = isNewsfeed;
@@ -194,7 +190,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
     private void loadImages(final CommunityPostVM item, final LinearLayout layout) {
         layout.removeAllViewsInLayout();
 
-        final int padding = activityUtil.getRealDimension(3, this.activity.getResources());
+        final int padding = ViewUtil.getRealDimension(3, this.activity.getResources());
         final int totalPadding = padding * DefaultValues.MAX_POST_IMAGES;
 
         int loadedImageCount = 0;
@@ -226,7 +222,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
                         Log.d(this.getClass().getSimpleName(), "onLoadingComplete: loaded bitmap - " + loadedImage.getWidth() + "x" + loadedImage.getHeight());
 
                         int displayDimension =
-                                (activityUtil.getDisplayDimensions(NewsfeedListAdapter.this.activity).width() /
+                                (ViewUtil.getDisplayDimensions(NewsfeedListAdapter.this.activity).width() /
                                         DefaultValues.MAX_POST_IMAGES) - totalPadding;
                         //Log.d(this.getClass().getSimpleName(), "onLoadingComplete: screen size="+activityUtil.getDisplayDimensions().width()+"x"+activityUtil.getDisplayDimensions().height());
 

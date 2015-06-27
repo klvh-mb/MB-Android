@@ -1,12 +1,16 @@
 package miniBean.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import miniBean.R;
 import miniBean.util.ImageUtil;
@@ -154,6 +158,17 @@ public class AppController extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
 
         System.exit(1);
+    }
+
+    public static boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) AppController.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(AppController.getInstance().getApplicationContext(), AppController.getInstance().getString(R.string.connection_timeout_message), Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void printKeyHashForFacebook() {

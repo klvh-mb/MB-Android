@@ -46,8 +46,6 @@ import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
 import miniBean.app.MyImageGetter;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.ActivityUtil;
-import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
@@ -97,8 +95,6 @@ public class DetailActivity extends TrackedFragmentActivity {
     private List<ImageView> commentImages = new ArrayList<>();
     private List<File> photos = new ArrayList<>();
 
-    private ActivityUtil activityUtil;
-
     private MyImageGetter imageGetter;
 
     @Override
@@ -106,8 +102,6 @@ public class DetailActivity extends TrackedFragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.detail_activity);
-
-        activityUtil = new ActivityUtil(this);
 
         imageGetter = new MyImageGetter(this);
 
@@ -386,7 +380,7 @@ public class DetailActivity extends TrackedFragmentActivity {
 
                             // popup again
                             commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
-                            activityUtil.popupInputMethodWindow();
+                            ViewUtil.popupInputMethodWindow(DetailActivity.this);
                             return true;
                         }
                     });
@@ -416,7 +410,7 @@ public class DetailActivity extends TrackedFragmentActivity {
             });
             */
 
-            activityUtil.popupInputMethodWindow();
+            ViewUtil.popupInputMethodWindow(this);
 
             commentPostButton = (TextView) layout.findViewById(R.id.postButton);
             commentPostButton.setOnClickListener(new View.OnClickListener() {
@@ -523,7 +517,7 @@ public class DetailActivity extends TrackedFragmentActivity {
         }
 
         // pop back soft keyboard
-        activityUtil.popupInputMethodWindow();
+        ViewUtil.popupInputMethodWindow(this);
     }
 
     private void doComment() {
@@ -594,8 +588,8 @@ public class DetailActivity extends TrackedFragmentActivity {
             if (paginationPopup == null) {
                 paginationPopup = new PopupWindow(
                         layout,
-                        activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH, this.getResources()),
-                        activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT, this.getResources()),
                         true);
             }
 
@@ -784,11 +778,11 @@ public class DetailActivity extends TrackedFragmentActivity {
                     (ViewGroup) findViewById(R.id.popupElement));
 
             // hide soft keyboard when select emoticon
-            activityUtil.hideInputMethodWindow(layout);
+            ViewUtil.hideInputMethodWindow(this, layout);
 
             if (emoPopup == null) {
                 emoPopup = new PopupWindow(layout,
-                        activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         true);
             }
@@ -812,7 +806,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                     EmoticonUtil.insertEmoticon(emoticonVMList.get(i), commentEditText);
                     emoPopup.dismiss();
                     emoPopup = null;
-                    activityUtil.popupInputMethodWindow();
+                    ViewUtil.popupInputMethodWindow(DetailActivity.this);
                 }
             });
         } catch (Exception e) {

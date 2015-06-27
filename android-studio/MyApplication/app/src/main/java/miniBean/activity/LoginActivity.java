@@ -15,7 +15,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.util.ActivityUtil;
+import miniBean.util.ViewUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -53,7 +53,7 @@ public class LoginActivity extends AbstractLoginActivity {
                     @Override
                     public void success(Response response, Response response2) {
                         if (!saveToSession(response)) {
-                            ActivityUtil.alert(LoginActivity.this,
+                            ViewUtil.alert(LoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
                         }
@@ -65,18 +65,18 @@ public class LoginActivity extends AbstractLoginActivity {
                         loginButton.setEnabled(true);
                         if (error.getResponse() != null &&
                                 error.getResponse().getStatus() == 400) {
-                            String errorMsg = LoginActivity.this.activityUtil.getResponseBody(error.getResponse());
+                            String errorMsg = ViewUtil.getResponseBody(error.getResponse());
                             if (!StringUtils.isEmpty(errorMsg)) {
-                                ActivityUtil.alert(LoginActivity.this,
+                                ViewUtil.alert(LoginActivity.this,
                                         getString(R.string.login_error_title),
                                         errorMsg);
                             } else {
-                                ActivityUtil.alert(LoginActivity.this,
+                                ViewUtil.alert(LoginActivity.this,
                                         getString(R.string.login_error_title),
                                         getString(R.string.login_id_error_message));
                             }
                         } else {
-                            ActivityUtil.alert(LoginActivity.this,
+                            ViewUtil.alert(LoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
                         }
@@ -120,7 +120,7 @@ public class LoginActivity extends AbstractLoginActivity {
             return false;
         }
 
-        String key = activityUtil.getResponseBody(response);
+        String key = ViewUtil.getResponseBody(response);
         Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
         AppController.getInstance().saveSessionId(key);
 

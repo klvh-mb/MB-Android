@@ -33,7 +33,6 @@ import miniBean.activity.UserProfileActivity;
 import miniBean.app.AppController;
 import miniBean.app.MyImageGetter;
 import miniBean.app.UserInfoCache;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
@@ -58,8 +57,6 @@ public class DetailListAdapter extends BaseAdapter {
 
     private LinearLayout postImagesLayout;
 
-    private ActivityUtil activityUtil;
-
     private MyImageGetter imageGetter;
 
     private MessageUtil messageUtil;
@@ -68,7 +65,6 @@ public class DetailListAdapter extends BaseAdapter {
         this.activity = activity;
         this.postComments = postComments;
         this.page = page;
-        this.activityUtil = new ActivityUtil(activity);
         this.imageGetter = new MyImageGetter(activity);
         this.messageUtil = new MessageUtil(activity);
     }
@@ -310,14 +306,14 @@ public class DetailListAdapter extends BaseAdapter {
             ImageView postImage = new ImageView(this.activity);
             postImage.setAdjustViewBounds(true);
             postImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            postImage.setPadding(0, 0, 0, activityUtil.getRealDimension(10, this.activity.getResources()));
+            postImage.setPadding(0, 0, 0, ViewUtil.getRealDimension(10, this.activity.getResources()));
             layout.addView(postImage);
 
             /*
             postImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    fullscreenImagePopup(source);
+                    ViewUtil.fullscreenImagePopup(DetailListAdapter.this, source);
                 }
             });
             */
@@ -349,7 +345,7 @@ public class DetailListAdapter extends BaseAdapter {
                         int height = loadedImage.getHeight();
 
                         // always stretch to screen width
-                        int displayWidth = ActivityUtil.getDisplayDimensions(DetailListAdapter.this.activity).width();
+                        int displayWidth = ViewUtil.getDisplayDimensions(DetailListAdapter.this.activity).width();
                         float scaleAspect = (float)displayWidth / (float)width;
                         width = displayWidth;
                         height = (int)(height * scaleAspect);
@@ -457,30 +453,5 @@ public class DetailListAdapter extends BaseAdapter {
                 Log.e(DetailListAdapter.class.getSimpleName(), "deleteComment: failure", error);
             }
         });
-    }
-
-    private void fullscreenImagePopup(String source) {
-        try {
-            frameLayout.getForeground().setAlpha(20);
-            frameLayout.getForeground().setColorFilter(R.color.gray, PorterDuff.Mode.OVERLAY);
-
-            //We need to get the instance of the LayoutInflater, use the context of this activity
-            LayoutInflater inflater = (LayoutInflater) activity
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //Inflate the view from a predefined XML layout
-            View layout = inflater.inflate(R.layout.image_popup_window,(ViewGroup) activity.findViewById(R.id.popupElement));
-            ImageView fullImage= (ImageView) layout.findViewById(R.id.fullImage);
-
-            PopupWindow imagePopup = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
-            imagePopup.setOutsideTouchable(false);
-            imagePopup.setBackgroundDrawable(new BitmapDrawable(activity.getResources(), ""));
-            imagePopup.setFocusable(true);
-            imagePopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
-            ImageUtil.displayImage(source, fullImage);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

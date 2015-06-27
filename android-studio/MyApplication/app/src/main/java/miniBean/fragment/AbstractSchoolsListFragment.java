@@ -26,8 +26,8 @@ import miniBean.adapter.DistrictListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragment;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.LocationVM;
 
 public abstract class AbstractSchoolsListFragment extends TrackedFragment {
@@ -48,8 +48,6 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
     protected View listHeader;
     protected ListView listView;
 
-    protected ActivityUtil activityUtil;
-
     // PN and KG override
 
     abstract protected boolean isPN();
@@ -69,8 +67,6 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.school_list_fragment, container, false);
-
-        activityUtil = new ActivityUtil(getActivity());
 
         // header
         listHeader = getHeaderView(inflater);
@@ -204,7 +200,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
                 } else {
                     Toast.makeText(getActivity(), "Enter name to search....", Toast.LENGTH_LONG).show();
                 }
-                activityUtil.hideInputMethodWindow(searchWindow);
+                ViewUtil.hideInputMethodWindow(getActivity(), searchWindow);
                 return false;
             }
 
@@ -284,7 +280,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         // if search mode, back will exit search mode
         // and swallow the event
         if (!searchWindow.isIconified()) {
-            activityUtil.hideInputMethodWindow(searchWindow);
+            ViewUtil.hideInputMethodWindow(getActivity(), searchWindow);
 
             // HACK!!! to dismiss soft keyboard...
             if (dismissSearchPressCount > 0) {
@@ -302,7 +298,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         nurseryLayout.setVisibility(View.VISIBLE);
         searchResultLayout.setVisibility(View.GONE);
         searchWindow.setIconified(true);
-        activityUtil.hideInputMethodWindow(searchWindow);
+        ViewUtil.hideInputMethodWindow(getActivity(), searchWindow);
         dismissSearchPressCount = 0;
         listView.smoothScrollToPosition(0);
     }

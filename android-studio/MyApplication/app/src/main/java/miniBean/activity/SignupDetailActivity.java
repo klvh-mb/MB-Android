@@ -28,9 +28,9 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -56,8 +56,6 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
     private Calendar calendar;
     private ImageView birthday1,birthday2,birthday3;
     private TextView birthdayLabel1,birthdayLabel2,birthdayLabel3;
-
-    protected ActivityUtil activityUtil;
 
     private String year1,month1,day1,year2,month2,day2,year3,month3,day3;
 
@@ -118,8 +116,6 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
         birthdayLabel3 = (TextView) findViewById(R.id.birthdayLabel3);
 
         calendar = Calendar.getInstance();
-
-        activityUtil = new ActivityUtil(this);
 
         displayName = (EditText) findViewById(R.id.displaynameEdit);
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
@@ -278,14 +274,14 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            String errorMsg = SignupDetailActivity.this.activityUtil.getResponseBody(error.getResponse());
+                            String errorMsg = ViewUtil.getResponseBody(error.getResponse());
                             if (error.getResponse().getStatus() == 500 &&
                                     error.getResponse() != null &&
                                     !StringUtils.isEmpty(errorMsg)) {
-                                ActivityUtil.alert(SignupDetailActivity.this, errorMsg);
+                                ViewUtil.alert(SignupDetailActivity.this, errorMsg);
                             } else {
                                 //ActivityUtil.alert(SignupDetailActivity.this, getString(R.string.signup_details_error_info));
-                                ActivityUtil.alert(SignupDetailActivity.this,
+                                ViewUtil.alert(SignupDetailActivity.this,
                                         "\""+displayname+"\" "+getString(R.string.signup_details_error_displayname_already_exists));
 
                             }

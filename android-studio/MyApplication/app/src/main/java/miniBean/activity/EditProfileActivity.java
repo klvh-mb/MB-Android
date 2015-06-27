@@ -23,8 +23,8 @@ import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserProfileDataVM;
 import miniBean.viewmodel.UserVM;
@@ -50,13 +50,9 @@ public class EditProfileActivity extends TrackedFragmentActivity {
 
     private List<String> districtNames;
 
-    protected ActivityUtil activityUtil;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        activityUtil = new ActivityUtil(this);
 
         setContentView(R.layout.edit_profile_activity);
 
@@ -186,13 +182,13 @@ public class EditProfileActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                String errorMsg = EditProfileActivity.this.activityUtil.getResponseBody(error.getResponse());
+                String errorMsg = ViewUtil.getResponseBody(error.getResponse());
                 if (error.getResponse().getStatus() == 500 &&
                         error.getResponse() != null &&
                         !StringUtils.isEmpty(errorMsg)) {
-                    ActivityUtil.alert(EditProfileActivity.this, errorMsg);
+                    ViewUtil.alert(EditProfileActivity.this, errorMsg);
                 } else {
-                    ActivityUtil.alert(EditProfileActivity.this, getString(R.string.signup_details_error_info));
+                    ViewUtil.alert(EditProfileActivity.this, getString(R.string.signup_details_error_info));
                 }
                 Log.e(EditProfileActivity.class.getSimpleName(), "setUserProfileData: failure", error);
             }
