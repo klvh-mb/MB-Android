@@ -44,6 +44,7 @@ import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.EmoticonVM;
 import miniBean.viewmodel.NewPost;
@@ -63,7 +64,6 @@ public class NewPostActivity extends TrackedFragmentActivity {
     protected ImageView communityIcon;
     protected ImageView backImage, browseImage, emoImage;
     protected TextView postTitle, postContent, postAction, editTextInFocus;
-    protected ProgressBar spinner;
 
     protected String selectedImagePath = null;
     protected Uri selectedImageUri = null;
@@ -114,9 +114,6 @@ public class NewPostActivity extends TrackedFragmentActivity {
         postTitle = (TextView) findViewById(R.id.postTitle);
         postContent = (TextView) findViewById(R.id.postContent);
         editTextInFocus = postContent;
-
-        spinner = (ProgressBar) findViewById(R.id.spinner);
-        AnimationUtil.cancel(spinner);
 
         postTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -281,7 +278,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
             return;
         }
 
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         final boolean withPhotos = photos.size() > 0;
 
@@ -305,8 +302,9 @@ public class NewPostActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(NewPostActivity.this);
                 Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_failed), Toast.LENGTH_SHORT).show();
-                error.printStackTrace();
+                Log.e(NewPostActivity.class.getSimpleName(), "doPost: failure", error);
             }
         });
     }
@@ -326,15 +324,16 @@ public class NewPostActivity extends TrackedFragmentActivity {
                 }
 
                 @Override
-                public void failure(RetrofitError retrofitError) {
-                    retrofitError.printStackTrace(); //to see if you have errors
+                public void failure(RetrofitError error) {
+                    ViewUtil.stopSpinner(NewPostActivity.this);
+                    Log.e(NewPostActivity.class.getSimpleName(), "uploadPhotos: failure", error);
                 }
             });
         }
     }
 
     protected void complete() {
-        AnimationUtil.cancel(spinner);
+        ViewUtil.stopSpinner(this);
         onBackPressed();
         finish();
         Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_LONG).show();

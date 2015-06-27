@@ -36,13 +36,14 @@ import retrofit.client.Response;
 public class RequestListFragment extends TrackedFragment {
 
     private static final String TAG = RequestListFragment.class.getName();
-    RequestListAdapter adapter;
+    private RequestListAdapter adapter;
     private ListView listView;
     private TextView tipText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.request_list_fragment, container, false);
 
         listView = (ListView) view.findViewById(R.id.listRequest);
@@ -62,10 +63,10 @@ public class RequestListFragment extends TrackedFragment {
                 NotificationVM vm = gson.fromJson(json_data.toString(), NotificationVM.class);
                 notificationVMs.add(vm);
 
-                if(vm.getSta()==0) {
+                if (vm.getSta()==0) {
                     if (i != 0) {
                         ids.append(",");
-                        }
+                    }
                     ids.append(vm.getNid());
                 }
             }
@@ -73,13 +74,13 @@ public class RequestListFragment extends TrackedFragment {
             e.printStackTrace();
         }
 
-        if(ids.length()!=0)
+        if (ids.length()!=0) {
             markAsRead(ids.toString());
+        }
 
-
-        if(notificationVMs.size() == 0){
+        if (notificationVMs.size() == 0) {
             tipText.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             adapter = new RequestListAdapter(getActivity(), notificationVMs);
             listView.setAdapter(adapter);
         }
@@ -127,6 +128,7 @@ public class RequestListFragment extends TrackedFragment {
 
         return view;
     }
+
     private void markAsRead(String ids){
         AppController.getApi().markAsRead(ids,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
@@ -136,9 +138,8 @@ public class RequestListFragment extends TrackedFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                    error.printStackTrace();
+                Log.e(RequestListFragment.class.getSimpleName(), "markAsRead: failure", error);
             }
         });
     }
-
 }

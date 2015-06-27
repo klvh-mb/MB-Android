@@ -29,7 +29,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,7 +80,6 @@ public class DetailActivity extends TrackedFragmentActivity {
     private TextView questionText;
     private PopupWindow commentPopup, paginationPopup, emoPopup;
     private Boolean isBookmarked = false;
-    private ProgressBar spinner;
     private TextView communityName, numPostViews, numPostComments;
     private ImageView communityIcon;
     private EditText commentEditText;
@@ -124,7 +122,6 @@ public class DetailActivity extends TrackedFragmentActivity {
         pageButton = (Button) findViewById(R.id.page);
         backButton = (ImageButton) findViewById(R.id.back);
         nextButton = (ImageButton) findViewById(R.id.next);
-        spinner = (ProgressBar) findViewById(R.id.spinner);
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
 
@@ -182,7 +179,7 @@ public class DetailActivity extends TrackedFragmentActivity {
     }
 
     private void getQnaDetail() {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         AppController.getApi().qnaLanding(postId, commId, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
             @Override
@@ -292,7 +289,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                     }
                 });
 
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(DetailActivity.this);
             }
 
             @Override
@@ -304,7 +301,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                     Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.connection_timeout_message), Toast.LENGTH_SHORT).show();
                 }
 
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(DetailActivity.this);
 
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
@@ -536,7 +533,7 @@ public class DetailActivity extends TrackedFragmentActivity {
             return;
         }
 
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         final boolean withPhotos = photos.size() > 0;
 
@@ -744,10 +741,9 @@ public class DetailActivity extends TrackedFragmentActivity {
     }
 
     private void getComments(Long postID, final int offset) {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         AppController.getApi().getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
-
             @Override
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {
                 communityItems.clear();
@@ -763,12 +759,12 @@ public class DetailActivity extends TrackedFragmentActivity {
                 listView.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
 
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(DetailActivity.this);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(DetailActivity.this);
                 Log.e(DetailActivity.class.getSimpleName(), "getComments: failure", error);
             }
         });

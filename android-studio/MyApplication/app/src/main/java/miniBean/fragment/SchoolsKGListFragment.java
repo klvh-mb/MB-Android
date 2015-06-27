@@ -51,7 +51,8 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
     }
 
     @Override
-    protected void getSchoolsByDistrict(final Long id, final String district){
+    protected void getSchoolsByDistrict(final Long id, final String district) {
+        ViewUtil.showSpinner(getActivity());
         AppController.getApi().getKGsByDistricts(id, AppController.getInstance().getSessionId(), new Callback<List<KindergartenVM>>() {
             @Override
             public void success(List<KindergartenVM> vms, Response response) {
@@ -59,10 +60,12 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
                 schoolVMList = vms;
                 applyFilters();
                 noOfSchools.setText(vms.size() + "");
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(getActivity());
                 error.printStackTrace();
             }
         });
@@ -161,7 +164,8 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
     }
 
     @Override
-    protected void searchByName(final String query){
+    protected void searchByName(final String query) {
+        ViewUtil.showSpinner(getActivity());
         dismissSearchPressCount = 0;
         AppController.getApi().searchKGsByName(query, AppController.getInstance().getSessionId(), new Callback<List<KindergartenVM>>() {
             @Override
@@ -182,10 +186,13 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
                 //KGListAdapter resultListAdapter = new KGListAdapter(getActivity(), resultList);
                 //listView.setAdapter(resultListAdapter);
                 listAdapter.refresh(searchVMList);
+
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(getActivity());
                 error.printStackTrace();
             }
         });

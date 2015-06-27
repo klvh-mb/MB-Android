@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 
 // FB API v4.0
 //import com.facebook.CallbackManager;
@@ -38,8 +37,8 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ActivityUtil;
-import miniBean.util.AnimationUtil;
 import miniBean.util.SharedPreferencesUtil;
+import miniBean.util.ViewUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -55,13 +54,8 @@ import retrofit.client.Response;
  */
 public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
-    private ProgressBar spinner;
     private View loginButton;
     private View facebookButton;
-
-    protected void setSpinner(ProgressBar spinner) {
-        this.spinner = spinner;
-    }
 
     protected void setLoginButton(View loginButton) {
         this.loginButton = loginButton;
@@ -252,14 +246,21 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
         }
     }
 
-    protected void showSpinner(boolean show) {
-        if (spinner != null) {
-            if (show) {
-                AnimationUtil.show(spinner);
-            } else {
-                AnimationUtil.cancel(spinner);
-            }
+    protected void showSpinner() {
+        showSpinner(true);
+    }
+
+    protected void stopSpinner() {
+        showSpinner(false);
+    }
+
+    private void showSpinner(boolean show) {
+        if (show) {
+            ViewUtil.showSpinner(this);
+        } else {
+            ViewUtil.stopSpinner(this);
         }
+
         if (loginButton != null) {
             loginButton.setEnabled(!show);
         }

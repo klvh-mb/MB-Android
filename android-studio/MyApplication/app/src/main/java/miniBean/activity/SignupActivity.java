@@ -1,24 +1,17 @@
 package miniBean.activity;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,10 +64,6 @@ public class SignupActivity extends AbstractLoginActivity {
         termsCheckbox = (CheckBox) findViewById(R.id.termsCheckbox);
         privacyCheckbox = (CheckBox) findViewById(R.id.privacyCheckbox);
 
-        ProgressBar spinner = (ProgressBar) findViewById(R.id.spinner);
-        spinner.setVisibility(View.INVISIBLE);
-
-        setSpinner(spinner);
         setLoginButton(signupButton);
         setFacebookButton(facebookButton);
 

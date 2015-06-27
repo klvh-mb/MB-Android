@@ -20,6 +20,7 @@ import miniBean.activity.MessageDetailActivity;
 import miniBean.adapter.ConversationListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragment;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.ConversationVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -36,6 +37,7 @@ public class MessageListFragment extends TrackedFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         View view = inflater.inflate(R.layout.message_list_fragment, container, false);
 
         tipText = (TextView) view.findViewById(R.id.tipText);
@@ -98,6 +100,7 @@ public class MessageListFragment extends TrackedFragment {
     }
 
     private void getAllConversations() {
+        ViewUtil.showSpinner(getActivity());
         AppController.getApi().getAllConversations(AppController.getInstance().getSessionId(), new Callback<List<ConversationVM>>() {
             @Override
             public void success(List<ConversationVM> conversationVMs, Response response) {
@@ -109,24 +112,30 @@ public class MessageListFragment extends TrackedFragment {
                     adapter = new ConversationListAdapter(getActivity(), conversationVMList);
                     listView.setAdapter(adapter);
                 }
+
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(getActivity());
                 Log.e(MessageListFragment.class.getSimpleName(), "getAllConversations: failure", error);
             }
         });
     }
 
     private void deleteConversation(Long id) {
+        ViewUtil.showSpinner(getActivity());
         AppController.getApi().deleteConversation(id,AppController.getInstance().getSessionId(),new Callback<Response>() {
             @Override
             public void success(Response response, Response response1) {
                 getAllConversations();
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(getActivity());
                 Log.e(MessageListFragment.class.getSimpleName(), "deleteConversation: failure", error);
             }
         });

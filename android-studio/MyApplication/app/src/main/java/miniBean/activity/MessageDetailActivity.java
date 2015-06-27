@@ -29,7 +29,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,10 +54,10 @@ import miniBean.app.BroadcastService;
 import miniBean.app.EmoticonCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ActivityUtil;
-import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.EmoticonVM;
 import miniBean.viewmodel.MessagePostVM;
 import miniBean.viewmodel.MessageVM;
@@ -82,7 +81,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     private List<ImageView> commentImages = new ArrayList<>();
     private List<File> photos = new ArrayList<>();
     private EmoticonListAdapter emoticonListAdapter;
-    private ProgressBar spinner;
 
     private TextView commentPostButton,title;
     private ImageView backImage, commentBrowseButton, commentCancelButton, commentEmoImage, profileButton;
@@ -117,7 +115,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         activityUtil = new ActivityUtil(this);
 
         commentEdit = (TextView) findViewById(R.id.commentEdit);
-        mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout1);
+        mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
         loadMessage= (Button) findViewById(R.id.loadButton);
         profileButton= (ImageView) findViewById(R.id.profileButton);
 
@@ -125,9 +123,8 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
         listView = (ListView)findViewById(R.id.list_view_messages);
         title = (TextView) findViewById(R.id.title);
-        spinner = (ProgressBar) findViewById(R.id.spinner);
 
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         messageVMList = new ArrayList<>();
 
@@ -538,19 +535,20 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                         }
                     });
 
-
                     adapter = new MessageListAdapter(MessageDetailActivity.this, messageVMList);
                     listView.setAdapter(adapter);
-                    AnimationUtil.cancel(spinner);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                ViewUtil.stopSpinner(MessageDetailActivity.this);
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(MessageDetailActivity.this);
                 Log.e(MessageDetailActivity.class.getSimpleName(), "getMessages: failure", error);
             }
         });
@@ -600,16 +598,18 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                     adapter.notifyDataSetChanged();
                    // adapter = new MessageListAdapter(MessageDetailActivity.this, messageVMList);
                    // listView.setAdapter(adapter);
-                    AnimationUtil.cancel(spinner);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                ViewUtil.stopSpinner(MessageDetailActivity.this);
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(MessageDetailActivity.this);
                 Log.e(MessageDetailActivity.class.getSimpleName(), "loadMoreMessages.api.getMessages: failure", error);
             }
         });

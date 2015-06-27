@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.parceler.apache.commons.lang.StringUtils;
@@ -43,16 +42,12 @@ public class LoginActivity extends AbstractLoginActivity {
         signup = (TextView) findViewById(R.id.signupText);
         forgetPassword = (TextView) findViewById(R.id.forgetPasswordText);
 
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.spinner);
-        spinner.setVisibility(View.INVISIBLE);
-
-        setSpinner(spinner);
         setLoginButton(loginButton);
         setFacebookButton(facebookButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                showSpinner(true);
+                showSpinner();
 
                 AppController.getApi().login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
@@ -66,7 +61,7 @@ public class LoginActivity extends AbstractLoginActivity {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        showSpinner(false);
+                        stopSpinner();
                         loginButton.setEnabled(true);
                         if (error.getResponse() != null &&
                                 error.getResponse().getStatus() == 400) {

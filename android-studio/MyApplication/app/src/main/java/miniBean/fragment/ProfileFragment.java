@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -30,9 +29,9 @@ import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragment;
 import miniBean.app.UserInfoCache;
-import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -44,7 +43,6 @@ public class ProfileFragment extends TrackedFragment {
 
     private static final String TAG = ProfileFragment.class.getName();
     private ImageView userCoverPic, userPic, editCoverImage;
-    private ProgressBar spinner;
     private TextView questionsCount, answersCount, bookmarksCount, userName;
     private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
     private Long userId;
@@ -68,7 +66,6 @@ public class ProfileFragment extends TrackedFragment {
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
         userPic = (ImageView) view.findViewById(R.id.userImage);
         editCoverImage = (ImageView) view.findViewById(R.id.editCoverImage);
-        spinner = (ProgressBar) view.findViewById(R.id.spinner);
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
@@ -183,7 +180,7 @@ public class ProfileFragment extends TrackedFragment {
     }
 
     private void getUserInfo() {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(getActivity());
 
         UserVM user = UserInfoCache.getUser();
 
@@ -200,17 +197,17 @@ public class ProfileFragment extends TrackedFragment {
         ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-                AnimationUtil.show(spinner);
+                ViewUtil.showSpinner(getActivity());
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(getActivity());
             }
         });
     }
@@ -246,7 +243,7 @@ public class ProfileFragment extends TrackedFragment {
     }
 
     private void changeCoverPhoto(final long id){
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(getActivity());
 
         Log.d(this.getClass().getSimpleName(), "changeCoverPhoto: Id=" + id);
 
@@ -263,17 +260,17 @@ public class ProfileFragment extends TrackedFragment {
                         ImageUtil.displayCoverImage(id, userCoverPic, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-                                AnimationUtil.show(spinner);
+                                ViewUtil.showSpinner(getActivity());
                             }
 
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                AnimationUtil.cancel(spinner);
+                                ViewUtil.stopSpinner(getActivity());
                             }
 
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                AnimationUtil.cancel(spinner);
+                                ViewUtil.stopSpinner(getActivity());
                             }
                         });
                     }
@@ -288,7 +285,7 @@ public class ProfileFragment extends TrackedFragment {
     }
 
     private void changeProfilePhoto(final long id) {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(getActivity());
 
         Log.d(this.getClass().getSimpleName(), "changeProfilePhoto: Id=" + id);
 
@@ -305,17 +302,17 @@ public class ProfileFragment extends TrackedFragment {
                         ImageUtil.displayProfileImage(id, userPic, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-                                AnimationUtil.show(spinner);
+                                ViewUtil.showSpinner(getActivity());
                             }
 
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                AnimationUtil.cancel(spinner);
+                                ViewUtil.stopSpinner(getActivity());
                             }
 
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                AnimationUtil.cancel(spinner);
+                                ViewUtil.stopSpinner(getActivity());
                             }
                         });
                     }

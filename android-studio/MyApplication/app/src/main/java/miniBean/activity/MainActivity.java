@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,7 +23,7 @@ import miniBean.fragment.CommunityMainFragment;
 import miniBean.app.TrackedFragment;
 import miniBean.fragment.MyProfileFragment;
 import miniBean.fragment.SchoolsMainFragment;
-import miniBean.util.AnimationUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunitiesParentVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.NotificationsParentVM;
@@ -51,7 +50,6 @@ public class MainActivity extends TrackedFragmentActivity {
     private boolean topicCommunityTabLoaded = false;
     private boolean yearCommunityTabLoaded = false;
 
-    private ProgressBar spinner;
     private TextView notificationCount;
 
     private TrackedFragment selectedFragment;
@@ -85,8 +83,6 @@ public class MainActivity extends TrackedFragmentActivity {
         profileText = (TextView) findViewById(R.id.profileText);
         notificationCount = (TextView) findViewById(R.id.notificationCount);
 
-        spinner = (ProgressBar) findViewById(R.id.spinner);
-
         commsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,17 +114,14 @@ public class MainActivity extends TrackedFragmentActivity {
 
         init();
 
-        AnimationUtil.show(spinner);
         NotificationCache.refresh(new Callback<NotificationsParentVM>() {
             @Override
             public void success(NotificationsParentVM notificationsParentVM, Response response) {
-                AnimationUtil.cancel(spinner);
                 setUnreadNotificationsCount();
             }
 
             @Override
             public void failure(RetrofitError error) {
-                AnimationUtil.cancel(spinner);
                 Log.e(MainActivity.class.getSimpleName(), "onStart: NotificationCache.refresh: failure", error);
             }
         });
@@ -252,8 +245,6 @@ public class MainActivity extends TrackedFragmentActivity {
         }
 
         if (LocalCommunityTabCache.isCommunityCategoryMapListEmpty()) {
-            AnimationUtil.show(spinner);
-
             topicCommunityTabLoaded = false;
             yearCommunityTabLoaded = false;
 
@@ -267,7 +258,6 @@ public class MainActivity extends TrackedFragmentActivity {
 
                             topicCommunityTabLoaded = true;
                             if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
-                                AnimationUtil.cancel(spinner);
                                 pressCommunityTab();
                             }
                         }
@@ -288,7 +278,6 @@ public class MainActivity extends TrackedFragmentActivity {
 
                             yearCommunityTabLoaded = true;
                             if (topicCommunityTabLoaded && yearCommunityTabLoaded) {
-                                AnimationUtil.cancel(spinner);
                                 pressCommunityTab();
                             }
                         }

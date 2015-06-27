@@ -1,5 +1,6 @@
 package miniBean.util;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.text.Html;
 import android.text.Selection;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import miniBean.R;
@@ -28,6 +30,20 @@ public class ViewUtil {
     //
     // View
     //
+
+    public static void showSpinner(Activity activity) {
+        ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.spinner);
+        if (spinner != null) {
+            AnimationUtil.show(spinner);
+        }
+    }
+
+    public static void stopSpinner(Activity activity) {
+        ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.spinner);
+        if (spinner != null) {
+            AnimationUtil.cancel(spinner);
+        }
+    }
 
     public static void setHeightBasedOnChildren(ListView listView) {
         BaseAdapter listAdapter = (BaseAdapter) listView.getAdapter();

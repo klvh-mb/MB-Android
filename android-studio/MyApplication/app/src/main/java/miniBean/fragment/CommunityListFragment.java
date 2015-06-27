@@ -9,7 +9,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +18,13 @@ import miniBean.activity.CommunityActivity;
 import miniBean.adapter.CommunityListAdapter;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragment;
-import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class CommunityListFragment extends TrackedFragment {
 
     private static final String TAG = CommunityListFragment.class.getName();
-    ProgressBar spinner;
     private ListView listView;
     private CommunityListAdapter listAdapter;
     private List<CommunitiesWidgetChildVM> communities;
@@ -37,15 +35,13 @@ public class CommunityListFragment extends TrackedFragment {
 
         View view = inflater.inflate(R.layout.community_list_fragment, container, false);
 
+        ViewUtil.showSpinner(getActivity());
+
         listView = (ListView) view.findViewById(R.id.listComm);
 
         // Tricky... listview header and footer dividers need to add in code...
         listView.addHeaderView(new View(getActivity().getBaseContext()), null, true);
         listView.addFooterView(new View(getActivity().getBaseContext()), null, true);
-
-        spinner = (ProgressBar) view.findViewById(R.id.spinner);
-
-        AnimationUtil.show(spinner);
 
         communities = new ArrayList<>();
 
@@ -84,7 +80,7 @@ public class CommunityListFragment extends TrackedFragment {
         this.communities.clear();
         this.communities.addAll(communities);
         listAdapter.notifyDataSetChanged();
-        AnimationUtil.cancel(spinner);
+        ViewUtil.stopSpinner(getActivity());
     }
 
     @Override

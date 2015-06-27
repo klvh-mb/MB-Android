@@ -31,19 +31,19 @@ public class NewsfeedListFragement extends AbstractNewsfeedListFragement {
         Log.d(this.getClass().getSimpleName(), "InfiniteScrollListener offset="+offset+" with key="+getArguments().getString("key"));
         switch (getArguments().getString("key")) {
             case "userquestion":
-                getUserQuestion(offset,getArguments().getLong("id"));
+                getUserQuestions(offset,getArguments().getLong("id"));
                 break;
             case "useranswer":
-                getUserAnswer(offset,getArguments().getLong("id"));
+                getUserAnswers(offset,getArguments().getLong("id"));
                 break;
             case "question":
-                getUserQuestion(offset,getArguments().getLong("id"));
+                getUserQuestions(offset,getArguments().getLong("id"));
                 break;
             case "answer":
-                getUserAnswer(offset,getArguments().getLong("id"));
+                getUserAnswers(offset,getArguments().getLong("id"));
                 break;
             case "bookmark":
-                getBookmark(offset);
+                getBookmarks(offset);
                 break;
             case "feed":
                 getNewsFeed(offset);
@@ -63,12 +63,12 @@ public class NewsfeedListFragement extends AbstractNewsfeedListFragement {
             @Override
             public void failure(RetrofitError error) {
                 setFooterText(R.string.list_loading_error);
-                error.printStackTrace();
+                Log.e(NewsfeedListFragement.class.getSimpleName(), "getNewsFeed: failure", error);
             }
         });
     }
 
-    private void getUserQuestion(int offset,Long id) {
+    private void getUserQuestions(int offset,Long id) {
         AppController.getApi().getUserPosts(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
             @Override
             public void success(PostArray array, Response response2) {
@@ -78,12 +78,12 @@ public class NewsfeedListFragement extends AbstractNewsfeedListFragement {
             @Override
             public void failure(RetrofitError error) {
                 setFooterText(R.string.list_loading_error);
-                error.printStackTrace();
+                Log.e(NewsfeedListFragement.class.getSimpleName(), "getUserQuestion: failure", error);
             }
         });
     }
 
-    private void getUserAnswer(int offset,Long id) {
+    private void getUserAnswers(int offset,Long id) {
         AppController.getApi().getUserComments(Long.valueOf(offset), id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
 
             @Override
@@ -94,12 +94,12 @@ public class NewsfeedListFragement extends AbstractNewsfeedListFragement {
             @Override
             public void failure(RetrofitError error) {
                 setFooterText(R.string.list_loading_error);
-                error.printStackTrace();
+                Log.e(NewsfeedListFragement.class.getSimpleName(), "getUserAnswer: failure", error);
             }
         });
     }
 
-    private void getBookmark(int offset) {
+    private void getBookmarks(int offset) {
         AppController.getApi().getBookmarkedPosts(Long.valueOf(offset), AppController.getInstance().getSessionId(), new Callback<List<CommunityPostVM>>() {
             @Override
             public void success(List<CommunityPostVM> posts, Response response) {
@@ -109,7 +109,7 @@ public class NewsfeedListFragement extends AbstractNewsfeedListFragement {
             @Override
             public void failure(RetrofitError error) {
                 setFooterText(R.string.list_loading_error);
-                error.printStackTrace();
+                Log.e(NewsfeedListFragement.class.getSimpleName(), "getBookmark: failure", error);
             }
         });
     }

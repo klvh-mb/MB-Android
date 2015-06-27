@@ -14,6 +14,7 @@ import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.KGCommunityFragment;
 import miniBean.util.SharingUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -116,6 +117,7 @@ public class KGCommunityActivity extends TrackedFragmentActivity {
     }
 
     private void getSchoolInfo(Long id) {
+        ViewUtil.showSpinner(this);
         AppController.getApi().getKGInfo(id, AppController.getInstance().getSessionId(), new Callback<KindergartenVM>() {
             @Override
             public void success(KindergartenVM vm, Response response) {
@@ -128,10 +130,13 @@ public class KGCommunityActivity extends TrackedFragmentActivity {
                 }
 
                 initFragment();
+
+                ViewUtil.stopSpinner(KGCommunityActivity.this);
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(KGCommunityActivity.this);
                 Log.e(KGCommunityActivity.class.getSimpleName(), "getSchoolInfo: failure", error);
             }
         });

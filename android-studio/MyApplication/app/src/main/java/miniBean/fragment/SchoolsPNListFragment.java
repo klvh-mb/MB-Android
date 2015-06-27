@@ -50,7 +50,8 @@ public class SchoolsPNListFragment extends AbstractSchoolsListFragment {
     }
 
     @Override
-    protected void getSchoolsByDistrict(final Long id, final String district){
+    protected void getSchoolsByDistrict(final Long id, final String district) {
+        ViewUtil.showSpinner(getActivity());
         AppController.getApi().getPNsByDistricts(id, AppController.getInstance().getSessionId(), new Callback<List<PreNurseryVM>>() {
             @Override
             public void success(List<PreNurseryVM> vms, Response response) {
@@ -58,10 +59,12 @@ public class SchoolsPNListFragment extends AbstractSchoolsListFragment {
                 schoolVMList = vms;
                 applyFilters();
                 noOfSchools.setText(vms.size() + "");
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(getActivity());
                 error.printStackTrace();
             }
         });
@@ -160,7 +163,8 @@ public class SchoolsPNListFragment extends AbstractSchoolsListFragment {
     }
 
     @Override
-    protected void searchByName(final String query){
+    protected void searchByName(final String query) {
+        ViewUtil.showSpinner(getActivity());
         dismissSearchPressCount = 0;
         AppController.getApi().searchPNsByName(query, AppController.getInstance().getSessionId(), new Callback<List<PreNurseryVM>>() {
             @Override
@@ -181,10 +185,13 @@ public class SchoolsPNListFragment extends AbstractSchoolsListFragment {
                 //PNListAdapter resultListAdapter = new PNListAdapter(getActivity(), resultList);
                 //listView.setAdapter(resultListAdapter);
                 listAdapter.refresh(searchVMList);
+
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(getActivity());
                 error.printStackTrace();
             }
         });

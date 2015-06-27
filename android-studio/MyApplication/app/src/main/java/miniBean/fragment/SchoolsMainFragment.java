@@ -31,7 +31,7 @@ public class SchoolsMainFragment extends TrackedFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.schools_main_fragement, container, false);
+        View view = inflater.inflate(R.layout.schools_main_fragment, container, false);
 
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.pager);

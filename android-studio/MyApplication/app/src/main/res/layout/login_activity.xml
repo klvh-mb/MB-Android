@@ -10,7 +10,7 @@
         android:id="@+id/spinner"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/progress_spinner"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="255dp" />

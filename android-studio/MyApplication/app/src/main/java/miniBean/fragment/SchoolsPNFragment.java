@@ -30,7 +30,7 @@ public class SchoolsPNFragment extends TrackedFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.schools_pn_fragement, container, false);
+        View view = inflater.inflate(R.layout.schools_pn_fragment, container, false);
 
         buttonList = (Button) view.findViewById(R.id.buttonListing);
         buttonBookmark = (Button) view.findViewById(R.id.buttonBookmark);
@@ -41,7 +41,7 @@ public class SchoolsPNFragment extends TrackedFragment {
         if(listClicked){
             pressListButton();
         }else if(newsClicked){
-            pressNewsButton();
+            pressNewsfeedButton();
         }else if(bookmarkClicked){
             pressBookmarkButton();
         }
@@ -69,7 +69,7 @@ public class SchoolsPNFragment extends TrackedFragment {
         buttonNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pressNewsButton();
+                pressNewsfeedButton();
                 bookmarkClicked=false;
                 newsClicked=true;
                 listClicked=false;
@@ -115,7 +115,7 @@ public class SchoolsPNFragment extends TrackedFragment {
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
 
-    private void pressNewsButton(){
+    private void pressNewsfeedButton(){
         buttonList.setBackgroundColor(getResources().getColor(R.color.pn_box_border));
         buttonList.setTextColor(Color.WHITE);
 

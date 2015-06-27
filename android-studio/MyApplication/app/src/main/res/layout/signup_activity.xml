@@ -4,6 +4,16 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <ProgressBar
+    style="?android:attr/progressBarStyle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/spinner"
+    android:layout_centerInParent="true"
+    android:indeterminate="true"
+    android:indeterminateDrawable="@drawable/progress_spinner"
+    android:visibility="invisible" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,17 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_centerInParent="true"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/progress_spinner"
-        android:visibility="visible" />
-
-    <TextView
+        <TextView
         android:id="@+id/facebookText"
         android:text="@string/signup_fb_title"
         android:textSize="15dp"

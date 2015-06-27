@@ -243,14 +243,14 @@
                         android:background="@drawable/line_dotted_green"
                         android:layout_width="match_parent"
                         android:layout_height="3dp"
-                        android:id="@+id/viewBar3">
+                        android:id="@+id/viewBar">
                     </View>
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewBar3"
+                        android:layout_below="@+id/viewBar"
                         android:layout_margin="5dp"
                         android:layout_marginBottom="20dp"
                         android:id="@+id/referralLayout">
