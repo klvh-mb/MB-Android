@@ -8,6 +8,7 @@ public class GameAccountVM {
     public long rdpt;
     public long refs;
     public boolean signedIn;
+    public boolean profilePic;
     public long gl;
     public String gln;
     public String gli;
@@ -67,6 +68,14 @@ public class GameAccountVM {
 
     public void setSignedIn(boolean signedIn) {
         this.signedIn = signedIn;
+    }
+
+    public boolean hasProfilePic() {
+        return profilePic;
+    }
+
+    public void setHasProfilePic(boolean profilePic) {
+        this.profilePic = profilePic;
     }
 
     public long getGl() {

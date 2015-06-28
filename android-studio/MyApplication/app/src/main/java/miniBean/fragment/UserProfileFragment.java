@@ -35,7 +35,8 @@ public class UserProfileFragment extends TrackedFragment {
     private ImageView userCoverPic, userPic;
     private TextView questionsCount, answersCount, bookmarksCount, userName, userInfoText;
     private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
-    private Button editButton,messageButton;
+    private Button editButton, messageButton;
+    private LinearLayout gameLayout;
 
     private MessageUtil messageUtil;
 
@@ -54,8 +55,10 @@ public class UserProfileFragment extends TrackedFragment {
         userPic = (ImageView) view.findViewById(R.id.userImage);
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
+
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         bookmarksMenu.setVisibility(View.GONE);
+
         settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
         settingsMenu.setVisibility(View.GONE);
 
@@ -65,6 +68,9 @@ public class UserProfileFragment extends TrackedFragment {
         userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
         userInfoLayout.setVisibility(View.GONE);
         userInfoText = (TextView) view.findViewById(R.id.userInfoText);
+
+        gameLayout = (LinearLayout) view.findViewById(R.id.gameLayout);
+        gameLayout.setVisibility(View.GONE);
 
         ImageView editCoverImage = (ImageView) view.findViewById(R.id.editCoverImage);
         editCoverImage.setVisibility(View.GONE);

@@ -18,16 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Button
-            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/loadButton"
-            android:layout_width="90dp"
-            android:layout_height="25dp"
-            android:textSize="10dp"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:textSize="14dp"
             android:background="@drawable/rounded_corner_button"
-            android:text="Load More Message"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp" />
+            android:text="@string/pm_load_more"
+            android:textColor="@color/dark_gray"
+            android:layout_margin="5dp" />
 
         <ListView
             android:layout_below="@+id/loadButton"

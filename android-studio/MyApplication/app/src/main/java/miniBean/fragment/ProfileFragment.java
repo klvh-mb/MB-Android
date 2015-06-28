@@ -15,24 +15,32 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.lang.reflect.Field;
 
 import miniBean.R;
 import miniBean.activity.EditProfileActivity;
+import miniBean.activity.GameActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragment;
 import miniBean.app.UserInfoCache;
 import miniBean.util.DefaultValues;
+import miniBean.util.GameConstants;
 import miniBean.util.ImageUtil;
+import miniBean.util.SharingUtil;
+import miniBean.util.UrlUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
+import miniBean.viewmodel.GameAccountVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -50,8 +58,12 @@ public class ProfileFragment extends TrackedFragment {
     private final Integer SELECT_PICTURE = 1;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
-    private boolean coverPhotoClicked = false, profilePhotoClicked=false;
+    private boolean coverPhotoClicked = false, profilePhotoClicked = false;
+    private boolean hasProfilePic = false;
+
     private Button editButton, messageButton;
+    private LinearLayout gameLayout;
+    private TextView pointsText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,8 +85,19 @@ public class ProfileFragment extends TrackedFragment {
         userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
         editButton = (Button) view.findViewById(R.id.editButton);
         messageButton = (Button) view.findViewById(R.id.messageButton);
+        gameLayout = (LinearLayout) view.findViewById(R.id.gameLayout);
+        pointsText = (TextView) view.findViewById(R.id.pointsText);
+
         messageButton.setVisibility(View.GONE);
         userInfoLayout.setVisibility(View.GONE);
+
+        gameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), GameActivity.class);
+                startActivity(intent);
+            }
+        });
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +129,7 @@ public class ProfileFragment extends TrackedFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), NewsfeedActivity.class);
-                intent.putExtra("id",userId);
+                intent.putExtra("id", userId);
                 intent.putExtra("key","question");
                 startActivity(intent);
             }
@@ -143,6 +166,7 @@ public class ProfileFragment extends TrackedFragment {
         });
 
         getUserInfo();
+        getGameAccount();
         getBookmarkSummary();
 
         return view;
@@ -207,6 +231,24 @@ public class ProfileFragment extends TrackedFragment {
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                ViewUtil.stopSpinner(getActivity());
+            }
+        });
+    }
+
+    private void getGameAccount() {
+        ViewUtil.showSpinner(getActivity());
+        AppController.getApi().getGameAccount(AppController.getInstance().getSessionId(), new Callback<GameAccountVM>() {
+            @Override
+            public void success(final GameAccountVM gameAccountVM, Response response) {
+                pointsText.setText(gameAccountVM.getGmpt() + "");
+                hasProfilePic = gameAccountVM.hasProfilePic();
+                ViewUtil.stopSpinner(getActivity());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(GameActivity.class.getSimpleName(), "getGameAccount: failure", error);
                 ViewUtil.stopSpinner(getActivity());
             }
         });
@@ -297,6 +339,13 @@ public class ProfileFragment extends TrackedFragment {
         AppController.getApi().uploadProfilePhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
             @Override
             public void success(Response response, Response response2) {
+                if (!hasProfilePic) {
+                    hasProfilePic = true;
+                    ViewUtil.alertGamePoints(getActivity(),
+                            getActivity().getString(R.string.game_upload_profile_pic_title),
+                            GameConstants.POINTS_UPLOAD_PROFILE_PHOTO);
+                }
+
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         ImageUtil.displayProfileImage(id, userPic, new SimpleImageLoadingListener() {

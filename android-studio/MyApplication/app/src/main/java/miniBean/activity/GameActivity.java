@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ import retrofit.client.Response;
 
 public class GameActivity extends TrackedFragmentActivity {
 
+    private ScrollView scrollView;
+    private RelativeLayout gameLayout;
     private TextView pointsText, redeemedPointsText;
     private ImageView signInImage;
     private TextView referralNotePoints;
@@ -63,6 +66,8 @@ public class GameActivity extends TrackedFragmentActivity {
                 )
         );
 
+        scrollView = (ScrollView) this.findViewById(R.id.scrollView);
+        gameLayout = (RelativeLayout) this.findViewById((R.id.gameLayout));
         pointsText = (TextView) this.findViewById(R.id.pointsText);
         redeemedPointsText = (TextView) this.findViewById(R.id.redeemedPointsText);
         signInImage = (ImageView) this.findViewById(R.id.signInImage);

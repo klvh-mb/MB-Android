@@ -167,8 +167,10 @@
     <string name="pm_actionbar_title">私人訊息</string>
     <string name="pm_user">私人訊息</string>
     <string name="pm_max_images">最多可加入1張圖</string>
+    <string name="pm_load_more">加載訊息</string>
     <string name="pm_start_failed">暫時不能開啟訊息，請稍後重試</string>
     <string name="pm_send_failed">暫時不能發出訊息，請稍後重試</string>
+
 
     <string name="game_title">小豆豆中心</string>
     <string name="game_rules_title">積分規則</string>

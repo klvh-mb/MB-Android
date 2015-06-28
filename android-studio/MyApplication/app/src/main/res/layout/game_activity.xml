@@ -101,10 +101,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0"
+                                android:text="-"
                                 android:id="@+id/pointsText"
                                 android:textStyle="bold"
-                                android:textSize="15dp"
+                                android:textSize="18dp"
                                 android:textColor="@color/game_orange"
                                 android:layout_marginLeft="10dp"
                                 android:layout_gravity="center_vertical" />
