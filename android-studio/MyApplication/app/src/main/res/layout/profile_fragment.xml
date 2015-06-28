@@ -114,7 +114,7 @@
                     android:layout_height="35dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:id="@+id/gameLayout">
 
                     <ImageView

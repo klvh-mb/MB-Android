@@ -297,6 +297,10 @@ public class ViewUtil {
     }
 
     public static Dialog alertGamePoints(Context context, String desc, int points) {
+        return alertGamePoints(context, desc, points, 3000);
+    }
+
+    public static Dialog alertGamePoints(Context context, String desc, int points, long delayMillis) {
         final Dialog dialog = alert(context, R.layout.game_points_popup_window);
         TextView descText = (TextView) dialog.findViewById(R.id.descText);
         TextView pointsText = (TextView) dialog.findViewById(R.id.pointsText);
@@ -310,6 +314,18 @@ public class ViewUtil {
                 }
             }
         });
+
+        // auto dismiss
+        if (delayMillis != -1) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            }, delayMillis);
+        }
         return dialog;
     }
 

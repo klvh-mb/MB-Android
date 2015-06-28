@@ -162,14 +162,6 @@ public class GameActivity extends TrackedFragmentActivity {
                 // alert and refresh
                 final Dialog dialog = ViewUtil.alertGamePoints(GameActivity.this,
                         getString(R.string.game_daily_signin_title), GameConstants.POINTS_DAILY_SIGNIN);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (dialog != null && dialog.isShowing()) {
-                            dialog.dismiss();
-                        }
-                    }
-                }, 2000);
                 refresh();
             }
 
