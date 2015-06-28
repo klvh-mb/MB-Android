@@ -248,7 +248,9 @@ public class ViewUtil {
         alert(context, title, message,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
                     }
                 });
     }
@@ -265,6 +267,10 @@ public class ViewUtil {
         alertBuilder.show();
     }
 
+    public static Dialog alert(Context context, int dialogResourceId) {
+        return alert(context, dialogResourceId, -1, null);
+    }
+
     public static Dialog alert(Context context, int dialogResourceId, int buttonResourceId, final View.OnClickListener onClick) {
         LayoutInflater factory = LayoutInflater.from(context);
         final View dialogView = factory.inflate(dialogResourceId, null);
@@ -273,14 +279,37 @@ public class ViewUtil {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(dialogView);
         //dialog.setButton(AlertDialog.BUTTON_POSITIVE, context.getString(android.R.string.yes), onClick);
-        Button button = (Button) dialogView.findViewById(buttonResourceId);
-        button.setOnClickListener(new View.OnClickListener() {
+        if (buttonResourceId != -1) {
+            Button button = (Button) dialogView.findViewById(buttonResourceId);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    if (onClick != null) {
+                        onClick.onClick(view);
+                    }
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+        }
+        dialog.show();
+        return dialog;
+    }
+
+    public static Dialog alertGamePoints(Context context, String desc, int points) {
+        final Dialog dialog = alert(context, R.layout.game_points_popup_window);
+        TextView descText = (TextView) dialog.findViewById(R.id.descText);
+        TextView pointsText = (TextView) dialog.findViewById(R.id.pointsText);
+        ImageView dismissImage = (ImageView) dialog.findViewById(R.id.dismissImage);
+        descText.setText(desc);
+        pointsText.setText("+"+points);
+        dismissImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                onClick.onClick(view);
-                dialog.dismiss();
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         });
-        dialog.show();
         return dialog;
     }
 

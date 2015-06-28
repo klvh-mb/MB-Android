@@ -1,10 +1,14 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
+import android.app.Dialog;
+import android.app.Service;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,22 +84,15 @@ public class GameActivity extends TrackedFragmentActivity {
             }
         });
 
-        getGameAccount();
-        getGameTransactions();
-
-        if (UserInfoCache.getUser().isAdmin()) {
-            latestGameTransactionsLayout.setVisibility(View.VISIBLE);
-            getLatestGameTransactions();
-        } else {
-            latestGameTransactionsLayout.setVisibility(View.GONE);
-        }
+        refresh();
     }
 
     private void getGameAccount() {
+        ViewUtil.showSpinner(this);
         AppController.getApi().getGameAccount(AppController.getInstance().getSessionId(), new Callback<GameAccountVM>() {
             @Override
             public void success(final GameAccountVM gameAccountVM, Response response) {
-                pointsText.setText(gameAccountVM.getGmpt()+"");
+                pointsText.setText(gameAccountVM.getGmpt() + "");
                 if (gameAccountVM.getRdpt() == 0) {
                     redeemedPointsText.setText("-");
                 } else {
@@ -116,9 +113,6 @@ public class GameActivity extends TrackedFragmentActivity {
                     public void onClick(View v) {
                         if (!signedIn) {
                             signInForToday();
-                        } else {
-                            // alert
-
                         }
                     }
                 });
@@ -141,11 +135,13 @@ public class GameActivity extends TrackedFragmentActivity {
                     }
                 });
 
+                ViewUtil.stopSpinner(GameActivity.this);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.e(GameActivity.class.getSimpleName(), "getGameAccount: failure", error);
+                ViewUtil.stopSpinner(GameActivity.this);
             }
         });
     }
@@ -158,8 +154,18 @@ public class GameActivity extends TrackedFragmentActivity {
                 UserInfoCache.getUser().setEnableSignInForToday(false);
                 signedIn = true;
 
-                // alert
-
+                // alert and refresh
+                final Dialog dialog = ViewUtil.alertGamePoints(GameActivity.this,
+                        getString(R.string.game_daily_signin_title), GameConstants.POINTS_DAILY_SIGNIN);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (dialog != null && dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
+                    }
+                }, 2000);
+                refresh();
             }
 
             @Override
@@ -203,6 +209,18 @@ public class GameActivity extends TrackedFragmentActivity {
                 Log.e(GameActivity.class.getSimpleName(), "getLatestGameTransactions: failure", error);
             }
         });
+    }
+
+    private void refresh() {
+        getGameAccount();
+        getGameTransactions();
+
+        if (UserInfoCache.getUser().isAdmin()) {
+            latestGameTransactionsLayout.setVisibility(View.VISIBLE);
+            getLatestGameTransactions();
+        } else {
+            latestGameTransactionsLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
