@@ -3,6 +3,7 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.app.Dialog;
 import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -42,9 +43,9 @@ public class GameActivity extends TrackedFragmentActivity {
     private RelativeLayout gameLayout;
     private TextView pointsText, redeemedPointsText;
     private ImageView signInImage;
-    private TextView referralNotePoints;
+    private TextView referralNotePoints, referralSuccessNum, referralSuccessPoints;
     private EditText referralUrlEdit;
-    private LinearLayout whatsappLayout, copyUrlLayout;
+    private LinearLayout gameRulesLayout, whatsappLayout, copyUrlLayout;
     private ImageView backImage;
     private ListView gameTransactionList, latestGameTransactionList;
     private RelativeLayout latestGameTransactionsLayout;
@@ -72,7 +73,10 @@ public class GameActivity extends TrackedFragmentActivity {
         redeemedPointsText = (TextView) this.findViewById(R.id.redeemedPointsText);
         signInImage = (ImageView) this.findViewById(R.id.signInImage);
         referralNotePoints = (TextView) this.findViewById(R.id.referralNotePoints);
+        referralSuccessNum = (TextView) this.findViewById(R.id.referralSuccessNum);
+        referralSuccessPoints = (TextView) this.findViewById(R.id.referralSuccessPoints);
         referralUrlEdit = (EditText) this.findViewById(R.id.referralUrlEdit);
+        gameRulesLayout = (LinearLayout) this.findViewById(R.id.gameRulesLayout);
         whatsappLayout = (LinearLayout) this.findViewById(R.id.whatsappLayout);
         copyUrlLayout = (LinearLayout) this.findViewById(R.id.copyUrlLayout);
         gameTransactionList = (ListView) this.findViewById(R.id.gameTransactionList);
@@ -80,6 +84,14 @@ public class GameActivity extends TrackedFragmentActivity {
         latestGameTransactionsLayout = (RelativeLayout) this.findViewById(R.id.latestGameTransactionsLayout);
 
         referralNotePoints.setText(GameConstants.POINTS_REFERRAL_SIGNUP+"");
+
+        gameRulesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameActivity.this, GameRulesActivity.class);
+                startActivity(intent);
+            }
+        });
 
         backImage = (ImageView) this.findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +122,9 @@ public class GameActivity extends TrackedFragmentActivity {
                 } else {
                     signInImage.setImageDrawable(getResources().getDrawable(R.drawable.game_sign_in));
                 }
+
+                referralSuccessNum.setText(gameAccountVM.getRefs()+"");
+                referralSuccessPoints.setText((gameAccountVM.getRefs() * GameConstants.POINTS_REFERRAL_SIGNUP)+"");
 
                 referralUrlEdit.setText(UrlUtil.createReferralUrl(gameAccountVM));
 

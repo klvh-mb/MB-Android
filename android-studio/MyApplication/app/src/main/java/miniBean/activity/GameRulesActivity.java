@@ -7,7 +7,7 @@ import miniBean.R;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.MyWebViewClient;
 
-public class TermsActivity extends TrackedFragmentActivity {
+public class GameRulesActivity extends TrackedFragmentActivity {
 
     private WebView webView;
 
@@ -21,7 +21,7 @@ public class TermsActivity extends TrackedFragmentActivity {
         webView.setWebViewClient(new MyWebViewClient());
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(MyWebViewClient.TERMS_URL);
+        webView.loadUrl(MyWebViewClient.GAME_RULES_URL);
     }
 
     @Override

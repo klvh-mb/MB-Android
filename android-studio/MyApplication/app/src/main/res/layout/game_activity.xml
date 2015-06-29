@@ -41,30 +41,62 @@
                     android:id="@+id/section1"
                     android:layout_marginBottom="25dp">
 
-                    <LinearLayout
-                    android:id="@+id/pointsHeaderLayout"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/pointsHeaderLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="5dp">
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/game_l1"
-                        android:layout_gravity="center_vertical" />
-                    <TextView
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/game_points_title"
-                        android:textColor="@color/game_title_text"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/game_l1"
+                                android:layout_gravity="center_vertical" />
+
+                            <TextView
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/game_points_title"
+                                android:textColor="@color/game_title_text"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/gameRulesLayout">
+
+                            <ImageView
+                                android:layout_width="13dp"
+                                android:layout_height="13dp"
+                                android:src="@drawable/ic_ques"
+                                android:layout_gravity="center_vertical" />
+
+                            <TextView
+                                android:layout_marginLeft="3dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical|right"
+                                android:text="@string/game_rules_title"
+                                android:textColor="@color/game_title_text"
+                                android:textSize="13dp" />
+                        </LinearLayout>
+                    </RelativeLayout>
 
                     <View
                     android:layout_marginTop="0dp"
@@ -314,6 +346,69 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginRight="25dp"
+                            android:weightSum="10"
+                            android:layout_marginTop="5dp">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/game_referral_success_num"
+                                    android:textSize="14dp"
+                                    android:textColor="@color/game_title_text"
+                                    android:layout_gravity="center_vertical" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="-"
+                                    android:textStyle="bold"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/orange"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:id="@+id/referralSuccessNum" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/game_referral_success_points"
+                                    android:textSize="14dp"
+                                    android:textColor="@color/game_title_text"
+                                    android:layout_gravity="center_vertical" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="-"
+                                    android:textStyle="bold"
+                                    android:textSize="15dp"
+                                    android:textColor="@color/orange"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp"
+                                    android:id="@+id/referralSuccessPoints" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:weightSum="10"
                             android:layout_marginLeft="5dp"
@@ -323,18 +418,18 @@
 
                             <EditText
                                 android:layout_width="0dp"
-                                android:layout_height="40dp"
+                                android:layout_height="38dp"
                                 android:id="@+id/referralUrlEdit"
                                 android:background="@drawable/game_edit_text_round"
                                 android:layout_weight="10"
                                 android:layout_gravity="center_vertical"
                                 android:editable="false"
                                 android:singleLine="true"
-                                android:textColor="@color/dark_gray"
+                                android:textColor="@color/gray"
                                 android:enabled="false"
                                 android:focusable="false"
                                 android:textSize="14dp"
-                                android:text="http://www.minibean.hk" />
+                                android:text="@string/base_url" />
 
                         </LinearLayout>
 
@@ -370,7 +465,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/sharing_whatsapp_button"
                                     android:id="@+id/whatsappText"
-                                    android:textColor="@color/game_title_text"
+                                    android:textColor="@color/dark_gray"
                                     android:layout_marginLeft="5dp"
                                     android:layout_gravity="center"
                                     android:textSize="14dp"
@@ -401,7 +496,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/sharing_copy_url_button"
                                     android:id="@+id/copyUrlText"
-                                    android:textColor="@color/game_title_text"
+                                    android:textColor="@color/dark_gray"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="10dp"
                                     android:textSize="14dp"

@@ -17,7 +17,7 @@ public class ForgetPasswordActivity extends TrackedFragmentActivity {
 
         setContentView(R.layout.webview_activity);
 
-        webView = (WebView) findViewById(R.id.webView1);
+        webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new MyWebViewClient());
 
         webView.getSettings().setJavaScriptEnabled(true);
