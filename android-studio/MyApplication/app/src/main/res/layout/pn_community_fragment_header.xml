@@ -120,10 +120,10 @@
                     android:layout_gravity="center_vertical"
                     android:textSize="14dp" />
                 <ImageView
-                    android:layout_width="15dp"
+                    android:layout_width="16dp"
                     android:layout_height="10dp"
                     android:layout_marginLeft="5dp"
-                    android:background="@drawable/ic_blue_arrow"
+                    android:background="@drawable/ic_blue_arrow_2"
                     android:layout_gravity="center_vertical" />
             </LinearLayout>
         </LinearLayout>

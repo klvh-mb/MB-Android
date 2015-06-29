@@ -350,7 +350,7 @@
                             android:layout_marginLeft="25dp"
                             android:layout_marginRight="25dp"
                             android:weightSum="10"
-                            android:layout_marginTop="5dp">
+                            android:layout_marginTop="3dp">
 
                             <LinearLayout
                                 android:orientation="horizontal"
@@ -418,7 +418,7 @@
 
                             <EditText
                                 android:layout_width="0dp"
-                                android:layout_height="38dp"
+                                android:layout_height="35dp"
                                 android:id="@+id/referralUrlEdit"
                                 android:background="@drawable/game_edit_text_round"
                                 android:layout_weight="10"

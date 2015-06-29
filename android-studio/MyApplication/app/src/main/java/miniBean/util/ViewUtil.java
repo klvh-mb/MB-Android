@@ -64,16 +64,20 @@ public class ViewUtil {
     //
 
     public static void showSpinner(Activity activity) {
-        ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.spinner);
-        if (spinner != null) {
-            AnimationUtil.show(spinner);
+        if (activity != null) {
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.spinner);
+            if (spinner != null) {
+                AnimationUtil.show(spinner);
+            }
         }
     }
 
     public static void stopSpinner(Activity activity) {
-        ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.spinner);
-        if (spinner != null) {
-            AnimationUtil.cancel(spinner);
+        if (activity != null) {
+            ProgressBar spinner = (ProgressBar) activity.findViewById(R.id.spinner);
+            if (spinner != null) {
+                AnimationUtil.cancel(spinner);
+            }
         }
     }
 
