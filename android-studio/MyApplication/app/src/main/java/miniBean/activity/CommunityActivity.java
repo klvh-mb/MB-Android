@@ -33,7 +33,7 @@ public class CommunityActivity extends TrackedFragmentActivity {
         );
 
         backImage = (ImageView) this.findViewById(R.id.backImage);
-        titleAction = (TextView) this.findViewById(R.id.title);
+        titleAction = (TextView) this.findViewById(R.id.actionbarTitle);
         editAction = (ImageView) this.findViewById(R.id.newPostIcon);
 
         Bundle bundle = new Bundle();

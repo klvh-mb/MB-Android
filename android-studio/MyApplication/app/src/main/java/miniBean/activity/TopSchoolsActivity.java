@@ -59,7 +59,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 )
         );
 
-        TextView actionbarTitle = (TextView) findViewById(R.id.title);
+        TextView actionbarTitle = (TextView) findViewById(R.id.actionbarTitle);
         RelativeLayout topViewedLayout = (RelativeLayout) findViewById(R.id.topViewedLayout);
         RelativeLayout topBookmarkedLayout = (RelativeLayout) findViewById(R.id.topBookmarkedLayout);
 

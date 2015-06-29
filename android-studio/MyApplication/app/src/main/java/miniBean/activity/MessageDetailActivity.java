@@ -11,7 +11,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Gravity;
@@ -120,7 +119,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         intent = new Intent(this, BroadcastService.class);
 
         listView = (ListView)findViewById(R.id.list_view_messages);
-        title = (TextView) findViewById(R.id.title);
+        title = (TextView) findViewById(R.id.actionbarTitle);
 
         ViewUtil.showSpinner(this);
 

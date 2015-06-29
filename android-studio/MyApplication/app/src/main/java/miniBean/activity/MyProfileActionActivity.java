@@ -2,7 +2,6 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import miniBean.R;
+import miniBean.app.TrackedFragment;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.MessageListFragment;
 import miniBean.fragment.SettingsFragment;
@@ -25,10 +25,12 @@ public class MyProfileActionActivity extends TrackedFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setTracked(false);  // track in fragment
+
         setContentView(R.layout.my_profile_action_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.my_profile_action_actionbar, null),
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.my_actionbar, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
                         ActionBar.LayoutParams.MATCH_PARENT,
@@ -36,10 +38,10 @@ public class MyProfileActionActivity extends TrackedFragmentActivity {
                 )
         );
 
-        titleText = (TextView) findViewById(R.id.title);
+        titleText = (TextView) findViewById(R.id.actionbarTitle);
 
         Bundle bundle = new Bundle();
-        Fragment fragment = null;
+        TrackedFragment fragment = null;
         switch (getIntent().getStringExtra("key")) {
             case "requests":
                 titleText.setText(getString(R.string.request_actionbar_title));
@@ -66,6 +68,7 @@ public class MyProfileActionActivity extends TrackedFragmentActivity {
         if (fragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.children_layout, fragment).commit();
+            fragment.setTrackedOnce();
         }
 
         backImage = (ImageView) this.findViewById(R.id.backImage);

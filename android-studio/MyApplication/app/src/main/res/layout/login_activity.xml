@@ -136,7 +136,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="忘記密碼"
+            android:text="@string/login_forgot_password"
             android:textColor="#ffffff"
             android:textSize="16dp"
             android:layout_alignParentLeft="true"
@@ -147,7 +147,7 @@
          <TextView
              android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="新會員注册"
+            android:text="@string/login_new_signup"
             android:textColor="#ffffff"
             android:textSize="16dp"
             android:layout_alignParentRight="true"

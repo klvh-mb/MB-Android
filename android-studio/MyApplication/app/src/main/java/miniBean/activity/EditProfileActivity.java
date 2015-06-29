@@ -57,7 +57,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
         setContentView(R.layout.edit_profile_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.my_profile_action_actionbar, null),
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.my_actionbar, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
                         ActionBar.LayoutParams.MATCH_PARENT,
@@ -65,7 +65,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
                 )
         );
 
-        TextView titleText = (TextView) findViewById(R.id.title);
+        TextView titleText = (TextView) findViewById(R.id.actionbarTitle);
         titleText.setText(getString(R.string.edit_user_info));
 
         fbLoginIcon = (ImageView) findViewById(R.id.fbLoginIcon);

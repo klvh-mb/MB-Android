@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import miniBean.R;
@@ -22,7 +24,7 @@ public class NewsfeedActivity extends TrackedFragmentActivity {
         setContentView(R.layout.newsfeed_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.newsfeed_actionbar, null),
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.my_actionbar, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
                         ActionBar.LayoutParams.MATCH_PARENT,
@@ -30,7 +32,15 @@ public class NewsfeedActivity extends TrackedFragmentActivity {
                 )
         );
 
-        titleText = (TextView) findViewById(R.id.title);
+        titleText = (TextView) findViewById(R.id.actionbarTitle);
+
+        ImageView backImage = (ImageView) this.findViewById(R.id.backImage);
+        backImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         Long id = getIntent().getLongExtra("id", 0L);
         String key = getIntent().getStringExtra("key");

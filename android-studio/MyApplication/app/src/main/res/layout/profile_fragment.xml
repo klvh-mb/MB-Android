@@ -118,7 +118,7 @@
                     android:id="@+id/gameLayout">
 
                     <ImageView
-                        android:layout_width="28dp"
+                        android:layout_width="24dp"
                         android:layout_height="20dp"
                         android:src="@drawable/game_l1"
                         android:layout_gravity="center_vertical" />
@@ -126,7 +126,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/game_points_total"
+                        android:text="@string/game_points_desc"
                         android:id="@+id/pointsDesc"
                         android:textColor="@color/dark_gray_2"
                         android:textSize="15dp"
