@@ -59,14 +59,11 @@ public class DetailListAdapter extends BaseAdapter {
 
     private MyImageGetter imageGetter;
 
-    private MessageUtil messageUtil;
-
     public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> postComments, int page) {
         this.activity = activity;
         this.postComments = postComments;
         this.page = page;
         this.imageGetter = new MyImageGetter(activity);
-        this.messageUtil = new MessageUtil(activity);
     }
 
     @Override
@@ -186,7 +183,7 @@ public class DetailListAdapter extends BaseAdapter {
             messageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    messageUtil.startConversation(item.getOid());
+                    MessageUtil.openConversation(item.getOid(), activity);
                 }
             });
         }

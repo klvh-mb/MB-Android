@@ -69,8 +69,6 @@ public class ConversationListAdapter extends BaseAdapter {
         firstMessageText = (TextView) view.findViewById(R.id.firstMessageText);
         userPicture = (ImageView) view.findViewById(R.id.userPicture);
 
-
-
         ImageUtil.displayThumbnailProfileImage(item.getUid(), userPicture);
 
         senderText.setText(item.getNm());

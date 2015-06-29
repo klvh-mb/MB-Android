@@ -38,14 +38,10 @@ public class UserProfileFragment extends TrackedFragment {
     private Button editButton, messageButton;
     private LinearLayout gameLayout;
 
-    private MessageUtil messageUtil;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
-
-        messageUtil = new MessageUtil(getActivity());
 
         userName = (TextView) view.findViewById(R.id.usernameText);
         questionsCount = (TextView) view.findViewById(R.id.questionsCount);
@@ -137,7 +133,7 @@ public class UserProfileFragment extends TrackedFragment {
             messageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    messageUtil.startConversation(userId);
+                    MessageUtil.openConversation(userId, getActivity());
                 }
             });
         }

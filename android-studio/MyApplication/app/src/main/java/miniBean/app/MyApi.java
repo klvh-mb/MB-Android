@@ -298,8 +298,8 @@ public interface MyApi {
     @GET("/get-messages/{id}/{offset}")
     public void getMessages(@Path("id") Long id,@Path("offset") Long offset,@Query("key") String key, Callback<Response> cb);
 
-    @GET("/start-conversation/{id}")
-    public void startConversation(@Path("id") Long id,@Query("key") String key, Callback<List<ConversationVM>> cb);
+    @GET("/open-conversation/{id}")
+    public void openConversation(@Path("id") Long id,@Query("key") String key, Callback<List<ConversationVM>> cb);
 
     @GET("/delete-conversation/{id}")
     public void deleteConversation(@Path("id") Long id,@Query("key") String key, Callback<Response> cb);

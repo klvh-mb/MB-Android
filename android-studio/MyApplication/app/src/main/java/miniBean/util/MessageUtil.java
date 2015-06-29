@@ -17,19 +17,18 @@ import retrofit.client.Response;
 
 public class MessageUtil {
 
-    private Activity activity;
-
-    public MessageUtil(Activity activity) {
-        this.activity = activity;
-    }
-
-    public void startConversation(final long userId) {
-        AppController.getApi().startConversation(userId, AppController.getInstance().getSessionId(), new Callback<List<ConversationVM>>() {
+    public static void openConversation(final long userId, final Activity activity) {
+        AppController.getApi().openConversation(userId, AppController.getInstance().getSessionId(), new Callback<List<ConversationVM>>() {
             @Override
             public void success(List<ConversationVM> conversationVMs, Response response1) {
+                if (conversationVMs == null || conversationVMs.size() < 1) {
+                    Toast.makeText(activity, activity.getString(R.string.pm_start_failed), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 ConversationVM conversationVM = conversationVMs.get(0);
                 if (conversationVM != null && conversationVM.getUid() == userId) {
-                    startMessageDetailActivity(conversationVM.getId(), conversationVM.getUid(), conversationVM.getNm());
+                    startMessageDetailActivity(conversationVM.getId(), conversationVM.getUid(), conversationVM.getNm(), activity);
                 } else {
                     Toast.makeText(activity, activity.getString(R.string.pm_start_failed), Toast.LENGTH_SHORT).show();
                 }
@@ -43,8 +42,8 @@ public class MessageUtil {
         });
     }
 
-    public void startMessageDetailActivity(long conversationId,  long userId, String userDisplayname) {
-        Log.d(this.getClass().getSimpleName(), "startMessageDetailActivity with userId - " + userId);
+    public static void startMessageDetailActivity(long conversationId,  long userId, String userDisplayname, final Activity activity) {
+        Log.d(MessageUtil.class.getSimpleName(), "startMessageDetailActivity with userId - " + userId);
         Intent intent = new Intent(activity, MessageDetailActivity.class);
         intent.putExtra("user_name", userDisplayname);
         intent.putExtra("uid", userId);

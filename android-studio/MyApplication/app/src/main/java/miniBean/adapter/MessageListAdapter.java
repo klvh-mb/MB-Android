@@ -60,7 +60,7 @@ public class MessageListAdapter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-         final MessageVM m = messageVMs.get(position);
+        final MessageVM m = messageVMs.get(position);
 
         Long userId1 = UserInfoCache.getUser().getId();
         Long userId2 = m.getSuid();
@@ -99,8 +99,9 @@ public class MessageListAdapter extends BaseAdapter {
             }
         });
 
-    return convertView;
+        return convertView;
     }
+
     private void loadImages(MessageVM item, final ImageView messageImage) {
 
         messageImage.setAdjustViewBounds(true);

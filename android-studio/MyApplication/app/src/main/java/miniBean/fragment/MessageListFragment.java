@@ -49,7 +49,7 @@ public class MessageListFragment extends TrackedFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ConversationVM childVM = adapter.getItem(i);
-                Intent intent=new Intent(getActivity(),MessageDetailActivity.class);
+                Intent intent = new Intent(getActivity(), MessageDetailActivity.class);
                 intent.putExtra("user_name",childVM.getNm());
                 intent.putExtra("uid",childVM.getUid());
                 intent.putExtra("cid",childVM.getId());

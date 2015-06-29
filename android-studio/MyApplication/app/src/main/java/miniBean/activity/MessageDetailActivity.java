@@ -134,21 +134,17 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                 i.putExtra("oid", getIntent().getLongExtra("uid",0l));
                 i.putExtra("name", getIntent().getStringExtra("user_name"));
                 startActivity(i);
-
             }
         });
 
-            getMessages(getIntent().getLongExtra("cid", 0l), 0l);
+        getMessages(getIntent().getLongExtra("cid", 0l), 0l);
         loadMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("offset::::::" + offset);
                 loadMoreMessages(getIntent().getLongExtra("cid",0l),offset);
                 offset++;
             }
         });
-
-
 
         commentEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +154,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
         });
 
         backImage = (ImageView) this.findViewById(R.id.backAction);
-
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -507,7 +502,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
                     JSONObject obj = new JSONObject(responseVm);
 
                     JSONArray userGroupArray = obj.getJSONArray("message");
-                    System.out.println("size message::::" + userGroupArray.length());
                     for (int i = 0; i < userGroupArray.length(); i++) {
                         JSONObject object1 = userGroupArray.getJSONObject(i);
                         MessageVM vm = new MessageVM();
