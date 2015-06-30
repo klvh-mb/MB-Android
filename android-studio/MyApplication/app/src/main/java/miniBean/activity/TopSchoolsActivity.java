@@ -22,8 +22,7 @@ import miniBean.adapter.TopViewedPNListAdapter;
 import miniBean.adapter.TopViewedKGListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.fragment.SchoolsKGFragment;
-import miniBean.fragment.SchoolsPNFragment;
+import miniBean.fragment.AbstractSchoolsListFragment;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
@@ -63,12 +62,12 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
         RelativeLayout topViewedLayout = (RelativeLayout) findViewById(R.id.topViewedLayout);
         RelativeLayout topBookmarkedLayout = (RelativeLayout) findViewById(R.id.topBookmarkedLayout);
 
-        if (getIntent().getStringExtra("flag").equals(SchoolsPNFragment.INTENT_FLAG)) {
+        if (getIntent().getStringExtra("flag").equals(AbstractSchoolsListFragment.PN_INTENT_FLAG)) {
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_green));
             actionbarTitle.setText(getString(R.string.schools_top_pn_ranking));
             topViewedLayout.setBackgroundResource(R.drawable.schools_pn_edit_text_round);
             topBookmarkedLayout.setBackgroundResource(R.drawable.schools_pn_edit_text_round);
-        } else if (getIntent().getStringExtra("flag").equals(SchoolsKGFragment.INTENT_FLAG)) {
+        } else if (getIntent().getStringExtra("flag").equals(AbstractSchoolsListFragment.KG_INTENT_FLAG)) {
             getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_bg_maroon));
             actionbarTitle.setText(getString(R.string.schools_top_kg_ranking));
             topViewedLayout.setBackgroundResource(R.drawable.schools_kg_edit_text_round);
@@ -96,10 +95,10 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
             }
         });
 
-        if (getIntent().getStringExtra("flag").equals(SchoolsPNFragment.INTENT_FLAG)) {
+        if (getIntent().getStringExtra("flag").equals(AbstractSchoolsListFragment.PN_INTENT_FLAG)) {
             getTopViewPNs();
             getTopBookmarkPNs();
-        } else if (getIntent().getStringExtra("flag").equals(SchoolsKGFragment.INTENT_FLAG)) {
+        } else if (getIntent().getStringExtra("flag").equals(AbstractSchoolsListFragment.KG_INTENT_FLAG)) {
             getTopViewsKGs();
             getTopBookmarkKGs();
         }
@@ -107,10 +106,10 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
         topViewedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (getIntent().getStringExtra("flag").equals(SchoolsPNFragment.INTENT_FLAG)) {
+                if (getIntent().getStringExtra("flag").equals(AbstractSchoolsListFragment.PN_INTENT_FLAG)) {
                     PreNurseryVM vm = topViewedPNListAdapter.getItem(i);
                     startSchoolActivity(vm.getId(), vm.getCommId(), PNCommunityActivity.class);
-                } else if (getIntent().getStringExtra("flag").equals(SchoolsKGFragment.INTENT_FLAG)) {
+                } else if (getIntent().getStringExtra("flag").equals(AbstractSchoolsListFragment.KG_INTENT_FLAG)) {
                     KindergartenVM vm = topViewedKGListAdapter.getItem(i);
                     startSchoolActivity(vm.getId(), vm.getCommId(), KGCommunityActivity.class);
                 }
@@ -120,10 +119,10 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
         topBookmarkedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (getIntent().getStringExtra("flag").equals(SchoolsPNFragment.INTENT_FLAG)) {
+                if (getIntent().getStringExtra("flag").equals(AbstractSchoolsListFragment.PN_INTENT_FLAG)) {
                     PreNurseryVM vm = topBookmarkedPNListAdapter.getItem(i);
                     startSchoolActivity(vm.getId(), vm.getCommId(), PNCommunityActivity.class);
-                } else if (getIntent().getStringExtra("flag").equals(SchoolsKGFragment.INTENT_FLAG)) {
+                } else if (getIntent().getStringExtra("flag").equals(AbstractSchoolsListFragment.KG_INTENT_FLAG)) {
                     KindergartenVM vm = topBookmarkedKGListAdapter.getItem(i);
                     startSchoolActivity(vm.getId(), vm.getCommId(), KGCommunityActivity.class);
                 }

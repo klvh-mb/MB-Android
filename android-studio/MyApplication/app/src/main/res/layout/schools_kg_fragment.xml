@@ -27,7 +27,8 @@
                 android:src="@drawable/hot_ranking_flag"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout

@@ -1,5 +1,6 @@
 package miniBean.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.TopSchoolsActivity;
 import miniBean.adapter.DistrictListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
@@ -32,6 +34,9 @@ import miniBean.viewmodel.LocationVM;
 
 public abstract class AbstractSchoolsListFragment extends TrackedFragment {
 
+    public static final String PN_INTENT_FLAG = "FromPN";
+    public static final String KG_INTENT_FLAG = "FromKG";
+
     private static final String TAG = AbstractSchoolsListFragment.class.getName();
     protected GridView districtGrid;
     protected List<LocationVM> locationVMList;
@@ -41,6 +46,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
     protected RelativeLayout nurseryLayout,boxLayout,searchResultLayout,searchLayout;
     protected LinearLayout cancelLayout;
     protected SearchView searchWindow;
+    protected LinearLayout appDatesLayout, rankingLayout;
     protected String currValue,cpValue,typeValue,timeValue;
 
     protected int dismissSearchPressCount = 0;
@@ -81,6 +87,8 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         noOfSchools = (TextView) listHeader.findViewById(R.id.noOfSchools);
         tooManyResultsText = (TextView) listHeader.findViewById(R.id.tooManyResultsText);
         searchLayout = (RelativeLayout) listHeader.findViewById(R.id.searchView);
+        appDatesLayout = (LinearLayout) listHeader.findViewById(R.id.appDatesLayout);
+        rankingLayout = (LinearLayout) listHeader.findViewById(R.id.rankingLayout);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, DefaultValues.FILTER_SCHOOLS_COUPON);
         couponSpinner.setAdapter(adapter);
@@ -107,6 +115,24 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
 
         yourDistrictNameText.setText(AppController.getUserLocation().getDisplayName());
         districtNameText.setText(AppController.getUserLocation().getDisplayName());
+
+        // actions
+        appDatesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+
+        rankingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),TopSchoolsActivity.class);
+                intent.putExtra("flag", isPN()? PN_INTENT_FLAG : KG_INTENT_FLAG);
+                startActivity(intent);
+            }
+        });
 
         // list
         listView = (ListView) view.findViewById(R.id.schoolList);

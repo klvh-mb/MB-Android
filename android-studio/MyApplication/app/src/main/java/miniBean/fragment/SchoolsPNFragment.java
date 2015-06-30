@@ -17,8 +17,6 @@ import miniBean.app.TrackedFragment;
 
 public class SchoolsPNFragment extends TrackedFragment {
 
-    public static final String INTENT_FLAG = "FromPN";
-
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
 
@@ -82,7 +80,7 @@ public class SchoolsPNFragment extends TrackedFragment {
                 // launch new post page with no comm id, user will select
                 Intent intent = new Intent(SchoolsPNFragment.this.getActivity(), NewPNPostActivity.class);
                 intent.putExtra("id",0L);
-                intent.putExtra("flag",INTENT_FLAG);
+                intent.putExtra("flag",AbstractSchoolsListFragment.PN_INTENT_FLAG);
                 startActivity(intent);
             }
         });
@@ -91,7 +89,7 @@ public class SchoolsPNFragment extends TrackedFragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(SchoolsPNFragment.this.getActivity(),TopSchoolsActivity.class);
-                intent.putExtra("flag",INTENT_FLAG);
+                intent.putExtra("flag",AbstractSchoolsListFragment.PN_INTENT_FLAG);
                 startActivity(intent);
             }
         });

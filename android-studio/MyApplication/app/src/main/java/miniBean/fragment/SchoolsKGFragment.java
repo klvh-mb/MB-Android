@@ -17,8 +17,6 @@ import miniBean.app.TrackedFragment;
 
 public class SchoolsKGFragment extends TrackedFragment {
 
-    public static final String INTENT_FLAG = "FromKG";
-
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
 
@@ -36,7 +34,7 @@ public class SchoolsKGFragment extends TrackedFragment {
         buttonBookmark = (Button) view.findViewById(R.id.buttonBookmark);
         buttonNews = (Button) view.findViewById(R.id.buttonNewsfeed);
         newPostIcon = (ImageView) view.findViewById(R.id.newPostIcon);
-        rankingActionIcon= (ImageView) view.findViewById(R.id.rankingAction);
+        rankingActionIcon = (ImageView) view.findViewById(R.id.rankingAction);
 
         if(listClicked){
             pressListButton();
@@ -82,7 +80,7 @@ public class SchoolsKGFragment extends TrackedFragment {
                 // launch new post page with no comm id, user will select
                 Intent intent = new Intent(SchoolsKGFragment.this.getActivity(), NewKGPostActivity.class);
                 intent.putExtra("id",0L);
-                intent.putExtra("flag",INTENT_FLAG);
+                intent.putExtra("flag",AbstractSchoolsListFragment.KG_INTENT_FLAG);
                 startActivity(intent);
             }
         });
@@ -90,8 +88,8 @@ public class SchoolsKGFragment extends TrackedFragment {
         rankingActionIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(SchoolsKGFragment.this.getActivity(),TopSchoolsActivity.class);
-                intent.putExtra("flag",INTENT_FLAG);
+                Intent intent = new Intent(SchoolsKGFragment.this.getActivity(),TopSchoolsActivity.class);
+                intent.putExtra("flag",AbstractSchoolsListFragment.KG_INTENT_FLAG);
                 startActivity(intent);
             }
         });

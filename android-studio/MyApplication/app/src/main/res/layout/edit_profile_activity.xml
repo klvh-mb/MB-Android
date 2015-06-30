@@ -513,7 +513,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_below="@+id/sexRadio1"
-                                android:src="@drawable/calendar"
+                                android:src="@drawable/ic_calendar"
                                 android:layout_marginLeft="15dp"
                                 android:layout_toRightOf="@+id/birthdayText1"
                                 android:layout_gravity="center_vertical" />
@@ -606,7 +606,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_below="@+id/sexRadio2"
-                                android:src="@drawable/calendar"
+                                android:src="@drawable/ic_calendar"
                                 android:layout_marginLeft="15dp"
                                 android:layout_toRightOf="@+id/birthdayText2"
                                 android:layout_gravity="center_vertical" />
@@ -699,7 +699,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_below="@+id/sexRadio3"
-                                android:src="@drawable/calendar"
+                                android:src="@drawable/ic_calendar"
                                 android:layout_marginLeft="15dp"
                                 android:layout_toRightOf="@+id/birthdayText3"
                                 android:layout_gravity="center_vertical" />
