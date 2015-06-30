@@ -113,11 +113,12 @@ public class AppController extends Application {
 
         ImageUtil.init();
 
+        initStaticCaches();
+
         //ACRA.init(getInstance());
     }
 
-    public static void initCaches() {
-        NotificationCache.refresh();
+    public static void initStaticCaches() {
         DistrictCache.refresh();
         EmoticonCache.refresh();
     }
