@@ -18,7 +18,7 @@
             android:id="@+id/viewBar"
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:layout_below="@+id/button_component"
+            android:layout_below="@+id/loadMoreLayout"
             android:background="@color/light_gray"></View>
 
         <FrameLayout

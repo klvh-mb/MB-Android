@@ -11,6 +11,17 @@ import miniBean.app.AppController;
  */
 public class DefaultValues {
 
+    // From server
+    public static final int DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD = 0;
+    public static final int DEFAULT_INFINITE_SCROLL_DELAY = 500;
+    public static final int DEFAULT_INFINITE_SCROLL_COUNT = 10;
+    public static final int DEFAULT_PAGINATION_COUNT = 10;
+
+    public static final int CONVERSATION_LAST_MESSAGE_COUNT = 50;
+    public static final int CONVERSATION_MESSAGE_COUNT = 10;
+    public static final int CONVERSATION_COUNT = 100;
+
+    // UI
     public static final int MIN_CHAR_SIGNUP_PASSWORD = 4;
 
     public static final int SPLASH_DISPLAY_MILLIS = 1000;
@@ -18,11 +29,6 @@ public class DefaultValues {
     public static final int DEFAULT_HANDLER_DELAY = 10;
 
     public static final int PULL_TO_REFRESH_DELAY = 1000;
-
-    public static final int DEFAULT_INFINITE_SCROLL_VISIBLE_THRESHOLD = 0;
-    public static final int DEFAULT_INFINITE_SCROLL_DELAY = 500;
-    public static final int DEFAULT_INFINITE_SCROLL_COUNT = 10;
-    public static final int DEFAULT_PAGINATION_COUNT = 10;
 
     public static final int LISTVIEW_SLIDE_IN_ANIM_START = 10;
     public static final int LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR = 2;

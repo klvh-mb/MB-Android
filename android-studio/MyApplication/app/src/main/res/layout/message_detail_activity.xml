@@ -17,24 +17,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Button
-            android:layout_centerHorizontal="true"
-            android:id="@+id/loadButton"
-            android:layout_width="120dp"
-            android:layout_height="30dp"
-            android:textSize="14dp"
-            android:background="@drawable/rounded_corner_button"
-            android:text="@string/pm_load_more"
-            android:textColor="@color/dark_gray"
-            android:layout_margin="5dp" />
 
         <ListView
-            android:layout_below="@+id/loadButton"
-            android:id="@+id/list_view_messages"
+            android:id="@+id/messageList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/view_bg"
-            android:transcriptMode="alwaysScroll"
             android:stackFromBottom="true"
             android:layout_marginBottom="50dp"
             android:divider="@null">

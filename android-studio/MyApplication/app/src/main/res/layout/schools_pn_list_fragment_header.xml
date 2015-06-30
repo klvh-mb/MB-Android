@@ -19,9 +19,16 @@
             </SearchView>
     </RelativeLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/actionsLayout"
+        android:layout_below="@+id/searchView"></LinearLayout>
+
     <RelativeLayout
         android:id="@+id/boxLayout"
-        android:layout_below="@+id/searchView"
+        android:layout_below="@+id/actionsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_pn_grid"
