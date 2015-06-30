@@ -2,6 +2,7 @@ package miniBean.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.GameRulesActivity;
+import miniBean.activity.UserProfileActivity;
 import miniBean.util.DateTimeUtil;
 import miniBean.viewmodel.GameTransactionVM;
 
@@ -68,7 +71,7 @@ public class GameTransactionListAdapter extends BaseAdapter {
 
         gameTransactionText = (TextView) convertView.findViewById(R.id.gameTransactionText);
 
-        GameTransactionVM item = items.get(position);
+        final GameTransactionVM item = items.get(position);
 
         String str;
         if (!TRANSACTION_TYPE_REDEEM.equalsIgnoreCase(item.getTy()) &&
@@ -82,6 +85,14 @@ public class GameTransactionListAdapter extends BaseAdapter {
             str += "\n[u=%d][points=%d]";
             str = String.format(str, DateTimeUtil.format(item.getTt(),true), item.getTd(), item.getTp(), item.getUid(), item.getNtp());
             gameTransactionText.setTextColor(activity.getResources().getColor(R.color.admin_green));
+            gameTransactionText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, UserProfileActivity.class);
+                    intent.putExtra("oid", item.getUid());
+                    activity.startActivity(intent);
+                }
+            });
         } else {
             str = String.format(str, DateTimeUtil.format(item.getTt(), true), item.getTd(), item.getTp());
         }

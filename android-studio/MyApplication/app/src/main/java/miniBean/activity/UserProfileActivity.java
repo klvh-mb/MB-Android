@@ -26,12 +26,8 @@ public class UserProfileActivity extends TrackedFragmentActivity {
                 )
         );
 
-        Long userId = getIntent().getLongExtra("oid", 0l);
-        String name = getIntent().getStringExtra("name");
-
         Bundle bundle = new Bundle();
-        bundle.putLong("oid", userId);
-        bundle.putString("name", name);
+        bundle.putLong("oid", getIntent().getLongExtra("oid", 0l));
 
         //set Fragmentclass Arguments
         //Fragmentclass fragobj=new Fragmentclass();

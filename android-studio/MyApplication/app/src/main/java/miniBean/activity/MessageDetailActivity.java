@@ -113,8 +113,8 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
 
         commentEdit = (TextView) findViewById(R.id.commentEdit);
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
-        loadMessage= (Button) findViewById(R.id.loadButton);
-        profileButton= (ImageView) findViewById(R.id.profileButton);
+        loadMessage = (Button) findViewById(R.id.loadButton);
+        profileButton = (ImageView) findViewById(R.id.profileButton);
 
         intent = new Intent(this, BroadcastService.class);
 
@@ -132,7 +132,6 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             public void onClick(View view) {
                 Intent i = new Intent(MessageDetailActivity.this, UserProfileActivity.class);
                 i.putExtra("oid", getIntent().getLongExtra("uid",0l));
-                i.putExtra("name", getIntent().getStringExtra("user_name"));
                 startActivity(i);
             }
         });
