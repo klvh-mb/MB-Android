@@ -13,8 +13,8 @@ android {
         applicationId "miniBean.app.AppController"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 7
-        versionName "2.0"
+        versionCode 9
+        versionName "2.2"
     }
     buildTypes {
         release {

@@ -14,6 +14,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.NotificationCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
 import miniBean.util.DefaultValues;
@@ -88,7 +89,8 @@ public class SplashActivity extends TrackedFragmentActivity {
                         AppController.getInstance().saveSessionId(sessionId);
                     }
 
-                    AppController.initCaches();
+                    //AppController.initCaches();
+                    NotificationCache.refresh();
 
                     // display splash
                     new Handler().postDelayed(new Runnable() {
