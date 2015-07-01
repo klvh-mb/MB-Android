@@ -83,14 +83,50 @@
             android:gravity="right"
             android:layout_alignParentRight="true">
 
-            <ImageView
-                android:id="@+id/mascotIcon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/logo_bean_s"
-                android:layout_centerVertical="true"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_corner_button_game"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/newPostIcon" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toLeftOf="@+id/signInImage"
+                android:id="@+id/gameLayout"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/mascotIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/logo_bean_s"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/game_points"
+                    android:id="@+id/gameText"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="13dp"
+                    android:textColor="@color/dark_blue"
+                    android:layout_marginRight="5dp"
+                    android:layout_toRightOf="@+id/mascotIcon"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/signInImage"
+                android:src="@drawable/game_sign_in_s"
+                android:layout_gravity="center_vertical"
+                android:layout_toLeftOf="@+id/newPostIcon"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp" />
 
             <ImageView
                 android:id="@+id/newPostIcon"

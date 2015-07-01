@@ -173,7 +173,6 @@
     <string name="pm_start_failed">暫時不能開啟訊息，請稍後重試</string>
     <string name="pm_send_failed">暫時不能發出訊息，請稍後重試</string>
 
-
     <string name="game_title">小豆豆中心</string>
     <string name="game_rules_title">積分規則</string>
     <string name="game_daily_signin_title">每日簽到</string>
@@ -182,6 +181,7 @@
     <string name="game_level_text">等級 : </string>
     <string name="game_level_tips">( 距離升級到 L5 還差 479 小豆豆 )</string>
     <string name="game_points_title">我的小豆豆</string>
+    <string name="game_points">小豆豆</string>
     <string name="game_points_desc">小豆豆 : </string>
     <string name="game_points_total">小豆豆總數 : </string>
     <string name="game_points_redeem">可兌換 : </string>
