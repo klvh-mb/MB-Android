@@ -17,10 +17,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_centerInParent="true"
-            android:paddingLeft="35dp"
-            android:paddingTop="25dp"
-            android:paddingRight="35dp"
-            android:paddingBottom="25dp">
+            android:paddingLeft="25dp"
+            android:paddingTop="15dp"
+            android:paddingRight="25dp"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:id="@+id/mascot"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/mascot_yellow_left" />
 
             <TextView
                 android:id="@+id/descText"
@@ -28,7 +36,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/dark_gray_2" />
+                android:textColor="@color/dark_gray_2"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp" />
 
             <TextView
                 android:id="@+id/pointsText"
@@ -38,7 +48,8 @@
                 android:textStyle="bold"
                 android:textColor="@color/game_orange"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="2dp" />
+                android:layout_marginRight="2dp"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/endText"
@@ -47,7 +58,8 @@
                 android:text="@string/game_note_points"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                android:textColor="@color/dark_gray_2" />
+                android:textColor="@color/dark_gray_2"
+                android:layout_gravity="center_vertical" />
 
         </LinearLayout>
     </RelativeLayout>
