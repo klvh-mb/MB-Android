@@ -2,6 +2,7 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ public class KGBookmarksFragment extends TrackedFragment {
         AppController.getApi().getBookmarkedKGs(AppController.getInstance().getSessionId(), new Callback<List<KindergartenVM>>() {
             @Override
             public void success(List<KindergartenVM> vms, Response response) {
-                // first load or bookmark list chanded
+                // first load or bookmark list changed
                 if (totalBookmark == -1 || totalBookmark != vms.size()) {
                     totalBookmark = vms.size();
                     totalBookmarkText.setText(totalBookmark + "");
@@ -94,7 +95,7 @@ public class KGBookmarksFragment extends TrackedFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(KGBookmarksFragment.class.getSimpleName(), "getBookmarkedSchools: failure", error);
             }
         });
     }

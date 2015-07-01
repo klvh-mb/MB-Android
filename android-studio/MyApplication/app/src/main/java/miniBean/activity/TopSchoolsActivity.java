@@ -50,7 +50,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
         setContentView(R.layout.top_schools_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.top_schools_actionbar, null),
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.schools_actionbar, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
                         ActionBar.LayoutParams.MATCH_PARENT,

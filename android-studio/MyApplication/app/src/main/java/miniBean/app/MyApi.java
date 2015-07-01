@@ -226,6 +226,9 @@ public interface MyApi {
     @GET("/get-bookmarked-pn-communities")
     public void getBookmarkedPNCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
 
+    @GET("/get-pn-app-dates")
+    public void getPNAppDates(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+
     @GET("/get-pnnewsfeeds/{offset}")
     public void getPNNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
 
@@ -253,6 +256,9 @@ public interface MyApi {
 
     @GET("/get-bookmarked-kg-communities")
     public void getBookmarkedKGCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
+
+    @GET("/get-kg-app-dates")
+    public void getKGAppDates(@Query("key") String key, Callback<List<KindergartenVM>> cb);
 
     @GET("/get-kgnewsfeeds/{offset}")
     public void getKGNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);

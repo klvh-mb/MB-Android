@@ -149,6 +149,7 @@ public class DetailActivity extends TrackedFragmentActivity {
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
 
         communityItems = new ArrayList<>();
+
         backImage = (ImageView) findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -470,7 +471,7 @@ public class DetailActivity extends TrackedFragmentActivity {
 
             Log.d(this.getClass().getSimpleName(), "initCommentPopup: " + selectedImagePath);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(this.getClass().getSimpleName(), "initCommentPopup: failure", e);
         }
     }
 
@@ -616,7 +617,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(this.getClass().getSimpleName(), "initPaginationPopup: failure", e);
         }
     }
 
@@ -724,10 +725,10 @@ public class DetailActivity extends TrackedFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.a:
-                System.out.println("Report clicked...");
+                Log.d(this.getClass().getSimpleName(), "onOptionsItemSelected: "+item.getItemId());
                 return true;
             case R.id.b:
-                System.out.println("Url clicked...");
+                Log.d(this.getClass().getSimpleName(), "onOptionsItemSelected: "+item.getItemId());
                 return true;
             default:
                 return false;
@@ -810,7 +811,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(this.getClass().getSimpleName(), "initEmoticonPopup: failure", e);
         }
     }
 

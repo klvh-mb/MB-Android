@@ -183,7 +183,7 @@ class MyCommunityPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             default: {
                 MyCommunityPagerFragment fragment = new MyCommunityPagerFragment();
-                fragment.setTrackedOnce();
+                //fragment.setTrackedOnce();
                 fragment.setCommunities(getCommunitiesForPage(position));
                 return fragment;
             }

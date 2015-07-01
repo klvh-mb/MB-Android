@@ -57,12 +57,12 @@ public class LoginActivity extends AbstractLoginActivity {
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
                         }
+                        stopSpinner();
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         stopSpinner();
-                        loginButton.setEnabled(true);
                         if (error.getResponse() != null &&
                                 error.getResponse().getStatus() == 400) {
                             String errorMsg = ViewUtil.getResponseBody(error.getResponse());

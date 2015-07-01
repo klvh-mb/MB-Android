@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -128,9 +129,11 @@ public class SignupActivity extends AbstractLoginActivity {
     private void signUp(String lname,String fname,String email,String password,String repeatPassword) {
         showErrorMessage(false);
 
+        showSpinner();
         AppController.getApi().signUp(lname, fname, email, password, repeatPassword, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
+                stopSpinner();
                 if (response.getStatus() == 200) {
                     initSuccessPopup();
                 }
@@ -138,10 +141,11 @@ public class SignupActivity extends AbstractLoginActivity {
 
             @Override
             public void failure(RetrofitError error) {
+                stopSpinner();
                 if (error.getResponse().getStatus() == 400) {
                     showErrorMessage(true);
                 }
-                error.printStackTrace();
+                Log.e(SignupActivity.class.getSimpleName(), "signUp: failure", error);
             }
         });
     }
@@ -179,7 +183,7 @@ public class SignupActivity extends AbstractLoginActivity {
             TextView emailText = (TextView) dialog.findViewById(R.id.emailText);
             emailText.setText(email.getText().toString());
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(SignupActivity.class.getSimpleName(), "initSuccessPopup: failure", e);
         }
     }
 

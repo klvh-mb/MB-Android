@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.KGAppDatesActivity;
+import miniBean.activity.PNAppDatesActivity;
 import miniBean.activity.TopSchoolsActivity;
 import miniBean.adapter.DistrictListAdapter;
 import miniBean.app.AppController;
@@ -120,15 +122,20 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         appDatesLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                if (isPN()) {
+                    Intent intent = new Intent(getActivity(), PNAppDatesActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), KGAppDatesActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         rankingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),TopSchoolsActivity.class);
+                Intent intent = new Intent(getActivity(), TopSchoolsActivity.class);
                 intent.putExtra("flag", isPN()? PN_INTENT_FLAG : KG_INTENT_FLAG);
                 startActivity(intent);
             }

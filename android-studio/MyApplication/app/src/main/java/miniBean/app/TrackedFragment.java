@@ -37,6 +37,9 @@ public abstract class TrackedFragment extends Fragment {
         this.tracked = true;
     }
 
+    /**
+     * Set in leaf fragment e.g. main activity->pager->fragment->list fragment (setTrackedOnce)
+     */
     public void setTrackedOnce() {
         this.trackedOnce = true;
     }

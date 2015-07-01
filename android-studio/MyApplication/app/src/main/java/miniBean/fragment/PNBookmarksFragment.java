@@ -2,6 +2,7 @@ package miniBean.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import retrofit.client.Response;
 
 public class PNBookmarksFragment extends TrackedFragment {
 
-    private static final String TAG = KGBookmarksFragment.class.getName();
+    private static final String TAG = PNBookmarksFragment.class.getName();
 
     private LinearLayout bookmarkTipsLayout, headerLayout;
     private TextView bookmarkTips;
@@ -78,7 +79,7 @@ public class PNBookmarksFragment extends TrackedFragment {
         AppController.getApi().getBookmarkedPNs(AppController.getInstance().getSessionId(), new Callback<List<PreNurseryVM>>() {
             @Override
             public void success(List<PreNurseryVM> vms, Response response) {
-                // first load or bookmark list chanded
+                // first load or bookmark list changed
                 if (totalBookmark == -1 || totalBookmark != vms.size()) {
                     totalBookmark = vms.size();
                     totalBookmarkText.setText(totalBookmark + "");
@@ -94,7 +95,7 @@ public class PNBookmarksFragment extends TrackedFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(PNBookmarksFragment.class.getSimpleName(), "getBookmarkedSchools: failure", error);
             }
         });
     }

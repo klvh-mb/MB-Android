@@ -261,6 +261,7 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
                             "\n babyGen2="+babygen2+"\n babyBirthday2="+year2+"-"+month2+"-"+day2+
                             "\n babyGen3="+babygen3+"\n babyBirthday3="+year3+"-"+month3+"-"+day3);
 
+            showSpinner();
             AppController.getApi().signUpInfo(displayname, DefaultValues.DEFAULT_PARENT_BIRTH_YEAR, locationId, parenttype, babynum,
                     babygen1, babygen2, babygen3,
                     year1, month1, day1, year2, month2, day2, year3, month3, day3,
@@ -285,7 +286,9 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
                                         "\""+displayname+"\" "+getString(R.string.signup_details_error_displayname_already_exists));
 
                             }
-                            error.printStackTrace();
+
+                            stopSpinner();
+                            Log.e(SignupDetailActivity.class.getSimpleName(), "submitDetails.api.signUpInfo: failure", error);
                         }
                     });
         }
@@ -303,7 +306,8 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                stopSpinner();
+                Log.e(SignupDetailActivity.class.getSimpleName(), "initNewUser: failure", error);
             }
         });
     }
@@ -486,5 +490,25 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
         if (!StringUtils.isEmpty(error))
             error += "\n";
         return error + newError;
+    }
+
+    private void showSpinner() {
+        showSpinner(true);
+    }
+
+    private void stopSpinner() {
+        showSpinner(false);
+    }
+
+    private void showSpinner(boolean show) {
+        if (show) {
+            ViewUtil.showSpinner(this);
+        } else {
+            ViewUtil.stopSpinner(this);
+        }
+
+        if (finishButton != null) {
+            finishButton.setEnabled(!show);
+        }
     }
 }

@@ -5,7 +5,7 @@
     <RelativeLayout
         android:id="@+id/loadMoreLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:background="@color/light_gray"
         android:padding="10dp" >
 
@@ -13,13 +13,11 @@
             android:id="@+id/loadMoreText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:textColor="@color/white"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:layout_gravity="center_vertical"
             android:text="@string/pm_load_more"
-            android:layout_centerInParent="true"
-            android:textStyle="bold" />
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -107,24 +107,24 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/school_mascot"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/schools_mascot"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="5dp" />
-            <ImageView
-                android:id="@+id/schoolTitleImage"
-                android:layout_width="165dp"
-                android:layout_height="40dp"
-                android:src="@drawable/schools_pn_title"
-                android:layout_gravity="center_vertical|left"
-                android:scaleType="fitCenter" />
+                <ImageView
+                    android:id="@+id/school_mascot"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/schools_mascot"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="5dp" />
+                <ImageView
+                    android:id="@+id/schoolTitleImage"
+                    android:layout_width="165dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/schools_pn_title"
+                    android:layout_gravity="center_vertical|left"
+                    android:scaleType="fitCenter" />
             </LinearLayout>
             <LinearLayout
                 android:layout_centerVertical="true"
@@ -138,14 +138,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/schools_your_district"
                     android:textSize="14dp" />
-            <TextView
-                android:id="@+id/yourDistrictNameText"
-                android:layout_width="wrap_content"
-                android:textColor="#D1942B"
-                android:layout_height="wrap_content"
-                android:text="-"
-                android:textSize="14dp"
-                android:layout_marginRight="5dp" />
+                <TextView
+                    android:id="@+id/yourDistrictNameText"
+                    android:layout_width="wrap_content"
+                    android:textColor="#D1942B"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="14dp"
+                    android:layout_marginRight="5dp" />
             </LinearLayout>
         </RelativeLayout>
         <RelativeLayout
