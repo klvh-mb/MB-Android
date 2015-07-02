@@ -10,9 +10,14 @@ import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostCommentVM;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.CommunityVM;
+import miniBean.viewmodel.ConversationVM;
 import miniBean.viewmodel.EmoticonVM;
+import miniBean.viewmodel.GameAccountVM;
+import miniBean.viewmodel.GameTransactionVM;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.LocationVM;
+import miniBean.viewmodel.MessagePostVM;
+import miniBean.viewmodel.MessageVM;
 import miniBean.viewmodel.NewPost;
 import miniBean.viewmodel.NotificationsParentVM;
 import miniBean.viewmodel.PostArray;
@@ -221,6 +226,9 @@ public interface MyApi {
     @GET("/get-bookmarked-pn-communities")
     public void getBookmarkedPNCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
 
+    @GET("/get-pn-app-dates")
+    public void getPNAppDates(@Query("key") String key, Callback<List<PreNurseryVM>> cb);
+
     @GET("/get-pnnewsfeeds/{offset}")
     public void getPNNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
 
@@ -248,6 +256,9 @@ public interface MyApi {
 
     @GET("/get-bookmarked-kg-communities")
     public void getBookmarkedKGCommunities(@Query("key") String key, Callback<CommunitiesParentVM> callback);
+
+    @GET("/get-kg-app-dates")
+    public void getKGAppDates(@Query("key") String key, Callback<List<KindergartenVM>> cb);
 
     @GET("/get-kgnewsfeeds/{offset}")
     public void getKGNewsfeed(@Path("offset") Long offset, @Query("key") String key, Callback<PostArray> callback);
@@ -282,6 +293,63 @@ public interface MyApi {
 
     @GET("/get-top-bookmarked-kgs")
     public void getTopBookmarkedKGs(@Query("key") String key, Callback<List<KindergartenVM>> cb);
+
+    //
+    // Messages APIs
+    //
+
+    @GET("/get-all-conversations")
+    public void getAllConversations(@Query("key") String key, Callback<List<ConversationVM>> cb);
+
+    @GET("/get-messages/{id}/{offset}")
+    public void getMessages(@Path("id") Long id,@Path("offset") Long offset,@Query("key") String key, Callback<Response> cb);
+
+    @GET("/open-conversation/{id}")
+    public void openConversation(@Path("id") Long id,@Query("key") String key, Callback<List<ConversationVM>> cb);
+
+    @GET("/delete-conversation/{id}")
+    public void deleteConversation(@Path("id") Long id,@Query("key") String key, Callback<Response> cb);
+
+    @POST("/message/sendMsg")
+    public void sendMessage(@Body MessagePostVM message,@Query("key") String key, Callback<Response> cb);
+
+    @GET("/get-unread-msg-count")
+    public void getUnreadMessageCount(@Query("key") String key, Callback<MessageVM> cb);
+
+    @GET("/image/get-message-image-by-id/{id} ")
+    public void getMessageImage(@Query("key") String key,@Part("messageId") long id, Callback<MessageVM> cb);
+
+    @Multipart
+    @POST("/image/sendMessagePhoto") //a function in your api upload image for message
+    public void uploadMessagePhoto(@Query("key") String key,@Part("messageId") long id, @Part("send-photo0") TypedFile photo, Callback<Response> cb);
+
+    //
+    // Game APIs
+    //
+
+    @POST("/sign-in-for-today")
+    public void signInForToday(@Query("key") String key, Callback<Response> cb);
+
+    @GET("/get-gameaccount")
+    public void getGameAccount(@Query("key") String key, Callback<GameAccountVM> cb);
+
+    @GET("/get-game-transactions/{offset}")
+    public void getGameTransactions(@Path("offset") Long offset, @Query("key") String key, Callback<List<GameTransactionVM>> cb);
+
+    @GET("/get-latest-game-transactions")
+    public void getLatestGameTransactions(@Query("key") String key, Callback<List<GameTransactionVM>> cb);
+
+    @GET("/get-signup-referrals")
+    public void getSignupReferrals(@Query("key") String key, Callback<List<UserVM>> cb);
+
+    //
+    // GCM key APIs
+    //
+
+    @POST("/saveGCMKey/{GCMkey}")
+    public void saveGCMkey(@Path("GCMkey") String GCMkey,@Query("key") String key,Callback<Response> cb);
+
+
 }
 
 

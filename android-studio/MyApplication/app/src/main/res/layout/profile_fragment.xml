@@ -19,7 +19,7 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center" />
 
-    <RelativeLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
 
@@ -96,35 +96,102 @@
                         android:singleLine="true"
                         android:gravity="center" />
 
-
                 </RelativeLayout>
 
             </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/editLayout"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profilePic"
-            android:minHeight="20dp">
-            <Button
-                android:id="@+id/editButton"
-                android:layout_alignParentRight="true"
-                android:layout_width="80dp"
-                android:layout_height="35dp"
-                android:textSize="14dp"
-                android:background="@drawable/rounded_corner_button"
-                android:text="@string/edit_user_info"
-                android:layout_marginRight="5dp" />
+
+            <RelativeLayout
+                android:id="@+id/actionsLayout"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profilePic"
+                android:minHeight="20dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/gameLayout">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/game_l1"
+                        android:layout_gravity="center_vertical" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/game_points_desc"
+                        android:id="@+id/pointsDesc"
+                        android:textColor="@color/dark_gray_2"
+                        android:textSize="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:id="@+id/pointsText"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:textColor="@color/game_orange"
+                        android:layout_marginLeft="7dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="10dp"
+                        android:layout_marginLeft="7dp"
+                        android:background="@drawable/ic_blue_arrow_2"
+                        android:layout_gravity="center_vertical" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/messageButton"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:textSize="14dp"
+                    android:background="@drawable/rounded_corner_button"
+                    android:text="@string/pm_user"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="false"
+                    android:drawableLeft="@drawable/ic_chat_s"
+                    android:drawablePadding="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/dark_gray"
+                    android:layout_centerVertical="true" />
+
+                <Button
+                    android:id="@+id/editButton"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="80dp"
+                    android:layout_height="35dp"
+                    android:textSize="14dp"
+                    android:background="@drawable/rounded_corner_button"
+                    android:text="@string/edit_user_info"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/dark_gray"
+                    android:layout_centerVertical="true" />
+
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_below="@+id/editLayout"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/actionsLayout"
                 android:background="#ffffff"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <View
                     android:layout_width="wrap_content"

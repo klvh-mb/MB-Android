@@ -17,8 +17,6 @@ import miniBean.app.TrackedFragment;
 
 public class SchoolsKGFragment extends TrackedFragment {
 
-    public static final String INTENT_FLAG = "FromKG";
-
     private Button buttonList,buttonNews,buttonBookmark;
     private boolean listClicked=true,newsClicked,bookmarkClicked;
 
@@ -30,18 +28,18 @@ public class SchoolsKGFragment extends TrackedFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.schools_kg_fragement, container, false);
+        View view = inflater.inflate(R.layout.schools_kg_fragment, container, false);
 
         buttonList = (Button) view.findViewById(R.id.buttonListing);
         buttonBookmark = (Button) view.findViewById(R.id.buttonBookmark);
         buttonNews = (Button) view.findViewById(R.id.buttonNewsfeed);
         newPostIcon = (ImageView) view.findViewById(R.id.newPostIcon);
-        rankingActionIcon= (ImageView) view.findViewById(R.id.rankingAction);
+        rankingActionIcon = (ImageView) view.findViewById(R.id.rankingAction);
 
         if(listClicked){
             pressListButton();
         }else if(newsClicked){
-            pressNewsButton();
+            pressNewsfeedButton();
         }else if(bookmarkClicked){
             pressBookmarkButton();
         }
@@ -69,7 +67,7 @@ public class SchoolsKGFragment extends TrackedFragment {
         buttonNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pressNewsButton();
+                pressNewsfeedButton();
                 bookmarkClicked=false;
                 newsClicked=true;
                 listClicked=false;
@@ -82,7 +80,7 @@ public class SchoolsKGFragment extends TrackedFragment {
                 // launch new post page with no comm id, user will select
                 Intent intent = new Intent(SchoolsKGFragment.this.getActivity(), NewKGPostActivity.class);
                 intent.putExtra("id",0L);
-                intent.putExtra("flag",INTENT_FLAG);
+                intent.putExtra("flag",AbstractSchoolsListFragment.KG_INTENT_FLAG);
                 startActivity(intent);
             }
         });
@@ -90,9 +88,8 @@ public class SchoolsKGFragment extends TrackedFragment {
         rankingActionIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent=new Intent(SchoolsKGFragment.this.getActivity(),TopSchoolsActivity.class);
-                intent.putExtra("flag",INTENT_FLAG);
+                Intent intent = new Intent(SchoolsKGFragment.this.getActivity(),TopSchoolsActivity.class);
+                intent.putExtra("flag",AbstractSchoolsListFragment.KG_INTENT_FLAG);
                 startActivity(intent);
             }
         });
@@ -116,7 +113,7 @@ public class SchoolsKGFragment extends TrackedFragment {
         transaction.replace(R.id.children_fragement, selectedFragment).commit();
     }
 
-    private void pressNewsButton(){
+    private void pressNewsfeedButton(){
         buttonList.setBackgroundColor(getResources().getColor(R.color.kg_box_border));
         buttonList.setTextColor(Color.WHITE);
 

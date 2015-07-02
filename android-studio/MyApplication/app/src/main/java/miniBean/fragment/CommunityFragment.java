@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragment;
-import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.CommunityUtil;
 import miniBean.util.DefaultValues;
@@ -45,7 +43,6 @@ public class CommunityFragment extends TrackedFragment {
     private ListView listView;
     private NewsfeedListAdapter feedListAdapter;
     private List<CommunityPostVM> feedItems;
-    private ProgressBar spinner;
     private ImageView joinImageView;
     private ImageView communityCoverPic, communityIcon;
     private CommunitiesWidgetChildVM currentCommunity;
@@ -59,8 +56,6 @@ public class CommunityFragment extends TrackedFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.community_fragment, container, false);
-
-        spinner = (ProgressBar) view.findViewById(R.id.spinner);
 
         communityUtil = new CommunityUtil(getActivity());
 
@@ -199,7 +194,6 @@ public class CommunityFragment extends TrackedFragment {
 
     private void getCommunity(Long id) {
         AppController.getApi().getCommunity(id, AppController.getInstance().getSessionId(), new Callback<CommunityVM>() {
-
             @Override
             public void success(CommunityVM communityVM, Response response) {
                 commId = communityVM.getId();
@@ -208,14 +202,12 @@ public class CommunityFragment extends TrackedFragment {
 
             @Override
             public void failure(RetrofitError error) {
-
+                Log.e(CommunityFragment.class.getSimpleName(), "getCommunity: failure", error);
             }
         });
     }
 
     private void getNewsFeedByCommunityId(final CommunitiesWidgetChildVM community) {
-        AnimationUtil.show(spinner);
-
         ImageUtil.displayCommunityCoverImage(community.id, communityCoverPic);
 
         AppController.getApi().getCommunityInitialPosts(community.id, AppController.getInstance().getSessionId(), new Callback<PostArray>() {
@@ -237,14 +229,11 @@ public class CommunityFragment extends TrackedFragment {
                     Log.d(this.getClass().getSimpleName(), "getNewsFeedByCommunityId.api.success: load comm icon from background - " + community.gi);
                     ImageUtil.displayRoundedCornersImage(community.gi, communityIcon);
                 }
-
-                AnimationUtil.cancel(spinner);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                AnimationUtil.cancel(spinner);
-                error.printStackTrace();
+                Log.e(CommunityFragment.class.getSimpleName(), "getNewsFeedByCommunityId: failure", error);
             }
         });
     }
@@ -265,7 +254,7 @@ public class CommunityFragment extends TrackedFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(CommunityFragment.class.getSimpleName(), "loadNewsfeed: failure", error);
             }
         });
     }

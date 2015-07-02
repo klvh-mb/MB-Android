@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.KGCommunityFragment;
 import miniBean.util.SharingUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -95,7 +97,7 @@ public class KGCommunityActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(KGCommunityActivity.class.getSimpleName(), "bookmark: failure", error);
             }
         });
     }
@@ -109,12 +111,13 @@ public class KGCommunityActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                Log.e(KGCommunityActivity.class.getSimpleName(), "unbookmark: failure", error);
             }
         });
     }
 
     private void getSchoolInfo(Long id) {
+        ViewUtil.showSpinner(this);
         AppController.getApi().getKGInfo(id, AppController.getInstance().getSessionId(), new Callback<KindergartenVM>() {
             @Override
             public void success(KindergartenVM vm, Response response) {
@@ -127,11 +130,14 @@ public class KGCommunityActivity extends TrackedFragmentActivity {
                 }
 
                 initFragment();
+
+                ViewUtil.stopSpinner(KGCommunityActivity.this);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                ViewUtil.stopSpinner(KGCommunityActivity.this);
+                Log.e(KGCommunityActivity.class.getSimpleName(), "getSchoolInfo: failure", error);
             }
         });
     }

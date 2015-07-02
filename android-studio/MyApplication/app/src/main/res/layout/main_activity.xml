@@ -2,16 +2,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/spinner"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@drawable/progress_spinner"></ProgressBar>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,10 +15,10 @@
             android:layout_weight="80"></LinearLayout>
 
         <View
-            android:id="@+id/viewBar3"
+            android:id="@+id/viewBar"
             android:layout_width="match_parent"
             android:layout_height="0.8dp"
-            android:layout_below="@+id/button_component"
+            android:layout_below="@+id/loadMoreLayout"
             android:background="@color/light_gray"></View>
 
         <FrameLayout
@@ -126,18 +116,19 @@
 
             <TextView
                 android:id="@+id/notificationCount"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:text="-"
-                android:textSize="10dp"
+                android:textSize="11dp"
                 android:textAlignment="center"
                 android:textColor="#FFF"
                 android:background="@drawable/badge_circle"
                 android:layout_alignTop="@+id/setting"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center" />
+                android:layout_marginRight="25dp"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
+                android:visibility="invisible" />
         </FrameLayout>
     </LinearLayout>
 </RelativeLayout>

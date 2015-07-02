@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import miniBean.R;
+import miniBean.activity.GameActivity;
 import miniBean.activity.MainActivity;
 import miniBean.activity.NewPostActivity;
 import miniBean.app.TrackedFragment;
@@ -27,6 +29,8 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
     private RelativeLayout profileLayout;
     private ImageView profileImage;
     private TextView usernameText;
+    private RelativeLayout gameLayout;
+    private ImageView signInImage;
     private ImageView mascotIcon, newPostIcon;
     private Button newsfeed, joined;
     private boolean newsfeedPressed = true;
@@ -40,23 +44,27 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
         profileImage = (ImageView) view.findViewById(R.id.profileImage);
         usernameText = (TextView) view.findViewById(R.id.usernameText);
 
+        gameLayout = (RelativeLayout) view.findViewById(R.id.gameLayout);
         mascotIcon = (ImageView) view.findViewById(R.id.mascotIcon);
         newPostIcon = (ImageView) view.findViewById(R.id.newPostIcon);
+        signInImage = (ImageView) view.findViewById(R.id.signInImage);
 
         newsfeed = (Button) view.findViewById(R.id.buttonNewsfeed); // obsolete...
         joined = (Button) view.findViewById(R.id.buttonJoined);     // obsolete...
 
+        /*
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 AnimationUtil.rotateBackForthOnce(mascotIcon);
             }
         }, 2000);
+        */
 
         pressNewsfeedButton();
 
         // profile
-        ImageUtil.displayMiniProfileImage(UserInfoCache.getUser().getId(), profileImage);
+        ImageUtil.displayThumbnailProfileImage(UserInfoCache.getUser().getId(), profileImage);
         usernameText.setText(UserInfoCache.getUser().getDisplayName());
 
         profileLayout.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +77,21 @@ public class MyCommunityNewsfeedFragment extends TrackedFragment {
             }
         });
 
-        mascotIcon.setOnClickListener(new View.OnClickListener() {
+        gameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // launch game
+                Intent intent = new Intent(MyCommunityNewsfeedFragment.this.getActivity(), GameActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        signInImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // launch game
+                Intent intent = new Intent(MyCommunityNewsfeedFragment.this.getActivity(), GameActivity.class);
+                startActivity(intent);
             }
         });
 

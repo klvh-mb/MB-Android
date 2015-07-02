@@ -1,5 +1,6 @@
 package miniBean.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,15 +23,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.KGAppDatesActivity;
+import miniBean.activity.PNAppDatesActivity;
+import miniBean.activity.TopSchoolsActivity;
 import miniBean.adapter.DistrictListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragment;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.LocationVM;
 
 public abstract class AbstractSchoolsListFragment extends TrackedFragment {
+
+    public static final String PN_INTENT_FLAG = "FromPN";
+    public static final String KG_INTENT_FLAG = "FromKG";
 
     private static final String TAG = AbstractSchoolsListFragment.class.getName();
     protected GridView districtGrid;
@@ -41,14 +48,13 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
     protected RelativeLayout nurseryLayout,boxLayout,searchResultLayout,searchLayout;
     protected LinearLayout cancelLayout;
     protected SearchView searchWindow;
+    protected LinearLayout appDatesLayout, rankingLayout;
     protected String currValue,cpValue,typeValue,timeValue;
 
     protected int dismissSearchPressCount = 0;
 
     protected View listHeader;
     protected ListView listView;
-
-    protected ActivityUtil activityUtil;
 
     // PN and KG override
 
@@ -70,8 +76,6 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
 
         View view = inflater.inflate(R.layout.school_list_fragment, container, false);
 
-        activityUtil = new ActivityUtil(getActivity());
-
         // header
         listHeader = getHeaderView(inflater);
         couponSpinner = (Spinner) listHeader.findViewById(R.id.couponSpinner);
@@ -85,6 +89,8 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         noOfSchools = (TextView) listHeader.findViewById(R.id.noOfSchools);
         tooManyResultsText = (TextView) listHeader.findViewById(R.id.tooManyResultsText);
         searchLayout = (RelativeLayout) listHeader.findViewById(R.id.searchView);
+        appDatesLayout = (LinearLayout) listHeader.findViewById(R.id.appDatesLayout);
+        rankingLayout = (LinearLayout) listHeader.findViewById(R.id.rankingLayout);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, DefaultValues.FILTER_SCHOOLS_COUPON);
         couponSpinner.setAdapter(adapter);
@@ -111,6 +117,29 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
 
         yourDistrictNameText.setText(AppController.getUserLocation().getDisplayName());
         districtNameText.setText(AppController.getUserLocation().getDisplayName());
+
+        // actions
+        appDatesLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPN()) {
+                    Intent intent = new Intent(getActivity(), PNAppDatesActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), KGAppDatesActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        rankingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TopSchoolsActivity.class);
+                intent.putExtra("flag", isPN()? PN_INTENT_FLAG : KG_INTENT_FLAG);
+                startActivity(intent);
+            }
+        });
 
         // list
         listView = (ListView) view.findViewById(R.id.schoolList);
@@ -204,7 +233,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
                 } else {
                     Toast.makeText(getActivity(), "Enter name to search....", Toast.LENGTH_LONG).show();
                 }
-                activityUtil.hideInputMethodWindow(searchWindow);
+                ViewUtil.hideInputMethodWindow(getActivity(), searchWindow);
                 return false;
             }
 
@@ -284,7 +313,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         // if search mode, back will exit search mode
         // and swallow the event
         if (!searchWindow.isIconified()) {
-            activityUtil.hideInputMethodWindow(searchWindow);
+            ViewUtil.hideInputMethodWindow(getActivity(), searchWindow);
 
             // HACK!!! to dismiss soft keyboard...
             if (dismissSearchPressCount > 0) {
@@ -302,7 +331,7 @@ public abstract class AbstractSchoolsListFragment extends TrackedFragment {
         nurseryLayout.setVisibility(View.VISIBLE);
         searchResultLayout.setVisibility(View.GONE);
         searchWindow.setIconified(true);
-        activityUtil.hideInputMethodWindow(searchWindow);
+        ViewUtil.hideInputMethodWindow(getActivity(), searchWindow);
         dismissSearchPressCount = 0;
         listView.smoothScrollToPosition(0);
     }

@@ -3,6 +3,7 @@ package miniBean.fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
@@ -13,6 +14,7 @@ import miniBean.R;
 import miniBean.adapter.KGListAdapter;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
@@ -50,7 +52,8 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
     }
 
     @Override
-    protected void getSchoolsByDistrict(final Long id, final String district){
+    protected void getSchoolsByDistrict(final Long id, final String district) {
+        ViewUtil.showSpinner(getActivity());
         AppController.getApi().getKGsByDistricts(id, AppController.getInstance().getSessionId(), new Callback<List<KindergartenVM>>() {
             @Override
             public void success(List<KindergartenVM> vms, Response response) {
@@ -58,10 +61,12 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
                 schoolVMList = vms;
                 applyFilters();
                 noOfSchools.setText(vms.size() + "");
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(getActivity());
                 error.printStackTrace();
             }
         });
@@ -150,8 +155,9 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
 
         List<KindergartenVM> vm = new ArrayList<>();
         for (int i = 0; i < filteredVMList.size(); i++) {
-            if (!StringUtils.isEmpty(filteredVMList.get(i).getCt()) &&
-                    filteredVMList.get(i).getCt().contains(ctValue)) {
+            String classTime = ViewUtil.translateClassTime(filteredVMList.get(i).getCt(), this.getResources());
+            if (!StringUtils.isEmpty(classTime) &&
+                    classTime.contains(ctValue)) {
                 vm.add(filteredVMList.get(i));
             }
         }
@@ -159,7 +165,8 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
     }
 
     @Override
-    protected void searchByName(final String query){
+    protected void searchByName(final String query) {
+        ViewUtil.showSpinner(getActivity());
         dismissSearchPressCount = 0;
         AppController.getApi().searchKGsByName(query, AppController.getInstance().getSessionId(), new Callback<List<KindergartenVM>>() {
             @Override
@@ -180,10 +187,13 @@ public class SchoolsKGListFragment extends AbstractSchoolsListFragment {
                 //KGListAdapter resultListAdapter = new KGListAdapter(getActivity(), resultList);
                 //listView.setAdapter(resultListAdapter);
                 listAdapter.refresh(searchVMList);
+
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(getActivity());
                 error.printStackTrace();
             }
         });

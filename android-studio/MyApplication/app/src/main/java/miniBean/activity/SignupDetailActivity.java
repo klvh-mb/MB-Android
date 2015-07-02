@@ -26,10 +26,11 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -47,8 +48,7 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
     private LinearLayout babyDetailsLayout1, babyDetailsLayout2, babyDetailsLayout3;
     private TextView titleText;
 
-    public List<String> locations;
-    private List<LocationVM> locationVMList;
+    private List<String> districtNames;
 
     String parenttype = "",babynum = "",babygen1 = "", babygen2 = "", babygen3 = "";
 
@@ -56,8 +56,6 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
     private Calendar calendar;
     private ImageView birthday1,birthday2,birthday3;
     private TextView birthdayLabel1,birthdayLabel2,birthdayLabel3;
-
-    protected ActivityUtil activityUtil;
 
     private String year1,month1,day1,year2,month2,day2,year3,month3,day3;
 
@@ -119,15 +117,12 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
 
         calendar = Calendar.getInstance();
 
-        activityUtil = new ActivityUtil(this);
-
         displayName = (EditText) findViewById(R.id.displaynameEdit);
         locationSpinner = (Spinner) findViewById(R.id.locationSpinner);
 
         finishButton = (Button) findViewById(R.id.finishButton);
 
-        locationVMList = new ArrayList<LocationVM>();
-        setLocation();
+        setDistricts();
 
         babyNumberArray = new String[]{"1","2","3"};
         ArrayAdapter<String> babyAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,babyNumberArray);
@@ -177,9 +172,10 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 locationId = -1;
                 String loc = locationSpinner.getSelectedItem().toString();
-                for (LocationVM vm : locationVMList) {
+                List<LocationVM> districts = DistrictCache.getDistricts();
+                for (LocationVM vm : districts) {
                     if (vm.getDisplayName().equals(loc)) {
-                        locationId = Integer.parseInt(vm.getId().toString());
+                        locationId = vm.getId().intValue();
                         break;
                     }
                 }
@@ -265,6 +261,7 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
                             "\n babyGen2="+babygen2+"\n babyBirthday2="+year2+"-"+month2+"-"+day2+
                             "\n babyGen3="+babygen3+"\n babyBirthday3="+year3+"-"+month3+"-"+day3);
 
+            showSpinner();
             AppController.getApi().signUpInfo(displayname, DefaultValues.DEFAULT_PARENT_BIRTH_YEAR, locationId, parenttype, babynum,
                     babygen1, babygen2, babygen3,
                     year1, month1, day1, year2, month2, day2, year3, month3, day3,
@@ -278,18 +275,20 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            String errorMsg = SignupDetailActivity.this.activityUtil.getResponseBody(error.getResponse());
+                            String errorMsg = ViewUtil.getResponseBody(error.getResponse());
                             if (error.getResponse().getStatus() == 500 &&
                                     error.getResponse() != null &&
                                     !StringUtils.isEmpty(errorMsg)) {
-                                ActivityUtil.alert(SignupDetailActivity.this, errorMsg);
+                                ViewUtil.alert(SignupDetailActivity.this, errorMsg);
                             } else {
                                 //ActivityUtil.alert(SignupDetailActivity.this, getString(R.string.signup_details_error_info));
-                                ActivityUtil.alert(SignupDetailActivity.this,
+                                ViewUtil.alert(SignupDetailActivity.this,
                                         "\""+displayname+"\" "+getString(R.string.signup_details_error_displayname_already_exists));
 
                             }
-                            error.printStackTrace();
+
+                            stopSpinner();
+                            Log.e(SignupDetailActivity.class.getSimpleName(), "submitDetails.api.signUpInfo: failure", error);
                         }
                     });
         }
@@ -307,7 +306,8 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                stopSpinner();
+                Log.e(SignupDetailActivity.class.getSimpleName(), "initNewUser: failure", error);
             }
         });
     }
@@ -395,28 +395,21 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
         });
     }
 
-    private void setLocation() {
-        AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(), new Callback<List<LocationVM>>() {
-            @Override
-            public void success(List<LocationVM> locationVMs, Response response) {
-                locations = new ArrayList<String>();
+    private void setDistricts(){
+        List<LocationVM> districts = DistrictCache.getDistricts();
+        districtNames = new ArrayList<String>();
+        districtNames.add(getString(R.string.signup_details_location));
+        for (int i = 0; i < districts.size(); i++) {
+            districtNames.add(districts.get(i).getDisplayName());
+        }
 
-                locations.add(getString(R.string.signup_details_location));
-                for (int i = 0; i < locationVMs.size(); i++) {
-                    locations.add(locationVMs.get(i).getDisplayName());
-                    locationVMList.addAll(locationVMs);
-                }
-
-                ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(SignupDetailActivity.this, android.R.layout.simple_spinner_item, locations);
-                locationSpinner.setAdapter(locationAdapter);
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-
-            }
-        });
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(
+                SignupDetailActivity.this,
+                android.R.layout.simple_spinner_item,
+                districtNames);
+        locationSpinner.setAdapter(locationAdapter);
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -497,5 +490,25 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
         if (!StringUtils.isEmpty(error))
             error += "\n";
         return error + newError;
+    }
+
+    private void showSpinner() {
+        showSpinner(true);
+    }
+
+    private void stopSpinner() {
+        showSpinner(false);
+    }
+
+    private void showSpinner(boolean show) {
+        if (show) {
+            ViewUtil.showSpinner(this);
+        } else {
+            ViewUtil.stopSpinner(this);
+        }
+
+        if (finishButton != null) {
+            finishButton.setEnabled(!show);
+        }
     }
 }

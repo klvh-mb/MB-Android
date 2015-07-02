@@ -18,8 +18,8 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.LocalCommunityTabCache;
-import miniBean.util.ActivityUtil;
 import miniBean.util.SharedPreferencesUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
 public class MyCommunityNewsfeedListFragement extends NewsfeedListFragement {
@@ -57,7 +57,7 @@ public class MyCommunityNewsfeedListFragement extends NewsfeedListFragement {
         viewPager = (ViewPager) headerView.findViewById(R.id.commsPager);
         dotsLayout = (LinearLayout) view.findViewById(R.id.dots);
 
-        int pageMargin = ActivityUtil.getRealDimension(2, this.getResources());
+        int pageMargin = ViewUtil.getRealDimension(2, this.getResources());
         viewPager.setPageMargin(pageMargin);
 
         // init adapter
@@ -183,7 +183,7 @@ class MyCommunityPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             default: {
                 MyCommunityPagerFragment fragment = new MyCommunityPagerFragment();
-                fragment.setTrackedOnce();
+                //fragment.setTrackedOnce();
                 fragment.setCommunities(getCommunitiesForPage(position));
                 return fragment;
             }

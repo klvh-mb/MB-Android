@@ -20,6 +20,7 @@ import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
 import miniBean.app.AppController;
 import miniBean.util.CommunityIconUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -104,7 +105,7 @@ public class PNListAdapter extends BaseAdapter {
         commentNoText.setText(item.getNop()+"");
 
         curriculumValue.setText(item.getCurt());
-        timeValue.setText(item.getCt());
+        timeValue.setText(ViewUtil.translateClassTime(item.getCt(), this.activity.getResources()));
         typeValue.setText(item.getOrgt());
         distName.setText(item.getDis());
 

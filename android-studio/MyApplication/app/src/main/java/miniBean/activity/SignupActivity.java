@@ -1,22 +1,18 @@
 package miniBean.activity;
 
-import android.app.ActionBar;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +22,7 @@ import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
 import miniBean.util.Validation;
+import miniBean.util.ViewUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -68,10 +65,6 @@ public class SignupActivity extends AbstractLoginActivity {
         termsCheckbox = (CheckBox) findViewById(R.id.termsCheckbox);
         privacyCheckbox = (CheckBox) findViewById(R.id.privacyCheckbox);
 
-        ProgressBar spinner = (ProgressBar) findViewById(R.id.spinner);
-        spinner.setVisibility(View.INVISIBLE);
-
-        setSpinner(spinner);
         setLoginButton(signupButton);
         setFacebookButton(facebookButton);
 
@@ -136,20 +129,23 @@ public class SignupActivity extends AbstractLoginActivity {
     private void signUp(String lname,String fname,String email,String password,String repeatPassword) {
         showErrorMessage(false);
 
-        AppController.getApi().signUp(lname,fname,email,password,repeatPassword, new Callback<Response>() {
+        showSpinner();
+        AppController.getApi().signUp(lname, fname, email, password, repeatPassword, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                if(response.getStatus() == 200){
+                stopSpinner();
+                if (response.getStatus() == 200) {
                     initSuccessPopup();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if(error.getResponse().getStatus() == 400){
+                stopSpinner();
+                if (error.getResponse().getStatus() == 400) {
                     showErrorMessage(true);
                 }
-                error.printStackTrace();
+                Log.e(SignupActivity.class.getSimpleName(), "signUp: failure", error);
             }
         });
     }
@@ -174,35 +170,20 @@ public class SignupActivity extends AbstractLoginActivity {
 
     private void initSuccessPopup() {
         try {
-            LayoutInflater inflater = (LayoutInflater) SignupActivity.this
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            Dialog dialog = ViewUtil.alert(
+                    this,
+                    R.layout.signup_success_popup_window,
+                    R.id.okButton,
+                    new View.OnClickListener() {
+                        public void onClick(View view) {
+                            SignupActivity.this.onBackPressed();
+                        }
+                    });
 
-            View layout = inflater.inflate(R.layout.signup_succeess_popup_window,
-                    (ViewGroup) findViewById(R.id.popupElement));
-
-            TextView emailText = (TextView) layout.findViewById(R.id.emailText);
-            Button okButton = (Button) layout.findViewById(R.id.okButton);
-
-            signupSuccessPopup = new PopupWindow(
-                    layout,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true);
-            //signupSuccessPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
-            //signupSuccessPopup.setOutsideTouchable(false);
-            signupSuccessPopup.setFocusable(true);
-            signupSuccessPopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
+            TextView emailText = (TextView) dialog.findViewById(R.id.emailText);
             emailText.setText(email.getText().toString());
-
-            okButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SignupActivity.this.onBackPressed();
-                }
-            });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(SignupActivity.class.getSimpleName(), "initSuccessPopup: failure", e);
         }
     }
 

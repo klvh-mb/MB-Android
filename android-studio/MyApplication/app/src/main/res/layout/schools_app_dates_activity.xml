@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rootLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/view_bg">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/headerLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="10dp"
+        android:weightSum="10"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/schools_app_dates_title_all"
+            android:textSize="16dp"
+            android:textColor="@color/dark_gray_2"
+            android:layout_weight="2.5"
+            android:background="@drawable/rounded_corner_button"
+            android:id="@+id/allSchoolsText"
+            android:gravity="center"
+            android:layout_marginRight="3dp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/schools_app_dates_title_hk"
+            android:textSize="16dp"
+            android:textColor="@color/dark_gray_2"
+            android:layout_weight="2.5"
+            android:background="@drawable/rounded_corner_button"
+            android:id="@+id/hkSchoolsText"
+            android:gravity="center"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/schools_app_dates_title_kl"
+            android:textSize="16dp"
+            android:textColor="@color/dark_gray_2"
+            android:layout_weight="2.5"
+            android:background="@drawable/rounded_corner_button"
+            android:id="@+id/klSchoolsText"
+            android:gravity="center"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/schools_app_dates_title_nt"
+            android:textSize="16dp"
+            android:textColor="@color/dark_gray_2"
+            android:layout_weight="2.5"
+            android:background="@drawable/rounded_corner_button"
+            android:id="@+id/ntSchoolsText"
+            android:gravity="center"
+            android:layout_marginLeft="3dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/tipsLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/schools_info_box"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/school_mascot"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/schools_mascot" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:textColor="@color/dark_gray_2"
+            android:id="@+id/tips"
+            android:layout_gravity="center_vertical"
+            android:text="@string/schools_app_dates_tips"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:layout_marginRight="15dp" />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tipsLayout"
+        android:id="@+id/appDateList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@color/view_bg"
+        android:dividerHeight="10dp"
+        android:drawSelectorOnTop="false"
+        android:headerDividersEnabled="true"
+        android:footerDividersEnabled="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+</RelativeLayout>

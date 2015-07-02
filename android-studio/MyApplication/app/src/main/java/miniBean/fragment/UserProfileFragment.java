@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -22,8 +21,10 @@ import miniBean.R;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragment;
-import miniBean.util.AnimationUtil;
+import miniBean.app.UserInfoCache;
 import miniBean.util.ImageUtil;
+import miniBean.util.MessageUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.ProfileVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -32,10 +33,10 @@ public class UserProfileFragment extends TrackedFragment {
 
     private static final String TAG = UserProfileFragment.class.getName();
     private ImageView userCoverPic, userPic;
-    private ProgressBar spinner;
     private TextView questionsCount, answersCount, bookmarksCount, userName, userInfoText;
     private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
-    private Button editButton;
+    private Button editButton, messageButton;
+    private LinearLayout gameLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,11 +49,12 @@ public class UserProfileFragment extends TrackedFragment {
         bookmarksCount = (TextView) view.findViewById(R.id.bookmarksCount);
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
         userPic = (ImageView) view.findViewById(R.id.userImage);
-        spinner = (ProgressBar) view.findViewById(R.id.spinner);
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
+
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         bookmarksMenu.setVisibility(View.GONE);
+
         settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
         settingsMenu.setVisibility(View.GONE);
 
@@ -63,10 +65,15 @@ public class UserProfileFragment extends TrackedFragment {
         userInfoLayout.setVisibility(View.GONE);
         userInfoText = (TextView) view.findViewById(R.id.userInfoText);
 
+        gameLayout = (LinearLayout) view.findViewById(R.id.gameLayout);
+        gameLayout.setVisibility(View.GONE);
+
         ImageView editCoverImage = (ImageView) view.findViewById(R.id.editCoverImage);
         editCoverImage.setVisibility(View.GONE);
         ImageView editUserImage = (ImageView) view.findViewById(R.id.editUserImage);
         editUserImage.setVisibility(View.GONE);
+
+        messageButton = (Button) view.findViewById(R.id.messageButton);
 
         questionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,14 +125,26 @@ public class UserProfileFragment extends TrackedFragment {
             }
         });
 
-        long userId = getArguments().getLong("oid");
+        final long userId = getArguments().getLong("oid");
+        if (userId == UserInfoCache.getUser().getId()) {
+            messageButton.setVisibility(View.GONE);
+        } else {
+            messageButton.setVisibility(View.VISIBLE);
+            messageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MessageUtil.openConversation(userId, getActivity());
+                }
+            });
+        }
+
         getUserProfile(userId);
 
         return view;
     }
 
     private void getUserProfile(final long userId) {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(getActivity());
 
         AppController.getApi().getUserProfile(userId, AppController.getInstance().getSessionId(), new Callback<ProfileVM>() {
             @Override
@@ -142,21 +161,21 @@ public class UserProfileFragment extends TrackedFragment {
                     userInfoLayout.setVisibility(View.GONE);
                 }
 
-                ImageUtil.displayThumbnailProfileImage(userId, userPic);
+                ImageUtil.displayProfileImage(userId, userPic);
                 ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
-                        AnimationUtil.show(spinner);
+                        ViewUtil.showSpinner(getActivity());
                     }
 
                     @Override
                     public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        AnimationUtil.cancel(spinner);
+                        ViewUtil.stopSpinner(getActivity());
                     }
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        AnimationUtil.cancel(spinner);
+                        ViewUtil.stopSpinner(getActivity());
                     }
                 });
             }

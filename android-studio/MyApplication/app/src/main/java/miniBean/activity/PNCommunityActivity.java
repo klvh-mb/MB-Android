@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.PNCommunityFragment;
 import miniBean.util.SharingUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -115,6 +117,7 @@ public class PNCommunityActivity extends TrackedFragmentActivity {
     }
 
     private void getSchoolInfo(Long id) {
+        ViewUtil.showSpinner(this);
         AppController.getApi().getPNInfo(id, AppController.getInstance().getSessionId(), new Callback<PreNurseryVM>() {
             @Override
             public void success(PreNurseryVM vm, Response response) {
@@ -127,11 +130,14 @@ public class PNCommunityActivity extends TrackedFragmentActivity {
                 }
 
                 initFragment();
+
+                ViewUtil.stopSpinner(PNCommunityActivity.this);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace();
+                ViewUtil.stopSpinner(PNCommunityActivity.this);
+                Log.e(PNCommunityActivity.class.getSimpleName(), "getSchoolInfo: failure", error);
             }
         });
     }

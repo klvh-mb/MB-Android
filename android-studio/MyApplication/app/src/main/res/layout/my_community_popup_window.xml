@@ -6,7 +6,7 @@
     android:background="@drawable/rounded_corner_popup"
     android:orientation="horizontal">
     <RelativeLayout
-        android:id="@+id/title"
+        android:id="@+id/actionbarTitle"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:gravity="center_vertical|center_horizontal">
@@ -19,7 +19,7 @@
     </RelativeLayout>
     <ListView
         android:id="@+id/communityList"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/actionbarTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </ListView>

@@ -3,7 +3,34 @@
     android:id="@+id/rootLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/view_bg">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/bookmarkTipsLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/schools_info_box"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textColor="@color/dark_gray_3"
+            android:id="@+id/bookmarkTips"
+            android:gravity="center" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="10dp"
         android:id="@+id/headerLayout"
@@ -16,11 +43,12 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/bookmarkTipsLayout">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/schools_pn_bookmark_title_1"
+            android:text="@string/schools_bookmark_title_prefix"
             android:textSize="16dp"
             android:textColor="@color/dark_gray_3" />
         <TextView
@@ -28,7 +56,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="-"
             android:textStyle="bold"
             android:textSize="16dp"
             android:textColor="@color/pn_text" />
@@ -36,7 +63,7 @@
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/schools_pn_bookmark_title_2"
+            android:text=""
             android:textSize="16dp"
             android:textColor="@color/dark_gray_3"
             android:id="@+id/bookmarkText" />

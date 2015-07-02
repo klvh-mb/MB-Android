@@ -8,6 +8,7 @@ public class NotificationsParentVM {
     public Long requestCount;
     public List<NotificationVM> allNotif;
     public List<NotificationVM> requestNotif;
+    public Long messageCount;
 
     public String getName() {
         return name;
@@ -47,5 +48,13 @@ public class NotificationsParentVM {
 
     public void setRequestNotif(List<NotificationVM> requestNotif) {
         this.requestNotif = requestNotif;
+    }
+
+    public Long getMessageCount() {
+        return messageCount;
+    }
+
+    public void setMessageCount(Long messageCount) {
+        this.messageCount = messageCount;
     }
 }

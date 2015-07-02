@@ -17,16 +17,89 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp">
         </SearchView>
+
     </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/actionsLayout"
+        android:layout_below="@+id/searchView"
+        android:weightSum="10"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:id="@+id/appDatesLayout"
+            android:layout_weight="5"
+            android:background="@drawable/schools_kg_edit_text_round"
+            android:layout_marginRight="3dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/appDatesIcon"
+                android:src="@drawable/ic_round_calendar"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/schools_application_date"
+                android:id="@+id/appDatesText"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray"
+                android:layout_gravity="center"
+                android:layout_marginLeft="7dp"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:id="@+id/rankingLayout"
+            android:layout_weight="5"
+            android:background="@drawable/schools_kg_edit_text_round"
+            android:layout_marginLeft="3dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/rankingIcon"
+                android:src="@drawable/ic_round_ranking"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/schools_ranking"
+                android:id="@+id/rankingText"
+                android:textSize="15dp"
+                android:textColor="@color/dark_gray"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="7dp"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/boxLayout"
-        android:layout_below="@+id/searchView"
+        android:layout_below="@+id/actionsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner_kg_grid"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp">
         <RelativeLayout
             android:background="@drawable/rounded_corner_kg_grid_top"
             android:layout_width="wrap_content"
@@ -92,8 +165,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:horizontalSpacing="5dp" />
+                android:layout_marginBottom="5dp"
+                android:horizontalSpacing="5dp"
+                android:paddingBottom="5dp" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -120,7 +194,7 @@
                 android:id="@+id/districtNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="17dp"
+                android:textSize="15dp"
                 android:text="-"
                 android:textColor="@color/kg_text"
                 android:layout_marginLeft="5dp"
@@ -133,7 +207,7 @@
                 android:layout_toRightOf="@+id/districtNameText"
                 android:text="@string/schools_filter_text_1"
                 android:textColor="@color/dark_gray_3"
-                android:textSize="16dp" />
+                android:textSize="15dp" />
             <TextView
                 android:id="@+id/noOfSchools"
                 android:layout_marginLeft="3dp"
@@ -142,7 +216,7 @@
                 android:layout_toRightOf="@+id/filterText1"
                 android:text="-"
                 android:textColor="@color/kg_text"
-                android:textSize="17dp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
@@ -151,7 +225,7 @@
                 android:text="@string/schools_filter_text_4"
                 android:layout_toRightOf="@+id/noOfSchools"
                 android:textColor="@color/dark_gray_3"
-                android:textSize="16dp"
+                android:textSize="15dp"
                 android:id="@+id/filterText2" />
         </LinearLayout>
 
@@ -169,12 +243,12 @@
 
         <RelativeLayout
             android:id="@+id/filterLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/filterText3"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="5dp">
 
             <LinearLayout
                 android:id="@+id/couponLayout"
@@ -202,10 +276,11 @@
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/typeLayout"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentRight="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp">
+                android:layout_toRightOf="@+id/couponLayout"
+                android:layout_marginLeft="20dp">
                 <TextView
                     android:layout_toRightOf="@+id/couponSpinner"
                     android:id="@+id/typeText"
@@ -229,7 +304,7 @@
             <LinearLayout
                 android:id="@+id/curriculumLayout"
                 android:layout_below="@+id/couponLayout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
@@ -256,11 +331,12 @@
                 android:id="@+id/timeLayout"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="false"
                 android:layout_below="@+id/typeLayout"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp">
+                android:layout_toRightOf="@+id/curriculumLayout"
+                android:layout_marginLeft="20dp">
                 <TextView
                     android:id="@+id/timeText"
                     android:layout_gravity="center"
@@ -398,6 +474,7 @@
         android:background="@color/kg_maroon"
         android:id="@+id/divider"
         android:layout_below="@+id/nurseryLayout"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

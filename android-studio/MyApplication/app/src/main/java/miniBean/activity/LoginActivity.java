@@ -9,14 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.util.ActivityUtil;
+import miniBean.util.ViewUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -43,50 +42,46 @@ public class LoginActivity extends AbstractLoginActivity {
         signup = (TextView) findViewById(R.id.signupText);
         forgetPassword = (TextView) findViewById(R.id.forgetPasswordText);
 
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.spinner);
-        spinner.setVisibility(View.INVISIBLE);
-
-        setSpinner(spinner);
         setLoginButton(loginButton);
         setFacebookButton(facebookButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                showSpinner(true);
+                showSpinner();
 
                 AppController.getApi().login(username.getText().toString(), password.getText().toString(), new Callback<Response>() {
                     @Override
                     public void success(Response response, Response response2) {
                         if (!saveToSession(response)) {
-                            ActivityUtil.alert(LoginActivity.this,
+                            ViewUtil.alert(LoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
                         }
+                        stopSpinner();
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        showSpinner(false);
-                        loginButton.setEnabled(true);
+                        stopSpinner();
                         if (error.getResponse() != null &&
                                 error.getResponse().getStatus() == 400) {
-                            String errorMsg = LoginActivity.this.activityUtil.getResponseBody(error.getResponse());
+                            String errorMsg = ViewUtil.getResponseBody(error.getResponse());
                             if (!StringUtils.isEmpty(errorMsg)) {
-                                ActivityUtil.alert(LoginActivity.this,
+                                ViewUtil.alert(LoginActivity.this,
                                         getString(R.string.login_error_title),
                                         errorMsg);
                             } else {
-                                ActivityUtil.alert(LoginActivity.this,
+                                ViewUtil.alert(LoginActivity.this,
                                         getString(R.string.login_error_title),
                                         getString(R.string.login_id_error_message));
                             }
                         } else {
-                            ActivityUtil.alert(LoginActivity.this,
+                            ViewUtil.alert(LoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
                         }
 
-                        error.printStackTrace();
+                        Log.e(LoginActivity.class.getSimpleName(), "api.login: failure", error);
                     }
                 });
             }
@@ -125,7 +120,7 @@ public class LoginActivity extends AbstractLoginActivity {
             return false;
         }
 
-        String key = activityUtil.getResponseBody(response);
+        String key = ViewUtil.getResponseBody(response);
         Log.d(this.getClass().getSimpleName(), "saveToSession: sessionID - " + key);
         AppController.getInstance().saveSessionId(key);
 

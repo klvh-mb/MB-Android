@@ -20,8 +20,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import miniBean.R;
-import miniBean.util.ActivityUtil;
 import miniBean.util.EmoticonUtil;
+import miniBean.util.ViewUtil;
 
 public class MyImageGetter implements Html.ImageGetter{
 
@@ -31,13 +31,10 @@ public class MyImageGetter implements Html.ImageGetter{
 
     private Activity activity;
 
-    private ActivityUtil activityUtil;
-
     public MyImageGetter(Activity activity) {
         this.activity = activity;
-        this.activityUtil = new ActivityUtil(activity);
-        emoticonWidth = activityUtil.getRealDimension(EmoticonUtil.WIDTH, this.activity.getResources());
-        emoticonHeight = activityUtil.getRealDimension(EmoticonUtil.HEIGHT, this.activity.getResources());
+        emoticonWidth = ViewUtil.getRealDimension(EmoticonUtil.WIDTH, this.activity.getResources());
+        emoticonHeight = ViewUtil.getRealDimension(EmoticonUtil.HEIGHT, this.activity.getResources());
     }
 
     public void setTextView(TextView textView) {
@@ -115,7 +112,7 @@ public class MyImageGetter implements Html.ImageGetter{
                 int height = bitmap.getHeight();
 
                 // always stretch to screen width
-                int displayWidth = activityUtil.getDisplayDimensions(MyImageGetter.this.activity).width();
+                int displayWidth = ViewUtil.getDisplayDimensions(MyImageGetter.this.activity).width();
                 float scaleAspect = (float)displayWidth / (float)width;
                 width = displayWidth;
                 height = (int)(height * scaleAspect);

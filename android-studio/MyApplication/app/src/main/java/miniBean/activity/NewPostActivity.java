@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,12 +37,11 @@ import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.ActivityUtil;
-import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.EmoticonVM;
 import miniBean.viewmodel.NewPost;
@@ -63,7 +61,6 @@ public class NewPostActivity extends TrackedFragmentActivity {
     protected ImageView communityIcon;
     protected ImageView backImage, browseImage, emoImage;
     protected TextView postTitle, postContent, postAction, editTextInFocus;
-    protected ProgressBar spinner;
 
     protected String selectedImagePath = null;
     protected Uri selectedImageUri = null;
@@ -81,15 +78,11 @@ public class NewPostActivity extends TrackedFragmentActivity {
     protected boolean postSuccess = false;
     protected int imageUploadSuccessCount = 0;
 
-    protected ActivityUtil activityUtil;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.new_post_activity);
-
-        activityUtil = new ActivityUtil(this);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.new_post_actionbar, null),
@@ -114,9 +107,6 @@ public class NewPostActivity extends TrackedFragmentActivity {
         postTitle = (TextView) findViewById(R.id.postTitle);
         postContent = (TextView) findViewById(R.id.postContent);
         editTextInFocus = postContent;
-
-        spinner = (ProgressBar) findViewById(R.id.spinner);
-        AnimationUtil.cancel(spinner);
 
         postTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -235,7 +225,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
         }
 
         // pop back soft keyboard
-        activityUtil.popupInputMethodWindow();
+        ViewUtil.popupInputMethodWindow(this);
     }
 
     protected void setPostImage(Bitmap bp){
@@ -281,7 +271,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
             return;
         }
 
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         final boolean withPhotos = photos.size() > 0;
 
@@ -305,8 +295,9 @@ public class NewPostActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
+                ViewUtil.stopSpinner(NewPostActivity.this);
                 Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_failed), Toast.LENGTH_SHORT).show();
-                error.printStackTrace();
+                Log.e(NewPostActivity.class.getSimpleName(), "doPost: failure", error);
             }
         });
     }
@@ -326,15 +317,16 @@ public class NewPostActivity extends TrackedFragmentActivity {
                 }
 
                 @Override
-                public void failure(RetrofitError retrofitError) {
-                    retrofitError.printStackTrace(); //to see if you have errors
+                public void failure(RetrofitError error) {
+                    ViewUtil.stopSpinner(NewPostActivity.this);
+                    Log.e(NewPostActivity.class.getSimpleName(), "uploadPhotos: failure", error);
                 }
             });
         }
     }
 
     protected void complete() {
-        AnimationUtil.cancel(spinner);
+        ViewUtil.stopSpinner(this);
         onBackPressed();
         finish();
         Toast.makeText(NewPostActivity.this, NewPostActivity.this.getString(R.string.new_post_success), Toast.LENGTH_LONG).show();
@@ -348,11 +340,14 @@ public class NewPostActivity extends TrackedFragmentActivity {
             View layout = inflater.inflate(R.layout.my_community_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
 
-            myCommunityPopup = new PopupWindow(
-                    layout,
-                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH, this.getResources()),
-                    activityUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT, this.getResources()),
-                    true);
+            if (myCommunityPopup == null) {
+                myCommunityPopup = new PopupWindow(
+                        layout,
+                        ViewUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_WIDTH, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.MY_COMMUNITY_POPUP_HEIGHT, this.getResources()),
+                        true);
+            }
+
             myCommunityPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             myCommunityPopup.setOutsideTouchable(false);
             myCommunityPopup.setFocusable(true);
@@ -380,6 +375,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
 
                     updateSelectCommunityLayout();
                     myCommunityPopup.dismiss();
+                    myCommunityPopup = null;
                     Log.d(this.getClass().getSimpleName(), "initMyCommunityPopup: listView.onItemClick: community="+community.getId()+"|"+community.getDn());
                 }
             });
@@ -399,12 +395,14 @@ public class NewPostActivity extends TrackedFragmentActivity {
                     (ViewGroup) findViewById(R.id.popupElement));
 
             // hide soft keyboard when select emoticon
-            activityUtil.hideInputMethodWindow(layout);
+            ViewUtil.hideInputMethodWindow(this, layout);
 
-            emoPopup = new PopupWindow(layout,
-                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true);
+            if (emoPopup == null) {
+                emoPopup = new PopupWindow(layout,
+                        ViewUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true);
+            }
 
             emoPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             emoPopup.setOutsideTouchable(false);
@@ -424,7 +422,8 @@ public class NewPostActivity extends TrackedFragmentActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     EmoticonUtil.insertEmoticon(emoticonVMList.get(i), editTextInFocus);
                     emoPopup.dismiss();
-                    activityUtil.popupInputMethodWindow();
+                    emoPopup = null;
+                    ViewUtil.popupInputMethodWindow(NewPostActivity.this);
                 }
             });
         } catch (Exception e) {
@@ -440,8 +439,10 @@ public class NewPostActivity extends TrackedFragmentActivity {
         if (postSuccess ||
                 (StringUtils.isEmpty(title) && StringUtils.isEmpty(content))) {
             super.onBackPressed();
-            if (myCommunityPopup != null)
+            if (myCommunityPopup != null) {
                 myCommunityPopup.dismiss();
+                myCommunityPopup = null;
+            }
             return;
         }
 

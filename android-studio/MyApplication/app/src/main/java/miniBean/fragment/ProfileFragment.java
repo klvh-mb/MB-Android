@@ -14,26 +14,33 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.lang.reflect.Field;
 
 import miniBean.R;
 import miniBean.activity.EditProfileActivity;
+import miniBean.activity.GameActivity;
 import miniBean.activity.MyProfileActionActivity;
 import miniBean.activity.NewsfeedActivity;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragment;
 import miniBean.app.UserInfoCache;
-import miniBean.util.AnimationUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.GameConstants;
 import miniBean.util.ImageUtil;
+import miniBean.util.SharingUtil;
+import miniBean.util.UrlUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
+import miniBean.viewmodel.GameAccountVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -44,7 +51,6 @@ public class ProfileFragment extends TrackedFragment {
 
     private static final String TAG = ProfileFragment.class.getName();
     private ImageView userCoverPic, userPic, editCoverImage;
-    private ProgressBar spinner;
     private TextView questionsCount, answersCount, bookmarksCount, userName;
     private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
     private Long userId;
@@ -52,8 +58,12 @@ public class ProfileFragment extends TrackedFragment {
     private final Integer SELECT_PICTURE = 1;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
-    private boolean coverPhotoClicked = false, profilePhotoClicked=false;
-    private Button editButton;
+    private boolean coverPhotoClicked = false, profilePhotoClicked = false;
+    private boolean hasProfilePic = false;
+
+    private Button editButton, messageButton;
+    private LinearLayout gameLayout;
+    private TextView pointsText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,14 +78,26 @@ public class ProfileFragment extends TrackedFragment {
         userCoverPic = (ImageView) view.findViewById(R.id.userCoverPic);
         userPic = (ImageView) view.findViewById(R.id.userImage);
         editCoverImage = (ImageView) view.findViewById(R.id.editCoverImage);
-        spinner = (ProgressBar) view.findViewById(R.id.spinner);
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         settingsMenu = (LinearLayout) view.findViewById(R.id.menuSettings);
         userInfoLayout = (LinearLayout) view.findViewById(R.id.userInfoLayout);
-        editButton= (Button) view.findViewById(R.id.editButton);
+        editButton = (Button) view.findViewById(R.id.editButton);
+        messageButton = (Button) view.findViewById(R.id.messageButton);
+        gameLayout = (LinearLayout) view.findViewById(R.id.gameLayout);
+        pointsText = (TextView) view.findViewById(R.id.pointsText);
+
+        messageButton.setVisibility(View.GONE);
         userInfoLayout.setVisibility(View.GONE);
+
+        gameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), GameActivity.class);
+                startActivity(intent);
+            }
+        });
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +129,7 @@ public class ProfileFragment extends TrackedFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), NewsfeedActivity.class);
-                intent.putExtra("id",userId);
+                intent.putExtra("id", userId);
                 intent.putExtra("key","question");
                 startActivity(intent);
             }
@@ -144,6 +166,7 @@ public class ProfileFragment extends TrackedFragment {
         });
 
         getUserInfo();
+        getGameAccount();
         getBookmarkSummary();
 
         return view;
@@ -181,7 +204,7 @@ public class ProfileFragment extends TrackedFragment {
     }
 
     private void getUserInfo() {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(getActivity());
 
         UserVM user = UserInfoCache.getUser();
 
@@ -194,21 +217,39 @@ public class ProfileFragment extends TrackedFragment {
         questionsCount.setText(user.getQuestionsCount()+"");
         answersCount.setText(user.getAnswersCount()+"");
 
-        ImageUtil.displayThumbnailProfileImage(userId, userPic);
+        ImageUtil.displayProfileImage(userId, userPic);
         ImageUtil.displayCoverImage(userId, userCoverPic, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-                AnimationUtil.show(spinner);
+                ViewUtil.showSpinner(getActivity());
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(getActivity());
             }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(getActivity());
+            }
+        });
+    }
+
+    private void getGameAccount() {
+        ViewUtil.showSpinner(getActivity());
+        AppController.getApi().getGameAccount(AppController.getInstance().getSessionId(), new Callback<GameAccountVM>() {
+            @Override
+            public void success(final GameAccountVM gameAccountVM, Response response) {
+                pointsText.setText(gameAccountVM.getGmpt() + "");
+                hasProfilePic = gameAccountVM.hasProfilePic();
+                ViewUtil.stopSpinner(getActivity());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(GameActivity.class.getSimpleName(), "getGameAccount: failure", error);
+                ViewUtil.stopSpinner(getActivity());
             }
         });
     }
@@ -244,7 +285,7 @@ public class ProfileFragment extends TrackedFragment {
     }
 
     private void changeCoverPhoto(final long id){
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(getActivity());
 
         Log.d(this.getClass().getSimpleName(), "changeCoverPhoto: Id=" + id);
 
@@ -261,17 +302,17 @@ public class ProfileFragment extends TrackedFragment {
                         ImageUtil.displayCoverImage(id, userCoverPic, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-                                AnimationUtil.show(spinner);
+                                ViewUtil.showSpinner(getActivity());
                             }
 
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                AnimationUtil.cancel(spinner);
+                                ViewUtil.stopSpinner(getActivity());
                             }
 
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                AnimationUtil.cancel(spinner);
+                                ViewUtil.stopSpinner(getActivity());
                             }
                         });
                     }
@@ -286,7 +327,7 @@ public class ProfileFragment extends TrackedFragment {
     }
 
     private void changeProfilePhoto(final long id) {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(getActivity());
 
         Log.d(this.getClass().getSimpleName(), "changeProfilePhoto: Id=" + id);
 
@@ -298,22 +339,29 @@ public class ProfileFragment extends TrackedFragment {
         AppController.getApi().uploadProfilePhoto(typedFile,AppController.getInstance().getSessionId(),new Callback<Response>(){
             @Override
             public void success(Response response, Response response2) {
+                if (!hasProfilePic) {
+                    hasProfilePic = true;
+                    ViewUtil.alertGamePoints(getActivity(),
+                            getActivity().getString(R.string.game_upload_profile_pic_title),
+                            GameConstants.POINTS_UPLOAD_PROFILE_PHOTO);
+                }
+
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
-                        ImageUtil.displayThumbnailProfileImage(id, userPic, new SimpleImageLoadingListener() {
+                        ImageUtil.displayProfileImage(id, userPic, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-                                AnimationUtil.show(spinner);
+                                ViewUtil.showSpinner(getActivity());
                             }
 
                             @Override
                             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                AnimationUtil.cancel(spinner);
+                                ViewUtil.stopSpinner(getActivity());
                             }
 
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                AnimationUtil.cancel(spinner);
+                                ViewUtil.stopSpinner(getActivity());
                             }
                         });
                     }

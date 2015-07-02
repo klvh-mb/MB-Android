@@ -14,8 +14,8 @@ import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.CommunityFragment;
 
 public class CommunityActivity extends TrackedFragmentActivity {
-    ImageView backImage, editAction;
-    TextView titleAction;
+    private ImageView backImage, editAction;
+    private TextView titleAction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class CommunityActivity extends TrackedFragmentActivity {
         );
 
         backImage = (ImageView) this.findViewById(R.id.backImage);
-        titleAction = (TextView) this.findViewById(R.id.title);
+        titleAction = (TextView) this.findViewById(R.id.actionbarTitle);
         editAction = (ImageView) this.findViewById(R.id.newPostIcon);
 
         Bundle bundle = new Bundle();

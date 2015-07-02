@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="10dp"
+    android:background="@color/view_bg">
+
+    <ImageView
+        android:id="@+id/senderImage"
+        android:layout_width="35dp"
+        android:layout_height="35dp" />
+
+    <RelativeLayout
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/bg_msg_from"
+        android:layout_toRightOf="@+id/senderImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="15dp"
+        android:layout_marginRight="65dp">
+        <TextView
+            android:id="@+id/txtMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="@color/dark_gray_2"
+            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true" />
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/messageImages"
+            android:layout_below="@+id/txtMsg"
+            android:visibility="gone"
+             />
+        <TextView
+            android:id="@+id/messageDate"
+            android:layout_below="@id/messageImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

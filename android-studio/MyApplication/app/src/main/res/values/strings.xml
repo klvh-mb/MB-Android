@@ -10,15 +10,19 @@
 
     <!-- Settings -->
     <string name="app_name">miniBean</string>
+    <string name="app_desc">miniBean 小萌豆 - 全新家長社交平台</string>
     <string name="facebook_app_id">798543453496777</string>
-    <string name="base_url">http://192.168.1.115:9000</string>
+    <string name="base_url">http://192.168.1.122:9000</string>
     <!--string name="base_url">http://www.minibean.hk</string-->
     <string name="action_settings">Settings</string>
+    <string name="clipboard_text_label">複制信息</string>
     <string name="connection_timeout_title">網路問題</string>
     <string name="connection_timeout_message">網路出現問題。請檢查是否已經上缐</string>
 
     <!-- Login / Signup -->
     <string name="login">登入</string>
+    <string name="login_forgot_password">忘記密碼</string>
+    <string name="login_new_signup">新會員注册</string>
     <string name="login_error_title">登入錯誤</string>
     <string name="login_error_message">登入錯誤。請重試</string>
     <string name="login_id_error_message">登入電郵或密碼錯誤</string>
@@ -137,13 +141,14 @@
     <string name="list_loading_error">加載出現問題。請檢查網路再重試</string>
     <string name="list_loaded_all">- 已加載全部 -</string>
     <string name="sharing_app_not_installed"> 沒有安裝。</string>
-    <string name="sharing_message_note">(分享自 miniBean 小萌豆)</string>
-    <!--string name="sharing_message_note">全新 miniBean 小萌豆 Android App:</string-->
+    <string name="sharing_message_note">(分享自 miniBean 小萌豆，立即下載全新 Android App)</string>
+    <string name="sharing_whatsapp_button">Whatsapp分享</string>
+    <string name="sharing_copy_url_button">複製連結</string>
 
     <!-- Profile tab -->
     <string name="settings_actionbar_title">設定</string>
     <string name="logout">登出</string>
-    <string name="my_profile_actionbar_title">我的主頁</string>
+    <string name="my_profile_actionbar_title"></string>
     <string name="user_profile_actionbar_title">主頁</string>
     <string name="edit_user_info">更改資料</string>
     <string name="edit_user_info_login_method">登入方式 : </string>
@@ -161,21 +166,40 @@
     <string name="answers_title">回覆的話題</string>
     <string name="bookmarks_title">我的收藏</string>
 
+    <string name="pm_actionbar_title">私人訊息</string>
+    <string name="pm_user">私人訊息</string>
+    <string name="pm_max_images">最多可加入1張圖</string>
+    <string name="pm_load_more">加載訊息</string>
+    <string name="pm_start_failed">暫時不能開啟訊息，請稍後重試</string>
+    <string name="pm_send_failed">暫時不能發出訊息，請稍後重試</string>
+
+    <string name="game_title">小豆豆中心</string>
+    <string name="game_rules_title">積分規則</string>
     <string name="game_daily_signin_title">每日簽到</string>
     <string name="game_daily_signin_text">立即簽到累積小豆豆!</string>
     <string name="game_level_title">我的等級</string>
     <string name="game_level_text">等級 : </string>
-    <string name="game_level_note">( 距離升級到 L5 還差 479 小豆豆 )</string>
+    <string name="game_level_tips">( 距離升級到 L5 還差 479 小豆豆 )</string>
     <string name="game_points_title">我的小豆豆</string>
-    <string name="game_points_total">小豆豆總值 : </string>
+    <string name="game_points">小豆豆</string>
+    <string name="game_points_desc">小豆豆 : </string>
+    <string name="game_points_total">小豆豆總數 : </string>
     <string name="game_points_redeem">可兌換 : </string>
     <string name="game_points_redeemed">已兌換 : </string>
+    <string name="game_points_redeemed_tips">( 未有兌換禮品記錄 )</string>
     <string name="game_referral_title">介紹新會員加入</string>
     <string name="game_referral_text">用以下連結介紹你的朋友加入~~</string>
     <string name="game_referral_note1">每個朋友成功註冊。你即可獲得</string>
-    <string name="game_referral_note2">個小豆豆!</string>
+    <string name="game_referral_note2">小豆豆!</string>
+    <string name="game_referral_success_num">成功介紹加入 : </string>
+    <string name="game_referral_success_points">獲得小豆豆 : </string>
+    <string name="game_referral_url_copy_success">介紹連結已複制</string>
+    <string name="game_referral_url_copy_failed">介紹連結不能複制</string>
     <string name="game_transaction_title">小豆豆記錄表 (最近30個記錄)</string>
+    <string name="game_transaction_latest_title">小豆豆最新記錄</string>
     <string name="game_transaction_note">由"每日簽到"、"介紹新會員加入"所獲得的小豆豆會立即計算在"小豆豆總數"中。以其他方式獲得的小豆豆會在隔天反應</string>
+    <string name="game_upload_profile_pic_title">上載個人照片</string>
+    <string name="game_note_points">小豆豆!</string>
 
     <!-- Schools tab -->
     <string name="schools_tab_title_pn">幼兒班(PN班)</string>
@@ -185,6 +209,9 @@
     <string name="schools_bookmarks">我的收藏</string>
     <string name="schools_your_district">您的地區:</string>
     <string name="schools_actionbar_title">詳情</string>
+    <string name="schools_application_date">申請日期</string>
+    <string name="schools_application_date_prefix">[申請日期]</string>
+    <string name="schools_ranking">最多媽媽關注</string>
     <string name="schools_info_coupon">學券申請:</string>
     <string name="schools_info_type">學校類別:</string>
     <string name="schools_info_curriculum">課程類別:</string>
@@ -208,6 +235,12 @@
     <string name="schools_info_pm">下午班</string>
     <string name="schools_info_wd">全日班</string>
     <string name="schools_info_total">總數</string>
+    <string name="schools_info_summer_uniform">夏季校服</string>
+    <string name="schools_info_winter_uniform">冬季校服</string>
+    <string name="schools_info_schoolbag">書包</string>
+    <string name="schools_info_tea">茶點</string>
+    <string name="schools_info_textbooks">課本</string>
+    <string name="schools_info_workbooks">練習簿/作業</string>
     <string name="schools_info_fee_note">全年學費(期數)</string>
     <string name="schools_info_not_provide">沒有直接代辦</string>
     <string name="schools_info_comm_welcome">歡迎和其他家長一起討論</string>
@@ -229,6 +262,7 @@
     <string name="schools_landing_title_pn">幼兒班(PN班 2-3歲) 收生資料</string>
     <string name="schools_landing_title_kg_1">學生人數</string>
     <string name="schools_landing_title_kg_2">全年學費 (2014/15 學年資料)</string>
+    <string name="schools_landing_title_kg_3">主要代辦項目參考價目 (2013/14 學年)</string>
     <string name="schools_landing_title_curriculum">課程資料</string>
     <string name="schools_landing_title_contact">聯絡資料</string>
     <string name="schools_landing_title_comm">討論區</string>
@@ -245,11 +279,17 @@
     <string name="filter_schools_time_pm">下午</string>
     <string name="filter_schools_time_wd">全日</string>
 
-    <string name="schools_pn_bookmark_title_1">收藏了</string>
-    <string name="schools_pn_bookmark_title_2">間幼兒班(PN班)</string>
-    <string name="schools_pn_bookmark_title_3">間幼稚園</string>
-    <string name="schools_bookmark_application_date">[申請日期]</string>
+    <string name="schools_bookmark_title_pn_tips">還沒有收藏幼兒班~\n立即收藏，接收最新討論通知</string>
+    <string name="schools_bookmark_title_kg_tips">還沒有收藏幼稚園~\n立即收藏，接收最新討論通知</string>
+    <string name="schools_bookmark_title_prefix">收藏了</string>
+    <string name="schools_bookmark_title_pn">間幼兒班(PN班)</string>
+    <string name="schools_bookmark_title_kg">間幼稚園</string>
 
+    <string name="schools_app_dates_title_all">全部</string>
+    <string name="schools_app_dates_title_hk">香港</string>
+    <string name="schools_app_dates_title_kl">九龍</string>
+    <string name="schools_app_dates_title_nt">新界</string>
+    <string name="schools_app_dates_tips">資料由miniBean會員提供，最終以幼稚園官方網站或請致電幼稚園為準</string>
 
     <string name="schools_top_pn_ranking">幼兒班排名</string>
     <string name="schools_top_kg_ranking">幼稚園排名</string>

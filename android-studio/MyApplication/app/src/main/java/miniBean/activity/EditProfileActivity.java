@@ -2,6 +2,7 @@ package miniBean.activity;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,10 +20,11 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserProfileDataVM;
 import miniBean.viewmodel.UserVM;
@@ -38,6 +40,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
     private EditText displayName,aboutmeEdit;
     private TextView displayEmailText;
     private EditText lastNameEdit,firstNameEdit;
+    private ImageView backImage;
 
     private UserProfileDataVM profileDataVM;
 
@@ -45,23 +48,16 @@ public class EditProfileActivity extends TrackedFragmentActivity {
 
     private int pos;
 
-    public List<String> locations;
-    private List<LocationVM> locationVMList;
-
-    protected ActivityUtil activityUtil;
-
-    ImageView backImage;
+    private List<String> districtNames;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activityUtil = new ActivityUtil(this);
-
         setContentView(R.layout.edit_profile_activity);
 
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.my_profile_action_actionbar, null),
+        getActionBar().setCustomView(getLayoutInflater().inflate(R.layout.my_actionbar, null),
                 new ActionBar.LayoutParams(
                         ActionBar.LayoutParams.WRAP_CONTENT,
                         ActionBar.LayoutParams.MATCH_PARENT,
@@ -69,7 +65,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
                 )
         );
 
-        TextView titleText = (TextView) findViewById(R.id.title);
+        TextView titleText = (TextView) findViewById(R.id.actionbarTitle);
         titleText.setText(getString(R.string.edit_user_info));
 
         fbLoginIcon = (ImageView) findViewById(R.id.fbLoginIcon);
@@ -88,18 +84,17 @@ public class EditProfileActivity extends TrackedFragmentActivity {
 
         finishButton = (Button) findViewById(R.id.finishButton);
 
-        locationVMList = new ArrayList<LocationVM>();
-
-        setLocation();
+        setDistricts();
 
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 locationId = -1;
                 String loc = locationSpinner.getSelectedItem().toString();
-                for (LocationVM vm : locationVMList) {
+                List<LocationVM> districts = DistrictCache.getDistricts();
+                for (LocationVM vm : districts) {
                     if (vm.getDisplayName().equals(loc)) {
-                        locationId = Integer.parseInt(vm.getId().toString());
+                        locationId = vm.getId().intValue();
                         break;
                     }
                 }
@@ -126,7 +121,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
             }
         });
 
-        ImageView backImage = (ImageView) this.findViewById(R.id.backImage);
+        backImage = (ImageView) this.findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,30 +130,23 @@ public class EditProfileActivity extends TrackedFragmentActivity {
         });
     }
 
-    private void setLocation() {
-        AppController.getApi().getAllDistricts(AppController.getInstance().getSessionId(), new Callback<List<LocationVM>>() {
-            @Override
-            public void success(List<LocationVM> locationVMs, Response response) {
-                locations = new ArrayList<String>();
+    private void setDistricts(){
+        List<LocationVM> districts = DistrictCache.getDistricts();
+        districtNames = new ArrayList<String>();
+        districtNames.add(getString(R.string.signup_details_location));
+        for (int i = 0; i < districts.size(); i++) {
+            districtNames.add(districts.get(i).getDisplayName());
+        }
 
-                locations.add(getString(R.string.signup_details_location));
-                for (int i = 0; i < locationVMs.size(); i++) {
-                    locations.add(locationVMs.get(i).getDisplayName());
-                    locationVMList.addAll(locationVMs);
-                }
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(
+                EditProfileActivity.this,
+                android.R.layout.simple_spinner_item,
+                districtNames);
+        locationSpinner.setAdapter(locationAdapter);
 
-                ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(EditProfileActivity.this, android.R.layout.simple_spinner_item, locations);
-                locationSpinner.setAdapter(locationAdapter);
-
-                pos = locationAdapter.getPosition(AppController.getUserLocation().getDisplayName());
-                locationSpinner.setSelection(pos);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
+        // set previous value
+        pos = locationAdapter.getPosition(AppController.getUserLocation().getDisplayName());
+        locationSpinner.setSelection(pos);
     }
 
     private void getUserInfo() {
@@ -187,22 +175,22 @@ public class EditProfileActivity extends TrackedFragmentActivity {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        error.printStackTrace();
+                        Log.e(EditProfileActivity.class.getSimpleName(), "updateUserProfileData: failure", error);
                     }
                 });
             }
 
             @Override
             public void failure(RetrofitError error) {
-                String errorMsg = EditProfileActivity.this.activityUtil.getResponseBody(error.getResponse());
+                String errorMsg = ViewUtil.getResponseBody(error.getResponse());
                 if (error.getResponse().getStatus() == 500 &&
                         error.getResponse() != null &&
                         !StringUtils.isEmpty(errorMsg)) {
-                    ActivityUtil.alert(EditProfileActivity.this, errorMsg);
+                    ViewUtil.alert(EditProfileActivity.this, errorMsg);
                 } else {
-                    ActivityUtil.alert(EditProfileActivity.this, getString(R.string.signup_details_error_info));
+                    ViewUtil.alert(EditProfileActivity.this, getString(R.string.signup_details_error_info));
                 }
-                error.printStackTrace();
+                Log.e(EditProfileActivity.class.getSimpleName(), "setUserProfileData: failure", error);
             }
         });
     }

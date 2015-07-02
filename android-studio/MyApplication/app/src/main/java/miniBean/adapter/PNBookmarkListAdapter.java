@@ -74,7 +74,7 @@ public class PNBookmarkListAdapter extends BaseAdapter {
         if (StringUtils.isEmpty(item.appDateTxt)) {
             appDateText.setVisibility(View.GONE);
         } else {
-            appDateText.setText(activity.getString(R.string.schools_bookmark_application_date)+" "+item.appDateTxt);
+            appDateText.setText(activity.getString(R.string.schools_application_date_prefix)+" "+item.appDateTxt);
             appDateText.setVisibility(View.VISIBLE);
         }
 

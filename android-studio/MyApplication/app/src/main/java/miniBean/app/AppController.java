@@ -1,17 +1,22 @@
 package miniBean.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import miniBean.R;
 import miniBean.util.ImageUtil;
 import miniBean.util.SharedPreferencesUtil;
 import miniBean.viewmodel.LocationVM;
+import miniBean.viewmodel.MessageVM;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -19,6 +24,7 @@ import org.acra.*;
 import org.acra.annotation.*;
 
 import java.security.MessageDigest;
+import java.util.List;
 
 /**
  * ARCA config
@@ -54,6 +60,17 @@ public class AppController extends Application {
 
     private static AppController mInstance;
     private static MyApi api;
+
+    private long conversationId;
+    public List<MessageVM> messageVMList;
+
+    public long getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(long conversationId) {
+        this.conversationId = conversationId;
+    }
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -96,11 +113,12 @@ public class AppController extends Application {
 
         ImageUtil.init();
 
+        initStaticCaches();
+
         ACRA.init(getInstance());
     }
 
-    public static void initCaches() {
-        NotificationCache.refresh();
+    public static void initStaticCaches() {
         DistrictCache.refresh();
         EmoticonCache.refresh();
     }
@@ -141,6 +159,17 @@ public class AppController extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
 
         System.exit(1);
+    }
+
+    public static boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) AppController.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if(netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()){
+            Toast.makeText(AppController.getInstance().getApplicationContext(), AppController.getInstance().getString(R.string.connection_timeout_message), Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void printKeyHashForFacebook() {

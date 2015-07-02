@@ -47,7 +47,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/button_component"
+        android:id="@+id/loadMoreLayout"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_below="@+id/image_component"

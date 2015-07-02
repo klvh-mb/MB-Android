@@ -29,7 +29,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,14 +46,12 @@ import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
 import miniBean.app.MyImageGetter;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.ActivityUtil;
-import miniBean.util.AnimationUtil;
 import miniBean.util.CommunityIconUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.EmoticonUtil;
-import miniBean.util.HtmlUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.SharingUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommentPost;
 import miniBean.viewmodel.CommentResponse;
 import miniBean.viewmodel.CommunityPostCommentVM;
@@ -81,7 +78,6 @@ public class DetailActivity extends TrackedFragmentActivity {
     private TextView questionText;
     private PopupWindow commentPopup, paginationPopup, emoPopup;
     private Boolean isBookmarked = false;
-    private ProgressBar spinner;
     private TextView communityName, numPostViews, numPostComments;
     private ImageView communityIcon;
     private EditText commentEditText;
@@ -99,8 +95,6 @@ public class DetailActivity extends TrackedFragmentActivity {
     private List<ImageView> commentImages = new ArrayList<>();
     private List<File> photos = new ArrayList<>();
 
-    private ActivityUtil activityUtil;
-
     private MyImageGetter imageGetter;
 
     @Override
@@ -108,8 +102,6 @@ public class DetailActivity extends TrackedFragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.detail_activity);
-
-        activityUtil = new ActivityUtil(this);
 
         imageGetter = new MyImageGetter(this);
 
@@ -124,7 +116,6 @@ public class DetailActivity extends TrackedFragmentActivity {
         pageButton = (Button) findViewById(R.id.page);
         backButton = (ImageButton) findViewById(R.id.back);
         nextButton = (ImageButton) findViewById(R.id.next);
-        spinner = (ProgressBar) findViewById(R.id.spinner);
 
         mainFrameLayout = (FrameLayout) findViewById(R.id.mainFrameLayout);
 
@@ -158,6 +149,7 @@ public class DetailActivity extends TrackedFragmentActivity {
         bookmarkAction = (ImageView) findViewById(R.id.bookmarkAction);
 
         communityItems = new ArrayList<>();
+
         backImage = (ImageView) findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +174,7 @@ public class DetailActivity extends TrackedFragmentActivity {
     }
 
     private void getQnaDetail() {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         AppController.getApi().qnaLanding(postId, commId, AppController.getInstance().getSessionId(), new Callback<CommunityPostVM>() {
             @Override
@@ -229,7 +221,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");
 
-                HtmlUtil.setHtmlText(post.getPtl(), imageGetter, questionText);
+                ViewUtil.setHtmlText(post.getPtl(), imageGetter, questionText, true);
 
                 isBookmarked = post.isBookmarked;
                 if (isBookmarked) {
@@ -292,7 +284,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                     }
                 });
 
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(DetailActivity.this);
             }
 
             @Override
@@ -304,7 +296,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                     Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.connection_timeout_message), Toast.LENGTH_SHORT).show();
                 }
 
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(DetailActivity.this);
 
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
@@ -312,7 +304,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                     }
                 }, DefaultValues.DEFAULT_HANDLER_DELAY);
 
-                error.printStackTrace();
+                Log.e(DetailActivity.class.getSimpleName(), "getQnaDetail: failure", error);
             }
         });
     }
@@ -389,7 +381,7 @@ public class DetailActivity extends TrackedFragmentActivity {
 
                             // popup again
                             commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
-                            activityUtil.popupInputMethodWindow();
+                            ViewUtil.popupInputMethodWindow(DetailActivity.this);
                             return true;
                         }
                     });
@@ -419,7 +411,7 @@ public class DetailActivity extends TrackedFragmentActivity {
             });
             */
 
-            activityUtil.popupInputMethodWindow();
+            ViewUtil.popupInputMethodWindow(this);
 
             commentPostButton = (TextView) layout.findViewById(R.id.postButton);
             commentPostButton.setOnClickListener(new View.OnClickListener() {
@@ -434,6 +426,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 @Override
                 public void onClick(View v) {
                     commentPopup.dismiss();
+                    commentPopup = null;
                 }
             });
 
@@ -478,14 +471,12 @@ public class DetailActivity extends TrackedFragmentActivity {
 
             Log.d(this.getClass().getSimpleName(), "initCommentPopup: " + selectedImagePath);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(this.getClass().getSimpleName(), "initCommentPopup: failure", e);
         }
     }
 
     private void resetCommentImages() {
-        for (ImageView commentImage : commentImages) {
-            commentImage.setImageDrawable(null);
-        }
+        commentImages = new ArrayList<>();
         photos = new ArrayList<>();
     }
 
@@ -527,7 +518,7 @@ public class DetailActivity extends TrackedFragmentActivity {
         }
 
         // pop back soft keyboard
-        activityUtil.popupInputMethodWindow();
+        ViewUtil.popupInputMethodWindow(this);
     }
 
     private void doComment() {
@@ -537,7 +528,7 @@ public class DetailActivity extends TrackedFragmentActivity {
             return;
         }
 
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         final boolean withPhotos = photos.size() > 0;
 
@@ -548,20 +539,18 @@ public class DetailActivity extends TrackedFragmentActivity {
                 if (withPhotos) {
                     uploadPhotos(array.getId());
                 } else {
-                    getComments(getIntent().getLongExtra("postId", 0L),0);  // reload page
+                    getComments(getIntent().getLongExtra("postId", 0L), 0);  // reload page
                 }
                 Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_success), Toast.LENGTH_LONG).show();
 
-                resetCommentImages();
-                commentPopup.dismiss();
-                commentPopup = null;
+                reset();
             }
 
             @Override
             public void failure(RetrofitError error) {
+                Log.e(DetailActivity.this.getClass().getSimpleName(), "doComment.api.answerOnQuestion: failed with error", error);
                 Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_failed), Toast.LENGTH_SHORT).show();
-                commentPopup.dismiss();
-                error.printStackTrace();
+                reset();
             }
         });
     }
@@ -577,8 +566,8 @@ public class DetailActivity extends TrackedFragmentActivity {
                 }
 
                 @Override
-                public void failure(RetrofitError retrofitError) {
-                    retrofitError.printStackTrace(); //to see if you have errors
+                public void failure(RetrofitError error) {
+                    Log.e(DetailActivity.class.getSimpleName(), "uploadPhotos: failure", error);
                 }
             });
         }
@@ -597,11 +586,13 @@ public class DetailActivity extends TrackedFragmentActivity {
             View layout = inflater.inflate(R.layout.pagination_popup_window,
                     (ViewGroup) findViewById(R.id.popupElement));
 
-            paginationPopup = new PopupWindow(
-                    layout,
-                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH, this.getResources()),
-                    activityUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT, this.getResources()),
-                    true);
+            if (paginationPopup == null) {
+                paginationPopup = new PopupWindow(
+                        layout,
+                        ViewUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_WIDTH, this.getResources()),
+                        ViewUtil.getRealDimension(DefaultValues.PAGINATION_POPUP_HEIGHT, this.getResources()),
+                        true);
+            }
 
             paginationPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             paginationPopup.setOutsideTouchable(false);
@@ -622,10 +613,11 @@ public class DetailActivity extends TrackedFragmentActivity {
                     Log.d(this.getClass().getSimpleName(), "listView1.onItemClick: Page " + (position + 1));
                     getComments(getIntent().getLongExtra("postId", 0L), position);
                     paginationPopup.dismiss();
+                    paginationPopup = null;
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(this.getClass().getSimpleName(), "initPaginationPopup: failure", e);
         }
     }
 
@@ -702,7 +694,7 @@ public class DetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace(); //to see if you have errors
+                Log.e(DetailActivity.class.getSimpleName(), "bookmark: failure", error);
             }
         });
     }
@@ -716,8 +708,7 @@ public class DetailActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                error.printStackTrace(); //to see if you have errors
-
+                Log.e(DetailActivity.class.getSimpleName(), "unbookmark: failure", error);
             }
         });
     }
@@ -734,10 +725,10 @@ public class DetailActivity extends TrackedFragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.a:
-                System.out.println("Report clicked...");
+                Log.d(this.getClass().getSimpleName(), "onOptionsItemSelected: "+item.getItemId());
                 return true;
             case R.id.b:
-                System.out.println("Url clicked...");
+                Log.d(this.getClass().getSimpleName(), "onOptionsItemSelected: "+item.getItemId());
                 return true;
             default:
                 return false;
@@ -745,10 +736,9 @@ public class DetailActivity extends TrackedFragmentActivity {
     }
 
     private void getComments(Long postID, final int offset) {
-        AnimationUtil.show(spinner);
+        ViewUtil.showSpinner(this);
 
         AppController.getApi().getComments(postID,offset,AppController.getInstance().getSessionId(),new Callback<List<CommunityPostCommentVM>>(){
-
             @Override
             public void success(List<CommunityPostCommentVM> commentVMs, Response response) {
                 communityItems.clear();
@@ -764,13 +754,13 @@ public class DetailActivity extends TrackedFragmentActivity {
                 listView.setAdapter(listAdapter);
                 listAdapter.notifyDataSetChanged();
 
-                AnimationUtil.cancel(spinner);
+                ViewUtil.stopSpinner(DetailActivity.this);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                AnimationUtil.cancel(spinner);
-                error.printStackTrace();
+                ViewUtil.stopSpinner(DetailActivity.this);
+                Log.e(DetailActivity.class.getSimpleName(), "getComments: failure", error);
             }
         });
     }
@@ -789,12 +779,14 @@ public class DetailActivity extends TrackedFragmentActivity {
                     (ViewGroup) findViewById(R.id.popupElement));
 
             // hide soft keyboard when select emoticon
-            activityUtil.hideInputMethodWindow(layout);
+            ViewUtil.hideInputMethodWindow(this, layout);
 
-            emoPopup = new PopupWindow(layout,
-                    activityUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true);
+            if (emoPopup == null) {
+                emoPopup = new PopupWindow(layout,
+                        ViewUtil.getRealDimension(DefaultValues.EMOTICON_POPUP_WIDTH, this.getResources()),
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        true);
+            }
 
             emoPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
             emoPopup.setOutsideTouchable(false);
@@ -814,11 +806,35 @@ public class DetailActivity extends TrackedFragmentActivity {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     EmoticonUtil.insertEmoticon(emoticonVMList.get(i), commentEditText);
                     emoPopup.dismiss();
-                    activityUtil.popupInputMethodWindow();
+                    emoPopup = null;
+                    ViewUtil.popupInputMethodWindow(DetailActivity.this);
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(this.getClass().getSimpleName(), "initEmoticonPopup: failure", e);
         }
+    }
+
+    private void reset() {
+        if (commentPopup != null) {
+            commentPopup.dismiss();
+            commentPopup = null;
+        }
+        if (emoPopup != null) {
+            emoPopup.dismiss();
+            emoPopup = null;
+        }
+        if (paginationPopup != null) {
+            paginationPopup.dismiss();
+            paginationPopup = null;
+        }
+        resetCommentImages();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        reset();
     }
 }

@@ -14,10 +14,11 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.NotificationCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
-import miniBean.util.ActivityUtil;
 import miniBean.util.DefaultValues;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -29,6 +30,8 @@ public class SplashActivity extends TrackedFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setTracked(false);
 
         setContentView(R.layout.splash_activity);
     }
@@ -88,7 +91,8 @@ public class SplashActivity extends TrackedFragmentActivity {
                         AppController.getInstance().saveSessionId(sessionId);
                     }
 
-                    AppController.initCaches();
+                    //AppController.initCaches();
+                    NotificationCache.refresh();
 
                     // display splash
                     new Handler().postDelayed(new Runnable() {
@@ -108,7 +112,7 @@ public class SplashActivity extends TrackedFragmentActivity {
                         RetrofitError.Kind.HTTP.equals(error.getKind().name())) {
                     showNetworkProblemAlert();
                 } else {
-                    ActivityUtil.alert(SplashActivity.this,
+                    ViewUtil.alert(SplashActivity.this,
                             getString(R.string.login_error_title),
                             getString(R.string.login_error_message),
                             new DialogInterface.OnClickListener() {
@@ -128,7 +132,7 @@ public class SplashActivity extends TrackedFragmentActivity {
     }
 
     private void showNetworkProblemAlert() {
-        ActivityUtil.alert(SplashActivity.this,
+        ViewUtil.alert(SplashActivity.this,
                 getString(R.string.connection_timeout_title),
                 getString(R.string.connection_timeout_message));
     }

@@ -54,10 +54,11 @@ public class ImageUtil {
     public static final String PROFILE_IMAGE_URL = AppController.BASE_URL + "/image/get-profile-image-by-id/";
     public static final String PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-profile-image-by-id/";
     public static final String THUMBNAIL_PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-thumbnail-image-by-id/";
-    public static final String MINI_PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-mini-image-by-id/";
     public static final String POST_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-post-image-by-id/";
     public static final String ORIGINAL_POST_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-original-post-image-by-id/";
     //public static final String COMMENT_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-comment-image-by-id/";
+    public static final String MESSAGE_IMAGE_BY_ID_URL= AppController.BASE_URL + "/image/get-message-image-by-id/";
+    public static final String ORIGINAL_MESSAGE_IMAGE_BY_ID_URL= AppController.BASE_URL + "/image/get-original-private-image-by-id/";
 
     public static DisplayImageOptions DEFAULT_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
@@ -200,19 +201,11 @@ public class ImageUtil {
     }
 
     public static void displayThumbnailProfileImage(long id, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(THUMBNAIL_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUNDED_CORNERS_IMAGE_OPTIONS);
+        ImageLoader.getInstance().displayImage(THUMBNAIL_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUND_IMAGE_OPTIONS);
     }
 
     public static void displayThumbnailProfileImage(long id, ImageView imageView, ImageLoadingListener listener) {
-        ImageLoader.getInstance().displayImage(THUMBNAIL_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUNDED_CORNERS_IMAGE_OPTIONS, listener);
-    }
-
-    public static void displayMiniProfileImage(long id, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(MINI_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUND_IMAGE_OPTIONS);
-    }
-
-    public static void displayMiniProfileImage(long id, ImageView imageView, ImageLoadingListener listener) {
-        ImageLoader.getInstance().displayImage(MINI_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUND_IMAGE_OPTIONS, listener);
+        ImageLoader.getInstance().displayImage(THUMBNAIL_PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUND_IMAGE_OPTIONS, listener);
     }
 
     // Post image
@@ -235,6 +228,16 @@ public class ImageUtil {
     public static void displayOriginalPostImage(long id, ImageView imageView, ImageLoadingListener listener) {
         Log.d(ImageUtil.class.getSimpleName(), "displayOriginalPostImage: loading "+ORIGINAL_POST_IMAGE_BY_ID_URL + id);
         getImageLoader().displayImage(ORIGINAL_POST_IMAGE_BY_ID_URL + id, imageView, listener);
+    }
+
+    public static void displayMessageImage(long id, ImageView imageView, ImageLoadingListener listener) {
+        Log.d(ImageUtil.class.getSimpleName(), "displayPostImage: loading "+MESSAGE_IMAGE_BY_ID_URL + id);
+        getImageLoader().displayImage(MESSAGE_IMAGE_BY_ID_URL + id, imageView, listener);
+    }
+
+    public static void displayOriginalMessageImage(long id, ImageView imageView, ImageLoadingListener listener) {
+        Log.d(ImageUtil.class.getSimpleName(), "displayPostImage: loading "+ORIGINAL_MESSAGE_IMAGE_BY_ID_URL + id);
+        getImageLoader().displayImage(ORIGINAL_MESSAGE_IMAGE_BY_ID_URL + id, imageView, listener);
     }
 
     // Generic
@@ -266,7 +269,6 @@ public class ImageUtil {
     public static void clearProfileImageCache(long id){
         clearImageCache(PROFILE_IMAGE_URL + id);
         clearImageCache(THUMBNAIL_PROFILE_IMAGE_BY_ID_URL + id);
-        clearImageCache(MINI_PROFILE_IMAGE_BY_ID_URL + id);
     }
 
     public static void clearCoverImageCache(long id){

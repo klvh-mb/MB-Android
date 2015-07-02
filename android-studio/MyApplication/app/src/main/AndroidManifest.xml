@@ -18,6 +18,8 @@
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
+        <!--service android:name=".app.BroadcastService" /-->
+
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/app_name"
@@ -57,6 +59,15 @@
             android:name=".activity.EditProfileActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.MessageDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GameRulesActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MyProfileActionActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -87,14 +98,20 @@
             android:name=".activity.NewKGPostActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.PNAppDatesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.KGAppDatesActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.TopSchoolsActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name="com.facebook.FacebookActivity"
+        <!--activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
+            android:label="@string/app_name" /-->
         <activity android:name="org.acra.CrashReportDialog"
             android:theme="@android:style/Theme.Dialog"
             android:launchMode="singleInstance"

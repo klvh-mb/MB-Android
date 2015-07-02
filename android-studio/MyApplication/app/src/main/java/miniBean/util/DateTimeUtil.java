@@ -78,11 +78,18 @@ public class DateTimeUtil {
             return AppController.getInstance().getString(R.string.timeago_yesterday);
         } else if (diff < 14 * DAY_MILLIS) {
             return diff / DAY_MILLIS + AppController.getInstance().getString(R.string.timeago_days);
-        } else {
-            Date date = new Date(time);
-            if (withHrMin)
-                return sdtf.format(date);
-            return sdf.format(date);
         }
+        return format(time, withHrMin);
+    }
+
+    public static String format(long time) {
+        return format(time, false);
+    }
+
+    public static String format(long time, boolean withHrMin) {
+        Date date = new Date(time);
+        if (withHrMin)
+            return sdtf.format(date);
+        return sdf.format(date);
     }
 }
