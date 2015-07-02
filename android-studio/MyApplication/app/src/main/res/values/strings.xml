@@ -173,7 +173,6 @@
     <string name="pm_start_failed">暫時不能開啟訊息，請稍後重試</string>
     <string name="pm_send_failed">暫時不能發出訊息，請稍後重試</string>
 
-
     <string name="game_title">小豆豆中心</string>
     <string name="game_rules_title">積分規則</string>
     <string name="game_daily_signin_title">每日簽到</string>
@@ -182,6 +181,7 @@
     <string name="game_level_text">等級 : </string>
     <string name="game_level_tips">( 距離升級到 L5 還差 479 小豆豆 )</string>
     <string name="game_points_title">我的小豆豆</string>
+    <string name="game_points">小豆豆</string>
     <string name="game_points_desc">小豆豆 : </string>
     <string name="game_points_total">小豆豆總數 : </string>
     <string name="game_points_redeem">可兌換 : </string>
@@ -209,6 +209,9 @@
     <string name="schools_bookmarks">我的收藏</string>
     <string name="schools_your_district">您的地區:</string>
     <string name="schools_actionbar_title">詳情</string>
+    <string name="schools_application_date">申請日期</string>
+    <string name="schools_application_date_prefix">[申請日期]</string>
+    <string name="schools_ranking">最多媽媽關注</string>
     <string name="schools_info_coupon">學券申請:</string>
     <string name="schools_info_type">學校類別:</string>
     <string name="schools_info_curriculum">課程類別:</string>
@@ -281,7 +284,12 @@
     <string name="schools_bookmark_title_prefix">收藏了</string>
     <string name="schools_bookmark_title_pn">間幼兒班(PN班)</string>
     <string name="schools_bookmark_title_kg">間幼稚園</string>
-    <string name="schools_bookmark_application_date">[申請日期]</string>
+
+    <string name="schools_app_dates_title_all">全部</string>
+    <string name="schools_app_dates_title_hk">香港</string>
+    <string name="schools_app_dates_title_kl">九龍</string>
+    <string name="schools_app_dates_title_nt">新界</string>
+    <string name="schools_app_dates_tips">資料由miniBean會員提供，最終以幼稚園官方網站或請致電幼稚園為準</string>
 
     <string name="schools_top_pn_ranking">幼兒班排名</string>
     <string name="schools_top_kg_ranking">幼稚園排名</string>

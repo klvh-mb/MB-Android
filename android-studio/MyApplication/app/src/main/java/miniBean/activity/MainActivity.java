@@ -64,6 +64,8 @@ public class MainActivity extends TrackedFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setTracked(false);
+
         setContentView(R.layout.main_activity);
 
         mInstance = this;
@@ -175,6 +177,7 @@ public class MainActivity extends TrackedFragmentActivity {
         if (!profileClicked) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             selectedFragment = new MyProfileFragment();
+            selectedFragment.setTrackedOnce();
             fragmentTransaction.replace(R.id.placeHolder, selectedFragment).commit();
             notificationCount.setVisibility(View.INVISIBLE);
         }

@@ -3,7 +3,8 @@
     android:id="@+id/rootLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/view_bg">
 
     <LinearLayout
         android:layout_marginTop="10dp"

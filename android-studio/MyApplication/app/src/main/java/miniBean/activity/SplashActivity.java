@@ -31,6 +31,8 @@ public class SplashActivity extends TrackedFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setTracked(false);
+
         setContentView(R.layout.splash_activity);
     }
 

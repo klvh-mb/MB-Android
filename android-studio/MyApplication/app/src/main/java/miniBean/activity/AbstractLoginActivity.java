@@ -95,13 +95,13 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
             @Override
             public void onCancel() {
-                showSpinner(false);
+                stopSpinner();
                 Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onCancel: fb login cancelled");
             }
 
             @Override
             public void onError(FacebookException e) {
-                showSpinner(false);
+                stopSpinner();
                 ActivityUtil.alert(AbstractLoginActivity.this,
                         getString(R.string.login_error_title),
                         getString(R.string.login_error_message));
@@ -112,7 +112,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
     }
 
     protected void loginToFacebook() {
-        showSpinner(true);
+        showSpinner();
 
         // FB API v4.0
         //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(REQUEST_FACEBOOK_PERMISSIONS));
@@ -151,7 +151,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
                         @Override
                         public void onError(DialogError error) {
-                            showSpinner(false);
+                            stopSpinner();
                             ViewUtil.alert(AbstractLoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
@@ -160,7 +160,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
                         @Override
                         public void onFacebookError(FacebookError fberror) {
-                            showSpinner(false);
+                            stopSpinner();
                             ViewUtil.alert(AbstractLoginActivity.this,
                                     getString(R.string.login_error_title),
                                     getString(R.string.login_error_message));
@@ -169,7 +169,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
                         @Override
                         public void onCancel() {
-                            showSpinner(false);
+                            stopSpinner();
                             Log.d(AbstractLoginActivity.this.getClass().getSimpleName(), "loginToFacebook.onCancel");
                         }
 
@@ -179,13 +179,13 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
     }
 
     protected void doLoginUsingAccessToken(String access_token) {
-        showSpinner(true);
+        showSpinner();
 
         Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken: access_token - " + access_token);
         AppController.getApi().loginByFacebook(access_token, new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                showSpinner(false);
+                stopSpinner();
 
                 Log.d(this.getClass().getSimpleName(), "doLoginUsingAccessToken.success");
                 if (!saveToSession(response)) {
@@ -197,7 +197,7 @@ public abstract class AbstractLoginActivity extends TrackedFragmentActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                showSpinner(false);
+                stopSpinner();
                 ViewUtil.alert(AbstractLoginActivity.this,
                         getString(R.string.login_error_title),
                         getString(R.string.login_error_message));

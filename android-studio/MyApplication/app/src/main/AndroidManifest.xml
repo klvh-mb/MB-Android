@@ -98,6 +98,12 @@
             android:name=".activity.NewKGPostActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.PNAppDatesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.KGAppDatesActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.TopSchoolsActivity"
             android:screenOrientation="portrait" />
 
