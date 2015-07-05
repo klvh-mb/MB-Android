@@ -79,7 +79,8 @@
             android:paddingRight="15dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="-10dp">
             <ImageView
                 android:id="@+id/postImageView"
                 android:layout_width="18dp"
@@ -125,11 +126,131 @@
                     android:layout_gravity="center_vertical" />
             </LinearLayout>
         </LinearLayout>
+
         <RelativeLayout
-            android:id="@+id/infoLayout"
+            android:id="@+id/importantDatesLayout"
             android:layout_below="@+id/gotoCommLayout"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/importantDatesLayout">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/calendarIcon"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_calendar"
+                    android:layout_marginRight="5dp" />
+
+                <TextView
+                    android:id="@+id/importantDatesText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/kg_text"
+                    android:text="@string/schools_landing_title_important_dates"
+                    android:textIsSelectable="false"
+                    android:textSize="18dp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/dottedline"
+                android:layout_below="@+id/importantDatesLayout" />
+            <LinearLayout
+                android:id="@+id/appDateBox"
+                android:layout_below="@+id/importantDatesLayout"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:id="@+id/infoIcon"
+                    android:layout_marginRight="3dp"
+                    android:src="@drawable/ic_info_bubble"
+                    android:layout_marginTop="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_app_date"
+                    android:textSize="15dp"
+                    android:textColor="@color/dark_gray_3"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/appDateValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="-"
+                    android:textSize="15dp"
+                    android:textColor="@color/schools_info_text"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/openDayBox"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/appDateBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:id="@+id/infoIcon2"
+                    android:layout_marginRight="3dp"
+                    android:src="@drawable/ic_info_bubble"
+                    android:layout_marginTop="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/schools_info_open_day"
+                    android:textColor="@color/dark_gray_3"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/openDayValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="-"
+                    android:textSize="15dp"
+                    android:textColor="@color/schools_info_text"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/bottomText"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/openDayBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/schools_info_app_dates_tips"
+                android:textColor="@color/dark_gray"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/infoLayout"
+            android:layout_below="@+id/importantDatesLayout"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp">
@@ -503,7 +624,7 @@
                android:layout_height="wrap_content"
                android:text="@string/schools_info_data_asof"
                android:textColor="@color/dark_gray"
-               android:textSize="14dp"
+               android:textSize="13dp"
                android:layout_below="@+id/acceptanceTable" />
         </RelativeLayout>
 

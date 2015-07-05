@@ -212,6 +212,8 @@
     <string name="schools_application_date">申請日期</string>
     <string name="schools_application_date_prefix">[申請日期]</string>
     <string name="schools_ranking">最多媽媽關注</string>
+    <string name="schools_info_app_date">申請日期:</string>
+    <string name="schools_info_open_day">開放日:</string>
     <string name="schools_info_coupon">學券申請:</string>
     <string name="schools_info_type">學校類別:</string>
     <string name="schools_info_curriculum">課程類別:</string>
@@ -290,6 +292,7 @@
     <string name="schools_app_dates_title_kl">九龍</string>
     <string name="schools_app_dates_title_nt">新界</string>
     <string name="schools_app_dates_tips">資料由miniBean會員提供，最終以幼稚園官方網站或請致電幼稚園為準</string>
+    <string name="schools_info_app_dates_tips">* 資料由miniBean會員提供，最終以幼稚園官方網站或請致電幼稚園為準</string>
 
     <string name="schools_top_pn_ranking">幼兒班排名</string>
     <string name="schools_top_kg_ranking">幼稚園排名</string>
