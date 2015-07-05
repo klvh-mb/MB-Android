@@ -100,12 +100,105 @@
 
             </RelativeLayout>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profilePic"
+                android:id="@+id/uploadProfilePicTipsLayout"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/tips"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/schools_info_box"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/viewBar"
+                    android:paddingTop="5dp">
+
+                    <ImageView
+                        android:id="@+id/mascot"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:scaleType="fitCenter"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/mascot_yellow_left" />
+
+                    <TextView
+                        android:id="@+id/tipsReminderText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray_2"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="3dp"
+                        android:text="@string/tips_reminder" />
+
+                    <TextView
+                        android:id="@+id/tipsDescText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray_2"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="3dp" />
+
+                    <TextView
+                        android:id="@+id/tipsPointsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/game_orange"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_gravity="center_vertical" />
+
+                    <TextView
+                        android:id="@+id/tipsEndText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/game_note_points"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/dark_gray_2"
+                        android:layout_gravity="center_vertical" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/cancelTipsButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_close"
+                    android:layout_gravity="right|top"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="15dp"
+                    android:padding="6dp" />
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.8dp"
+                android:background="@drawable/bar1"
+                android:layout_below="@+id/uploadProfilePicTipsLayout" />
+
             <RelativeLayout
                 android:id="@+id/actionsLayout"
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profilePic"
+                android:layout_below="@+id/uploadProfilePicTipsLayout"
                 android:minHeight="20dp">
 
                 <LinearLayout

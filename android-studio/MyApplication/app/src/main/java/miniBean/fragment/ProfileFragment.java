@@ -12,15 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -36,8 +34,7 @@ import miniBean.app.UserInfoCache;
 import miniBean.util.DefaultValues;
 import miniBean.util.GameConstants;
 import miniBean.util.ImageUtil;
-import miniBean.util.SharingUtil;
-import miniBean.util.UrlUtil;
+import miniBean.util.SharedPreferencesUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.BookmarkSummaryVM;
 import miniBean.viewmodel.GameAccountVM;
@@ -65,6 +62,10 @@ public class ProfileFragment extends TrackedFragment {
     private LinearLayout gameLayout;
     private TextView pointsText;
 
+    private FrameLayout uploadProfilePicTipsLayout;
+    private TextView tipsDescText, tipsPointsText, tipsEndText;
+    private ImageView cancelTipsButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -87,6 +88,12 @@ public class ProfileFragment extends TrackedFragment {
         messageButton = (Button) view.findViewById(R.id.messageButton);
         gameLayout = (LinearLayout) view.findViewById(R.id.gameLayout);
         pointsText = (TextView) view.findViewById(R.id.pointsText);
+
+        uploadProfilePicTipsLayout = (FrameLayout) view.findViewById(R.id.uploadProfilePicTipsLayout);
+        tipsDescText = (TextView) view.findViewById(R.id.tipsDescText);
+        tipsPointsText = (TextView) view.findViewById(R.id.tipsPointsText);
+        tipsEndText = (TextView) view.findViewById(R.id.tipsEndText);
+        cancelTipsButton = (ImageView) view.findViewById(R.id.cancelTipsButton);
 
         messageButton.setVisibility(View.GONE);
         userInfoLayout.setVisibility(View.GONE);
@@ -175,7 +182,7 @@ public class ProfileFragment extends TrackedFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == SELECT_PICTURE) {
             if (data == null)
@@ -191,12 +198,12 @@ public class ProfileFragment extends TrackedFragment {
                 if (coverPhotoClicked) {
                     userCoverPic.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                     userCoverPic.setVisibility(View.VISIBLE);
-                    changeCoverPhoto(userId);
+                    uploadCoverPhoto(userId);
                     coverPhotoClicked = false;
                 } else if (profilePhotoClicked) {
                     userPic.setImageDrawable(new BitmapDrawable(this.getResources(), bp));
                     userPic.setVisibility(View.VISIBLE);
-                    changeProfilePhoto(userId);
+                    uploadProfilePhoto(userId);
                     profilePhotoClicked = false;
                 }
             }
@@ -243,6 +250,21 @@ public class ProfileFragment extends TrackedFragment {
             public void success(final GameAccountVM gameAccountVM, Response response) {
                 pointsText.setText(gameAccountVM.getGmpt() + "");
                 hasProfilePic = gameAccountVM.hasProfilePic();
+                if (hasProfilePic ||
+                        SharedPreferencesUtil.getInstance().isScreenViewed(SharedPreferencesUtil.Screen.UPLOAD_PROFILE_PIC_TIPS)) {
+                    uploadProfilePicTipsLayout.setVisibility(View.GONE);
+                } else {
+                    uploadProfilePicTipsLayout.setVisibility(View.VISIBLE);
+                    tipsDescText.setText(getString(R.string.game_upload_profile_pic_title));
+                    tipsPointsText.setText("+" + GameConstants.POINTS_UPLOAD_PROFILE_PHOTO);
+                    cancelTipsButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SharedPreferencesUtil.getInstance().setScreenViewed(SharedPreferencesUtil.Screen.UPLOAD_PROFILE_PIC_TIPS);
+                            uploadProfilePicTipsLayout.setVisibility(View.GONE);
+                        }
+                    });
+                }
                 ViewUtil.stopSpinner(getActivity());
             }
 
@@ -284,7 +306,7 @@ public class ProfileFragment extends TrackedFragment {
         }
     }
 
-    private void changeCoverPhoto(final long id){
+    private void uploadCoverPhoto(final long id){
         ViewUtil.showSpinner(getActivity());
 
         Log.d(this.getClass().getSimpleName(), "changeCoverPhoto: Id=" + id);
@@ -326,7 +348,7 @@ public class ProfileFragment extends TrackedFragment {
         });
     }
 
-    private void changeProfilePhoto(final long id) {
+    private void uploadProfilePhoto(final long id) {
         ViewUtil.showSpinner(getActivity());
 
         Log.d(this.getClass().getSimpleName(), "changeProfilePhoto: Id=" + id);
@@ -341,6 +363,7 @@ public class ProfileFragment extends TrackedFragment {
             public void success(Response response, Response response2) {
                 if (!hasProfilePic) {
                     hasProfilePic = true;
+                    uploadProfilePicTipsLayout.setVisibility(View.GONE);
                     ViewUtil.alertGamePoints(getActivity(),
                             getActivity().getString(R.string.game_upload_profile_pic_title),
                             GameConstants.POINTS_UPLOAD_PROFILE_PHOTO);

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,10 @@ public class KGCommunityFragment extends AbstractSchoolCommunityFragment {
 
     private ImageView icon,couponImage,pnImage,govtImage;
     private LinearLayout gotoCommLayout,newPostLayout;
+
+    private RelativeLayout importantDatesLayout;
+    private LinearLayout appDateBox, openDayBox;
+    private TextView appDateValueText, openDayValueText;
 
     private KindergartenVM schoolVM;
 
@@ -128,6 +133,12 @@ public class KGCommunityFragment extends AbstractSchoolCommunityFragment {
         teaFee = (TextView) view.findViewById(R.id.extraFeesTableRow2Cell4);
         textbooksFee = (TextView) view.findViewById(R.id.extraFeesTableRow3Cell2);
         workbooksFee = (TextView) view.findViewById(R.id.extraFeesTableRow3Cell4);
+
+        importantDatesLayout = (RelativeLayout) listHeader.findViewById(R.id.importantDatesLayout);
+        appDateBox = (LinearLayout) listHeader.findViewById(R.id.appDateBox);
+        openDayBox = (LinearLayout) listHeader.findViewById(R.id.openDayBox);
+        appDateValueText = (TextView) listHeader.findViewById(R.id.appDateValueText);
+        openDayValueText = (TextView) listHeader.findViewById(R.id.openDayValueText);
 
         newPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -281,6 +292,24 @@ public class KGCommunityFragment extends AbstractSchoolCommunityFragment {
             pnImage.setImageResource(R.drawable.value_yes);
         } else {
             pnImage.setImageResource(R.drawable.value_no);
+        }
+
+        if (StringUtils.isEmpty(schoolVM.appDateTxt) && StringUtils.isEmpty(schoolVM.openDateTxt)) {
+            importantDatesLayout.setVisibility(View.GONE);
+        } else {
+            importantDatesLayout.setVisibility(View.VISIBLE);
+            if (StringUtils.isEmpty(schoolVM.appDateTxt)) {
+                appDateBox.setVisibility(View.GONE);
+            } else {
+                appDateBox.setVisibility(View.VISIBLE);
+                appDateValueText.setText(schoolVM.appDateTxt);
+            }
+            if (StringUtils.isEmpty(schoolVM.openDateTxt)) {
+                openDayBox.setVisibility(View.GONE);
+            } else {
+                openDayBox.setVisibility(View.VISIBLE);
+                openDayValueText.setText(schoolVM.openDateTxt);
+            }
         }
     }
 

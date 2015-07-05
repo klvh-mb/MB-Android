@@ -115,7 +115,7 @@ public class AppController extends Application {
 
         initStaticCaches();
 
-        ACRA.init(getInstance());
+        //ACRA.init(getInstance());
     }
 
     public static void initStaticCaches() {

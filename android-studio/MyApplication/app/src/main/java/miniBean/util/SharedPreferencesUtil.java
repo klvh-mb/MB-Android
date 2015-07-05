@@ -32,7 +32,8 @@ public class SharedPreferencesUtil {
         COMMS_TAB,
         SCHOOLS_TAB,
         PROFILE_TAB,
-        MY_NEWSFEED_TIPS
+        MY_NEWSFEED_TIPS,
+        UPLOAD_PROFILE_PIC_TIPS
     }
 
     private static SharedPreferencesUtil instance = null;
