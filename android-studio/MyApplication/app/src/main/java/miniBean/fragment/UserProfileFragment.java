@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class UserProfileFragment extends TrackedFragment {
     private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
     private Button editButton, messageButton;
     private LinearLayout gameLayout;
+    private FrameLayout uploadProfilePicTipsLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +53,9 @@ public class UserProfileFragment extends TrackedFragment {
         userPic = (ImageView) view.findViewById(R.id.userImage);
         questionMenu = (LinearLayout) view.findViewById(R.id.menuQuestion);
         answerMenu = (LinearLayout) view.findViewById(R.id.menuAnswer);
+
+        uploadProfilePicTipsLayout = (FrameLayout) view.findViewById(R.id.uploadProfilePicTipsLayout);
+        uploadProfilePicTipsLayout.setVisibility(View.GONE);
 
         bookmarksMenu = (LinearLayout) view.findViewById(R.id.menuBookmarks);
         bookmarksMenu.setVisibility(View.GONE);
