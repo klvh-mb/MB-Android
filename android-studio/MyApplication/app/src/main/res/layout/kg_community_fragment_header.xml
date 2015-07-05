@@ -140,7 +140,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/importantDatesLayout">
+                android:id="@+id/importantDatesTitleLayout">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -166,10 +166,11 @@
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/dottedline"
-                android:layout_below="@+id/importantDatesLayout" />
+                android:layout_below="@+id/importantDatesTitleLayout" />
+
             <LinearLayout
                 android:id="@+id/appDateBox"
-                android:layout_below="@+id/importantDatesLayout"
+                android:layout_below="@+id/importantDatesTitleLayout"
                 android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -235,7 +236,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/bottomText"
+                android:id="@+id/importantDatesBottomText"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/openDayBox"
                 android:layout_width="match_parent"
