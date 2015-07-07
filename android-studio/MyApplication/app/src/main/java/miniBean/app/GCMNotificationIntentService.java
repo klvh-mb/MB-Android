@@ -1,6 +1,7 @@
 package miniBean.app;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,7 +11,9 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-//import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import java.util.Date;
 
 import miniBean.R;
 import miniBean.activity.MainActivity;
@@ -29,7 +32,6 @@ public class GCMNotificationIntentService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		/*
 		Bundle extras = intent.getExtras();
 		GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 
@@ -58,33 +60,44 @@ public class GCMNotificationIntentService extends IntentService {
 				}
 				Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
 
-				sendNotification("Message: "
+				sendNotification(""
 						+ extras.get(Config.MESSAGE_KEY));
 				Log.i(TAG, "Received: " + extras.toString());
 			}
 		}
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
-		*/
 	}
 
-	/*
 	private void sendNotification(String msg) {
-		Log.d(TAG, "Preparing to send notification...: " + msg);
-		mNotificationManager = (NotificationManager) this
-				.getSystemService(Context.NOTIFICATION_SERVICE);
 
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, MainActivity.class), 0);
+        NotificationManager notificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(R.drawable.mascot_orange_left, msg, System.currentTimeMillis());
 
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(R.drawable.gcm_cloud)
-				.setContentTitle("GCM Notification")
-				.setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
-				.setContentText(msg);
+        String title = getApplicationContext().getString(R.string.app_name);//The notification title
 
-		mBuilder.setContentIntent(contentIntent);
-		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-		Log.d(TAG, "Notification sent successfully.");
-	}
-	*/
+        Date now = new Date();
+        long uniqueId = now.getTime();//use date to generate an unique id to differentiate the notifications.
+
+        /** Put the information you should pass in your notification to the intent. **/
+        /** Replace the HomeActivity with the class name you wish to start when user click on the notificaiton. **/
+        Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+        notificationIntent.putExtra("IS_NOTIFICATION", true);
+        notificationIntent.putExtra("NOTIFICATION_MSG", msg);
+
+        // set intent so it does not start a new activity
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        /** This is the part to let your application recognise difference notification when the user click on the notification.  You could use any unique string to represent your notification. But be sure each notification have difference action name.
+         **/
+        notificationIntent.setAction("com.sample.myapp" + uniqueId);
+
+        PendingIntent intent =
+                PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+        notification.setLatestEventInfo(getApplicationContext(), title, msg, intent);
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        /** Set the unique id to let Notification Manager knows this is a another notification instead of same notification. If you use the same uniqueId for each notification, the Notification Manager will assume that is same notification and would replace the previous notification. **/
+        notificationManager.notify((int) uniqueId, notification);
+    }
 }

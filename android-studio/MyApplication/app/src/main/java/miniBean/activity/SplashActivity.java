@@ -14,6 +14,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.app.GcmBroadcastReceiver;
 import miniBean.app.NotificationCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
@@ -33,7 +34,9 @@ public class SplashActivity extends TrackedFragmentActivity {
 
         setTracked(false);
 
+        sendBroadcast(new Intent(getApplicationContext(), GcmBroadcastReceiver.class));
         setContentView(R.layout.splash_activity);
+
     }
 
     @Override
