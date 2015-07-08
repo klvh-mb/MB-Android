@@ -199,7 +199,9 @@
     <string name="game_transaction_latest_title">小豆豆最新記錄</string>
     <string name="game_transaction_note">由"每日簽到"、"介紹新會員加入"所獲得的小豆豆會立即計算在"小豆豆總數"中。以其他方式獲得的小豆豆會在隔天反應</string>
     <string name="game_upload_profile_pic_title">上載個人照片</string>
-    <string name="game_note_points">小豆豆!</string>
+    <string name="game_note_points">小豆豆！</string>
+    <string name="game_gifts_title">儲小豆豆換領豐富禮品</string>
+    <string name="game_gifts_redeem_now">立即換領</string>
 
     <!-- Schools tab -->
     <string name="schools_tab_title_pn">幼兒班(PN班)</string>

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miniBean.R;
+import miniBean.adapter.GameGiftListAdapter;
 import miniBean.adapter.GameTransactionListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
@@ -29,6 +30,7 @@ import miniBean.util.SharingUtil;
 import miniBean.util.UrlUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.GameAccountVM;
+import miniBean.viewmodel.GameGiftVM;
 import miniBean.viewmodel.GameTransactionVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -44,7 +46,7 @@ public class GameActivity extends TrackedFragmentActivity {
     private EditText referralUrlEdit;
     private LinearLayout gameRulesLayout, whatsappLayout, copyUrlLayout;
     private ImageView backImage;
-    private ListView gameTransactionList, latestGameTransactionList;
+    private ListView gameGiftList, gameTransactionList, latestGameTransactionList;
     private RelativeLayout latestGameTransactionsLayout;
 
     private boolean signedIn;
@@ -76,6 +78,7 @@ public class GameActivity extends TrackedFragmentActivity {
         gameRulesLayout = (LinearLayout) this.findViewById(R.id.gameRulesLayout);
         whatsappLayout = (LinearLayout) this.findViewById(R.id.whatsappLayout);
         copyUrlLayout = (LinearLayout) this.findViewById(R.id.copyUrlLayout);
+        gameGiftList = (ListView) this.findViewById(R.id.gameGiftList);
         gameTransactionList = (ListView) this.findViewById(R.id.gameTransactionList);
         latestGameTransactionList = (ListView) this.findViewById(R.id.latestGameTransactionList);
         latestGameTransactionsLayout = (RelativeLayout) this.findViewById(R.id.latestGameTransactionsLayout);
@@ -184,6 +187,24 @@ public class GameActivity extends TrackedFragmentActivity {
         });
     }
 
+    private void getGameGifts() {
+        AppController.getApi().getAllGameGifts(AppController.getInstance().getSessionId(), new Callback<List<GameGiftVM>>() {
+            @Override
+            public void success(List<GameGiftVM> vms, Response response) {
+                List<GameGiftVM> gameGifts = new ArrayList<>();
+                gameGifts.addAll(vms);
+                GameGiftListAdapter gameGiftListAdapter = new GameGiftListAdapter(GameActivity.this, gameGifts);
+                gameGiftList.setAdapter(gameGiftListAdapter);
+                ViewUtil.setHeightBasedOnChildren(gameGiftList);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(GameActivity.class.getSimpleName(), "getGameGifts: failure", error);
+            }
+        });
+    }
+
     private void getGameTransactions() {
         AppController.getApi().getGameTransactions(0L, AppController.getInstance().getSessionId(), new Callback<List<GameTransactionVM>>() {
             @Override
@@ -222,6 +243,7 @@ public class GameActivity extends TrackedFragmentActivity {
 
     private void refresh() {
         getGameAccount();
+        getGameGifts();
         getGameTransactions();
 
         if (UserInfoCache.getUser().isAdmin()) {
