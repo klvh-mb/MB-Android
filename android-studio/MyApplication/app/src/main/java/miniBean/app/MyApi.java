@@ -13,6 +13,7 @@ import miniBean.viewmodel.CommunityVM;
 import miniBean.viewmodel.ConversationVM;
 import miniBean.viewmodel.EmoticonVM;
 import miniBean.viewmodel.GameAccountVM;
+import miniBean.viewmodel.GameGiftVM;
 import miniBean.viewmodel.GameTransactionVM;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.LocationVM;
@@ -333,6 +334,9 @@ public interface MyApi {
     @GET("/get-gameaccount")
     public void getGameAccount(@Query("key") String key, Callback<GameAccountVM> cb);
 
+    @GET("/get-all-game-gifts")
+    public void getAllGameGifts(@Query("key") String key, Callback<List<GameGiftVM>> cb);
+
     @GET("/get-game-transactions/{offset}")
     public void getGameTransactions(@Path("offset") Long offset, @Query("key") String key, Callback<List<GameTransactionVM>> cb);
 
@@ -348,8 +352,6 @@ public interface MyApi {
 
     @POST("/saveGCMKey/{GCMkey}")
     public void saveGCMkey(@Path("GCMkey") String GCMkey,@Query("key") String key,Callback<Response> cb);
-
-
 }
 
 
