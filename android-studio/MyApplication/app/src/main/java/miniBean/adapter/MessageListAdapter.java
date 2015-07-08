@@ -1,6 +1,7 @@
 package miniBean.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -18,6 +19,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.List;
 
 import miniBean.R;
+import miniBean.activity.FullScreenActivity;
 import miniBean.app.MyImageGetter;
 import miniBean.app.UserInfoCache;
 import miniBean.util.DateTimeUtil;
@@ -95,6 +97,12 @@ public class MessageListAdapter extends BaseAdapter {
         messageImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(activity, FullScreenActivity.class);
+                intent.putExtra("image",m.getImgs());
+                activity.startActivity(intent);
+
+                //Start details activity
+
                 //ViewUtil.fullscreenImagePopup(activity, AppController.BASE_URL + "/image/get-original-private-image-by-id/"+m.getImgs());
             }
         });

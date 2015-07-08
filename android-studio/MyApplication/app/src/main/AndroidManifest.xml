@@ -118,6 +118,10 @@
         <activity
             android:name=".activity.TopSchoolsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.FullScreenActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".app.GcmBroadcastReceiver"
