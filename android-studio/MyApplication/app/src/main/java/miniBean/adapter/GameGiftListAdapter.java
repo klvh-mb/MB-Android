@@ -19,6 +19,7 @@ import miniBean.activity.GameGiftActivity;
 import miniBean.app.UserInfoCache;
 import miniBean.util.ImageMapping;
 import miniBean.util.ImageUtil;
+import miniBean.util.ViewUtil;
 import miniBean.viewmodel.GameAccountVM;
 import miniBean.viewmodel.GameGiftVM;
 
@@ -93,7 +94,7 @@ public class GameGiftListAdapter extends BaseAdapter {
                 Intent intent = new Intent(activity, GameGiftActivity.class);
                 intent.putExtra("id", item.getId());
                 intent.putExtra("userGamePoints", gameAccount.getGmpt());
-                activity.startActivity(intent);
+                activity.startActivityForResult(intent, ViewUtil.START_ACTIVITY_REQUEST_CODE);
             }
         });
 

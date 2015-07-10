@@ -333,7 +333,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ImageUtil.SELECT_PICTURE && resultCode == RESULT_OK &&
+        if (requestCode == ViewUtil.SELECT_PICTURE_REQUEST_CODE && resultCode == RESULT_OK &&
                 data != null && photos.size() < DefaultValues.MAX_MESSAGE_IMAGES) {
 
             selectedImageUri = data.getData();

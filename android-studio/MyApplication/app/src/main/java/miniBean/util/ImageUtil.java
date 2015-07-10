@@ -37,8 +37,6 @@ public class ImageUtil {
 
     public static final String MINIBEAN_TEMP_DIR_NAME = "miniBean";
 
-    public static final int SELECT_PICTURE = 1;
-
     public static final int PREVIEW_THUMBNAIL_MAX_WIDTH = 350;
     public static final int PREVIEW_THUMBNAIL_MAX_HEIGHT = 350;
 
@@ -312,7 +310,7 @@ public class ImageUtil {
         intent.setData(android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         //intent.setType("image/*");
         //intent.setAction(Intent.ACTION_GET_CONTENT);
-        activity.startActivityForResult(Intent.createChooser(intent, title), SELECT_PICTURE);
+        activity.startActivityForResult(Intent.createChooser(intent, title), ViewUtil.SELECT_PICTURE_REQUEST_CODE);
     }
 
     public static String getRealPathFromUri(Context context, Uri contentUri) {

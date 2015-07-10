@@ -1,5 +1,6 @@
 package miniBean.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -52,7 +53,6 @@ public class ProfileFragment extends TrackedFragment {
     private LinearLayout questionMenu, answerMenu, bookmarksMenu, settingsMenu, userInfoLayout;
     private Long userId;
     private Boolean isPhoto = false;
-    private final Integer SELECT_PICTURE = 1;
     private String selectedImagePath = null;
     private Uri selectedImageUri = null;
     private boolean coverPhotoClicked = false, profilePhotoClicked = false;
@@ -102,7 +102,7 @@ public class ProfileFragment extends TrackedFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), GameActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, ViewUtil.START_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -110,7 +110,7 @@ public class ProfileFragment extends TrackedFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, ViewUtil.START_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -179,12 +179,11 @@ public class ProfileFragment extends TrackedFragment {
         return view;
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == SELECT_PICTURE) {
+        if (requestCode == ViewUtil.SELECT_PICTURE_REQUEST_CODE) {
             if (data == null)
                 return;
 
@@ -206,6 +205,19 @@ public class ProfileFragment extends TrackedFragment {
                     uploadProfilePhoto(userId);
                     profilePhotoClicked = false;
                 }
+            }
+        }
+
+        if(requestCode == ViewUtil.START_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            boolean refresh = data.getBooleanExtra(ViewUtil.INTENT_VALUE_REFRESH, false);
+            if (refresh) {
+                getUserInfo();
+                getGameAccount();
+
+                // refresh parent activity
+                Intent intent = new Intent();
+                intent.putExtra(ViewUtil.INTENT_VALUE_REFRESH, true);
+                getActivity().setResult(Activity.RESULT_OK, intent);
             }
         }
     }

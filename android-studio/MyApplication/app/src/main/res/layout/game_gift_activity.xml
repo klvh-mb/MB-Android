@@ -32,7 +32,9 @@
                 android:id="@+id/gameLayout"
                 android:background="@drawable/game_edit_text_round"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -45,7 +47,6 @@
                         android:layout_height="150dp"
                         android:id="@+id/gameGiftImage"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp"
                         android:layout_centerHorizontal="true" />
 
                     <LinearLayout
@@ -116,7 +117,6 @@
                         android:text="@string/game_gifts_redeem_now"
                         android:id="@+id/redeemText1"
                         android:textColor="@color/white"
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center"
                         android:textSize="17dp"
                         android:singleLine="true"
@@ -320,8 +320,7 @@
                     android:background="@drawable/rounded_corner_button_game"
                     android:layout_below="@+id/detailsLayout"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginTop="30dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -329,7 +328,6 @@
                         android:text="@string/game_gifts_redeem_now"
                         android:id="@+id/redeemText2"
                         android:textColor="@color/white"
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center"
                         android:textSize="17dp"
                         android:singleLine="true"

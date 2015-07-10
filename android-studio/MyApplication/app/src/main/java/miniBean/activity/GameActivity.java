@@ -16,6 +16,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,9 +180,15 @@ public class GameActivity extends TrackedFragmentActivity {
                 UserInfoCache.getUser().setEnableSignInForToday(false);
                 signedIn = true;
 
-                // alert and refresh
+                // alert
                 final Dialog dialog = ViewUtil.alertGameStatus(GameActivity.this,
                         getString(R.string.game_daily_signin_title), GameConstants.POINTS_DAILY_SIGNIN);
+
+                // refresh parent activity
+                Intent intent = new Intent();
+                intent.putExtra(ViewUtil.INTENT_VALUE_REFRESH, true);
+                setResult(RESULT_OK, intent);
+
                 refresh();
             }
 
@@ -254,6 +262,22 @@ public class GameActivity extends TrackedFragmentActivity {
             getLatestGameTransactions();
         } else {
             latestGameTransactionsLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ViewUtil.START_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            boolean refresh = data.getBooleanExtra(ViewUtil.INTENT_VALUE_REFRESH, false);
+            if (refresh) {
+                refresh();
+
+                // refresh parent activity
+                Intent intent = new Intent();
+                intent.putExtra(ViewUtil.INTENT_VALUE_REFRESH, true);
+                setResult(RESULT_OK, intent);
+            }
         }
     }
 

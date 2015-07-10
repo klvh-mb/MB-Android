@@ -1,6 +1,7 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -192,8 +193,15 @@ public class GameGiftActivity extends TrackedFragmentActivity {
                 if (responseStatusVM.isSuccess()) {
                     // change button state and alert
                     userGamePoints -= gameGift.getRp();
+                    gameGift.setIsPending(true);
                     redeemText1.setText(getString(R.string.game_gifts_redeem_pending));
                     redeemText2.setText(getString(R.string.game_gifts_redeem_pending));
+
+                    // refresh parent activity
+                    Intent intent = new Intent();
+                    intent.putExtra(ViewUtil.INTENT_VALUE_REFRESH, true);
+                    setResult(RESULT_OK, intent);
+
                     ViewUtil.alertGameStatus(GameGiftActivity.this, getString(R.string.game_gifts_redeem_requested), -1, 5000);
                 } else {
                     ViewUtil.alertGameStatus(GameGiftActivity.this, responseStatusVM.getMessages().get(0), -1, 5000);

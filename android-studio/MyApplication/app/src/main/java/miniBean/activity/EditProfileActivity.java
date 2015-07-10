@@ -1,6 +1,7 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -163,13 +164,22 @@ public class EditProfileActivity extends TrackedFragmentActivity {
     }
 
     private void setUserProfileData(UserProfileDataVM userProfileDataVM){
+        ViewUtil.showSpinner(this);
         AppController.getApi().updateUserProfileData(userProfileDataVM, AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
             public void success(UserVM userVM, Response response) {
                 UserInfoCache.refresh(new Callback<UserVM>() {
                     @Override
                     public void success(UserVM userVM, Response response) {
-                        getUserInfo();
+                        UserInfoCache.refresh();
+
+                        // refresh parent activity
+                        Intent intent = new Intent();
+                        intent.putExtra(ViewUtil.INTENT_VALUE_REFRESH, true);
+                        setResult(RESULT_OK, intent);
+
+                        ViewUtil.stopSpinner(EditProfileActivity.this);
+
                         finish();
                     }
 
@@ -190,6 +200,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
                 } else {
                     ViewUtil.alert(EditProfileActivity.this, getString(R.string.signup_details_error_info));
                 }
+                ViewUtil.stopSpinner(EditProfileActivity.this);
                 Log.e(EditProfileActivity.class.getSimpleName(), "setUserProfileData: failure", error);
             }
         });
