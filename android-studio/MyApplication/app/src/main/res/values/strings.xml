@@ -210,7 +210,7 @@
     <string name="game_gifts_redeem_shipping_title">領取方式</string>
     <string name="game_gifts_redeem_cc_title">客戶服務</string>
     <string name="game_gifts_redeem_more_title">注意事項</string>
-    <string name="game_gifts_redeem_points_not_enough">這次換領禮品需要%1$d小豆豆。您現在只有%2$d小豆豆，還未足夠~</string>
+    <string name="game_gifts_redeem_points_not_enough">換領需要%1$d小豆豆。您現在只有%2$d小豆豆，還未足夠~</string>
     <string name="game_gifts_redeem_requested">我們已收到您的換領禮品要求~ 請按照「換領規則」聯絡我們</string>
 
     <!-- Schools tab -->

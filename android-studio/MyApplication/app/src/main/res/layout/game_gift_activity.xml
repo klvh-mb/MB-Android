@@ -189,7 +189,7 @@
                             android:background="@drawable/line_dotted_green"
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
-                            android:id="@+id/viewBar1">
+                            android:id="@+id/viewBar2">
                         </View>
 
                         <TextView
@@ -225,7 +225,7 @@
                             android:background="@drawable/line_dotted_green"
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
-                            android:id="@+id/viewBar1">
+                            android:id="@+id/viewBar3">
                         </View>
 
                         <TextView
@@ -261,7 +261,7 @@
                             android:background="@drawable/line_dotted_green"
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
-                            android:id="@+id/viewBar1">
+                            android:id="@+id/viewBar4">
                         </View>
 
                         <TextView
@@ -297,7 +297,7 @@
                             android:background="@drawable/line_dotted_green"
                             android:layout_width="match_parent"
                             android:layout_height="3dp"
-                            android:id="@+id/viewBar1">
+                            android:id="@+id/viewBar5">
                         </View>
 
                         <TextView
