@@ -14,7 +14,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.viewmodel.PreNurseryVM;
 
 public class PNBookmarkListAdapter extends BaseAdapter {
@@ -60,7 +60,7 @@ public class PNBookmarkListAdapter extends BaseAdapter {
 
         PreNurseryVM item = schoolVMList.get(i);
 
-        int iconMapped = CommunityIconUtil.map(item.getIcon());
+        int iconMapped = ImageMapping.map(item.getIcon());
         if (iconMapped != -1) {
             icon.setImageDrawable(view.getResources().getDrawable(iconMapped));
         } else {

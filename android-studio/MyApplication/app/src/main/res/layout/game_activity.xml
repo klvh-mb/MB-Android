@@ -94,7 +94,7 @@
                                 android:layout_gravity="center_vertical|right"
                                 android:text="@string/game_rules_title"
                                 android:textColor="@color/game_title_text"
-                                android:textSize="13dp" />
+                                android:textSize="14dp" />
                         </LinearLayout>
                     </RelativeLayout>
 

@@ -12,7 +12,7 @@
     <string name="app_name">miniBean</string>
     <string name="app_desc">miniBean 小萌豆 - 全新家長社交平台</string>
     <string name="facebook_app_id">798543453496777</string>
-    <string name="base_url">http://192.168.1.122:9000</string>
+    <string name="base_url">http://192.168.1.136:9000</string>
     <!--string name="base_url">http://www.minibean.hk</string-->
     <string name="clipboard_text_label">複制信息</string>
     <string name="connection_timeout_title">網路問題</string>
@@ -202,6 +202,16 @@
     <string name="game_note_points">小豆豆！</string>
     <string name="game_gifts_title">儲小豆豆換領豐富禮品</string>
     <string name="game_gifts_redeem_now">立即換領</string>
+    <string name="game_gifts_redeem_pending">- 已要求換領 -</string>
+    <string name="game_gifts_redeem_desc">兌換 : </string>
+    <string name="game_gifts_redeem_title">換領禮品</string>
+    <string name="game_gifts_redeem_steps_title">換領規則</string>
+    <string name="game_gifts_redeem_expiration_title">換領有效期</string>
+    <string name="game_gifts_redeem_shipping_title">領取方式</string>
+    <string name="game_gifts_redeem_cc_title">客戶服務</string>
+    <string name="game_gifts_redeem_more_title">注意事項</string>
+    <string name="game_gifts_redeem_points_not_enough">這次換領禮品需要%1$d小豆豆。您現在只有%2$d小豆豆，還未足夠~</string>
+    <string name="game_gifts_redeem_requested">我們已收到您的換領禮品要求~ 請按照「換領規則」聯絡我們</string>
 
     <!-- Schools tab -->
     <string name="schools_tab_title_pn">幼兒班(PN班)</string>

@@ -53,7 +53,7 @@ public class CommunityUtil {
         noMember.setText(item.getMm().toString());
         noPost.setText("-");
 
-        int iconMapped = CommunityIconUtil.map(item.gi);
+        int iconMapped = ImageMapping.map(item.gi);
         if (iconMapped != -1) {
             //Log.d(this.getClass().getSimpleName(), "setCommunityLayout: replace source with local comm icon - " + item.gi);
             commImage.setImageDrawable(activity.getResources().getDrawable(iconMapped));

@@ -364,7 +364,7 @@ public class ProfileFragment extends TrackedFragment {
                 if (!hasProfilePic) {
                     hasProfilePic = true;
                     uploadProfilePicTipsLayout.setVisibility(View.GONE);
-                    ViewUtil.alertGamePoints(getActivity(),
+                    ViewUtil.alertGameStatus(getActivity(),
                             getActivity().getString(R.string.game_upload_profile_pic_title),
                             GameConstants.POINTS_UPLOAD_PROFILE_PHOTO);
                 }

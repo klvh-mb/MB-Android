@@ -11,8 +11,6 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.text.Html;
 import android.text.Selection;
@@ -34,7 +32,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
@@ -148,16 +145,20 @@ public class ViewUtil {
     // HTML
     //
 
-    public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView) {
-        setHtmlText(text, imageGetter, textView, false);
+    public static void setHtmlText(String text, TextView textView, Activity activity) {
+        setHtmlText(text, textView, activity, false);
     }
 
-    public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView, boolean longClickSelectAll) {
-        setHtmlText(text, imageGetter, textView, longClickSelectAll, false);
+    public static void setHtmlText(String text, TextView textView, Activity activity, boolean longClickSelectAll) {
+        setHtmlText(text, textView, activity, longClickSelectAll, false);
     }
 
-    public static void setHtmlText(String text, MyImageGetter imageGetter, TextView textView, boolean longClickSelectAll, boolean linkMovement) {
-        //Log.d(this.getClass().getSimpleName(), "getDisplayTextFromHtml: text="+text);
+    public static void setHtmlText(String text, TextView textView, Activity activity, boolean longClickSelectAll, boolean linkMovement) {
+        if (StringUtils.isEmpty(text)) {
+            text = "";
+        }
+
+        MyImageGetter imageGetter = new MyImageGetter(activity);
 
         text = text.replace("\n", HTML_LINE_BREAK);
 
@@ -300,17 +301,31 @@ public class ViewUtil {
         return dialog;
     }
 
-    public static Dialog alertGamePoints(Context context, String desc, int points) {
-        return alertGamePoints(context, desc, points, 3000);
+    public static Dialog alertGameStatus(Context context, String desc) {
+        return alertGameStatus(context, desc, -1, 3000);
     }
 
-    public static Dialog alertGamePoints(Context context, String desc, int points, long delayMillis) {
+    public static Dialog alertGameStatus(Context context, String desc, int points) {
+        return alertGameStatus(context, desc, points, 3000);
+    }
+
+    public static Dialog alertGameStatus(Context context, String desc, int points, long delayMillis) {
         final Dialog dialog = alert(context, R.layout.game_points_popup_window);
+        ImageView mascot = (ImageView) dialog.findViewById(R.id.mascot);
         TextView descText = (TextView) dialog.findViewById(R.id.descText);
         TextView pointsText = (TextView) dialog.findViewById(R.id.pointsText);
-        ImageView dismissImage = (ImageView) dialog.findViewById(R.id.dismissImage);
+        TextView endText = (TextView) dialog.findViewById(R.id.endText);
+
         descText.setText(desc);
-        pointsText.setText("+"+points);
+        if (points == -1) {
+            mascot.setVisibility(View.GONE);
+            pointsText.setVisibility(View.GONE);
+            endText.setVisibility(View.GONE);
+        } else {
+            pointsText.setText("+"+points);
+        }
+
+        ImageView dismissImage = (ImageView) dialog.findViewById(R.id.dismissImage);
         dismissImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if (dialog != null && dialog.isShowing()) {

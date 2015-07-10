@@ -15,9 +15,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.activity.UserProfileActivity;
+import miniBean.activity.GameGiftActivity;
 import miniBean.app.UserInfoCache;
+import miniBean.util.ImageMapping;
 import miniBean.util.ImageUtil;
+import miniBean.viewmodel.GameAccountVM;
 import miniBean.viewmodel.GameGiftVM;
 
 public class GameGiftListAdapter extends BaseAdapter {
@@ -28,10 +30,12 @@ public class GameGiftListAdapter extends BaseAdapter {
     private LinearLayout gameGiftLayout, viewsLayout;
     private ImageView gameGiftImage;
     private TextView titleText, pointsText, viewsText;
+    private GameAccountVM gameAccount;
 
-    public GameGiftListAdapter(Activity activity, List<GameGiftVM> items) {
+    public GameGiftListAdapter(Activity activity, List<GameGiftVM> items, GameAccountVM gameAccount) {
         this.activity = activity;
         this.items = items;
+        this.gameAccount = gameAccount;
     }
 
     @Override
@@ -71,7 +75,14 @@ public class GameGiftListAdapter extends BaseAdapter {
 
         final GameGiftVM item = items.get(position);
 
-        ImageUtil.displayRoundedCornersImage(item.getImt(), gameGiftImage);
+        int imageMapped = ImageMapping.map(item.getImt());
+        if (imageMapped != -1) {
+            //Log.d(this.getClass().getSimpleName(), "getView: replace source with local game gift image - " + imageMapped);
+            gameGiftImage.setImageDrawable(activity.getResources().getDrawable(imageMapped));
+        } else {
+            Log.d(this.getClass().getSimpleName(), "getView: load game gift image from background - " + item.getImt());
+            ImageUtil.displayThinRoundedCornersImage(item.getImt(), gameGiftImage);
+        }
 
         titleText.setText(item.getNm());
         pointsText.setText(item.getRp()+"");
@@ -79,8 +90,9 @@ public class GameGiftListAdapter extends BaseAdapter {
         gameGiftLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, UserProfileActivity.class);
+                Intent intent = new Intent(activity, GameGiftActivity.class);
                 intent.putExtra("id", item.getId());
+                intent.putExtra("userGamePoints", gameAccount.getGmpt());
                 activity.startActivity(intent);
             }
         });

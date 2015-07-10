@@ -14,7 +14,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.app.MyImageGetter;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.ViewUtil;
@@ -26,12 +25,10 @@ public class ConversationListAdapter extends BaseAdapter {
     private List<ConversationVM> conversationVMs;
     private ImageView userPicture;
     private TextView senderText,firstMessageText,dateText;
-    private MyImageGetter imageGetter;
 
     public ConversationListAdapter(Activity activity, List<ConversationVM> conversationVMs) {
         this.activity = activity;
         this.conversationVMs = conversationVMs;
-        this.imageGetter = new MyImageGetter(activity);
     }
 
     @Override
@@ -73,7 +70,7 @@ public class ConversationListAdapter extends BaseAdapter {
 
         senderText.setText(item.getNm());
         dateText.setText(DateTimeUtil.getTimeAgo(item.getLmd()));
-        ViewUtil.setHtmlText(item.getLm(), imageGetter, firstMessageText);
+        ViewUtil.setHtmlText(item.getLm(), firstMessageText, activity);
 
         Log.d(this.getClass().getSimpleName(), item.getLm());
 

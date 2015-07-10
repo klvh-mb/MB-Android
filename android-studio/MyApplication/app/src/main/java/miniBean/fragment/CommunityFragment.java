@@ -24,7 +24,7 @@ import miniBean.adapter.NewsfeedListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragment;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.CommunityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
@@ -221,7 +221,7 @@ public class CommunityFragment extends TrackedFragment {
                 commNameText.setText(community.dn);
                 numMemberText.setText(community.mm + "");
 
-                int iconMapped = CommunityIconUtil.map(community.gi);
+                int iconMapped = ImageMapping.map(community.gi);
                 if (iconMapped != -1) {
                     //Log.d(this.getClass().getSimpleName(), "getNewsFeedByCommunityId.api.success: replace source with local comm icon - " + community.gi);
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));

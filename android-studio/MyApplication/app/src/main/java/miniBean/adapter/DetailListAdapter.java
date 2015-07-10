@@ -6,11 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +28,6 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.UserProfileActivity;
 import miniBean.app.AppController;
-import miniBean.app.MyImageGetter;
 import miniBean.app.UserInfoCache;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
@@ -53,17 +49,13 @@ public class DetailListAdapter extends BaseAdapter {
     private TextView deleteText, likeText, numLike, postIndex;
     private FrameLayout frameLayout;
     private Button messageButton;
-    private int page;
-
     private LinearLayout postImagesLayout;
-
-    private MyImageGetter imageGetter;
+    private int page;
 
     public DetailListAdapter(Activity activity, List<CommunityPostCommentVM> postComments, int page) {
         this.activity = activity;
         this.postComments = postComments;
         this.page = page;
-        this.imageGetter = new MyImageGetter(activity);
     }
 
     @Override
@@ -242,7 +234,7 @@ public class DetailListAdapter extends BaseAdapter {
             }
         }
 
-        ViewUtil.setHtmlText(item.getD(), imageGetter, postBodyText, true, true);
+        ViewUtil.setHtmlText(item.getD(), postBodyText, activity, true, true);
 
         ownerName.setText(item.getOn());
         ownerName.setOnClickListener(new View.OnClickListener() {

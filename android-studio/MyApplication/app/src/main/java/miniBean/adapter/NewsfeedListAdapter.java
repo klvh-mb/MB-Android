@@ -23,8 +23,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.app.AppController;
-import miniBean.app.MyImageGetter;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
@@ -46,15 +45,12 @@ public class NewsfeedListAdapter extends BaseAdapter {
     private boolean isNewsfeed = true;
     private int lastPosition = -1;
 
-    private MyImageGetter imageGetter;
-
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this(activity, feedItems, true);
     }
 
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems, boolean isNewsfeed) {
         this.activity = activity;
-        this.imageGetter = new MyImageGetter(activity);
         this.feedItems = feedItems;
         this.isNewsfeed = isNewsfeed;
     }
@@ -101,7 +97,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
         //Log.d(this.getClass().getSimpleName(), "getView: Post - " + item.getPtl() + "|#comment: " + item.getN_c());
 
-        ViewUtil.setHtmlText(item.getPtl(), imageGetter, postTitle);
+        ViewUtil.setHtmlText(item.getPtl(), postTitle, activity);
         username.setText(item.getP());
         numComments.setText(item.getN_c()+"");
         timeText.setText(DateTimeUtil.getTimeAgo(item.getUt()));
@@ -126,7 +122,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
         if (isNewsfeed) {
             commName.setText(item.getCn());
-            int iconMapped = CommunityIconUtil.map(item.getCi());
+            int iconMapped = ImageMapping.map(item.getCi());
             if (iconMapped != -1) {
                 //Log.d(this.getClass().getSimpleName(), "getView: replace source with local comm icon - " + commIcon);
                 communityIcon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));

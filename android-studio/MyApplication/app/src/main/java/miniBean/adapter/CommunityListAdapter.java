@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
@@ -67,7 +67,7 @@ public class CommunityListAdapter extends BaseAdapter {
         noMembers.setText(item.getMm().toString());
         numTopicsToday.setText("-");
 
-        int iconMapped = CommunityIconUtil.map(item.gi);
+        int iconMapped = ImageMapping.map(item.gi);
         if (iconMapped != -1) {
             //Log.d(this.getClass().getSimpleName(), "getView: replace source with local comm icon - " + item.gi);
             communityPic.setImageDrawable(activity.getResources().getDrawable(iconMapped));

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.util.EmoticonUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.EmoticonVM;
 
@@ -53,7 +53,7 @@ public class EmoticonListAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.emoticon_grid_item, null);
 
         imageView = (ImageView) view.findViewById(R.id.emoImage);
-        int iconMapped = EmoticonUtil.map(emoticonVMList.get(i).getUrl());
+        int iconMapped = ImageMapping.map(emoticonVMList.get(i).getUrl());
         if (iconMapped != -1) {
             //Log.d(this.getClass().getSimpleName(), "getQnaDetail: replace source with local comm icon - " + commIcon);
             imageView.setImageDrawable(activity.getResources().getDrawable(iconMapped));

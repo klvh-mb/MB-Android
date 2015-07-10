@@ -20,7 +20,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import miniBean.R;
-import miniBean.util.EmoticonUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.ViewUtil;
 
 public class MyImageGetter implements Html.ImageGetter{
@@ -33,8 +33,8 @@ public class MyImageGetter implements Html.ImageGetter{
 
     public MyImageGetter(Activity activity) {
         this.activity = activity;
-        emoticonWidth = ViewUtil.getRealDimension(EmoticonUtil.WIDTH, this.activity.getResources());
-        emoticonHeight = ViewUtil.getRealDimension(EmoticonUtil.HEIGHT, this.activity.getResources());
+        emoticonWidth = ViewUtil.getRealDimension(ImageMapping.EMOTICON_WIDTH, this.activity.getResources());
+        emoticonHeight = ViewUtil.getRealDimension(ImageMapping.EMOTICON_HEIGHT, this.activity.getResources());
     }
 
     public void setTextView(TextView textView) {
@@ -45,7 +45,7 @@ public class MyImageGetter implements Html.ImageGetter{
     public Drawable getDrawable(String source) {
         LevelListDrawable d = new LevelListDrawable();
 
-        int emoticon = EmoticonUtil.map(source);
+        int emoticon = ImageMapping.map(source);
         if (emoticon != -1) {
             //Log.d(this.getClass().getSimpleName(), "getDrawable: replace source with emoticon - " + source);
             Drawable emo = activity.getResources().getDrawable(emoticon);

@@ -47,8 +47,9 @@ public class DefaultValues {
     public static final int MAX_MESSAGE_IMAGES = 1;
     public static final int MAX_POST_IMAGE_DIMENSION = 100;
 
-    public static final int IMAGE_CORNERS_ROUNDED_VALUE = 15;
-    public static final int IMAGE_ROUND_ROUNDED_VALUE = 120;
+    public static final int IMAGE_ROUNDED_CORNERS_RADIUS = 38;
+    public static final int IMAGE_THIN_ROUNDED_CORNERS_RADIUS = 15;
+    public static final int IMAGE_ROUND_RADIUS = 120;
 
     public static final int NEW_POST_DAYS_AGO = 3;
     public static final int NEW_POST_NOC = 3;

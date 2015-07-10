@@ -68,6 +68,9 @@
             android:name=".activity.GameRulesActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.GameGiftActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MyProfileActionActivity"
             android:screenOrientation="portrait" />
         <activity

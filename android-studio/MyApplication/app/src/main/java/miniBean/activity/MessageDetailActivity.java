@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -55,7 +53,7 @@ import miniBean.app.BroadcastService;
 import miniBean.app.EmoticonCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.DefaultValues;
-import miniBean.util.EmoticonUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.ImageUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.EmoticonVM;
@@ -419,7 +417,7 @@ public class MessageDetailActivity extends TrackedFragmentActivity {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    EmoticonUtil.insertEmoticon(emoticonVMList.get(i), commentEditText);
+                    ImageMapping.insertEmoticon(emoticonVMList.get(i), commentEditText);
                     emoPopup.dismiss();
                     emoPopup = null;
                     ViewUtil.popupInputMethodWindow(MessageDetailActivity.this);

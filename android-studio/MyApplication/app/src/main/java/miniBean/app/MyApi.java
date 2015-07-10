@@ -25,6 +25,7 @@ import miniBean.viewmodel.PostArray;
 import miniBean.viewmodel.PostResponse;
 import miniBean.viewmodel.PreNurseryVM;
 import miniBean.viewmodel.ProfileVM;
+import miniBean.viewmodel.ResponseStatusVM;
 import miniBean.viewmodel.UserProfileDataVM;
 import miniBean.viewmodel.UserVM;
 import retrofit.Callback;
@@ -43,7 +44,7 @@ import retrofit.mime.TypedFile;
 public interface MyApi {
 
     @POST("/signup")
-    public void signUp(@Query("lname") String lanme,@Query("fname") String fname,@Query("email") String email,@Query("password") String password,@Query("repeatPassword") String repeatPassword,Callback<Response> cb);
+    public void signUp(@Query("lname") String lname,@Query("fname") String fname,@Query("email") String email,@Query("password") String password,@Query("repeatPassword") String repeatPassword,Callback<Response> cb);
     //http://localhost:9000/signup?lname=asd&fname=dsa&email=shwashank12@gmail.com&password=qwerty&repeatPassword=qwerty
 
     @FormUrlEncoded
@@ -336,6 +337,13 @@ public interface MyApi {
 
     @GET("/get-all-game-gifts")
     public void getAllGameGifts(@Query("key") String key, Callback<List<GameGiftVM>> cb);
+
+    @GET("/get-game-gift-info/{id}")
+    public void getGameGiftInfo(@Path("id") Long id, @Query("key") String key, Callback<GameGiftVM> cb);
+
+    @FormUrlEncoded
+    @POST("/redeem-game-gift")
+    public void redeemGameGift(@Field("id") Long id, @Query("key") String key, Callback<ResponseStatusVM> cb);
 
     @GET("/get-game-transactions/{offset}")
     public void getGameTransactions(@Path("offset") Long offset, @Query("key") String key, Callback<List<GameTransactionVM>> cb);

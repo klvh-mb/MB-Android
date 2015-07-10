@@ -19,7 +19,7 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
 import miniBean.app.AppController;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
@@ -87,7 +87,7 @@ public class PNListAdapter extends BaseAdapter {
 
         final PreNurseryVM item = items.get(position);
 
-        int iconMapped = CommunityIconUtil.map(item.getIcon());
+        int iconMapped = ImageMapping.map(item.getIcon());
         if (iconMapped != -1) {
             icon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
             icon.setVisibility(View.VISIBLE);

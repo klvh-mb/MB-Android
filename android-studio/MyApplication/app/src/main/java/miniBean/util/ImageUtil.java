@@ -76,7 +76,16 @@ public class ImageUtil {
                     bitmapConfig(Bitmap.Config.RGB_565).
                     imageScaleType(ImageScaleType.IN_SAMPLE_INT).
                     showImageOnLoading(R.drawable.image_loading).
-                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_CORNERS_ROUNDED_VALUE)).build();
+                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_ROUNDED_CORNERS_RADIUS)).build();
+
+    public static DisplayImageOptions THIN_ROUNDED_CORNERS_IMAGE_OPTIONS =
+            new DisplayImageOptions.Builder().
+                    cacheInMemory(true).
+                    cacheOnDisk(true).
+                    bitmapConfig(Bitmap.Config.RGB_565).
+                    imageScaleType(ImageScaleType.IN_SAMPLE_INT).
+                    showImageOnLoading(R.drawable.image_loading).
+                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_THIN_ROUNDED_CORNERS_RADIUS)).build();
 
     public static DisplayImageOptions ROUND_IMAGE_OPTIONS =
             new DisplayImageOptions.Builder().
@@ -85,7 +94,7 @@ public class ImageUtil {
                     bitmapConfig(Bitmap.Config.RGB_565).
                     imageScaleType(ImageScaleType.IN_SAMPLE_INT).
                     showImageOnLoading(R.drawable.image_loading).
-                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_ROUND_ROUNDED_VALUE)).build();
+                    displayer(new RoundedBitmapDisplayer(DefaultValues.IMAGE_ROUND_RADIUS)).build();
 
     private static ImageLoader mImageLoader;
 
@@ -258,6 +267,12 @@ public class ImageUtil {
         if (!url.startsWith(AppController.BASE_URL))
             url = AppController.BASE_URL + url;
         ImageLoader.getInstance().displayImage(url, imageView, ROUNDED_CORNERS_IMAGE_OPTIONS);
+    }
+
+    public static void displayThinRoundedCornersImage(String url, ImageView imageView) {
+        if (!url.startsWith(AppController.BASE_URL))
+            url = AppController.BASE_URL + url;
+        ImageLoader.getInstance().displayImage(url, imageView, THIN_ROUNDED_CORNERS_IMAGE_OPTIONS);
     }
 
     public static void displayRoundImage(String url, ImageView imageView) {

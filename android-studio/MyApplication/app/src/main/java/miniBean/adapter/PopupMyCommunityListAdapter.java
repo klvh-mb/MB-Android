@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import miniBean.R;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.ImageUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 
@@ -64,7 +64,7 @@ public class PopupMyCommunityListAdapter extends BaseAdapter {
         CommunitiesWidgetChildVM item = communities.get(position);
 
         communityName.setText(item.getDn());
-        int iconMapped = CommunityIconUtil.map(item.getGi());
+        int iconMapped = ImageMapping.map(item.getGi());
         if (iconMapped != -1) {
             //Log.d(this.getClass().getSimpleName(), "getView: replace source with local comm icon - " + commIcon);
             communityIcon.setImageDrawable(activity.getResources().getDrawable(iconMapped));

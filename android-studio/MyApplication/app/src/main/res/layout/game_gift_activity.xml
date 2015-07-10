@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/view_bg">
+
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_spinner"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerInParent="true" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:id="@+id/gameLayout"
+                android:background="@drawable/game_edit_text_round"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:id="@+id/pointsLayout">
+
+                    <ImageView
+                        android:layout_width="280dp"
+                        android:layout_height="150dp"
+                        android:id="@+id/gameGiftImage"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_centerHorizontal="true" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/titleLayout"
+                        android:layout_below="@+id/gameGiftImage"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerHorizontal="true">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/titleText"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:textColor="@color/game_title_text"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_horizontal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pointsTitleLayout"
+                        android:layout_below="@+id/titleLayout"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/game_gifts_redeem_desc"
+                            android:id="@+id/pointsDesc"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="15dp"
+                            android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:id="@+id/pointsText"
+                            android:textSize="15dp"
+                            android:textColor="@color/dark_gray_2"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="center_vertical" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:id="@+id/redeemLayout1"
+                    android:layout_weight="5"
+                    android:background="@drawable/rounded_corner_button_game"
+                    android:layout_below="@+id/pointsLayout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/game_gifts_redeem_now"
+                        android:id="@+id/redeemText1"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center"
+                        android:textSize="17dp"
+                        android:singleLine="true"
+                        android:layout_centerInParent="true"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailsLayout"
+                    android:layout_below="@+id/redeemLayout1"
+                    android:layout_marginTop="25dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/redeemStepsLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/game_gifts_redeem_steps_title"
+                            android:textColor="@color/game_title_text"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:id="@+id/redeemStepsTitle"
+                            android:layout_margin="5dp" />
+
+                        <View
+                            android:background="@drawable/line_dotted_green"
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:id="@+id/viewBar1">
+                        </View>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/redeemStepsText"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_margin="10dp"
+                            android:autoText="false" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/redeemExpirationLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/game_gifts_redeem_expiration_title"
+                            android:textColor="@color/game_title_text"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:id="@+id/redeemExpirationTitle"
+                            android:layout_margin="5dp" />
+
+                        <View
+                            android:background="@drawable/line_dotted_green"
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:id="@+id/viewBar1">
+                        </View>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/redeemExpirationText"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_margin="10dp"
+                            android:autoText="false" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/redeemShippingLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/game_gifts_redeem_shipping_title"
+                            android:textColor="@color/game_title_text"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:id="@+id/redeemShippingTitle"
+                            android:layout_margin="5dp" />
+
+                        <View
+                            android:background="@drawable/line_dotted_green"
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:id="@+id/viewBar1">
+                        </View>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/redeemShippingText"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_margin="10dp"
+                            android:autoText="false" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/redeemCCLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/game_gifts_redeem_cc_title"
+                            android:textColor="@color/game_title_text"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:id="@+id/redeemCCTitle"
+                            android:layout_margin="5dp" />
+
+                        <View
+                            android:background="@drawable/line_dotted_green"
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:id="@+id/viewBar1">
+                        </View>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/redeemCCText"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_margin="10dp"
+                            android:autoText="false" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/redeemMoreLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/game_gifts_redeem_more_title"
+                            android:textColor="@color/game_title_text"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:id="@+id/redeemMoreTitle"
+                            android:layout_margin="5dp" />
+
+                        <View
+                            android:background="@drawable/line_dotted_green"
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:id="@+id/viewBar1">
+                        </View>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/redeemMoreText"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_margin="10dp"
+                            android:autoText="false" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:id="@+id/redeemLayout2"
+                    android:layout_weight="5"
+                    android:background="@drawable/rounded_corner_button_game"
+                    android:layout_below="@+id/detailsLayout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/game_gifts_redeem_now"
+                        android:id="@+id/redeemText2"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center"
+                        android:textSize="17dp"
+                        android:singleLine="true"
+                        android:layout_centerInParent="true"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -3,13 +3,13 @@
 
     <!-- view background color -->
     <solid
-        android:color="#92D9EA" >
+        android:color="@color/game_box_border" >
     </solid>
 
     <!-- view border color and width -->
     <stroke
         android:width="2dp"
-        android:color="#eee" >
+        android:color="@color/game_box_border_light" >
     </stroke>
 
     <!-- If you want to add some padding -->
@@ -22,7 +22,7 @@
 
     <!-- Here is the corner radius -->
     <corners
-        android:radius="25dp" >
+        android:radius="5dp" >
     </corners>
 
 </shape>

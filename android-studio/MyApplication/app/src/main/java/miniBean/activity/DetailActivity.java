@@ -44,11 +44,9 @@ import miniBean.adapter.EmoticonListAdapter;
 import miniBean.adapter.PopupPageListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
-import miniBean.app.MyImageGetter;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.DefaultValues;
-import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.SharingUtil;
 import miniBean.util.ViewUtil;
@@ -95,15 +93,11 @@ public class DetailActivity extends TrackedFragmentActivity {
     private List<ImageView> commentImages = new ArrayList<>();
     private List<File> photos = new ArrayList<>();
 
-    private MyImageGetter imageGetter;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.detail_activity);
-
-        imageGetter = new MyImageGetter(this);
 
         communityName = (TextView) findViewById(R.id.communityName);
         communityIcon = (ImageView) findViewById(R.id.commIcon);
@@ -221,7 +215,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 numPostViews.setText(post.getNov() + "");
                 numPostComments.setText(post.getN_c() + "");
 
-                ViewUtil.setHtmlText(post.getPtl(), imageGetter, questionText, true);
+                ViewUtil.setHtmlText(post.getPtl(), questionText, DetailActivity.this, true);
 
                 isBookmarked = post.isBookmarked;
                 if (isBookmarked) {
@@ -250,7 +244,7 @@ public class DetailActivity extends TrackedFragmentActivity {
                 listAdapter = new DetailListAdapter(DetailActivity.this, communityItems, curPage);
                 listView.setAdapter(listAdapter);
 
-                int iconMapped = CommunityIconUtil.map(post.getCi());
+                int iconMapped = ImageMapping.map(post.getCi());
                 if (iconMapped != -1) {
                     //Log.d(this.getClass().getSimpleName(), "getQnaDetail: replace source with local comm icon - " + commIcon);
                     communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
@@ -804,7 +798,7 @@ public class DetailActivity extends TrackedFragmentActivity {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    EmoticonUtil.insertEmoticon(emoticonVMList.get(i), commentEditText);
+                    ImageMapping.insertEmoticon(emoticonVMList.get(i), commentEditText);
                     emoPopup.dismiss();
                     emoPopup = null;
                     ViewUtil.popupInputMethodWindow(DetailActivity.this);

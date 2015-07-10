@@ -18,7 +18,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.List;
 
 import miniBean.R;
-import miniBean.app.MyImageGetter;
 import miniBean.app.UserInfoCache;
 import miniBean.util.DateTimeUtil;
 import miniBean.util.ImageUtil;
@@ -31,12 +30,10 @@ public class MessageListAdapter extends BaseAdapter {
     private List<MessageVM> messageVMs;
     private ImageView messageImages;
     private ImageView senderImage;
-    private MyImageGetter imageGetter;
 
     public MessageListAdapter(Activity activity, List<MessageVM> messageVMs) {
         this.activity = activity;
         this.messageVMs = messageVMs;
-        this.imageGetter = new MyImageGetter(activity);
     }
 
     @Override
@@ -78,7 +75,7 @@ public class MessageListAdapter extends BaseAdapter {
 
         TextView txtMsg = (TextView) convertView.findViewById(R.id.txtMsg);
         TextView dateMsg = (TextView) convertView.findViewById(R.id.messageDate);
-        ViewUtil.setHtmlText(m.getTxt(), imageGetter, txtMsg, true, true);
+        ViewUtil.setHtmlText(m.getTxt(), txtMsg, activity, true, true);
 
         dateMsg.setText(DateTimeUtil.getTimeAgo(m.getCd()));
 

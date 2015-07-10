@@ -15,7 +15,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.activity.NewKGPostActivity;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.ExternalLauncherUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
@@ -198,7 +198,7 @@ public class KGCommunityFragment extends AbstractSchoolCommunityFragment {
             enNameText.setText(schoolVM.getNe());
             enNameText.setVisibility(View.VISIBLE);
         }
-        int iconMapped = CommunityIconUtil.map(schoolVM.getIcon());
+        int iconMapped = ImageMapping.map(schoolVM.getIcon());
         if (iconMapped != -1) {
             icon.setImageDrawable(getResources().getDrawable(iconMapped));
             icon.setVisibility(View.VISIBLE);

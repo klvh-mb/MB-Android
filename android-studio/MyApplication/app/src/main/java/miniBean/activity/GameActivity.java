@@ -40,7 +40,7 @@ public class GameActivity extends TrackedFragmentActivity {
 
     private ScrollView scrollView;
     private RelativeLayout gameLayout;
-    private TextView pointsText, redeemedPointsText;
+    private TextView pointsText, redeemedPointsText, redeemedPointsTips;
     private ImageView signInImage;
     private TextView referralNotePoints, referralSuccessNum, referralSuccessPoints;
     private EditText referralUrlEdit;
@@ -70,6 +70,7 @@ public class GameActivity extends TrackedFragmentActivity {
         gameLayout = (RelativeLayout) this.findViewById((R.id.gameLayout));
         pointsText = (TextView) this.findViewById(R.id.pointsText);
         redeemedPointsText = (TextView) this.findViewById(R.id.redeemedPointsText);
+        redeemedPointsTips = (TextView) this.findViewById(R.id.redeemedPointsTips);
         signInImage = (ImageView) this.findViewById(R.id.signInImage);
         referralNotePoints = (TextView) this.findViewById(R.id.referralNotePoints);
         referralSuccessNum = (TextView) this.findViewById(R.id.referralSuccessNum);
@@ -114,6 +115,7 @@ public class GameActivity extends TrackedFragmentActivity {
                     redeemedPointsText.setText("-");
                 } else {
                     redeemedPointsText.setText(gameAccountVM.getRdpt() + "");
+                    redeemedPointsTips.setVisibility(View.GONE);
                 }
 
                 signedIn = gameAccountVM.isSignedIn();
@@ -155,6 +157,8 @@ public class GameActivity extends TrackedFragmentActivity {
                     }
                 });
 
+                getGameGifts(gameAccountVM);
+
                 ViewUtil.stopSpinner(GameActivity.this);
             }
 
@@ -175,7 +179,7 @@ public class GameActivity extends TrackedFragmentActivity {
                 signedIn = true;
 
                 // alert and refresh
-                final Dialog dialog = ViewUtil.alertGamePoints(GameActivity.this,
+                final Dialog dialog = ViewUtil.alertGameStatus(GameActivity.this,
                         getString(R.string.game_daily_signin_title), GameConstants.POINTS_DAILY_SIGNIN);
                 refresh();
             }
@@ -187,13 +191,13 @@ public class GameActivity extends TrackedFragmentActivity {
         });
     }
 
-    private void getGameGifts() {
+    private void getGameGifts(final GameAccountVM gameAccount) {
         AppController.getApi().getAllGameGifts(AppController.getInstance().getSessionId(), new Callback<List<GameGiftVM>>() {
             @Override
             public void success(List<GameGiftVM> vms, Response response) {
                 List<GameGiftVM> gameGifts = new ArrayList<>();
                 gameGifts.addAll(vms);
-                GameGiftListAdapter gameGiftListAdapter = new GameGiftListAdapter(GameActivity.this, gameGifts);
+                GameGiftListAdapter gameGiftListAdapter = new GameGiftListAdapter(GameActivity.this, gameGifts, gameAccount);
                 gameGiftList.setAdapter(gameGiftListAdapter);
                 ViewUtil.setHeightBasedOnChildren(gameGiftList);
             }
@@ -243,7 +247,6 @@ public class GameActivity extends TrackedFragmentActivity {
 
     private void refresh() {
         getGameAccount();
-        getGameGifts();
         getGameTransactions();
 
         if (UserInfoCache.getUser().isAdmin()) {

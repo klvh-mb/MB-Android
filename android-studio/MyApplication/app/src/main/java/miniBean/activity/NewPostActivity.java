@@ -37,9 +37,8 @@ import miniBean.app.AppController;
 import miniBean.app.EmoticonCache;
 import miniBean.app.LocalCommunityTabCache;
 import miniBean.app.TrackedFragmentActivity;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.DefaultValues;
-import miniBean.util.EmoticonUtil;
 import miniBean.util.ImageUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
@@ -364,7 +363,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
                     communityId = community.getId();
 
                     communityName.setText(community.getDn());
-                    int iconMapped = CommunityIconUtil.map(community.getGi());
+                    int iconMapped = ImageMapping.map(community.getGi());
                     if (iconMapped != -1) {
                         //Log.d(this.getClass().getSimpleName(), "initMyCommunityPopup: replace source with local comm icon - " + commIcon);
                         communityIcon.setImageDrawable(getResources().getDrawable(iconMapped));
@@ -420,7 +419,7 @@ public class NewPostActivity extends TrackedFragmentActivity {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    EmoticonUtil.insertEmoticon(emoticonVMList.get(i), editTextInFocus);
+                    ImageMapping.insertEmoticon(emoticonVMList.get(i), editTextInFocus);
                     emoPopup.dismiss();
                     emoPopup = null;
                     ViewUtil.popupInputMethodWindow(NewPostActivity.this);

@@ -19,10 +19,9 @@ import java.util.List;
 import miniBean.R;
 import miniBean.activity.KGCommunityActivity;
 import miniBean.app.AppController;
-import miniBean.util.CommunityIconUtil;
+import miniBean.util.ImageMapping;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
-import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -88,7 +87,7 @@ public class KGListAdapter extends BaseAdapter {
 
         final KindergartenVM item = items.get(position);
 
-        int iconMapped = CommunityIconUtil.map(item.getIcon());
+        int iconMapped = ImageMapping.map(item.getIcon());
         if (iconMapped != -1) {
             icon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
             icon.setVisibility(View.VISIBLE);
