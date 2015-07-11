@@ -46,5 +46,15 @@
                 android:layout_marginLeft="5dp" />
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/whatsappAction"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_whatsapp"
+            android:layout_centerVertical="true"
+            android:padding="3dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true" />
+
     </RelativeLayout>
 </RelativeLayout>

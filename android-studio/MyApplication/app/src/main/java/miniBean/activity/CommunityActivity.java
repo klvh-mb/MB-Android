@@ -12,9 +12,10 @@ import android.widget.TextView;
 import miniBean.R;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.CommunityFragment;
+import miniBean.util.SharingUtil;
 
 public class CommunityActivity extends TrackedFragmentActivity {
-    private ImageView backImage, editAction;
+    private ImageView backImage, whatsappAction, newPostAction;
     private TextView titleAction;
 
     @Override
@@ -34,7 +35,7 @@ public class CommunityActivity extends TrackedFragmentActivity {
 
         backImage = (ImageView) this.findViewById(R.id.backImage);
         titleAction = (TextView) this.findViewById(R.id.actionbarTitle);
-        editAction = (ImageView) this.findViewById(R.id.newPostIcon);
+        newPostAction = (ImageView) this.findViewById(R.id.newPostIcon);
 
         Bundle bundle = new Bundle();
         if (getIntent().getStringExtra("flag") != null) {
@@ -58,7 +59,7 @@ public class CommunityActivity extends TrackedFragmentActivity {
             }
         });
 
-        editAction.setOnClickListener(new View.OnClickListener() {
+        newPostAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CommunityActivity.this,NewPostActivity.class);

@@ -179,7 +179,7 @@
     <string name="game_daily_signin_text">立即簽到累積小豆豆!</string>
     <string name="game_level_title">我的等級</string>
     <string name="game_level_text">等級 : </string>
-    <string name="game_level_tips">( 距離升級到 L5 還差 479 小豆豆 )</string>
+    <string name="game_level_tips">( 距離升級到 %1$s 還差 %2$d 小豆豆 )</string>
     <string name="game_points_title">我的小豆豆</string>
     <string name="game_points">小豆豆</string>
     <string name="game_points_desc">小豆豆 : </string>
@@ -201,6 +201,7 @@
     <string name="game_upload_profile_pic_title">上載個人照片</string>
     <string name="game_note_points">小豆豆！</string>
     <string name="game_gifts_title">儲小豆豆換領豐富禮品</string>
+    <string name="game_gifts_desc">儲小豆豆換禮品</string>
     <string name="game_gifts_redeem_now">立即換領</string>
     <string name="game_gifts_redeem_pending">- 已要求換領 -</string>
     <string name="game_gifts_redeem_desc">兌換 : </string>

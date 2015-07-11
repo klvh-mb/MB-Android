@@ -9,8 +9,10 @@ import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
+import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityPostVM;
 import miniBean.viewmodel.GameAccountVM;
+import miniBean.viewmodel.GameGiftVM;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
 
@@ -32,6 +34,14 @@ public class SharingUtil {
 
     public static void shareToWhatapp(GameAccountVM gameAccount, Context context) {
         shareTo(createMessage(gameAccount), SharingType.WHATSAPP, context);
+    }
+
+    public static void shareToWhatapp(GameGiftVM gameGift, Context context) {
+        shareTo(createMessage(gameGift), SharingType.WHATSAPP, context);
+    }
+
+    public static void shareToWhatapp(CommunitiesWidgetChildVM community, Context context) {
+        shareTo(createMessage(community), SharingType.WHATSAPP, context);
     }
 
     public static void shareToWhatapp(CommunityPostVM post, Context context) {
@@ -77,6 +87,28 @@ public class SharingUtil {
     private static String createMessage(GameAccountVM gameAccount) {
         String message = AppController.getInstance().getResources().getString(R.string.app_desc);
         String url = UrlUtil.createReferralUrl(gameAccount);
+        message = message +
+                ViewUtil.HTML_LINE_BREAK +
+                url +
+                ViewUtil.HTML_LINE_BREAK +
+                SHARING_MESSAGE_NOTE;
+        return message;
+    }
+
+    private static String createMessage(GameGiftVM gameGift) {
+        String message = AppController.getInstance().getResources().getString(R.string.game_gifts_desc)+"："+gameGift.getNm();
+        String url = UrlUtil.createGameGiftUrl(gameGift);
+        message = message +
+                ViewUtil.HTML_LINE_BREAK +
+                url +
+                ViewUtil.HTML_LINE_BREAK +
+                SHARING_MESSAGE_NOTE;
+        return message;
+    }
+
+    private static String createMessage(CommunitiesWidgetChildVM community) {
+        String message = community.getDn();
+        String url = UrlUtil.createCommunityUrl(community);
         message = message +
                 ViewUtil.HTML_LINE_BREAK +
                 url +

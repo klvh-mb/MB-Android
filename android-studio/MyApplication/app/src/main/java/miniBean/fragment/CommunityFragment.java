@@ -28,6 +28,7 @@ import miniBean.util.ImageMapping;
 import miniBean.util.CommunityUtil;
 import miniBean.util.DefaultValues;
 import miniBean.util.ImageUtil;
+import miniBean.util.SharingUtil;
 import miniBean.viewmodel.CommunitiesWidgetChildVM;
 import miniBean.viewmodel.CommunityCategoryMapVM;
 import miniBean.viewmodel.CommunityPostVM;
@@ -82,7 +83,7 @@ public class CommunityFragment extends TrackedFragment {
         listView.setFriction(ViewConfiguration.getScrollFriction() *
                 DefaultValues.LISTVIEW_SCROLL_FRICTION_SCALE_FACTOR);
 
-        if(!getArguments().getString("flag").equals("FromDetailActivity")) {
+        if (!getArguments().getString("flag").equals("FromDetailActivity")) {
             commId = getArguments().getLong("id");
             initData();
         } else {
@@ -188,6 +189,15 @@ public class CommunityFragment extends TrackedFragment {
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
                 }
+            }
+        });
+
+        // actionbar
+        ImageView whatsappAction = (ImageView) getActivity().findViewById(R.id.whatsappAction);
+        whatsappAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharingUtil.shareToWhatapp(currentCommunity, getActivity());
             }
         });
     }

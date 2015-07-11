@@ -126,14 +126,14 @@
                 android:layout_gravity="center_vertical"
                 android:layout_toLeftOf="@+id/newPostIcon"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="15dp" />
 
             <ImageView
                 android:id="@+id/newPostIcon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="15dp"
                 android:src="@drawable/edit_post"
                 android:layout_alignParentRight="true" />
         </RelativeLayout>

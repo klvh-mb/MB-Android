@@ -19,6 +19,7 @@ import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.ImageMapping;
 import miniBean.util.ImageUtil;
+import miniBean.util.SharingUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.GameGiftVM;
 import miniBean.viewmodel.ResponseStatusVM;
@@ -31,7 +32,7 @@ public class GameGiftActivity extends TrackedFragmentActivity {
     private ScrollView scrollView;
     private RelativeLayout gameLayout;
     private TextView titleText, pointsText;
-    private ImageView gameGiftImage;
+    private ImageView whatsappAction, gameGiftImage;
     private LinearLayout redeemStepsLayout, redeemExpirationLayout, redeemShippingLayout, redeemCCLayout, redeemMoreLayout;
     private TextView redeemStepsText, redeemExpirationText, redeemShippingText, redeemCCText, redeemMoreText, redeemText1, redeemText2;
     private RelativeLayout redeemLayout1, redeemLayout2;
@@ -58,6 +59,7 @@ public class GameGiftActivity extends TrackedFragmentActivity {
         gameGiftId = getIntent().getLongExtra("id", 0L);
         userGamePoints = getIntent().getLongExtra("userGamePoints", 0L);
 
+        whatsappAction = (ImageView) findViewById(R.id.whatsappAction);
         scrollView = (ScrollView) this.findViewById(R.id.scrollView);
         gameLayout = (RelativeLayout) this.findViewById((R.id.gameLayout));
         gameGiftImage = (ImageView) this.findViewById((R.id.gameGiftImage));
@@ -110,6 +112,13 @@ public class GameGiftActivity extends TrackedFragmentActivity {
             @Override
             public void success(final GameGiftVM gameGiftVM, Response response) {
                 gameGift = gameGiftVM;
+
+                whatsappAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharingUtil.shareToWhatapp(gameGiftVM, GameGiftActivity.this);
+                    }
+                });
 
                 int imageMapped = ImageMapping.map(gameGiftVM.getIm());
                 if (imageMapped != -1) {
