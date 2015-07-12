@@ -34,7 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp">
+                android:paddingBottom="20dp"
+                android:touchscreenBlocksFocus="false">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -95,8 +96,18 @@
                             android:id="@+id/pointsText"
                             android:textSize="15dp"
                             android:textColor="@color/dark_gray_2"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="5dp"
                             android:layout_gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/game_points"
+                            android:id="@+id/endText"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp" />
 
                     </LinearLayout>
                 </RelativeLayout>
@@ -335,6 +346,205 @@
                         android:textStyle="bold" />
                 </RelativeLayout>
 
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/referralLayout"
+                android:background="@drawable/game_edit_text_round"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/section2">
+
+                    <LinearLayout
+                        android:id="@+id/referralHeaderLayout"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_below="@+id/signInLayout"
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/tips_reminder"
+                            android:textColor="@color/game_title_text"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_below="@+id/referralHeaderLayout"
+                        android:background="@drawable/line_dotted_green"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:id="@+id/viewBar3" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewBar"
+                        android:layout_margin="5dp"
+                        android:id="@+id/referralLayout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/game_referral_text"
+                            android:id="@+id/referralDesc"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/dark_gray_2"
+                            android:textSize="14dp"
+                            android:layout_margin="3dp" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/game_referral_note1"
+                                android:id="@+id/referralNote1"
+                                android:textColor="@color/dark_gray_2"
+                                android:textSize="14dp"
+                                android:layout_gravity="center_vertical" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:id="@+id/referralNotePoints"
+                                android:textColor="@color/game_orange"
+                                android:textSize="15dp"
+                                android:textStyle="bold"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/game_referral_note2"
+                                android:id="@+id/referralNote2"
+                                android:textColor="@color/dark_gray_2"
+                                android:textSize="14dp"
+                                android:layout_gravity="center_vertical" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="10"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="15dp">
+
+                            <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="35dp"
+                                android:id="@+id/referralUrlEdit"
+                                android:background="@drawable/game_edit_text_round"
+                                android:layout_weight="10"
+                                android:layout_gravity="center_vertical"
+                                android:editable="false"
+                                android:singleLine="true"
+                                android:textColor="@color/gray"
+                                android:enabled="false"
+                                android:focusable="false"
+                                android:textSize="14dp"
+                                android:text="@string/base_url" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:weightSum="10"
+                            android:measureWithLargestChild="false"
+                            android:layout_gravity="center_vertical">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:id="@+id/whatsappLayout"
+                                android:layout_weight="5"
+                                android:background="@drawable/rounded_corner_button"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp">
+
+                                <ImageView
+                                    android:id="@+id/whatsappImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_whatsapp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sharing_whatsapp_button"
+                                    android:id="@+id/whatsappText"
+                                    android:textColor="@color/dark_gray"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_gravity="center"
+                                    android:textSize="14dp"
+                                    android:singleLine="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:id="@+id/copyUrlLayout"
+                                android:layout_weight="5"
+                                android:background="@drawable/rounded_corner_button"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginRight="3dp">
+
+                                <ImageView
+                                    android:id="@+id/copyUrlImage"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_link"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="5dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/sharing_copy_url_button"
+                                    android:id="@+id/copyUrlText"
+                                    android:textColor="@color/dark_gray"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
+                                    android:textSize="14dp"
+                                    android:singleLine="true" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </RelativeLayout>
 
         </LinearLayout>

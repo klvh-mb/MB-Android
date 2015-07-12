@@ -11,6 +11,7 @@ import java.util.List;
 
 import miniBean.app.AppController;
 import miniBean.viewmodel.EmoticonVM;
+import miniBean.viewmodel.GameAccountVM;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserVM;
 
@@ -25,6 +26,7 @@ public class SharedPreferencesUtil {
     public static final String FB_ACCESS_EXPIRES = "access_expires";
     public static final String SESSION_ID = "sessionID";
     public static final String USER_INFO = "userInfo";
+    public static final String GAME_ACCOUNT = "gameAccount";
     public static final String DISTRICTS = "districts";
     public static final String EMOTICONS = "emoticons";
 
@@ -59,6 +61,10 @@ public class SharedPreferencesUtil {
 
     public void saveUserInfo(UserVM userInfo) {
         this.saveObject(USER_INFO, userInfo);
+    }
+
+    public void saveGameAccount(GameAccountVM gameAccount) {
+        this.saveObject(GAME_ACCOUNT, gameAccount);
     }
 
     public void saveDistricts(List<LocationVM> districts) {
@@ -100,6 +106,13 @@ public class SharedPreferencesUtil {
         UserVM userInfo = new Gson().fromJson(json, UserVM.class);
         //Log.d(this.getClass().getSimpleName(), "[DEBUG] getUserInfo: json="+json);
         return userInfo;
+    }
+
+    public GameAccountVM getGameAccount() {
+        String json = this.prefs.getString(GAME_ACCOUNT, null);
+        GameAccountVM gameAccount = new Gson().fromJson(json, GameAccountVM.class);
+        //Log.d(this.getClass().getSimpleName(), "[DEBUG] getGameAccount: json="+json);
+        return gameAccount;
     }
 
     public List<LocationVM> getDistricts() {

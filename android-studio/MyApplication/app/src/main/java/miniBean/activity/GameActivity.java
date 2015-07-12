@@ -16,8 +16,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.parceler.apache.commons.lang.StringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,7 +107,7 @@ public class GameActivity extends TrackedFragmentActivity {
 
     private void getGameAccount() {
         ViewUtil.showSpinner(this);
-        AppController.getApi().getGameAccount(AppController.getInstance().getSessionId(), new Callback<GameAccountVM>() {
+        UserInfoCache.refresh(null, new Callback<GameAccountVM>() {
             @Override
             public void success(final GameAccountVM gameAccountVM, Response response) {
                 pointsText.setText(gameAccountVM.getGmpt() + "");
@@ -127,8 +125,8 @@ public class GameActivity extends TrackedFragmentActivity {
                     signInImage.setImageDrawable(getResources().getDrawable(R.drawable.game_sign_in));
                 }
 
-                referralSuccessNum.setText(gameAccountVM.getRefs()+"");
-                referralSuccessPoints.setText((gameAccountVM.getRefs() * GameConstants.POINTS_REFERRAL_SIGNUP)+"");
+                referralSuccessNum.setText(gameAccountVM.getRefs() + "");
+                referralSuccessPoints.setText((gameAccountVM.getRefs() * GameConstants.POINTS_REFERRAL_SIGNUP) + "");
 
                 referralUrlEdit.setText(UrlUtil.createReferralUrl(gameAccountVM));
 
@@ -179,6 +177,11 @@ public class GameActivity extends TrackedFragmentActivity {
                 signInImage.setImageDrawable(getResources().getDrawable(R.drawable.game_signed_in));
                 UserInfoCache.getUser().setEnableSignInForToday(false);
                 signedIn = true;
+
+                // update cache
+                UserInfoCache.getGameAccount().setGmpt(
+                        UserInfoCache.getGameAccount().getGmpt() + GameConstants.POINTS_DAILY_SIGNIN
+                );
 
                 // alert
                 final Dialog dialog = ViewUtil.alertGameStatus(GameActivity.this,

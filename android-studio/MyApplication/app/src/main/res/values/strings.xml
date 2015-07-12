@@ -188,7 +188,7 @@
     <string name="game_points_redeemed">已兌換 : </string>
     <string name="game_points_redeemed_tips">( 未有兌換禮品記錄 )</string>
     <string name="game_referral_title">介紹新會員加入</string>
-    <string name="game_referral_text">用以下連結介紹你的朋友加入~~</string>
+    <string name="game_referral_text">用以下連結介紹你的朋友加入</string>
     <string name="game_referral_note1">每個朋友成功註冊。你即可獲得</string>
     <string name="game_referral_note2">小豆豆!</string>
     <string name="game_referral_success_num">成功介紹加入 : </string>
@@ -213,6 +213,7 @@
     <string name="game_gifts_redeem_more_title">注意事項</string>
     <string name="game_gifts_redeem_points_not_enough">換領需要%1$d小豆豆。您現在只有%2$d小豆豆，還未足夠~</string>
     <string name="game_gifts_redeem_requested">我們已收到您的換領禮品要求~ 請按照「換領規則」聯絡我們</string>
+    <string name="game_gifts_redeem_confirm">確定使用小豆豆換領禮品嗎?</string>
 
     <!-- Schools tab -->
     <string name="schools_tab_title_pn">幼兒班(PN班)</string>

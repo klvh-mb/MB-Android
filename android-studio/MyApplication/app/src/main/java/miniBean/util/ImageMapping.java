@@ -139,16 +139,14 @@ public class ImageMapping {
         imageMap.put("/assets/app/images/emoticons/wink.png", R.drawable.emo_wink);
 
         // Game gift images
-        //imageMap.put("/assets/app/images/game/gifts/eugene-expo-ticket.jpg", R.drawable.game_gift_eugene_expo_ticket);
-        //imageMap.put("/assets/app/images/game/gifts/eugene-expo-ticket-thumb.jpg", R.drawable.game_gift_eugene_expo_ticket_thumb);
         imageMap.put("/assets/app/images/game/gifts/mannings.jpg", R.drawable.game_gift_mannings);
-        imageMap.put("/assets/app/images/game/gifts/mannings-thumb.jpg", R.drawable.game_gift_mannings_thumb);
+        imageMap.put("/assets/app/images/game/gifts/mannings-thumb.jpg", R.drawable.game_gift_mannings);
         imageMap.put("/assets/app/images/game/gifts/sogo.jpg", R.drawable.game_gift_sogo);
-        imageMap.put("/assets/app/images/game/gifts/sogo-thumb.jpg", R.drawable.game_gift_sogo_thumb);
+        imageMap.put("/assets/app/images/game/gifts/sogo-thumb.jpg", R.drawable.game_gift_sogo);
         imageMap.put("/assets/app/images/game/gifts/yata.jpg", R.drawable.game_gift_yata);
-        imageMap.put("/assets/app/images/game/gifts/yata-thumb.jpg", R.drawable.game_gift_yata_thumb);
+        imageMap.put("/assets/app/images/game/gifts/yata-thumb.jpg", R.drawable.game_gift_yata);
         imageMap.put("/assets/app/images/game/gifts/wellcome.jpg", R.drawable.game_gift_wellcome);
-        imageMap.put("/assets/app/images/game/gifts/wellcome-thumb.jpg", R.drawable.game_gift_wellcome_thumb);
+        imageMap.put("/assets/app/images/game/gifts/wellcome-thumb.jpg", R.drawable.game_gift_wellcome);
     }
 
     private ImageMapping() {}

@@ -257,35 +257,25 @@ public class ProfileFragment extends TrackedFragment {
 
     private void getGameAccount() {
         ViewUtil.showSpinner(getActivity());
-        AppController.getApi().getGameAccount(AppController.getInstance().getSessionId(), new Callback<GameAccountVM>() {
-            @Override
-            public void success(final GameAccountVM gameAccountVM, Response response) {
-                pointsText.setText(gameAccountVM.getGmpt() + "");
-                hasProfilePic = gameAccountVM.hasProfilePic();
-                if (hasProfilePic ||
-                        SharedPreferencesUtil.getInstance().isScreenViewed(SharedPreferencesUtil.Screen.UPLOAD_PROFILE_PIC_TIPS)) {
+        GameAccountVM gameAccount = UserInfoCache.getGameAccount();
+        pointsText.setText(gameAccount.getGmpt() + "");
+        hasProfilePic = gameAccount.hasProfilePic();
+        if (hasProfilePic ||
+                SharedPreferencesUtil.getInstance().isScreenViewed(SharedPreferencesUtil.Screen.UPLOAD_PROFILE_PIC_TIPS)) {
+            uploadProfilePicTipsLayout.setVisibility(View.GONE);
+        } else {
+            uploadProfilePicTipsLayout.setVisibility(View.VISIBLE);
+            tipsDescText.setText(getString(R.string.game_upload_profile_pic_title));
+            tipsPointsText.setText("+" + GameConstants.POINTS_UPLOAD_PROFILE_PHOTO);
+            cancelTipsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferencesUtil.getInstance().setScreenViewed(SharedPreferencesUtil.Screen.UPLOAD_PROFILE_PIC_TIPS);
                     uploadProfilePicTipsLayout.setVisibility(View.GONE);
-                } else {
-                    uploadProfilePicTipsLayout.setVisibility(View.VISIBLE);
-                    tipsDescText.setText(getString(R.string.game_upload_profile_pic_title));
-                    tipsPointsText.setText("+" + GameConstants.POINTS_UPLOAD_PROFILE_PHOTO);
-                    cancelTipsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SharedPreferencesUtil.getInstance().setScreenViewed(SharedPreferencesUtil.Screen.UPLOAD_PROFILE_PIC_TIPS);
-                            uploadProfilePicTipsLayout.setVisibility(View.GONE);
-                        }
-                    });
                 }
-                ViewUtil.stopSpinner(getActivity());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e(GameActivity.class.getSimpleName(), "getGameAccount: failure", error);
-                ViewUtil.stopSpinner(getActivity());
-            }
-        });
+            });
+        }
+        ViewUtil.stopSpinner(getActivity());
     }
 
     private void getBookmarkSummary() {

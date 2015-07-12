@@ -171,8 +171,6 @@ public class EditProfileActivity extends TrackedFragmentActivity {
                 UserInfoCache.refresh(new Callback<UserVM>() {
                     @Override
                     public void success(UserVM userVM, Response response) {
-                        UserInfoCache.refresh();
-
                         // refresh parent activity
                         Intent intent = new Intent();
                         intent.putExtra(ViewUtil.INTENT_VALUE_REFRESH, true);
@@ -187,7 +185,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
                     public void failure(RetrofitError error) {
                         Log.e(EditProfileActivity.class.getSimpleName(), "updateUserProfileData: failure", error);
                     }
-                });
+                }, null);
             }
 
             @Override

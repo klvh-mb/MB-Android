@@ -1,25 +1,32 @@
 package miniBean.activity;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
+import miniBean.app.UserInfoCache;
+import miniBean.util.GameConstants;
 import miniBean.util.ImageMapping;
 import miniBean.util.ImageUtil;
 import miniBean.util.SharingUtil;
+import miniBean.util.UrlUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.GameGiftVM;
 import miniBean.viewmodel.ResponseStatusVM;
@@ -31,11 +38,13 @@ public class GameGiftActivity extends TrackedFragmentActivity {
 
     private ScrollView scrollView;
     private RelativeLayout gameLayout;
-    private TextView titleText, pointsText;
+    private TextView titleText, pointsText, referralNotePoints;
     private ImageView whatsappAction, gameGiftImage;
     private LinearLayout redeemStepsLayout, redeemExpirationLayout, redeemShippingLayout, redeemCCLayout, redeemMoreLayout;
     private TextView redeemStepsText, redeemExpirationText, redeemShippingText, redeemCCText, redeemMoreText, redeemText1, redeemText2;
     private RelativeLayout redeemLayout1, redeemLayout2;
+    private LinearLayout whatsappLayout, copyUrlLayout;
+    private EditText referralUrlEdit;
 
     private long gameGiftId, userGamePoints;
     private GameGiftVM gameGift;
@@ -54,7 +63,6 @@ public class GameGiftActivity extends TrackedFragmentActivity {
                         Gravity.CENTER
                 )
         );
-
 
         gameGiftId = getIntent().getLongExtra("id", 0L);
         userGamePoints = getIntent().getLongExtra("userGamePoints", 0L);
@@ -91,6 +99,33 @@ public class GameGiftActivity extends TrackedFragmentActivity {
             @Override
             public void onClick(View v) {
                 redeemGameGift(gameGiftId);
+            }
+        });
+
+        referralNotePoints = (TextView) this.findViewById(R.id.referralNotePoints);
+        referralNotePoints.setText(GameConstants.POINTS_REFERRAL_SIGNUP + "");
+
+        referralUrlEdit = (EditText) this.findViewById(R.id.referralUrlEdit);
+        referralUrlEdit.setText(UrlUtil.createReferralUrl(UserInfoCache.getGameAccount()));
+
+        whatsappLayout = (LinearLayout) this.findViewById(R.id.whatsappLayout);
+        copyUrlLayout = (LinearLayout) this.findViewById(R.id.copyUrlLayout);
+
+        whatsappLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharingUtil.shareToWhatapp(UserInfoCache.getGameAccount(), GameGiftActivity.this);
+            }
+        });
+
+        copyUrlLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ViewUtil.copyToClipboard(referralUrlEdit)) {
+                    Toast.makeText(GameGiftActivity.this, GameGiftActivity.this.getString(R.string.game_referral_url_copy_success), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(GameGiftActivity.this, GameGiftActivity.this.getString(R.string.game_referral_url_copy_failed), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -183,7 +218,7 @@ public class GameGiftActivity extends TrackedFragmentActivity {
         });
     }
 
-    private void redeemGameGift(long id) {
+    private void redeemGameGift(final long id) {
         if (gameGift.isPending) {
             ViewUtil.alertGameStatus(GameGiftActivity.this, getString(R.string.game_gifts_redeem_requested), -1, 5000);
             return;
@@ -196,6 +231,24 @@ public class GameGiftActivity extends TrackedFragmentActivity {
             return;
         }
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.game_gifts_redeem_confirm))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int btn) {
+                        doRedeem(id);
+                    }
+                })
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int btn) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void doRedeem(final long id) {
         AppController.getApi().redeemGameGift(id, AppController.getInstance().getSessionId(), new Callback<ResponseStatusVM>() {
             @Override
             public void success(ResponseStatusVM responseStatusVM, Response response1) {
@@ -205,6 +258,14 @@ public class GameGiftActivity extends TrackedFragmentActivity {
                     gameGift.setIsPending(true);
                     redeemText1.setText(getString(R.string.game_gifts_redeem_pending));
                     redeemText2.setText(getString(R.string.game_gifts_redeem_pending));
+
+                    // update cache
+                    UserInfoCache.getGameAccount().setGmpt(
+                            UserInfoCache.getGameAccount().getGmpt() - gameGift.getRp()
+                    );
+                    UserInfoCache.getGameAccount().setRdpt(
+                            UserInfoCache.getGameAccount().getRdpt() + gameGift.getRp()
+                    );
 
                     // refresh parent activity
                     Intent intent = new Intent();
