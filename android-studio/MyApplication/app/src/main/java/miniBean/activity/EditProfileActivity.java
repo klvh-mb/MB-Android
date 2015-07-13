@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.parceler.apache.commons.lang.StringUtils;
 
@@ -25,6 +26,7 @@ import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
 import miniBean.util.DefaultValues;
+import miniBean.util.ValidationUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserProfileDataVM;
@@ -112,13 +114,15 @@ public class EditProfileActivity extends TrackedFragmentActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                profileDataVM.setParent_aboutme(aboutmeEdit.getText().toString());
-                profileDataVM.setParent_displayname(displayName.getText().toString());
-                profileDataVM.setParent_firstname(firstNameEdit.getText().toString());
-                profileDataVM.setParent_lastname(lastNameEdit.getText().toString());
-                profileDataVM.setParent_birth_year(String.valueOf(DefaultValues.DEFAULT_PARENT_BIRTH_YEAR));
-                profileDataVM.setParent_location(locationId);
-                setUserProfileData(profileDataVM);
+                if (isValid()) {
+                    profileDataVM.setParent_aboutme(aboutmeEdit.getText().toString());
+                    profileDataVM.setParent_displayname(displayName.getText().toString());
+                    profileDataVM.setParent_firstname(firstNameEdit.getText().toString());
+                    profileDataVM.setParent_lastname(lastNameEdit.getText().toString());
+                    profileDataVM.setParent_birth_year(String.valueOf(DefaultValues.DEFAULT_PARENT_BIRTH_YEAR));
+                    profileDataVM.setParent_location(locationId);
+                    updateUserProfileData(profileDataVM);
+                }
             }
         });
 
@@ -153,7 +157,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
     private void getUserInfo() {
         UserVM user = UserInfoCache.getUser();
         fbLoginIcon.setVisibility(user.isFbLogin()? View.VISIBLE : View.GONE);
-        mbLoginIcon.setVisibility(user.isFbLogin()? View.GONE : View.VISIBLE);
+        mbLoginIcon.setVisibility(user.isFbLogin() ? View.GONE : View.VISIBLE);
         displayEmailText.setText(user.getEmail());
         displayName.setText(user.getDisplayName());
         aboutmeEdit.setText(user.getAboutMe());
@@ -163,7 +167,7 @@ public class EditProfileActivity extends TrackedFragmentActivity {
         //(new ActivityUtil(this)).hideInputMethodWindow(this.finishButton);
     }
 
-    private void setUserProfileData(UserProfileDataVM userProfileDataVM){
+    private void updateUserProfileData(UserProfileDataVM userProfileDataVM){
         ViewUtil.showSpinner(this);
         AppController.getApi().updateUserProfileData(userProfileDataVM, AppController.getInstance().getSessionId(), new Callback<UserVM>() {
             @Override
@@ -202,5 +206,26 @@ public class EditProfileActivity extends TrackedFragmentActivity {
                 Log.e(EditProfileActivity.class.getSimpleName(), "setUserProfileData: failure", error);
             }
         });
+    }
+
+    private boolean isValid() {
+        boolean valid = true;
+        String error = "";
+        if (!ValidationUtil.hasText(displayName)) {
+            error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_displayname_not_entered));
+            valid = false;
+        }
+        if (!ValidationUtil.hasText(firstNameEdit) || !ValidationUtil.hasText(lastNameEdit)) {
+            error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_name_not_entered));
+            valid = false;
+        }
+        if (locationId == -1) {
+            error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_location_not_entered));
+            valid = false;
+        }
+
+        if (!valid)
+            Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        return valid;
     }
 }

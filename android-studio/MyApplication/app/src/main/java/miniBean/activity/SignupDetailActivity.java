@@ -29,7 +29,7 @@ import miniBean.app.AppController;
 import miniBean.app.DistrictCache;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.util.DefaultValues;
-import miniBean.util.Validation;
+import miniBean.util.ValidationUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.LocationVM;
 import miniBean.viewmodel.UserVM;
@@ -447,35 +447,35 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
     private boolean isValid(){
         boolean valid = true;
         String error = "";
-        if (!Validation.hasText(displayName)) {
-            error = appendError(error, getString(R.string.signup_details_error_displayname_not_entered));
+        if (!ValidationUtil.hasText(displayName)) {
+            error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_displayname_not_entered));
             valid = false;
         }
         if (locationId == -1) {
-            error = appendError(error, getString(R.string.signup_details_error_location_not_entered));
+            error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_location_not_entered));
             valid = false;
         }
         if (!parentClicked) {
-            error = appendError(error, getString(R.string.signup_details_error_status_not_entered));
+            error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_status_not_entered));
             valid = false;
         }
         if (!parenttype.equals("NA")) {
             int num = StringUtils.isEmpty(babynum)? 0 : Integer.parseInt(babynum);
             if (num >= 1) {
                 if (StringUtils.isEmpty(day1) || StringUtils.isEmpty(babygen1)) {
-                    error = appendError(error, getString(R.string.signup_details_error_baby_not_entered));
+                    error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_baby_not_entered));
                     valid = false;
                 }
             }
             if (num >= 2) {
                 if (StringUtils.isEmpty(day2) || StringUtils.isEmpty(babygen2)) {
-                    error = appendError(error, getString(R.string.signup_details_error_baby_not_entered));
+                    error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_baby_not_entered));
                     valid = false;
                 }
             }
             if (num >= 3) {
                 if (StringUtils.isEmpty(day3) || StringUtils.isEmpty(babygen3)) {
-                    error = appendError(error, getString(R.string.signup_details_error_baby_not_entered));
+                    error = ValidationUtil.appendError(error, getString(R.string.signup_details_error_baby_not_entered));
                     valid = false;
                 }
             }
@@ -484,12 +484,6 @@ public class SignupDetailActivity extends TrackedFragmentActivity {
         if (!valid)
             Toast.makeText(this, error, Toast.LENGTH_LONG).show();
         return valid;
-    }
-
-    private String appendError(String error, String newError) {
-        if (!StringUtils.isEmpty(error))
-            error += "\n";
-        return error + newError;
     }
 
     private void showSpinner() {

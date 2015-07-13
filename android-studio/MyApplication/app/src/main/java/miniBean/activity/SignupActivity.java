@@ -21,7 +21,7 @@ import org.parceler.apache.commons.lang.StringUtils;
 import miniBean.R;
 import miniBean.app.AppController;
 import miniBean.util.DefaultValues;
-import miniBean.util.Validation;
+import miniBean.util.ValidationUtil;
 import miniBean.util.ViewUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -189,15 +189,15 @@ public class SignupActivity extends AbstractLoginActivity {
 
     private boolean isValid() {
         boolean valid = true;
-        if (!Validation.hasText(lastName))
+        if (!ValidationUtil.hasText(lastName))
             valid = false;
-        if (!Validation.hasText(firstName))
+        if (!ValidationUtil.hasText(firstName))
             valid = false;
-        if (!Validation.hasText(email) || !Validation.isEmailAddress(email))
+        if (!ValidationUtil.hasText(email) || !ValidationUtil.isEmailAddress(email))
             valid = false;
-        if (!Validation.hasText(password))
+        if (!ValidationUtil.hasText(password))
             valid = false;
-        if (!Validation.hasText(repeatPassword))
+        if (!ValidationUtil.hasText(repeatPassword))
             valid = false;
         if (!isPasswordValid(password.getText().toString(),repeatPassword.getText().toString()))
             valid = false;

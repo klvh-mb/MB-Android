@@ -2,12 +2,14 @@ package miniBean.util;
 
 import android.widget.EditText;
 
+import org.parceler.apache.commons.lang.StringUtils;
+
 import java.util.regex.Pattern;
 
 import miniBean.R;
 import miniBean.app.AppController;
 
-public class Validation {
+public class ValidationUtil {
 
     // Regular Expression
     // you can change the expression based on your need
@@ -63,5 +65,11 @@ public class Validation {
         }
 
         return true;
+    }
+
+    public static String appendError(String error, String newError) {
+        if (!StringUtils.isEmpty(error))
+            error += "\n";
+        return error + newError;
     }
 }
