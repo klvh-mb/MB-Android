@@ -175,6 +175,7 @@
 
     <string name="game_title">小豆豆中心</string>
     <string name="game_rules_title">積分規則</string>
+    <string name="game_rules_text">如何累積小豆豆？</string>
     <string name="game_daily_signin_title">每日簽到</string>
     <string name="game_daily_signin_text">立即簽到累積小豆豆!</string>
     <string name="game_level_title">我的等級</string>
@@ -272,7 +273,7 @@
     <string name="schools_filter_text_3">幼兒服務 (PN班)</string>
     <string name="schools_filter_text_4">間幼稚園</string>
     <string name="schools_posts">話題 :</string>
-    <string name="schools_discuss_together">一齊討論</string>
+    <string name="schools_discuss_together">討論區</string>
     <string name="schools_landing_title_important_dates">重要日期</string>
     <string name="schools_landing_title_info">學校資料</string>
     <string name="schools_landing_title_pn">幼兒班(PN班 2-3歲) 收生資料</string>

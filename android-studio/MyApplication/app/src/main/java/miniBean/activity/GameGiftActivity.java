@@ -38,7 +38,7 @@ public class GameGiftActivity extends TrackedFragmentActivity {
 
     private ScrollView scrollView;
     private RelativeLayout gameLayout;
-    private TextView titleText, pointsText, referralNotePoints;
+    private TextView titleText, pointsText, referralNotePoints, descText, gameRulesText;
     private ImageView whatsappAction, gameGiftImage;
     private LinearLayout redeemStepsLayout, redeemExpirationLayout, redeemShippingLayout, redeemCCLayout, redeemMoreLayout;
     private TextView redeemStepsText, redeemExpirationText, redeemShippingText, redeemCCText, redeemMoreText, redeemText1, redeemText2;
@@ -73,6 +73,8 @@ public class GameGiftActivity extends TrackedFragmentActivity {
         gameGiftImage = (ImageView) this.findViewById((R.id.gameGiftImage));
         titleText = (TextView) this.findViewById(R.id.titleText);
         pointsText = (TextView) this.findViewById(R.id.pointsText);
+        descText = (TextView) this.findViewById(R.id.descText);
+        gameRulesText = (TextView) this.findViewById(R.id.gameRulesText);
         redeemStepsLayout = (LinearLayout) this.findViewById(R.id.redeemStepsLayout);
         redeemExpirationLayout = (LinearLayout) this.findViewById(R.id.redeemExpirationLayout);
         redeemShippingLayout = (LinearLayout) this.findViewById(R.id.redeemShippingLayout);
@@ -155,17 +157,32 @@ public class GameGiftActivity extends TrackedFragmentActivity {
                     }
                 });
 
+                gameRulesText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(GameGiftActivity.this, GameRulesActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
                 int imageMapped = ImageMapping.map(gameGiftVM.getIm());
                 if (imageMapped != -1) {
                     //Log.d(this.getClass().getSimpleName(), "getGameGift: replace source with local game gift image - " + imageMapped);
                     gameGiftImage.setImageDrawable(getResources().getDrawable(imageMapped));
                 } else {
                     Log.d(this.getClass().getSimpleName(), "getGameGift: load game gift image from background - " + gameGiftVM.getIm());
-                    ImageUtil.displayThinRoundedCornersImage(gameGiftVM.getIm(), gameGiftImage);
+                    ImageUtil.displayImage(gameGiftVM.getIm(), gameGiftImage);
                 }
 
                 titleText.setText(gameGiftVM.getNm());
                 pointsText.setText(gameGiftVM.getRp() + "");
+
+                if (!StringUtils.isEmpty(gameGiftVM.getDs())) {
+                    descText.setVisibility(View.VISIBLE);
+                    ViewUtil.setHtmlText(gameGiftVM.getDs(), descText, GameGiftActivity.this, true, true);
+                } else {
+                    descText.setVisibility(View.GONE);
+                }
 
                 if (!StringUtils.isEmpty(gameGiftVM.getRi())) {
                     redeemStepsLayout.setVisibility(View.VISIBLE);

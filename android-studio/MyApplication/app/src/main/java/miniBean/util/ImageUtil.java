@@ -49,7 +49,6 @@ public class ImageUtil {
     public static final String THUMBNAIL_COMMUNITY_COVER_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-thumbnail-cover-community-image-by-id/";
     public static final String COVER_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-cover-image-by-id/";
     public static final String THUMBNAIL_COVER_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-thumbnail-cover-image-by-id/";
-    public static final String PROFILE_IMAGE_URL = AppController.BASE_URL + "/image/get-profile-image-by-id/";
     public static final String PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-profile-image-by-id/";
     public static final String THUMBNAIL_PROFILE_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-thumbnail-image-by-id/";
     public static final String POST_IMAGE_BY_ID_URL = AppController.BASE_URL + "/image/get-post-image-by-id/";
@@ -195,16 +194,12 @@ public class ImageUtil {
 
     // Profile image
 
-    public static void displayProfileImage(ImageView imageView) {
-        ImageLoader.getInstance().displayImage(PROFILE_IMAGE_URL, imageView, ROUNDED_CORNERS_IMAGE_OPTIONS);
-    }
-
     public static void displayProfileImage(long id, ImageView imageView) {
         ImageLoader.getInstance().displayImage(PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUNDED_CORNERS_IMAGE_OPTIONS);
     }
 
     public static void displayProfileImage(long id, ImageView imageView, ImageLoadingListener listener) {
-        ImageLoader.getInstance().displayImage(PROFILE_IMAGE_URL + id, imageView, ROUNDED_CORNERS_IMAGE_OPTIONS, listener);
+        ImageLoader.getInstance().displayImage(PROFILE_IMAGE_BY_ID_URL + id, imageView, ROUNDED_CORNERS_IMAGE_OPTIONS, listener);
     }
 
     public static void displayThumbnailProfileImage(long id, ImageView imageView) {
@@ -280,7 +275,7 @@ public class ImageUtil {
     }
 
     public static void clearProfileImageCache(long id){
-        clearImageCache(PROFILE_IMAGE_URL + id);
+        clearImageCache(PROFILE_IMAGE_BY_ID_URL + id);
         clearImageCache(THUMBNAIL_PROFILE_IMAGE_BY_ID_URL + id);
     }
 

@@ -82,7 +82,7 @@ public class GameGiftListAdapter extends BaseAdapter {
             gameGiftImage.setImageDrawable(activity.getResources().getDrawable(imageMapped));
         } else {
             Log.d(this.getClass().getSimpleName(), "getView: load game gift image from background - " + item.getImt());
-            ImageUtil.displayThinRoundedCornersImage(item.getImt(), gameGiftImage);
+            ImageUtil.displayImage(item.getImt(), gameGiftImage);
         }
 
         titleText.setText(item.getNm());
