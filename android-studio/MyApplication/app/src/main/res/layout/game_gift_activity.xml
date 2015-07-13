@@ -390,7 +390,6 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="7dp"
                         android:layout_marginRight="5dp"
-                        android:layout_below="@+id/signInLayout"
                         android:layout_marginBottom="5dp">
 
                         <TextView
@@ -409,15 +408,13 @@
                         android:background="@drawable/line_dotted_green"
                         android:layout_width="match_parent"
                         android:layout_height="3dp"
-                        android:id="@+id/viewBar3" />
+                        android:id="@+id/viewBar6" />
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewBar"
-                        android:layout_margin="5dp"
-                        android:id="@+id/referralLayout">
+                        android:layout_margin="5dp">
 
                         <TextView
                             android:layout_width="wrap_content"

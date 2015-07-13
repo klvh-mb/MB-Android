@@ -3,6 +3,7 @@ package miniBean.activity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +24,7 @@ import miniBean.adapter.TopViewedKGListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.fragment.AbstractSchoolsListFragment;
+import miniBean.util.DefaultValues;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.KindergartenVM;
 import miniBean.viewmodel.PreNurseryVM;
@@ -134,10 +136,10 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
             public void onClick(View view) {
                 if(scrollUp) {
                     scrollView.fullScroll(View.FOCUS_DOWN);
-                    scrollUp=false;
+                    scrollUp = false;
                 }else {
                     scrollView.fullScroll(View.FOCUS_UP);
-                    scrollUp=true;
+                    scrollUp = true;
                 }
             }
         });
@@ -158,7 +160,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 topViewedPNListAdapter = new TopViewedPNListAdapter(TopSchoolsActivity.this, topViewedPNs);
                 topViewedList.setAdapter(topViewedPNListAdapter);
                 ViewUtil.setHeightBasedOnChildren(topViewedList);
-                scrollView.fullScroll(View.FOCUS_UP);
+                ViewUtil.scrollTop(scrollView);
             }
 
             @Override
@@ -176,7 +178,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 topBookmarkedPNListAdapter = new TopBookmarkedPNListAdapter(TopSchoolsActivity.this, topBookmarkedPNs);
                 topBookmarkedList.setAdapter(topBookmarkedPNListAdapter);
                 ViewUtil.setHeightBasedOnChildren(topBookmarkedList);
-                scrollView.fullScroll(View.FOCUS_UP);
+                ViewUtil.scrollTop(scrollView);
             }
 
             @Override
@@ -194,7 +196,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 topViewedKGListAdapter = new TopViewedKGListAdapter(TopSchoolsActivity.this, topViewedKGs);
                 topViewedList.setAdapter(topViewedKGListAdapter);
                 ViewUtil.setHeightBasedOnChildren(topViewedList);
-                scrollView.fullScroll(View.FOCUS_UP);
+                ViewUtil.scrollTop(scrollView);
             }
 
             @Override
@@ -212,7 +214,7 @@ public class TopSchoolsActivity extends TrackedFragmentActivity {
                 topBookmarkedKGListAdapter = new TopBookmarkedKGListAdapter(TopSchoolsActivity.this, topBookmarkedKGs);
                 topBookmarkedList.setAdapter(topBookmarkedKGListAdapter);
                 ViewUtil.setHeightBasedOnChildren(topBookmarkedList);
-                scrollView.fullScroll(View.FOCUS_UP);
+                ViewUtil.scrollTop(scrollView);
             }
 
             @Override

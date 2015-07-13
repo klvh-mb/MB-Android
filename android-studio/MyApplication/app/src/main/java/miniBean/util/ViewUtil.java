@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.parceler.apache.commons.lang.StringUtils;
@@ -118,6 +119,23 @@ public class ViewUtil {
                 ViewUtil.getRealDimension(5, listView.getResources());  // extra margin
         listView.setLayoutParams(params);
         listView.requestLayout();
+    }
+
+    public static void scrollTop(final ScrollView scrollView) {
+        scrollTop(scrollView, true);
+    }
+
+    public static void scrollTop(final ScrollView scrollView, boolean delay) {
+        if (delay) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.fullScroll(View.FOCUS_UP);
+                }
+            }, DefaultValues.DEFAULT_HANDLER_DELAY);
+        } else {
+            scrollView.fullScroll(View.FOCUS_UP);
+        }
     }
 
     public static void fullscreenImagePopup(Activity activity, String source) {

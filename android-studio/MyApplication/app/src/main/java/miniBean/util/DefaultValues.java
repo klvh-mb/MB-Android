@@ -26,7 +26,7 @@ public class DefaultValues {
 
     public static final int SPLASH_DISPLAY_MILLIS = 1000;
     public static final int DEFAULT_CONNECTION_TIMEOUT_MILLIS = 3000;
-    public static final int DEFAULT_HANDLER_DELAY = 10;
+    public static final int DEFAULT_HANDLER_DELAY = 100;
 
     public static final int PULL_TO_REFRESH_DELAY = 1000;
 

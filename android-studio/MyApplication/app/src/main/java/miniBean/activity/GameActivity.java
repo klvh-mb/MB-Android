@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -25,6 +26,7 @@ import miniBean.adapter.GameTransactionListAdapter;
 import miniBean.app.AppController;
 import miniBean.app.TrackedFragmentActivity;
 import miniBean.app.UserInfoCache;
+import miniBean.util.DefaultValues;
 import miniBean.util.GameConstants;
 import miniBean.util.SharingUtil;
 import miniBean.util.UrlUtil;
@@ -211,6 +213,7 @@ public class GameActivity extends TrackedFragmentActivity {
                 GameGiftListAdapter gameGiftListAdapter = new GameGiftListAdapter(GameActivity.this, gameGifts, gameAccount);
                 gameGiftList.setAdapter(gameGiftListAdapter);
                 ViewUtil.setHeightBasedOnChildren(gameGiftList);
+                ViewUtil.scrollTop(scrollView);
             }
 
             @Override
@@ -229,6 +232,7 @@ public class GameActivity extends TrackedFragmentActivity {
                 GameTransactionListAdapter gameTransactionListAdapter = new GameTransactionListAdapter(GameActivity.this, gameTransactions);
                 gameTransactionList.setAdapter(gameTransactionListAdapter);
                 ViewUtil.setHeightBasedOnChildren(gameTransactionList);
+                ViewUtil.scrollTop(scrollView);
             }
 
             @Override
@@ -247,6 +251,7 @@ public class GameActivity extends TrackedFragmentActivity {
                 GameTransactionListAdapter gameTransactionListAdapter = new GameTransactionListAdapter(GameActivity.this, gameTransactions, true);
                 latestGameTransactionList.setAdapter(gameTransactionListAdapter);
                 ViewUtil.setHeightBasedOnChildren(latestGameTransactionList);
+                ViewUtil.scrollTop(scrollView);
             }
 
             @Override

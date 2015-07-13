@@ -3,7 +3,6 @@ package miniBean.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +19,6 @@ import miniBean.activity.MainActivity;
 import miniBean.activity.NewPostActivity;
 import miniBean.app.TrackedFragment;
 import miniBean.app.UserInfoCache;
-import miniBean.util.AnimationUtil;
 import miniBean.util.ImageUtil;
 
 public class MyCommunityNewsfeedFragment extends TrackedFragment {
