@@ -212,7 +212,8 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/arrow_back"
                     android:layout_marginRight="5dp"
-                    android:padding="8dp" />
+                    android:padding="5dp"
+                    android:visibility="gone" />
 
                 <ImageButton
                     android:layout_width="45dp"
@@ -224,7 +225,8 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/arrow_next"
                     android:layout_marginRight="5dp"
-                    android:padding="8dp" />
+                    android:padding="5dp"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </RelativeLayout>

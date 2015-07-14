@@ -291,6 +291,7 @@ public class DetailListAdapter extends BaseAdapter {
     private void loadImages(final CommunityPostCommentVM item, final LinearLayout layout) {
         layout.removeAllViewsInLayout();
 
+        Log.d(this.getClass().getSimpleName(), "loadImages: "+item.getImgs().length+" images");
         for (Long imageId : item.getImgs()) {
             ImageView postImage = new ImageView(this.activity);
             postImage.setAdjustViewBounds(true);
@@ -322,7 +323,8 @@ public class DetailListAdapter extends BaseAdapter {
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
+                    ImageView imageView = (ImageView)view;
+                    imageView.setVisibility(View.GONE);
                 }
 
                 @Override

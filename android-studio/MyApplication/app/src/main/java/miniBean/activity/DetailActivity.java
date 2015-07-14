@@ -320,148 +320,148 @@ public class DetailActivity extends TrackedFragmentActivity {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT, //activityUtil.getRealDimension(DefaultValues.COMMENT_POPUP_HEIGHT),
                         true);
-            }
 
-            commentPopup.setOutsideTouchable(false);
-            commentPopup.setFocusable(true);
-            commentPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
-            commentPopup.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-            commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+                commentPopup.setOutsideTouchable(false);
+                commentPopup.setFocusable(true);
+                commentPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), ""));
+                commentPopup.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-            commentPopup.setTouchInterceptor(new View.OnTouchListener() {
-                public boolean onTouch(View view, MotionEvent event) {
-                    return false;
-                }
-            });
+                commentPopup.setTouchInterceptor(new View.OnTouchListener() {
+                    public boolean onTouch(View view, MotionEvent event) {
+                        return false;
+                    }
+                });
 
-            commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
-            commentEditText.setLongClickable(true);
+                commentEditText = (EditText) layout.findViewById(R.id.commentEditText);
+                commentEditText.setLongClickable(true);
 
-            // NOTE: UGLY WORKAROUND or pasting text to comment edit!!!
-            commentEditText.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Log.d(DetailActivity.this.getClass().getSimpleName(), "onLongClick");
-                    startActionMode(new ActionMode.Callback() {
-                        final int PASTE_MENU_ITEM_ID = 0;
+                // NOTE: UGLY WORKAROUND or pasting text to comment edit!!!
+                commentEditText.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        Log.d(DetailActivity.this.getClass().getSimpleName(), "onLongClick");
+                        startActionMode(new ActionMode.Callback() {
+                            final int PASTE_MENU_ITEM_ID = 0;
 
-                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                            Log.d(DetailActivity.this.getClass().getSimpleName(), "onPrepareActionMode");
-                            return true;
-                        }
-
-                        public void onDestroyActionMode(ActionMode mode) {
-                        }
-
-                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                            Log.d(DetailActivity.this.getClass().getSimpleName(), "onCreateActionMode: menu size="+menu.size());
-                            menu.add(0,PASTE_MENU_ITEM_ID,0,"Paste");
-                            menu.setQwertyMode(false);
-                            return true;
-                        }
-
-                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                            Log.d(DetailActivity.this.getClass().getSimpleName(), "onActionItemClicked: item clicked="+item.getItemId()+" title="+item.getTitle());
-                            switch(item.getItemId()) {
-                                case PASTE_MENU_ITEM_ID:
-                                    final ClipboardManager clipBoard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
-                                    if (clipBoard != null && clipBoard.getPrimaryClip() != null && clipBoard.getPrimaryClip().getItemAt(0) != null) {
-                                        String paste = clipBoard.getPrimaryClip().getItemAt(0).getText().toString();
-                                        commentEditText.getText().insert(commentEditText.getSelectionStart(), paste);
-                                    }
+                            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                                Log.d(DetailActivity.this.getClass().getSimpleName(), "onPrepareActionMode");
+                                return true;
                             }
 
-                            mode.finish();
+                            public void onDestroyActionMode(ActionMode mode) {
+                            }
 
-                            // popup again
-                            commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
-                            ViewUtil.popupInputMethodWindow(DetailActivity.this);
-                            return true;
+                            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                                Log.d(DetailActivity.this.getClass().getSimpleName(), "onCreateActionMode: menu size=" + menu.size());
+                                menu.add(0, PASTE_MENU_ITEM_ID, 0, "Paste");
+                                menu.setQwertyMode(false);
+                                return true;
+                            }
+
+                            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                                Log.d(DetailActivity.this.getClass().getSimpleName(), "onActionItemClicked: item clicked=" + item.getItemId() + " title=" + item.getTitle());
+                                switch (item.getItemId()) {
+                                    case PASTE_MENU_ITEM_ID:
+                                        final ClipboardManager clipBoard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                                        if (clipBoard != null && clipBoard.getPrimaryClip() != null && clipBoard.getPrimaryClip().getItemAt(0) != null) {
+                                            String paste = clipBoard.getPrimaryClip().getItemAt(0).getText().toString();
+                                            commentEditText.getText().insert(commentEditText.getSelectionStart(), paste);
+                                        }
+                                }
+
+                                mode.finish();
+
+                                // popup again
+                                commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+                                ViewUtil.popupInputMethodWindow(DetailActivity.this);
+                                return true;
+                            }
+                        });
+                        return true;
+                    }
+                });
+
+                /*
+                commentEditText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+                    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                        Log.d(DetailActivity.this.getClass().getSimpleName(), "onPrepareActionMode");
+                        return false;
+                    }
+
+                    public void onDestroyActionMode(ActionMode mode) {
+                    }
+
+                    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                        Log.d(DetailActivity.this.getClass().getSimpleName(), "onCreateActionMode");
+                        return false;
+                    }
+
+                    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                        Log.d(DetailActivity.this.getClass().getSimpleName(), "onActionItemClicked");
+                        return false;
+                    }
+                });
+                */
+
+                commentPostButton = (TextView) layout.findViewById(R.id.postButton);
+                commentPostButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        doComment();
+                    }
+                });
+
+                commentCancelButton = (ImageView) layout.findViewById(R.id.cancelButton);
+                commentCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        commentPopup.dismiss();
+                        commentPopup = null;
+                    }
+                });
+
+                commentBrowseButton = (ImageView) layout.findViewById(R.id.browseImage);
+                commentBrowseButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (photos.size() == DefaultValues.MAX_COMMENT_IMAGES) {
+                            Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_max_images), Toast.LENGTH_SHORT).show();
+                        } else {
+                            ImageUtil.openPhotoPicker(DetailActivity.this);
                         }
-                    });
-                    return true;
-                }
-            });
+                    }
+                });
 
-            /*
-            commentEditText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    Log.d(DetailActivity.this.getClass().getSimpleName(), "onPrepareActionMode");
-                    return false;
-                }
+                if (commentImages.size() == 0) {
+                    commentImages.add((ImageView) layout.findViewById(R.id.commentImage1));
+                    commentImages.add((ImageView) layout.findViewById(R.id.commentImage2));
+                    commentImages.add((ImageView) layout.findViewById(R.id.commentImage3));
 
-                public void onDestroyActionMode(ActionMode mode) {
-                }
-
-                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    Log.d(DetailActivity.this.getClass().getSimpleName(), "onCreateActionMode");
-                    return false;
-                }
-
-                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    Log.d(DetailActivity.this.getClass().getSimpleName(), "onActionItemClicked");
-                    return false;
-                }
-            });
-            */
-
-            ViewUtil.popupInputMethodWindow(this);
-
-            commentPostButton = (TextView) layout.findViewById(R.id.postButton);
-            commentPostButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    doComment();
-                }
-            });
-
-            commentCancelButton = (ImageView) layout.findViewById(R.id.cancelButton);
-            commentCancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    commentPopup.dismiss();
-                    commentPopup = null;
-                }
-            });
-
-            commentBrowseButton = (ImageView) layout.findViewById(R.id.browseImage);
-            commentBrowseButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (photos.size() == DefaultValues.MAX_COMMENT_IMAGES) {
-                        Toast.makeText(DetailActivity.this, DetailActivity.this.getString(R.string.comment_max_images), Toast.LENGTH_SHORT).show();
-                    } else {
-                        ImageUtil.openPhotoPicker(DetailActivity.this);
+                    for (ImageView commentImage : commentImages) {
+                        commentImage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                removeCommentImage();
+                            }
+                        });
                     }
                 }
-            });
 
-            if (commentImages.size() == 0) {
-                commentImages.add((ImageView) layout.findViewById(R.id.commentImage1));
-                commentImages.add((ImageView) layout.findViewById(R.id.commentImage2));
-                commentImages.add((ImageView) layout.findViewById(R.id.commentImage3));
-
-                for (ImageView commentImage : commentImages) {
-                    commentImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            removeCommentImage();
-                        }
-                    });
-                }
+                commentEmoImage = (ImageView) layout.findViewById(R.id.emoImage);
+                commentEmoImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        initEmoticonPopup();
+                    }
+                });
             }
-
-            commentEmoImage = (ImageView) layout.findViewById(R.id.emoImage);
-            commentEmoImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    initEmoticonPopup();
-                }
-            });
 
             if (emoticonVMList.isEmpty() && EmoticonCache.getEmoticons().isEmpty()) {
                 EmoticonCache.refresh();
             }
+
+            commentPopup.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+            ViewUtil.popupInputMethodWindow(this);
 
             Log.d(this.getClass().getSimpleName(), "initCommentPopup: " + selectedImagePath);
         } catch (Exception e) {
@@ -635,14 +635,13 @@ public class DetailActivity extends TrackedFragmentActivity {
             backButton.setEnabled(false);
             nextButton.setEnabled(false);
         } else {
-            backButton.setVisibility(View.VISIBLE);
-            nextButton.setVisibility(View.VISIBLE);
-
             if (page <= 1) {
                 backButton.setEnabled(false);
+                backButton.setBackgroundResource(R.drawable.rounded_corner_button_gray);
                 backButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_back_gray));
             } else {
                 backButton.setEnabled(true);
+                backButton.setBackgroundResource(R.drawable.rounded_corner_button_pink);
                 backButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_back));
 
                 final int pageOffset = page - 1;
@@ -656,9 +655,11 @@ public class DetailActivity extends TrackedFragmentActivity {
 
             if (page >= maxPage) {
                 nextButton.setEnabled(false);
+                nextButton.setBackgroundResource(R.drawable.rounded_corner_button_gray);
                 nextButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_next_gray));
             } else {
                 nextButton.setEnabled(true);
+                nextButton.setBackgroundResource(R.drawable.rounded_corner_button_pink);
                 nextButton.setImageDrawable(getResources().getDrawable(R.drawable.arrow_next));
 
                 final int pageOffset = page - 1;
@@ -669,6 +670,9 @@ public class DetailActivity extends TrackedFragmentActivity {
                     }
                 });
             }
+
+            backButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
         }
     }
 

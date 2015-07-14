@@ -44,6 +44,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
     private List<CommunityPostVM> feedItems;
     private boolean isNewsfeed = true;
     private int lastPosition = -1;
+    private int loadedImageCount = 0;
 
     public NewsfeedListAdapter(Activity activity, List<CommunityPostVM> feedItems) {
         this(activity, feedItems, true);
@@ -189,7 +190,7 @@ public class NewsfeedListAdapter extends BaseAdapter {
         final int padding = ViewUtil.getRealDimension(3, this.activity.getResources());
         final int totalPadding = padding * DefaultValues.MAX_POST_IMAGES;
 
-        int loadedImageCount = 0;
+        loadedImageCount = 0;
         for (Long imageId : item.getImgs()) {
             if (loadedImageCount >= DefaultValues.MAX_POST_IMAGES)
                 break;
@@ -209,7 +210,8 @@ public class NewsfeedListAdapter extends BaseAdapter {
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
+                    ImageView imageView = (ImageView)view;
+                    imageView.setVisibility(View.GONE);
                 }
 
                 @Override
