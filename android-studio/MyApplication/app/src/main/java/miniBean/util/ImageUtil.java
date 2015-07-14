@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -26,6 +28,7 @@ import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import miniBean.R;
 import miniBean.app.AppController;
@@ -365,6 +368,15 @@ public class ImageUtil {
         */
 
         bp = BitmapFactory.decodeFile(path, opts);
+
+        // retain EXIF orientation
+        try {
+            ExifInterface exif = new ExifInterface(path);
+            bp = retainOrientation(bp, exif);
+        } catch (IOException ioe) {
+            Log.e(ImageUtil.class.getSimpleName(), "resizeImage: failed to retain orientation", ioe);
+        }
+
         return bp;
     }
 
@@ -398,6 +410,38 @@ public class ImageUtil {
         }
 
         return resizedImage;
+    }
+
+    /**
+     * http://stackoverflow.com/questions/7286714/android-get-orientation-of-a-camera-bitmap-and-rotate-back-90-degrees
+     *
+     * @param bp
+     * @param exif
+     * @return
+     */
+    private static Bitmap retainOrientation(Bitmap bp, ExifInterface exif) {
+        int rotation = exifToDegrees(exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL));
+        if (rotation > 0) {
+            int width = bp.getWidth();
+            int height = bp.getHeight();
+
+            Matrix matrix = new Matrix();
+            matrix.preRotate(rotation);
+
+            return Bitmap.createBitmap(bp, 0, 0, width, height, matrix, false);
+        }
+        return bp;
+    }
+
+    private static int exifToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
     }
 
     public static Bitmap cropToSquare(Bitmap bitmap) {
