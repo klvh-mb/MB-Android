@@ -11,7 +11,7 @@ public class GameConstants {
      * e.g. 1 referral = 25 points => 20 referral = 500 points = $50 coupon
      */
     public static final int POINTS_SIGNUP = 10;
-    public static final int POINTS_UPLOAD_PROFILE_PHOTO = 25;
+    public static final int POINTS_UPLOAD_PROFILE_PHOTO = 10;
     public static final int POINTS_DAILY_SIGNIN = 2;
     public static final int POINTS_POST = 0;
     public static final int POINTS_COMMENT = 0;

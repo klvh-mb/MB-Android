@@ -193,6 +193,7 @@
     <string name="game_referral_text">用以下連結介紹你的朋友加入</string>
     <string name="game_referral_note1">每個朋友成功註冊。你即可獲得</string>
     <string name="game_referral_note2">小豆豆!</string>
+    <string name="game_referral_fb_note">*註意: 被邀請加入者必需以Facebook用戶身份註冊成為miniBean會員</string>
     <string name="game_referral_success_num">成功介紹加入 : </string>
     <string name="game_referral_success_points">獲得小豆豆 : </string>
     <string name="game_referral_url_copy_success">介紹連結已複制</string>
