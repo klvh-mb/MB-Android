@@ -16,6 +16,7 @@ import miniBean.R;
 import miniBean.activity.NewPNPostActivity;
 import miniBean.util.ImageMapping;
 import miniBean.util.ExternalLauncherUtil;
+import miniBean.util.ImageUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.PreNurseryVM;
 
@@ -134,13 +135,19 @@ public class PNCommunityFragment extends AbstractSchoolCommunityFragment {
             enNameText.setText(schoolVM.getNe());
             enNameText.setVisibility(View.VISIBLE);
         }
-        int iconMapped = ImageMapping.map(schoolVM.getIcon());
-        if (iconMapped != -1) {
-            icon.setImageDrawable(getResources().getDrawable(iconMapped));
+
+        if (!StringUtils.isEmpty(schoolVM.getIcon())) {
+            int iconMapped = ImageMapping.map(schoolVM.getIcon());
+            if (iconMapped != -1) {
+                icon.setImageDrawable(getResources().getDrawable(iconMapped));
+            } else {
+                ImageUtil.displayRoundedCornersImage(schoolVM.getIcon(), icon);
+            }
             icon.setVisibility(View.VISIBLE);
         } else {
             icon.setVisibility(View.GONE);
         }
+
         districtText.setText(schoolVM.getDis());
         typeValue.setText(schoolVM.getOrgt());
         timeValue.setText(ViewUtil.translateClassTime(schoolVM.getCt(), this.getResources()));

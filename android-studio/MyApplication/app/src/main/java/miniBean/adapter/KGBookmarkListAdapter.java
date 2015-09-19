@@ -15,6 +15,7 @@ import java.util.List;
 
 import miniBean.R;
 import miniBean.util.ImageMapping;
+import miniBean.util.ImageUtil;
 import miniBean.viewmodel.KindergartenVM;
 
 public class KGBookmarkListAdapter extends BaseAdapter {
@@ -60,9 +61,13 @@ public class KGBookmarkListAdapter extends BaseAdapter {
 
         KindergartenVM item = schoolVMList.get(i);
 
-        int iconMapped = ImageMapping.map(item.getIcon());
-        if (iconMapped != -1) {
-            icon.setImageDrawable(view.getResources().getDrawable(iconMapped));
+        if (!StringUtils.isEmpty(item.getIcon())) {
+            int iconMapped = ImageMapping.map(item.getIcon());
+            if (iconMapped != -1) {
+                icon.setImageDrawable(view.getResources().getDrawable(iconMapped));
+            } else {
+                ImageUtil.displayRoundedCornersImage(item.getIcon(), icon);
+            }
         } else {
             icon.setImageResource(R.drawable.schools_green_book);
         }

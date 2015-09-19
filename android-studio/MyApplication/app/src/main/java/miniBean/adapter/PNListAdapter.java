@@ -20,6 +20,7 @@ import miniBean.R;
 import miniBean.activity.PNCommunityActivity;
 import miniBean.app.AppController;
 import miniBean.util.ImageMapping;
+import miniBean.util.ImageUtil;
 import miniBean.util.ViewUtil;
 import miniBean.viewmodel.PreNurseryVM;
 import retrofit.Callback;
@@ -87,9 +88,13 @@ public class PNListAdapter extends BaseAdapter {
 
         final PreNurseryVM item = items.get(position);
 
-        int iconMapped = ImageMapping.map(item.getIcon());
-        if (iconMapped != -1) {
-            icon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
+        if (!StringUtils.isEmpty(item.getIcon())) {
+            int iconMapped = ImageMapping.map(item.getIcon());
+            if (iconMapped != -1) {
+                icon.setImageDrawable(convertView.getResources().getDrawable(iconMapped));
+            } else {
+                ImageUtil.displayRoundedCornersImage(item.getIcon(), icon);
+            }
             icon.setVisibility(View.VISIBLE);
         } else {
             icon.setVisibility(View.GONE);
